@@ -174,9 +174,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const resetModalView = () => {
         const customForm = document.getElementById('custom-itinerary-form');
         const authContainer = document.getElementById('phone-auth-container');
+        const previewContainer = document.getElementById('itinerary-preview-container');
         const subtitle = document.querySelector('.modal-subtitle');
         if (customForm) customForm.style.display = 'block';
         if (authContainer) authContainer.style.display = 'none';
+        if (previewContainer) previewContainer.style.display = 'none';
         if (subtitle) subtitle.innerText = 'Design your personalized Kumaon adventure. We will curate it directly from Pithoragarh.';
     };
 
@@ -238,6 +240,27 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
         customForm.parentNode.insertBefore(authDiv, customForm.nextSibling);
+
+        // Dynamically Inject Itinerary Preview HTML
+        const previewDiv = document.createElement('div');
+        previewDiv.id = 'itinerary-preview-container';
+        previewDiv.style.display = 'none';
+        previewDiv.innerHTML = `
+            <div class="auth-header" style="text-align: center; margin-bottom: 15px;">
+                <h4 style="color: var(--color-gold); font-size: 1.2rem; margin-bottom: 6px; font-family: var(--font-primary);">Your Tailored Itinerary</h4>
+                <p style="font-size: 0.82rem; color: var(--color-text-secondary);">Here is a custom day-wise outline based on your interests.</p>
+            </div>
+            
+            <div id="itinerary-days-list" style="margin: 15px 0; max-height: 240px; overflow-y: auto; padding-right: 8px; border: 1px solid var(--glass-border); border-radius: var(--border-radius-sm); padding: 12px; background: rgba(255,255,255,0.02);">
+                <!-- Day-wise details go here -->
+            </div>
+            
+            <div class="modal-btn-grid" style="margin-top: 15px;">
+                <button type="button" class="btn btn-secondary" onclick="resetModalView()"><i class="fa-solid fa-arrow-left"></i> Customize</button>
+                <button type="button" id="btn-final-share" class="btn btn-primary" style="background-color: #25D366; color: white;"><i class="fa-brands fa-whatsapp"></i> Finalize on WhatsApp</button>
+            </div>
+        `;
+        authDiv.parentNode.insertBefore(previewDiv, authDiv.nextSibling);
 
         const indicator = document.createElement('div');
         indicator.id = 'auth-status-indicator';
@@ -470,59 +493,264 @@ async function submitItineraryRequest(data, type) {
         } else {
             showToast('Custom itinerary request saved successfully!', 'success');
             
-            // Execute the original sharing action
-            if (type === 'whatsapp') {
-                let text = `*Rudraansh Yatra - Personalized Trip Request*\n\n`;
-                text += `*Name:* ${data.name}\n`;
-                text += `*Email:* ${data.email}\n`;
-                text += `*Destination:* ${data.destination}\n`;
-                text += `*Duration:* ${data.days} Days\n`;
-                if (data.requests) {
-                    text += `*Requests:* ${data.requests}\n`;
-                }
-                text += `\n_Please send me a custom-tailored itinerary and group quotation._`;
+            // Generate the dynamic day-wise itinerary list
+            const daysList = document.getElementById('itinerary-days-list');
+            if (daysList) {
+                const daysData = generateItineraryText(data.destination, data.days, data.requests);
+                let daysHTML = '';
+                daysData.forEach(item => {
+                    daysHTML += `
+                        <div class="itinerary-day-item" style="margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.04); padding-bottom: 8px;">
+                            <h5 style="color: var(--color-gold); font-size: 13px; margin-bottom: 4px; font-weight: 700; font-family: var(--font-primary);">Day ${item.day}: ${item.title}</h5>
+                            <p style="font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; margin: 0;">${item.desc}</p>
+                        </div>
+                    `;
+                });
+                daysList.innerHTML = daysHTML;
                 
-                const encodedText = encodeURIComponent(text);
-                window.open(`https://wa.me/917617617651?text=${encodedText}`, '_blank');
-            } else if (type === 'email') {
-                const subject = encodeURIComponent(`Custom Trip Request - ${data.name}`);
-                let body = `Namaste Rudraansh Yatra Team,\n\n`;
-                body += `I would like to request a custom itinerary with the following details:\n\n`;
-                body += `Name: ${data.name}\n`;
-                body += `Email: ${data.email}\n`;
-                body += `Destination: ${data.destination}\n`;
-                body += `Preferred Duration: ${data.days} Days\n`;
-                if (data.requests) {
-                    body += `Special Requests / Medical Notes:\n${data.requests}\n`;
-                }
-                body += `\nPlease send me availability details and pricing options.\n\n`;
-                body += `Best regards,\n${data.name}`;
-                
-                const encodedBody = encodeURIComponent(body);
-                window.open(`mailto:info@rudraanshyatra.com?subject=${subject}&body=${encodedBody}`, '_self');
+                // Add scrollbar style rules locally
+                const scrollbarStyle = document.getElementById('custom-scrollbar-preview-style') || document.createElement('style');
+                scrollbarStyle.id = 'custom-scrollbar-preview-style';
+                scrollbarStyle.innerHTML = `
+                    #itinerary-days-list::-webkit-scrollbar { width: 4px; }
+                    #itinerary-days-list::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.01); }
+                    #itinerary-days-list::-webkit-scrollbar-thumb { background: var(--color-gold); border-radius: 2px; }
+                `;
+                if (!scrollbarStyle.parentNode) document.head.appendChild(scrollbarStyle);
             }
             
-            // Close modal and reset form
-            const modal = document.getElementById('custom-trip-modal');
-            if (modal) modal.classList.remove('active');
-            const form = document.getElementById('custom-itinerary-form');
-            if (form) form.reset();
+            // Configure the final action button
+            const finalBtn = document.getElementById('btn-final-share');
+            if (finalBtn) {
+                if (type === 'whatsapp') {
+                    finalBtn.innerHTML = `<i class="fa-brands fa-whatsapp"></i> Finalize on WhatsApp`;
+                    finalBtn.style.backgroundColor = '#25D366';
+                    finalBtn.onclick = () => {
+                        openWhatsAppShare(data);
+                        const modal = document.getElementById('custom-trip-modal');
+                        if (modal) modal.classList.remove('active');
+                        resetModalView();
+                        const form = document.getElementById('custom-itinerary-form');
+                        if (form) form.reset();
+                    };
+                } else {
+                    finalBtn.innerHTML = `<i class="fa-solid fa-envelope"></i> Send via Email`;
+                    finalBtn.style.backgroundColor = 'var(--color-gold)';
+                    finalBtn.onclick = () => {
+                        openEmailShare(data);
+                        const modal = document.getElementById('custom-trip-modal');
+                        if (modal) modal.classList.remove('active');
+                        resetModalView();
+                        const form = document.getElementById('custom-itinerary-form');
+                        if (form) form.reset();
+                    };
+                }
+            }
             
-            // Clean up pending data
-            window.pendingItineraryData = null;
-            window.pendingItineraryType = null;
+            // Hide other views, show preview
+            const customForm = document.getElementById('custom-itinerary-form');
+            if (customForm) customForm.style.display = 'none';
+            document.getElementById('phone-auth-container').style.display = 'none';
+            document.getElementById('itinerary-preview-container').style.display = 'block';
             
-            // Reset view state
-            const authContainer = document.getElementById('phone-auth-container');
             const subtitle = document.querySelector('.modal-subtitle');
-            if (form) form.style.display = 'block';
-            if (authContainer) authContainer.style.display = 'none';
-            if (subtitle) subtitle.innerText = 'Design your personalized Kumaon adventure. We will curate it directly from Pithoragarh.';
+            if (subtitle) subtitle.innerText = 'Here is your custom travel plan based on your chosen circuit and special interests.';
         }
     } catch (e) {
         showToast('Failed to submit request.', 'error');
         console.error(e);
     }
+}
+
+function openWhatsAppShare(data) {
+    let text = `*Rudraansh Yatra - Personalized Trip Request*\n\n`;
+    text += `*Name:* ${data.name}\n`;
+    text += `*Email:* ${data.email}\n`;
+    text += `*Destination:* ${data.destination}\n`;
+    text += `*Duration:* ${data.days} Days\n`;
+    if (data.requests) {
+        text += `*Requests:* ${data.requests}\n`;
+    }
+    text += `\n_Please send me a custom-tailored itinerary and group quotation._`;
+    
+    const encodedText = encodeURIComponent(text);
+    window.open(`https://wa.me/917617617651?text=${encodedText}`, '_blank');
+}
+
+function openEmailShare(data) {
+    const subject = encodeURIComponent(`Custom Trip Request - ${data.name}`);
+    let body = `Namaste Rudraansh Yatra Team,\n\n`;
+    body += `I would like to request a custom itinerary with the following details:\n\n`;
+    body += `Name: ${data.name}\n`;
+    body += `Email: ${data.email}\n`;
+    body += `Destination: ${data.destination}\n`;
+    body += `Preferred Duration: ${data.days} Days\n`;
+    if (data.requests) {
+        body += `Special Requests / Medical Notes:\n${data.requests}\n`;
+    }
+    body += `\nPlease send me availability details and pricing options.\n\n`;
+    body += `Best regards,\n${data.name}`;
+    
+    const encodedBody = encodeURIComponent(body);
+    window.open(`mailto:info@rudraanshyatra.com?subject=${subject}&body=${encodedBody}`, '_self');
+}
+
+function generateItineraryText(destination, days, requests) {
+    let daysArray = [];
+    const lowerRequests = (requests || '').toLowerCase();
+    
+    let extraNotes = [];
+    if (lowerRequests.includes('senior') || lowerRequests.includes('old') || lowerRequests.includes('parent')) {
+        extraNotes.push("Senior-citizen friendly pacing with regular acclimatization stops.");
+    }
+    if (lowerRequests.includes('helicopter') || lowerRequests.includes('heli')) {
+        extraNotes.push("Helicopter shuttle assistance requested for high-altitude sections.");
+    }
+    if (lowerRequests.includes('veg') || lowerRequests.includes('food') || lowerRequests.includes('diet')) {
+        extraNotes.push("Strictly vegetarian organic Kumaoni meals arranged at all homestays.");
+    }
+    if (lowerRequests.includes('oxygen') || lowerRequests.includes('medical') || lowerRequests.includes('asthma')) {
+        extraNotes.push("Dedicated oxygen cylinder and medical oximeter kept in vehicle.");
+    }
+    if (lowerRequests.includes('child') || lowerRequests.includes('kid') || lowerRequests.includes('family')) {
+        extraNotes.push("Family-friendly homestays with hot water facility.");
+    }
+
+    const noteText = extraNotes.length > 0 ? ` Note: ${extraNotes.join(" ")}` : "";
+
+    for (let i = 1; i <= days; i++) {
+        let title = '';
+        let desc = '';
+        
+        if (destination.includes('Adi Kailash')) {
+            if (i === 1) {
+                title = "Arrival & Drive to Dharchula";
+                desc = "Drive from Pithoragarh to Dharchula (90 km, 4 hrs) in private 4x4. Briefing on permits." + noteText;
+            } else if (i === days) {
+                title = "Return to Pithoragarh";
+                desc = "Drive from Dharchula back to Pithoragarh. Departure with Prasad and blessings.";
+            } else if (i === 2) {
+                title = "Dharchula to Gunji / Nabi Village";
+                desc = "Pass through tight border checkpoints and drive along the Kali River to Gunji (3,200m). Acclimatization walk.";
+            } else if (i === 3) {
+                title = "Expedition to Jolingkong (Adi Kailash Base)";
+                desc = "Behold the sacred Adi Kailash peak (6,191m) and bathe/pray at Parvati Kund. Visit Gauri Kund.";
+            } else if (i === 4) {
+                title = "Om Parvat Darshan at Nabhidhang";
+                desc = "Witness the holy natural 'ॐ' symbol formed of snow on the face of Om Parvat at Nabhidhang. Return to Gunji.";
+            } else if (i === days - 1) {
+                title = "Gunji to Dharchula Return";
+                desc = "Return drive down the valleys to Dharchula. Evening free to shop for local border goods.";
+            } else {
+                title = "Exploration of Kuti Village";
+                desc = "Explore the legendary village of Kuti, named after Kunti (mother of Pandavas). Explore local stone architecture and meet Rung tribes.";
+            }
+        } else if (destination.includes('Khaliya')) {
+            if (i === 1) {
+                title = "Pithoragarh to Munsiyari";
+                desc = "Scenic drive from Pithoragarh to Munsiyari. Witness the majestic Panchachuli range." + noteText;
+            } else if (i === days) {
+                title = "Munsiyari to Pithoragarh Return";
+                desc = "Morning check-out and return drive back to Pithoragarh.";
+            } else if (i === 2) {
+                title = "Trek to Khaliya Top Meadow";
+                desc = "Trek 6 km through dense oak and rhododendron forests to the alpine bugyal of Khaliya Top (3,500m). Overnight camping under the stars.";
+            } else if (i === 3) {
+                title = "Sunrise at Peak & Descent";
+                desc = "Wake up for a breathtaking 360-degree Himalayan sunrise. Descent back to Munsiyari. Stay in cozy homestay.";
+            } else {
+                title = "Balati Farm Exploration";
+                desc = "Visit Balati Potato Farm and organic nurseries around Munsiyari. Taste local Kumaoni cuisine.";
+            }
+        } else if (destination.includes('Kailash Yatra')) {
+            if (i === 1) {
+                title = "Acclimatization at Pithoragarh";
+                desc = "Medical checkups and permit documentation review at our ground control center." + noteText;
+            } else if (i === days) {
+                title = "Departure from Pithoragarh";
+                desc = "Yatra concludes. Transfer to Kathgodam railway station or local airport.";
+            } else if (i === 2) {
+                title = "Drive to Dharchula";
+                desc = "Drive along the border valley. Security clearance and biometric checks.";
+            } else if (i === 3) {
+                title = "Dharchula to Gunji";
+                desc = "Fascinating drive past rushing waterfalls. Homestay lodging in Vyas Valley.";
+            } else if (i === 4) {
+                title = "Vyas Valley Acclimatization";
+                desc = "Hike to Nabi temple. Resting to ensure zero AMS risks.";
+            } else if (i === 5) {
+                title = "Gunji to Lipulekh Pass & Tibet Entry";
+                desc = "Cross the Lipulekh Pass border checkpoint. Meet Tibet local operators and drive to Taklakot.";
+            } else if (i === 6) {
+                title = "Drive to Lake Manasarovar";
+                desc = "First holy darshan of Mount Kailash. Holy bath at the banks of Lake Manasarovar (4,590m).";
+            } else if (i === 7) {
+                title = "Kailash Parikrama Day 1 (Trek to Dirapuk)";
+                desc = "Trek 13 km from Darchen to Dirapuk. Feast your eyes on the majestic North Face of Mt. Kailash.";
+            } else if (i === 8) {
+                title = "Parikrama Day 2 (Dirapuk to Zuthulpuk via Dolma La)";
+                desc = "Cross the challenging Dolma La Pass (5,630m). Pray at Gauri Kund. Descent to Zuthulpuk (22 km trek).";
+            } else if (i === 9) {
+                title = "Parikrama Day 3 & Return to Taklakot";
+                desc = "Complete the final 3-hour trek of the Parikrama. Drive back to Taklakot.";
+            } else if (i === days - 2) {
+                title = "Re-enter India via Lipulekh";
+                desc = "Cross back into Uttarakhand. Drive to Gunji or Dharchula.";
+            } else if (i === days - 1) {
+                title = "Dharchula to Pithoragarh";
+                desc = "Scenic return drive. Celebration dinner with the local Rudraansh Yatra team.";
+            } else {
+                title = "Rest and Reflection Day";
+                desc = "Optional rest day at Taklakot or Darchen for spiritual meditation.";
+            }
+        } else if (destination.includes('Panchachuli')) {
+            if (i === 1) {
+                title = "Pithoragarh to Dharchula";
+                desc = "Drive along border roads. Permit collection." + noteText;
+            } else if (i === days) {
+                title = "Dharchula to Pithoragarh Return";
+                desc = "Morning drive back to Pithoragarh.";
+            } else if (i === 2) {
+                title = "Dharchula to Urthing / Sobla";
+                desc = "Drive to Sobla, start of Darma Valley. Trek/drive to Urthing village. Homestay lodging.";
+            } else if (i === 3) {
+                title = "Trek to Panchachuli Base Camp";
+                desc = "Trek through wild meadows to the snout of Meola Glacier, directly under the five peaks. Night camp.";
+            } else if (i === 4) {
+                title = "Explore Glacier & Descent";
+                desc = "Explore nearby icefalls and return trek back to Urthing village.";
+            } else {
+                title = "Vyas Valley Border Views";
+                desc = "Explore nearby Rung tribal villages and stone carvings.";
+            }
+        } else {
+            if (i === 1) {
+                title = "Pithoragarh to Dharchula";
+                desc = "Start of exploration. Safety check and local orientation." + noteText;
+            } else if (i === days) {
+                title = "Dharchula to Pithoragarh Return";
+                desc = "Transfer back to Pithoragarh town.";
+            } else if (i === 2) {
+                title = "Dharchula to Sela Village";
+                desc = "Drive along the Dhauliganga River to Sela. Stone-and-wood house tours.";
+            } else if (i === 3) {
+                title = "Sela to Baaling Village";
+                desc = "Explore high pine forest paths and local grasslands of Baaling.";
+            } else if (i === 4) {
+                title = "Baaling to Daktu / Tidang";
+                desc = "Reach Upper Darma. Close view of East Face of Panchachuli peaks.";
+            } else if (i === days - 1) {
+                title = "Upper Darma to Dharchula";
+                desc = "Return drive down to Dharchula. Local market shopping.";
+            } else {
+                title = "Trek to Nagling Glacier";
+                desc = "Trek to the edge of Nagling Glacier viewpoint. Pristine high altitude experience.";
+            }
+        }
+        
+        daysArray.push({ day: i, title: title, desc: desc });
+    }
+    return daysArray;
 }
 
 function showToast(message, type = 'info') {
@@ -574,3 +802,4 @@ window.handleSignOut = handleSignOut;
 window.sendOTPCode = sendOTPCode;
 window.verifyOTPCode = verifyOTPCode;
 window.backToPhone = backToPhone;
+window.resetModalView = resetModalView;
