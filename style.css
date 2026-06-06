@@ -1353,11 +1353,39 @@ textarea.form-control {
     border-radius: var(--border-radius-md);
     max-width: 600px;
     width: 90%;
-    padding: 40px;
+    padding: 30px;
     position: relative;
     box-shadow: var(--shadow-lg);
     transform: translateY(30px);
     transition: var(--transition-smooth);
+    max-height: 85vh;
+    overflow-y: auto;
+}
+
+/* Custom scrollbar for modal-box */
+.modal-box::-webkit-scrollbar {
+    width: 6px;
+}
+.modal-box::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 3px;
+}
+.modal-box::-webkit-scrollbar-thumb {
+    background: var(--color-gold);
+    border-radius: 3px;
+}
+
+.modal-box .form-group {
+    margin-bottom: 14px;
+}
+
+.modal-box .form-control {
+    padding: 10px 14px;
+    font-size: 13.5px;
+}
+
+.modal-box textarea.form-control {
+    min-height: 80px;
 }
 
 .modal-overlay.active .modal-box {
