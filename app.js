@@ -221,7 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="form-group" style="margin-bottom: 20px;">
                     <label for="auth-phone" style="display: block; margin-bottom: 8px; font-size: 0.72rem; letter-spacing: 1.5px; text-transform: uppercase;">Mobile Number *</label>
                     <div style="display: flex; gap: 8px;">
-                        <span style="background: var(--color-bg-card); border: 1.5px solid var(--glass-border); border-radius: var(--border-radius-sm); padding: 12px 14px; color: var(--color-text-light); font-size: 14.5px; display: flex; align-items: center;">+91</span>
+                        <span style="background: rgba(255, 255, 255, 0.08); border: 1.5px solid var(--glass-border); border-radius: var(--border-radius-sm); padding: 12px 14px; color: #ffffff; font-size: 14.5px; display: flex; align-items: center; font-weight: 600;">+91</span>
                         <input type="tel" id="auth-phone" class="form-control" placeholder="9876543210" required pattern="[0-9]{10}" style="flex: 1;" />
                     </div>
                 </div>
@@ -770,14 +770,14 @@ function showToast(message, type = 'info') {
     
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
-    toast.style.background = 'var(--color-bg-card, #251502)';
-    toast.style.borderLeft = `4px solid ${type === 'success' ? 'var(--color-gold, #C9A84C)' : type === 'error' ? '#d93838' : 'var(--color-gold, #C9A84C)'}`;
-    toast.style.borderTop = '1px solid var(--glass-border, rgba(201,168,76,0.2))';
-    toast.style.borderRight = '1px solid var(--glass-border, rgba(201,168,76,0.2))';
-    toast.style.borderBottom = '1px solid var(--glass-border, rgba(201,168,76,0.2))';
+    toast.style.background = '#1e293b';
+    toast.style.borderLeft = `4px solid ${type === 'success' ? '#22c55e' : type === 'error' ? '#ef4444' : '#3b82f6'}`;
+    toast.style.borderTop = '1px solid rgba(255, 255, 255, 0.1)';
+    toast.style.borderRight = '1px solid rgba(255, 255, 255, 0.1)';
+    toast.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
     toast.style.padding = '16px 24px';
     toast.style.borderRadius = 'var(--border-radius-sm, 4px)';
-    toast.style.color = 'var(--color-text-light, #FFF8EC)';
+    toast.style.color = '#ffffff';
     toast.style.fontSize = '14px';
     toast.style.minWidth = '280px';
     toast.style.boxShadow = '0 10px 30px rgba(0,0,0,0.3)';
