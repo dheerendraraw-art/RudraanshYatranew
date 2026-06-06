@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rudransh Travels – Sacred Himalayan Journeys</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   :root {
     --saffron: #E8720C;
@@ -553,6 +554,289 @@
     transition: opacity 0.7s ease, transform 0.7s ease;
   }
   .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── CUSTOM ITINERARY SECTION ── */
+  .custom-itinerary-section {
+    background: var(--brown);
+    position: relative;
+    overflow: hidden;
+  }
+  .custom-itinerary-section::before {
+    content: '';
+    position: absolute;
+    bottom: -100px;
+    left: -100px;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .itinerary-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 60px;
+    align-items: start;
+  }
+  .itinerary-form-card {
+    background: rgba(26,15,0,0.6);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 8px;
+    padding: 40px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    backdrop-filter: blur(8px);
+  }
+  .itinerary-form-card h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.4rem;
+    color: var(--gold-light);
+    margin-bottom: 24px;
+    letter-spacing: 1px;
+  }
+  .form-group-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  .form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .form-group label {
+    font-size: 0.72rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--cream);
+    opacity: 0.8;
+  }
+  .form-group input, .form-group select, .form-group textarea {
+    background: rgba(26,15,0,0.8);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 4px;
+    padding: 12px 16px;
+    color: var(--cream);
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem;
+    transition: border-color 0.25s, box-shadow 0.25s;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: var(--saffron);
+    box-shadow: 0 0 8px var(--saffron-glow);
+  }
+  .form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+  .itinerary-info-panel {
+    background: rgba(201,168,76,0.03);
+    border: 1px solid rgba(201,168,76,0.1);
+    border-radius: 8px;
+    padding: 30px;
+  }
+  .itinerary-info-panel h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    color: var(--gold-light);
+    margin-bottom: 16px;
+  }
+  .itinerary-info-panel p {
+    font-size: 0.85rem;
+    color: rgba(255,248,236,0.6);
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+  .user-auth-status {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 20px;
+    font-size: 0.82rem;
+    color: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .auth-link {
+    color: var(--saffron);
+    text-decoration: none;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .auth-link:hover {
+    text-decoration: underline;
+    color: var(--gold-light);
+  }
+
+  /* ── AUTH MODAL ── */
+  .auth-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 110;
+    background: rgba(26,15,0,0.85);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .auth-modal.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .auth-modal-content {
+    background: #251502;
+    border: 1px solid var(--gold);
+    border-radius: 8px;
+    width: 100%;
+    max-width: 420px;
+    padding: 40px;
+    position: relative;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+  }
+  .auth-modal.active .auth-modal-content {
+    transform: scale(1);
+  }
+  .auth-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    color: var(--cream);
+    font-size: 1.4rem;
+    cursor: pointer;
+    line-height: 1;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+  }
+  .auth-close:hover {
+    opacity: 1;
+  }
+  .auth-modal h3 {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.4rem;
+    color: var(--gold-light);
+    margin-bottom: 12px;
+    text-align: center;
+  }
+  .auth-modal p {
+    font-size: 0.85rem;
+    color: rgba(255,248,236,0.6);
+    margin-bottom: 24px;
+    text-align: center;
+  }
+  .auth-step {
+    display: none;
+  }
+  .auth-step.active {
+    display: block;
+  }
+  .phone-input-wrap {
+    display: flex;
+    gap: 8px;
+  }
+  .phone-input-wrap span {
+    background: rgba(26,15,0,0.8);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 4px;
+    padding: 12px 14px;
+    color: var(--cream);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+  }
+  .phone-input-wrap input {
+    flex: 1;
+  }
+
+  /* ── TOAST NOTIFICATIONS ── */
+  .toast-container {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 120;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .toast {
+    background: #251502;
+    border-left: 4px solid var(--saffron);
+    border-top: 1px solid rgba(201,168,76,0.2);
+    border-right: 1px solid rgba(201,168,76,0.2);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    padding: 16px 24px;
+    border-radius: 4px;
+    color: var(--cream);
+    font-size: 0.85rem;
+    min-width: 280px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    transform: translateX(120%);
+    transition: transform 0.3s ease;
+  }
+  .toast.active {
+    transform: translateX(0);
+  }
+  .toast.success {
+    border-left-color: var(--gold);
+  }
+  .toast.error {
+    border-left-color: #d93838;
+  }
+
+  /* ── SUCCESS DIALOG ── */
+  .itinerary-success-card {
+    text-align: center;
+    padding: 40px;
+    background: rgba(26,15,0,0.8);
+    border: 1px solid var(--gold);
+    border-radius: 8px;
+    animation: heroFade 0.6s ease;
+  }
+  .itinerary-success-card h3 {
+    font-family: 'Cinzel Decorative', serif;
+    color: var(--gold-light);
+    font-size: 1.6rem;
+    margin-bottom: 16px;
+  }
+  .itinerary-success-card p {
+    font-size: 0.9rem;
+    color: rgba(255,248,236,0.7);
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+  .mock-itinerary-preview {
+    background: rgba(201,168,76,0.05);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 6px;
+    padding: 24px;
+    text-align: left;
+    margin-bottom: 24px;
+    font-size: 0.85rem;
+  }
+  .mock-itinerary-preview h4 {
+    font-family: 'Cinzel', serif;
+    color: var(--gold-light);
+    margin-bottom: 12px;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    padding-bottom: 8px;
+  }
+  .mock-day {
+    margin-bottom: 12px;
+  }
+  .mock-day strong {
+    color: var(--saffron);
+  }
+
+  @media (max-width: 1024px) {
+    .itinerary-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
 </style>
 </head>
 <body>
@@ -566,6 +850,7 @@
     <li><a href="#packages">Packages</a></li>
     <li><a href="#adventure">Adventure</a></li>
     <li><a href="#temples">Temples</a></li>
+    <li><a href="#custom-itinerary">Custom Itinerary</a></li>
     <li><a href="#faq">FAQ</a></li>
     <li><a href="#contact" class="nav-cta">Book Now</a></li>
   </ul>
@@ -789,6 +1074,109 @@
     </div>
   </div>
 </section>
+
+<!-- CUSTOM ITINERARY SECTION -->
+<section id="custom-itinerary" class="custom-itinerary-section">
+  <div class="container">
+    <div class="section-tag">Bespoke Expeditions</div>
+    <div class="gold-line"></div>
+    <h2 class="section-title">Design Your Pilgrimage</h2>
+    <p class="section-desc" style="margin-bottom: 50px;">Can't find the perfect package? Create a customized journey tailored to your spiritual pace, group size, and adventure preferences.</p>
+
+    <div class="itinerary-grid reveal">
+      <div id="itinerary-form-container">
+        <form id="custom-itinerary-form" class="itinerary-form-card" onsubmit="handleItinerarySubmit(event)">
+          <h3>Itinerary Customization</h3>
+          
+          <div class="form-group-row">
+            <div class="form-group">
+              <label for="yatri-name">Your Full Name *</label>
+              <input type="text" id="yatri-name" required placeholder="e.g. Rajesh Kumar" />
+            </div>
+            <div class="form-group">
+              <label for="yatri-email">Email Address</label>
+              <input type="email" id="yatri-email" placeholder="e.g. rajesh@gmail.com" />
+            </div>
+          </div>
+
+          <div class="form-group-row">
+            <div class="form-group">
+              <label for="yatri-destination">Select Destination *</label>
+              <select id="yatri-destination" required>
+                <option value="" disabled selected>Choose a circuit...</option>
+                <option value="Adi Kailash Yatra">Adi Kailash Yatra</option>
+                <option value="Om Parvat Darshan">Om Parvat Darshan</option>
+                <option value="Darma Valley Trek">Darma Valley Trek</option>
+                <option value="Khaliya Top Trek">Khaliya Top Trek</option>
+                <option value="Milam Glacier Trek">Milam Glacier Trek</option>
+                <option value="Custom Himalayan Circuit">Custom Himalayan Circuit</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="yatri-days">Duration (Days) *</label>
+              <input type="number" id="yatri-days" required min="3" max="30" value="5" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="yatri-requests">Special Customizations / Requirements</label>
+            <textarea id="yatri-requests" placeholder="e.g., Senior citizen assistance, helicopter service, specific dietary needs, custom pick-up locations..."></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary" style="width: 100%;">Generate Custom Itinerary</button>
+        </form>
+      </div>
+
+      <div class="itinerary-info-panel">
+        <h4>Why Custom Journeys?</h4>
+        <p>High-altitude pilgrimages like Adi Kailash are deeply personal. We help you customize daily altitude gains, select custom 4x4 vehicles, arrange private guides, and organize specific rituals (pujas) at the holy sites.</p>
+        
+        <h4>Native Expertise</h4>
+        <p>Our local Kumaoni guides know every trail, homestay, and ITBP post. Your safety and spiritual comfort are our primary guidelines.</p>
+
+        <div class="user-auth-status">
+          <span id="auth-status-text">Not signed in.</span>
+          <span id="auth-action-btn" class="auth-link" onclick="openAuthModal()">Sign In</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUTH MODAL -->
+<div id="auth-modal" class="auth-modal">
+  <div class="auth-modal-content">
+    <button class="auth-close" onclick="closeAuthModal()">×</button>
+    <h3>Yatri Verification</h3>
+    <p>Please verify your mobile number to submit the itinerary request.</p>
+
+    <!-- STEP 1: ENTER PHONE -->
+    <div id="auth-step-phone" class="auth-step active">
+      <div class="form-group">
+        <label for="auth-phone">Mobile Number *</label>
+        <div class="phone-input-wrap">
+          <span>+91</span>
+          <input type="tel" id="auth-phone" placeholder="9876543210" required pattern="[0-9]{10}" />
+        </div>
+      </div>
+      <button onclick="sendOTPCode()" id="btn-send-otp" class="btn-primary" style="width: 100%; margin-top: 10px;">Send Verification OTP</button>
+      <p style="font-size: 0.72rem; margin-top: 15px; color: rgba(255,248,236,0.4);">Note: If testing in sandbox, you can configure test phone numbers in your Supabase Auth settings.</p>
+    </div>
+
+    <!-- STEP 2: ENTER OTP -->
+    <div id="auth-step-otp" class="auth-step">
+      <div class="form-group">
+        <label for="auth-otp">Enter 6-Digit OTP *</label>
+        <input type="text" id="auth-otp" placeholder="123456" required pattern="[0-9]{6}" maxlength="6" style="text-align: center; letter-spacing: 6px; font-size: 1.2rem;" />
+      </div>
+      <button onclick="verifyOTPCode()" id="btn-verify-otp" class="btn-primary" style="width: 100%; margin-top: 10px;">Verify &amp; Continue</button>
+      <button onclick="backToPhoneStep()" class="btn-outline" style="width: 100%; margin-top: 12px; padding: 12px 0;">Change Phone Number</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div id="toast-container" class="toast-container"></div>
 
 <!-- ADVENTURE SPORTS -->
 <section class="adventure-section" id="adventure">
@@ -1036,7 +1424,6 @@
   </div>
 </footer>
 
-<script>
   // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
@@ -1053,6 +1440,328 @@
       ? 'rgba(26,15,0,0.97)'
       : 'linear-gradient(to bottom, rgba(26,15,0,0.95), transparent)';
   });
+
+  // ── SUPABASE AUTH & ITINERARY LOGIC ──
+  const supabaseUrl = 'https://ysnzxvvsegmkmkepclti.supabase.co';
+  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlzbnp4dnZzZWdta21rZXBjbHRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NDY3NjMsImV4cCI6MjA5NjMyMjc2M30.V6q3OpJCf6PEu6JTM__6E7PJDrY5lY--FZfjyy_toLM';
+  const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+  let currentUser = null;
+  let pendingPhone = '';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    checkUserSession();
+  });
+
+  async function checkUserSession() {
+    try {
+      const { data: { session }, error } = await supabaseClient.auth.getSession();
+      if (session) {
+        currentUser = session.user;
+      } else {
+        currentUser = null;
+      }
+    } catch (e) {
+      console.error('Session check error:', e);
+    }
+    updateAuthUI();
+  }
+
+  // Listen to auth changes
+  supabaseClient.auth.onAuthStateChange((event, session) => {
+    if (session) {
+      currentUser = session.user;
+    } else {
+      currentUser = null;
+    }
+    updateAuthUI();
+  });
+
+  function updateAuthUI() {
+    const statusText = document.getElementById('auth-status-text');
+    const actionBtn = document.getElementById('auth-action-btn');
+    if (currentUser) {
+      statusText.innerHTML = `Verified: <strong>${currentUser.phone}</strong>`;
+      actionBtn.innerText = 'Sign Out';
+      actionBtn.onclick = handleSignOut;
+    } else {
+      statusText.innerText = 'Not verified.';
+      actionBtn.innerText = 'Sign In';
+      actionBtn.onclick = openAuthModal;
+    }
+  }
+
+  async function handleSignOut() {
+    const { error } = await supabaseClient.auth.signOut();
+    if (error) {
+      showToast(error.message, 'error');
+    } else {
+      showToast('Signed out successfully.', 'success');
+      currentUser = null;
+      updateAuthUI();
+    }
+  }
+
+  function openAuthModal() {
+    document.getElementById('auth-modal').classList.add('active');
+    backToPhoneStep();
+  }
+
+  function closeAuthModal() {
+    document.getElementById('auth-modal').classList.remove('active');
+  }
+
+  function backToPhoneStep() {
+    document.getElementById('auth-step-phone').classList.add('active');
+    document.getElementById('auth-step-otp').classList.remove('active');
+    document.getElementById('auth-otp').value = '';
+  }
+
+  async function sendOTPCode() {
+    const phoneInput = document.getElementById('auth-phone').value;
+    if (!phoneInput || phoneInput.length !== 10 || isNaN(phoneInput)) {
+      showToast('Please enter a valid 10-digit mobile number.', 'error');
+      return;
+    }
+
+    const fullPhone = '+91' + phoneInput;
+    pendingPhone = fullPhone;
+
+    const sendBtn = document.getElementById('btn-send-otp');
+    sendBtn.innerText = 'Sending OTP...';
+    sendBtn.disabled = true;
+
+    try {
+      const { data, error } = await supabaseClient.auth.signInWithOtp({
+        phone: fullPhone
+      });
+
+      if (error) {
+        showToast(error.message, 'error');
+      } else {
+        showToast('OTP sent to ' + fullPhone, 'success');
+        document.getElementById('auth-step-phone').classList.remove('active');
+        document.getElementById('auth-step-otp').classList.add('active');
+        document.getElementById('auth-otp').focus();
+      }
+    } catch (e) {
+      showToast('An unexpected error occurred.', 'error');
+      console.error(e);
+    } finally {
+      sendBtn.innerText = 'Send Verification OTP';
+      sendBtn.disabled = false;
+    }
+  }
+
+  async function verifyOTPCode() {
+    const otpInput = document.getElementById('auth-otp').value;
+    if (!otpInput || otpInput.length !== 6 || isNaN(otpInput)) {
+      showToast('Please enter a valid 6-digit OTP.', 'error');
+      return;
+    }
+
+    const verifyBtn = document.getElementById('btn-verify-otp');
+    verifyBtn.innerText = 'Verifying OTP...';
+    verifyBtn.disabled = true;
+
+    try {
+      const { data: { session }, error } = await supabaseClient.auth.verifyOtp({
+        phone: pendingPhone,
+        token: otpInput,
+        type: 'sms'
+      });
+
+      if (error) {
+        showToast(error.message, 'error');
+      } else {
+        showToast('Verification successful!', 'success');
+        currentUser = session.user;
+        updateAuthUI();
+        closeAuthModal();
+        
+        // Auto submit if they were in the middle of submission
+        submitCustomItinerary();
+      }
+    } catch (e) {
+      showToast('Verification failed.', 'error');
+      console.error(e);
+    } finally {
+      verifyBtn.innerText = 'Verify & Continue';
+      verifyBtn.disabled = false;
+    }
+  }
+
+  function handleItinerarySubmit(e) {
+    e.preventDefault();
+    if (!currentUser) {
+      openAuthModal();
+      showToast('Please verify your mobile number to submit the request.', 'info');
+    } else {
+      submitCustomItinerary();
+    }
+  }
+
+  async function submitCustomItinerary() {
+    const name = document.getElementById('yatri-name').value;
+    const email = document.getElementById('yatri-email').value;
+    const destination = document.getElementById('yatri-destination').value;
+    const days = parseInt(document.getElementById('yatri-days').value) || 5;
+    const requests = document.getElementById('yatri-requests').value;
+
+    if (!name || !destination || !days) {
+      showToast('Please fill out all required fields.', 'error');
+      return;
+    }
+
+    const submitBtn = document.querySelector('#custom-itinerary-form button[type="submit"]');
+    if (submitBtn) {
+      submitBtn.innerText = 'Submitting Request...';
+      submitBtn.disabled = true;
+    }
+
+    try {
+      const { data, error } = await supabaseClient.from('custom_requests').insert([
+        {
+          name: name,
+          email: email || null,
+          destination: destination,
+          days: days,
+          requests: requests || '',
+          phone: currentUser.phone,
+          user_id: currentUser.id
+        }
+      ]);
+
+      if (error) {
+        showToast(error.message, 'error');
+      } else {
+        showToast('Itinerary request submitted!', 'success');
+        showSuccessItinerary(name, destination, days, requests);
+      }
+    } catch (e) {
+      showToast('Failed to submit request.', 'error');
+      console.error(e);
+    } finally {
+      if (submitBtn) {
+        submitBtn.innerText = 'Generate Custom Itinerary';
+        submitBtn.disabled = false;
+      }
+    }
+  }
+
+  function showSuccessItinerary(name, destination, days, requests) {
+    const formContainer = document.getElementById('itinerary-form-container');
+    
+    // Generate a simple dynamic mock itinerary based on destination and days
+    let itineraryHTML = '';
+    for (let i = 1; i <= days; i++) {
+      let activity = '';
+      if (i === 1) {
+        activity = `Arrival at Pithoragarh, welcome briefing, and acclimatization check at local homestay.`;
+      } else if (i === days) {
+        activity = `Morning prayers at local shrine and departure with blessings.`;
+      } else {
+        if (destination.includes('Adi Kailash')) {
+          if (i === 2) activity = `Drive through scenic Dharchula to Gunji village (3,200m). Checking Inner Line Permits.`;
+          else if (i === 3) activity = `Expedition to Jolingkong for divine Adi Kailash Darshan & Parvati Kund.`;
+          else if (i === 4) activity = `Visit Om Parvat viewpoint at Nabhidhang and return journey to Dharchula.`;
+          else activity = `Trek/drive exploring nearby valleys (Kuti / Nabi) and cultural exchange.`;
+        } else if (destination.includes('Om Parvat')) {
+          if (i === 2) activity = `Acclimatization drive to Gunji. Local temple visits.`;
+          else if (i === 3) activity = `Behold the miraculous Om Parvat view at Nabhidhang.`;
+          else if (i === 4) activity = `Explore Darma valley junctions and return drive to Dharchula.`;
+          else activity = `Visit Golu Devta temple on return route.`;
+        } else {
+          activity = `Scenic exploration of ${destination} highlights and native guided tour.`;
+        }
+      }
+      
+      itineraryHTML += `
+        <div class="mock-day">
+          <strong>Day ${i}:</strong> ${activity}
+        </div>
+      `;
+    }
+    
+    formContainer.innerHTML = `
+      <div class="itinerary-success-card">
+        <h3>Om Namah Shivaya!</h3>
+        <p>Thank you, <strong>${name}</strong>. Your custom itinerary request for <strong>${destination}</strong> (${days} Days) has been received. Our guides are already reviewing your customizations: <em>"${requests || 'None specified'}"</em>.</p>
+        
+        <div class="mock-itinerary-preview">
+          <h4>Custom Itinerary Preview</h4>
+          ${itineraryHTML}
+        </div>
+        
+        <p style="font-size: 0.8rem; color: rgba(255,248,236,0.5); margin-bottom: 20px;">A verification log has been registered for ${currentUser.phone}. We will contact you shortly with your finalized itinerary and permit steps.</p>
+        <button class="btn-primary" onclick="resetItineraryForm()">Request Another Itinerary</button>
+      </div>
+    `;
+  }
+
+  function resetItineraryForm() {
+    const formContainer = document.getElementById('itinerary-form-container');
+    formContainer.innerHTML = `
+      <form id="custom-itinerary-form" class="itinerary-form-card" onsubmit="handleItinerarySubmit(event)">
+        <h3>Itinerary Customization</h3>
+        
+        <div class="form-group-row">
+          <div class="form-group">
+            <label for="yatri-name">Your Full Name *</label>
+            <input type="text" id="yatri-name" required placeholder="e.g. Rajesh Kumar" />
+          </div>
+          <div class="form-group">
+            <label for="yatri-email">Email Address</label>
+            <input type="email" id="yatri-email" placeholder="e.g. rajesh@gmail.com" />
+          </div>
+        </div>
+
+        <div class="form-group-row">
+          <div class="form-group">
+            <label for="yatri-destination">Select Destination *</label>
+            <select id="yatri-destination" required>
+              <option value="" disabled selected>Choose a circuit...</option>
+              <option value="Adi Kailash Yatra">Adi Kailash Yatra</option>
+              <option value="Om Parvat Darshan">Om Parvat Darshan</option>
+              <option value="Darma Valley Trek">Darma Valley Trek</option>
+              <option value="Khaliya Top Trek">Khaliya Top Trek</option>
+              <option value="Milam Glacier Trek">Milam Glacier Trek</option>
+              <option value="Custom Himalayan Circuit">Custom Himalayan Circuit</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="yatri-days">Duration (Days) *</label>
+            <input type="number" id="yatri-days" required min="3" max="30" value="5" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="yatri-requests">Special Customizations / Requirements</label>
+          <textarea id="yatri-requests" placeholder="e.g., Senior citizen assistance, helicopter service, specific dietary needs, custom pick-up locations..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary" style="width: 100%;">Generate Custom Itinerary</button>
+      </form>
+    `;
+  }
+
+  function showToast(message, type = 'info') {
+    const container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.innerText = message;
+    
+    container.appendChild(toast);
+    
+    // Trigger transition
+    setTimeout(() => toast.classList.add('active'), 10);
+    
+    // Auto remove
+    setTimeout(() => {
+      toast.classList.remove('active');
+      setTimeout(() => toast.remove(), 300);
+    }, 4000);
+  }
 </script>
 </body>
 </html>
