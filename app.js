@@ -248,7 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const getFormData = () => {
             return {
                 name: document.getElementById('custom-name').value.trim(),
-                email: document.getElementById('custom-email').value.trim(),
+                email: document.getElementById('custom-email').value.trim().toLowerCase(),
                 destination: document.getElementById('custom-destination').value,
                 days: document.getElementById('custom-days').value,
                 requests: document.getElementById('custom-requests').value.trim()
@@ -287,7 +287,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // 8. Add Announcement Bar
     const announcementHtml = `
         <div class="announcement-bar">
-            <div class="announcement-marquee">🔥 NOW BOOKING: Adi Kailash & Om Parvat Yatra 2026! Secure Your Seats Today. 🔥</div>
+            <div class="announcement-marquee">
+                <span>🔥 NOW BOOKING: Adi Kailash & Om Parvat Yatra 2026! Secure Your Seats Today. 🔥</span>
+                <span>🔥 NOW BOOKING: Adi Kailash & Om Parvat Yatra 2026! Secure Your Seats Today. 🔥</span>
+                <span>🔥 NOW BOOKING: Adi Kailash & Om Parvat Yatra 2026! Secure Your Seats Today. 🔥</span>
+                <span>🔥 NOW BOOKING: Adi Kailash & Om Parvat Yatra 2026! Secure Your Seats Today. 🔥</span>
+            </div>
         </div>
     `;
     document.body.insertAdjacentHTML('afterbegin', announcementHtml);
@@ -430,6 +435,22 @@ function showToast(message, type = 'info') {
 
 // ── DYNAMIC DIALOG INJECTIONS ──
 function injectDialogs() {
+    // Inject nav auth item in header menu if missing
+    const navMenu = document.querySelector('.nav-menu');
+    if (navMenu && !document.getElementById('nav-auth-item')) {
+        const authLi = document.createElement('li');
+        authLi.id = 'nav-auth-item';
+        
+        // Find custom trip button or build request button container
+        const customTripBtn = document.getElementById('custom-trip-btn') || document.getElementById('btn-book-whatsapp');
+        const customTripLi = customTripBtn ? customTripBtn.closest('li') : null;
+        if (customTripLi) {
+            navMenu.insertBefore(authLi, customTripLi);
+        } else {
+            navMenu.appendChild(authLi);
+        }
+    }
+
     // 1. Discount Popup Modal
     const discountPopupHtml = `
         <div class="modal-overlay" id="discount-modal">
@@ -712,7 +733,7 @@ function initializeDiscountPopup() {
 
         const name = document.getElementById('discount-name').value.trim();
         const phone = document.getElementById('discount-phone').value.trim();
-        const email = document.getElementById('discount-email').value.trim();
+        const email = document.getElementById('discount-email').value.trim().toLowerCase();
         const travelers = document.getElementById('discount-travelers').value;
         const destination = document.getElementById('discount-destination').value;
 
@@ -845,7 +866,7 @@ function initializeAuthListeners() {
     // Handle Sign In Submit
     document.getElementById('signin-form').addEventListener('submit', async (e) => {
         e.preventDefault();
-        const email = document.getElementById('signin-email').value.trim();
+        const email = document.getElementById('signin-email').value.trim().toLowerCase();
         
         if (isOtpLogin) {
             // Send OTP Flow
@@ -902,7 +923,7 @@ function initializeAuthListeners() {
     document.getElementById('signup-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         const name = document.getElementById('signup-name').value.trim();
-        const email = document.getElementById('signup-email').value.trim();
+        const email = document.getElementById('signup-email').value.trim().toLowerCase();
         const password = document.getElementById('signup-password').value;
 
         showToast('Registering user account...', 'info');
