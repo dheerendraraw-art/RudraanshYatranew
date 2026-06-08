@@ -489,10 +489,23 @@ header.scrolled {
         border: none;
         border-left: 2px solid var(--color-gold);
         background: transparent;
-        padding-left: 15px;
+        padding-left: 16px;
         margin-top: 8px;
         display: none;
         min-width: unset;
+        width: 100%;
+    }
+    
+    .dropdown-menu li a {
+        padding: 8px 0 !important;
+        font-size: 14px !important;
+        letter-spacing: 1px !important;
+        text-transform: uppercase !important;
+    }
+
+    .dropdown-menu li a:hover {
+        padding-left: 0 !important;
+        background: transparent !important;
     }
     
     .dropdown.active .dropdown-menu {
