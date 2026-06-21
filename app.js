@@ -463,7 +463,6 @@ function injectDialogs() {
                             <option value="Adi Kailash & Om Parvat Yatra">Adi Kailash & Om Parvat Yatra</option>
                             <option value="Khaliya Top Trek">Khaliya Top Trek</option>
                             <option value="Mt. Kailash Yatra">Mt. Kailash Yatra</option>
-                            <option value="Panchachuli Base Camp Trek">Panchachuli Base Camp Trek</option>
                             <option value="Darma Valley Exploration">Darma Valley Exploration</option>
                         </select>
                     </div>
