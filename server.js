@@ -3,8 +3,8 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Serve static files from the root directory
-app.use(express.static(__dirname));
+// Serve static files from the root directory with clean URL support
+app.use(express.static(__dirname, { extensions: ['html'] }));
 
 // Default route to serve index.html
 app.get('/', (req, res) => {
