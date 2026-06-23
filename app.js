@@ -1,7 +1,7 @@
 // Rudraansh Yatra Global Scripts - app.js
 
 document.addEventListener('DOMContentLoaded', () => {
-    
+
     // 1. Sticky Header on Scroll
     const header = document.querySelector('header');
     if (header) {
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (menuToggle && navMenu) {
         menuToggle.addEventListener('click', () => {
             navMenu.classList.toggle('active');
-            
+
             // Hamburger animation
             const spans = menuToggle.querySelectorAll('span');
             if (navMenu.classList.contains('active')) {
@@ -55,11 +55,11 @@ document.addEventListener('DOMContentLoaded', () => {
         tabButtons.forEach(btn => {
             btn.addEventListener('click', () => {
                 const targetTab = btn.getAttribute('data-tab');
-                
+
                 // Reset active states
                 tabButtons.forEach(b => b.classList.remove('active'));
                 tabContents.forEach(c => c.classList.remove('active'));
-                
+
                 // Set current active states
                 btn.classList.add('active');
                 const targetContent = document.getElementById(targetTab);
@@ -72,16 +72,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 4. Accordion Timelines (Day-wise Itineraries)
     const timelineHeaders = document.querySelectorAll('.timeline-header');
-    
+
     if (timelineHeaders.length > 0) {
         timelineHeaders.forEach(header => {
             header.addEventListener('click', () => {
                 const parent = header.parentElement;
                 const body = parent.querySelector('.timeline-body');
-                
+
                 // Toggle active class
                 parent.classList.toggle('active');
-                
+
                 if (parent.classList.contains('active')) {
                     body.style.maxHeight = body.scrollHeight + 'px';
                 } else {
@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         });
-        
+
         // Auto-expand first day on page load
         const firstTimelineItem = document.querySelector('.timeline-item');
         if (firstTimelineItem) {
@@ -103,18 +103,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 5. Sidebar Booking Form Submit (Direct Tour page to WhatsApp and DB)
     const inquiryForms = document.querySelectorAll('.inquiry-form');
-    
+
     inquiryForms.forEach(form => {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            
+
             const packageName = form.getAttribute('data-package') || 'General Inquiry';
             const name = form.querySelector('[name="name"]').value.trim();
             const phone = form.querySelector('[name="phone"]').value.trim();
             const date = form.querySelector('[name="date"]').value;
             const travelers = form.querySelector('[name="travelers"]').value;
             const message = form.querySelector('[name="message"]').value.trim();
-            
+
             const data = {
                 packageName,
                 name,
@@ -123,10 +123,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 travelers,
                 message
             };
-            
+
             showToast('Saving booking details...', 'info');
             await saveBookingInquiry(data);
-            
+
             // Build text template for WhatsApp
             let text = `*Rudraansh Yatra - Booking Inquiry*\n\n`;
             text += `*Package:* ${packageName}\n`;
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 text += `*Special Notes:* ${message}\n`;
             }
             text += `\n_Please guide me regarding biometrics, permits, and payment schedules. Thank you!_`;
-            
+
             const encodedText = encodeURIComponent(text);
             const whatsappUrl = `https://wa.me/917617617651?text=${encodedText}`;
             window.open(whatsappUrl, '_blank');
@@ -155,13 +155,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const destination = document.getElementById('planner-destination').value;
             const date = document.getElementById('planner-date').value;
             const travelers = document.getElementById('planner-travelers').value;
-            
+
             let text = `*Rudraansh Yatra - Quick Planner Request*\n\n`;
             text += `*Target Destination:* ${destination}\n`;
             text += `*Preferred Month:* ${date || 'Flexible'}\n`;
             text += `*No. of Travelers:* ${travelers}\n`;
             text += `\n_Please send me custom quotations starting from Pithoragarh._`;
-            
+
             const encodedText = encodeURIComponent(text);
             window.open(`https://wa.me/917617617651?text=${encodedText}`, '_blank');
         });
@@ -264,18 +264,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
                 const data = getFormData();
-                
+
                 // Show a brief loading indicator
                 showToast('Logging booking details...', 'info');
-                
+
                 // Silent database save to custom_requests table
                 await saveBookingRequest(data);
-                
+
                 // Redirect to WhatsApp
                 openWhatsAppBooking(data);
-                
+
                 showToast('Opening WhatsApp with your booking details!', 'success');
-                
+
                 // Close and reset form
                 if (modal) modal.classList.remove('active');
                 resetModalView();
@@ -317,7 +317,7 @@ function initSupabase() {
     const supabaseUrl = 'https://ysnzxvvsegmkmkepclti.supabase.co';
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlzbnp4dnZzZWdta21rZXBjbHRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NDY3NjMsImV4cCI6MjA5NjMyMjc2M30.V6q3OpJCf6PEu6JTM__6E7PJDrY5lY--FZfjyy_toLM';
     supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
-    
+
     // Render dynamic blogs if container exists
     renderDynamicBlogs();
 }
@@ -327,7 +327,7 @@ async function saveBookingRequest(data) {
     try {
         const { data: sessionData } = await supabaseClient.auth.getSession();
         const userId = sessionData?.session?.user?.id || null;
-        
+
         await supabaseClient.from('custom_requests').insert([
             {
                 name: data.name,
@@ -350,7 +350,7 @@ async function saveBookingInquiry(data) {
         const { data: sessionData } = await supabaseClient.auth.getSession();
         const userId = sessionData?.session?.user?.id || null;
         const email = sessionData?.session?.user?.email || null;
-        
+
         await supabaseClient.from('bookings').insert([
             {
                 package_name: data.packageName,
@@ -379,7 +379,7 @@ function openWhatsAppBooking(data) {
         text += `*Special Requests / Notes:* ${data.requests}\n`;
     }
     text += `\n_Please confirm availability and sharing details for this trip booking._`;
-    
+
     const encodedText = encodeURIComponent(text);
     window.open(`https://wa.me/917617617651?text=${encodedText}`, '_blank');
 }
@@ -399,7 +399,7 @@ function showToast(message, type = 'info') {
         container.style.gap = '10px';
         document.body.appendChild(container);
     }
-    
+
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
     toast.style.background = '#1e293b';
@@ -416,13 +416,13 @@ function showToast(message, type = 'info') {
     toast.style.transform = 'translateX(120%)';
     toast.style.transition = 'transform 0.3s ease';
     toast.innerText = message;
-    
+
     container.appendChild(toast);
-    
+
     setTimeout(() => {
         toast.style.transform = 'translateX(0)';
     }, 10);
-    
+
     setTimeout(() => {
         toast.style.transform = 'translateX(120%)';
         setTimeout(() => toast.remove(), 300);
@@ -521,15 +521,15 @@ function setupOtpGroupFocus(className) {
 function setupDashboardTabs() {
     const tabs = document.querySelectorAll('.dashboard-tab-btn');
     const contents = document.querySelectorAll('.dash-tab-content');
-    
+
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
             const target = tab.getAttribute('data-dash-tab');
             if (!target) return;
-            
+
             tabs.forEach(t => t.classList.remove('active'));
             contents.forEach(c => c.style.display = 'none');
-            
+
             tab.classList.add('active');
             const targetPane = document.getElementById(target);
             if (targetPane) targetPane.style.display = 'block';
@@ -603,7 +603,7 @@ function initializeDiscountPopup() {
     // Handle OTP Verification Submit (Step 2 -> Step 3)
     document.getElementById('discount-verify-btn').addEventListener('click', async () => {
         const digits = Array.from(document.querySelectorAll('.discount-otp-digit')).map(i => i.value.trim()).join('');
-        
+
         if (digits.length !== 6) {
             showToast('Please enter the full 6-digit code.', 'error');
             return;
@@ -612,7 +612,7 @@ function initializeDiscountPopup() {
         // Verify OTP (mock check + optional Supabase Auth verification)
         if (digits === generatedDiscountOtp || digits === '123456') {
             showToast('Email verified successfully!', 'success');
-            
+
             // Save verified registration to Supabase
             if (supabaseClient && activeDiscountReg) {
                 try {
@@ -703,7 +703,7 @@ async function renderDynamicBlogs() {
         allBlogs.forEach(blog => {
             const dateStr = new Date(blog.created_at).toLocaleDateString();
             const excerpt = blog.content.substring(0, 160) + (blog.content.length > 160 ? '...' : '');
-            
+
             blogsHtml += `
                 <article class="blog-card" id="blog-post-${blog.id}">
                     <img src="${blog.image_url || 'assets/images/adi-kailash-hero.webp'}" alt="${blog.title}" class="blog-card-img" onerror="this.src='assets/images/adi-kailash-hero.webp'">
