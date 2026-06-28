@@ -2529,3 +2529,70 @@ footer h4::after {
         text-align: center;
     }
 }
+
+/* ── GRID-2 LAYOUT UTILITY ── */
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+@media (max-width: 768px) {
+    .grid-2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ── CLICKABLE CARDS (STRETCH LINK CSS) ── */
+.card, .blog-card, .sidebar-link-item {
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover, .blog-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+.card-link::after, .blog-card-link::after, .sidebar-link-name::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1; /* stretches to cover the entire card */
+}
+/* Ensure specific actions inside cards are clickable and not blocked by the stretch link */
+.card .btn-whatsapp, .blog-card-meta, .blog-card-excerpt {
+    position: relative;
+    z-index: 2;
+}
+
+/* ── CERTIFICATION SEALS IN FOOTER ── */
+.footer-certifications {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+.footer-cert-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 8px 12px;
+    border-radius: var(--border-radius-sm);
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: var(--transition-smooth);
+}
+.footer-cert-badge:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--color-gold);
+    color: #ffffff;
+}
+.footer-cert-badge i {
+    color: var(--color-gold);
+    font-size: 14px;
+}
