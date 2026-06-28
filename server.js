@@ -46,7 +46,7 @@ function renderBlogsHtml(blogs) {
             day: 'numeric'
         });
         const excerpt = blog.content.substring(0, 160) + (blog.content.length > 160 ? '...' : '');
-        const slug = slugify(blog.title);
+        const slug = blog.slug || slugify(blog.title);
         html += `
             <article class="blog-card" id="blog-post-${blog.id}">
                 <img src="${blog.image_url || 'assets/images/adi-kailash-hero.webp'}" alt="${blog.title}" class="blog-card-img" onerror="this.src='assets/images/adi-kailash-hero.webp'">
@@ -54,7 +54,7 @@ function renderBlogsHtml(blogs) {
                     <div class="blog-card-meta">By ${blog.author} | ${dateStr}</div>
                     <h3 class="blog-card-title">${blog.title}</h3>
                     <p class="blog-card-excerpt">${excerpt}</p>
-                    <a href="/blog/${blog.id}/${slug}" class="blog-card-link">Read Diaries <i class="fa-solid fa-arrow-right-long"></i></a>
+                    <a href="/blog/${slug}" class="blog-card-link">Read Diaries <i class="fa-solid fa-arrow-right-long"></i></a>
                 </div>
             </article>
         `;
@@ -127,19 +127,19 @@ app.get('/blogs', async (req, res) => {
     }
 });
 
-// 3. SSR Route for individual Blog Articles (/blog/:id/:slug)
-app.get('/blog/:id/:slug', async (req, res) => {
-    const blogId = req.params.id;
+// 3. SSR Route for individual Blog Articles (/blog/:slug)
+app.get('/blog/:slug', async (req, res) => {
+    const slug = req.params.slug;
 
     try {
         let blog = null;
 
         if (supabase) {
-            // Fetch from database
+            // Fetch from database by slug
             const { data, error } = await supabase
                 .from('blogs')
                 .select('*')
-                .eq('id', blogId)
+                .eq('slug', slug)
                 .single();
             if (data && !error) {
                 blog = data;
@@ -195,14 +195,14 @@ app.get('/blog', async (req, res) => {
         if (supabase) {
             const { data, error } = await supabase
                 .from('blogs')
-                .select('title')
+                .select('title, slug')
                 .eq('id', blogId)
                 .single();
             
             if (data && !error) {
                 // Perform a 301 permanent redirect to the new SEO-friendly URL slug
-                const slug = slugify(data.title);
-                return res.redirect(301, `/blog/${blogId}/${slug}`);
+                const slug = data.slug || slugify(data.title);
+                return res.redirect(301, `/blog/${slug}`);
             }
         }
         res.redirect('/blogs');

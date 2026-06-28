@@ -709,11 +709,13 @@
                     .getPublicUrl(fileName);
                 const imageUrl = urlData.publicUrl;
 
-                // 3. Save blog row
-                showAdminToast('Saving blog article text details...', 'info');
+                // Helper to slugify
+                const slugify = (text) => text.toString().toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]+/g, '').replace(/\-\-+/g, '-').replace(/^-+/, '').replace(/-+$/, '');
+                const slug = slugify(title);
+
                 const { error: dbErr } = await supabaseAdmin
                     .from('blogs')
-                    .insert([{ title, author, content, image_url: imageUrl }]);
+                    .insert([{ title, author, content, image_url: imageUrl, slug }]);
 
                 if (dbErr) throw dbErr;
 
