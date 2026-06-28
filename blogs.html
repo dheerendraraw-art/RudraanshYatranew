@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Blogs & Diaries - Rudraansh Yatra</title>
+    <meta name="description"
+        content="Read authentic Himalayan travel stories, border guidelines, and cultural experiences from Vyas Valley, Adi Kailash, and Om Parvat.">
+    <!-- Google Search Site Name & Favicon -->
+    <meta property="og:site_name" content="Rudraansh Yatra">
+    <link rel="icon" type="image/png" href="assets/images/logo.png">
+    <link rel="shortcut icon" type="image/png" href="assets/images/logo.png">
+
+    <!-- Google Fonts Preconnect & Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-info">
+                <span><i class="fa-solid fa-phone"></i> <a href="tel:+917617617651">+91 7617617651</a></span>
+                <span><i class="fa-solid fa-location-dot"></i> Simalgair Bazaar, Pithoragarh, Uttarakhand</span>
+            </div>
+            <div class="top-socials">
+                <a href="https://www.facebook.com/profile.php?id=61589223945628" target="_blank"
+                    rel="noopener noreferrer" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                <a href="https://www.instagram.com/yatra_rudraansh?igsh=MXYxdmg0Y2dqNDJ3bg==" target="_blank"
+                    rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Navbar -->
+    <header>
+        <div class="container navbar-shell">
+            <a href="/" class="logo">
+                <div class="logo-icon-img-wrap">
+                    <img src="assets/images/logo.png" alt="Rudraansh Yatra Logo" class="logo-icon-img">
+                </div>
+                <div class="logo-text">Rudraansh <span>Yatra</span></div>
+            </a>
+
+            <button class="menu-toggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0);" class="nav-link">Destinations <i class="fa-solid fa-chevron-down"
+                            style="font-size: 10px; margin-left: 2px;"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="adi-kailash">Adi Kailash & Om Parvat</a></li>
+                        <li><a href="khaliya-top">Khaliya Top Trek</a></li>
+                        <li><a href="mt-kailash">Mt. Kailash Yatra</a></li>
+                        <li><a href="darma-valley">Darma Valley Exploration</a></li>
+                    </ul>
+                </li>
+                <li><a href="whats-included" class="nav-link">What's Included</a></li>
+                <li><a href="about" class="nav-link">About Us</a></li>
+                <li><a href="gallery" class="nav-link">Gallery</a></li>
+                <li><a href="blogs" class="nav-link active">Blogs</a></li>
+                <li><button class="nav-btn" id="custom-trip-btn">Custom Trip <i
+                            class="fa-solid fa-compass"></i></button></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero"
+        style="background-image: url('assets/images/adi-kailash-blog.jpg'); height: 50vh; min-height: 400px;">
+        <div class="hero-content">
+            <span class="hero-badge"><span></span> Himalayan Legends</span>
+            <h1 class="hero-title">Travel Diaries & Guides</h1>
+            <p class="hero-desc">Stories, guidelines, and cultural experiences straight from our guides trekking across the Kumaon borderlands.</p>
+        </div>
+    </section>
+
+    <!-- Blogs Listing Section -->
+    <section class="gallery-section" style="background-color: var(--color-bg-base); padding: 80px 0;">
+        <div class="container">
+            <div class="blog-grid">
+                {{BLOGS_GRID}}
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-grid">
+            <div>
+                <a href="/" class="logo" style="margin-bottom: 20px;">
+                    <div class="logo-icon-img-wrap">
+                        <img src="assets/images/logo.png" alt="Rudraansh Yatra Logo" class="logo-icon-img">
+                    </div>
+                    <div class="logo-text" style="color: #ffffff;">Rudraansh <span style="color: var(--color-gold);">Yatra</span></div>
+                </a>
+                <p style="color: rgba(255,255,255,0.6); margin-bottom: 24px;">Born in the hills, we are hyper-local experts curating clean, eco-friendly journeys and spiritual yatras across remote Himalayan borders.</p>
+                <div class="top-socials">
+                    <a href="https://www.facebook.com/profile.php?id=61589223945628" target="_blank"
+                        rel="noopener noreferrer" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/yatra_rudraansh?igsh=MXYxdmg0Y2dqNDJ3bg==" target="_blank"
+                        rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4>Our Yatras</h4>
+                <ul class="footer-links">
+                    <li><a href="adi-kailash">Adi Kailash & Om Parvat</a></li>
+                    <li><a href="khaliya-top">Khaliya Top Trek</a></li>
+                    <li><a href="mt-kailash">Mt. Kailash Yatra</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Treks & Adventures</h4>
+                <ul class="footer-links">
+                    <li><a href="darma-valley">Darma Valley Exploration</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Contact Office</h4>
+                <ul class="footer-contact">
+                    <li>
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>Simalgair Bazaar,<br>Pithoragarh, Uttarakhand - 262501</span>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-phone"></i>
+                        <span>+91 7617617651</span>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-envelope"></i>
+                        <span>info@rudraanshyatra.com</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2026 Rudraansh Yatra. All Rights Reserved. Managed Directly by Local Ground Experts in Pithoragarh. | <a href="/admin" style="text-decoration: underline; color: var(--color-gold);">Admin Panel</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Custom Itinerary Modal (Reused) -->
+    <div class="modal-overlay" id="custom-trip-modal">
+        <div class="modal-box">
+            <button class="modal-close" id="modal-close-btn">&times;</button>
+            <h3 class="modal-title">Custom Itinerary Builder</h3>
+            <p class="modal-subtitle">Design your personalized Kumaon adventure. We will curate it directly from Pithoragarh.</p>
+
+            <form id="custom-itinerary-form">
+                <div class="form-group">
+                    <label for="custom-name">Full Name</label>
+                    <input type="text" id="custom-name" name="name" class="form-control" placeholder="E.g. Ramesh Dev" required>
+                </div>
+                <div class="form-group">
+                    <label for="custom-email">Email Address</label>
+                    <input type="email" id="custom-email" name="email" class="form-control" placeholder="E.g. ramesh@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="custom-destination">Select Destination</label>
+                    <select id="custom-destination" name="destination" class="form-control" required>
+                        <option value="" disabled selected>Select an option</option>
+                        <option value="Adi Kailash & Om Parvat Yatra">Adi Kailash & Om Parvat Yatra</option>
+                        <option value="Khaliya Top Trek">Khaliya Top Trek</option>
+                        <option value="Mt. Kailash Yatra">Mt. Kailash Yatra (Lipulekh)</option>
+                        <option value="Darma Valley Exploration">Darma Valley Exploration</option>
+                        <option value="Custom/Multiple Valleys">Custom / Multiple Valleys</option>
+                    </select>
+                </div>
+                <div class="form-row" style="display: grid; grid-template-columns: 1fr; gap: 16px;">
+                    <div class="form-group">
+                        <label for="custom-days">Number of Days</label>
+                        <input type="number" id="custom-days" name="days" class="form-control" min="2" max="30" placeholder="E.g. 6" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="custom-requests">Special Requests / Medical Notes</label>
+                    <textarea id="custom-requests" name="requests" class="form-control" placeholder="E.g. Diet requirements, oxygen cylinder request, group discounts..."></textarea>
+                </div>
+
+                <div class="modal-btn-grid">
+                    <button type="button" class="btn btn-secondary" id="submit-email-btn"><i class="fa-solid fa-envelope"></i> Share via Email</button>
+                    <button type="button" class="btn btn-primary" id="submit-wa-btn" style="background-color: #25D366; color: white;"><i class="fa-brands fa-whatsapp"></i> Share via WhatsApp</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+
+</html>

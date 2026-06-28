@@ -317,9 +317,6 @@ function initSupabase() {
     const supabaseUrl = 'https://ysnzxvvsegmkmkepclti.supabase.co';
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlzbnp4dnZzZWdta21rZXBjbHRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NDY3NjMsImV4cCI6MjA5NjMyMjc2M30.V6q3OpJCf6PEu6JTM__6E7PJDrY5lY--FZfjyy_toLM';
     supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
-
-    // Render dynamic blogs if container exists
-    renderDynamicBlogs();
 }
 
 async function saveBookingRequest(data) {
@@ -641,86 +638,6 @@ function initializeDiscountPopup() {
 
 
 
-// ── DYNAMIC HOME PAGE BLOGS RENDERING ──
-async function renderDynamicBlogs() {
-    const section = document.getElementById('homepage-blogs');
-    if (!section) return;
 
-    // Check if grid already exists
-    let grid = section.querySelector('.blog-grid');
-    if (!grid) {
-        section.innerHTML = `
-            <div class="container blog-section-container">
-                <div class="section-header text-center">
-                    <span class="section-subtitle">Our Travel Diaries</span>
-                    <h2 class="section-title">Himalayan Legends & Insights</h2>
-                    <p class="section-desc">Stories, guidelines, and cultural experiences straight from our guides trekking across the Kumaon borderlands.</p>
-                </div>
-                <div class="blog-grid">
-                    <!-- Blogs render here -->
-                </div>
-            </div>
-        `;
-        grid = section.querySelector('.blog-grid');
-    }
-
-    // Fetch blogs from Supabase
-    try {
-        let blogsHtml = '';
-
-        // Default local fallback blogs to show in case db is empty
-        const defaultBlogs = [
-            {
-                id: 'default-1',
-                created_at: new Date('2026-05-15').toISOString(),
-                title: 'The Sacred Aura of Om Parvat & Vyas Valley',
-                author: 'Devendra Rawat',
-                image_url: 'assets/images/om-parvat-group.webp',
-                content: 'Standing before Om Parvat is a humbling experience. The natural snow deposition forming the sacred sound of the universe is a mystery that draws travelers from all walks of life. Here is our guide to preparing your spirit and body for the journey.'
-            },
-            {
-                id: 'default-2',
-                created_at: new Date('2026-05-28').toISOString(),
-                title: 'Preserving Kumaon: Why Eco-Tourism Matters',
-                author: 'Yashpal Kumaoni',
-                image_url: 'assets/images/adi-kailash-panchachuli.jpg',
-                content: 'As local ground guides in Pithoragarh, we witness the impact of waste in high altitudes. Our Green Travel Pledge enforces zero single-use plastics and supports homestay economies. Here is how you can trek responsibly.'
-            }
-        ];
-
-        let dbBlogs = [];
-        if (supabaseClient) {
-            const { data } = await supabaseClient
-                .from('blogs')
-                .select('*')
-                .order('created_at', { ascending: false });
-            if (data) dbBlogs = data;
-        }
-
-        // Merge DB blogs first, then fallbacks
-        const allBlogs = [...dbBlogs, ...defaultBlogs];
-
-        allBlogs.forEach(blog => {
-            const dateStr = new Date(blog.created_at).toLocaleDateString();
-            const excerpt = blog.content.substring(0, 160) + (blog.content.length > 160 ? '...' : '');
-
-            blogsHtml += `
-                <article class="blog-card" id="blog-post-${blog.id}">
-                    <img src="${blog.image_url || 'assets/images/adi-kailash-hero.webp'}" alt="${blog.title}" class="blog-card-img" onerror="this.src='assets/images/adi-kailash-hero.webp'">
-                    <div class="blog-card-content">
-                        <div class="blog-card-meta">By ${blog.author} | ${dateStr}</div>
-                        <h3 class="blog-card-title">${blog.title}</h3>
-                        <p class="blog-card-excerpt">${excerpt}</p>
-                        <a href="#" onclick="alert('Full blog post content: \\n\\n${blog.content.replace(/'/g, "\\'")}')" class="blog-card-link">Read Diaries <i class="fa-solid fa-arrow-right-long"></i></a>
-                    </div>
-                </article>
-            `;
-        });
-
-        grid.innerHTML = blogsHtml;
-    } catch (err) {
-        console.error('Failed to render dynamic blogs:', err);
-    }
-}
 
 

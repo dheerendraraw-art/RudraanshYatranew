@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Gallery - Rudraansh Yatra | Himalayan Travel Diaries</title>
+    <meta name="description"
+        content="Browse breathtaking landscapes and travel memories from Adi Kailash, Om Parvat, Panchachuli, and Darma Valley. Direct local operations in Pithoragarh.">
+    <!-- Google Search Site Name & Favicon -->
+    <meta property="og:site_name" content="Rudraansh Yatra">
+    <link rel="icon" type="image/png" href="assets/images/logo.png">
+    <link rel="shortcut icon" type="image/png" href="assets/images/logo.png">
+
+    <!-- Google Fonts Preconnect & Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-info">
+                <span><i class="fa-solid fa-phone"></i> <a href="tel:+917617617651">+91 7617617651</a></span>
+                <span><i class="fa-solid fa-location-dot"></i> Simalgair Bazaar, Pithoragarh, Uttarakhand</span>
+            </div>
+            <div class="top-socials">
+                <a href="https://www.facebook.com/profile.php?id=61589223945628" target="_blank"
+                    rel="noopener noreferrer" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                <a href="https://www.instagram.com/yatra_rudraansh?igsh=MXYxdmg0Y2dqNDJ3bg==" target="_blank"
+                    rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Navbar -->
+    <header>
+        <div class="container navbar-shell">
+            <a href="/" class="logo">
+                <div class="logo-icon-img-wrap">
+                    <img src="assets/images/logo.png" alt="Rudraansh Yatra Logo" class="logo-icon-img">
+                </div>
+                <div class="logo-text">Rudraansh <span>Yatra</span></div>
+            </a>
+
+            <button class="menu-toggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0);" class="nav-link">Destinations <i class="fa-solid fa-chevron-down"
+                            style="font-size: 10px; margin-left: 2px;"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="adi-kailash">Adi Kailash & Om Parvat</a></li>
+                        <li><a href="khaliya-top">Khaliya Top Trek</a></li>
+                        <li><a href="mt-kailash">Mt. Kailash Yatra</a></li>
+                        <li><a href="darma-valley">Darma Valley Exploration</a></li>
+                    </ul>
+                </li>
+                <li><a href="whats-included" class="nav-link">What's Included</a></li>
+                <li><a href="about" class="nav-link">About Us</a></li>
+                <li><a href="gallery" class="nav-link active">Gallery</a></li>
+                <li><a href="blogs" class="nav-link">Blogs</a></li>
+                <li><button class="nav-btn" id="custom-trip-btn">Custom Trip <i
+                            class="fa-solid fa-compass"></i></button></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero"
+        style="background-image: url('assets/images/adi-kailash-blog.jpg'); height: 50vh; min-height: 400px;">
+        <div class="hero-content">
+            <span class="hero-badge"><span></span> Visual Diaries</span>
+            <h1 class="hero-title">Himalayan Photo Gallery</h1>
+            <p class="hero-desc">Breathtaking views and spiritual milestones captured directly from our Kumaon borderland expeditions.</p>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section">
+        <div class="container">
+            <!-- Filter Tabs -->
+            <div class="gallery-filters">
+                <button class="gallery-filter-btn active" data-filter="all">All Photos</button>
+                <button class="gallery-filter-btn" data-filter="Adi Kailash">Adi Kailash</button>
+                <button class="gallery-filter-btn" data-filter="Om Parvat">Om Parvat</button>
+                <button class="gallery-filter-btn" data-filter="Darma Valley">Darma Valley</button>
+                <button class="gallery-filter-btn" data-filter="Khaliya Top">Khaliya Top</button>
+                <button class="gallery-filter-btn" data-filter="General">General</button>
+            </div>
+
+            <!-- Loader -->
+            <div id="gallery-loader" style="text-align: center; padding: 40px; color: var(--color-slate);">
+                <i class="fa-solid fa-spinner fa-spin" style="font-size: 32px; margin-bottom: 12px; color: var(--color-gold);"></i>
+                <p>Loading spiritual views...</p>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div class="gallery-grid" id="gallery-grid" style="display: none;">
+                <!-- Dynamically loaded gallery items -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox Modal -->
+    <div class="lightbox-modal" id="gallery-lightbox">
+        <button class="lightbox-close-btn" id="lightbox-close" aria-label="Close Lightbox">&times;</button>
+        <button class="lightbox-nav-btn prev" id="lightbox-prev" aria-label="Previous image"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="lightbox-nav-btn next" id="lightbox-next" aria-label="Next image"><i class="fa-solid fa-chevron-right"></i></button>
+        <div class="lightbox-content">
+            <img src="" id="lightbox-img" alt="Gallery Lightbox Preview">
+            <div class="lightbox-caption-box">
+                <h4 class="lightbox-title" id="lightbox-caption">Caption</h4>
+                <span class="lightbox-category" id="lightbox-cat">Category</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-grid">
+            <div>
+                <a href="/" class="logo" style="margin-bottom: 20px;">
+                    <div class="logo-icon-img-wrap">
+                        <img src="assets/images/logo.png" alt="Rudraansh Yatra Logo" class="logo-icon-img">
+                    </div>
+                    <div class="logo-text" style="color: #ffffff;">Rudraansh <span style="color: var(--color-gold);">Yatra</span></div>
+                </a>
+                <p style="color: rgba(255,255,255,0.6); margin-bottom: 24px;">Born in the hills, we are hyper-local experts curating clean, eco-friendly journeys and spiritual yatras across remote Himalayan borders.</p>
+                <div class="top-socials">
+                    <a href="https://www.facebook.com/profile.php?id=61589223945628" target="_blank"
+                        rel="noopener noreferrer" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/yatra_rudraansh?igsh=MXYxdmg0Y2dqNDJ3bg==" target="_blank"
+                        rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4>Our Yatras</h4>
+                <ul class="footer-links">
+                    <li><a href="adi-kailash">Adi Kailash & Om Parvat</a></li>
+                    <li><a href="khaliya-top">Khaliya Top Trek</a></li>
+                    <li><a href="mt-kailash">Mt. Kailash Yatra</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Treks & Adventures</h4>
+                <ul class="footer-links">
+                    <li><a href="darma-valley">Darma Valley Exploration</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Contact Office</h4>
+                <ul class="footer-contact">
+                    <li>
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>Simalgair Bazaar,<br>Pithoragarh, Uttarakhand - 262501</span>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-phone"></i>
+                        <span>+91 7617617651</span>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-envelope"></i>
+                        <span>info@rudraanshyatra.com</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2026 Rudraansh Yatra. All Rights Reserved. Managed Directly by Local Ground Experts in Pithoragarh. | <a href="/admin" style="text-decoration: underline; color: var(--color-gold);">Admin Panel</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Custom Itinerary Modal (Reused) -->
+    <div class="modal-overlay" id="custom-trip-modal">
+        <div class="modal-box">
+            <button class="modal-close" id="modal-close-btn">&times;</button>
+            <h3 class="modal-title">Custom Itinerary Builder</h3>
+            <p class="modal-subtitle">Design your personalized Kumaon adventure. We will curate it directly from Pithoragarh.</p>
+
+            <form id="custom-itinerary-form">
+                <div class="form-group">
+                    <label for="custom-name">Full Name</label>
+                    <input type="text" id="custom-name" name="name" class="form-control" placeholder="E.g. Ramesh Dev" required>
+                </div>
+                <div class="form-group">
+                    <label for="custom-email">Email Address</label>
+                    <input type="email" id="custom-email" name="email" class="form-control" placeholder="E.g. ramesh@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="custom-destination">Select Destination</label>
+                    <select id="custom-destination" name="destination" class="form-control" required>
+                        <option value="" disabled selected>Select an option</option>
+                        <option value="Adi Kailash & Om Parvat Yatra">Adi Kailash & Om Parvat Yatra</option>
+                        <option value="Khaliya Top Trek">Khaliya Top Trek</option>
+                        <option value="Mt. Kailash Yatra">Mt. Kailash Yatra (Lipulekh)</option>
+                        <option value="Darma Valley Exploration">Darma Valley Exploration</option>
+                        <option value="Custom/Multiple Valleys">Custom / Multiple Valleys</option>
+                    </select>
+                </div>
+                <div class="form-row" style="display: grid; grid-template-columns: 1fr; gap: 16px;">
+                    <div class="form-group">
+                        <label for="custom-days">Number of Days</label>
+                        <input type="number" id="custom-days" name="days" class="form-control" min="2" max="30" placeholder="E.g. 6" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="custom-requests">Special Requests / Medical Notes</label>
+                    <textarea id="custom-requests" name="requests" class="form-control" placeholder="E.g. Diet requirements, oxygen cylinder request, group discounts..."></textarea>
+                </div>
+
+                <div class="modal-btn-grid">
+                    <button type="button" class="btn btn-secondary" id="submit-email-btn"><i class="fa-solid fa-envelope"></i> Share via Email</button>
+                    <button type="button" class="btn btn-primary" id="submit-wa-btn" style="background-color: #25D366; color: white;"><i class="fa-brands fa-whatsapp"></i> Share via WhatsApp</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+    
+    <!-- Gallery Dynamic Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let galleryItems = [];
+            let activeFilter = 'all';
+            let currentLightboxIndex = 0;
+
+            const grid = document.getElementById('gallery-grid');
+            const loader = document.getElementById('gallery-loader');
+            const filters = document.querySelectorAll('.gallery-filter-btn');
+
+            // Lightbox Elements
+            const lightbox = document.getElementById('gallery-lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxCaption = document.getElementById('lightbox-caption');
+            const lightboxCat = document.getElementById('lightbox-cat');
+            const lightboxClose = document.getElementById('lightbox-close');
+            const lightboxPrev = document.getElementById('lightbox-prev');
+            const lightboxNext = document.getElementById('lightbox-next');
+
+            // Load Supabase Client & Fetch Data
+            const checkSupabaseInit = setInterval(() => {
+                if (typeof supabase !== 'undefined' && supabaseClient) {
+                    clearInterval(checkSupabaseInit);
+                    fetchGalleryData();
+                }
+            }, 100);
+
+            async function fetchGalleryData() {
+                try {
+                    let dbItems = [];
+                    if (supabaseClient) {
+                        const { data, error } = await supabaseClient
+                            .from('gallery')
+                            .select('*')
+                            .order('created_at', { ascending: false });
+                        if (data && !error) {
+                            dbItems = data;
+                        }
+                    }
+
+                    // Predefined beautiful fallback pictures if DB has no images
+                    const defaultGallery = [
+                        {
+                            id: 'def-g1',
+                            image_url: 'assets/images/Kailash.webp',
+                            caption: 'The majestic peak of Mt. Kailash standing tall against Tibet skies.',
+                            category: 'General'
+                        },
+                        {
+                            id: 'def-g2',
+                            image_url: 'assets/images/Panchacholi.jpeg',
+                            caption: 'Sunrise hitting the five sacred peaks of Panchachuli from Munsiyari.',
+                            category: 'Darma Valley'
+                        },
+                        {
+                            id: 'def-g3',
+                            image_url: 'assets/images/om-parvat-group.webp',
+                            caption: 'Our traveler group posing in front of the divine natural snow-formed Om.',
+                            category: 'Om Parvat'
+                        },
+                        {
+                            id: 'def-g4',
+                            image_url: 'assets/images/adi-kailash-parvat.jpeg',
+                            caption: 'The sacred reflection of Adi Kailash in the crystal clear Parvati Kund.',
+                            category: 'Adi Kailash'
+                        },
+                        {
+                            id: 'def-g5',
+                            image_url: 'assets/images/khaliya-top.jpg',
+                            caption: 'Lush green alpine meadows of Khaliya Top overlooking the snow boundaries.',
+                            category: 'Khaliya Top'
+                        },
+                        {
+                            id: 'def-g6',
+                            image_url: 'assets/images/adi-kailash-panchachuli.jpg',
+                            caption: 'Deep valleys carving pathways towards the Kumaon border homestays.',
+                            category: 'Adi Kailash'
+                        }
+                    ];
+
+                    // Merge DB items first, then default items
+                    galleryItems = [...dbItems, ...defaultGallery];
+                    
+                    renderGalleryGrid();
+                    loader.style.display = 'none';
+                    grid.style.display = 'grid';
+                } catch (e) {
+                    console.error('Failed to load gallery items:', e);
+                }
+            }
+
+            function renderGalleryGrid() {
+                let html = '';
+                
+                // Filter items
+                const filtered = activeFilter === 'all' 
+                    ? galleryItems 
+                    : galleryItems.filter(item => item.category.toLowerCase() === activeFilter.toLowerCase());
+
+                if (filtered.length === 0) {
+                    grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--color-text-secondary);">
+                        <i class="fa-solid fa-image-portrait" style="font-size: 40px; color: var(--color-slate); margin-bottom: 12px;"></i>
+                        <p>No photos uploaded yet under this category.</p>
+                    </div>`;
+                    return;
+                }
+
+                filtered.forEach((item, index) => {
+                    html += `
+                        <div class="gallery-item" data-index="${index}" onclick="openLightbox(${index})">
+                            <img src="${item.image_url}" alt="${item.caption || 'Himalayan View'}" onerror="this.src='assets/images/adi-kailash-hero.webp'">
+                            <div class="gallery-overlay">
+                                <span class="gallery-cat">${item.category}</span>
+                                <h4 class="gallery-caption">${item.caption || 'Kumaon Landscapes'}</h4>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                grid.innerHTML = html;
+            }
+
+            // Filtering Tab listener
+            filters.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filters.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    activeFilter = btn.getAttribute('data-filter');
+                    renderGalleryGrid();
+                });
+            });
+
+            // Lightbox Actions
+            window.openLightbox = function(index) {
+                const filtered = activeFilter === 'all' 
+                    ? galleryItems 
+                    : galleryItems.filter(item => item.category.toLowerCase() === activeFilter.toLowerCase());
+
+                if (index < 0 || index >= filtered.length) return;
+                
+                currentLightboxIndex = index;
+                const item = filtered[index];
+
+                lightboxImg.src = item.image_url;
+                lightboxCaption.innerText = item.caption || 'Beautiful Himalayan Landscape';
+                lightboxCat.innerText = item.category;
+                
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Stop page scrolling
+            };
+
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+
+            function navigateLightbox(dir) {
+                const filtered = activeFilter === 'all' 
+                    ? galleryItems 
+                    : galleryItems.filter(item => item.category.toLowerCase() === activeFilter.toLowerCase());
+
+                let newIndex = currentLightboxIndex + dir;
+                if (newIndex < 0) newIndex = filtered.length - 1;
+                if (newIndex >= filtered.length) newIndex = 0;
+
+                openLightbox(newIndex);
+            }
+
+            // Event Listeners
+            lightboxClose.addEventListener('click', closeLightbox);
+            lightboxPrev.addEventListener('click', () => navigateLightbox(-1));
+            lightboxNext.addEventListener('click', () => navigateLightbox(1));
+            
+            // Close lightbox on click outside the image
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) closeLightbox();
+            });
+
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (!lightbox.classList.contains('active')) return;
+                
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') navigateLightbox(-1);
+                if (e.key === 'ArrowRight') navigateLightbox(1);
+            });
+        });
+    </script>
+</body>
+
+</html>
