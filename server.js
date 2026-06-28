@@ -17,6 +17,19 @@ if (supabaseUrl && supabaseKey) {
 }
 
 // Helper to pre-render blogs HTML
+// Helper to convert titles to URL-safe slugs
+function slugify(text) {
+    return text
+        .toString()
+        .toLowerCase()
+        .replace(/\s+/g, '-')           // Replace spaces with -
+        .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+        .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+        .replace(/^-+/, '')             // Trim - from start
+        .replace(/-+$/, '');            // Trim - from end
+}
+
+// Helper to pre-render blogs HTML
 function renderBlogsHtml(blogs) {
     if (!blogs || blogs.length === 0) {
         return `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--color-text-secondary);">
@@ -33,6 +46,7 @@ function renderBlogsHtml(blogs) {
             day: 'numeric'
         });
         const excerpt = blog.content.substring(0, 160) + (blog.content.length > 160 ? '...' : '');
+        const slug = slugify(blog.title);
         html += `
             <article class="blog-card" id="blog-post-${blog.id}">
                 <img src="${blog.image_url || 'assets/images/adi-kailash-hero.webp'}" alt="${blog.title}" class="blog-card-img" onerror="this.src='assets/images/adi-kailash-hero.webp'">
@@ -40,7 +54,7 @@ function renderBlogsHtml(blogs) {
                     <div class="blog-card-meta">By ${blog.author} | ${dateStr}</div>
                     <h3 class="blog-card-title">${blog.title}</h3>
                     <p class="blog-card-excerpt">${excerpt}</p>
-                    <a href="/blog?id=${blog.id}" class="blog-card-link">Read Diaries <i class="fa-solid fa-arrow-right-long"></i></a>
+                    <a href="/blog/${blog.id}/${slug}" class="blog-card-link">Read Diaries <i class="fa-solid fa-arrow-right-long"></i></a>
                 </div>
             </article>
         `;
@@ -113,10 +127,9 @@ app.get('/blogs', async (req, res) => {
     }
 });
 
-// 3. SSR Route for individual Blog Articles (/blog)
-app.get('/blog', async (req, res) => {
-    const blogId = req.query.id;
-    if (!blogId) return res.redirect('/blogs');
+// 3. SSR Route for individual Blog Articles (/blog/:id/:slug)
+app.get('/blog/:id/:slug', async (req, res) => {
+    const blogId = req.params.id;
 
     try {
         let blog = null;
@@ -153,6 +166,9 @@ app.get('/blog', async (req, res) => {
             day: 'numeric'
         });
 
+        // Set alt tags on dynamic images automatically
+        const imageAlt = `${blog.title} Cover Photo - Rudraansh Yatra`;
+
         blogHtml = blogHtml
             .replace(/{{META_TITLE}}/g, `${blog.title} - Rudraansh Yatra Diaries`)
             .replace(/{{META_DESC}}/g, `${blog.content.substring(0, 150).replace(/"/g, '&quot;')}...`)
@@ -160,11 +176,38 @@ app.get('/blog', async (req, res) => {
             .replace(/{{AUTHOR}}/g, blog.author)
             .replace(/{{DATE}}/g, dateStr)
             .replace(/{{IMAGE}}/g, blog.image_url || 'assets/images/adi-kailash-hero.webp')
+            .replace(/{{IMAGE_ALT}}/g, imageAlt)
             .replace(/{{CONTENT}}/g, paragraphsHtml);
 
         res.send(blogHtml);
     } catch (err) {
         console.error('SSR Blog Error:', err);
+        res.redirect('/blogs');
+    }
+});
+
+// 4. Backward Compatibility Redirect for Legacy Links (/blog?id=XYZ)
+app.get('/blog', async (req, res) => {
+    const blogId = req.query.id;
+    if (!blogId) return res.redirect('/blogs');
+
+    try {
+        if (supabase) {
+            const { data, error } = await supabase
+                .from('blogs')
+                .select('title')
+                .eq('id', blogId)
+                .single();
+            
+            if (data && !error) {
+                // Perform a 301 permanent redirect to the new SEO-friendly URL slug
+                const slug = slugify(data.title);
+                return res.redirect(301, `/blog/${blogId}/${slug}`);
+            }
+        }
+        res.redirect('/blogs');
+    } catch (err) {
+        console.error('Redirect Error:', err);
         res.redirect('/blogs');
     }
 });
