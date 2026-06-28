@@ -278,44 +278,7 @@
                     }
 
                     // Predefined beautiful fallback pictures if DB has no images
-                    const defaultGallery = [
-                        {
-                            id: 'def-g1',
-                            image_url: 'assets/images/Kailash.webp',
-                            caption: 'The majestic peak of Mt. Kailash standing tall against Tibet skies.',
-                            category: 'General'
-                        },
-                        {
-                            id: 'def-g2',
-                            image_url: 'assets/images/Panchacholi.jpeg',
-                            caption: 'Sunrise hitting the five sacred peaks of Panchachuli from Munsiyari.',
-                            category: 'Darma Valley'
-                        },
-                        {
-                            id: 'def-g3',
-                            image_url: 'assets/images/om-parvat-group.webp',
-                            caption: 'Our traveler group posing in front of the divine natural snow-formed Om.',
-                            category: 'Om Parvat'
-                        },
-                        {
-                            id: 'def-g4',
-                            image_url: 'assets/images/adi-kailash-parvat.jpeg',
-                            caption: 'The sacred reflection of Adi Kailash in the crystal clear Parvati Kund.',
-                            category: 'Adi Kailash'
-                        },
-                        {
-                            id: 'def-g5',
-                            image_url: 'assets/images/khaliya-top.jpg',
-                            caption: 'Lush green alpine meadows of Khaliya Top overlooking the snow boundaries.',
-                            category: 'Khaliya Top'
-                        },
-                        {
-                            id: 'def-g6',
-                            image_url: 'assets/images/adi-kailash-panchachuli.jpg',
-                            caption: 'Deep valleys carving pathways towards the Kumaon border homestays.',
-                            category: 'Adi Kailash'
-                        }
-                    ];
+                    const defaultGallery = [];
 
                     // Merge DB items first, then default items
                     galleryItems = [...dbItems, ...defaultGallery];
