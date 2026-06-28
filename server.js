@@ -169,9 +169,11 @@ app.get('/blog/:slug', async (req, res) => {
         // Set alt tags on dynamic images automatically
         const imageAlt = `${blog.title} Cover Photo - Rudraansh Yatra`;
 
+        const metaDescriptionVal = blog.meta_description || `${blog.content.substring(0, 150)}...`;
+
         blogHtml = blogHtml
             .replace(/{{META_TITLE}}/g, `${blog.title} - Rudraansh Yatra Diaries`)
-            .replace(/{{META_DESC}}/g, `${blog.content.substring(0, 150).replace(/"/g, '&quot;')}...`)
+            .replace(/{{META_DESC}}/g, metaDescriptionVal.replace(/"/g, '&quot;'))
             .replace(/{{TITLE}}/g, blog.title)
             .replace(/{{AUTHOR}}/g, blog.author)
             .replace(/{{DATE}}/g, dateStr)
