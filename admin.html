@@ -208,7 +208,7 @@
 
                     <!-- Write Blog Form -->
                     <div class="admin-form-card">
-                        <h3 class="admin-form-title"><i class="fa-solid fa-pen-nib"
+                        <h3 class="admin-form-title" id="blog-form-title"><i class="fa-solid fa-pen-nib"
                                 style="color: var(--color-gold); margin-right: 8px;"></i> Write a Himalayan Diary</h3>
                         <form id="blog-form" onsubmit="submitBlogForm(event)">
                             <div class="admin-form-control-wrap">
@@ -241,6 +241,14 @@
                                     <label for="blog-content">Article Content</label>
                                     <textarea id="blog-content" class="admin-textarea" rows="10"
                                         placeholder="Type the complete yatra stories or advice..." required></textarea>
+                                </div>
+                                <div class="admin-form-group">
+                                    <label for="blog-slug">URL Slug (Optional)</label>
+                                    <input type="text" id="blog-slug" class="admin-input" placeholder="E.g., custom-slug-here (auto-generated if empty)">
+                                </div>
+                                <div class="admin-form-group">
+                                    <label for="blog-meta-desc">Meta Description (Optional)</label>
+                                    <textarea id="blog-meta-desc" class="admin-textarea" rows="2" placeholder="Custom Google search result snippet (auto-generated if empty)"></textarea>
                                 </div>
                                 <button type="submit" id="btn-submit-blog" class="btn btn-primary"
                                     style="width: 100%; border: none;">
@@ -493,7 +501,7 @@
                             <td><small>${item.message || '—'}</small></td>
                             <td>${createdStr}</td>
                             <td>
-                                <button class="admin-btn-delete" onclick="deleteRecord('bookings', ${item.id}, fetchBookings)">
+                                <button class="admin-btn-delete" onclick="deleteRecord('bookings', '${item.id}', fetchBookings)">
                                     <i class="fa-solid fa-trash"></i> Delete
                                 </button>
                             </td>
@@ -539,7 +547,7 @@
                             <td><small>${item.requests || '—'}</small></td>
                             <td>${createdStr}</td>
                             <td>
-                                <button class="admin-btn-delete" onclick="deleteRecord('custom_requests', ${item.id}, fetchCustomRequests)">
+                                <button class="admin-btn-delete" onclick="deleteRecord('custom_requests', '${item.id}', fetchCustomRequests)">
                                     <i class="fa-solid fa-trash"></i> Delete
                                 </button>
                             </td>
@@ -586,7 +594,7 @@
                             <td><span style="color: ${item.verified ? '#22c55e' : '#ef4444'}; font-weight: bold;">${item.verified ? 'Verified' : 'Pending'}</span></td>
                             <td>${createdStr}</td>
                             <td>
-                                <button class="admin-btn-delete" onclick="deleteRecord('discount_registrations', ${item.id}, fetchDiscountRegistrations)">
+                                <button class="admin-btn-delete" onclick="deleteRecord('discount_registrations', '${item.id}', fetchDiscountRegistrations)">
                                     <i class="fa-solid fa-trash"></i> Delete
                                 </button>
                             </td>
@@ -623,6 +631,8 @@
                 let html = '';
                 data.forEach(item => {
                     const createdStr = new Date(item.created_at).toLocaleDateString();
+                    // Escape double quotes inside item properties so they do not break HTML attributes
+                    const safeItem = JSON.stringify(item).replace(/"/g, '&quot;');
                     html += `
                         <div class="admin-item-row" id="blog-row-${item.id}">
                             <img class="admin-item-img" src="${item.image_url}" onerror="this.src='assets/images/adi-kailash-hero.webp'">
@@ -630,9 +640,14 @@
                                 <span class="admin-item-name">${item.title}</span>
                                 <div class="admin-item-sub">By ${item.author} | Published on ${createdStr}</div>
                             </div>
-                            <button class="admin-btn-delete" onclick="deleteRecord('blogs', ${item.id}, fetchBlogs)">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
+                            <div style="display: flex; gap: 8px;">
+                                <button class="admin-btn-edit" onclick="startEditBlog(${safeItem})" style="background-color: var(--color-gold); color: #0f172a; border: none; width: 32px; height: 32px; border-radius: var(--border-radius-sm); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px;">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                                <button class="admin-btn-delete" onclick="deleteRecord('blogs', '${item.id}', fetchBlogs)">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </div>
                         </div>
                     `;
                 });
@@ -672,7 +687,7 @@
                                 <span class="admin-item-name">${item.caption || 'Himalayan Capture'}</span>
                                 <div class="admin-item-sub">Category: <strong>${item.category}</strong></div>
                             </div>
-                            <button class="admin-btn-delete" onclick="deleteRecord('gallery', ${item.id}, fetchGallery)">
+                            <button class="admin-btn-delete" onclick="deleteRecord('gallery', '${item.id}', fetchGallery)">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
                         </div>
@@ -706,6 +721,76 @@
             }
         }
 
+        // State Variables for Blog Editing
+        let editingBlogId = null;
+        let editingBlogImageUrl = null;
+
+        function startEditBlog(item) {
+            editingBlogId = item.id;
+            editingBlogImageUrl = item.image_url;
+
+            // Update form header
+            document.getElementById('blog-form-title').innerHTML = `<i class="fa-solid fa-pen-nib" style="color: var(--color-gold); margin-right: 8px;"></i> Edit Himalayan Diary`;
+            
+            // Populate fields
+            document.getElementById('blog-title').value = item.title;
+            document.getElementById('blog-author').value = item.author || '';
+            document.getElementById('blog-content').value = item.content;
+            document.getElementById('blog-slug').value = item.slug || '';
+            document.getElementById('blog-meta-desc').value = item.meta_description || '';
+            
+            // Image input is optional during edit
+            document.getElementById('blog-image').required = false;
+
+            // Show thumbnail preview
+            const previewContainer = document.getElementById('blog-preview-container');
+            const previewImage = document.getElementById('blog-preview');
+            previewImage.src = item.image_url || '';
+            previewContainer.style.display = item.image_url ? 'block' : 'none';
+
+            // Change button text
+            const btn = document.getElementById('btn-submit-blog');
+            btn.innerHTML = `Update Article <i class="fa-solid fa-check-double" style="margin-left: 6px;"></i>`;
+
+            // Add Cancel button if it doesn't already exist
+            let cancelBtn = document.getElementById('btn-cancel-blog-edit');
+            if (!cancelBtn) {
+                cancelBtn = document.createElement('button');
+                cancelBtn.type = 'button';
+                cancelBtn.id = 'btn-cancel-blog-edit';
+                cancelBtn.className = 'btn btn-secondary';
+                cancelBtn.style.marginTop = '12px';
+                cancelBtn.style.width = '100%';
+                cancelBtn.innerText = 'Cancel Edit';
+                cancelBtn.onclick = cancelBlogEdit;
+                btn.parentNode.insertBefore(cancelBtn, btn.nextSibling);
+            }
+
+            // Scroll to the card form smoothly
+            document.getElementById('blog-form').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function cancelBlogEdit() {
+            editingBlogId = null;
+            editingBlogImageUrl = null;
+
+            // Reset form header
+            document.getElementById('blog-form-title').innerHTML = `<i class="fa-solid fa-pen-nib" style="color: var(--color-gold); margin-right: 8px;"></i> Write a Himalayan Diary`;
+
+            // Reset form
+            document.getElementById('blog-form').reset();
+            removePreview('blog-image', 'blog-preview-container');
+            document.getElementById('blog-image').required = true;
+
+            // Reset submit button text
+            const btn = document.getElementById('btn-submit-blog');
+            btn.innerHTML = `Publish Article <i class="fa-solid fa-paper-plane" style="margin-left: 6px;"></i>`;
+
+            // Remove cancel button
+            const cancelBtn = document.getElementById('btn-cancel-blog-edit');
+            if (cancelBtn) cancelBtn.remove();
+        }
+
         // Upload Logic: Blog Submit Form (Upload Cover + Save Row)
         async function submitBlogForm(event) {
             event.preventDefault();
@@ -713,54 +798,90 @@
             const title = document.getElementById('blog-title').value.trim();
             const author = document.getElementById('blog-author').value.trim();
             const content = document.getElementById('blog-content').value.trim();
+            const customSlug = document.getElementById('blog-slug').value.trim();
+            const metaDesc = document.getElementById('blog-meta-desc').value.trim();
             const fileInput = document.getElementById('blog-image');
             const file = fileInput.files[0];
 
-            if (!file) {
+            if (!file && !editingBlogId) {
                 showAdminToast('Please select a cover image first.', 'error');
                 return;
             }
 
             btn.disabled = true;
-            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Uploading Image...`;
-            showAdminToast('Uploading cover image to Supabase Storage...', 'info');
 
             try {
-                // 1. Upload Cover Image to 'blog-images' bucket
-                const fileExt = file.name.split('.').pop();
-                const fileName = `cover_${Date.now()}.${fileExt}`;
-                const { data: uploadData, error: uploadErr } = await supabaseAdmin.storage
-                    .from('blog-images')
-                    .upload(fileName, file, { cacheControl: '3600', upsert: false });
+                let imageUrl = editingBlogImageUrl;
 
-                if (uploadErr) throw uploadErr;
+                if (file) {
+                    btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Uploading Image...`;
+                    showAdminToast('Uploading cover image to Supabase Storage...', 'info');
 
-                // 2. Fetch Public URL
-                const { data: urlData } = supabaseAdmin.storage
-                    .from('blog-images')
-                    .getPublicUrl(fileName);
-                const imageUrl = urlData.publicUrl;
+                    // 1. Upload Cover Image to 'blog-images' bucket
+                    const fileExt = file.name.split('.').pop();
+                    const fileName = `cover_${Date.now()}.${fileExt}`;
+                    const { data: uploadData, error: uploadErr } = await supabaseAdmin.storage
+                        .from('blog-images')
+                        .upload(fileName, file, { cacheControl: '3600', upsert: false });
+
+                    if (uploadErr) throw uploadErr;
+
+                    // 2. Fetch Public URL
+                    const { data: urlData } = supabaseAdmin.storage
+                        .from('blog-images')
+                        .getPublicUrl(fileName);
+                    imageUrl = urlData.publicUrl;
+                }
 
                 // Helper to slugify
                 const slugify = (text) => text.toString().toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]+/g, '').replace(/\-\-+/g, '-').replace(/^-+/, '').replace(/-+$/, '');
-                const slug = slugify(title);
+                const slug = customSlug ? slugify(customSlug) : slugify(title);
+                const dbMetaDesc = metaDesc || null;
 
-                const { error: dbErr } = await supabaseAdmin
-                    .from('blogs')
-                    .insert([{ title, author, content, image_url: imageUrl, slug }]);
+                if (editingBlogId) {
+                    btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Updating Article...`;
+                    showAdminToast('Updating blog article in Supabase...', 'info');
 
-                if (dbErr) throw dbErr;
+                    const { error: dbErr } = await supabaseAdmin
+                        .from('blogs')
+                        .update({ title, author, content, image_url: imageUrl, slug, meta_description: dbMetaDesc })
+                        .eq('id', editingBlogId);
 
-                showAdminToast('Article successfully published!', 'success');
-                document.getElementById('blog-form').reset();
-                removePreview('blog-image', 'blog-preview-container');
+                    if (dbErr) throw dbErr;
+
+                    showAdminToast('Article successfully updated!', 'success');
+                    cancelBlogEdit();
+                } else {
+                    btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Publishing Article...`;
+                    showAdminToast('Saving blog article text details...', 'info');
+
+                    const { error: dbErr } = await supabaseAdmin
+                        .from('blogs')
+                        .insert([{ 
+                            title, 
+                            author, 
+                            content, 
+                            image_url: imageUrl, 
+                            slug, 
+                            meta_description: dbMetaDesc 
+                        }]);
+
+                    if (dbErr) throw dbErr;
+
+                    showAdminToast('Article successfully published!', 'success');
+                    document.getElementById('blog-form').reset();
+                    removePreview('blog-image', 'blog-preview-container');
+                }
+
                 fetchBlogs();
             } catch (err) {
                 console.error(err);
-                showAdminToast('Failed to publish article: ' + err.message, 'error');
+                showAdminToast('Failed to save article: ' + err.message, 'error');
             } finally {
                 btn.disabled = false;
-                btn.innerHTML = `Publish Article <i class="fa-solid fa-paper-plane" style="margin-left: 6px;"></i>`;
+                if (!editingBlogId) {
+                    btn.innerHTML = `Publish Article <i class="fa-solid fa-paper-plane" style="margin-left: 6px;"></i>`;
+                }
             }
         }
 
