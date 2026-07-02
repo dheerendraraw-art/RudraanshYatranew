@@ -96,7 +96,7 @@
     <section class="gallery-section">
         <div class="container">
             <!-- Filter Tabs -->
-            <div class="gallery-filters">
+            <h2 class="sr-only">Himalayan Photo Collections</h2>`r`n            <div class="gallery-filters">
                 <button class="gallery-filter-btn active" data-filter="all">All Photos</button>
                 <button class="gallery-filter-btn" data-filter="Adi Kailash">Adi Kailash</button>
                 <button class="gallery-filter-btn" data-filter="Om Parvat">Om Parvat</button>
@@ -126,7 +126,7 @@
         <div class="lightbox-content">
             <img src="" id="lightbox-img" alt="Gallery Lightbox Preview">
             <div class="lightbox-caption-box">
-                <h4 class="lightbox-title" id="lightbox-caption">Caption</h4>
+                <div class="lightbox-title" id="lightbox-caption" style="font-size: 20px; font-weight: 600; font-family: var(--font-serif); color: var(--color-primary); margin-bottom: 5px;">Caption</div>
                 <span class="lightbox-category" id="lightbox-cat">Category</span>
             </div>
         </div>
@@ -156,7 +156,7 @@
                 </div>
             </div>
             <div>
-                <h4>Our Yatras</h4>
+                <h3>Our Yatras</h3>
                 <ul class="footer-links">
                     <li><a href="adi-kailash">Adi Kailash & Om Parvat</a></li>
                     <li><a href="khaliya-top">Khaliya Top Trek</a></li>
@@ -164,13 +164,13 @@
                 </ul>
             </div>
             <div>
-                <h4>Treks & Adventures</h4>
+                <h3>Treks & Adventures</h3>
                 <ul class="footer-links">
                     <li><a href="darma-valley">Darma Valley Exploration</a></li>
                 </ul>
             </div>
             <div>
-                <h4>Contact Office</h4>
+                <h3>Contact Office</h3>
                 <ul class="footer-contact">
                     <li>
                         <i class="fa-solid fa-location-dot"></i>
@@ -320,7 +320,7 @@
                             <img src="${item.image_url}" alt="${item.caption || 'Himalayan View'}" onerror="this.src='assets/images/adi-kailash-hero.webp'">
                             <div class="gallery-overlay">
                                 <span class="gallery-cat">${item.category}</span>
-                                <h4 class="gallery-caption">${item.caption || 'Kumaon Landscapes'}</h4>
+                                <h3 class="gallery-caption">${item.caption || 'Kumaon Landscapes'}</h3>
                             </div>
                         </div>
                     `;

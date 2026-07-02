@@ -1601,7 +1601,7 @@ footer {
     margin-bottom: 24px;
 }
 
-footer h4 {
+footer h3, footer h4 {
     color: var(--color-text-light);
     font-family: var(--font-sans);
     font-size: 14px;
@@ -1612,7 +1612,7 @@ footer h4 {
     position: relative;
 }
 
-footer h4::after {
+footer h3::after, footer h4::after {
     content: '';
     position: absolute;
     bottom: -8px;
@@ -2649,4 +2649,17 @@ footer h4::after {
     line-height: 1.6;
     border-top: 1px solid rgba(10, 25, 47, 0.05);
     padding-top: 16px;
+}
+
+
+/* Visually hidden screen reader elements */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
 }
