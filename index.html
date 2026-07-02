@@ -27,7 +27,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></noscript>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -55,7 +55,7 @@
         <div class="container navbar-shell">
             <a href="/" class="logo">
                 <div class="logo-icon-img-wrap">
-                    <img src="assets/images/logo.png" alt="Rudraansh Yatra Logo" class="logo-icon-img">
+                    <img src="assets/images/logo.png" alt="Rudraansh Yatra Logo" class="logo-icon-img" width="44" height="44">
                 </div>
                 <div class="logo-text">Rudraansh <span>Yatra</span></div>
             </a>
@@ -209,7 +209,7 @@
                 <!-- Package A: Adi Kailash -->
                 <div class="card">
                     <div class="card-img-container">
-                        <img src="assets/images/adi-kailash-parvat.jpeg" alt="Adi Kailash Peak">
+                        <img src="assets/images/adi-kailash-parvat.jpeg" alt="Adi Kailash Peak" width="380" height="250" loading="lazy">
                         <span class="card-badge spiritual">Spiritual Yatra</span>
                         <span class="card-duration">6 Days / 5 Nights</span>
                     </div>
@@ -242,7 +242,7 @@
                 <!-- Package B: Khaliya Top -->
                 <div class="card">
                     <div class="card-img-container">
-                        <img src="assets/images/khaliya-top.jpg" alt="Panchachuli Peak view from Munsiyari">
+                        <img src="assets/images/khaliya-top.jpg" alt="Panchachuli Peak view from Munsiyari" width="380" height="250" loading="lazy">
                         <span class="card-badge adventure">Alpine Trek</span>
                         <span class="card-duration">4 Days / 3 Nights</span>
                     </div>
@@ -275,7 +275,7 @@
                 <!-- Package C: Mt. Kailash -->
                 <div class="card">
                     <div class="card-img-container">
-                        <img src="assets/images/Kailash.webp" alt="Mount Kailash Tibet">
+                        <img src="assets/images/Kailash.webp" alt="Mount Kailash Tibet" width="380" height="250" loading="lazy">
                         <span class="card-badge spiritual">Tibet Pilgrimage</span>
                         <span class="card-duration">13 Days / 12 Nights</span>
                     </div>
@@ -308,7 +308,7 @@
                 <!-- Package E: Darma Valley Exploration -->
                 <div class="card">
                     <div class="card-img-container">
-                        <img src="assets/images/Panchacholi.jpeg" alt="Darma Valley tribal villages">
+                        <img src="assets/images/Panchacholi.jpeg" alt="Darma Valley tribal villages" width="380" height="250" loading="lazy">
                         <span class="card-badge adventure">Culture Exploration</span>
                         <span class="card-duration">6 Days / 5 Nights</span>
                     </div>
@@ -354,7 +354,7 @@
             <div class="grid-2" style="max-width: 900px; margin: 0 auto; gap: 30px;">
                 <!-- MSME Card -->
                 <div class="feature-box text-center" style="padding: 40px; border: 1px solid var(--color-gold); background: var(--color-bg-card); border-radius: var(--border-radius-md);">
-                    <div style="margin-bottom: 20px; display: flex; justify-content: center; height: 80px; align-items: center;"><img src="/assets/images/msme-logo.png" alt="MSME Logo" style="height: 100%; object-fit: contain;"></div>
+                    <div style="margin-bottom: 20px; display: flex; justify-content: center; height: 80px; align-items: center;"><img src="/assets/images/msme-logo.png" alt="MSME Logo" style="height: 100%; object-fit: contain;" width="99" height="80" loading="lazy"></div>
                     <h3 class="feature-title" style="color: var(--color-primary); margin-bottom: 12px; font-family: var(--font-serif); font-size: 20px;">MSME Registered</h3>
                     <p class="feature-desc" style="font-size: 14px; color: var(--color-text-primary); line-height: 1.6;">Registered under the <strong>Ministry of Micro, Small & Medium Enterprises (MSME)</strong>, Government of India. Promoting reliable, local tourism entrepreneurship in the borderlands.</p>
                     <div style="margin-top: 15px; font-size: 12px; font-weight: bold; color: var(--color-gold-dark); font-family: monospace; letter-spacing: 0.5px;">UDYAM REG. NO: UDYAM-UK-09-0012985</div>
@@ -362,7 +362,7 @@
 
                 <!-- NIDHI Card -->
                 <div class="feature-box text-center" style="padding: 40px; border: 1px solid var(--color-gold); background: var(--color-bg-card); border-radius: var(--border-radius-md);">
-                    <div style="margin-bottom: 20px; display: flex; justify-content: center; height: 80px; align-items: center;"><img src="/assets/images/nidhi-logo.png" alt="NIDHI Logo" style="height: 100%; object-fit: contain;"></div>
+                    <div style="margin-bottom: 20px; display: flex; justify-content: center; height: 80px; align-items: center;"><img src="/assets/images/nidhi-logo.png" alt="NIDHI Logo" style="height: 100%; object-fit: contain;" width="80" height="80" loading="lazy"></div>
                     <h3 class="feature-title" style="color: var(--color-primary); margin-bottom: 12px; font-family: var(--font-serif); font-size: 20px;">NIDHI Certified</h3>
                     <p class="feature-desc" style="font-size: 14px; color: var(--color-text-primary); line-height: 1.6;">Accredited under <strong>NIDHI (National Integrated Database of Hospitality Industry)</strong>, Ministry of Tourism, Government of India. Compliant with standard safety and accommodation protocols.</p>
                     <div style="margin-top: 15px; font-size: 12px; font-weight: bold; color: var(--color-gold-dark); font-family: monospace; letter-spacing: 0.5px;">REGISTRATION ID: EUK000357</div>
@@ -529,7 +529,7 @@
         </div>
     </div>
 
-    <script src="app.js"></script>
+    <script src="app.js" defer></script>
 </body>
 
 </html>
