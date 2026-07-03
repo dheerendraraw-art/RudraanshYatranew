@@ -1246,6 +1246,7 @@
 
         // --- 3. LEADS MANAGER LOGIC ---
         let usersMap = {};
+        let usersList = [];
         let currentLeads = [];
 
         window.fetchUsers = async function() {
@@ -1253,11 +1254,12 @@
                 const { data, error } = await supabaseAdmin.from('users_view').select('*');
                 if (error) throw error;
                 
+                usersList = data || [];
                 usersMap = {};
                 let assigneeSelect = document.getElementById('lead-assignee');
                 let optionsHtml = '<option value="" style="background:#111827; color: white;">Unassigned</option>';
                 
-                (data || []).forEach(user => {
+                usersList.forEach(user => {
                     usersMap[user.id] = user.email;
                     optionsHtml += `<option value="${user.id}" style="background:#111827; color: white;">${user.email}</option>`;
                 });
