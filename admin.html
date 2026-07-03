@@ -299,7 +299,11 @@
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
                     <h3 class="admin-form-title" style="margin-bottom: 0; border-bottom: none;"><i
                             class="fa-solid fa-people-group" style="color: var(--color-gold);"></i> Leads Manager</h3>
-                    <button type="button" onclick="openLeadModal()" class="btn btn-primary" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-plus"></i> Add New Lead</button>
+                    <div style="display: flex; gap: 8px;">
+                        <button type="button" onclick="triggerImportLeads()" class="btn btn-primary" id="import-leads-btn" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-file-import"></i> Import Leads</button>
+                        <input type="file" id="leads-csv-file" accept=".csv" style="display: none;" onchange="handleLeadsCSVImport(event)">
+                        <button type="button" onclick="openLeadModal()" class="btn btn-primary" id="add-lead-btn" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-plus"></i> Add New Lead</button>
+                    </div>
                 </div>
                 <div class="admin-table-container">
                     <table class="admin-table">
@@ -405,70 +409,83 @@
             
             <form id="lead-form">
                 <input type="hidden" id="lead-id">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                    <div class="admin-form-group" style="margin-bottom: 12px;">
+                
+                <!-- Group 1: Name & Phone (Always Visible) -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                    <div class="admin-form-group">
                         <label for="lead-name" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Client Name *</label>
                         <input type="text" id="lead-name" class="admin-input" required style="width: 100%; background: rgba(255,255,255,0.05); border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
                     </div>
-                    <div class="admin-form-group" style="margin-bottom: 12px;">
-                        <label for="lead-phone" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Phone Number</label>
-                        <input type="tel" id="lead-phone" class="admin-input" style="width: 100%; background: rgba(255,255,255,0.05); border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
+                    <div class="admin-form-group">
+                        <label for="lead-phone" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Phone Number *</label>
+                        <input type="tel" id="lead-phone" class="admin-input" required style="width: 100%; background: rgba(255,255,255,0.05); border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
                     </div>
                 </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                    <div class="admin-form-group" style="margin-bottom: 12px;">
+
+                <!-- Group 2: Email & Source (Always Visible) -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                    <div class="admin-form-group">
                         <label for="lead-email" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Email Address</label>
                         <input type="email" id="lead-email" class="admin-input" style="width: 100%; background: rgba(255,255,255,0.05); border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
                     </div>
-                    <div class="admin-form-group" style="margin-bottom: 12px;">
+                    <div class="admin-form-group">
                         <label for="lead-source" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Lead Source</label>
                         <input type="text" id="lead-source" class="admin-input" placeholder="E.g. Website, Walk-in" style="width: 100%; background: rgba(255,255,255,0.05); border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
                     </div>
                 </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                    <div class="admin-form-group" style="margin-bottom: 12px;">
-                        <label for="lead-status" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Status</label>
-                        <select id="lead-status" class="admin-input" style="width: 100%; background: #1f2937; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
-                            <option value="New">✨ New</option>
-                            <option value="Answered">📞 Answered</option>
-                            <option value="Busy">⏳ Busy</option>
-                            <option value="Incorrect Number">🚫 Incorrect Number</option>
-                            <option value="Follow up required">🔁 Follow up required</option>
-                            <option value="Not Answered">🔇 Not Answered</option>
-                            <option value="No. not reachable">📴 No. not reachable</option>
-                        </select>
-                    </div>
-                    <div class="admin-form-group" style="margin-bottom: 12px;">
+
+                <!-- Group 3: Status (Always Visible) -->
+                <div class="admin-form-group" style="margin-bottom: 12px;">
+                    <label for="lead-status" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Status</label>
+                    <select id="lead-status" class="admin-input" style="width: 100%; background: #1f2937; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
+                        <option value="New">✨ New</option>
+                        <option value="Answered">📞 Answered</option>
+                        <option value="Busy">⏳ Busy</option>
+                        <option value="Incorrect Number">🚫 Incorrect Number</option>
+                        <option value="Follow up required">🔁 Follow up required</option>
+                        <option value="Not Answered">🔇 Not Answered</option>
+                        <option value="No. not reachable">📴 No. not reachable</option>
+                    </select>
+                </div>
+
+                <!-- Group 4: Assignee & Final Status (Edit Only) -->
+                <div class="edit-only-field" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                    <div class="admin-form-group">
                         <label for="lead-assignee" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Assign To User</label>
                         <select id="lead-assignee" class="admin-input" style="width: 100%; background: #1f2937; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
                             <option value="">Unassigned</option>
                         </select>
                     </div>
+                    <div class="admin-form-group">
+                        <label for="lead-finalstatus" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Final Status</label>
+                        <select id="lead-finalstatus" class="admin-input" style="width: 100%; background: #1f2937; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
+                            <option value="">🔘 None</option>
+                            <option value="Booking confirmed">🎉 Booking confirmed</option>
+                            <option value="Booked elsewhere">🏢 Booked elsewhere</option>
+                            <option value="Postpone">⏳ Postpone</option>
+                            <option value="Lost lead">🗑️ Lost lead</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="admin-form-group" style="margin-bottom: 12px;">
-                    <label for="lead-finalstatus" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Final Status</label>
-                    <select id="lead-finalstatus" class="admin-input" style="width: 100%; background: #1f2937; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
-                        <option value="">🔘 None</option>
-                        <option value="Booking confirmed">🎉 Booking confirmed</option>
-                        <option value="Booked elsewhere">🏢 Booked elsewhere</option>
-                        <option value="Postpone">⏳ Postpone</option>
-                        <option value="Lost lead">🗑️ Lost lead</option>
-                    </select>
-                </div>
-                <div class="admin-form-group" style="margin-bottom: 12px;">
+
+                <!-- Group 5: Remarks (Edit Only) -->
+                <div class="admin-form-group edit-only-field" style="margin-bottom: 12px;">
                     <label for="lead-remarks" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Remarks</label>
                     <textarea id="lead-remarks" class="admin-textarea" rows="2" style="width: 100%; background: rgba(255,255,255,0.05); border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white; resize: none;"></textarea>
                 </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                    <div class="admin-form-group" style="margin-bottom: 16px;">
+
+                <!-- Group 6: Follow Up 1 & 2 (Edit Only) -->
+                <div class="edit-only-field" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+                    <div class="admin-form-group">
                         <label for="lead-followup1" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Follow up 1</label>
                         <input type="text" id="lead-followup1" class="admin-input" style="width: 100%; background: rgba(255,255,255,0.05); border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
                     </div>
-                    <div class="admin-form-group" style="margin-bottom: 16px;">
+                    <div class="admin-form-group">
                         <label for="lead-followup2" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Follow up 2</label>
                         <input type="text" id="lead-followup2" class="admin-input" style="width: 100%; background: rgba(255,255,255,0.05); border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
                     </div>
                 </div>
+
                 <button type="submit" class="btn btn-primary" style="width: 100%; border: none; padding: 10px; font-weight: bold; background-color: var(--color-gold); color: #111827; cursor: pointer; border-radius: 4px;">Save Lead</button>
             </form>
         </div>
@@ -490,6 +507,8 @@
         document.addEventListener('DOMContentLoaded', () => {
             // Check session security status
             if (sessionStorage.getItem('admin_verified') === 'true') {
+                currentUserRole = sessionStorage.getItem('admin_role') || 'admin';
+                currentUsername = sessionStorage.getItem('admin_username') || 'admin';
                 showDashboard();
             }
         });
@@ -522,30 +541,98 @@
             }, 4000);
         }
 
-        // Passcode Gate Action
+        let currentUserRole = 'admin';
+        let currentUsername = 'admin';
+
+        const STAFF_USERS = {
+            'agent1': 'Agent1@Rudra26',
+            'agent2': 'Agent2@Rudra26',
+            'agent3': 'Agent3@Rudra26',
+            'agent4': 'Agent4@Rudra26',
+            'agent5': 'Agent5@Rudra26',
+            'agent6': 'Agent6@Rudra26',
+            'agent7': 'Agent7@Rudra26'
+        };
+
+        function applyRolePermissions() {
+            const tabs = document.querySelectorAll('.admin-nav-item');
+            
+            if (currentUserRole === 'staff') {
+                // Staff only sees Bookings and Leads Manager
+                tabs.forEach(tab => {
+                    const target = tab.getAttribute('onclick');
+                    if (target && (target.includes('bookings') || target.includes('leads'))) {
+                        tab.style.display = 'flex';
+                    } else {
+                        tab.style.display = 'none';
+                    }
+                });
+
+                // Hide elements restricted to admin
+                const addLeadBtn = document.getElementById('add-lead-btn');
+                if (addLeadBtn) addLeadBtn.style.display = 'none';
+                
+                const importLeadsBtn = document.getElementById('import-leads-btn');
+                if (importLeadsBtn) importLeadsBtn.style.display = 'none';
+
+                // Automatically switch to Leads tab
+                switchTab(null, 'leads');
+            } else {
+                // Admin sees all tabs
+                tabs.forEach(tab => tab.style.display = 'flex');
+                
+                const addLeadBtn = document.getElementById('add-lead-btn');
+                if (addLeadBtn) addLeadBtn.style.display = 'inline-block';
+                
+                const importLeadsBtn = document.getElementById('import-leads-btn');
+                if (importLeadsBtn) importLeadsBtn.style.display = 'inline-block';
+            }
+        }
+
+        // Passcode Gate Action supporting 7 agents + admin
         function verifyPasscode(event) {
             event.preventDefault();
-            const pinVal = document.getElementById('admin-passcode').value;
+            const usernameInput = document.getElementById('admin-username');
+            const passcodeInput = document.getElementById('admin-passcode');
+            const usernameVal = usernameInput.value.trim().toLowerCase();
+            const pinVal = passcodeInput.value.trim();
             const gateCard = document.querySelector('.admin-lock-card');
 
-            if (pinVal === CORRECT_PIN) {
+            if (usernameVal === 'admin' && pinVal === CORRECT_PIN) {
+                currentUserRole = 'admin';
+                currentUsername = 'admin';
                 sessionStorage.setItem('admin_verified', 'true');
-                showAdminToast('Dashboard unlocked successfully!', 'success');
+                sessionStorage.setItem('admin_role', 'admin');
+                sessionStorage.setItem('admin_username', 'admin');
+                showAdminToast('Dashboard unlocked as Admin!', 'success');
+                showDashboard();
+            } else if (STAFF_USERS[usernameVal] && STAFF_USERS[usernameVal] === pinVal) {
+                currentUserRole = 'staff';
+                currentUsername = usernameVal;
+                sessionStorage.setItem('admin_verified', 'true');
+                sessionStorage.setItem('admin_role', 'staff');
+                sessionStorage.setItem('admin_username', usernameVal);
+                showAdminToast(`Dashboard unlocked as ${usernameVal}!`, 'success');
                 showDashboard();
             } else {
-                showAdminToast('Invalid passcode. Access denied.', 'error');
+                showAdminToast('Invalid Username or Passcode.', 'error');
                 gateCard.classList.add('shake-animation');
                 setTimeout(() => {
                     gateCard.classList.remove('shake-animation');
                 }, 400);
-                document.getElementById('admin-passcode').value = '';
-                document.getElementById('admin-passcode').focus();
+                passcodeInput.value = '';
+                passcodeInput.focus();
             }
         }
 
         function showDashboard() {
             document.getElementById('gate-container').style.display = 'none';
             document.getElementById('dashboard-container').style.display = 'flex';
+
+            currentUserRole = sessionStorage.getItem('admin_role') || 'admin';
+            currentUsername = sessionStorage.getItem('admin_username') || 'admin';
+            
+            applyRolePermissions();
 
             // Init client
             if (typeof supabase !== 'undefined') {
@@ -556,6 +643,8 @@
 
         function logoutAdmin() {
             sessionStorage.removeItem('admin_verified');
+            sessionStorage.removeItem('admin_role');
+            sessionStorage.removeItem('admin_username');
             window.location.reload();
         }
 
@@ -1404,7 +1493,7 @@
                                 </select>
                             </td>
                             <td>
-                                <select onchange="updateLeadField('${item.id}', 'assigned_to', this.value)" style="background: #1f2937; color: white; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 4px; font-size: 12px; width: 150px; cursor: pointer;">
+                                <select ${currentUserRole === "staff" ? "disabled" : ""} onchange="updateLeadField('${item.id}', 'assigned_to', this.value)" style="background: #1f2937; color: white; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 4px; font-size: 12px; width: 150px; cursor: pointer;">
                                     ${assigneeOptions}
                                 </select>
                             </td>
@@ -1422,9 +1511,10 @@
                                     <button class="admin-btn-edit" onclick="startEditLead(${index})" style="background-color: var(--color-gold); color: #0f172a; border: none; width: 28px; height: 28px; border-radius: var(--border-radius-sm, 4px); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px;">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </button>
+                                    ${currentUserRole === "admin" ? `
                                     <button class="admin-btn-delete" onclick="deleteRecord('leads', '${item.id}', fetchLeads)" style="width: 28px; height: 28px; font-size: 12px;">
                                         <i class="fa-solid fa-trash"></i>
-                                    </button>
+                                    </button>` : ""}
                                 </div>
                             </td>
                         </tr>
@@ -1448,6 +1538,16 @@
             document.getElementById('lead-modal-title').innerText = 'Add New Lead';
             document.getElementById('lead-id').value = '';
             document.getElementById('lead-form').reset();
+            
+            // Hide edit-only fields when adding a new lead
+            document.querySelectorAll('.edit-only-field').forEach(el => el.style.display = 'none');
+            
+            // Enable fields for new entry
+            document.getElementById('lead-name').disabled = false;
+            document.getElementById('lead-phone').disabled = false;
+            document.getElementById('lead-email').disabled = false;
+            document.getElementById('lead-source').disabled = false;
+            document.getElementById('lead-assignee').disabled = false;
         };
 
         window.closeLeadModal = function() {
@@ -1474,12 +1574,138 @@
             document.getElementById('lead-phone').value = item.phone || '';
             document.getElementById('lead-email').value = item.email || '';
             document.getElementById('lead-source').value = item.source || '';
-            document.getElementById('lead-status').value = item.status || 'Answered';
+            document.getElementById('lead-status').value = item.status || 'New';
             document.getElementById('lead-assignee').value = item.assigned_to || '';
             document.getElementById('lead-finalstatus').value = item.final_status || '';
             document.getElementById('lead-remarks').value = item.remarks || '';
             document.getElementById('lead-followup1').value = item.follow_up_1 || '';
             document.getElementById('lead-followup2').value = item.follow_up_2 || '';
+
+            // Show edit-only fields
+            document.querySelectorAll('.edit-only-field').forEach(el => {
+                el.style.display = '';
+            });
+
+            // If logged in as staff, restrict editing permissions to name/phone/email/source/assignee
+            const isStaff = (currentUserRole === 'staff');
+            document.getElementById('lead-name').disabled = isStaff;
+            document.getElementById('lead-phone').disabled = isStaff;
+            document.getElementById('lead-email').disabled = isStaff;
+            document.getElementById('lead-source').disabled = isStaff;
+            document.getElementById('lead-assignee').disabled = isStaff;
+        };
+
+        // Helper to copy a confirmed lead to bookings table
+        window.copyLeadToBooking = async function(lead) {
+            try {
+                // Check if this lead already has a booking to avoid duplicate inserts
+                const { data: existing, error: checkErr } = await supabaseAdmin
+                    .from('bookings')
+                    .select('id')
+                    .eq('email', lead.email)
+                    .eq('phone', lead.phone)
+                    .limit(1);
+                
+                if (checkErr) throw checkErr;
+                
+                if (existing && existing.length > 0) {
+                    console.log('Booking already exists for this lead email/phone.');
+                    return; // skip duplicate
+                }
+
+                // Insert into bookings table
+                const { error: insertErr } = await supabaseAdmin
+                    .from('bookings')
+                    .insert([{
+                        name: lead.name,
+                        phone: lead.phone,
+                        email: lead.email || '',
+                        package_name: 'Confirmed Lead Booking',
+                        travel_date: new Date().toISOString().split('T')[0], // today's date
+                        travelers: '1',
+                        message: lead.remarks || 'Transferred from Leads Manager'
+                    }]);
+
+                if (insertErr) throw insertErr;
+                showAdminToast('Lead successfully copied to Bookings!', 'success');
+                fetchBookings(); // refresh bookings tab
+            } catch (err) {
+                console.error('Error copying lead to bookings:', err);
+                showAdminToast('Failed to copy lead to bookings: ' + err.message, 'error');
+            }
+        };
+
+        // Bulk CSV Import for Leads
+        window.triggerImportLeads = function() {
+            document.getElementById('leads-csv-file').click();
+        };
+
+        window.handleLeadsCSVImport = async function(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                const text = e.target.result;
+                const lines = text.split(/\r?\n/);
+                if (lines.length <= 1) {
+                    showAdminToast('CSV file is empty or only contains headers!', 'error');
+                    return;
+                }
+
+                const newLeads = [];
+                for (let i = 1; i < lines.length; i++) {
+                    const line = lines[i].trim();
+                    if (!line) continue;
+
+                    // Simple CSV parser supporting quotes
+                    const cols = [];
+                    let insideQuotes = false;
+                    let current = '';
+                    for (let j = 0; j < line.length; j++) {
+                        const char = line[j];
+                        if (char === '"') {
+                            insideQuotes = !insideQuotes;
+                        } else if (char === ',' && !insideQuotes) {
+                            cols.push(current.trim());
+                            current = '';
+                        } else {
+                            current += char;
+                        }
+                    }
+                    cols.push(current.trim());
+
+                    if (cols[0]) { // Name is required
+                        newLeads.push({
+                            name: cols[0],
+                            phone: cols[1] || '',
+                            email: cols[2] || '',
+                            source: cols[3] || 'CSV Import',
+                            status: cols[4] || 'New',
+                            remarks: cols[5] || '',
+                            follow_up_1: cols[6] || '',
+                            follow_up_2: cols[7] || '',
+                            final_status: cols[8] || null
+                        });
+                    }
+                }
+
+                if (newLeads.length === 0) {
+                    showAdminToast('No valid leads found in CSV.', 'error');
+                    return;
+                }
+
+                try {
+                    const { error } = await supabaseAdmin.from('leads').insert(newLeads);
+                    if (error) throw error;
+                    showAdminToast(`Successfully imported ${newLeads.length} leads!`, 'success');
+                    fetchLeads();
+                } catch (err) {
+                    console.error(err);
+                    showAdminToast('Failed to import leads: ' + err.message, 'error');
+                }
+            };
+            reader.readAsText(file);
         };
 
         document.getElementById('lead-form').addEventListener('submit', async (e) => {
@@ -1497,7 +1723,14 @@
             const final_status = document.getElementById('lead-finalstatus').value || null;
 
             try {
-                const leadData = { name, phone, email, source, status, assigned_to, remarks, follow_up_1, follow_up_2, final_status };
+                let leadData = {};
+                if (currentUserRole === 'staff') {
+                    // Staff can only update status, remarks, follow-ups, and final status
+                    leadData = { status, remarks, follow_up_1, follow_up_2, final_status };
+                } else {
+                    // Admin updates everything
+                    leadData = { name, phone, email, source, status, assigned_to, remarks, follow_up_1, follow_up_2, final_status };
+                }
                 
                 if (id) {
                     const { error } = await supabaseAdmin
@@ -1505,6 +1738,14 @@
                         .update(leadData)
                         .eq('id', id);
                     if (error) throw error;
+                    
+                    // If marked as booking confirmed, move to bookings tab
+                    if (final_status === 'Booking confirmed') {
+                        const originalLead = currentLeads.find(l => l.id === id);
+                        const fullLead = { ...originalLead, ...leadData };
+                        await copyLeadToBooking(fullLead);
+                    }
+                    
                     showAdminToast('Lead updated successfully!', 'success');
                 } else {
                     const { error } = await supabaseAdmin
