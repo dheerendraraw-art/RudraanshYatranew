@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -36,7 +36,12 @@
                 </div>
                 <div class="form-group" style="margin-bottom: 20px; text-align: left;">
                     <label for="admin-passcode" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Passcode</label>
-                    <input type="password" id="admin-passcode" class="admin-input" style="text-align: left; font-size: 15px; padding: 10px;" placeholder="Passcode" required>
+                    <div style="display: flex; gap: 8px;">
+                        <input type="password" id="admin-passcode" class="admin-input" style="text-align: left; font-size: 15px; padding: 10px; flex: 1;" placeholder="Passcode" required>
+                        <button type="button" onclick="toggleLoginPassword()" class="btn btn-secondary" style="border: 1px solid var(--color-gold); background: #1e293b; padding: 10px 12px; cursor: pointer; border-radius: 4px; color: var(--color-gold); display: flex; align-items: center; justify-content: center;" title="Show/Hide Password">
+                            <i class="fa-solid fa-eye-slash" id="login-eye-icon"></i>
+                        </button>
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-primary"
                     style="width: 100%; border: none; font-size: 15px; padding: 12px;">
@@ -1904,14 +1909,14 @@
                         <tr>
                             <td><strong>${item.username}</strong></td>
                             <td>
-                                <span style="font-size: 11px; font-weight: bold; background: ${item.role === 'admin' ? 'rgba(212,175,55,0.2)' : 'rgba(255,255,255,0.05)'}; padding: 4px 8px; border-radius: 4px; color: ${item.role === 'admin' ? 'var(--color-gold)' : 'white'};">
+                                <span style="font-size: 11px; font-weight: bold; background: ${item.role === 'admin' ? '#fef3c7' : '#e5e7eb'}; padding: 6px 12px; border-radius: 4px; color: ${item.role === 'admin' ? '#b45309' : '#4b5563'}; border: 1px solid ${item.role === 'admin' ? '#f59e0b' : '#d1d5db'};">
                                     ${item.role.toUpperCase()}
                                 </span>
                             </td>
                             <td>
                                 <div style="display: flex; gap: 8px; align-items: center;">
-                                    <input type="password" id="passcode-input-${item.id}" value="${item.passcode}" style="background: rgba(255,255,255,0.05); border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 6px 10px; color: white; font-family: monospace; font-size: 14px; width: 220px;">
-                                    <button onclick="togglePasscodeVisibility('${item.id}', this)" class="btn btn-secondary" style="border: 1px solid var(--color-gold); background: transparent; padding: 6px 10px; cursor: pointer; border-radius: 3px; color: white;" title="Show/Hide Password">
+                                    <input type="password" id="passcode-input-${item.id}" value="${item.passcode}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 6px 10px; color: #1e293b; font-family: monospace; font-size: 14px; width: 220px; font-weight: 600;">
+                                    <button onclick="togglePasscodeVisibility('${item.id}', this)" class="btn btn-secondary" style="border: 1.5px solid var(--color-gold); background: #1e293b; padding: 6px 10px; cursor: pointer; border-radius: 4px; color: var(--color-gold); display: flex; align-items: center; justify-content: center;" title="Show/Hide Password">
                                         <i class="fa-solid fa-eye-slash"></i>
                                     </button>
                                 </div>
@@ -1931,6 +1936,18 @@
                 if (tbody) {
                     tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: red;">Failed to load credentials: ${err.message}</td></tr>`;
                 }
+            }
+        };
+
+        window.toggleLoginPassword = function() {
+            const input = document.getElementById('admin-passcode');
+            const icon = document.getElementById('login-eye-icon');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.className = 'fa-solid fa-eye';
+            } else {
+                input.type = 'password';
+                icon.className = 'fa-solid fa-eye-slash';
             }
         };
 
