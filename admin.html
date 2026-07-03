@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -1217,6 +1217,7 @@
 
         // --- 3. LEADS MANAGER LOGIC ---
         let usersMap = {};
+        let currentLeads = [];
 
         window.fetchUsers = async function() {
             try {
@@ -1253,16 +1254,17 @@
 
                 if (!tbody) return;
 
+                currentLeads = data || [];
+
                 if (data.length === 0) {
                     tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: var(--color-slate);">No leads registered yet.</td></tr>`;
                     return;
                 }
 
                 let html = '';
-                data.forEach(item => {
+                data.forEach((item, index) => {
                     const createdStr = new Date(item.created_at).toLocaleDateString();
                     const assigneeEmail = usersMap[item.assigned_to] || 'Unassigned';
-                    const safeItem = JSON.stringify(item).replace(/"/g, '&quot;');
                     
                     let statusColor = '#3b82f6';
                     if (item.status === 'Closed/Converted') statusColor = '#22c55e';
@@ -1281,7 +1283,7 @@
                             <td>${createdStr}</td>
                             <td>
                                 <div style="display: flex; gap: 8px;">
-                                    <button class="admin-btn-edit" onclick="startEditLead(${safeItem})" style="background-color: var(--color-gold); color: #0f172a; border: none; width: 28px; height: 28px; border-radius: var(--border-radius-sm, 4px); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px;">
+                                    <button class="admin-btn-edit" onclick="startEditLead(${index})" style="background-color: var(--color-gold); color: #0f172a; border: none; width: 28px; height: 28px; border-radius: var(--border-radius-sm, 4px); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px;">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </button>
                                     <button class="admin-btn-delete" onclick="deleteRecord('leads', '${item.id}', fetchLeads)" style="width: 28px; height: 28px; font-size: 12px;">
@@ -1312,7 +1314,9 @@
             document.getElementById('lead-modal').style.display = 'none';
         };
 
-        window.startEditLead = function(item) {
+        window.startEditLead = function(index) {
+            const item = currentLeads[index];
+            if (!item) return;
             document.getElementById('lead-modal').style.display = 'flex';
             document.getElementById('lead-modal-title').innerText = 'Edit Lead';
             document.getElementById('lead-id').value = item.id;
