@@ -547,6 +547,16 @@
         let currentUserRole = 'admin';
         let currentUsername = 'admin';
 
+        const AGENT_UUIDS = {
+            'agent1': '00000000-0000-0000-0000-000000000001',
+            'agent2': '00000000-0000-0000-0000-000000000002',
+            'agent3': '00000000-0000-0000-0000-000000000003',
+            'agent4': '00000000-0000-0000-0000-000000000004',
+            'agent5': '00000000-0000-0000-0000-000000000005',
+            'agent6': '00000000-0000-0000-0000-000000000006',
+            'agent7': '00000000-0000-0000-0000-000000000007'
+        };
+
         const STAFF_USERS = {
             'agent1': 'Agent1@Rudra26',
             'agent2': 'Agent2@Rudra26',
@@ -558,18 +568,22 @@
         };
 
         function applyRolePermissions() {
-            const tabs = document.querySelectorAll('.admin-nav-item');
+            const tabs = document.querySelectorAll('.admin-tab-btn');
             
             if (currentUserRole === 'staff') {
                 // Staff only sees Bookings and Leads Manager
                 tabs.forEach(tab => {
                     const target = tab.getAttribute('onclick');
-                    if (target && (target.includes('bookings') || target.includes('leads'))) {
-                        tab.style.display = 'flex';
+                    if (target && (target.includes('pane-bookings') || target.includes('pane-leads'))) {
+                        tab.style.display = 'inline-flex';
                     } else {
                         tab.style.display = 'none';
                     }
                 });
+
+                // Hide statistics grid for staff
+                const statsGrid = document.querySelector('.admin-stats-grid');
+                if (statsGrid) statsGrid.style.display = 'none';
 
                 // Hide elements restricted to admin
                 const addLeadBtn = document.getElementById('add-lead-btn');
@@ -579,11 +593,14 @@
                 if (importLeadsBtn) importLeadsBtn.style.display = 'none';
 
                 // Automatically switch to Leads tab
-                switchTab(null, 'leads');
+                switchTab(null, 'pane-leads');
             } else {
                 // Admin sees all tabs
-                tabs.forEach(tab => tab.style.display = 'flex');
+                tabs.forEach(tab => tab.style.display = 'inline-flex');
                 
+                const statsGrid = document.querySelector('.admin-stats-grid');
+                if (statsGrid) statsGrid.style.display = 'grid';
+
                 const addLeadBtn = document.getElementById('add-lead-btn');
                 if (addLeadBtn) addLeadBtn.style.display = 'inline-block';
                 
@@ -659,8 +676,15 @@
             tabs.forEach(t => t.classList.remove('active'));
             contents.forEach(c => c.style.display = 'none');
 
-            evt.currentTarget.classList.add('active');
-            document.getElementById(paneId).style.display = 'block';
+            if (evt && evt.currentTarget) {
+                evt.currentTarget.classList.add('active');
+            } else {
+                const targetTab = Array.from(tabs).find(t => t.getAttribute('onclick') && t.getAttribute('onclick').includes(paneId));
+                if (targetTab) targetTab.classList.add('active');
+            }
+            
+            const targetPane = document.getElementById(paneId);
+            if (targetPane) targetPane.style.display = 'block';
         }
 
         // Preview images instantly
@@ -700,10 +724,19 @@
         // 1. Fetch Bookings
         async function fetchBookings() {
             try {
-                const { data, error } = await supabaseAdmin
+                let query = supabaseAdmin
                     .from('bookings')
                     .select('*')
                     .order('created_at', { ascending: false });
+
+                if (currentUserRole === 'staff') {
+                    const agentUuid = AGENT_UUIDS[currentUsername];
+                    if (agentUuid) {
+                        query = query.eq('user_id', agentUuid);
+                    }
+                }
+
+                const { data, error } = await query;
 
                 const statEl = document.getElementById('stat-bookings');
                 const tbody = document.getElementById('bookings-table-body');
@@ -1626,7 +1659,8 @@
                         package_name: 'Confirmed Lead Booking',
                         travel_date: new Date().toISOString().split('T')[0], // today's date
                         travelers: '1',
-                        message: lead.remarks || 'Transferred from Leads Manager'
+                        message: lead.remarks || 'Transferred from Leads Manager',
+                        user_id: lead.assigned_to || null
                     }]);
 
                 if (insertErr) throw insertErr;
