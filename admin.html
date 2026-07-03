@@ -133,6 +133,9 @@
                 <button class="admin-tab-btn" onclick="switchTab(event, 'pane-leads')">
                     <i class="fa-solid fa-people-group"></i> Leads Manager
                 </button>
+                <button class="admin-tab-btn" onclick="switchTab(event, 'pane-passwords')" id="tab-passwords-btn">
+                    <i class="fa-solid fa-key"></i> Manage Staff
+                </button>
             </div>
 
             <!-- PANE 1: BOOKINGS -->
@@ -340,6 +343,30 @@
                 </div>
             </div>
 
+            <!-- PANE 7: MANAGE STAFF & PASSWORDS (ADMIN ONLY) -->
+            <div id="pane-passwords" class="admin-tab-content-pane" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3 class="admin-form-title" style="margin-bottom: 0; border-bottom: none;"><i class="fa-solid fa-key" style="color: var(--color-gold);"></i> Manage Staff & Passwords</h3>
+                </div>
+                <div class="admin-table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Role</th>
+                                <th>Current Passcode</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="passwords-table-body">
+                            <tr>
+                                <td colspan="4" style="text-align: center; color: var(--color-slate);">Loading credentials...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
             <!-- PANE 5: GALLERY -->
             <div id="pane-gallery" class="admin-tab-content-pane" style="display: none;">
                 <div class="admin-form-grid">
@@ -509,8 +536,12 @@
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlzbnp4dnZzZWdta21rZXBjbHRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NDY3NjMsImV4cCI6MjA5NjMyMjc2M30.V6q3OpJCf6PEu6JTM__6E7PJDrY5lY--FZfjyy_toLM';
         let supabaseAdmin = null;
 
+        if (typeof supabase !== 'undefined') {
+            supabaseAdmin = supabase.createClient(supabaseUrl, supabaseKey);
+        }
+
         // Verification configuration
-        const CORRECT_PIN = 'VandanaDheerendra@2023';
+        let CORRECT_PIN = 'VandanaDheerendra@2023';
 
         document.addEventListener('DOMContentLoaded', () => {
             // Check session security status
@@ -562,15 +593,7 @@
             'agent7': '00000000-0000-0000-0000-000000000007'
         };
 
-        const STAFF_USERS = {
-            'agent1': 'Agent1@Rudra26',
-            'agent2': 'Agent2@Rudra26',
-            'agent3': 'Agent3@Rudra26',
-            'agent4': 'Agent4@Rudra26',
-            'agent5': 'Agent5@Rudra26',
-            'agent6': 'Agent6@Rudra26',
-            'agent7': 'Agent7@Rudra26'
-        };
+
 
         function applyRolePermissions() {
             const tabs = document.querySelectorAll('.admin-tab-btn');
@@ -614,8 +637,8 @@
             }
         }
 
-        // Passcode Gate Action supporting 7 agents + admin
-        function verifyPasscode(event) {
+        // Passcode Gate Action querying staff_credentials in Supabase
+        async function verifyPasscode(event) {
             event.preventDefault();
             const usernameInput = document.getElementById('admin-username');
             const passcodeInput = document.getElementById('admin-passcode');
@@ -623,30 +646,41 @@
             const pinVal = passcodeInput.value.trim();
             const gateCard = document.querySelector('.admin-lock-card');
 
-            if (usernameVal === 'admin' && pinVal === CORRECT_PIN) {
-                currentUserRole = 'admin';
-                currentUsername = 'admin';
+            try {
+                if (!supabaseAdmin) {
+                    showAdminToast('Database client not initialized. Please reload.', 'error');
+                    return;
+                }
+
+                const { data, error } = await supabaseAdmin
+                    .from('staff_credentials')
+                    .select('*')
+                    .eq('username', usernameVal)
+                    .eq('passcode', pinVal)
+                    .single();
+
+                if (error || !data) {
+                    showAdminToast('Invalid Username or Passcode.', 'error');
+                    gateCard.classList.add('shake-animation');
+                    setTimeout(() => {
+                        gateCard.classList.remove('shake-animation');
+                    }, 400);
+                    passcodeInput.value = '';
+                    passcodeInput.focus();
+                    return;
+                }
+
+                // Credentials valid!
+                currentUserRole = data.role; // 'admin' or 'staff'
+                currentUsername = data.username;
                 sessionStorage.setItem('admin_verified', 'true');
-                sessionStorage.setItem('admin_role', 'admin');
-                sessionStorage.setItem('admin_username', 'admin');
-                showAdminToast('Dashboard unlocked as Admin!', 'success');
+                sessionStorage.setItem('admin_role', currentUserRole);
+                sessionStorage.setItem('admin_username', currentUsername);
+                showAdminToast(`Dashboard unlocked as ${currentUsername}!`, 'success');
                 showDashboard();
-            } else if (STAFF_USERS[usernameVal] && STAFF_USERS[usernameVal] === pinVal) {
-                currentUserRole = 'staff';
-                currentUsername = usernameVal;
-                sessionStorage.setItem('admin_verified', 'true');
-                sessionStorage.setItem('admin_role', 'staff');
-                sessionStorage.setItem('admin_username', usernameVal);
-                showAdminToast(`Dashboard unlocked as ${usernameVal}!`, 'success');
-                showDashboard();
-            } else {
-                showAdminToast('Invalid Username or Passcode.', 'error');
-                gateCard.classList.add('shake-animation');
-                setTimeout(() => {
-                    gateCard.classList.remove('shake-animation');
-                }, 400);
-                passcodeInput.value = '';
-                passcodeInput.focus();
+            } catch (err) {
+                console.error(err);
+                showAdminToast('Login verification failed: ' + err.message, 'error');
             }
         }
 
@@ -722,13 +756,19 @@
         async function loadAllDashboardData() {
             if (!supabaseAdmin) return;
 
-            fetchBookings();
-            fetchCustomRequests();
-            fetchDiscountRegistrations();
-            fetchBlogs();
-            fetchGallery();
-            await fetchUsers();
-            fetchLeads();
+            if (currentUserRole === 'admin') {
+                fetchBookings();
+                fetchCustomRequests();
+                fetchDiscountRegistrations();
+                fetchBlogs();
+                fetchGallery();
+                await fetchUsers();
+                fetchLeads();
+                fetchCredentials();
+            } else {
+                fetchBookings();
+                fetchLeads();
+            }
         }
 
         // 1. Fetch Bookings
@@ -1817,6 +1857,99 @@
                 showAdminToast('Failed to save lead: ' + err.message, 'error');
             }
         });
+
+        // --- 4. STAFF CREDENTIALS LOGIC (ADMIN ONLY) ---
+        let staffCredentialsList = [];
+
+        window.fetchCredentials = async function() {
+            if (currentUserRole !== 'admin') return;
+            try {
+                const { data, error } = await supabaseAdmin
+                    .from('staff_credentials')
+                    .select('*')
+                    .order('username', { ascending: true });
+
+                if (error) throw error;
+                staffCredentialsList = data || [];
+
+                const tbody = document.getElementById('passwords-table-body');
+                if (!tbody) return;
+
+                let html = ';
+                staffCredentialsList.forEach((item, index) => {
+                    html += `
+                        <tr>
+                            <td><strong>${item.username}</strong></td>
+                            <td>
+                                <span style="font-size: 11px; font-weight: bold; background: ${item.role === 'admin' ? 'rgba(212,175,55,0.2)' : 'rgba(255,255,255,0.05)'}; padding: 4px 8px; border-radius: 4px; color: ${item.role === 'admin' ? 'var(--color-gold)' : 'white'};">
+                                    ${item.role.toUpperCase()}
+                                </span>
+                            </td>
+                            <td>
+                                <div style="display: flex; gap: 8px; align-items: center;">
+                                    <input type="password" id="passcode-input-${item.id}" value="${item.passcode}" style="background: rgba(255,255,255,0.05); border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 6px 10px; color: white; font-family: monospace; font-size: 14px; width: 220px;">
+                                    <button onclick="togglePasscodeVisibility('${item.id}', this)" class="btn btn-secondary" style="border: 1px solid var(--color-gold); background: transparent; padding: 6px 10px; cursor: pointer; border-radius: 3px; color: white;" title="Show/Hide Password">
+                                        <i class="fa-solid fa-eye-slash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                            <td>
+                                <button onclick="updateStaffPasscode('${item.id}', '${item.username}')" class="btn btn-primary" style="background-color: var(--color-gold); border: none; padding: 6px 12px; font-size: 12px; cursor: pointer; border-radius: 3px; color: #0f172a; font-weight: 600;">
+                                    <i class="fa-solid fa-floppy-disk"></i> Update Password
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                tbody.innerHTML = html;
+            } catch (err) {
+                console.error(err);
+                const tbody = document.getElementById('passwords-table-body');
+                if (tbody) {
+                    tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: red;">Failed to load credentials: ${err.message}</td></tr>`;
+                }
+            }
+        };
+
+        window.togglePasscodeVisibility = function(id, btn) {
+            const input = document.getElementById(`passcode-input-${id}`);
+            const icon = btn.querySelector('i');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.className = 'fa-solid fa-eye';
+            } else {
+                input.type = 'password';
+                icon.className = 'fa-solid fa-eye-slash';
+            }
+        };
+
+        window.updateStaffPasscode = async function(id, username) {
+            const input = document.getElementById(`passcode-input-${id}`);
+            const newPasscode = input.value.trim();
+            
+            if (!newPasscode) {
+                showAdminToast('Passcode cannot be empty!', 'error');
+                return;
+            }
+
+            try {
+                const { error } = await supabaseAdmin
+                    .from('staff_credentials')
+                    .update({ passcode: newPasscode })
+                    .eq('id', id);
+
+                if (error) throw error;
+                showAdminToast(`Passcode updated successfully for ${username}!`, 'success');
+                
+                if (username === 'admin') {
+                    CORRECT_PIN = newPasscode;
+                }
+                fetchCredentials();
+            } catch (err) {
+                console.error(err);
+                showAdminToast('Failed to update passcode: ' + err.message, 'error');
+            }
+        };
     </script>
 </body>
 
