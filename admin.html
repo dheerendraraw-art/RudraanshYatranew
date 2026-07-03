@@ -311,7 +311,10 @@
                                 <th>Source</th>
                                 <th>Status</th>
                                 <th>Assigned To</th>
-                                <th>Notes</th>
+                                <th>Remarks</th>
+                                <th>Follow up 1</th>
+                                <th>Follow up 2</th>
+                                <th>Final Status</th>
                                 <th>Created</th>
                                 <th>Actions</th>
                             </tr>
@@ -395,50 +398,76 @@
     </div>
 
     <!-- Add/Edit Lead Modal -->
-    <div class="modal-overlay" id="lead-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10000; justify-content: center; align-items: center;">
-        <div class="modal-box" style="background: #111827; border: 2px solid var(--color-gold); max-width: 500px; width: 90%; padding: 24px; border-radius: var(--border-radius-md); position: relative; margin: 20px;">
-            <button class="modal-close" onclick="closeLeadModal()" style="position: absolute; top: 12px; right: 16px; font-size: 24px; background: none; border: none; color: var(--color-text-secondary); cursor: pointer;">&times;</button>
+    <div class="modal-overlay" id="lead-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 10000; justify-content: center; align-items: center; overflow-y: auto;">
+        <div class="modal-box" style="background: #111827; border: 2px solid var(--color-gold); max-width: 550px; width: 90%; padding: 24px; border-radius: var(--border-radius-md); position: relative; margin: 40px auto;">
+            <button type="button" class="modal-close" onclick="closeLeadModal()" style="position: absolute; top: 12px; right: 16px; font-size: 24px; background: none; border: none; color: var(--color-text-secondary); cursor: pointer;">&times;</button>
             <h3 id="lead-modal-title" style="font-family: var(--font-serif); color: white; margin-bottom: 20px; font-size: 20px;">Add New Lead</h3>
             
             <form id="lead-form">
                 <input type="hidden" id="lead-id">
-                <div class="admin-form-group" style="margin-bottom: 16px;">
-                    <label for="lead-name" style="display: block; color: var(--color-text-secondary); margin-bottom: 6px;">Client Name</label>
-                    <input type="text" id="lead-name" class="admin-input" required style="width: 100%; background: rgba(255,255,255,0.05); border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 10px; color: white;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div class="admin-form-group" style="margin-bottom: 12px;">
+                        <label for="lead-name" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Client Name *</label>
+                        <input type="text" id="lead-name" class="admin-input" required style="width: 100%; background: rgba(255,255,255,0.05); border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
+                    </div>
+                    <div class="admin-form-group" style="margin-bottom: 12px;">
+                        <label for="lead-phone" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Phone Number</label>
+                        <input type="tel" id="lead-phone" class="admin-input" style="width: 100%; background: rgba(255,255,255,0.05); border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
+                    </div>
                 </div>
-                <div class="admin-form-group" style="margin-bottom: 16px;">
-                    <label for="lead-phone" style="display: block; color: var(--color-text-secondary); margin-bottom: 6px;">Phone Number</label>
-                    <input type="tel" id="lead-phone" class="admin-input" style="width: 100%; background: rgba(255,255,255,0.05); border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 10px; color: white;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div class="admin-form-group" style="margin-bottom: 12px;">
+                        <label for="lead-email" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Email Address</label>
+                        <input type="email" id="lead-email" class="admin-input" style="width: 100%; background: rgba(255,255,255,0.05); border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
+                    </div>
+                    <div class="admin-form-group" style="margin-bottom: 12px;">
+                        <label for="lead-source" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Lead Source</label>
+                        <input type="text" id="lead-source" class="admin-input" placeholder="E.g. Website, Walk-in" style="width: 100%; background: rgba(255,255,255,0.05); border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
+                    </div>
                 </div>
-                <div class="admin-form-group" style="margin-bottom: 16px;">
-                    <label for="lead-email" style="display: block; color: var(--color-text-secondary); margin-bottom: 6px;">Email Address</label>
-                    <input type="email" id="lead-email" class="admin-input" style="width: 100%; background: rgba(255,255,255,0.05); border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 10px; color: white;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div class="admin-form-group" style="margin-bottom: 12px;">
+                        <label for="lead-status" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Status</label>
+                        <select id="lead-status" class="admin-input" style="width: 100%; background: #1f2937; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
+                            <option value="Answered">Answered</option>
+                            <option value="Busy">Busy</option>
+                            <option value="Incorrect Number">Incorrect Number</option>
+                            <option value="Follow up required">Follow up required</option>
+                            <option value="Not Answered">Not Answered</option>
+                        </select>
+                    </div>
+                    <div class="admin-form-group" style="margin-bottom: 12px;">
+                        <label for="lead-assignee" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Assign To User</label>
+                        <select id="lead-assignee" class="admin-input" style="width: 100%; background: #1f2937; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
+                            <option value="">Unassigned</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="admin-form-group" style="margin-bottom: 16px;">
-                    <label for="lead-source" style="display: block; color: var(--color-text-secondary); margin-bottom: 6px;">Lead Source</label>
-                    <input type="text" id="lead-source" class="admin-input" placeholder="E.g. Website, WhatsApp, Walk-in" style="width: 100%; background: rgba(255,255,255,0.05); border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 10px; color: white;">
-                </div>
-                <div class="admin-form-group" style="margin-bottom: 16px;">
-                    <label for="lead-status" style="display: block; color: var(--color-text-secondary); margin-bottom: 6px;">Status</label>
-                    <select id="lead-status" class="admin-input" style="width: 100%; background: rgba(255,255,255,0.05); border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 10px; color: white;">
-                        <option value="New" style="background:#111827; color: white;">New</option>
-                        <option value="In Progress" style="background:#111827; color: white;">In Progress</option>
-                        <option value="Contacted" style="background:#111827; color: white;">Contacted</option>
-                        <option value="Closed/Converted" style="background:#111827; color: white;">Closed/Converted</option>
-                        <option value="Cancelled" style="background:#111827; color: white;">Cancelled</option>
+                <div class="admin-form-group" style="margin-bottom: 12px;">
+                    <label for="lead-finalstatus" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Final Status</label>
+                    <select id="lead-finalstatus" class="admin-input" style="width: 100%; background: #1f2937; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
+                        <option value="">None</option>
+                        <option value="Booking confirmed">Booking confirmed</option>
+                        <option value="Booked elsewhere">Booked elsewhere</option>
+                        <option value="Postpone">Postpone</option>
+                        <option value="Lost lead">Lost lead</option>
                     </select>
                 </div>
-                <div class="admin-form-group" style="margin-bottom: 16px;">
-                    <label for="lead-assignee" style="display: block; color: var(--color-text-secondary); margin-bottom: 6px;">Assign To User</label>
-                    <select id="lead-assignee" class="admin-input" style="width: 100%; background: rgba(255,255,255,0.05); border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 10px; color: white;">
-                        <option value="" style="background:#111827; color: white;">Unassigned</option>
-                    </select>
+                <div class="admin-form-group" style="margin-bottom: 12px;">
+                    <label for="lead-remarks" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Remarks</label>
+                    <textarea id="lead-remarks" class="admin-textarea" rows="2" style="width: 100%; background: rgba(255,255,255,0.05); border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white; resize: none;"></textarea>
                 </div>
-                <div class="admin-form-group" style="margin-bottom: 20px;">
-                    <label for="lead-notes" style="display: block; color: var(--color-text-secondary); margin-bottom: 6px;">Internal Notes</label>
-                    <textarea id="lead-notes" class="admin-textarea" rows="3" style="width: 100%; background: rgba(255,255,255,0.05); border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 10px; color: white; resize: none;"></textarea>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div class="admin-form-group" style="margin-bottom: 16px;">
+                        <label for="lead-followup1" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Follow up 1</label>
+                        <input type="text" id="lead-followup1" class="admin-input" style="width: 100%; background: rgba(255,255,255,0.05); border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
+                    </div>
+                    <div class="admin-form-group" style="margin-bottom: 16px;">
+                        <label for="lead-followup2" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Follow up 2</label>
+                        <input type="text" id="lead-followup2" class="admin-input" style="width: 100%; background: rgba(255,255,255,0.05); border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%; border: none;">Save Lead</button>
+                <button type="submit" class="btn btn-primary" style="width: 100%; border: none; padding: 10px; font-weight: bold; background-color: var(--color-gold); color: #111827; cursor: pointer; border-radius: 4px;">Save Lead</button>
             </form>
         </div>
     </div>
@@ -1239,6 +1268,26 @@
             }
         };
 
+        // Inline field updates helper
+        window.updateLeadField = async function(leadId, fieldName, value) {
+            try {
+                const updateData = {};
+                updateData[fieldName] = value === "" ? null : value;
+                
+                const { error } = await supabaseAdmin
+                    .from('leads')
+                    .update(updateData)
+                    .eq('id', leadId);
+
+                if (error) throw error;
+                showAdminToast('Lead updated successfully!', 'success');
+                fetchLeads();
+            } catch (err) {
+                console.error(err);
+                showAdminToast('Failed to update lead: ' + err.message, 'error');
+            }
+        };
+
         window.fetchLeads = async function() {
             try {
                 const { data, error } = await supabaseAdmin
@@ -1257,29 +1306,61 @@
                 currentLeads = data || [];
 
                 if (data.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: var(--color-slate);">No leads registered yet.</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="12" style="text-align: center; color: var(--color-slate);">No leads registered yet.</td></tr>`;
                     return;
                 }
 
                 let html = '';
                 data.forEach((item, index) => {
                     const createdStr = new Date(item.created_at).toLocaleDateString();
-                    const assigneeEmail = usersMap[item.assigned_to] || 'Unassigned';
                     
-                    let statusColor = '#3b82f6';
-                    if (item.status === 'Closed/Converted') statusColor = '#22c55e';
-                    else if (item.status === 'In Progress') statusColor = '#eab308';
-                    else if (item.status === 'Cancelled') statusColor = '#ef4444';
+                    // Render Status Dropdown options
+                    let statusOptions = '';
+                    const statuses = ["Answered", "Busy", "Incorrect Number", "Follow up required", "Not Answered"];
+                    statuses.forEach(s => {
+                        const selected = item.status === s ? 'selected' : '';
+                        statusOptions += `<option value="${s}" ${selected}>${s}</option>`;
+                    });
+
+                    // Render Assignee Dropdown options
+                    let assigneeOptions = '<option value="">Unassigned</option>';
+                    (usersList || []).forEach(user => {
+                        const selected = item.assigned_to === user.id ? 'selected' : '';
+                        assigneeOptions += `<option value="${user.id}" ${selected}>${user.email}</option>`;
+                    });
+
+                    // Render Final Status Dropdown options
+                    let finalStatusOptions = '<option value="">None</option>';
+                    const finalStatuses = ["Booking confirmed", "Booked elsewhere", "Postpone", "Lost lead"];
+                    finalStatuses.forEach(fs => {
+                        const selected = item.final_status === fs ? 'selected' : '';
+                        finalStatusOptions += `<option value="${fs}" ${selected}>${fs}</option>`;
+                    });
 
                     html += `
                         <tr>
                             <td><strong>${item.name}</strong></td>
-                            <td>${item.phone || '-'}</td>
+                            <td style="white-space: nowrap;">${item.phone || '-'}</td>
                             <td>${item.email || '-'}</td>
                             <td><span style="font-size: 11px; font-weight: bold; background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px;">${item.source || 'Website'}</span></td>
-                            <td><span style="font-size: 11px; font-weight: bold; color: ${statusColor}; border: 1px solid ${statusColor}; background: ${statusColor}1A; padding: 4px 8px; border-radius: 4px;">${item.status || 'New'}</span></td>
-                            <td style="color: var(--color-gold); font-weight: bold;">${assigneeEmail}</td>
-                            <td><small>${item.notes || '-'}</small></td>
+                            <td>
+                                <select onchange="updateLeadField('${item.id}', 'status', this.value)" style="background: #1f2937; color: white; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 4px; font-size: 12px; width: 135px; cursor: pointer;">
+                                    ${statusOptions}
+                                </select>
+                            </td>
+                            <td>
+                                <select onchange="updateLeadField('${item.id}', 'assigned_to', this.value)" style="background: #1f2937; color: white; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 4px; font-size: 12px; width: 150px; cursor: pointer;">
+                                    ${assigneeOptions}
+                                </select>
+                            </td>
+                            <td><small>${item.remarks || '-'}</small></td>
+                            <td><small>${item.follow_up_1 || '-'}</small></td>
+                            <td><small>${item.follow_up_2 || '-'}</small></td>
+                            <td>
+                                <select onchange="updateLeadField('${item.id}', 'final_status', this.value)" style="background: #1f2937; color: white; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 4px; font-size: 12px; width: 140px; cursor: pointer;">
+                                    ${finalStatusOptions}
+                                </select>
+                            </td>
                             <td>${createdStr}</td>
                             <td>
                                 <div style="display: flex; gap: 8px;">
@@ -1298,35 +1379,52 @@
             } catch (err) {
                 console.error(err);
                 if (tbody) {
-                    tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: red;">Failed to fetch leads. Error: ${err.message}</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="12" style="text-align: center; color: red;">Failed to fetch leads. Error: ${err.message}</td></tr>`;
                 }
             }
         };
 
         window.openLeadModal = function() {
-            document.getElementById('lead-modal').style.display = 'flex';
+            const modal = document.getElementById('lead-modal');
+            if (modal) {
+                modal.classList.add('active');
+                modal.style.display = 'flex';
+            }
             document.getElementById('lead-modal-title').innerText = 'Add New Lead';
             document.getElementById('lead-id').value = '';
             document.getElementById('lead-form').reset();
         };
 
         window.closeLeadModal = function() {
-            document.getElementById('lead-modal').style.display = 'none';
+            const modal = document.getElementById('lead-modal');
+            if (modal) {
+                modal.classList.remove('active');
+                modal.style.display = 'none';
+            }
         };
 
         window.startEditLead = function(index) {
             const item = currentLeads[index];
             if (!item) return;
-            document.getElementById('lead-modal').style.display = 'flex';
+            
+            const modal = document.getElementById('lead-modal');
+            if (modal) {
+                modal.classList.add('active');
+                modal.style.display = 'flex';
+            }
+            
             document.getElementById('lead-modal-title').innerText = 'Edit Lead';
             document.getElementById('lead-id').value = item.id;
             document.getElementById('lead-name').value = item.name;
             document.getElementById('lead-phone').value = item.phone || '';
             document.getElementById('lead-email').value = item.email || '';
             document.getElementById('lead-source').value = item.source || '';
-            document.getElementById('lead-status').value = item.status || 'New';
+            document.getElementById('lead-status').value = item.status || 'Answered';
             document.getElementById('lead-assignee').value = item.assigned_to || '';
-            document.getElementById('lead-notes').value = item.notes || '';
+            document.getElementById('lead-finalstatus').value = item.final_status || '';
+            document.getElementById('lead-remarks').value = item.remarks || '';
+            document.getElementById('lead-followup1').value = item.follow_up_1 || '';
+            document.getElementById('lead-followup2').value = item.follow_up_2 || '';
         };
 
         document.getElementById('lead-form').addEventListener('submit', async (e) => {
@@ -1338,20 +1436,25 @@
             const source = document.getElementById('lead-source').value.trim();
             const status = document.getElementById('lead-status').value;
             const assigned_to = document.getElementById('lead-assignee').value || null;
-            const notes = document.getElementById('lead-notes').value.trim();
+            const remarks = document.getElementById('lead-remarks').value.trim();
+            const follow_up_1 = document.getElementById('lead-followup1').value.trim();
+            const follow_up_2 = document.getElementById('lead-followup2').value.trim();
+            const final_status = document.getElementById('lead-finalstatus').value || null;
 
             try {
+                const leadData = { name, phone, email, source, status, assigned_to, remarks, follow_up_1, follow_up_2, final_status };
+                
                 if (id) {
                     const { error } = await supabaseAdmin
                         .from('leads')
-                        .update({ name, phone, email, source, status, assigned_to, notes })
+                        .update(leadData)
                         .eq('id', id);
                     if (error) throw error;
                     showAdminToast('Lead updated successfully!', 'success');
                 } else {
                     const { error } = await supabaseAdmin
                         .from('leads')
-                        .insert([{ name, phone, email, source, status, assigned_to, notes }]);
+                        .insert([leadData]);
                     if (error) throw error;
                     showAdminToast('Lead created successfully!', 'success');
                 }
