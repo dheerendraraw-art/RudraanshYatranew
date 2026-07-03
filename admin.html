@@ -30,10 +30,13 @@
             <p class="admin-lock-desc">Enter the administrator passcode to access bookings and content uploads.</p>
 
             <form id="passcode-form" onsubmit="verifyPasscode(event)">
-                <div class="form-group" style="margin-bottom: 20px;">
-                    <input type="password" id="admin-passcode" class="admin-input"
-                        style="text-align: center; letter-spacing: 4px; font-size: 18px;" placeholder="••••••••"
-                        required autofocus>
+                <div class="form-group" style="margin-bottom: 12px; text-align: left;">
+                    <label for="admin-username" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Username</label>
+                    <input type="text" id="admin-username" class="admin-input" style="text-align: left; font-size: 15px; padding: 10px;" placeholder="Username" required autofocus>
+                </div>
+                <div class="form-group" style="margin-bottom: 20px; text-align: left;">
+                    <label for="admin-passcode" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Passcode</label>
+                    <input type="password" id="admin-passcode" class="admin-input" style="text-align: left; font-size: 15px; padding: 10px;" placeholder="Passcode" required>
                 </div>
                 <button type="submit" class="btn btn-primary"
                     style="width: 100%; border: none; font-size: 15px; padding: 12px;">
