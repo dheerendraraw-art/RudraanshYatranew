@@ -1442,10 +1442,19 @@
 
         window.fetchLeads = async function() {
             try {
-                const { data, error } = await supabaseAdmin
+                let query = supabaseAdmin
                     .from('leads')
                     .select('*')
                     .order('created_at', { ascending: false });
+
+                if (currentUserRole === 'staff') {
+                    const agentUuid = AGENT_UUIDS[currentUsername];
+                    if (agentUuid) {
+                        query = query.eq('assigned_to', agentUuid);
+                    }
+                }
+
+                const { data, error } = await query;
 
                 const statEl = document.getElementById('stat-leads');
                 const tbody = document.getElementById('leads-table-body');
