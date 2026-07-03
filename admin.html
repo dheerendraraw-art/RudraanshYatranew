@@ -429,11 +429,13 @@
                     <div class="admin-form-group" style="margin-bottom: 12px;">
                         <label for="lead-status" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Status</label>
                         <select id="lead-status" class="admin-input" style="width: 100%; background: #1f2937; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
-                            <option value="Answered">Answered</option>
-                            <option value="Busy">Busy</option>
-                            <option value="Incorrect Number">Incorrect Number</option>
-                            <option value="Follow up required">Follow up required</option>
-                            <option value="Not Answered">Not Answered</option>
+                            <option value="New">✨ New</option>
+                            <option value="Answered">📞 Answered</option>
+                            <option value="Busy">⏳ Busy</option>
+                            <option value="Incorrect Number">🚫 Incorrect Number</option>
+                            <option value="Follow up required">🔁 Follow up required</option>
+                            <option value="Not Answered">🔇 Not Answered</option>
+                            <option value="No. not reachable">📴 No. not reachable</option>
                         </select>
                     </div>
                     <div class="admin-form-group" style="margin-bottom: 12px;">
@@ -446,11 +448,11 @@
                 <div class="admin-form-group" style="margin-bottom: 12px;">
                     <label for="lead-finalstatus" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Final Status</label>
                     <select id="lead-finalstatus" class="admin-input" style="width: 100%; background: #1f2937; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
-                        <option value="">None</option>
-                        <option value="Booking confirmed">Booking confirmed</option>
-                        <option value="Booked elsewhere">Booked elsewhere</option>
-                        <option value="Postpone">Postpone</option>
-                        <option value="Lost lead">Lost lead</option>
+                        <option value="">🔘 None</option>
+                        <option value="Booking confirmed">🎉 Booking confirmed</option>
+                        <option value="Booked elsewhere">🏢 Booked elsewhere</option>
+                        <option value="Postpone">⏳ Postpone</option>
+                        <option value="Lost lead">🗑️ Lost lead</option>
                     </select>
                 </div>
                 <div class="admin-form-group" style="margin-bottom: 12px;">
@@ -1270,6 +1272,29 @@
             }
         };
 
+        // Dynamic select badges visual updates
+        window.updateSelectStyle = function(el) {
+            el.className = el.className.split(' ').filter(c => !c.startsWith('status-')).join(' ');
+            const val = el.value;
+            if (val === 'New') el.classList.add('status-new');
+            else if (val === 'Answered') el.classList.add('status-answered');
+            else if (val === 'Busy') el.classList.add('status-busy');
+            else if (val === 'Incorrect Number') el.classList.add('status-incorrect');
+            else if (val === 'Follow up required') el.classList.add('status-followup');
+            else if (val === 'Not Answered') el.classList.add('status-notanswered');
+            else if (val === 'No. not reachable') el.classList.add('status-notreachable');
+        };
+
+        window.updateFinalStyle = function(el) {
+            el.className = el.className.split(' ').filter(c => !c.startsWith('final-')).join(' ');
+            const val = el.value;
+            if (val === '') el.classList.add('final-none');
+            else if (val === 'Booking confirmed') el.classList.add('final-confirmed');
+            else if (val === 'Booked elsewhere') el.classList.add('final-elsewhere');
+            else if (val === 'Postpone') el.classList.add('final-postpone');
+            else if (val === 'Lost lead') el.classList.add('final-lost');
+        };
+
         // Inline field updates helper
         window.updateLeadField = async function(leadId, fieldName, value) {
             try {
@@ -1316,28 +1341,56 @@
                 data.forEach((item, index) => {
                     const createdStr = new Date(item.created_at).toLocaleDateString();
                     
-                    // Render Status Dropdown options
+                    // Render Status Dropdown options with Emojis
                     let statusOptions = '';
-                    const statuses = ["Answered", "Busy", "Incorrect Number", "Follow up required", "Not Answered"];
+                    const statuses = [
+                        { val: "New", text: "✨ New" },
+                        { val: "Answered", text: "📞 Answered" },
+                        { val: "Busy", text: "⏳ Busy" },
+                        { val: "Incorrect Number", text: "🚫 Incorrect Number" },
+                        { val: "Follow up required", text: "🔁 Follow up required" },
+                        { val: "Not Answered", text: "🔇 Not Answered" },
+                        { val: "No. not reachable", text: "📴 No. not reachable" }
+                    ];
                     statuses.forEach(s => {
-                        const selected = item.status === s ? 'selected' : '';
-                        statusOptions += `<option value="${s}" ${selected}>${s}</option>`;
+                        const selected = item.status === s.val ? 'selected' : '';
+                        statusOptions += `<option value="${s.val}" ${selected} style="background: #111827; color: white;">${s.text}</option>`;
                     });
 
                     // Render Assignee Dropdown options
-                    let assigneeOptions = '<option value="">Unassigned</option>';
+                    let assigneeOptions = '<option value="" style="background: #111827; color: white;">Unassigned</option>';
                     (usersList || []).forEach(user => {
                         const selected = item.assigned_to === user.id ? 'selected' : '';
-                        assigneeOptions += `<option value="${user.id}" ${selected}>${user.email}</option>`;
+                        assigneeOptions += `<option value="${user.id}" ${selected} style="background: #111827; color: white;">${user.email}</option>`;
                     });
 
-                    // Render Final Status Dropdown options
-                    let finalStatusOptions = '<option value="">None</option>';
-                    const finalStatuses = ["Booking confirmed", "Booked elsewhere", "Postpone", "Lost lead"];
+                    // Render Final Status Dropdown options with Emojis
+                    let finalStatusOptions = '<option value="" style="background: #111827; color: white;">🔘 None</option>';
+                    const finalStatuses = [
+                        { val: "Booking confirmed", text: "🎉 Booking confirmed" },
+                        { val: "Booked elsewhere", text: "🏢 Booked elsewhere" },
+                        { val: "Postpone", text: "⏳ Postpone" },
+                        { val: "Lost lead", text: "🗑️ Lost lead" }
+                    ];
                     finalStatuses.forEach(fs => {
-                        const selected = item.final_status === fs ? 'selected' : '';
-                        finalStatusOptions += `<option value="${fs}" ${selected}>${fs}</option>`;
+                        const selected = item.final_status === fs.val ? 'selected' : '';
+                        finalStatusOptions += `<option value="${fs.val}" ${selected} style="background: #111827; color: white;">${fs.text}</option>`;
                     });
+
+                    // Class style determinations
+                    let statusClass = 'status-new';
+                    if (item.status === 'Answered') statusClass = 'status-answered';
+                    else if (item.status === 'Busy') statusClass = 'status-busy';
+                    else if (item.status === 'Incorrect Number') statusClass = 'status-incorrect';
+                    else if (item.status === 'Follow up required') statusClass = 'status-followup';
+                    else if (item.status === 'Not Answered') statusClass = 'status-notanswered';
+                    else if (item.status === 'No. not reachable') statusClass = 'status-notreachable';
+
+                    let finalClass = 'final-none';
+                    if (item.final_status === 'Booking confirmed') finalClass = 'final-confirmed';
+                    else if (item.final_status === 'Booked elsewhere') finalClass = 'final-elsewhere';
+                    else if (item.final_status === 'Postpone') finalClass = 'final-postpone';
+                    else if (item.final_status === 'Lost lead') finalClass = 'final-lost';
 
                     html += `
                         <tr>
@@ -1346,7 +1399,7 @@
                             <td>${item.email || '-'}</td>
                             <td><span style="font-size: 11px; font-weight: bold; background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px;">${item.source || 'Website'}</span></td>
                             <td>
-                                <select onchange="updateLeadField('${item.id}', 'status', this.value)" style="background: #1f2937; color: white; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 4px; font-size: 12px; width: 135px; cursor: pointer;">
+                                <select onchange="updateLeadField('${item.id}', 'status', this.value); updateSelectStyle(this)" class="status-select ${statusClass}">
                                     ${statusOptions}
                                 </select>
                             </td>
@@ -1359,7 +1412,7 @@
                             <td><small>${item.follow_up_1 || '-'}</small></td>
                             <td><small>${item.follow_up_2 || '-'}</small></td>
                             <td>
-                                <select onchange="updateLeadField('${item.id}', 'final_status', this.value)" style="background: #1f2937; color: white; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 4px; font-size: 12px; width: 140px; cursor: pointer;">
+                                <select onchange="updateLeadField('${item.id}', 'final_status', this.value); updateFinalStyle(this)" class="final-select ${finalClass}">
                                     ${finalStatusOptions}
                                 </select>
                             </td>
