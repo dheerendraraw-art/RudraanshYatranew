@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -411,25 +411,30 @@
     <div class="modal-overlay" id="custom-trip-modal">
         <div class="modal-box">
             <button class="modal-close" id="modal-close-btn">&times;</button>
-            <h3 class="modal-title">Custom Itinerary Builder</h3>
-            <p class="modal-subtitle">Design your personalized Kumaon adventure. We will curate it directly from
-                Pithoragarh.</p>
+            <h3 class="modal-title">Unlock Special Yatra Discounts</h3>
+            <p class="modal-subtitle">Share details to get up to 10% direct discount on your Kumaon booking.</p>
+            
+            <div class="discount-badge-container" style="background: rgba(197, 160, 89, 0.08); border: 1px dashed var(--color-gold); border-radius: var(--border-radius-sm); padding: 12px; margin-bottom: 20px; text-align: center;">
+                <span style="font-family: var(--font-serif); font-size: 16px; color: var(--color-primary); font-weight: 600;">Your Booking Discount: <span id="live-discount-text" style="color: var(--color-gold); font-size: 20px; font-weight: 700; transition: color 0.3s ease;">0%</span></span>
+            </div>
 
             <form id="custom-itinerary-form">
                 <div class="form-group">
                     <label for="custom-name">Full Name</label>
-                    <input type="text" id="custom-name" name="name" class="form-control" placeholder="E.g. Ramesh Dev"
-                        required>
+                    <input type="text" id="custom-name" name="name" class="form-control" placeholder="E.g. Ramesh Dev" required>
                 </div>
                 <div class="form-group">
-                    <label for="custom-email">Email Address</label>
-                    <input type="email" id="custom-email" name="email" class="form-control"
-                        placeholder="E.g. ramesh@example.com" required>
+                    <label for="custom-email">Email Address <span style="color: var(--color-gold); font-weight: 600; font-size: 11px;">(Get 5% Off)</span></label>
+                    <input type="email" id="custom-email" name="email" class="form-control" placeholder="E.g. ramesh@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="custom-phone">Phone / WhatsApp Number <span style="color: var(--color-gold); font-weight: 600; font-size: 11px;">(Get +5% Off)</span></label>
+                    <input type="tel" id="custom-phone" name="phone" class="form-control" placeholder="E.g. +91 98765 43210">
                 </div>
                 <div class="form-group">
                     <label for="custom-destination">Select Destination</label>
                     <select id="custom-destination" name="destination" class="form-control" required>
-                        <option value="" disabled selected>Select an option</option>
+                        <option value="" disabled selected>Select Destination</option>
                         <option value="Adi Kailash & Om Parvat Yatra">Adi Kailash & Om Parvat Yatra</option>
                         <option value="Khaliya Top Trek">Khaliya Top Trek</option>
                         <option value="Mt. Kailash Yatra">Mt. Kailash Yatra (Lipulekh)</option>
@@ -437,25 +442,10 @@
                         <option value="Custom/Multiple Valleys">Custom / Multiple Valleys</option>
                     </select>
                 </div>
-                <div class="form-row" style="display: grid; grid-template-columns: 1fr; gap: 16px;">
-                    <div class="form-group">
-                        <label for="custom-days">Number of Days</label>
-                        <input type="number" id="custom-days" name="days" class="form-control" min="2" max="30"
-                            placeholder="E.g. 6" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="custom-requests">Special Requests / Medical Notes</label>
-                    <textarea id="custom-requests" name="requests" class="form-control"
-                        placeholder="E.g. Diet requirements, oxygen cylinder request, group discounts..."></textarea>
-                </div>
 
                 <div class="modal-btn-grid">
-                    <button type="button" class="btn btn-secondary" id="submit-email-btn"><i
-                            class="fa-solid fa-envelope"></i> Share via Email</button>
-                    <button type="button" class="btn btn-primary" id="submit-wa-btn"
-                        style="background-color: #25D366; color: white;"><i class="fa-brands fa-whatsapp"></i> Share via
-                        WhatsApp</button>
+                    <button type="button" class="btn btn-secondary" id="submit-email-btn"><i class="fa-solid fa-envelope"></i> Share via Email</button>
+                    <button type="button" class="btn btn-primary" id="submit-wa-btn" style="background-color: #25D366; color: white;"><i class="fa-brands fa-whatsapp"></i> Share via WhatsApp</button>
                 </div>
             </form>
         </div>

@@ -1,4 +1,4 @@
-// Rudraansh Yatra Global Scripts - app.js
+﻿// Rudraansh Yatra Global Scripts - app.js
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -186,11 +186,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const modalTitle = document.querySelector('#custom-trip-modal .modal-title');
     if (modalTitle) {
-        modalTitle.innerText = 'Book Your Custom Trip';
+        modalTitle.innerText = 'Unlock Special Yatra Discounts';
     }
     const modalSubtitle = document.querySelector('#custom-trip-modal .modal-subtitle');
     if (modalSubtitle) {
-        modalSubtitle.innerText = 'Customize your Kumaon adventure and request booking details directly from our ground team.';
+        modalSubtitle.innerText = 'Share details to get up to 10% direct discount on your Kumaon booking.';
     }
 
     // Open Modal
@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const customForm = document.getElementById('custom-itinerary-form');
         const subtitle = document.querySelector('#custom-trip-modal .modal-subtitle');
         if (customForm) customForm.style.display = 'block';
-        if (subtitle) subtitle.innerText = 'Customize your Kumaon adventure and request booking details directly from our ground team.';
+        if (subtitle) subtitle.innerText = 'Share details to get up to 10% direct discount on your Kumaon booking.';
     };
 
     // Close Modal
@@ -246,12 +246,19 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const getFormData = () => {
+            const emailVal = document.getElementById('custom-email').value.trim();
+            const phoneVal = document.getElementById('custom-phone').value.trim();
+            
+            let discount = 0;
+            if (emailVal.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) discount += 5;
+            if (phoneVal.replace(/\D/g, '').length >= 10) discount += 5;
+
             return {
                 name: document.getElementById('custom-name').value.trim(),
-                email: document.getElementById('custom-email').value.trim().toLowerCase(),
+                email: emailVal.toLowerCase(),
+                phone: phoneVal,
                 destination: document.getElementById('custom-destination').value,
-                days: document.getElementById('custom-days').value,
-                requests: document.getElementById('custom-requests').value.trim()
+                discount: discount + '%'
             };
         };
 
@@ -264,6 +271,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
                 const data = getFormData();
+
+                if (!data.email && !data.phone) {
+                    showToast('Please share either your Email or Phone to claim your discount!', 'error');
+                    return;
+                }
 
                 // Show a brief loading indicator
                 showToast('Logging booking details...', 'info');
@@ -280,6 +292,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (modal) modal.classList.remove('active');
                 resetModalView();
                 customForm.reset();
+                
+                // Reset live badge
+                const discountText = document.getElementById('live-discount-text');
+                if (discountText) {
+                    discountText.innerText = '0%';
+                    discountText.style.color = 'var(--color-gold)';
+                }
             });
         }
     }
@@ -328,10 +347,11 @@ async function saveBookingRequest(data) {
         await supabaseClient.from('custom_requests').insert([
             {
                 name: data.name,
-                email: data.email,
+                email: data.email || '',
+                phone: data.phone || '',
                 destination: data.destination,
-                days: parseInt(data.days) || 2,
-                requests: data.requests || '',
+                days: 6,
+                requests: `Applied Discount: ${data.discount}`,
                 user_id: userId
             }
         ]);
@@ -641,3 +661,30 @@ function initializeDiscountPopup() {
 
 
 
+
+
+    // Live Discount Calculations
+    const emailInput = document.getElementById('custom-email');
+    const phoneInput = document.getElementById('custom-phone');
+    const discountText = document.getElementById('live-discount-text');
+
+    const updateDiscount = () => {
+        let discount = 0;
+        if (emailInput && emailInput.value.trim().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+            discount += 5;
+        }
+        if (phoneInput && phoneInput.value.replace(/\D/g, '').length >= 10) {
+            discount += 5;
+        }
+        if (discountText) {
+            discountText.innerText = discount + '%';
+            if (discount > 0) {
+                discountText.style.color = '#25D366';
+            } else {
+                discountText.style.color = 'var(--color-gold)';
+            }
+        }
+    };
+
+    if (emailInput) emailInput.addEventListener('input', updateDiscount);
+    if (phoneInput) phoneInput.addEventListener('input', updateDiscount);
