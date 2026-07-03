@@ -311,6 +311,7 @@
                     <h3 class="admin-form-title" style="margin-bottom: 0; border-bottom: none;"><i
                             class="fa-solid fa-people-group" style="color: var(--color-gold);"></i> Leads Manager</h3>
                     <div style="display: flex; gap: 8px;">
+                        <button type="button" onclick="exportLeads()" class="btn btn-primary" id="export-leads-btn" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-file-export"></i> Export Leads</button>
                         <button type="button" onclick="triggerImportLeads()" class="btn btn-primary" id="import-leads-btn" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-file-import"></i> Import Leads</button>
                         <input type="file" id="leads-csv-file" accept=".csv" style="display: none;" onchange="handleLeadsCSVImport(event)">
                         <button type="button" onclick="openLeadModal()" class="btn btn-primary" id="add-lead-btn" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-plus"></i> Add New Lead</button>
@@ -620,6 +621,15 @@
                 const importLeadsBtn = document.getElementById('import-leads-btn');
                 if (importLeadsBtn) importLeadsBtn.style.display = 'none';
 
+                const exportLeadsBtn = document.getElementById('export-leads-btn');
+                if (exportLeadsBtn) exportLeadsBtn.style.display = 'none';
+
+                const importBookingsBtn = document.getElementById('import-bookings-btn');
+                if (importBookingsBtn) importBookingsBtn.style.display = 'none';
+
+                const exportBookingsBtn = document.getElementById('export-bookings-btn');
+                if (exportBookingsBtn) exportBookingsBtn.style.display = 'none';
+
                 // Automatically switch to Leads tab
                 switchTab(null, 'pane-leads');
             } else {
@@ -634,6 +644,15 @@
                 
                 const importLeadsBtn = document.getElementById('import-leads-btn');
                 if (importLeadsBtn) importLeadsBtn.style.display = 'inline-block';
+
+                const exportLeadsBtn = document.getElementById('export-leads-btn');
+                if (exportLeadsBtn) exportLeadsBtn.style.display = 'inline-block';
+
+                const importBookingsBtn = document.getElementById('import-bookings-btn');
+                if (importBookingsBtn) importBookingsBtn.style.display = 'inline-block';
+
+                const exportBookingsBtn = document.getElementById('export-bookings-btn');
+                if (exportBookingsBtn) exportBookingsBtn.style.display = 'inline-block';
             }
         }
 
@@ -1625,6 +1644,10 @@
         };
 
         window.openLeadModal = function() {
+            if (currentUserRole !== 'admin') {
+                showAdminToast('Permission denied. Only admins can add leads.', 'error');
+                return;
+            }
             const modal = document.getElementById('lead-modal');
             if (modal) {
                 modal.classList.add('active');
@@ -1948,6 +1971,53 @@
             } catch (err) {
                 console.error(err);
                 showAdminToast('Failed to update passcode: ' + err.message, 'error');
+            }
+        };
+
+        // Export all Leads to CSV (Admin Only)
+        window.exportLeads = async function() {
+            if (currentUserRole !== 'admin') {
+                showAdminToast('Permission denied.', 'error');
+                return;
+            }
+            try {
+                const { data, error } = await supabaseAdmin
+                    .from('leads')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+                if (!data || data.length === 0) {
+                    showAdminToast('No leads to export.', 'error');
+                    return;
+                }
+
+                let csv = 'Name,Phone,Email,Source,Status,Remarks,FollowUp1,FollowUp2,FinalStatus,Created\n';
+                
+                data.forEach(item => {
+                    const q = (str) => {
+                        if (!str) return '""';
+                        return `"${str.toString().replace(/"/g, '""')}"`;
+                    };
+                    
+                    csv += `${q(item.name)},${q(item.phone)},${q(item.email)},${q(item.source)},${q(item.status)},${q(item.remarks)},${q(item.follow_up_1)},${q(item.follow_up_2)},${q(item.final_status)},${q(item.created_at)}\n`;
+                });
+
+                const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                if (link.download !== undefined) {
+                    const url = URL.createObjectURL(blob);
+                    link.setAttribute('href', url);
+                    link.setAttribute('download', `leads_export_${new Date().toISOString().split('T')[0]}.csv`);
+                    link.style.visibility = 'hidden';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    showAdminToast('Leads exported successfully!', 'success');
+                }
+            } catch (err) {
+                console.error(err);
+                showAdminToast('Failed to export leads: ' + err.message, 'error');
             }
         };
     </script>
