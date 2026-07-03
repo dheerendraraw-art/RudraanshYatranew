@@ -55,9 +55,14 @@
                 <img src="assets/images/logo.png" alt="Logo">
                 <span>Rudraansh Yatra <strong style="color: var(--color-gold);">Admin Portal</strong></span>
             </div>
-            <button class="admin-logout-btn" onclick="logoutAdmin()">
-                Log Out <i class="fa-solid fa-right-from-bracket" style="margin-left: 6px;"></i>
-            </button>
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <span id="user-badge" style="color: var(--color-gold); font-size: 13px; font-weight: 600; background: rgba(212, 175, 55, 0.1); padding: 6px 12px; border-radius: 4px; border: 1px solid rgba(212, 175, 55, 0.2); display: inline-flex; align-items: center;">
+                    <i class="fa-solid fa-user" style="margin-right: 6px;"></i> <span id="logged-in-username">Admin</span>
+                </span>
+                <button class="admin-logout-btn" onclick="logoutAdmin()" style="margin: 0;">
+                    Log Out <i class="fa-solid fa-right-from-bracket" style="margin-left: 6px;"></i>
+                </button>
+            </div>
         </nav>
 
         <div class="admin-dashboard-container">
@@ -651,6 +656,11 @@
 
             currentUserRole = sessionStorage.getItem('admin_role') || 'admin';
             currentUsername = sessionStorage.getItem('admin_username') || 'admin';
+
+            const usernameEl = document.getElementById('logged-in-username');
+            if (usernameEl) {
+                usernameEl.innerText = currentUsername.charAt(0).toUpperCase() + currentUsername.slice(1);
+            }
             
             applyRolePermissions();
 
