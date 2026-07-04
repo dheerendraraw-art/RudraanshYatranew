@@ -72,48 +72,59 @@
 
         <div class="admin-dashboard-container">
 
+            <!-- Dashboard Summary Header -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h4 style="margin: 0; font-size: 14px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--color-slate); display: flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-chart-simple" style="color: var(--color-gold);"></i> 
+                    <span id="stats-header-title">Bookings Summary</span>
+                </h4>
+                <button onclick="toggleStatsCollapse()" class="btn btn-secondary" style="border: 1px solid var(--color-gold); background: #1e293b; padding: 6px 12px; font-size: 11px; cursor: pointer; border-radius: 4px; color: var(--color-gold); font-weight: bold; display: flex; align-items: center; gap: 6px;">
+                    <span id="stats-collapse-text">Collapse Stats</span> <i class="fa-solid fa-chevron-up" id="stats-collapse-icon"></i>
+                </button>
+            </div>
+
             <!-- Summary Stats Badges -->
-            <div class="admin-stats-grid">
-                <div class="admin-stat-card">
-                    <div class="admin-stat-icon"><i class="fa-solid fa-calendar-check"></i></div>
+            <div class="admin-stats-grid" id="dashboard-stats-grid" style="transition: max-height 0.3s ease-out, opacity 0.3s ease-out; overflow: hidden; opacity: 1; margin-bottom: 24px;">
+                <div class="admin-stat-card" id="stat-card-0">
+                    <div class="admin-stat-icon" id="stat-icon-0"><i class="fa-solid fa-calendar-check"></i></div>
                     <div class="admin-stat-info">
-                        <span class="admin-stat-num" id="stat-bookings">0</span>
-                        <span class="admin-stat-label">Total Bookings</span>
+                        <span class="admin-stat-num" id="stat-num-0">0</span>
+                        <span class="admin-stat-label" id="stat-label-0">Total Bookings</span>
                     </div>
                 </div>
-                <div class="admin-stat-card">
-                    <div class="admin-stat-icon"><i class="fa-solid fa-people-group"></i></div>
+                <div class="admin-stat-card" id="stat-card-1">
+                    <div class="admin-stat-icon" id="stat-icon-1"><i class="fa-solid fa-people-group"></i></div>
                     <div class="admin-stat-info">
-                        <span class="admin-stat-num" id="stat-leads">0</span>
-                        <span class="admin-stat-label">Total Leads</span>
+                        <span class="admin-stat-num" id="stat-num-1">0</span>
+                        <span class="admin-stat-label" id="stat-label-1">Total Leads</span>
                     </div>
                 </div>
-                <div class="admin-stat-card">
-                    <div class="admin-stat-icon"><i class="fa-solid fa-compass"></i></div>
+                <div class="admin-stat-card" id="stat-card-2">
+                    <div class="admin-stat-icon" id="stat-icon-2"><i class="fa-solid fa-compass"></i></div>
                     <div class="admin-stat-info">
-                        <span class="admin-stat-num" id="stat-requests">0</span>
-                        <span class="admin-stat-label">Custom Requests</span>
+                        <span class="admin-stat-num" id="stat-num-2">0</span>
+                        <span class="admin-stat-label" id="stat-label-2">Custom Requests</span>
                     </div>
                 </div>
-                <div class="admin-stat-card">
-                    <div class="admin-stat-icon"><i class="fa-solid fa-tags"></i></div>
+                <div class="admin-stat-card" id="stat-card-3">
+                    <div class="admin-stat-icon" id="stat-icon-3"><i class="fa-solid fa-tags"></i></div>
                     <div class="admin-stat-info">
-                        <span class="admin-stat-num" id="stat-discounts">0</span>
-                        <span class="admin-stat-label">Discount Claims</span>
+                        <span class="admin-stat-num" id="stat-num-3">0</span>
+                        <span class="admin-stat-label" id="stat-label-3">Discount Claims</span>
                     </div>
                 </div>
-                <div class="admin-stat-card">
-                    <div class="admin-stat-icon"><i class="fa-solid fa-newspaper"></i></div>
+                <div class="admin-stat-card" id="stat-card-4">
+                    <div class="admin-stat-icon" id="stat-icon-4"><i class="fa-solid fa-newspaper"></i></div>
                     <div class="admin-stat-info">
-                        <span class="admin-stat-num" id="stat-blogs">0</span>
-                        <span class="admin-stat-label">Blog Posts</span>
+                        <span class="admin-stat-num" id="stat-num-4">0</span>
+                        <span class="admin-stat-label" id="stat-label-4">Blog Posts</span>
                     </div>
                 </div>
-                <div class="admin-stat-card">
-                    <div class="admin-stat-icon"><i class="fa-solid fa-images"></i></div>
+                <div class="admin-stat-card" id="stat-card-5">
+                    <div class="admin-stat-icon" id="stat-icon-5"><i class="fa-solid fa-images"></i></div>
                     <div class="admin-stat-info">
-                        <span class="admin-stat-num" id="stat-gallery">0</span>
-                        <span class="admin-stat-label">Gallery Photos</span>
+                        <span class="admin-stat-num" id="stat-num-5">0</span>
+                        <span class="admin-stat-label" id="stat-label-5">Gallery Photos</span>
                     </div>
                 </div>
             </div>
@@ -351,25 +362,176 @@
 
             <!-- PANE 7: MANAGE STAFF & PASSWORDS (ADMIN ONLY) -->
             <div id="pane-passwords" class="admin-tab-content-pane" style="display: none;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                    <h3 class="admin-form-title" style="margin-bottom: 0; border-bottom: none;"><i class="fa-solid fa-key" style="color: var(--color-gold);"></i> Manage Staff & Passwords</h3>
-                </div>
-                <div class="admin-table-container">
-                    <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th>Username</th>
-                                <th>Role</th>
-                                <th>Current Passcode</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="passwords-table-body">
-                            <tr>
-                                <td colspan="4" style="text-align: center; color: var(--color-slate);">Loading credentials...</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="admin-form-grid" style="align-items: start;">
+                    
+                    <!-- Left: Staff List & Management -->
+                    <div class="admin-form-card" style="padding: 24px;">
+                        <h3 class="admin-form-title" style="margin-bottom: 20px;"><i class="fa-solid fa-users-gear" style="color: var(--color-gold); margin-right: 8px;"></i> Staff Accounts</h3>
+                        
+                        <div class="admin-table-container" style="margin-bottom: 24px; overflow-x: auto;">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Username</th>
+                                        <th>Role</th>
+                                        <th>Passcode</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="passwords-table-body">
+                                    <tr>
+                                        <td colspan="4" style="text-align: center; color: var(--color-slate);">Loading credentials...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Add Staff Form -->
+                        <h4 style="font-family: var(--font-serif); font-size: 18px; color: var(--color-primary); margin-bottom: 12px; border-top: 1px dashed var(--glass-border); padding-top: 16px;">
+                            <i class="fa-solid fa-user-plus" style="color: var(--color-gold); margin-right: 6px;"></i> Add New Staff Member
+                        </h4>
+                        <form id="add-staff-form" onsubmit="addNewStaffMember(event)">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                                <div class="admin-form-group" style="margin-bottom: 0;">
+                                    <label for="new-staff-username">Username</label>
+                                    <input type="text" id="new-staff-username" class="admin-input" placeholder="e.g. guide_yash" required style="padding: 8px 12px;">
+                                </div>
+                                <div class="admin-form-group" style="margin-bottom: 0;">
+                                    <label for="new-staff-passcode">Passcode</label>
+                                    <input type="text" id="new-staff-passcode" class="admin-input" placeholder="e.g. 987654" required style="padding: 8px 12px;">
+                                </div>
+                            </div>
+                            <div class="admin-form-group" style="margin-bottom: 16px;">
+                                <label for="new-staff-role">Role</label>
+                                <select id="new-staff-role" class="admin-select" required style="padding: 8px 12px;">
+                                    <option value="staff" selected>Staff (Can only view bookings/leads)</option>
+                                    <option value="admin">Administrator (Full Access)</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width: 100%; border: none; padding: 10px; font-size: 14px; font-weight: 600; cursor: pointer; background-color: var(--color-gold); color: #0f172a; border-radius: 4px;">
+                                <i class="fa-solid fa-plus"></i> Add Staff Member
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Right: Attendance & Salary Calculator -->
+                    <div class="admin-form-card" style="padding: 24px;">
+                        <h3 class="admin-form-title" style="margin-bottom: 20px;"><i class="fa-solid fa-calculator" style="color: var(--color-gold); margin-right: 8px;"></i> Attendance & Salary Calculator</h3>
+                        
+                        <form id="attendance-calc-form" onsubmit="calculateAndSaveAttendance(event)">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                                <div class="admin-form-group" style="margin-bottom: 0;">
+                                    <label for="calc-staff-select">Select Staff</label>
+                                    <select id="calc-staff-select" class="admin-select" required style="padding: 8px 12px;" onchange="loadStaffAttendanceDefaults()">
+                                        <option value="" disabled selected>Choose Staff</option>
+                                    </select>
+                                </div>
+                                <div class="admin-form-group" style="margin-bottom: 0;">
+                                    <label for="calc-month-select">Month</label>
+                                    <select id="calc-month-select" class="admin-select" required style="padding: 8px 12px;">
+                                        <option value="January">January</option>
+                                        <option value="February">February</option>
+                                        <option value="March">March</option>
+                                        <option value="April">April</option>
+                                        <option value="May">May</option>
+                                        <option value="June">June</option>
+                                        <option value="July">July</option>
+                                        <option value="August">August</option>
+                                        <option value="September">September</option>
+                                        <option value="October">October</option>
+                                        <option value="November">November</option>
+                                        <option value="December">December</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                                <div class="admin-form-group" style="margin-bottom: 0;">
+                                    <label for="calc-salary-type">Rate Type</label>
+                                    <select id="calc-salary-type" class="admin-select" required style="padding: 8px 12px;" onchange="toggleSalaryType()">
+                                        <option value="daily" selected>Daily Wage (₹)</option>
+                                        <option value="monthly">Fixed Monthly Salary (₹)</option>
+                                    </select>
+                                </div>
+                                <div class="admin-form-group" style="margin-bottom: 0;">
+                                    <label for="calc-salary-rate" id="calc-rate-label">Daily Wage (₹)</label>
+                                    <input type="number" id="calc-salary-rate" class="admin-input" required min="0" value="600" style="padding: 8px 12px;" oninput="recalcAttendanceOutputs()">
+                                </div>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 12px;">
+                                <div class="admin-form-group" style="margin-bottom: 0;">
+                                    <label for="calc-working-days">Total Days</label>
+                                    <input type="number" id="calc-working-days" class="admin-input" required min="1" max="31" value="26" style="padding: 8px 10px;" oninput="recalcAttendanceOutputs()">
+                                </div>
+                                <div class="admin-form-group" style="margin-bottom: 0;">
+                                    <label for="calc-present-days">Present</label>
+                                    <input type="number" id="calc-present-days" class="admin-input" required min="0" max="31" value="24" style="padding: 8px 10px;" oninput="recalcAttendanceOutputs()">
+                                </div>
+                                <div class="admin-form-group" style="margin-bottom: 0;">
+                                    <label for="calc-half-days">Half Days</label>
+                                    <input type="number" id="calc-half-days" class="admin-input" required min="0" max="31" value="0" style="padding: 8px 10px;" oninput="recalcAttendanceOutputs()">
+                                </div>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+                                <div class="admin-form-group" style="margin-bottom: 0;">
+                                    <label for="calc-leaves">Paid Leaves</label>
+                                    <input type="number" id="calc-leaves" class="admin-input" required min="0" max="31" value="0" style="padding: 8px 12px;" oninput="recalcAttendanceOutputs()">
+                                </div>
+                                <div class="admin-form-group" style="margin-bottom: 0;">
+                                    <label>Absent Days</label>
+                                    <input type="text" id="calc-absent-days" class="admin-input" readonly value="2" style="padding: 8px 12px; background: rgba(0,0,0,0.05); cursor: not-allowed;">
+                                </div>
+                            </div>
+
+                            <!-- Real-time calculations output box -->
+                            <div style="background: rgba(212, 175, 55, 0.05); border: 1.5px solid rgba(212, 175, 55, 0.2); border-radius: 6px; padding: 15px; margin-bottom: 20px; text-align: left;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                    <span style="font-size: 13px; color: var(--color-slate); font-weight: 500;">Attendance Rate:</span>
+                                    <span id="calc-out-rate" style="font-size: 14px; font-weight: 700; color: var(--color-primary);">92.3%</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                    <span style="font-size: 13px; color: var(--color-slate); font-weight: 500;">Deductions (Absent):</span>
+                                    <span id="calc-out-deductions" style="font-size: 14px; font-weight: 700; color: #ef4444;">₹1,200</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; border-top: 1.5px dashed rgba(212, 175, 55, 0.2); padding-top: 8px;">
+                                    <span style="font-size: 14px; color: var(--color-primary); font-weight: bold;">Net Payable Salary:</span>
+                                    <span id="calc-out-salary" style="font-size: 16px; font-weight: 800; color: var(--color-gold-dark);">₹14,400</span>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary" style="width: 100%; border: none; padding: 12px; font-size: 14px; font-weight: bold; cursor: pointer; background-color: var(--color-gold); color: #0f172a; border-radius: 4px; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 12px;">
+                                <i class="fa-solid fa-floppy-disk"></i> Calculate & Save Record
+                            </button>
+                        </form>
+
+                        <!-- Attendance History List -->
+                        <h4 style="font-family: var(--font-serif); font-size: 18px; color: var(--color-primary); margin-top: 24px; margin-bottom: 12px; border-top: 1px dashed var(--glass-border); padding-top: 16px; display: flex; justify-content: space-between; align-items: center;">
+                            <span><i class="fa-solid fa-history" style="color: var(--color-gold); margin-right: 6px;"></i> Attendance History</span>
+                            <button onclick="clearAttendanceHistory()" style="background: transparent; border: none; color: #ef4444; font-size: 11px; font-family: var(--font-sans); cursor: pointer; font-weight: bold; text-decoration: underline;"><i class="fa-solid fa-trash-can"></i> Clear All</button>
+                        </h4>
+                        
+                        <div style="max-height: 250px; overflow-y: auto; border: 1px solid var(--glass-border); border-radius: 4px; background: rgba(0, 0, 0, 0.01);">
+                            <table class="admin-table" style="margin: 0; font-size: 13px;">
+                                <thead>
+                                    <tr>
+                                        <th>Staff</th>
+                                        <th>Month</th>
+                                        <th>Rate</th>
+                                        <th>Payable</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="attendance-history-tbody">
+                                    <tr>
+                                        <td colspan="5" style="text-align: center; color: var(--color-slate); padding: 20px;">No history records saved.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -548,6 +710,13 @@
 
         // Verification configuration
         let CORRECT_PIN = 'VandanaDheerendra@2023';
+
+        // Global data arrays for dynamic stats
+        let bookingsData = [];
+        let customRequestsData = [];
+        let discountRegistrationsData = [];
+        let blogsData = [];
+        let galleryData = [];
 
         document.addEventListener('DOMContentLoaded', () => {
             // Check session security status
@@ -753,7 +922,184 @@
             
             const targetPane = document.getElementById(paneId);
             if (targetPane) targetPane.style.display = 'block';
+
+            // Dynamically change stats card header title
+            const headerTitle = document.getElementById('stats-header-title');
+            if (headerTitle) {
+                const labelMap = {
+                    'pane-bookings': 'Bookings Summary',
+                    'pane-requests': 'Custom Requests Summary',
+                    'pane-discounts': 'Discount Claims Summary',
+                    'pane-blogs': 'Blogs & News Summary',
+                    'pane-gallery': 'Gallery Summary',
+                    'pane-leads': 'Leads Pipeline Summary',
+                    'pane-passwords': 'Staff & Attendance Summary'
+                };
+                headerTitle.innerText = labelMap[paneId] || 'Dashboard Overview';
+            }
+
+            // Update dynamic stats
+            updateDynamicStats(paneId);
         }
+
+        window.toggleStatsCollapse = function() {
+            const grid = document.getElementById('dashboard-stats-grid');
+            const text = document.getElementById('stats-collapse-text');
+            const icon = document.getElementById('stats-collapse-icon');
+            if (!grid) return;
+
+            if (grid.style.display === 'none') {
+                grid.style.display = 'grid';
+                if (text) text.innerText = 'Collapse Stats';
+                if (icon) icon.className = 'fa-solid fa-chevron-up';
+                localStorage.setItem('stats_collapsed', 'false');
+            } else {
+                grid.style.display = 'none';
+                if (text) text.innerText = 'Expand Stats';
+                if (icon) icon.className = 'fa-solid fa-chevron-down';
+                localStorage.setItem('stats_collapsed', 'true');
+            }
+        };
+
+        window.refreshActiveTabStats = function() {
+            const activeTab = document.querySelector('.admin-tab-btn.active');
+            if (activeTab) {
+                const onclickAttr = activeTab.getAttribute('onclick');
+                if (onclickAttr) {
+                    const match = onclickAttr.match(/'([^']+)'/);
+                    if (match) {
+                        updateDynamicStats(match[1]);
+                    }
+                }
+            }
+        };
+
+        window.updateDynamicStats = function(paneId) {
+            const grid = document.getElementById('dashboard-stats-grid');
+            if (!grid) return;
+
+            const cards = [];
+            for (let i = 0; i < 6; i++) {
+                cards.push({
+                    el: document.getElementById(`stat-card-${i}`),
+                    icon: document.getElementById(`stat-icon-${i}`),
+                    num: document.getElementById(`stat-num-${i}`),
+                    label: document.getElementById(`stat-label-${i}`)
+                });
+            }
+
+            const setCard = (index, show, iconHtml, num, label) => {
+                const card = cards[index];
+                if (!card) return;
+                if (show) {
+                    card.el.style.display = 'flex';
+                    if (card.icon) card.icon.innerHTML = iconHtml;
+                    if (card.num) card.num.innerText = num;
+                    if (card.label) card.label.innerText = label;
+                } else {
+                    card.el.style.display = 'none';
+                }
+            };
+
+            if (paneId === 'pane-bookings') {
+                const total = bookingsData.length;
+                const totalTravelers = bookingsData.reduce((acc, curr) => acc + (parseInt(curr.travelers) || 0), 0);
+                const adiKailashBookings = bookingsData.filter(b => b.package_name && b.package_name.includes('Adi Kailash')).length;
+                const darmaValleyBookings = bookingsData.filter(b => b.package_name && b.package_name.includes('Darma')).length;
+                const mtKailashBookings = bookingsData.filter(b => b.package_name && b.package_name.includes('Kailash') && !b.package_name.includes('Adi')).length;
+                const otherBookings = total - (adiKailashBookings + darmaValleyBookings + mtKailashBookings);
+
+                setCard(0, true, '<i class="fa-solid fa-calendar-check"></i>', total, 'Total Bookings');
+                setCard(1, true, '<i class="fa-solid fa-users"></i>', totalTravelers, 'Total Travelers');
+                setCard(2, true, '<i class="fa-solid fa-mountain"></i>', adiKailashBookings, 'Adi Kailash');
+                setCard(3, true, '<i class="fa-solid fa-compass"></i>', darmaValleyBookings, 'Darma Valley');
+                setCard(4, true, '<i class="fa-solid fa-person-praying"></i>', mtKailashBookings, 'Mt. Kailash');
+                setCard(5, true, '<i class="fa-solid fa-person-hiking"></i>', otherBookings, 'Other Treks');
+            }
+            else if (paneId === 'pane-requests') {
+                const total = customRequestsData.length;
+                const totalDays = customRequestsData.reduce((acc, curr) => acc + (parseInt(curr.days) || 0), 0);
+                const avgDays = total > 0 ? (totalDays / total).toFixed(1) : 0;
+                
+                setCard(0, true, '<i class="fa-solid fa-compass"></i>', total, 'Custom Requests');
+                setCard(1, true, '<i class="fa-solid fa-clock"></i>', totalDays, 'Total Requested Days');
+                setCard(2, true, '<i class="fa-solid fa-calendar-day"></i>', avgDays, 'Avg Trip Duration');
+                setCard(3, false);
+                setCard(4, false);
+                setCard(5, false);
+            }
+            else if (paneId === 'pane-discounts') {
+                const total = discountRegistrationsData.length;
+                const verified = discountRegistrationsData.filter(d => d.verified).length;
+                const pending = total - verified;
+                const travelers = discountRegistrationsData.reduce((acc, curr) => acc + (parseInt(curr.travelers) || 0), 0);
+
+                setCard(0, true, '<i class="fa-solid fa-tags"></i>', total, 'Total Claims');
+                setCard(1, true, '<i class="fa-solid fa-circle-check" style="color: #22c55e;"></i>', verified, 'Verified Claims');
+                setCard(2, true, '<i class="fa-solid fa-clock" style="color: #eab308;"></i>', pending, 'Pending Claims');
+                setCard(3, true, '<i class="fa-solid fa-users"></i>', travelers, 'Registered Travelers');
+                setCard(4, false);
+                setCard(5, false);
+            }
+            else if (paneId === 'pane-blogs') {
+                const total = blogsData.length;
+                const uniqueAuthors = [...new Set(blogsData.map(b => b.author || 'Admin'))].length;
+                
+                setCard(0, true, '<i class="fa-solid fa-newspaper"></i>', total, 'Blog Posts');
+                setCard(1, true, '<i class="fa-solid fa-user-pen"></i>', uniqueAuthors, 'Active Authors');
+                setCard(2, false);
+                setCard(3, false);
+                setCard(4, false);
+                setCard(5, false);
+            }
+            else if (paneId === 'pane-gallery') {
+                const total = galleryData.length;
+                const adiKailashPhotos = galleryData.filter(g => g.category === 'Adi Kailash').length;
+                const darmaValleyPhotos = galleryData.filter(g => g.category === 'Darma Valley').length;
+                const otherPhotos = total - (adiKailashPhotos + darmaValleyPhotos);
+
+                setCard(0, true, '<i class="fa-solid fa-images"></i>', total, 'Gallery Photos');
+                setCard(1, true, '<i class="fa-solid fa-mountain"></i>', adiKailashPhotos, 'Adi Kailash Photos');
+                setCard(2, true, '<i class="fa-solid fa-compass"></i>', darmaValleyPhotos, 'Darma Valley Photos');
+                setCard(3, true, '<i class="fa-solid fa-image"></i>', otherPhotos, 'Other Category Photos');
+                setCard(4, false);
+                setCard(5, false);
+            }
+            else if (paneId === 'pane-leads') {
+                const total = currentLeads.length;
+                const newLeads = currentLeads.filter(l => l.status === 'New').length;
+                const contacted = currentLeads.filter(l => l.status === 'Contacted' || l.status === 'In Progress').length;
+                const converted = currentLeads.filter(l => l.status === 'Won' || l.status === 'Converted' || l.final_status === 'Won' || l.final_status === 'Booked').length;
+                const lost = currentLeads.filter(l => l.status === 'Lost' || l.final_status === 'Lost' || l.final_status === 'Cancelled').length;
+
+                setCard(0, true, '<i class="fa-solid fa-people-group"></i>', total, 'Total Leads');
+                setCard(1, true, '<i class="fa-solid fa-sparkles" style="color: #eab308;"></i>', newLeads, 'New Leads');
+                setCard(2, true, '<i class="fa-solid fa-phone-volume"></i>', contacted, 'Contacted/In Progress');
+                setCard(3, true, '<i class="fa-solid fa-thumbs-up" style="color: #22c55e;"></i>', converted, 'Converted Leads');
+                setCard(4, true, '<i class="fa-solid fa-thumbs-down" style="color: #ef4444;"></i>', lost, 'Lost Leads');
+                setCard(5, false);
+            }
+            else if (paneId === 'pane-passwords') {
+                const total = staffCredentialsList.length;
+                const admins = staffCredentialsList.filter(s => s.role === 'admin').length;
+                const staff = total - admins;
+                
+                let attendanceRecords = [];
+                try {
+                    attendanceRecords = JSON.parse(localStorage.getItem('staff_attendance_history')) || [];
+                } catch(e){}
+                const avgAttendance = attendanceRecords.length > 0 
+                    ? (attendanceRecords.reduce((acc, curr) => acc + parseFloat(curr.attendanceRate), 0) / attendanceRecords.length).toFixed(1) + '%'
+                    : '100%';
+
+                setCard(0, true, '<i class="fa-solid fa-users-gear"></i>', total, 'Total Staff');
+                setCard(1, true, '<i class="fa-solid fa-user-shield"></i>', admins, 'Administrators');
+                setCard(2, true, '<i class="fa-solid fa-user"></i>', staff, 'Staff Members');
+                setCard(3, true, '<i class="fa-solid fa-calendar-check"></i>', avgAttendance, 'Avg Attendance');
+                setCard(4, false);
+                setCard(5, false);
+            }
+        };
 
         // Preview images instantly
         function previewImage(input, previewId) {
@@ -780,6 +1126,16 @@
         async function loadAllDashboardData() {
             if (!supabaseAdmin) return;
 
+            // Apply collapsed state from localStorage
+            if (localStorage.getItem('stats_collapsed') === 'true') {
+                const grid = document.getElementById('dashboard-stats-grid');
+                const text = document.getElementById('stats-collapse-text');
+                const icon = document.getElementById('stats-collapse-icon');
+                if (grid) grid.style.display = 'none';
+                if (text) text.innerText = 'Expand Stats';
+                if (icon) icon.className = 'fa-solid fa-chevron-down';
+            }
+
             if (currentUserRole === 'admin') {
                 fetchBookings();
                 fetchCustomRequests();
@@ -793,6 +1149,11 @@
                 fetchBookings();
                 fetchLeads();
             }
+
+            // Initially set active stats
+            setTimeout(() => {
+                refreshActiveTabStats();
+            }, 600);
         }
 
         // 1. Fetch Bookings
@@ -811,21 +1172,19 @@
                 }
 
                 const { data, error } = await query;
-
-                const statEl = document.getElementById('stat-bookings');
-                const tbody = document.getElementById('bookings-table-body');
-
                 if (error) throw error;
 
-                statEl.innerText = data.length;
+                bookingsData = data || [];
+                refreshActiveTabStats();
 
-                if (data.length === 0) {
+                const tbody = document.getElementById('bookings-table-body');
+                if (bookingsData.length === 0) {
                     tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: var(--color-slate);">No bookings registered yet in Supabase.</td></tr>`;
                     return;
                 }
 
                 let html = '';
-                data.forEach(item => {
+                bookingsData.forEach(item => {
                     const dateStr = item.travel_date ? new Date(item.travel_date).toLocaleDateString() : 'N/A';
                     const createdStr = new Date(item.created_at).toLocaleDateString();
                     html += `
@@ -848,7 +1207,10 @@
                 tbody.innerHTML = html;
             } catch (err) {
                 console.error(err);
-                document.getElementById('bookings-table-body').innerHTML = `<tr><td colspan="8" style="text-align: center; color: red;">Failed to fetch bookings. Error: ${err.message}</td></tr>`;
+                const tbody = document.getElementById('bookings-table-body');
+                if (tbody) {
+                    tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: red;">Failed to fetch bookings. Error: ${err.message}</td></tr>`;
+                }
             }
         }
 
@@ -860,20 +1222,19 @@
                     .select('*')
                     .order('created_at', { ascending: false });
 
-                const statEl = document.getElementById('stat-requests');
-                const tbody = document.getElementById('requests-table-body');
-
                 if (error) throw error;
 
-                statEl.innerText = data.length;
+                customRequestsData = data || [];
+                refreshActiveTabStats();
 
-                if (data.length === 0) {
+                const tbody = document.getElementById('requests-table-body');
+                if (customRequestsData.length === 0) {
                     tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--color-slate);">No custom itinerary requests yet.</td></tr>`;
                     return;
                 }
 
                 let html = '';
-                data.forEach(item => {
+                customRequestsData.forEach(item => {
                     const createdStr = new Date(item.created_at).toLocaleDateString();
                     html += `
                         <tr>
@@ -894,7 +1255,10 @@
                 tbody.innerHTML = html;
             } catch (err) {
                 console.error(err);
-                document.getElementById('requests-table-body').innerHTML = `<tr><td colspan="7" style="text-align: center; color: red;">Failed to fetch custom requests. Error: ${err.message}</td></tr>`;
+                const tbody = document.getElementById('requests-table-body');
+                if (tbody) {
+                    tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: red;">Failed to fetch custom requests. Error: ${err.message}</td></tr>`;
+                }
             }
         }
 
@@ -906,20 +1270,19 @@
                     .select('*')
                     .order('created_at', { ascending: false });
 
-                const statEl = document.getElementById('stat-discounts');
-                const tbody = document.getElementById('discounts-table-body');
-
                 if (error) throw error;
 
-                statEl.innerText = data.length;
+                discountRegistrationsData = data || [];
+                refreshActiveTabStats();
 
-                if (data.length === 0) {
+                const tbody = document.getElementById('discounts-table-body');
+                if (discountRegistrationsData.length === 0) {
                     tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: var(--color-slate);">No discount registration logs.</td></tr>`;
                     return;
                 }
 
                 let html = '';
-                data.forEach(item => {
+                discountRegistrationsData.forEach(item => {
                     const createdStr = new Date(item.created_at).toLocaleDateString();
                     html += `
                         <tr>
@@ -941,7 +1304,10 @@
                 tbody.innerHTML = html;
             } catch (err) {
                 console.error(err);
-                document.getElementById('discounts-table-body').innerHTML = `<tr><td colspan="8" style="text-align: center; color: red;">Failed to fetch discount claims. Error: ${err.message}</td></tr>`;
+                const tbody = document.getElementById('discounts-table-body');
+                if (tbody) {
+                    tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: red;">Failed to fetch discount claims. Error: ${err.message}</td></tr>`;
+                }
             }
         }
 
@@ -953,22 +1319,20 @@
                     .select('*')
                     .order('created_at', { ascending: false });
 
-                const statEl = document.getElementById('stat-blogs');
-                const container = document.getElementById('blogs-list');
-
                 if (error) throw error;
 
-                statEl.innerText = data.length;
+                blogsData = data || [];
+                refreshActiveTabStats();
 
-                if (data.length === 0) {
+                const container = document.getElementById('blogs-list');
+                if (blogsData.length === 0) {
                     container.innerHTML = `<p style="text-align: center; color: var(--color-slate); padding: 20px;">No custom articles published in Supabase. Falling back to local default articles on public views.</p>`;
                     return;
                 }
 
                 let html = '';
-                data.forEach(item => {
+                blogsData.forEach(item => {
                     const createdStr = new Date(item.created_at).toLocaleDateString();
-                    // Escape double quotes inside item properties so they do not break HTML attributes
                     const safeItem = JSON.stringify(item).replace(/"/g, '&quot;');
                     html += `
                         <div class="admin-item-row" id="blog-row-${item.id}">
@@ -991,7 +1355,10 @@
                 container.innerHTML = html;
             } catch (err) {
                 console.error(err);
-                container.innerHTML = `<p style="text-align: center; color: red; padding: 20px;">Failed to fetch blogs.</p>`;
+                const container = document.getElementById('blogs-list');
+                if (container) {
+                    container.innerHTML = `<p style="text-align: center; color: red; padding: 20px;">Failed to fetch blogs.</p>`;
+                }
             }
         }
 
@@ -1003,20 +1370,19 @@
                     .select('*')
                     .order('created_at', { ascending: false });
 
-                const statEl = document.getElementById('stat-gallery');
-                const container = document.getElementById('gallery-list');
-
                 if (error) throw error;
 
-                statEl.innerText = data.length;
+                galleryData = data || [];
+                refreshActiveTabStats();
 
-                if (data.length === 0) {
+                const container = document.getElementById('gallery-list');
+                if (galleryData.length === 0) {
                     container.innerHTML = `<p style="text-align: center; color: var(--color-slate); padding: 20px;">No photographs uploaded. Public view displays local default pictures.</p>`;
                     return;
                 }
 
                 let html = '';
-                data.forEach(item => {
+                galleryData.forEach(item => {
                     html += `
                         <div class="admin-item-row" id="gallery-row-${item.id}">
                             <img class="admin-item-img" src="${item.image_url}" onerror="this.src='assets/images/adi-kailash-hero.webp'">
@@ -1033,7 +1399,10 @@
                 container.innerHTML = html;
             } catch (err) {
                 console.error(err);
-                container.innerHTML = `<p style="text-align: center; color: red; padding: 20px;">Failed to fetch gallery items.</p>`;
+                const container = document.getElementById('gallery-list');
+                if (container) {
+                    container.innerHTML = `<p style="text-align: center; color: red; padding: 20px;">Failed to fetch gallery items.</p>`;
+                }
             }
         }
 
@@ -1529,16 +1898,14 @@
                 }
 
                 const { data, error } = await query;
-
-                const statEl = document.getElementById('stat-leads');
                 const tbody = document.getElementById('leads-table-body');
 
                 if (error) throw error;
-                if (statEl) statEl.innerText = data.length;
-
-                if (!tbody) return;
 
                 currentLeads = data || [];
+                refreshActiveTabStats();
+
+                if (!tbody) return;
 
                 if (data.length === 0) {
                     tbody.innerHTML = `<tr><td colspan="12" style="text-align: center; color: var(--color-slate);">No leads registered yet.</td></tr>`;
@@ -1900,6 +2267,12 @@
                 if (error) throw error;
                 staffCredentialsList = data || [];
 
+                // Populate staff dropdown for calculator
+                populateStaffSelect();
+                
+                // Render attendance history
+                renderAttendanceHistory();
+
                 const tbody = document.getElementById('passwords-table-body');
                 if (!tbody) return;
 
@@ -1907,24 +2280,32 @@
                 staffCredentialsList.forEach((item, index) => {
                     html += `
                         <tr>
-                            <td><strong>${item.username}</strong></td>
                             <td>
-                                <span style="font-size: 11px; font-weight: bold; background: ${item.role === 'admin' ? '#fef3c7' : '#e5e7eb'}; padding: 6px 12px; border-radius: 4px; color: ${item.role === 'admin' ? '#b45309' : '#4b5563'}; border: 1px solid ${item.role === 'admin' ? '#f59e0b' : '#d1d5db'};">
-                                    ${item.role.toUpperCase()}
-                                </span>
+                                <input type="text" id="username-input-${item.id}" value="${item.username}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 6px 10px; color: #1e293b; font-family: var(--font-sans); font-size: 14px; width: 120px; font-weight: 600;">
                             </td>
                             <td>
-                                <div style="display: flex; gap: 8px; align-items: center;">
-                                    <input type="password" id="passcode-input-${item.id}" value="${item.passcode}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 6px 10px; color: #1e293b; font-family: monospace; font-size: 14px; width: 220px; font-weight: 600;">
-                                    <button onclick="togglePasscodeVisibility('${item.id}', this)" class="btn btn-secondary" style="border: 1.5px solid var(--color-gold); background: #1e293b; padding: 6px 10px; cursor: pointer; border-radius: 4px; color: var(--color-gold); display: flex; align-items: center; justify-content: center;" title="Show/Hide Password">
-                                        <i class="fa-solid fa-eye-slash"></i>
+                                <select id="role-select-${item.id}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 6px; color: #1e293b; font-family: var(--font-sans); font-size: 13px; font-weight: 600; width: 85px;">
+                                    <option value="staff" ${item.role === 'staff' ? 'selected' : ''}>STAFF</option>
+                                    <option value="admin" ${item.role === 'admin' ? 'selected' : ''}>ADMIN</option>
+                                </select>
+                            </td>
+                            <td>
+                                <div style="display: flex; gap: 6px; align-items: center;">
+                                    <input type="password" id="passcode-input-${item.id}" value="${item.passcode}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 6px 10px; color: #1e293b; font-family: monospace; font-size: 14px; width: 120px; font-weight: 600;">
+                                    <button onclick="togglePasscodeVisibility('${item.id}', this)" class="btn btn-secondary" style="border: 1px solid var(--color-gold); background: #1e293b; padding: 6px 8px; cursor: pointer; border-radius: 4px; color: var(--color-gold); display: flex; align-items: center; justify-content: center; width: 32px; height: 32px;" title="Show/Hide Password">
+                                        <i class="fa-solid fa-eye-slash" style="font-size: 12px;"></i>
                                     </button>
                                 </div>
                             </td>
                             <td>
-                                <button onclick="updateStaffPasscode('${item.id}', '${item.username}')" class="btn btn-primary" style="background-color: var(--color-gold); border: none; padding: 6px 12px; font-size: 12px; cursor: pointer; border-radius: 3px; color: #0f172a; font-weight: 600;">
-                                    <i class="fa-solid fa-floppy-disk"></i> Update Password
-                                </button>
+                                <div style="display: flex; gap: 4px;">
+                                    <button onclick="updateStaffCredentials('${item.id}', '${item.username}')" class="btn btn-primary" style="background-color: var(--color-gold); border: none; padding: 6px 10px; font-size: 12px; cursor: pointer; border-radius: 3px; color: #0f172a; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;" title="Save changes">
+                                        <i class="fa-solid fa-floppy-disk"></i> Save
+                                    </button>
+                                    <button onclick="deleteStaffRecord('${item.id}', '${item.username}')" class="btn btn-secondary" style="border: 1px solid #ef4444; background: transparent; color: #ef4444; padding: 6px 10px; font-size: 12px; cursor: pointer; border-radius: 3px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;" title="Delete account">
+                                        <i class="fa-solid fa-trash-can"></i> Del
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     `;
@@ -1937,6 +2318,309 @@
                     tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: red;">Failed to load credentials: ${err.message}</td></tr>`;
                 }
             }
+        };
+
+        window.populateStaffSelect = function() {
+            const select = document.getElementById('calc-staff-select');
+            if (!select) return;
+            
+            const currentSelected = select.value;
+            
+            let html = '<option value="" disabled selected>Choose Staff</option>';
+            staffCredentialsList.forEach(item => {
+                html += `<option value="${item.username}">${item.username} (${item.role.toUpperCase()})</option>`;
+            });
+            select.innerHTML = html;
+            
+            if (currentSelected && staffCredentialsList.some(item => item.username === currentSelected)) {
+                select.value = currentSelected;
+            }
+        };
+
+        window.addNewStaffMember = async function(event) {
+            event.preventDefault();
+            const usernameInput = document.getElementById('new-staff-username');
+            const passcodeInput = document.getElementById('new-staff-passcode');
+            const roleInput = document.getElementById('new-staff-role');
+            
+            const username = usernameInput.value.trim().toLowerCase();
+            const passcode = passcodeInput.value.trim();
+            const role = roleInput.value;
+            
+            if (!username || !passcode || !role) {
+                showAdminToast('Please fill in all fields.', 'error');
+                return;
+            }
+            
+            try {
+                const existing = staffCredentialsList.find(s => s.username === username);
+                if (existing) {
+                    showAdminToast('Username already exists!', 'error');
+                    return;
+                }
+                
+                const { error } = await supabaseAdmin
+                    .from('staff_credentials')
+                    .insert([{ username, passcode, role }]);
+                    
+                if (error) throw error;
+                
+                showAdminToast(`Successfully added staff member ${username}!`, 'success');
+                usernameInput.value = '';
+                passcodeInput.value = '';
+                roleInput.value = 'staff';
+                
+                fetchCredentials();
+            } catch (err) {
+                console.error(err);
+                showAdminToast('Failed to add staff member: ' + err.message, 'error');
+            }
+        };
+
+        window.updateStaffCredentials = async function(id, oldUsername) {
+            const usernameInput = document.getElementById(`username-input-${id}`);
+            const passcodeInput = document.getElementById(`passcode-input-${id}`);
+            const roleSelect = document.getElementById(`role-select-${id}`);
+            
+            const newUsername = usernameInput.value.trim().toLowerCase();
+            const newPasscode = passcodeInput.value.trim();
+            const newRole = roleSelect.value;
+            
+            if (!newUsername || !newPasscode) {
+                showAdminToast('Username and Passcode cannot be empty!', 'error');
+                return;
+            }
+
+            try {
+                const { error } = await supabaseAdmin
+                    .from('staff_credentials')
+                    .update({ username: newUsername, passcode: newPasscode, role: newRole })
+                    .eq('id', id);
+
+                if (error) throw error;
+                showAdminToast(`Staff details updated successfully!`, 'success');
+                
+                if (oldUsername === currentUsername) {
+                    sessionStorage.setItem('admin_username', newUsername);
+                    currentUsername = newUsername;
+                    const uEl = document.getElementById('logged-in-username');
+                    if (uEl) uEl.innerText = newUsername.charAt(0).toUpperCase() + newUsername.slice(1);
+                }
+                
+                if (id === 'admin') {
+                    CORRECT_PIN = newPasscode;
+                }
+                fetchCredentials();
+            } catch (err) {
+                console.error(err);
+                showAdminToast('Failed to update staff credentials: ' + err.message, 'error');
+            }
+        };
+
+        window.deleteStaffRecord = async function(id, username) {
+            if (username === 'admin') {
+                showAdminToast('Cannot delete the primary administrator account!', 'error');
+                return;
+            }
+            
+            if (username === currentUsername) {
+                showAdminToast('Cannot delete your own logged-in account!', 'error');
+                return;
+            }
+            
+            if (!confirm(`Are you sure you want to delete staff account "${username}"?`)) {
+                return;
+            }
+            
+            try {
+                const { error } = await supabaseAdmin
+                    .from('staff_credentials')
+                    .delete()
+                    .eq('id', id);
+                    
+                if (error) throw error;
+                showAdminToast(`Successfully deleted staff account "${username}"`, 'success');
+                fetchCredentials();
+            } catch (err) {
+                console.error(err);
+                showAdminToast('Failed to delete account: ' + err.message, 'error');
+            }
+        };
+
+        window.toggleSalaryType = function() {
+            const type = document.getElementById('calc-salary-type').value;
+            const label = document.getElementById('calc-rate-label');
+            const rateInput = document.getElementById('calc-salary-rate');
+            
+            if (!label || !rateInput) return;
+            
+            if (type === 'daily') {
+                label.innerText = 'Daily Wage (₹)';
+                rateInput.value = '600';
+            } else {
+                label.innerText = 'Monthly Base Salary (₹)';
+                rateInput.value = '15000';
+            }
+            recalcAttendanceOutputs();
+        };
+
+        window.recalcAttendanceOutputs = function() {
+            const type = document.getElementById('calc-salary-type').value;
+            const rate = parseFloat(document.getElementById('calc-salary-rate').value) || 0;
+            const totalDays = parseInt(document.getElementById('calc-working-days').value) || 26;
+            const present = parseInt(document.getElementById('calc-present-days').value) || 0;
+            const halfDays = parseInt(document.getElementById('calc-half-days').value) || 0;
+            const leaves = parseInt(document.getElementById('calc-leaves').value) || 0;
+            
+            let absent = totalDays - present - leaves;
+            if (absent < 0) absent = 0;
+            
+            const absentEl = document.getElementById('calc-absent-days');
+            if (absentEl) absentEl.value = absent;
+
+            let effectivePresent = present + (0.5 * halfDays) + leaves;
+            if (effectivePresent > totalDays) effectivePresent = totalDays;
+            
+            const ratePercent = totalDays > 0 ? ((effectivePresent / totalDays) * 100).toFixed(1) : 0;
+            
+            const rateEl = document.getElementById('calc-out-rate');
+            if (rateEl) rateEl.innerText = `${ratePercent}%`;
+
+            let payable = 0;
+            let deductions = 0;
+
+            if (type === 'daily') {
+                payable = Math.round(effectivePresent * rate);
+                deductions = Math.round(absent * rate);
+            } else {
+                payable = totalDays > 0 ? Math.round((effectivePresent / totalDays) * rate) : 0;
+                deductions = totalDays > 0 ? Math.round((absent / totalDays) * rate) : 0;
+            }
+
+            const dedEl = document.getElementById('calc-out-deductions');
+            if (dedEl) dedEl.innerText = `₹${deductions.toLocaleString()}`;
+            
+            const salEl = document.getElementById('calc-out-salary');
+            if (salEl) salEl.innerText = `₹${payable.toLocaleString()}`;
+        };
+
+        window.calculateAndSaveAttendance = function(event) {
+            if (event) event.preventDefault();
+            
+            const staff = document.getElementById('calc-staff-select').value;
+            const month = document.getElementById('calc-month-select').value;
+            const type = document.getElementById('calc-salary-type').value;
+            const rate = parseFloat(document.getElementById('calc-salary-rate').value) || 0;
+            const totalDays = parseInt(document.getElementById('calc-working-days').value) || 26;
+            const present = parseInt(document.getElementById('calc-present-days').value) || 0;
+            const halfDays = parseInt(document.getElementById('calc-half-days').value) || 0;
+            const leaves = parseInt(document.getElementById('calc-leaves').value) || 0;
+            
+            if (!staff) {
+                showAdminToast('Please select a staff member.', 'error');
+                return;
+            }
+
+            let effectivePresent = present + (0.5 * halfDays) + leaves;
+            if (effectivePresent > totalDays) effectivePresent = totalDays;
+            const ratePercent = totalDays > 0 ? ((effectivePresent / totalDays) * 100).toFixed(1) : 0;
+
+            let payable = 0;
+            if (type === 'daily') {
+                payable = Math.round(effectivePresent * rate);
+            } else {
+                payable = totalDays > 0 ? Math.round((effectivePresent / totalDays) * rate) : 0;
+            }
+
+            const record = {
+                id: Date.now().toString(),
+                staff,
+                month,
+                year: new Date().getFullYear(),
+                attendanceRate: ratePercent,
+                salaryPaid: payable,
+                type: type === 'daily' ? 'Daily' : 'Monthly',
+                rate
+            };
+
+            let history = [];
+            try {
+                history = JSON.parse(localStorage.getItem('staff_attendance_history')) || [];
+            } catch(e){}
+            
+            const existingIndex = history.findIndex(h => h.staff === staff && h.month === month && h.year === record.year);
+            if (existingIndex > -1) {
+                if (confirm(`A record for ${staff} in ${month} already exists. Overwrite?`)) {
+                    history[existingIndex] = record;
+                } else {
+                    return;
+                }
+            } else {
+                history.unshift(record);
+            }
+
+            localStorage.setItem('staff_attendance_history', JSON.stringify(history));
+            showAdminToast(`Attendance saved for ${staff} (${month})!`, 'success');
+            
+            renderAttendanceHistory();
+            refreshActiveTabStats();
+        };
+
+        window.renderAttendanceHistory = function() {
+            const tbody = document.getElementById('attendance-history-tbody');
+            if (!tbody) return;
+            
+            let history = [];
+            try {
+                history = JSON.parse(localStorage.getItem('staff_attendance_history')) || [];
+            } catch(e){}
+
+            if (history.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--color-slate); padding: 20px;">No history records saved.</td></tr>`;
+                return;
+            }
+
+            let html = '';
+            history.forEach((item, index) => {
+                html += `
+                    <tr>
+                        <td><strong>${item.staff}</strong></td>
+                        <td>${item.month} ${item.year}</td>
+                        <td>${item.attendanceRate}%</td>
+                        <td><strong>₹${item.salaryPaid.toLocaleString()}</strong></td>
+                        <td>
+                            <button onclick="deleteAttendanceHistoryItem('${item.id}')" style="background: transparent; border: none; color: #ef4444; cursor: pointer; font-size: 14px;" title="Delete Record"><i class="fa-solid fa-trash-can"></i></button>
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        };
+
+        window.deleteAttendanceHistoryItem = function(id) {
+            if (!confirm('Are you sure you want to delete this attendance record?')) return;
+            
+            let history = [];
+            try {
+                history = JSON.parse(localStorage.getItem('staff_attendance_history')) || [];
+            } catch(e){}
+            
+            history = history.filter(item => item.id !== id);
+            localStorage.setItem('staff_attendance_history', JSON.stringify(history));
+            
+            renderAttendanceHistory();
+            refreshActiveTabStats();
+        };
+
+        window.clearAttendanceHistory = function() {
+            if (!confirm('Are you sure you want to delete all saved attendance records? This cannot be undone.')) return;
+            localStorage.removeItem('staff_attendance_history');
+            renderAttendanceHistory();
+            refreshActiveTabStats();
+        };
+
+        window.loadStaffAttendanceDefaults = function() {
+            recalcAttendanceOutputs();
         };
 
         window.toggleLoginPassword = function() {
@@ -1960,34 +2644,6 @@
             } else {
                 input.type = 'password';
                 icon.className = 'fa-solid fa-eye-slash';
-            }
-        };
-
-        window.updateStaffPasscode = async function(id, username) {
-            const input = document.getElementById(`passcode-input-${id}`);
-            const newPasscode = input.value.trim();
-            
-            if (!newPasscode) {
-                showAdminToast('Passcode cannot be empty!', 'error');
-                return;
-            }
-
-            try {
-                const { error } = await supabaseAdmin
-                    .from('staff_credentials')
-                    .update({ passcode: newPasscode })
-                    .eq('id', id);
-
-                if (error) throw error;
-                showAdminToast(`Passcode updated successfully for ${username}!`, 'success');
-                
-                if (username === 'admin') {
-                    CORRECT_PIN = newPasscode;
-                }
-                fetchCredentials();
-            } catch (err) {
-                console.error(err);
-                showAdminToast('Failed to update passcode: ' + err.message, 'error');
             }
         };
 
