@@ -496,11 +496,14 @@
 
                             <!-- Daily Attendance Grid Section -->
                             <div class="admin-form-group" style="margin-bottom: 20px;">
-                                <label style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                                <label style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                                     <span style="font-size: 13px; font-weight: 600; color: var(--color-primary);"><i class="fa-solid fa-calendar-days" style="color: var(--color-gold); margin-right: 4px;"></i> Daily Tracker Grid</span>
                                     <span style="font-size: 11px; font-weight: 500; color: var(--color-slate);">Click to cycle: P → H → L → A</span>
                                 </label>
-                                <div id="daily-attendance-grid" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; background: rgba(0,0,0,0.02); border: 1.5px solid var(--glass-border); border-radius: 6px; padding: 10px; max-height: 180px; overflow-y: auto;">
+                                <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; font-weight: 700; font-size: 11px; color: var(--color-slate); margin-bottom: 6px; padding: 0 10px;">
+                                    <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+                                </div>
+                                <div id="daily-attendance-grid" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; background: rgba(0,0,0,0.02); border: 1.5px solid var(--glass-border); border-radius: 6px; padding: 10px; max-height: 240px; overflow-y: auto;">
                                     <!-- Days will be generated here -->
                                     <div style="grid-column: span 7; text-align: center; color: var(--color-slate); font-size: 12px; padding: 10px;">Select a staff member to load grid</div>
                                 </div>
@@ -751,6 +754,9 @@
                 <div style="display: flex; align-items: center; gap: 4px;"><span style="display: inline-block; width: 12px; height: 12px; background: #ef4444; border-radius: 2px;"></span> A (Absent)</div>
             </div>
 
+            <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; text-align: center; font-weight: 700; font-size: 11px; color: var(--color-slate); margin-bottom: 6px; padding: 0 4px;">
+                <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+            </div>
             <div id="details-modal-grid" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-bottom: 20px;">
                 <!-- Filled dynamically -->
             </div>
@@ -2838,6 +2844,16 @@
             refreshActiveTabStats();
         };
 
+        // Helper to get day index of 1st day of month (0 = Sunday, 1 = Monday, etc.)
+        function getFirstDayOfMonth(monthName, year = new Date().getFullYear()) {
+            const monthIndex = [
+                'January', 'February', 'March', 'April', 'May', 'June', 
+                'July', 'August', 'September', 'October', 'November', 'December'
+            ].indexOf(monthName);
+            if (monthIndex === -1) return 0;
+            return new Date(year, monthIndex, 1).getDay();
+        }
+
         window.loadStaffAttendanceDefaults = function() {
             const staff = document.getElementById('calc-staff-select').value;
             const month = document.getElementById('calc-month-select').value;
@@ -2853,7 +2869,16 @@
             const gridContainer = document.getElementById('daily-attendance-grid');
             if (!gridContainer) return;
             
+            // Get starting weekday
+            const startDayIndex = getFirstDayOfMonth(month);
+            
             let html = '';
+            // 1. Render empty cells before Day 1
+            for (let i = 0; i < startDayIndex; i++) {
+                html += `<div style="min-height: 44px; display: flex; align-items: center; justify-content: center; background: transparent;"></div>`;
+            }
+            
+            // 2. Render actual day buttons
             for (let d = 1; d <= daysInMonth; d++) {
                 let status = 'P'; // default
                 if (record && record.dailyStatus && record.dailyStatus[d - 1]) {
@@ -2863,7 +2888,7 @@
                 const colors = statusColors[status] || { bg: '#22c55e', text: '#ffffff' };
                 
                 html += `
-                    <button type="button" class="daily-day-btn" id="day-btn-${d}" data-day="${d}" data-status="${status}" onclick="cycleDayStatus(${d})" style="background: ${colors.bg}; color: ${colors.text}; border: none; border-radius: 4px; padding: 6px 0; font-size: 12px; font-weight: bold; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; transition: all 0.2s ease;">
+                    <button type="button" class="daily-day-btn" id="day-btn-${d}" data-day="${d}" data-status="${status}" onclick="cycleDayStatus(${d})" style="background: ${colors.bg}; color: ${colors.text}; border: none; border-radius: 4px; padding: 6px 0; font-size: 12px; font-weight: bold; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; transition: all 0.2s ease; min-height: 44px;">
                         <span style="font-size: 9px; opacity: 0.85; font-weight: normal;">Day ${d}</span>
                         <span class="day-status-label" style="font-size: 13px;">${status}</span>
                     </button>
@@ -2912,7 +2937,16 @@
             title.innerText = `${record.staff}'s Attendance`;
             subtitle.innerText = `Calendar sheet for ${record.month} ${record.year}`;
             
+            const recordYear = record.year || new Date().getFullYear();
+            const startDayIndex = getFirstDayOfMonth(record.month, recordYear);
+            
             let html = '';
+            // 1. Render empty cells before Day 1
+            for (let i = 0; i < startDayIndex; i++) {
+                html += `<div style="min-height: 44px; display: flex; align-items: center; justify-content: center; background: transparent;"></div>`;
+            }
+            
+            // 2. Render days
             const totalDays = record.totalDays;
             for (let d = 1; d <= totalDays; d++) {
                 let status = 'P';
@@ -2928,7 +2962,7 @@
                 
                 const colors = statusColors[status] || { bg: '#22c55e', text: '#ffffff' };
                 html += `
-                    <div style="background: ${colors.bg}; color: ${colors.text}; border-radius: 4px; padding: 6px 0; font-size: 11px; font-weight: bold; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;">
+                    <div style="background: ${colors.bg}; color: ${colors.text}; border-radius: 4px; padding: 6px 0; font-size: 11px; font-weight: bold; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 44px;">
                         <span style="font-size: 8px; opacity: 0.85; font-weight: normal;">Day ${d}</span>
                         <span style="font-size: 12px;">${status}</span>
                     </div>
