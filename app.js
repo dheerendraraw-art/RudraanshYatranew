@@ -1,4 +1,4 @@
-﻿// Rudraansh Yatra Global Scripts - app.js
+// Rudraansh Yatra Global Scripts - app.js
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -232,6 +232,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const customForm = document.getElementById('custom-itinerary-form');
 
     if (customForm) {
+        // Make discount heading text visible
+        const discountSpan = document.querySelector('.discount-badge-container span');
+        if (discountSpan) {
+            discountSpan.style.setProperty('color', 'var(--color-text-light)', 'important');
+        }
+
+        // Make Phone Number more important (required and carries 7% discount)
+        const emailLabel = document.querySelector('label[for="custom-email"]');
+        if (emailLabel) {
+            emailLabel.innerHTML = `Email Address <span style="color: var(--color-gold); font-weight: 600; font-size: 11px;">(Get 3% Off)</span>`;
+        }
+
+        const phoneLabel = document.querySelector('label[for="custom-phone"]');
+        if (phoneLabel) {
+            phoneLabel.innerHTML = `Phone / WhatsApp Number <span style="color: var(--color-gold); font-weight: 600; font-size: 11px;">(Get 7% Off)</span> <span style="color: #ef4444;">*</span>`;
+        }
+
+        const phoneInputEl = document.getElementById('custom-phone');
+        if (phoneInputEl) {
+            phoneInputEl.setAttribute('required', 'true');
+        }
+
         // Dynamically replace original multi-button grid with a single "Book via WhatsApp" button
         const btnGrid = customForm.querySelector('.modal-btn-grid');
         if (btnGrid) {
@@ -250,8 +272,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const phoneVal = document.getElementById('custom-phone').value.trim();
             
             let discount = 0;
-            if (emailVal.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) discount += 5;
-            if (phoneVal.replace(/\D/g, '').length >= 10) discount += 5;
+            if (emailVal.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) discount += 3;
+            if (phoneVal.replace(/\D/g, '').length >= 10) discount += 7;
 
             return {
                 name: document.getElementById('custom-name').value.trim(),
@@ -671,10 +693,10 @@ function initializeDiscountPopup() {
     const updateDiscount = () => {
         let discount = 0;
         if (emailInput && emailInput.value.trim().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-            discount += 5;
+            discount += 3;
         }
         if (phoneInput && phoneInput.value.replace(/\D/g, '').length >= 10) {
-            discount += 5;
+            discount += 7;
         }
         if (discountText) {
             discountText.innerText = discount + '%';
