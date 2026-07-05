@@ -2431,7 +2431,11 @@
                 fetchCredentials();
             } catch (err) {
                 console.error(err);
-                showAdminToast('Failed to add staff member: ' + err.message, 'error');
+                if (err.message && (err.message.includes('unique constraint') || err.message.includes('duplicate key'))) {
+                    showAdminToast(`Username "${username}" is already taken. Please use a unique username.`, 'error');
+                } else {
+                    showAdminToast('Failed to add staff member: ' + err.message, 'error');
+                }
             }
         };
 
@@ -2471,7 +2475,11 @@
                 fetchCredentials();
             } catch (err) {
                 console.error(err);
-                showAdminToast('Failed to update staff credentials: ' + err.message, 'error');
+                if (err.message && (err.message.includes('unique constraint') || err.message.includes('duplicate key'))) {
+                    showAdminToast(`Username "${newUsername}" is already taken. Please use a unique username.`, 'error');
+                } else {
+                    showAdminToast('Failed to update staff credentials: ' + err.message, 'error');
+                }
             }
         };
 
