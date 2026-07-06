@@ -471,10 +471,15 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
         }
 
         const doc = new PDFDocument({ margin: 50, size: 'A4' });
-
-        res.setHeader('Content-Disposition', `attachment; filename="Invoice_${bill.booking_id}.pdf"`);
-        res.setHeader('Content-Type', 'application/pdf');
-        doc.pipe(res);
+        const chunks = [];
+        doc.on('data', chunk => chunks.push(chunk));
+        doc.on('end', () => {
+            const pdfBuffer = Buffer.concat(chunks);
+            res.setHeader('Content-Disposition', `attachment; filename="Invoice_${bill.booking_id}.pdf"`);
+            res.setHeader('Content-Type', 'application/pdf');
+            res.setHeader('Content-Length', pdfBuffer.length);
+            res.send(pdfBuffer);
+        });
 
         const primaryColor = '#072654';
         const accentColor = '#d4af37';
@@ -629,7 +634,7 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
         doc.fillColor(lightTextColor)
            .font('Helvetica-Oblique')
            .fontSize(8.5)
-           .text('This is a computer generated invoice and requires no physical signature.', 50, 715, { align: 'center' });
+           .text('This is a computer generated invoice and requires no physical signature.', 50, 715, { align: 'center', width: 495 });
 
         doc.fillColor(primaryColor)
            .font('Helvetica-Bold')
