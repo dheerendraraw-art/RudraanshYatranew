@@ -830,6 +830,10 @@
             <button type="button" class="modal-close" onclick="closeCreateBillModal()" style="position: absolute; top: 12px; right: 16px; font-size: 24px; background: none; border: none; color: var(--color-text-secondary); cursor: pointer;">&times;</button>
             <h3 style="font-family: var(--font-serif); color: white; margin-bottom: 16px; font-size: 20px; display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-file-invoice-dollar" style="color: var(--color-gold)"></i> Create Booking Bill</h3>
             
+            <div id="bill-debug-box" style="margin-bottom: 16px; padding: 12px; background: #1e293b; border: 1.5px solid #eab308; border-radius: 4px; color: #4ade80; font-family: monospace; font-size: 12px; display: none; line-height: 1.4;">
+                <strong>Diagnostics:</strong> <span id="bill-debug-text">Ready</span>
+            </div>
+
             <form id="create-bill-form" onsubmit="submitCreateBill(event)">
                 <!-- Row 1: Booking ID & Package -->
                 <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 12px; margin-bottom: 12px;">
@@ -3525,6 +3529,15 @@
                 payment_status: paymentStatus
             };
 
+            const debugBox = document.getElementById('bill-debug-box');
+            const debugText = document.getElementById('bill-debug-text');
+            if (debugBox && debugText) {
+                debugBox.style.display = 'block';
+                debugBox.style.borderColor = '#eab308';
+                debugBox.style.color = '#4ade80';
+                debugText.innerText = 'Submitting record to Supabase database...';
+            }
+
             try {
                 const { data, error } = await supabaseAdmin
                     .from('booking_bills')
@@ -3534,11 +3547,20 @@
 
                 if (error) throw error;
 
+                if (debugText) debugText.innerText = 'Success! Closing modal...';
                 showAdminToast('Billing record created successfully!', 'success');
-                closeCreateBillModal();
-                fetchBillingRecords();
+                setTimeout(() => {
+                    closeCreateBillModal();
+                    if (debugBox) debugBox.style.display = 'none';
+                    fetchBillingRecords();
+                }, 1000);
             } catch (err) {
                 console.error(err);
+                if (debugBox && debugText) {
+                    debugBox.style.borderColor = '#ef4444';
+                    debugBox.style.color = '#f87171';
+                    debugText.innerHTML = '<strong>Insertion Failed:</strong><br>' + (err.message || err.details || JSON.stringify(err));
+                }
                 showAdminToast('Error creating billing record: ' + err.message, 'error');
             }
         };
