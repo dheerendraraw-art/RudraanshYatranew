@@ -2803,3 +2803,50 @@ footer h3::after, footer h4::after {
     background-position: right 10px center !important;
     background-size: 12px !important;
 }
+
+/* Payment Methods in Footer */
+.footer-payment-methods {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 30px 0;
+    text-align: center;
+}
+
+.footer-payment-methods .payment-title {
+    color: var(--color-text-light);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 20px;
+}
+
+.payment-badges-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.payment-card {
+    background-color: #ffffff;
+    border-radius: 6px;
+    width: 85px;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6px 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease;
+}
+
+.payment-card:hover {
+    transform: translateY(-2px);
+}
+
+.payment-card svg {
+    max-width: 100%;
+    max-height: 100%;
+}
