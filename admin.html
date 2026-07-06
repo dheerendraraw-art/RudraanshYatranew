@@ -377,13 +377,14 @@
                                     <tr>
                                         <th>Username</th>
                                         <th>Role</th>
+                                        <th>UUID Mapping (For Leads)</th>
                                         <th>Passcode</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody id="passwords-table-body">
                                     <tr>
-                                        <td colspan="4" style="text-align: center; color: var(--color-slate);">Loading credentials...</td>
+                                        <td colspan="5" style="text-align: center; color: var(--color-slate);">Loading credentials...</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -409,6 +410,12 @@
                                 <select id="new-staff-role" class="admin-select" required style="padding: 10px 12px;">
                                     <option value="staff" selected>Staff (Limited Access)</option>
                                     <option value="admin">Administrator (Full Access)</option>
+                                </select>
+                            </div>
+                            <div class="admin-form-group" style="margin-bottom: 20px;">
+                                <label for="new-staff-uuid">UUID Mapping (For Leads)</label>
+                                <select id="new-staff-uuid" class="admin-select" style="padding: 10px 12px;">
+                                    <option value="" selected>None</option>
                                 </select>
                             </div>
                             <button type="submit" class="btn btn-primary" style="width: 100%; border: none; padding: 12px; font-size: 14px; font-weight: 600; cursor: pointer; background-color: var(--color-gold); color: #0f172a; border-radius: 4px;">
@@ -458,13 +465,13 @@
                                 <div class="admin-form-group" style="margin-bottom: 0;">
                                     <label for="calc-salary-type">Rate Type</label>
                                     <select id="calc-salary-type" class="admin-select" required style="padding: 8px 12px;" onchange="toggleSalaryType()">
-                                        <option value="daily" selected>Daily Wage (₹)</option>
-                                        <option value="monthly">Monthly Salary (₹)</option>
+                                        <option value="monthly" selected>Monthly Salary (₹)</option>
+                                        <option value="daily">Daily Wage (₹)</option>
                                     </select>
                                 </div>
                                 <div class="admin-form-group" style="margin-bottom: 0;">
-                                    <label for="calc-salary-rate" id="calc-rate-label">Daily Wage (₹)</label>
-                                    <input type="number" id="calc-salary-rate" class="admin-input" required min="0" value="600" style="padding: 8px 12px;" oninput="recalcAttendanceOutputs()">
+                                    <label for="calc-salary-rate" id="calc-rate-label">Monthly Base Salary (₹)</label>
+                                    <input type="number" id="calc-salary-rate" class="admin-input" required min="0" value="15000" style="padding: 8px 12px;" oninput="recalcAttendanceOutputs()">
                                 </div>
                             </div>
 
@@ -794,6 +801,7 @@
             if (sessionStorage.getItem('admin_verified') === 'true') {
                 currentUserRole = sessionStorage.getItem('admin_role') || 'admin';
                 currentUsername = sessionStorage.getItem('admin_username') || 'admin';
+                currentUserUuidMapping = sessionStorage.getItem('admin_uuid_mapping') || '';
                 showDashboard();
             }
         });
@@ -828,6 +836,7 @@
 
         let currentUserRole = 'admin';
         let currentUsername = 'admin';
+        let currentUserUuidMapping = '';
 
         const AGENT_UUIDS = {
             'agent1': '00000000-0000-0000-0000-000000000001',
@@ -937,9 +946,11 @@
                 // Credentials valid!
                 currentUserRole = data.role; // 'admin' or 'staff'
                 currentUsername = data.username;
+                currentUserUuidMapping = data.uuid_mapping || '';
                 sessionStorage.setItem('admin_verified', 'true');
                 sessionStorage.setItem('admin_role', currentUserRole);
                 sessionStorage.setItem('admin_username', currentUsername);
+                sessionStorage.setItem('admin_uuid_mapping', currentUserUuidMapping);
                 showAdminToast(`Dashboard unlocked as ${currentUsername}!`, 'success');
                 showDashboard();
             } catch (err) {
@@ -954,6 +965,7 @@
 
             currentUserRole = sessionStorage.getItem('admin_role') || 'admin';
             currentUsername = sessionStorage.getItem('admin_username') || 'admin';
+            currentUserUuidMapping = sessionStorage.getItem('admin_uuid_mapping') || '';
 
             const usernameEl = document.getElementById('logged-in-username');
             if (usernameEl) {
@@ -973,6 +985,7 @@
             sessionStorage.removeItem('admin_verified');
             sessionStorage.removeItem('admin_role');
             sessionStorage.removeItem('admin_username');
+            sessionStorage.removeItem('admin_uuid_mapping');
             window.location.reload();
         }
 
@@ -1234,6 +1247,7 @@
                 fetchCredentials();
             } else {
                 fetchBookings();
+                await fetchUsers();
                 fetchLeads();
             }
 
@@ -1252,7 +1266,7 @@
                     .order('created_at', { ascending: false });
 
                 if (currentUserRole === 'staff') {
-                    const agentUuid = AGENT_UUIDS[currentUsername];
+                    const agentUuid = currentUserUuidMapping || AGENT_UUIDS[currentUsername];
                     if (agentUuid) {
                         query = query.eq('user_id', agentUuid);
                     }
@@ -1908,6 +1922,20 @@
 
         window.fetchUsers = async function() {
             try {
+                // Fetch staff credentials to map UUID to username
+                const { data: staffData, error: staffError } = await supabaseAdmin
+                    .from('staff_credentials')
+                    .select('username, uuid_mapping');
+                
+                const uuidToUsername = {};
+                if (staffData && !staffError) {
+                    staffData.forEach(s => {
+                        if (s.uuid_mapping) {
+                            uuidToUsername[s.uuid_mapping.toLowerCase()] = s.username.charAt(0).toUpperCase() + s.username.slice(1);
+                        }
+                    });
+                }
+
                 const { data, error } = await supabaseAdmin.from('users_view').select('*');
                 if (error) throw error;
                 
@@ -1917,8 +1945,10 @@
                 let optionsHtml = '<option value="" style="background:#111827; color: white;">Unassigned</option>';
                 
                 usersList.forEach(user => {
-                    usersMap[user.id] = user.email;
-                    optionsHtml += `<option value="${user.id}" style="background:#111827; color: white;">${user.email}</option>`;
+                    const mappedName = uuidToUsername[user.id.toLowerCase()];
+                    const displayName = mappedName ? mappedName : user.email;
+                    usersMap[user.id] = displayName;
+                    optionsHtml += `<option value="${user.id}" style="background:#111827; color: white;">${displayName}</option>`;
                 });
                 
                 if (assigneeSelect) assigneeSelect.innerHTML = optionsHtml;
@@ -1978,7 +2008,7 @@
                     .order('created_at', { ascending: false });
 
                 if (currentUserRole === 'staff') {
-                    const agentUuid = AGENT_UUIDS[currentUsername];
+                    const agentUuid = currentUserUuidMapping || AGENT_UUIDS[currentUsername];
                     if (agentUuid) {
                         query = query.eq('assigned_to', agentUuid);
                     }
@@ -2023,7 +2053,8 @@
                     let assigneeOptions = '<option value="" style="background: #111827; color: white;">Unassigned</option>';
                     (usersList || []).forEach(user => {
                         const selected = item.assigned_to === user.id ? 'selected' : '';
-                        assigneeOptions += `<option value="${user.id}" ${selected} style="background: #111827; color: white;">${user.email}</option>`;
+                        const displayName = usersMap[user.id] || user.email;
+                        assigneeOptions += `<option value="${user.id}" ${selected} style="background: #111827; color: white;">${displayName}</option>`;
                     });
 
                     // Render Final Status Dropdown options with Emojis
@@ -2356,6 +2387,16 @@
 
                 // Populate staff dropdown for calculator
                 populateStaffSelect();
+
+                // Populate new staff form UUID selector
+                const newStaffUuidEl = document.getElementById('new-staff-uuid');
+                if (newStaffUuidEl) {
+                    let newStaffUuidOptions = '<option value="">None</option>';
+                    (usersList || []).forEach(u => {
+                        newStaffUuidOptions += `<option value="${u.id}">${u.email}</option>`;
+                    });
+                    newStaffUuidEl.innerHTML = newStaffUuidOptions;
+                }
                 
                 // Set default month selections to current month
                 const currentMonthName = new Date().toLocaleString('en-US', { month: 'long' });
@@ -2376,6 +2417,12 @@
 
                 let html = '';
                 staffCredentialsList.forEach((item, index) => {
+                    let mappingOptions = '<option value="" style="background: #ffffff; color: #1e293b;">None</option>';
+                    (usersList || []).forEach(u => {
+                        const selected = item.uuid_mapping === u.id ? 'selected' : '';
+                        mappingOptions += `<option value="${u.id}" ${selected} style="background: #ffffff; color: #1e293b;">${u.email}</option>`;
+                    });
+
                     html += `
                         <tr>
                             <td>
@@ -2385,6 +2432,11 @@
                                 <select id="role-select-${item.id}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 6px; color: #1e293b; font-family: var(--font-sans); font-size: 13px; font-weight: 600; width: 85px;">
                                     <option value="staff" ${item.role === 'staff' ? 'selected' : ''}>STAFF</option>
                                     <option value="admin" ${item.role === 'admin' ? 'selected' : ''}>ADMIN</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select id="uuid-select-${item.id}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 6px; color: #1e293b; font-family: var(--font-sans); font-size: 13px; font-weight: 600; width: 180px;">
+                                    ${mappingOptions}
                                 </select>
                             </td>
                             <td>
@@ -2413,7 +2465,7 @@
                 console.error(err);
                 const tbody = document.getElementById('passwords-table-body');
                 if (tbody) {
-                    tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: red;">Failed to load credentials: ${err.message}</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: red;">Failed to load credentials: ${err.message}</td></tr>`;
                 }
             }
         };
@@ -2440,10 +2492,12 @@
             const usernameInput = document.getElementById('new-staff-username');
             const passcodeInput = document.getElementById('new-staff-passcode');
             const roleInput = document.getElementById('new-staff-role');
+            const uuidInput = document.getElementById('new-staff-uuid');
             
             const username = usernameInput.value.trim().toLowerCase();
             const passcode = passcodeInput.value.trim();
             const role = roleInput.value;
+            const uuid_mapping = uuidInput ? (uuidInput.value || null) : null;
             
             if (!username || !passcode || !role) {
                 showAdminToast('Please fill in all fields.', 'error');
@@ -2459,7 +2513,7 @@
                 
                 const { error } = await supabaseAdmin
                     .from('staff_credentials')
-                    .insert([{ username, passcode, role }]);
+                    .insert([{ username, passcode, role, uuid_mapping }]);
                     
                 if (error) throw error;
                 
@@ -2467,6 +2521,7 @@
                 usernameInput.value = '';
                 passcodeInput.value = '';
                 roleInput.value = 'staff';
+                if (uuidInput) uuidInput.value = '';
                 
                 fetchCredentials();
             } catch (err) {
@@ -2483,10 +2538,12 @@
             const usernameInput = document.getElementById(`username-input-${id}`);
             const passcodeInput = document.getElementById(`passcode-input-${id}`);
             const roleSelect = document.getElementById(`role-select-${id}`);
+            const uuidSelect = document.getElementById(`uuid-select-${id}`);
             
             const newUsername = usernameInput.value.trim().toLowerCase();
             const newPasscode = passcodeInput.value.trim();
             const newRole = roleSelect.value;
+            const newUuidMapping = uuidSelect ? (uuidSelect.value || null) : null;
             
             if (!newUsername || !newPasscode) {
                 showAdminToast('Username and Passcode cannot be empty!', 'error');
@@ -2496,7 +2553,7 @@
             try {
                 const { error } = await supabaseAdmin
                     .from('staff_credentials')
-                    .update({ username: newUsername, passcode: newPasscode, role: newRole })
+                    .update({ username: newUsername, passcode: newPasscode, role: newRole, uuid_mapping: newUuidMapping })
                     .eq('id', id);
 
                 if (error) throw error;
@@ -2504,7 +2561,9 @@
                 
                 if (oldUsername === currentUsername) {
                     sessionStorage.setItem('admin_username', newUsername);
+                    sessionStorage.setItem('admin_uuid_mapping', newUuidMapping || '');
                     currentUsername = newUsername;
+                    currentUserUuidMapping = newUuidMapping || '';
                     const uEl = document.getElementById('logged-in-username');
                     if (uEl) uEl.innerText = newUsername.charAt(0).toUpperCase() + newUsername.slice(1);
                 }
@@ -2578,15 +2637,17 @@
             const halfDays = parseInt(document.getElementById('calc-half-days').value) || 0;
             const leaves = parseInt(document.getElementById('calc-leaves').value) || 0;
             
-            let absent = totalDays - present - leaves;
-            if (absent < 0) absent = 0;
-            
-            const absentEl = document.getElementById('calc-absent-days');
-            if (absentEl) absentEl.value = absent;
-
+            // Effective present days: present days + 0.5 for each half day worked + leaves
             let effectivePresent = present + (0.5 * halfDays) + leaves;
             if (effectivePresent > totalDays) effectivePresent = totalDays;
             
+            // Absent days correctly accounts for half days off (deducting 0.5 days per half-day)
+            let absent = totalDays - effectivePresent;
+            if (absent < 0) absent = 0;
+            
+            const absentEl = document.getElementById('calc-absent-days');
+            if (absentEl) absentEl.value = absent.toFixed(1).replace('.0', '');
+
             const ratePercent = totalDays > 0 ? ((effectivePresent / totalDays) * 100).toFixed(1) : 0;
             
             const rateEl = document.getElementById('calc-out-rate');
@@ -2883,6 +2944,12 @@
                 let status = 'P'; // default
                 if (record && record.dailyStatus && record.dailyStatus[d - 1]) {
                     status = record.dailyStatus[d - 1];
+                } else if (!record) {
+                    // Default Sundays to 'L' (Paid Weekly Off)
+                    const dayOfWeek = (startDayIndex + d - 1) % 7;
+                    if (dayOfWeek === 0) { // Sunday
+                        status = 'L';
+                    }
                 }
                 
                 const colors = statusColors[status] || { bg: '#22c55e', text: '#ffffff' };
@@ -2898,7 +2965,7 @@
             
             if (record) {
                 document.getElementById('calc-salary-type').value = record.type === 'Daily' ? 'daily' : 'monthly';
-                document.getElementById('calc-salary-rate').value = record.rate || 600;
+                document.getElementById('calc-salary-rate').value = record.rate || (record.type === 'Daily' ? 600 : 15000);
                 
                 const type = record.type === 'Daily' ? 'daily' : 'monthly';
                 const label = document.getElementById('calc-rate-label');
