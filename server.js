@@ -280,6 +280,11 @@ ${urls.join('\n')}
     }
 });
 
+// GET application version for testing
+app.get('/api/version', (req, res) => {
+    res.json({ version: '1.0.5', status: 'Running', timestamp: '2026-07-06T17:10:00Z' });
+});
+
 // ==========================================
 // BILLING & PAYMENT TRACKING API ENDPOINTS
 // ==========================================
