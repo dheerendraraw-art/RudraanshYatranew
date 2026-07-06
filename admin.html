@@ -1511,6 +1511,9 @@
                             <td><small>${item.message || '—'}</small></td>
                             <td>${createdStr}</td>
                             <td>
+                                <button class="btn btn-primary" onclick="openCreateBillForBooking('${(item.name || '').replace(/'/g, '\\\'')}', '${item.phone || ''}', '${(item.email || '').replace(/'/g, '\\\'')}', '${(item.package_name || '').replace(/'/g, '\\\'')}', '${item.travel_date || ''}', '${item.travelers || 1}')" style="padding: 4px 8px; font-size: 11px; margin-right: 6px; background-color: var(--color-gold); color: #111827; border: none; font-weight: bold; cursor: pointer; border-radius: 3px;">
+                                    <i class="fa-solid fa-file-invoice-dollar"></i> Create Bill
+                                </button>
                                 <button class="admin-btn-delete" onclick="deleteRecord('bookings', '${item.id}', fetchBookings)">
                                     <i class="fa-solid fa-trash"></i> Delete
                                 </button>
@@ -2210,6 +2213,15 @@
                     .eq('id', leadId);
 
                 if (error) throw error;
+                
+                // If marked as booking confirmed inline, move to bookings tab
+                if (fieldName === 'final_status' && value === 'Booking confirmed') {
+                    const lead = currentLeads.find(l => l.id === leadId);
+                    if (lead) {
+                        await copyLeadToBooking(lead);
+                    }
+                }
+
                 showAdminToast('Lead updated successfully!', 'success');
                 fetchLeads();
             } catch (err) {
@@ -3465,6 +3477,41 @@
             document.getElementById('create-bill-modal').style.display = 'flex';
         };
 
+        window.openCreateBillForBooking = function(name, phone, email, packageName, travelDate, travelers) {
+            // Generate professional booking ID
+            const namePrefix = (name || 'CUST').replace(/[^a-zA-Z]/g, '').slice(0, 3).toUpperCase();
+            const randomNum = Math.floor(100 + Math.random() * 900);
+            const bookingId = `RY-2026-${namePrefix}-${randomNum}`;
+            
+            // Open modal and reset
+            document.getElementById('create-bill-form').reset();
+            const debugBox = document.getElementById('bill-debug-box');
+            if (debugBox) debugBox.style.display = 'none';
+            
+            // Fill values
+            document.getElementById('bill-booking-id').value = bookingId;
+            document.getElementById('bill-package-name').value = packageName || '';
+            document.getElementById('bill-cust-name').value = name || '';
+            document.getElementById('bill-cust-phone').value = phone || '';
+            document.getElementById('bill-cust-email').value = email || '';
+            document.getElementById('bill-group-size').value = travelers || 1;
+            
+            if (travelDate) {
+                try {
+                    const formattedDate = new Date(travelDate).toISOString().split('T')[0];
+                    document.getElementById('bill-start-date').value = formattedDate;
+                } catch(e) {
+                    document.getElementById('bill-start-date').value = travelDate;
+                }
+            } else {
+                const defaultDate = new Date();
+                defaultDate.setDate(defaultDate.getDate() + 30);
+                document.getElementById('bill-start-date').value = defaultDate.toISOString().split('T')[0];
+            }
+            
+            document.getElementById('create-bill-modal').style.display = 'flex';
+        };
+
         window.closeCreateBillModal = function() {
             document.getElementById('create-bill-modal').style.display = 'none';
         };
@@ -3553,6 +3600,7 @@
                     closeCreateBillModal();
                     if (debugBox) debugBox.style.display = 'none';
                     fetchBillingRecords();
+                    switchTab(null, 'pane-billing');
                 }, 1000);
             } catch (err) {
                 console.error(err);

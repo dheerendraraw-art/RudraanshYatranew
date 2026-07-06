@@ -653,6 +653,14 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
     }
 });
 
+// Serve admin.html with explicit cache-busting headers
+app.get(['/admin', '/admin.html'], (req, res) => {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+    res.sendFile(path.join(__dirname, 'admin.html'));
+});
+
 // Serve static files from the root directory with clean URL support (lower priority than our SSR routes)
 app.use(express.static(__dirname, { extensions: ['html'] }));
 
