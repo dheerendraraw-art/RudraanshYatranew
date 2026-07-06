@@ -214,6 +214,70 @@ app.get('/blog', async (req, res) => {
     }
 });
 
+// 5. Dynamic XML Sitemap Route (/sitemap.xml)
+app.get('/sitemap.xml', async (req, res) => {
+    try {
+        const baseUrl = 'https://rudraanshyatra.com';
+        
+        // Core pages of the website
+        const staticPages = [
+            '',
+            '/about',
+            '/gallery',
+            '/whats-included',
+            '/blogs',
+            '/adi-kailash',
+            '/khaliya-top',
+            '/mt-kailash',
+            '/darma-valley',
+            '/panchachuli'
+        ];
+        
+        let urls = staticPages.map(page => {
+            return `  <url>
+    <loc>${baseUrl}${page}</loc>
+    <changefreq>weekly</changefreq>
+    <priority>${page === '' ? '1.0' : '0.8'}</priority>
+  </url>`;
+        });
+
+        // Dynamic blog posts from Supabase
+        if (supabase) {
+            const { data: blogs } = await supabase
+                .from('blogs')
+                .select('slug, updated_at, created_at')
+                .order('created_at', { ascending: false });
+            
+            if (blogs && blogs.length > 0) {
+                blogs.forEach(blog => {
+                    const slug = blog.slug || slugify(blog.title);
+                    if (slug) {
+                        const lastMod = blog.updated_at || blog.created_at;
+                        const dateStr = lastMod ? new Date(lastMod).toISOString().split('T')[0] : '';
+                        const lastModTag = dateStr ? `\n    <lastmod>${dateStr}</lastmod>` : '';
+                        urls.push(`  <url>
+    <loc>${baseUrl}/blog/${slug}</loc>${lastModTag}
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>`);
+                    }
+                });
+            }
+        }
+
+        const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls.join('\n')}
+</urlset>`;
+
+        res.header('Content-Type', 'application/xml');
+        res.status(200).send(xml);
+    } catch (err) {
+        console.error('Sitemap Generator Error:', err);
+        res.status(500).send('Error generating sitemap');
+    }
+});
+
 // Serve static files from the root directory with clean URL support (lower priority than our SSR routes)
 app.use(express.static(__dirname, { extensions: ['html'] }));
 
