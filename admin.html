@@ -1918,6 +1918,7 @@
         // --- 3. LEADS MANAGER LOGIC ---
         let usersMap = {};
         let usersList = [];
+        let mappedUserIds = new Set();
         let currentLeads = [];
 
         window.fetchUsers = async function() {
@@ -1928,10 +1929,12 @@
                     .select('username, uuid_mapping');
                 
                 const uuidToUsername = {};
+                mappedUserIds.clear();
                 if (staffData && !staffError) {
                     staffData.forEach(s => {
                         if (s.uuid_mapping) {
                             uuidToUsername[s.uuid_mapping.toLowerCase()] = s.username.charAt(0).toUpperCase() + s.username.slice(1);
+                            mappedUserIds.add(s.uuid_mapping.toLowerCase());
                         }
                     });
                 }
@@ -1948,7 +1951,9 @@
                     const mappedName = uuidToUsername[user.id.toLowerCase()];
                     const displayName = mappedName ? mappedName : user.email;
                     usersMap[user.id] = displayName;
-                    optionsHtml += `<option value="${user.id}" style="background:#111827; color: white;">${displayName}</option>`;
+                    if (mappedName) {
+                        optionsHtml += `<option value="${user.id}" style="background:#111827; color: white;">${displayName}</option>`;
+                    }
                 });
                 
                 if (assigneeSelect) assigneeSelect.innerHTML = optionsHtml;
@@ -2053,8 +2058,11 @@
                     let assigneeOptions = '<option value="" style="background: #111827; color: white;">Unassigned</option>';
                     (usersList || []).forEach(user => {
                         const selected = item.assigned_to === user.id ? 'selected' : '';
-                        const displayName = usersMap[user.id] || user.email;
-                        assigneeOptions += `<option value="${user.id}" ${selected} style="background: #111827; color: white;">${displayName}</option>`;
+                        const isMapped = mappedUserIds.has(user.id.toLowerCase());
+                        if (isMapped || selected) {
+                            const displayName = usersMap[user.id] || user.email;
+                            assigneeOptions += `<option value="${user.id}" ${selected} style="background: #111827; color: white;">${displayName}</option>`;
+                        }
                     });
 
                     // Render Final Status Dropdown options with Emojis
