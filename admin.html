@@ -3331,26 +3331,38 @@
 
         window.fetchBillingRecords = async function() {
             try {
-                const searchVal = document.getElementById('billing-search').value;
+                if (!supabaseAdmin) {
+                    showAdminToast('Database client not initialized. Please reload.', 'error');
+                    return;
+                }
+                const searchVal = document.getElementById('billing-search').value.trim();
                 const statusVal = document.getElementById('billing-filter-status').value;
                 
-                let url = `/api/billing?status=${statusVal}`;
-                if (searchVal) {
-                    url += `&search=${encodeURIComponent(searchVal)}`;
+                let query = supabaseAdmin.from('booking_bills').select('*');
+
+                if (statusVal && statusVal !== 'All') {
+                    query = query.eq('payment_status', statusVal);
                 }
 
-                const response = await fetch(url);
-                const data = await response.json();
-                if (response.ok) {
-                    billingRecords = data;
-                    renderBillingTable();
-                    updateDynamicStats('pane-billing');
-                } else {
-                    showAdminToast(data.error || 'Failed to fetch billing records', 'error');
+                const { data, error } = await query.order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                let result = data || [];
+                if (searchVal) {
+                    const term = searchVal.toLowerCase();
+                    result = result.filter(bill => 
+                        bill.customer_name.toLowerCase().includes(term) || 
+                        bill.booking_id.toLowerCase().includes(term)
+                    );
                 }
+
+                billingRecords = result;
+                renderBillingTable();
+                updateDynamicStats('pane-billing');
             } catch (err) {
                 console.error('Fetch Billing Error:', err);
-                showAdminToast('Network error fetching bills', 'error');
+                showAdminToast('Error fetching bills: ' + err.message, 'error');
             }
         };
 
@@ -3448,6 +3460,11 @@
         window.submitCreateBill = async function(event) {
             event.preventDefault();
             
+            if (!supabaseAdmin) {
+                showAdminToast('Database client not initialized. Please reload.', 'error');
+                return;
+            }
+
             const bookingId = document.getElementById('bill-booking-id').value.trim();
             const packageName = document.getElementById('bill-package-name').value.trim();
             const name = document.getElementById('bill-cust-name').value.trim();
@@ -3461,38 +3478,60 @@
             const initialMode = document.getElementById('bill-init-mode').value;
             const initialType = document.getElementById('bill-init-type').value;
 
-            const body = {
-                bookingId,
-                packageName,
-                totalPackageAmount,
-                customerDetails: { name, phone, email, groupSize, tourStartDate }
-            };
-
-            if (initialPaid > 0) {
-                body.initialPayment = {
-                    amountPaid: initialPaid,
-                    paymentMode: initialMode,
-                    paymentType: initialType
-                };
+            if (isNaN(totalPackageAmount) || totalPackageAmount <= 0) {
+                showAdminToast('Please enter a valid total package cost', 'error');
+                return;
             }
 
-            try {
-                const response = await fetch('/api/billing', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(body)
+            let payments = [];
+            if (initialPaid > 0) {
+                const receiptId = 'REC-' + Date.now() + Math.floor(Math.random() * 10);
+                payments.push({
+                    receiptId,
+                    amountPaid: initialPaid,
+                    date: new Date().toISOString().split('T')[0],
+                    paymentMode: initialMode || 'UPI',
+                    paymentType: initialType || 'Token Advance'
                 });
-                const data = await response.json();
-                if (response.ok) {
-                    showAdminToast('Billing record created successfully!', 'success');
-                    closeCreateBillModal();
-                    fetchBillingRecords();
-                } else {
-                    showAdminToast(data.error || 'Failed to create billing record', 'error');
-                }
+            }
+
+            const totalPaid = payments.reduce((sum, p) => sum + p.amountPaid, 0);
+            const balanceRemaining = totalPackageAmount - totalPaid;
+
+            let paymentStatus = 'Pending';
+            if (totalPaid > 0) {
+                paymentStatus = totalPaid >= totalPackageAmount ? 'Fully Paid' : 'Partially Paid';
+            }
+
+            const newBill = {
+                booking_id: bookingId,
+                customer_name: name,
+                customer_phone: phone,
+                customer_email: email || '',
+                group_size: groupSize,
+                tour_start_date: tourStartDate,
+                package_name: packageName,
+                total_package_amount: totalPackageAmount,
+                payments_received: payments,
+                balance_remaining: balanceRemaining,
+                payment_status: paymentStatus
+            };
+
+            try {
+                const { data, error } = await supabaseAdmin
+                    .from('booking_bills')
+                    .insert([newBill])
+                    .select()
+                    .single();
+
+                if (error) throw error;
+
+                showAdminToast('Billing record created successfully!', 'success');
+                closeCreateBillModal();
+                fetchBillingRecords();
             } catch (err) {
                 console.error(err);
-                showAdminToast('Network error creating billing record', 'error');
+                showAdminToast('Error creating billing record: ' + err.message, 'error');
             }
         };
 
@@ -3511,6 +3550,11 @@
         window.submitAddPayment = async function(event) {
             event.preventDefault();
             
+            if (!supabaseAdmin) {
+                showAdminToast('Database client not initialized. Please reload.', 'error');
+                return;
+            }
+
             const billId = document.getElementById('payment-bill-id').value;
             const amountPaid = parseFloat(document.getElementById('pay-amount').value);
             const paymentMode = document.getElementById('pay-mode').value;
@@ -3522,22 +3566,49 @@
             }
 
             try {
-                const response = await fetch(`/api/billing/${billId}/payment`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ amountPaid, paymentMode, paymentType })
-                });
-                const data = await response.json();
-                if (response.ok) {
-                    showAdminToast('Payment transaction logged successfully!', 'success');
-                    closeAddPaymentModal();
-                    fetchBillingRecords();
-                } else {
-                    showAdminToast(data.error || 'Failed to log payment', 'error');
+                const bill = billingRecords.find(b => b.id === billId);
+                if (!bill) {
+                    showAdminToast('Billing record not found in cache', 'error');
+                    return;
                 }
+
+                const receiptId = 'REC-' + Date.now() + Math.floor(Math.random() * 10);
+                const newPayment = {
+                    receiptId,
+                    amountPaid,
+                    date: new Date().toISOString().split('T')[0],
+                    paymentMode,
+                    paymentType
+                };
+
+                const updatedPayments = [...(bill.payments_received || []), newPayment];
+                const totalPaid = updatedPayments.reduce((sum, p) => sum + p.amountPaid, 0);
+                const newBalance = parseFloat(bill.total_package_amount) - totalPaid;
+
+                let newStatus = 'Pending';
+                if (totalPaid > 0) {
+                    newStatus = totalPaid >= parseFloat(bill.total_package_amount) ? 'Fully Paid' : 'Partially Paid';
+                }
+
+                const { data, error } = await supabaseAdmin
+                    .from('booking_bills')
+                    .update({
+                        payments_received: updatedPayments,
+                        balance_remaining: newBalance,
+                        payment_status: newStatus
+                    })
+                    .eq('id', billId)
+                    .select()
+                    .single();
+
+                if (error) throw error;
+
+                showAdminToast('Payment transaction logged successfully!', 'success');
+                closeAddPaymentModal();
+                fetchBillingRecords();
             } catch (err) {
                 console.error(err);
-                showAdminToast('Network error logging payment', 'error');
+                showAdminToast('Error logging payment: ' + err.message, 'error');
             }
         };
     </script>
