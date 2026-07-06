@@ -613,7 +613,12 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
            .text(`INR ${totalPaidSoFar.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 450, currentY, { align: 'right', width: 85 });
 
         currentY += 20;
-        doc.rect(summaryBoxX - 10, currentY - 6, 225, 26).fill('rgba(212, 175, 55, 0.1)');
+        doc.save()
+           .fillColor('#d4af37')
+           .opacity(0.15)
+           .rect(summaryBoxX - 10, currentY - 6, 225, 26)
+           .fill()
+           .restore();
         
         doc.fillColor('#b2890f')
            .fontSize(10)
