@@ -9,6 +9,7 @@
   "dependencies": {
     "express": "^4.19.2",
     "@supabase/supabase-js": "^2.43.4",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "pdfkit": "^0.15.0"
   }
 }

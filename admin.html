@@ -134,6 +134,9 @@
                 <button class="admin-tab-btn active" onclick="switchTab(event, 'pane-bookings')">
                     <i class="fa-solid fa-calendar-check"></i> Bookings
                 </button>
+                <button class="admin-tab-btn" onclick="switchTab(event, 'pane-billing')">
+                    <i class="fa-solid fa-file-invoice-dollar"></i> Billing & Payments
+                </button>
                 <button class="admin-tab-btn" onclick="switchTab(event, 'pane-requests')">
                     <i class="fa-solid fa-compass"></i> Custom Requests
                 </button>
@@ -186,6 +189,55 @@
                             <tr>
                                 <td colspan="8" style="text-align: center; color: var(--color-slate);">Loading bookings
                                     data...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- PANE 9: BILLING & PAYMENT TRACKING -->
+            <div id="pane-billing" class="admin-tab-content-pane" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+                    <h3 class="admin-form-title" style="margin-bottom: 0; border-bottom: none;"><i
+                            class="fa-solid fa-file-invoice-dollar" style="color: var(--color-gold);"></i> Billing & Payment Tracker</h3>
+                    <button type="button" onclick="openCreateBillModal()" class="btn btn-primary" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;">
+                        <i class="fa-solid fa-plus"></i> Create New Bill
+                    </button>
+                </div>
+
+                <!-- Filters Bar -->
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 16px; border-radius: 6px; margin-bottom: 20px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+                    <div style="flex: 1; min-width: 250px; position: relative;">
+                        <input type="text" id="billing-search" class="admin-input" placeholder="Search by Client Name or Booking ID..." oninput="fetchBillingRecords()" style="padding-left: 36px; width: 100%;">
+                        <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--color-slate); font-size: 13px;"></i>
+                    </div>
+                    <div>
+                        <select id="billing-filter-status" class="admin-select" onchange="fetchBillingRecords()" style="margin-bottom: 0; min-width: 160px; padding: 10px 12px;">
+                            <option value="All">All Statuses</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Partially Paid">Partially Paid</option>
+                            <option value="Fully Paid">Fully Paid</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="admin-table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Booking ID</th>
+                                <th>Customer Details</th>
+                                <th>Tour Package Info</th>
+                                <th>Billed Amt</th>
+                                <th>Amount Paid</th>
+                                <th>Outstanding</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="billing-table-body">
+                            <tr>
+                                <td colspan="8" style="text-align: center; color: var(--color-slate); padding: 30px;">Loading billing tracker data...</td>
                             </tr>
                         </tbody>
                     </table>
@@ -772,6 +824,133 @@
         </div>
     </div>
 
+    <!-- Create Bill Modal -->
+    <div class="modal-overlay" id="create-bill-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 10000; justify-content: center; align-items: center; overflow-y: auto;">
+        <div class="modal-box" style="background: #111827; border: 2px solid var(--color-gold); max-width: 600px; width: 90%; padding: 24px; border-radius: var(--border-radius-md); position: relative; margin: 40px auto;">
+            <button type="button" class="modal-close" onclick="closeCreateBillModal()" style="position: absolute; top: 12px; right: 16px; font-size: 24px; background: none; border: none; color: var(--color-text-secondary); cursor: pointer;">&times;</button>
+            <h3 style="font-family: var(--font-serif); color: white; margin-bottom: 16px; font-size: 20px; display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-file-invoice-dollar" style="color: var(--color-gold)"></i> Create Booking Bill</h3>
+            
+            <form id="create-bill-form" onsubmit="submitCreateBill(event)">
+                <!-- Row 1: Booking ID & Package -->
+                <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 12px; margin-bottom: 12px;">
+                    <div class="admin-form-group">
+                        <label for="bill-booking-id">Booking ID *</label>
+                        <input type="text" id="bill-booking-id" class="admin-input" required placeholder="e.g. RY-2026-001">
+                    </div>
+                    <div class="admin-form-group">
+                        <label for="bill-package-name">Tour Package Name *</label>
+                        <input type="text" id="bill-package-name" class="admin-input" required placeholder="e.g. Adi Kailash & Om Parvat Yatra">
+                    </div>
+                </div>
+
+                <!-- Row 2: Customer Name & Phone -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                    <div class="admin-form-group">
+                        <label for="bill-cust-name">Client Name *</label>
+                        <input type="text" id="bill-cust-name" class="admin-input" required placeholder="Full Name">
+                    </div>
+                    <div class="admin-form-group">
+                        <label for="bill-cust-phone">Phone Number *</label>
+                        <input type="tel" id="bill-cust-phone" class="admin-input" required placeholder="Mobile Number">
+                    </div>
+                </div>
+
+                <!-- Row 3: Customer Email, Group Size, Start Date -->
+                <div style="display: grid; grid-template-columns: 1.5fr 1fr 1.2fr; gap: 12px; margin-bottom: 12px;">
+                    <div class="admin-form-group">
+                        <label for="bill-cust-email">Email Address</label>
+                        <input type="email" id="bill-cust-email" class="admin-input" placeholder="email@example.com">
+                    </div>
+                    <div class="admin-form-group">
+                        <label for="bill-group-size">Group Size *</label>
+                        <input type="number" id="bill-group-size" class="admin-input" required min="1" value="1">
+                    </div>
+                    <div class="admin-form-group">
+                        <label for="bill-start-date">Start Date *</label>
+                        <input type="date" id="bill-start-date" class="admin-input" required>
+                    </div>
+                </div>
+
+                <!-- Row 4: Total Package Cost -->
+                <div class="admin-form-group" style="margin-bottom: 16px;">
+                    <label for="bill-total-amount">Total Package Cost (₹) *</label>
+                    <input type="number" id="bill-total-amount" class="admin-input" required min="0" placeholder="e.g. 85000">
+                </div>
+
+                <!-- Row 5: Initial Payment (Token Advance) Section -->
+                <div style="background: rgba(255,255,255,0.03); border: 1px dashed rgba(212,175,55,0.3); border-radius: 6px; padding: 14px; margin-bottom: 20px;">
+                    <h4 style="margin-top: 0; margin-bottom: 8px; font-size: 13px; color: var(--color-gold); text-transform: uppercase; letter-spacing: 0.5px;">Optional: Log Initial Payment (Token Advance)</h4>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+                        <div class="admin-form-group" style="margin-bottom: 0;">
+                            <label for="bill-init-paid">Amount Paid (₹)</label>
+                            <input type="number" id="bill-init-paid" class="admin-input" min="0" value="0">
+                        </div>
+                        <div class="admin-form-group" style="margin-bottom: 0;">
+                            <label for="bill-init-mode">Payment Mode</label>
+                            <select id="bill-init-mode" class="admin-select" style="margin-bottom: 0; padding: 8px;">
+                                <option value="UPI">UPI</option>
+                                <option value="NetBanking">Net Banking</option>
+                                <option value="Cash">Cash</option>
+                            </select>
+                        </div>
+                        <div class="admin-form-group" style="margin-bottom: 0;">
+                            <label for="bill-init-type">Receipt Type</label>
+                            <select id="bill-init-type" class="admin-select" style="margin-bottom: 0; padding: 8px;">
+                                <option value="Token Advance">Token Advance</option>
+                                <option value="Second Installment">Second Installment</option>
+                                <option value="Final Cash on Arrival">Final Cash on Arrival</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; border: none; padding: 12px; font-weight: bold; background-color: var(--color-gold); color: #111827; cursor: pointer; border-radius: 4px;">
+                    Create Booking Bill & Save
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Payment Modal -->
+    <div class="modal-overlay" id="add-payment-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 10000; justify-content: center; align-items: center;">
+        <div class="modal-box" style="background: #111827; border: 2px solid var(--color-gold); max-width: 450px; width: 90%; padding: 24px; border-radius: var(--border-radius-md); position: relative;">
+            <button type="button" class="modal-close" onclick="closeAddPaymentModal()" style="position: absolute; top: 12px; right: 16px; font-size: 24px; background: none; border: none; color: var(--color-text-secondary); cursor: pointer;">&times;</button>
+            <h3 style="font-family: var(--font-serif); color: white; margin-bottom: 12px; font-size: 19px; display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-cash-register" style="color: var(--color-gold)"></i> Log Payment Transaction</h3>
+            <p id="payment-modal-subtitle" style="font-size: 13px; color: var(--color-slate); margin-bottom: 20px;"></p>
+            
+            <form id="add-payment-form" onsubmit="submitAddPayment(event)">
+                <input type="hidden" id="payment-bill-id">
+                
+                <div class="admin-form-group" style="margin-bottom: 12px;">
+                    <label for="pay-amount">Amount Paid (₹) *</label>
+                    <input type="number" id="pay-amount" class="admin-input" required min="1" placeholder="e.g. 25000">
+                </div>
+
+                <div class="admin-form-group" style="margin-bottom: 12px;">
+                    <label for="pay-mode">Payment Mode *</label>
+                    <select id="pay-mode" class="admin-select" required>
+                        <option value="UPI">UPI</option>
+                        <option value="NetBanking">Net Banking</option>
+                        <option value="Cash">Cash</option>
+                    </select>
+                </div>
+
+                <div class="admin-form-group" style="margin-bottom: 20px;">
+                    <label for="pay-type">Payment Type / Stage *</label>
+                    <select id="pay-type" class="admin-select" required>
+                        <option value="Token Advance">Token Advance</option>
+                        <option value="Second Installment" selected>Second Installment</option>
+                        <option value="Final Cash on Arrival">Final Cash on Arrival</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; border: none; padding: 11px; font-weight: bold; background-color: var(--color-gold); color: #111827; cursor: pointer; border-radius: 4px;">
+                    Log Payment & Update Balance
+                </button>
+            </form>
+        </div>
+    </div>
+
     <!-- Supabase JS Library -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -1012,6 +1191,7 @@
             if (headerTitle) {
                 const labelMap = {
                     'pane-bookings': 'Bookings Summary',
+                    'pane-billing': 'Billing & Payment Summary',
                     'pane-requests': 'Custom Requests Summary',
                     'pane-discounts': 'Discount Claims Summary',
                     'pane-blogs': 'Blogs & News Summary',
@@ -1021,6 +1201,10 @@
                     'pane-attendance': 'Staff Attendance & Wages'
                 };
                 headerTitle.innerText = labelMap[paneId] || 'Dashboard Overview';
+            }
+
+            if (paneId === 'pane-billing') {
+                if (window.fetchBillingRecords) window.fetchBillingRecords();
             }
 
             // Update dynamic stats
@@ -1100,6 +1284,21 @@
                 setCard(3, true, '<i class="fa-solid fa-compass"></i>', darmaValleyBookings, 'Darma Valley');
                 setCard(4, true, '<i class="fa-solid fa-person-praying"></i>', mtKailashBookings, 'Mt. Kailash');
                 setCard(5, true, '<i class="fa-solid fa-person-hiking"></i>', otherBookings, 'Other Treks');
+            }
+            else if (paneId === 'pane-billing') {
+                const totalBilled = billingRecords.reduce((sum, b) => sum + parseFloat(b.total_package_amount), 0);
+                const totalPaid = billingRecords.reduce((sum, b) => {
+                    const payments = b.payments_received || [];
+                    return sum + payments.reduce((pSum, p) => pSum + p.amountPaid, 0);
+                }, 0);
+                const totalOutstanding = totalBilled - totalPaid;
+
+                setCard(0, true, '<i class="fa-solid fa-indian-rupee-sign" style="color: var(--color-gold);"></i>', '₹' + totalBilled.toLocaleString('en-IN'), 'Total Billed');
+                setCard(1, true, '<i class="fa-solid fa-circle-check" style="color: #22c55e;"></i>', '₹' + totalPaid.toLocaleString('en-IN'), 'Total Collected');
+                setCard(2, true, '<i class="fa-solid fa-triangle-exclamation" style="color: #ef4444;"></i>', '₹' + totalOutstanding.toLocaleString('en-IN'), 'Outstanding Balance');
+                setCard(3, false);
+                setCard(4, false);
+                setCard(5, false);
             }
             else if (paneId === 'pane-requests') {
                 const total = customRequestsData.length;
@@ -1245,10 +1444,12 @@
                 await fetchUsers();
                 fetchLeads();
                 fetchCredentials();
+                fetchBillingRecords();
             } else {
                 fetchBookings();
                 await fetchUsers();
                 fetchLeads();
+                fetchBillingRecords();
             }
 
             // Initially set active stats
@@ -3120,6 +3321,223 @@
             } catch (err) {
                 console.error(err);
                 showAdminToast('Failed to export leads: ' + err.message, 'error');
+            }
+        };
+
+        // ==========================================
+        // BILLING & PAYMENT TRACKING FUNCTIONS
+        // ==========================================
+        let billingRecords = [];
+
+        window.fetchBillingRecords = async function() {
+            try {
+                const searchVal = document.getElementById('billing-search').value;
+                const statusVal = document.getElementById('billing-filter-status').value;
+                
+                let url = `/api/billing?status=${statusVal}`;
+                if (searchVal) {
+                    url += `&search=${encodeURIComponent(searchVal)}`;
+                }
+
+                const response = await fetch(url);
+                const data = await response.json();
+                if (response.ok) {
+                    billingRecords = data;
+                    renderBillingTable();
+                    updateDynamicStats('pane-billing');
+                } else {
+                    showAdminToast(data.error || 'Failed to fetch billing records', 'error');
+                }
+            } catch (err) {
+                console.error('Fetch Billing Error:', err);
+                showAdminToast('Network error fetching bills', 'error');
+            }
+        };
+
+        function renderBillingTable() {
+            const tbody = document.getElementById('billing-table-body');
+            if (!tbody) return;
+
+            if (billingRecords.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: var(--color-slate); padding: 30px;">No billing records found.</td></tr>`;
+                return;
+            }
+
+            let html = '';
+            billingRecords.forEach(bill => {
+                const totalBilled = parseFloat(bill.total_package_amount);
+                const payments = bill.payments_received || [];
+                const totalPaid = payments.reduce((sum, p) => sum + p.amountPaid, 0);
+                const remaining = totalBilled - totalPaid;
+                const startDateStr = new Date(bill.tour_start_date).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' });
+
+                const progressPct = Math.min(100, Math.max(0, (totalPaid / totalBilled) * 100)).toFixed(0);
+                
+                let statusBadgeClass = 'status-new';
+                if (bill.payment_status === 'Fully Paid') {
+                    statusBadgeClass = 'status-won';
+                } else if (bill.payment_status === 'Partially Paid') {
+                    statusBadgeClass = 'status-answered';
+                }
+
+                const custEmail = bill.customer_email ? `<span style="font-size: 11px; opacity: 0.7; display: block;">${bill.customer_email}</span>` : '';
+                const customerHtml = `
+                    <div style="text-align: left;">
+                        <strong style="color: white; display: block;">${bill.customer_name}</strong>
+                        <span style="font-size: 12px; display: block;">${bill.customer_phone}</span>
+                        ${custEmail}
+                    </div>
+                `;
+
+                const packageHtml = `
+                    <div style="text-align: left;">
+                        <strong style="color: var(--color-gold); display: block;">${bill.package_name}</strong>
+                        <span style="font-size: 12px; display: block;">Start: ${startDateStr} | Pax: ${bill.group_size}</span>
+                    </div>
+                `;
+
+                const progressHtml = `
+                    <div style="width: 100%; min-width: 100px;">
+                        <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 3px;">
+                            <span>₹${totalPaid.toLocaleString('en-IN')}</span>
+                            <span>${progressPct}%</span>
+                        </div>
+                        <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden;">
+                            <div style="width: ${progressPct}%; height: 100%; background: ${bill.payment_status === 'Fully Paid' ? '#22c55e' : '#eab308'}; border-radius: 3px;"></div>
+                        </div>
+                    </div>
+                `;
+
+                html += `
+                    <tr>
+                        <td><strong style="color: white; font-family: monospace;">${bill.booking_id}</strong></td>
+                        <td>${customerHtml}</td>
+                        <td>${packageHtml}</td>
+                        <td><strong style="color: white;">₹${totalBilled.toLocaleString('en-IN')}</strong></td>
+                        <td>${progressHtml}</td>
+                        <td><strong style="color: ${remaining > 0 ? '#ef4444' : '#22c55e'};">₹${remaining.toLocaleString('en-IN')}</strong></td>
+                        <td><span class="admin-badge ${statusBadgeClass}" style="padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 11px;">${bill.payment_status}</span></td>
+                        <td>
+                            <div style="display: flex; gap: 6px; justify-content: center;">
+                                <button onclick="openAddPaymentModal('${bill.id}', '${bill.booking_id}', '${bill.customer_name}', ${remaining})" class="btn btn-secondary" style="border: 1px solid var(--color-gold); background: transparent; color: var(--color-gold); padding: 4px 8px; font-size: 11px; cursor: pointer; border-radius: 4px; font-weight: bold; display: inline-flex; align-items: center; gap: 4px;" title="Add Payment">
+                                    <i class="fa-solid fa-plus-minus"></i> Add Pay
+                                </button>
+                                <a href="/api/billing/${bill.id}/pdf" class="btn btn-secondary" style="border: 1px solid #3b82f6; background: transparent; color: #3b82f6; padding: 4px 8px; font-size: 11px; cursor: pointer; border-radius: 4px; font-weight: bold; display: inline-flex; align-items: center; gap: 4px;" title="Download PDF Bill">
+                                    <i class="fa-solid fa-file-pdf"></i> PDF
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+
+        window.openCreateBillModal = function() {
+            document.getElementById('create-bill-form').reset();
+            const defaultDate = new Date();
+            defaultDate.setDate(defaultDate.getDate() + 30);
+            document.getElementById('bill-start-date').value = defaultDate.toISOString().split('T')[0];
+            document.getElementById('create-bill-modal').style.display = 'flex';
+        };
+
+        window.closeCreateBillModal = function() {
+            document.getElementById('create-bill-modal').style.display = 'none';
+        };
+
+        window.submitCreateBill = async function(event) {
+            event.preventDefault();
+            
+            const bookingId = document.getElementById('bill-booking-id').value.trim();
+            const packageName = document.getElementById('bill-package-name').value.trim();
+            const name = document.getElementById('bill-cust-name').value.trim();
+            const phone = document.getElementById('bill-cust-phone').value.trim();
+            const email = document.getElementById('bill-cust-email').value.trim();
+            const groupSize = parseInt(document.getElementById('bill-group-size').value) || 1;
+            const tourStartDate = document.getElementById('bill-start-date').value;
+            const totalPackageAmount = parseFloat(document.getElementById('bill-total-amount').value);
+
+            const initialPaid = parseFloat(document.getElementById('bill-init-paid').value) || 0;
+            const initialMode = document.getElementById('bill-init-mode').value;
+            const initialType = document.getElementById('bill-init-type').value;
+
+            const body = {
+                bookingId,
+                packageName,
+                totalPackageAmount,
+                customerDetails: { name, phone, email, groupSize, tourStartDate }
+            };
+
+            if (initialPaid > 0) {
+                body.initialPayment = {
+                    amountPaid: initialPaid,
+                    paymentMode: initialMode,
+                    paymentType: initialType
+                };
+            }
+
+            try {
+                const response = await fetch('/api/billing', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    showAdminToast('Billing record created successfully!', 'success');
+                    closeCreateBillModal();
+                    fetchBillingRecords();
+                } else {
+                    showAdminToast(data.error || 'Failed to create billing record', 'error');
+                }
+            } catch (err) {
+                console.error(err);
+                showAdminToast('Network error creating billing record', 'error');
+            }
+        };
+
+        window.openAddPaymentModal = function(id, bookingId, custName, maxAmount) {
+            document.getElementById('add-payment-form').reset();
+            document.getElementById('payment-bill-id').value = id;
+            document.getElementById('payment-modal-subtitle').innerText = `Add payment receipt for Booking ${bookingId} (${custName}). Remaining balance: ₹${maxAmount.toLocaleString()}`;
+            document.getElementById('pay-amount').value = maxAmount > 0 ? maxAmount : 0;
+            document.getElementById('add-payment-modal').style.display = 'flex';
+        };
+
+        window.closeAddPaymentModal = function() {
+            document.getElementById('add-payment-modal').style.display = 'none';
+        };
+
+        window.submitAddPayment = async function(event) {
+            event.preventDefault();
+            
+            const billId = document.getElementById('payment-bill-id').value;
+            const amountPaid = parseFloat(document.getElementById('pay-amount').value);
+            const paymentMode = document.getElementById('pay-mode').value;
+            const paymentType = document.getElementById('pay-type').value;
+
+            if (isNaN(amountPaid) || amountPaid <= 0) {
+                showAdminToast('Please enter a valid payment amount', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/billing/${billId}/payment`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ amountPaid, paymentMode, paymentType })
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    showAdminToast('Payment transaction logged successfully!', 'success');
+                    closeAddPaymentModal();
+                    fetchBillingRecords();
+                } else {
+                    showAdminToast(data.error || 'Failed to log payment', 'error');
+                }
+            } catch (err) {
+                console.error(err);
+                showAdminToast('Network error logging payment', 'error');
             }
         };
     </script>

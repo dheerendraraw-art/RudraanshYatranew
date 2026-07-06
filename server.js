@@ -3,8 +3,10 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const { createClient } = require('@supabase/supabase-js');
+const PDFDocument = require('pdfkit');
 
 const app = express();
+app.use(express.json());
 const PORT = process.env.PORT || 3000;
 
 // Initialize Supabase Client
@@ -275,6 +277,364 @@ ${urls.join('\n')}
     } catch (err) {
         console.error('Sitemap Generator Error:', err);
         res.status(500).send('Error generating sitemap');
+    }
+});
+
+// ==========================================
+// BILLING & PAYMENT TRACKING API ENDPOINTS
+// ==========================================
+
+// 1. Fetch all billing records with optional search & status filter
+app.get('/api/billing', async (req, res) => {
+    try {
+        if (!supabase) {
+            return res.status(500).json({ error: 'Supabase client not initialized' });
+        }
+        const { search, status } = req.query;
+        let query = supabase.from('booking_bills').select('*');
+
+        if (status && status !== 'All') {
+            query = query.eq('payment_status', status);
+        }
+
+        const { data, error } = await query.order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        let result = data || [];
+        if (search) {
+            const term = search.toLowerCase().trim();
+            result = result.filter(bill => 
+                bill.customer_name.toLowerCase().includes(term) || 
+                bill.booking_id.toLowerCase().includes(term)
+            );
+        }
+
+        res.json(result);
+    } catch (err) {
+        console.error('API GET Billing Error:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// 2. Create a new billing record
+app.post('/api/billing', async (req, res) => {
+    try {
+        if (!supabase) {
+            return res.status(500).json({ error: 'Supabase client not initialized' });
+        }
+
+        const { 
+            bookingId, 
+            customerDetails, 
+            packageName, 
+            totalPackageAmount,
+            initialPayment
+        } = req.body;
+
+        if (!bookingId || !customerDetails || !packageName || !totalPackageAmount) {
+            return res.status(400).json({ error: 'Missing required billing fields' });
+        }
+
+        const amount = parseFloat(totalPackageAmount);
+        if (isNaN(amount) || amount <= 0) {
+            return res.status(400).json({ error: 'Invalid total package amount' });
+        }
+
+        let payments = [];
+        if (initialPayment && parseFloat(initialPayment.amountPaid) > 0) {
+            const initialAmount = parseFloat(initialPayment.amountPaid);
+            const receiptId = 'REC-' + Date.now() + Math.floor(Math.random() * 10);
+            payments.push({
+                receiptId,
+                amountPaid: initialAmount,
+                date: new Date().toISOString().split('T')[0],
+                paymentMode: initialPayment.paymentMode || 'UPI',
+                paymentType: initialPayment.paymentType || 'Token Advance'
+            });
+        }
+
+        const totalPaid = payments.reduce((sum, p) => sum + p.amountPaid, 0);
+        const balanceRemaining = amount - totalPaid;
+
+        let paymentStatus = 'Pending';
+        if (totalPaid > 0) {
+            paymentStatus = totalPaid >= amount ? 'Fully Paid' : 'Partially Paid';
+        }
+
+        const newBill = {
+            booking_id: bookingId,
+            customer_name: customerDetails.name,
+            customer_phone: customerDetails.phone,
+            customer_email: customerDetails.email || '',
+            group_size: parseInt(customerDetails.groupSize) || 1,
+            tour_start_date: customerDetails.tourStartDate,
+            package_name: packageName,
+            total_package_amount: amount,
+            payments_received: payments,
+            balance_remaining: balanceRemaining,
+            payment_status: paymentStatus
+        };
+
+        const { data, error } = await supabase
+            .from('booking_bills')
+            .insert([newBill])
+            .select()
+            .single();
+
+        if (error) throw error;
+        res.status(201).json(data);
+    } catch (err) {
+        console.error('API POST Billing Error:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// 3. Log a new payment transaction on an existing bill
+app.post('/api/billing/:id/payment', async (req, res) => {
+    try {
+        if (!supabase) {
+            return res.status(500).json({ error: 'Supabase client not initialized' });
+        }
+
+        const billId = req.params.id;
+        const { amountPaid, paymentMode, paymentType } = req.body;
+
+        const additionalPaid = parseFloat(amountPaid);
+        if (isNaN(additionalPaid) || additionalPaid <= 0) {
+            return res.status(400).json({ error: 'Invalid payment amount' });
+        }
+
+        const { data: bill, error: fetchErr } = await supabase
+            .from('booking_bills')
+            .select('*')
+            .eq('id', billId)
+            .single();
+
+        if (fetchErr || !bill) {
+            return res.status(404).json({ error: 'Billing record not found' });
+        }
+
+        const receiptId = 'REC-' + Date.now() + Math.floor(Math.random() * 10);
+        const newPayment = {
+            receiptId,
+            amountPaid: additionalPaid,
+            date: new Date().toISOString().split('T')[0],
+            paymentMode: paymentMode || 'UPI',
+            paymentType: paymentType || 'Second Installment'
+        };
+
+        const updatedPayments = [...(bill.payments_received || []), newPayment];
+        const totalPaid = updatedPayments.reduce((sum, p) => sum + p.amountPaid, 0);
+        const newBalance = parseFloat(bill.total_package_amount) - totalPaid;
+
+        let newStatus = 'Pending';
+        if (totalPaid > 0) {
+            newStatus = totalPaid >= parseFloat(bill.total_package_amount) ? 'Fully Paid' : 'Partially Paid';
+        }
+
+        const { data: updatedBill, error: updateErr } = await supabase
+            .from('booking_bills')
+            .update({
+                payments_received: updatedPayments,
+                balance_remaining: newBalance,
+                payment_status: newStatus
+            })
+            .eq('id', billId)
+            .select()
+            .single();
+
+        if (updateErr) throw updateErr;
+        res.json(updatedBill);
+    } catch (err) {
+        console.error('API Add Payment Error:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// 4. Generate non-GST Bill of Supply PDF using PDFKit
+app.get('/api/billing/:id/pdf', async (req, res) => {
+    try {
+        if (!supabase) {
+            return res.status(500).send('Supabase client not initialized');
+        }
+
+        const billId = req.params.id;
+        const { data: bill, error } = await supabase
+            .from('booking_bills')
+            .select('*')
+            .eq('id', billId)
+            .single();
+
+        if (error || !bill) {
+            return res.status(404).send('Invoice not found');
+        }
+
+        const doc = new PDFDocument({ margin: 50, size: 'A4' });
+
+        res.setHeader('Content-Disposition', `attachment; filename="Invoice_${bill.booking_id}.pdf"`);
+        res.setHeader('Content-Type', 'application/pdf');
+        doc.pipe(res);
+
+        const primaryColor = '#072654';
+        const accentColor = '#d4af37';
+        const darkTextColor = '#1f2937';
+        const lightTextColor = '#6b7280';
+        const tableHeaderBg = '#f3f4f6';
+
+        doc.fillColor(primaryColor)
+           .font('Helvetica-Bold')
+           .fontSize(22)
+           .text('RUDRAANSH YATRA', 50, 50);
+        
+        doc.fillColor(lightTextColor)
+           .font('Helvetica')
+           .fontSize(9)
+           .text('PREMIUM TREK & PILGRIMAGE OPERATOR', 50, 75);
+
+        doc.fillColor(darkTextColor)
+           .fontSize(9)
+           .text('1st Floor Above Punetha Bookstore,', 320, 50, { align: 'right', width: 220 })
+           .text('Simailgair Bazaar, Pithoragarh,', 320, 62, { align: 'right', width: 220 })
+           .text('Uttarakhand - 262501', 320, 74, { align: 'right', width: 220 })
+           .fillColor(primaryColor)
+           .text('Phone: +91 7617617651 | info@rudraanshyatra.com', 320, 86, { align: 'right', width: 220 });
+
+        doc.moveTo(50, 105).lineTo(545, 105).strokeColor('#e5e7eb').strokeWidth(1.5).stroke();
+
+        doc.fillColor(primaryColor)
+           .font('Helvetica-Bold')
+           .fontSize(14)
+           .text('BILL OF SUPPLY (NON-GST)', 50, 120);
+
+        doc.fillColor(darkTextColor)
+           .font('Helvetica')
+           .fontSize(9)
+           .text(`Invoice No: BILL-${bill.booking_id}`, 50, 138)
+           .text(`Date: ${new Date(bill.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`, 50, 150)
+           .text(`Booking ID: ${bill.booking_id}`, 50, 162);
+
+        doc.fillColor(primaryColor)
+           .font('Helvetica-Bold')
+           .fontSize(11)
+           .text('BILLED TO', 50, 185)
+           .text('YATRA & TOUR DETAILS', 300, 185);
+
+        doc.fillColor(darkTextColor)
+           .font('Helvetica')
+           .fontSize(9.5)
+           .text(bill.customer_name, 50, 202, { width: 220 })
+           .fillColor(lightTextColor)
+           .text(`Phone: ${bill.customer_phone}`, 50, 216)
+           .text(`Email: ${bill.customer_email || 'N/A'}`, 50, 228);
+
+        const startDateStr = new Date(bill.tour_start_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        doc.fillColor(darkTextColor)
+           .font('Helvetica')
+           .fontSize(9.5)
+           .text(bill.package_name, 300, 202, { width: 245 })
+           .fillColor(lightTextColor)
+           .text(`Group Size: ${bill.group_size} Pax`, 300, 216)
+           .text(`Reporting Date: ${startDateStr}`, 300, 228);
+
+        doc.moveTo(50, 255).lineTo(545, 255).strokeColor('#e5e7eb').strokeWidth(1).stroke();
+
+        doc.fillColor(primaryColor)
+           .font('Helvetica-Bold')
+           .fontSize(11)
+           .text('BOOKING CHARGES', 50, 270);
+
+        doc.rect(50, 285, 495, 20).fill(tableHeaderBg);
+        doc.fillColor(darkTextColor)
+           .fontSize(9)
+           .font('Helvetica-Bold')
+           .text('Package Description', 60, 291)
+           .text('Total Rate (INR)', 450, 291, { align: 'right', width: 85 });
+
+        doc.font('Helvetica')
+           .fontSize(9.5)
+           .text(`Expedition Package: ${bill.package_name} (Group of ${bill.group_size} Pax)`, 60, 314, { width: 370 })
+           .text(`INR ${parseFloat(bill.total_package_amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 450, 314, { align: 'right', width: 85 });
+
+        doc.moveTo(50, 340).lineTo(545, 340).strokeColor('#e5e7eb').strokeWidth(1).stroke();
+
+        doc.fillColor(primaryColor)
+           .font('Helvetica-Bold')
+           .fontSize(11)
+           .text('PAYMENTS RECEIVED HISTORY', 50, 360);
+
+        doc.rect(50, 375, 495, 20).fill(tableHeaderBg);
+        doc.fillColor(darkTextColor)
+           .fontSize(8.5)
+           .font('Helvetica-Bold')
+           .text('Receipt ID', 60, 381)
+           .text('Payment Date', 180, 381)
+           .text('Payment Type', 270, 381)
+           .text('Method', 390, 381)
+           .text('Amount Received', 450, 381, { align: 'right', width: 85 });
+
+        let currentY = 403;
+        const payments = bill.payments_received || [];
+
+        doc.font('Helvetica').fontSize(9);
+
+        if (payments.length === 0) {
+            doc.fillColor(lightTextColor)
+               .text('No payment transactions logged yet.', 60, currentY);
+            currentY += 18;
+        } else {
+            payments.forEach((payment) => {
+                const dateVal = new Date(payment.date).toLocaleDateString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit' });
+                doc.fillColor(darkTextColor)
+                   .text(payment.receiptId, 60, currentY)
+                   .text(dateVal, 180, currentY)
+                   .text(payment.paymentType || 'Token Advance', 270, currentY)
+                   .text(payment.paymentMode || 'UPI', 390, currentY)
+                   .text(`INR ${parseFloat(payment.amountPaid).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 450, currentY, { align: 'right', width: 85 });
+                
+                currentY += 18;
+            });
+        }
+
+        doc.moveTo(50, currentY - 5).lineTo(545, currentY - 5).strokeColor('#e5e7eb').strokeWidth(1).stroke();
+
+        currentY += 15;
+        const summaryBoxX = 330;
+        const totalPaidSoFar = payments.reduce((sum, p) => sum + p.amountPaid, 0);
+
+        doc.fillColor(darkTextColor)
+           .fontSize(9.5)
+           .font('Helvetica')
+           .text('Total Package Price:', summaryBoxX, currentY)
+           .text(`INR ${parseFloat(bill.total_package_amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 450, currentY, { align: 'right', width: 85 });
+
+        currentY += 16;
+        doc.text('Total Amount Paid:', summaryBoxX, currentY)
+           .text(`INR ${totalPaidSoFar.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 450, currentY, { align: 'right', width: 85 });
+
+        currentY += 20;
+        doc.rect(summaryBoxX - 10, currentY - 6, 225, 26).fill('rgba(212, 175, 55, 0.1)');
+        
+        doc.fillColor('#b2890f')
+           .fontSize(10)
+           .font('Helvetica-Bold')
+           .text('BALANCE DUE ON ARRIVAL:', summaryBoxX, currentY)
+           .text(`INR ${parseFloat(bill.balance_remaining).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 450, currentY, { align: 'right', width: 85 });
+
+        doc.fillColor(lightTextColor)
+           .font('Helvetica-Oblique')
+           .fontSize(8.5)
+           .text('This is a computer generated invoice and requires no physical signature.', 50, 715, { align: 'center' });
+
+        doc.fillColor(primaryColor)
+           .font('Helvetica-Bold')
+           .fontSize(8)
+           .text('This is a non-GST Bill of Supply issued by a non-registered supplier operating within the statutory threshold exemption limits.', 50, 730, { align: 'center', width: 495 });
+
+        doc.end();
+    } catch (err) {
+        console.error('API Generate PDF Error:', err);
+        res.status(500).send('Failed to generate bill PDF: ' + err.message);
     }
 });
 
