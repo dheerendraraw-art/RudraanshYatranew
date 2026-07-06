@@ -956,6 +956,14 @@
 
     <!-- Admin Portal Script -->
     <script>
+        // Global error reporting for debugging
+        window.addEventListener('error', function(e) {
+            alert('Rudraansh Yatra Admin Portal Error:\n' + e.message + '\nIn: ' + e.filename + '\nLine: ' + e.lineno);
+        });
+        window.addEventListener('unhandledrejection', function(e) {
+            alert('Rudraansh Yatra Admin Unhandled Rejection:\n' + e.reason);
+        });
+
         // Credentials matching project settings
         const supabaseUrl = 'https://ysnzxvvsegmkmkepclti.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlzbnp4dnZzZWdta21rZXBjbHRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NDY3NjMsImV4cCI6MjA5NjMyMjc2M30.V6q3OpJCf6PEu6JTM__6E7PJDrY5lY--FZfjyy_toLM';
