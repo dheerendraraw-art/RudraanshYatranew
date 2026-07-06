@@ -505,7 +505,7 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
            .fillColor(primaryColor)
            .text('Phone: +91 7617617651 | info@rudraanshyatra.com', 320, 86, { align: 'right', width: 220 });
 
-        doc.moveTo(50, 105).lineTo(545, 105).strokeColor('#e5e7eb').strokeWidth(1.5).stroke();
+        doc.moveTo(50, 105).lineTo(545, 105).strokeColor('#e5e7eb').lineWidth(1.5).stroke();
 
         doc.fillColor(primaryColor)
            .font('Helvetica-Bold')
@@ -542,7 +542,7 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
            .text(`Group Size: ${bill.group_size} Pax`, 300, 216)
            .text(`Reporting Date: ${startDateStr}`, 300, 228);
 
-        doc.moveTo(50, 255).lineTo(545, 255).strokeColor('#e5e7eb').strokeWidth(1).stroke();
+        doc.moveTo(50, 255).lineTo(545, 255).strokeColor('#e5e7eb').lineWidth(1).stroke();
 
         doc.fillColor(primaryColor)
            .font('Helvetica-Bold')
@@ -561,7 +561,7 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
            .text(`Expedition Package: ${bill.package_name} (Group of ${bill.group_size} Pax)`, 60, 314, { width: 370 })
            .text(`INR ${parseFloat(bill.total_package_amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 450, 314, { align: 'right', width: 85 });
 
-        doc.moveTo(50, 340).lineTo(545, 340).strokeColor('#e5e7eb').strokeWidth(1).stroke();
+        doc.moveTo(50, 340).lineTo(545, 340).strokeColor('#e5e7eb').lineWidth(1).stroke();
 
         doc.fillColor(primaryColor)
            .font('Helvetica-Bold')
@@ -601,7 +601,7 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
             });
         }
 
-        doc.moveTo(50, currentY - 5).lineTo(545, currentY - 5).strokeColor('#e5e7eb').strokeWidth(1).stroke();
+        doc.moveTo(50, currentY - 5).lineTo(545, currentY - 5).strokeColor('#e5e7eb').lineWidth(1).stroke();
 
         currentY += 15;
         const summaryBoxX = 330;
