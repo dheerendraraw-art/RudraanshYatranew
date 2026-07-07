@@ -3318,12 +3318,16 @@
                 `;
             }
             grid.innerHTML = html;
+            modal.classList.add('active');
             modal.style.display = 'flex';
         };
 
         window.closeAttendanceDetailsModal = function() {
             const modal = document.getElementById('attendance-details-modal');
-            if (modal) modal.style.display = 'none';
+            if (modal) {
+                modal.classList.remove('active');
+                modal.style.display = 'none';
+            }
         };
 
         window.toggleLoginPassword = function() {
@@ -3521,11 +3525,19 @@
         // Manual Booking Creation Modal Handlers
         window.openAddBookingModal = function() {
             document.getElementById('add-booking-form').reset();
-            document.getElementById('add-booking-modal').style.display = 'flex';
+            const modal = document.getElementById('add-booking-modal');
+            if (modal) {
+                modal.classList.add('active');
+                modal.style.display = 'flex';
+            }
         };
 
         window.closeAddBookingModal = function() {
-            document.getElementById('add-booking-modal').style.display = 'none';
+            const modal = document.getElementById('add-booking-modal');
+            if (modal) {
+                modal.classList.remove('active');
+                modal.style.display = 'none';
+            }
         };
 
         window.submitAddBooking = async function(event) {
@@ -3601,7 +3613,11 @@
             const defaultDate = new Date();
             defaultDate.setDate(defaultDate.getDate() + 30);
             document.getElementById('bill-start-date').value = defaultDate.toISOString().split('T')[0];
-            document.getElementById('create-bill-modal').style.display = 'flex';
+            const modal = document.getElementById('create-bill-modal');
+            if (modal) {
+                modal.classList.add('active');
+                modal.style.display = 'flex';
+            }
         };
 
         window.openCreateBillForBooking = function(bookingId) {
@@ -3639,11 +3655,19 @@
                 document.getElementById('bill-start-date').value = defaultDate.toISOString().split('T')[0];
             }
             
-            document.getElementById('create-bill-modal').style.display = 'flex';
+            const modal = document.getElementById('create-bill-modal');
+            if (modal) {
+                modal.classList.add('active');
+                modal.style.display = 'flex';
+            }
         };
 
         window.closeCreateBillModal = function() {
-            document.getElementById('create-bill-modal').style.display = 'none';
+            const modal = document.getElementById('create-bill-modal');
+            if (modal) {
+                modal.classList.remove('active');
+                modal.style.display = 'none';
+            }
         };
 
         window.submitCreateBill = async function(event) {
@@ -3748,11 +3772,19 @@
             document.getElementById('payment-bill-id').value = id;
             document.getElementById('payment-modal-subtitle').innerText = `Add payment receipt for Booking ${bookingId} (${custName}). Remaining balance: ₹${maxAmount.toLocaleString()}`;
             document.getElementById('pay-amount').value = maxAmount > 0 ? maxAmount : 0;
-            document.getElementById('add-payment-modal').style.display = 'flex';
+            const modal = document.getElementById('add-payment-modal');
+            if (modal) {
+                modal.classList.add('active');
+                modal.style.display = 'flex';
+            }
         };
 
         window.closeAddPaymentModal = function() {
-            document.getElementById('add-payment-modal').style.display = 'none';
+            const modal = document.getElementById('add-payment-modal');
+            if (modal) {
+                modal.classList.remove('active');
+                modal.style.display = 'none';
+            }
         };
 
         window.submitAddPayment = async function(event) {
