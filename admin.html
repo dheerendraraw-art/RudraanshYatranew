@@ -167,8 +167,10 @@
                             class="fa-solid fa-calendar-check" style="color: var(--color-gold);"></i> Travel Booking Inquiries</h3>
                     <div style="display: flex; gap: 8px;">
                         <button type="button" id="export-bookings-btn" class="btn btn-primary" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-file-export"></i> Export CSV</button>
+                        <button type="button" onclick="downloadBookingsTemplate()" class="btn btn-secondary" style="border: 1px solid var(--color-gold); background: transparent; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: white;"><i class="fa-solid fa-download"></i> Template</button>
                         <button type="button" id="import-bookings-btn" class="btn btn-secondary" style="border: 1px solid var(--color-gold); background: transparent; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: white;"><i class="fa-solid fa-file-import"></i> Import CSV</button>
                         <input type="file" id="import-bookings-file" style="display: none;" accept=".csv">
+                        <button type="button" onclick="openAddBookingModal()" class="btn btn-primary" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-plus"></i> Add Booking</button>
                     </div>
                 </div>
                 <div class="admin-table-container">
@@ -383,6 +385,7 @@
                             class="fa-solid fa-people-group" style="color: var(--color-gold);"></i> Leads Manager</h3>
                     <div style="display: flex; gap: 8px;">
                         <button type="button" onclick="exportLeads()" class="btn btn-primary" id="export-leads-btn" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-file-export"></i> Export Leads</button>
+                        <button type="button" onclick="downloadLeadsTemplate()" class="btn btn-secondary" style="border: 1px solid var(--color-gold); background: transparent; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: white;"><i class="fa-solid fa-download"></i> Template</button>
                         <button type="button" onclick="triggerImportLeads()" class="btn btn-primary" id="import-leads-btn" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-file-import"></i> Import Leads</button>
                         <input type="file" id="leads-csv-file" accept=".csv" style="display: none;" onchange="handleLeadsCSVImport(event)">
                         <button type="button" onclick="openLeadModal()" class="btn btn-primary" id="add-lead-btn" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-plus"></i> Add New Lead</button>
@@ -821,6 +824,52 @@
             </div>
             
             <button onclick="closeAttendanceDetailsModal()" class="btn btn-primary" style="width: 100%; border: none; padding: 12px; font-size: 14px; font-weight: bold; background: var(--color-primary); color: #ffffff; border-radius: 4px; cursor: pointer;">Close Calendar</button>
+        </div>
+    </div>
+
+    <!-- Add Booking Modal -->
+    <div class="modal-overlay" id="add-booking-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 10000; justify-content: center; align-items: center; overflow-y: auto;">
+        <div class="modal-box" style="background: #111827; border: 2px solid var(--color-gold); max-width: 500px; width: 90%; padding: 24px; border-radius: var(--border-radius-md); position: relative; margin: 40px auto;">
+            <button type="button" class="modal-close" onclick="closeAddBookingModal()" style="position: absolute; top: 12px; right: 16px; font-size: 24px; background: none; border: none; color: var(--color-text-secondary); cursor: pointer;">&times;</button>
+            <h3 style="font-family: var(--font-serif); color: white; margin-bottom: 16px; font-size: 20px; display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-calendar-plus" style="color: var(--color-gold)"></i> Add Single Booking Inquiry</h3>
+            <form id="add-booking-form" onsubmit="submitAddBooking(event)">
+                <div class="admin-form-group" style="margin-bottom: 12px;">
+                    <label for="new-booking-package">Package Name *</label>
+                    <input type="text" id="new-booking-package" class="admin-input" required placeholder="e.g. Adi Kailash & Om Parvat Yatra">
+                </div>
+                <div class="admin-form-group" style="margin-bottom: 12px;">
+                    <label for="new-booking-name">Client Name *</label>
+                    <input type="text" id="new-booking-name" class="admin-input" required placeholder="Client's Full Name">
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                    <div class="admin-form-group">
+                        <label for="new-booking-phone">Phone Number *</label>
+                        <input type="tel" id="new-booking-phone" class="admin-input" required placeholder="Mobile Number">
+                    </div>
+                    <div class="admin-form-group">
+                        <label for="new-booking-email">Email Address</label>
+                        <input type="email" id="new-booking-email" class="admin-input" placeholder="email@example.com">
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                    <div class="admin-form-group">
+                        <label for="new-booking-date">Travel Date</label>
+                        <input type="date" id="new-booking-date" class="admin-input">
+                    </div>
+                    <div class="admin-form-group">
+                        <label for="new-booking-travelers">Travelers *</label>
+                        <input type="number" id="new-booking-travelers" class="admin-input" required min="1" value="1">
+                    </div>
+                </div>
+                <div class="admin-form-group" style="margin-bottom: 16px;">
+                    <label for="new-booking-message">Special Notes / Message</label>
+                    <textarea id="new-booking-message" class="admin-input" rows="3" placeholder="Any special requests or inquiries..."></textarea>
+                </div>
+                <div style="display: flex; justify-content: flex-end; gap: 12px;">
+                    <button type="button" class="btn btn-secondary" onclick="closeAddBookingModal()" style="border: 1px solid var(--color-gold); background: transparent; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: white;">Cancel</button>
+                    <button type="submit" class="btn btn-primary" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;">Save Booking</button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -1511,7 +1560,7 @@
                             <td><small>${item.message || '—'}</small></td>
                             <td>${createdStr}</td>
                             <td>
-                                <button class="btn btn-primary" onclick="openCreateBillForBooking('${(item.name || '').replace(/'/g, '\\\'')}', '${item.phone || ''}', '${(item.email || '').replace(/'/g, '\\\'')}', '${(item.package_name || '').replace(/'/g, '\\\'')}', '${item.travel_date || ''}', '${item.travelers || 1}')" style="padding: 4px 8px; font-size: 11px; margin-right: 6px; background-color: var(--color-gold); color: #111827; border: none; font-weight: bold; cursor: pointer; border-radius: 3px;">
+                                <button class="btn btn-primary" onclick="openCreateBillForBooking('${item.id}')" style="padding: 4px 8px; font-size: 11px; margin-right: 6px; background-color: var(--color-gold); color: #111827; border: none; font-weight: bold; cursor: pointer; border-radius: 3px;">
                                     <i class="fa-solid fa-file-invoice-dollar"></i> Create Bill
                                 </button>
                                 <button class="admin-btn-delete" onclick="deleteRecord('bookings', '${item.id}', fetchBookings)">
@@ -3469,6 +3518,84 @@
             tbody.innerHTML = html;
         }
 
+        // Manual Booking Creation Modal Handlers
+        window.openAddBookingModal = function() {
+            document.getElementById('add-booking-form').reset();
+            document.getElementById('add-booking-modal').style.display = 'flex';
+        };
+
+        window.closeAddBookingModal = function() {
+            document.getElementById('add-booking-modal').style.display = 'none';
+        };
+
+        window.submitAddBooking = async function(event) {
+            event.preventDefault();
+            const packageName = document.getElementById('new-booking-package').value.trim();
+            const name = document.getElementById('new-booking-name').value.trim();
+            const phone = document.getElementById('new-booking-phone').value.trim();
+            const email = document.getElementById('new-booking-email').value.trim();
+            const travelDate = document.getElementById('new-booking-date').value || null;
+            const travelers = parseInt(document.getElementById('new-booking-travelers').value) || 1;
+            const message = document.getElementById('new-booking-message').value.trim();
+
+            try {
+                const bookingData = {
+                    package_name: packageName,
+                    name: name,
+                    phone: phone,
+                    email: email,
+                    travel_date: travelDate,
+                    travelers: travelers,
+                    message: message,
+                    created_at: new Date().toISOString()
+                };
+
+                const { error } = await supabaseAdmin
+                    .from('bookings')
+                    .insert([bookingData]);
+
+                if (error) throw error;
+
+                showAdminToast('Booking inquiry added successfully!', 'success');
+                closeAddBookingModal();
+                fetchBookings();
+            } catch (err) {
+                console.error('Error adding booking:', err);
+                showAdminToast('Failed to add booking: ' + err.message, 'error');
+            }
+        };
+
+        // CSV Import Template Generators
+        window.downloadBookingsTemplate = function() {
+            const headers = ['Package Name', 'Client Name', 'Phone', 'Email', 'Travel Date (YYYY-MM-DD)', 'Travelers', 'Special Notes', 'Created At (YYYY-MM-DD)'];
+            const sampleRow = ['"Adi Kailash & Om Parvat Yatra"', '"John Doe"', '"9876543210"', '"john@example.com"', '"2026-08-15"', '2', '"Vegetarian food preferred"', '"2026-07-07"'];
+            const csvContent = headers.join(',') + '\n' + sampleRow.join(',');
+            
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.setAttribute('download', 'bookings_import_template.csv');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showAdminToast('Bookings CSV template downloaded!', 'success');
+        };
+
+        window.downloadLeadsTemplate = function() {
+            const headers = ['Name', 'Phone', 'Email', 'Source', 'Status', 'Remarks', 'Follow up 1', 'Follow up 2', 'Final Status'];
+            const sampleRow = ['"Jane Doe"', '"9988776655"', '"jane@example.com"', '"Website Inquiry"', '"New"', '"Interested in Panchachuli Trek"', '"Called, left voicemail"', '""', '""'];
+            const csvContent = headers.join(',') + '\n' + sampleRow.join(',');
+            
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.setAttribute('download', 'leads_import_template.csv');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showAdminToast('Leads CSV template downloaded!', 'success');
+        };
+
         window.openCreateBillModal = function() {
             document.getElementById('create-bill-form').reset();
             const defaultDate = new Date();
@@ -3477,11 +3604,14 @@
             document.getElementById('create-bill-modal').style.display = 'flex';
         };
 
-        window.openCreateBillForBooking = function(name, phone, email, packageName, travelDate, travelers) {
+        window.openCreateBillForBooking = function(bookingId) {
+            const booking = bookingsData.find(b => b.id === bookingId);
+            if (!booking) return;
+
             // Generate professional booking ID
-            const namePrefix = (name || 'CUST').replace(/[^a-zA-Z]/g, '').slice(0, 3).toUpperCase();
+            const namePrefix = (booking.name || 'CUST').replace(/[^a-zA-Z]/g, '').slice(0, 3).toUpperCase();
             const randomNum = Math.floor(100 + Math.random() * 900);
-            const bookingId = `RY-2026-${namePrefix}-${randomNum}`;
+            const bookingNo = `RY-2026-${namePrefix}-${randomNum}`;
             
             // Open modal and reset
             document.getElementById('create-bill-form').reset();
@@ -3489,19 +3619,19 @@
             if (debugBox) debugBox.style.display = 'none';
             
             // Fill values
-            document.getElementById('bill-booking-id').value = bookingId;
-            document.getElementById('bill-package-name').value = packageName || '';
-            document.getElementById('bill-cust-name').value = name || '';
-            document.getElementById('bill-cust-phone').value = phone || '';
-            document.getElementById('bill-cust-email').value = email || '';
-            document.getElementById('bill-group-size').value = travelers || 1;
+            document.getElementById('bill-booking-id').value = bookingNo;
+            document.getElementById('bill-package-name').value = booking.package_name || '';
+            document.getElementById('bill-cust-name').value = booking.name || '';
+            document.getElementById('bill-cust-phone').value = booking.phone || '';
+            document.getElementById('bill-cust-email').value = booking.email || '';
+            document.getElementById('bill-group-size').value = booking.travelers || 1;
             
-            if (travelDate) {
+            if (booking.travel_date) {
                 try {
-                    const formattedDate = new Date(travelDate).toISOString().split('T')[0];
+                    const formattedDate = new Date(booking.travel_date).toISOString().split('T')[0];
                     document.getElementById('bill-start-date').value = formattedDate;
                 } catch(e) {
-                    document.getElementById('bill-start-date').value = travelDate;
+                    document.getElementById('bill-start-date').value = booking.travel_date;
                 }
             } else {
                 const defaultDate = new Date();

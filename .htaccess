@@ -5,6 +5,10 @@ AddType image/webp .webp
     RewriteEngine On
     RewriteBase /
 
+    # Disable LiteSpeed Cache for admin page to prevent stale cache serving
+    RewriteCond %{REQUEST_URI} ^/(admin|admin\.html)$ [NC]
+    RewriteRule .* - [E=Cache-Control:no-cache]
+
     # Redirect direct requests for index.html or index to /
     RewriteCond %{THE_REQUEST} \s/+(index|index\.html)[\s?] [NC]
     RewriteRule ^ / [R=301,L]
