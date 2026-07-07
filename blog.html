@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -98,6 +98,27 @@
         .blog-text {
             margin-bottom: 20px;
             text-align: justify;
+        }
+        .blog-heading {
+            font-family: var(--font-serif);
+            font-size: 24px;
+            color: var(--color-primary);
+            margin-top: 35px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+        .blog-bullet {
+            margin-bottom: 12px;
+            padding-left: 20px;
+            position: relative;
+        }
+        .blog-bullet::before {
+            content: "•";
+            color: var(--color-gold);
+            font-weight: bold;
+            position: absolute;
+            left: 5px;
         }
         /* Sidebar items */
         .sidebar-card {

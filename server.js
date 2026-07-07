@@ -156,7 +156,18 @@ app.get('/blog/:slug', async (req, res) => {
         const paragraphsHtml = blog.content
             .split('\n')
             .filter(p => p.trim() !== '')
-            .map(p => `<p class="blog-text">${p.trim()}</p>`)
+            .map(p => {
+                const trimmed = p.trim();
+                // Check if it starts with a number followed by a dot and space (e.g. "1. Understand the Age Suitability")
+                if (/^\d+\.\s/.test(trimmed)) {
+                    return `<h3 class="blog-heading">${trimmed}</h3>`;
+                }
+                // Check if it starts with a bullet marker like * or - (e.g. "* Clothing:")
+                if (/^[*+-]\s/.test(trimmed)) {
+                    return `<p class="blog-bullet">${trimmed.substring(2)}</p>`;
+                }
+                return `<p class="blog-text">${trimmed}</p>`;
+            })
             .join('\n');
 
         // Load blog.html template and replace placeholders
@@ -282,7 +293,7 @@ ${urls.join('\n')}
 
 // GET application version for testing
 app.get('/api/version', (req, res) => {
-    res.json({ version: '1.0.6', status: 'Running', timestamp: '2026-07-07T05:27:00Z' });
+    res.json({ version: '1.0.7', status: 'Running', timestamp: '2026-07-07T06:01:00Z' });
 });
 
 // ==========================================
