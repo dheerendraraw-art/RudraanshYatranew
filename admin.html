@@ -2545,6 +2545,19 @@
                     return; // skip duplicate
                 }
 
+                // Combine original lead notes and staff remarks
+                let combinedNotes = '';
+                if (lead.notes && lead.notes.trim()) {
+                    combinedNotes += lead.notes.trim();
+                }
+                if (lead.remarks && lead.remarks.trim()) {
+                    if (combinedNotes) combinedNotes += '\n\nRemarks: ';
+                    combinedNotes += lead.remarks.trim();
+                }
+                if (!combinedNotes) {
+                    combinedNotes = 'Transferred from Leads Manager';
+                }
+
                 // Insert into bookings table
                 const { error: insertErr } = await supabaseAdmin
                     .from('bookings')
@@ -2555,7 +2568,7 @@
                         package_name: 'Confirmed Lead Booking',
                         travel_date: lead.travel_date || new Date().toISOString().split('T')[0],
                         travelers: '1',
-                        message: lead.remarks || 'Transferred from Leads Manager',
+                        message: combinedNotes,
                         assigned_to: lead.assigned_to || null,
                         user_id: lead.assigned_to || null,
                         lead_id: lead.id
