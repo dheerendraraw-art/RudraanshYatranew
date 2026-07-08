@@ -194,19 +194,19 @@
                 <div class="payment-title">UPI and Cards Accepted Here</div>
                 <div class="payment-badges-wrap">
                     <div class="payment-card" title="Visa">
-                        <img src="/assets/images/visa.svg" alt="Visa">
+                        <img src="/assets/images/visa.svg" alt="Visa" loading="lazy" width="48" height="30">
                     </div>
                     <div class="payment-card" title="Mastercard">
-                        <img src="/assets/images/mastercard.svg" alt="Mastercard">
+                        <img src="/assets/images/mastercard.svg" alt="Mastercard" loading="lazy" width="48" height="30">
                     </div>
                     <div class="payment-card" title="Google Pay">
-                        <img src="/assets/images/gpay.svg" alt="Google Pay">
+                        <img src="/assets/images/gpay.svg" alt="Google Pay" loading="lazy" width="48" height="30">
                     </div>
                     <div class="payment-card" title="PhonePe">
-                        <img src="/assets/images/phonepe.svg" alt="PhonePe">
+                        <img src="/assets/images/phonepe.svg" alt="PhonePe" loading="lazy" width="48" height="30">
                     </div>
                     <div class="payment-card" title="Razorpay">
-                        <img src="/assets/images/razorpay.svg" alt="Razorpay">
+                        <img src="/assets/images/razorpay.svg" alt="Razorpay" loading="lazy" width="48" height="30">
                     </div>
                 </div>
             </div>
@@ -352,7 +352,7 @@
                 filtered.forEach((item, index) => {
                     html += `
                         <div class="gallery-item" data-index="${index}" onclick="openLightbox(${index})">
-                            <img src="${item.image_url}" alt="${item.caption || 'Himalayan View'}" onerror="this.src='assets/images/adi-kailash-hero.webp'">
+                            <img src="${item.image_url}" alt="${item.caption || 'Himalayan View'}" loading="lazy" decoding="async" onerror="this.src='assets/images/adi-kailash-hero.webp'">
                             <div class="gallery-overlay">
                                 <span class="gallery-cat">${item.category}</span>
                                 <h3 class="gallery-caption">${item.caption || 'Kumaon Landscapes'}</h3>
