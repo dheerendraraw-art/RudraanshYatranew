@@ -1579,19 +1579,19 @@
 
                     html += `
                         <tr>
-                            <td><strong>${item.package_name}</strong></td>
-                            <td>${item.name}</td>
-                            <td>${item.phone} ${item.email ? '<br><small>' + item.email + '</small>' : ''}</td>
-                            <td>${dateStr}</td>
-                            <td>${item.travelers}</td>
-                            <td><small>${item.message || '—'}</small></td>
-                            <td>
+                            <td data-label="Package Name"><strong>${item.package_name}</strong></td>
+                            <td data-label="Client Name">${item.name}</td>
+                            <td data-label="Phone/Email">${item.phone} ${item.email ? '<br><small>' + item.email + '</small>' : ''}</td>
+                            <td data-label="Travel Date">${dateStr}</td>
+                            <td data-label="Travelers">${item.travelers}</td>
+                            <td data-label="Special Notes"><small>${item.message || '—'}</small></td>
+                            <td data-label="Assigned To">
                                 <select ${currentUserRole === "staff" ? "disabled" : ""} onchange="updateBookingField('${item.id}', 'assigned_to', this.value)" style="background: #1f2937; color: white; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 4px; font-size: 12px; width: 150px; cursor: pointer;">
                                     ${bookingAssigneeOptions}
                                 </select>
                             </td>
-                            <td>${createdStr}</td>
-                            <td>
+                            <td data-label="Created">${createdStr}</td>
+                            <td data-label="Actions">
                                 <div style="display: flex; gap: 6px; align-items: center;">
                                     <button class="btn btn-primary" onclick="openCreateBillForBooking('${item.id}')" style="padding: 4px 8px; font-size: 11px; background-color: var(--color-gold); color: #111827; border: none; font-weight: bold; cursor: pointer; border-radius: 3px;" title="Create Bill">
                                         <i class="fa-solid fa-file-invoice-dollar"></i> Create Bill
@@ -2407,37 +2407,37 @@
 
                     html += `
                         <tr>
-                            <td><strong>${item.name}</strong></td>
-                            <td style="white-space: nowrap;">${item.phone || '-'}</td>
-                            <td>${item.email || '-'}</td>
-                            <td><span style="font-size: 11px; font-weight: bold; background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px;">${item.source || 'Website'}</span></td>
-                            <td style="white-space: nowrap;">${item.travel_date ? new Date(item.travel_date).toLocaleDateString() : '-'}</td>
-                            <td>
+                            <td data-label="Name"><strong>${item.name}</strong></td>
+                            <td data-label="Phone" style="white-space: nowrap;">${item.phone || '-'}</td>
+                            <td data-label="Email">${item.email || '-'}</td>
+                            <td data-label="Source"><span style="font-size: 11px; font-weight: bold; background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px;">${item.source || 'Website'}</span></td>
+                            <td data-label="Travel Date" style="white-space: nowrap;">${item.travel_date ? new Date(item.travel_date).toLocaleDateString() : '-'}</td>
+                            <td data-label="Status">
                                 <select onchange="updateLeadField('${item.id}', 'status', this.value); updateSelectStyle(this)" class="status-select ${statusClass}">
                                     ${statusOptions}
                                 </select>
                             </td>
-                            <td>
+                            <td data-label="Assigned To">
                                 <select ${currentUserRole === "staff" ? "disabled" : ""} onchange="updateLeadField('${item.id}', 'assigned_to', this.value)" style="background: #1f2937; color: white; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 4px; font-size: 12px; width: 150px; cursor: pointer;">
                                     ${assigneeOptions}
                                 </select>
                             </td>
-                            <td><small>${item.remarks || '-'}</small></td>
-                            <td><small>${item.follow_up_1 || '-'}</small></td>
-                            <td><small>${item.follow_up_2 || '-'}</small></td>
-                            <td>
+                            <td data-label="Remarks"><small>${item.remarks || '-'}</small></td>
+                            <td data-label="Follow up 1"><small>${item.follow_up_1 || '-'}</small></td>
+                            <td data-label="Follow up 2"><small>${item.follow_up_2 || '-'}</small></td>
+                            <td data-label="Final Status">
                                 <select onchange="updateLeadField('${item.id}', 'final_status', this.value); updateFinalStyle(this)" class="final-select ${finalClass}">
                                     ${finalStatusOptions}
                                 </select>
                             </td>
-                            <td>${createdStr}</td>
-                            <td>
+                            <td data-label="Created">${createdStr}</td>
+                            <td data-label="Actions">
                                 <div style="display: flex; gap: 8px;">
                                     <button class="admin-btn-edit" onclick="startEditLead(${index})" style="background-color: var(--color-gold); color: #0f172a; border: none; width: 28px; height: 28px; border-radius: var(--border-radius-sm, 4px); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px;">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </button>
                                     ${currentUserRole === "admin" ? `
-                                    <button class="admin-btn-delete" onclick="deleteRecord('leads', '${item.id}', fetchLeads)" style="width: 28px; height: 28px; font-size: 12px;">
+                                    <button class="admin-btn-delete" onclick="deleteRecord('leads', '${item.id}', fetchLeads)" style="width: 28px; height: 28px; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; margin: 0;">
                                         <i class="fa-solid fa-trash"></i>
                                     </button>` : ""}
                                 </div>

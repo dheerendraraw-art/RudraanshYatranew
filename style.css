@@ -2858,3 +2858,115 @@ img {
     -ms-user-select: none;
     -webkit-user-drag: none;
 }
+
+/* Mobile Admin Responsiveness */
+@media (max-width: 768px) {
+    .admin-navbar {
+        flex-direction: column;
+        gap: 12px;
+        padding: 12px;
+        text-align: center;
+    }
+    
+    .admin-navbar > div {
+        flex-direction: column;
+        width: 100%;
+        gap: 8px;
+    }
+    
+    #user-badge {
+        justify-content: center;
+        width: 100%;
+    }
+    
+    .admin-logout-btn {
+        width: 100%;
+    }
+
+    .admin-dashboard-container {
+        padding: 0 10px;
+        margin: 15px auto;
+    }
+
+    /* Convert tables to responsive cards */
+    .admin-table-container {
+        border: none;
+        box-shadow: none;
+        background: transparent;
+        overflow-x: visible !important;
+    }
+
+    .admin-table {
+        min-width: 100% !important;
+        display: block;
+    }
+
+    .admin-table thead {
+        display: none;
+    }
+
+    .admin-table tbody {
+        display: block;
+        width: 100%;
+    }
+
+    .admin-table tbody tr {
+        display: block;
+        margin-bottom: 20px;
+        border: 2px solid var(--color-gold);
+        border-radius: var(--border-radius-md);
+        background: #111827 !important; /* dark cards matching admin look */
+        padding: 16px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    }
+
+    .admin-table tbody tr:hover {
+        background-color: #111827 !important;
+    }
+
+    .admin-table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+        font-size: 13px;
+        text-align: right;
+        color: #ffffff;
+    }
+
+    .admin-table td::before {
+        content: attr(data-label);
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 11px;
+        color: var(--color-gold);
+        text-align: left;
+        padding-right: 15px;
+    }
+
+    .admin-table td:last-child {
+        border-bottom: none !important;
+        justify-content: center;
+        padding-top: 15px;
+        padding-bottom: 0;
+    }
+
+    /* Action buttons grid inside cards */
+    .admin-table td:last-child > div {
+        width: 100%;
+        justify-content: center;
+        gap: 12px;
+    }
+
+    /* Form modal inputs columns override */
+    .modal-box div[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+
+    .modal-box {
+        padding: 16px !important;
+        width: 95% !important;
+    }
+}
