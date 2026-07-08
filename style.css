@@ -2969,4 +2969,17 @@ img {
         padding: 16px !important;
         width: 95% !important;
     }
+
+    /* Mobile detail field toggles */
+    .mobile-detail-field {
+        display: none !important;
+    }
+
+    tr.show-all-details .mobile-detail-field {
+        display: flex !important;
+    }
+
+    .booking-toggle-details-btn {
+        display: block !important;
+    }
 }

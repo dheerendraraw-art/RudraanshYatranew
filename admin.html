@@ -1511,19 +1511,20 @@
                 if (icon) icon.className = 'fa-solid fa-chevron-down';
             }
 
+            // Always fetch users first to ensure assignee lists and maps are fully loaded
+            await fetchUsers();
+
             if (currentUserRole === 'admin') {
                 fetchBookings();
                 fetchCustomRequests();
                 fetchDiscountRegistrations();
                 fetchBlogs();
                 fetchGallery();
-                await fetchUsers();
                 fetchLeads();
                 fetchCredentials();
                 fetchBillingRecords();
             } else {
                 fetchBookings();
-                await fetchUsers();
                 fetchLeads();
                 fetchBillingRecords();
             }
@@ -1577,22 +1578,25 @@
                         }
                     });
 
+                    const phoneVal = item.phone ? item.phone.trim() : '';
+                    const phoneHtml = phoneVal ? `<a href="tel:${phoneVal}" style="color: var(--color-gold); text-decoration: underline; font-weight: bold;">${phoneVal}</a>` : '—';
+
                     html += `
                         <tr>
-                            <td data-label="Package Name"><strong>${item.package_name}</strong></td>
+                            <td data-label="Package Name" class="mobile-detail-field"><strong>${item.package_name}</strong></td>
                             <td data-label="Client Name">${item.name}</td>
-                            <td data-label="Phone/Email">${item.phone} ${item.email ? '<br><small>' + item.email + '</small>' : ''}</td>
+                            <td data-label="Phone/Email">${phoneHtml} ${item.email ? '<br><small>' + item.email + '</small>' : ''}</td>
                             <td data-label="Travel Date">${dateStr}</td>
-                            <td data-label="Travelers">${item.travelers}</td>
+                            <td data-label="Travelers" class="mobile-detail-field">${item.travelers}</td>
                             <td data-label="Special Notes"><small>${item.message || '—'}</small></td>
                             <td data-label="Assigned To">
                                 <select ${currentUserRole === "staff" ? "disabled" : ""} onchange="updateBookingField('${item.id}', 'assigned_to', this.value)" style="background: #1f2937; color: white; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 4px; font-size: 12px; width: 150px; cursor: pointer;">
                                     ${bookingAssigneeOptions}
                                 </select>
                             </td>
-                            <td data-label="Created">${createdStr}</td>
+                            <td data-label="Created" class="mobile-detail-field">${createdStr}</td>
                             <td data-label="Actions">
-                                <div style="display: flex; gap: 6px; align-items: center;">
+                                <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
                                     ${currentUserRole !== 'staff' ? `
                                     <button class="btn btn-primary" onclick="openCreateBillForBooking('${item.id}')" style="padding: 4px 8px; font-size: 11px; background-color: var(--color-gold); color: #111827; border: none; font-weight: bold; cursor: pointer; border-radius: 3px;" title="Create Bill">
                                         <i class="fa-solid fa-file-invoice-dollar"></i> Create Bill
@@ -1604,6 +1608,9 @@
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </div>
+                                <div class="booking-toggle-details-btn" onclick="toggleMobileBookingDetails(this)" style="display: none; color: var(--color-gold); font-size: 11px; font-weight: 700; cursor: pointer; padding: 6px 0; border-top: 1px dashed rgba(255,255,255,0.05); margin-top: 8px; text-align: center; text-transform: uppercase; width: 100%;">
+                                    <i class="fa-solid fa-chevron-down"></i> Show Details
+                                </div>
                             </td>
                         </tr>
                     `;
@@ -1613,10 +1620,19 @@
                 console.error(err);
                 const tbody = document.getElementById('bookings-table-body');
                 if (tbody) {
-                    tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: red;">Failed to fetch bookings. Error: ${err.message}</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: red;">Failed to fetch bookings. Error: ${err.message}</td></tr>`;
                 }
             }
         }
+
+        window.toggleMobileBookingDetails = function(btn) {
+            const tr = btn.closest('tr');
+            if (tr) {
+                tr.classList.toggle('show-all-details');
+                const isExpanded = tr.classList.contains('show-all-details');
+                btn.innerHTML = isExpanded ? '<i class="fa-solid fa-chevron-up"></i> Hide Details' : '<i class="fa-solid fa-chevron-down"></i> Show Details';
+            }
+        };
 
         // 2. Fetch Custom Itinerary Requests
         async function fetchCustomRequests() {
