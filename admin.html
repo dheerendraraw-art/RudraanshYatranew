@@ -2531,18 +2531,17 @@
         // Helper to copy a confirmed lead to bookings table
         window.copyLeadToBooking = async function(lead) {
             try {
-                // Check if this lead already has a booking to avoid duplicate inserts
+                // Check if this lead already has a booking to avoid duplicate inserts by checking lead_id
                 const { data: existing, error: checkErr } = await supabaseAdmin
                     .from('bookings')
                     .select('id')
-                    .eq('email', lead.email)
-                    .eq('phone', lead.phone)
+                    .eq('lead_id', lead.id)
                     .limit(1);
                 
                 if (checkErr) throw checkErr;
                 
                 if (existing && existing.length > 0) {
-                    console.log('Booking already exists for this lead email/phone.');
+                    console.log('Booking already exists for this lead (lead_id matching).');
                     return; // skip duplicate
                 }
 
@@ -2558,7 +2557,8 @@
                         travelers: '1',
                         message: lead.remarks || 'Transferred from Leads Manager',
                         assigned_to: lead.assigned_to || null,
-                        user_id: lead.assigned_to || null
+                        user_id: lead.assigned_to || null,
+                        lead_id: lead.id
                     }]);
 
                 if (insertErr) throw insertErr;
