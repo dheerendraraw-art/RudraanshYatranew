@@ -183,13 +183,14 @@
                                 <th>Travel Date</th>
                                 <th>Travelers</th>
                                 <th>Special Notes</th>
+                                <th>Assigned To</th>
                                 <th>Created</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="bookings-table-body">
                             <tr>
-                                <td colspan="8" style="text-align: center; color: var(--color-slate);">Loading bookings
+                                <td colspan="9" style="text-align: center; color: var(--color-slate);">Loading bookings
                                     data...</td>
                             </tr>
                         </tbody>
@@ -399,6 +400,7 @@
                                 <th>Phone</th>
                                 <th>Email</th>
                                 <th>Source</th>
+                                <th>Travel Date</th>
                                 <th>Status</th>
                                 <th>Assigned To</th>
                                 <th>Remarks</th>
@@ -745,18 +747,24 @@
                     </div>
                 </div>
 
-                <!-- Group 3: Status (Always Visible) -->
-                <div class="admin-form-group" style="margin-bottom: 12px;">
-                    <label for="lead-status" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Status</label>
-                    <select id="lead-status" class="admin-input" style="width: 100%; background: #1f2937; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
-                        <option value="New">✨ New</option>
-                        <option value="Answered">📞 Answered</option>
-                        <option value="Busy">⏳ Busy</option>
-                        <option value="Incorrect Number">🚫 Incorrect Number</option>
-                        <option value="Follow up required">🔁 Follow up required</option>
-                        <option value="Not Answered">🔇 Not Answered</option>
-                        <option value="No. not reachable">📴 No. not reachable</option>
-                    </select>
+                <!-- Group 3: Status & Travel Date (Always Visible) -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                    <div class="admin-form-group">
+                        <label for="lead-status" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Status *</label>
+                        <select id="lead-status" class="admin-input" style="width: 100%; background: #1f2937; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
+                            <option value="New">✨ New</option>
+                            <option value="Answered">📞 Answered</option>
+                            <option value="Busy">⏳ Busy</option>
+                            <option value="Incorrect Number">🚫 Incorrect Number</option>
+                            <option value="Follow up required">🔁 Follow up required</option>
+                            <option value="Not Answered">🔇 Not Answered</option>
+                            <option value="No. not reachable">📴 No. not reachable</option>
+                        </select>
+                    </div>
+                    <div class="admin-form-group">
+                        <label for="lead-travel-date" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Travel Date</label>
+                        <input type="date" id="lead-travel-date" class="admin-input" style="width: 100%; background: rgba(255,255,255,0.05); border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
+                    </div>
                 </div>
 
                 <!-- Group 4: Assignee & Final Status (Edit Only) -->
@@ -831,8 +839,9 @@
     <div class="modal-overlay" id="add-booking-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 10000; justify-content: center; align-items: center; overflow-y: auto;">
         <div class="modal-box" style="background: #111827; border: 2px solid var(--color-gold); max-width: 500px; width: 90%; padding: 24px; border-radius: var(--border-radius-md); position: relative; margin: 40px auto;">
             <button type="button" class="modal-close" onclick="closeAddBookingModal()" style="position: absolute; top: 12px; right: 16px; font-size: 24px; background: none; border: none; color: var(--color-text-secondary); cursor: pointer;">&times;</button>
-            <h3 style="font-family: var(--font-serif); color: white; margin-bottom: 16px; font-size: 20px; display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-calendar-plus" style="color: var(--color-gold)"></i> Add Single Booking Inquiry</h3>
+            <h3 id="booking-modal-title" style="font-family: var(--font-serif); color: white; margin-bottom: 16px; font-size: 20px; display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-calendar-plus" style="color: var(--color-gold)"></i> Add Single Booking Inquiry</h3>
             <form id="add-booking-form" onsubmit="submitAddBooking(event)">
+                <input type="hidden" id="edit-booking-id">
                 <div class="admin-form-group" style="margin-bottom: 12px;">
                     <label for="new-booking-package">Package Name *</label>
                     <input type="text" id="new-booking-package" class="admin-input" required placeholder="e.g. Adi Kailash & Om Parvat Yatra">
@@ -860,6 +869,12 @@
                         <label for="new-booking-travelers">Travelers *</label>
                         <input type="number" id="new-booking-travelers" class="admin-input" required min="1" value="1">
                     </div>
+                </div>
+                <div class="admin-form-group" style="margin-bottom: 12px;">
+                    <label for="new-booking-assignee">Assign To User</label>
+                    <select id="new-booking-assignee" class="admin-input" style="width: 100%; background: #1f2937; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
+                        <option value="">Unassigned</option>
+                    </select>
                 </div>
                 <div class="admin-form-group" style="margin-bottom: 16px;">
                     <label for="new-booking-message">Special Notes / Message</label>
@@ -1542,14 +1557,26 @@
 
                 const tbody = document.getElementById('bookings-table-body');
                 if (bookingsData.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: var(--color-slate);">No bookings registered yet in Supabase.</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: var(--color-slate);">No bookings registered yet in Supabase.</td></tr>`;
                     return;
                 }
 
                 let html = '';
-                bookingsData.forEach(item => {
+                bookingsData.forEach((item, index) => {
                     const dateStr = item.travel_date ? new Date(item.travel_date).toLocaleDateString() : 'N/A';
                     const createdStr = new Date(item.created_at).toLocaleDateString();
+
+                    // Render Booking Assignee Dropdown options
+                    let bookingAssigneeOptions = '<option value="" style="background: #111827; color: white;">Unassigned</option>';
+                    (usersList || []).forEach(user => {
+                        const selected = (item.assigned_to === user.id || item.user_id === user.id) ? 'selected' : '';
+                        const isMapped = mappedUserIds.has(user.id.toLowerCase());
+                        if (isMapped || selected) {
+                            const displayName = usersMap[user.id] || user.email;
+                            bookingAssigneeOptions += `<option value="${user.id}" ${selected} style="background: #111827; color: white;">${displayName}</option>`;
+                        }
+                    });
+
                     html += `
                         <tr>
                             <td><strong>${item.package_name}</strong></td>
@@ -1558,14 +1585,24 @@
                             <td>${dateStr}</td>
                             <td>${item.travelers}</td>
                             <td><small>${item.message || '—'}</small></td>
+                            <td>
+                                <select ${currentUserRole === "staff" ? "disabled" : ""} onchange="updateBookingField('${item.id}', 'assigned_to', this.value)" style="background: #1f2937; color: white; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 4px; font-size: 12px; width: 150px; cursor: pointer;">
+                                    ${bookingAssigneeOptions}
+                                </select>
+                            </td>
                             <td>${createdStr}</td>
                             <td>
-                                <button class="btn btn-primary" onclick="openCreateBillForBooking('${item.id}')" style="padding: 4px 8px; font-size: 11px; margin-right: 6px; background-color: var(--color-gold); color: #111827; border: none; font-weight: bold; cursor: pointer; border-radius: 3px;">
-                                    <i class="fa-solid fa-file-invoice-dollar"></i> Create Bill
-                                </button>
-                                <button class="admin-btn-delete" onclick="deleteRecord('bookings', '${item.id}', fetchBookings)">
-                                    <i class="fa-solid fa-trash"></i> Delete
-                                </button>
+                                <div style="display: flex; gap: 6px; align-items: center;">
+                                    <button class="btn btn-primary" onclick="openCreateBillForBooking('${item.id}')" style="padding: 4px 8px; font-size: 11px; background-color: var(--color-gold); color: #111827; border: none; font-weight: bold; cursor: pointer; border-radius: 3px;" title="Create Bill">
+                                        <i class="fa-solid fa-file-invoice-dollar"></i> Create Bill
+                                    </button>
+                                    <button class="btn btn-primary" onclick="startEditBooking(${index})" style="width: 28px; height: 28px; font-size: 12px; padding: 0; background-color: var(--color-gold); color: #111827; border: none; font-weight: bold; cursor: pointer; border-radius: 3px; display: inline-flex; align-items: center; justify-content: center;" title="Edit Booking">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </button>
+                                    <button class="admin-btn-delete" onclick="deleteRecord('bookings', '${item.id}', fetchBookings)" style="width: 28px; height: 28px; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; margin: 0;">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     `;
@@ -2208,8 +2245,8 @@
                 if (error) throw error;
                 
                 usersList = data || [];
-                usersMap = {};
                 let assigneeSelect = document.getElementById('lead-assignee');
+                let bookingAssigneeSelect = document.getElementById('new-booking-assignee');
                 let optionsHtml = '<option value="" style="background:#111827; color: white;">Unassigned</option>';
                 
                 usersList.forEach(user => {
@@ -2222,6 +2259,7 @@
                 });
                 
                 if (assigneeSelect) assigneeSelect.innerHTML = optionsHtml;
+                if (bookingAssigneeSelect) bookingAssigneeSelect.innerHTML = optionsHtml;
             } catch (err) {
                 console.error('Failed to load assignment users:', err);
             }
@@ -2373,6 +2411,7 @@
                             <td style="white-space: nowrap;">${item.phone || '-'}</td>
                             <td>${item.email || '-'}</td>
                             <td><span style="font-size: 11px; font-weight: bold; background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px;">${item.source || 'Website'}</span></td>
+                            <td style="white-space: nowrap;">${item.travel_date ? new Date(item.travel_date).toLocaleDateString() : '-'}</td>
                             <td>
                                 <select onchange="updateLeadField('${item.id}', 'status', this.value); updateSelectStyle(this)" class="status-select ${statusClass}">
                                     ${statusOptions}
@@ -2438,6 +2477,7 @@
             document.getElementById('lead-email').disabled = false;
             document.getElementById('lead-source').disabled = false;
             document.getElementById('lead-assignee').disabled = false;
+            document.getElementById('lead-travel-date').disabled = false;
         };
 
         window.closeLeadModal = function() {
@@ -2470,6 +2510,7 @@
             document.getElementById('lead-remarks').value = item.remarks || '';
             document.getElementById('lead-followup1').value = item.follow_up_1 || '';
             document.getElementById('lead-followup2').value = item.follow_up_2 || '';
+            document.getElementById('lead-travel-date').value = item.travel_date || '';
 
             // Show edit-only fields
             document.querySelectorAll('.edit-only-field').forEach(el => {
@@ -2483,6 +2524,8 @@
             document.getElementById('lead-email').disabled = isStaff;
             document.getElementById('lead-source').disabled = isStaff;
             document.getElementById('lead-assignee').disabled = isStaff;
+            // Staff can edit the travel date
+            document.getElementById('lead-travel-date').disabled = false;
         };
 
         // Helper to copy a confirmed lead to bookings table
@@ -2511,9 +2554,10 @@
                         phone: lead.phone,
                         email: lead.email || '',
                         package_name: 'Confirmed Lead Booking',
-                        travel_date: new Date().toISOString().split('T')[0], // today's date
+                        travel_date: lead.travel_date || new Date().toISOString().split('T')[0],
                         travelers: '1',
                         message: lead.remarks || 'Transferred from Leads Manager',
+                        assigned_to: lead.assigned_to || null,
                         user_id: lead.assigned_to || null
                     }]);
 
@@ -2612,15 +2656,16 @@
             const follow_up_1 = document.getElementById('lead-followup1').value.trim();
             const follow_up_2 = document.getElementById('lead-followup2').value.trim();
             const final_status = document.getElementById('lead-finalstatus').value || null;
+            const travel_date = document.getElementById('lead-travel-date').value || null;
 
             try {
                 let leadData = {};
                 if (currentUserRole === 'staff') {
-                    // Staff can only update status, remarks, follow-ups, and final status
-                    leadData = { status, remarks, follow_up_1, follow_up_2, final_status };
+                    // Staff can only update status, remarks, follow-ups, final status, and travel date
+                    leadData = { status, remarks, follow_up_1, follow_up_2, final_status, travel_date };
                 } else {
                     // Admin updates everything
-                    leadData = { name, phone, email, source, status, assigned_to, remarks, follow_up_1, follow_up_2, final_status };
+                    leadData = { name, phone, email, source, status, assigned_to, remarks, follow_up_1, follow_up_2, final_status, travel_date };
                 }
                 
                 if (id) {
@@ -3522,9 +3567,11 @@
             tbody.innerHTML = html;
         }
 
-        // Manual Booking Creation Modal Handlers
+        // Manual Booking Creation / Edit Modal Handlers
         window.openAddBookingModal = function() {
             document.getElementById('add-booking-form').reset();
+            document.getElementById('edit-booking-id').value = '';
+            document.getElementById('booking-modal-title').innerHTML = '<i class="fa-solid fa-calendar-plus" style="color: var(--color-gold)"></i> Add Single Booking Inquiry';
             const modal = document.getElementById('add-booking-modal');
             if (modal) {
                 modal.classList.add('active');
@@ -3540,8 +3587,56 @@
             }
         };
 
+        window.startEditBooking = function(index) {
+            const item = bookingsData[index];
+            if (!item) return;
+
+            const modal = document.getElementById('add-booking-modal');
+            if (modal) {
+                modal.classList.add('active');
+                modal.style.display = 'flex';
+            }
+
+            document.getElementById('booking-modal-title').innerHTML = '<i class="fa-solid fa-calendar-plus" style="color: var(--color-gold)"></i> Edit Booking Inquiry';
+            document.getElementById('edit-booking-id').value = item.id;
+            document.getElementById('new-booking-package').value = item.package_name || '';
+            document.getElementById('new-booking-name').value = item.name || '';
+            document.getElementById('new-booking-phone').value = item.phone || '';
+            document.getElementById('new-booking-email').value = item.email || '';
+            document.getElementById('new-booking-date').value = item.travel_date || '';
+            document.getElementById('new-booking-travelers').value = item.travelers || 1;
+            document.getElementById('new-booking-message').value = item.message || '';
+            document.getElementById('new-booking-assignee').value = item.assigned_to || item.user_id || '';
+        };
+
+        window.updateBookingField = async function(bookingId, fieldName, value) {
+            try {
+                const updateData = {};
+                updateData[fieldName] = value === "" ? null : value;
+                
+                // If updating assigned_to, keep user_id in sync
+                if (fieldName === 'assigned_to') {
+                    updateData['user_id'] = value === "" ? null : value;
+                }
+
+                const { error } = await supabaseAdmin
+                    .from('bookings')
+                    .update(updateData)
+                    .eq('id', bookingId);
+
+                if (error) throw error;
+                
+                showAdminToast('Booking updated successfully!', 'success');
+                fetchBookings();
+            } catch (err) {
+                console.error(err);
+                showAdminToast('Failed to update booking: ' + err.message, 'error');
+            }
+        };
+
         window.submitAddBooking = async function(event) {
             event.preventDefault();
+            const id = document.getElementById('edit-booking-id').value;
             const packageName = document.getElementById('new-booking-package').value.trim();
             const name = document.getElementById('new-booking-name').value.trim();
             const phone = document.getElementById('new-booking-phone').value.trim();
@@ -3549,6 +3644,7 @@
             const travelDate = document.getElementById('new-booking-date').value || null;
             const travelers = parseInt(document.getElementById('new-booking-travelers').value) || 1;
             const message = document.getElementById('new-booking-message').value.trim();
+            const assignedTo = document.getElementById('new-booking-assignee').value || null;
 
             try {
                 const bookingData = {
@@ -3557,23 +3653,33 @@
                     phone: phone,
                     email: email,
                     travel_date: travelDate,
-                    travelers: travelers,
+                    travelers: travelers.toString(),
                     message: message,
-                    created_at: new Date().toISOString()
+                    assigned_to: assignedTo,
+                    user_id: assignedTo
                 };
 
-                const { error } = await supabaseAdmin
-                    .from('bookings')
-                    .insert([bookingData]);
+                if (id) {
+                    const { error } = await supabaseAdmin
+                        .from('bookings')
+                        .update(bookingData)
+                        .eq('id', id);
+                    if (error) throw error;
+                    showAdminToast('Booking updated successfully!', 'success');
+                } else {
+                    bookingData.created_at = new Date().toISOString();
+                    const { error } = await supabaseAdmin
+                        .from('bookings')
+                        .insert([bookingData]);
+                    if (error) throw error;
+                    showAdminToast('Booking inquiry added successfully!', 'success');
+                }
 
-                if (error) throw error;
-
-                showAdminToast('Booking inquiry added successfully!', 'success');
                 closeAddBookingModal();
                 fetchBookings();
             } catch (err) {
-                console.error('Error adding booking:', err);
-                showAdminToast('Failed to add booking: ' + err.message, 'error');
+                console.error('Error saving booking:', err);
+                showAdminToast('Failed to save booking: ' + err.message, 'error');
             }
         };
 
