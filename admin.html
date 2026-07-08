@@ -1593,9 +1593,10 @@
                             <td data-label="Created">${createdStr}</td>
                             <td data-label="Actions">
                                 <div style="display: flex; gap: 6px; align-items: center;">
+                                    ${currentUserRole !== 'staff' ? `
                                     <button class="btn btn-primary" onclick="openCreateBillForBooking('${item.id}')" style="padding: 4px 8px; font-size: 11px; background-color: var(--color-gold); color: #111827; border: none; font-weight: bold; cursor: pointer; border-radius: 3px;" title="Create Bill">
                                         <i class="fa-solid fa-file-invoice-dollar"></i> Create Bill
-                                    </button>
+                                    </button>` : ''}
                                     <button class="btn btn-primary" onclick="startEditBooking(${index})" style="width: 28px; height: 28px; font-size: 12px; padding: 0; background-color: var(--color-gold); color: #111827; border: none; font-weight: bold; cursor: pointer; border-radius: 3px; display: inline-flex; align-items: center; justify-content: center;" title="Edit Booking">
                                         <i class="fa-solid fa-pen"></i>
                                     </button>
