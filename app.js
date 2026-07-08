@@ -2,6 +2,18 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    // Global Image Protection (Disables right-click and drag-to-save on all images)
+    document.addEventListener('contextmenu', (e) => {
+        if (e.target.tagName === 'IMG') {
+            e.preventDefault();
+        }
+    });
+    document.addEventListener('dragstart', (e) => {
+        if (e.target.tagName === 'IMG') {
+            e.preventDefault();
+        }
+    });
+
     // 1. Sticky Header on Scroll
     const header = document.querySelector('header');
     if (header) {
