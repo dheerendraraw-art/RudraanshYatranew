@@ -120,7 +120,9 @@ document.addEventListener('DOMContentLoaded', () => {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const packageName = form.getAttribute('data-package') || 'General Inquiry';
+            const packageNameBase = form.getAttribute('data-package') || 'General Inquiry';
+            const pickupElement = form.querySelector('[name="pickup"]');
+            const packageName = pickupElement ? `${packageNameBase} (${pickupElement.value})` : packageNameBase;
             const name = form.querySelector('[name="name"]').value.trim();
             const phone = form.querySelector('[name="phone"]').value.trim();
             const date = form.querySelector('[name="date"]').value;

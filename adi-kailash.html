@@ -255,6 +255,28 @@
                         </div>
 
                     </div>
+
+                    <!-- Pithoragarh to Pithoragarh Alternate Itinerary -->
+                    <div style="margin-top: 35px; padding: 25px; background: rgba(255, 255, 255, 0.02); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.08);">
+                        <h4 style="color: var(--color-gold); margin-bottom: 12px; font-size: 16px; font-family: var(--font-serif); display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-route"></i> Pithoragarh to Pithoragarh Route (3 Days / 2 Nights)</h4>
+                        <p style="font-size: 14.5px; color: var(--color-text-secondary); margin-bottom: 16px; line-height: 1.6;">
+                            For travelers who prefer to handle their own travel to and from Pithoragarh, we offer a direct 3-Day ground package starting from Pithoragarh base:
+                        </p>
+                        <ul style="list-style: none; padding-left: 0; font-size: 14px; line-height: 2.0; color: var(--color-text-secondary);">
+                            <li style="margin-bottom: 10px; border-bottom: 1px dashed rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                <strong style="color: var(--color-text-light); display: inline-block; width: 70px;">Day 1:</strong> 
+                                Depart from Pithoragarh base, ascend through Chialekh Pass into Vyas Valley. Arrive at Nabi / Gunji homestay.
+                            </li>
+                            <li style="margin-bottom: 10px; border-bottom: 1px dashed rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                <strong style="color: var(--color-text-light); display: inline-block; width: 70px;">Day 2:</strong> 
+                                <span style="color: var(--color-gold); font-weight: 500;">Double Darshan</span> - Drive to Jyolingkong for Adi Kailash (Gauri Kund, Parvati Sarovar) & Nabidhang for Om Parvat. Return to Nabi / Gunji.
+                            </li>
+                            <li style="margin-bottom: 8px;">
+                                <strong style="color: var(--color-text-light); display: inline-block; width: 70px;">Day 3:</strong> 
+                                Morning departure from Nabi / Gunji, drive back down to Pithoragarh base.
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 
                 <!-- Tab C: Inclusions -->
@@ -339,18 +361,24 @@
             <div>
                 <div class="sidebar-widget">
                     <h3 class="widget-title">Yatra Details</h3>
-                    <div class="price-display">
-                        <span>Standard Package Cost</span>
-                        <strong>₹35,000</strong>
-                        <span>per person</span>
-                        <div class="price-tax-note"
-                            style="color: var(--color-gold) !important; font-weight: 700; margin-top: 10px;">Starting
-                            Point: Delhi / Dehradun</div>
-                        <div class="price-tax-note">Inclusive of permits & local 4x4 Bolero</div>
-                    </div>
-
-                    <h4 style="margin-bottom: 12px; color: var(--color-text-light);">Inquire / Book Yatra</h4>
                     <form class="inquiry-form" data-package="Adi Kailash & Om Parvat Yatra">
+                        <div class="price-display" style="margin-bottom: 20px;">
+                            <label for="yatra-package-select" style="font-size: 13px; font-weight: 600; display: block; margin-bottom: 8px; color: var(--color-text-light);">Select Yatra Route:</label>
+                            <select id="yatra-package-select" name="pickup" class="form-control" style="background-color: rgba(255, 255, 255, 0.05); color: #fff; border: 1px solid var(--color-gold); border-radius: 6px; padding: 10px; font-size: 14px; width: 100%; margin-bottom: 15px; cursor: pointer;">
+                                <option value="Delhi to Delhi" data-price="₹35,000" data-duration="6 Days / 5 Nights">Delhi to Delhi (₹35k | 6D/5N)</option>
+                                <option value="Kathgodam to Kathgodam" data-price="₹30,000" data-duration="6 Days / 5 Nights">Kathgodam to Kathgodam (₹30k | 6D/5N)</option>
+                                <option value="Pithoragarh to Pithoragarh" data-price="₹18,000" data-duration="3 Days / 2 Nights">Pithoragarh to Pithoragarh (₹18k | 3D/2N)</option>
+                            </select>
+                            
+                            <div style="border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 12px;">
+                                <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--color-gold); display: block;" id="selected-route-label">Delhi to Delhi Package</span>
+                                <strong style="font-size: 32px; display: block; margin: 4px 0; color: #fff;" id="selected-route-price">₹35,000</strong>
+                                <span style="font-size: 13px; color: var(--color-text-secondary); display: block;" id="selected-route-duration"><i class="fa-solid fa-clock"></i> 6 Days / 5 Nights</span>
+                            </div>
+                            <div class="price-tax-note" style="margin-top: 10px;">Inclusive of permits & local 4x4 Bolero</div>
+                        </div>
+
+                        <h4 style="margin-bottom: 12px; color: var(--color-text-light);">Inquire / Book Yatra</h4>
                         <div class="form-group">
                             <label for="booking-name">Full Name</label>
                             <input type="text" id="booking-name" name="name" class="form-control"
@@ -541,6 +569,27 @@
     </div>
 
     <script src="app.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const selectEl = document.getElementById('yatra-package-select');
+            const labelEl = document.getElementById('selected-route-label');
+            const priceEl = document.getElementById('selected-route-price');
+            const durationEl = document.getElementById('selected-route-duration');
+
+            if (selectEl && labelEl && priceEl && durationEl) {
+                selectEl.addEventListener('change', (e) => {
+                    const selectedOption = e.target.options[e.target.selectedIndex];
+                    const price = selectedOption.getAttribute('data-price');
+                    const duration = selectedOption.getAttribute('data-duration');
+                    const value = e.target.value;
+
+                    labelEl.textContent = `${value} Package`;
+                    priceEl.textContent = price;
+                    durationEl.innerHTML = `<i class="fa-solid fa-clock"></i> ${duration}`;
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>
