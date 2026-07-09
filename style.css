@@ -601,6 +601,13 @@ header.scrolled {
 }
 
 @media (min-width: 769px) {
+    .hero {
+        justify-content: flex-end;
+    }
+    .hero-content {
+        text-align: right;
+        margin-right: 8%;
+    }
     .hero .btn-container {
         justify-content: flex-end;
     }
