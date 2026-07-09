@@ -101,10 +101,26 @@
             <div>
                 <div class="tour-header">
                     <div class="tour-meta-badges">
-                        <span class="meta-badge duration"><i class="fa-solid fa-clock"></i> 6 Days / 5 Nights</span>
+                        <div class="meta-badge duration" style="position: relative; cursor: pointer; padding-right: 28px;" id="top-duration-dropdown-trigger">
+                            <span id="top-duration-badge-text"><i class="fa-solid fa-clock"></i> 6 Days / 5 Nights</span>
+                            <i class="fa-solid fa-chevron-down" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: 10px;"></i>
+                            <select id="top-duration-select" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;">
+                                <option value="Delhi to Delhi">6 Days / 5 Nights (Delhi)</option>
+                                <option value="Kathgodam to Kathgodam">6 Days / 5 Nights (Kathgodam)</option>
+                                <option value="Pithoragarh to Pithoragarh">3 Days / 2 Nights (Pithoragarh)</option>
+                            </select>
+                        </div>
                         <span class="meta-badge difficulty"><i class="fa-solid fa-person-praying"></i> Moderate to
                             Spiritual</span>
-                        <span class="meta-badge location"><i class="fa-solid fa-route"></i> Delhi / Dehradun Start</span>
+                        <div class="meta-badge location" style="position: relative; cursor: pointer; padding-right: 28px;" id="top-location-dropdown-trigger">
+                            <span id="top-location-badge-text"><i class="fa-solid fa-route"></i> Delhi / Dehradun Start</span>
+                            <i class="fa-solid fa-chevron-down" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: 10px;"></i>
+                            <select id="top-location-select" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;">
+                                <option value="Delhi to Delhi">Delhi / Dehradun Start</option>
+                                <option value="Kathgodam to Kathgodam">Kathgodam Start</option>
+                                <option value="Pithoragarh to Pithoragarh">Pithoragarh Start</option>
+                            </select>
+                        </div>
                     </div>
 
                     <h2 class="section-title" style="text-align: left;">Explore the Sacred Vyas Valley</h2>
@@ -576,17 +592,55 @@
             const priceEl = document.getElementById('selected-route-price');
             const durationEl = document.getElementById('selected-route-duration');
 
-            if (selectEl && labelEl && priceEl && durationEl) {
-                selectEl.addEventListener('change', (e) => {
-                    const selectedOption = e.target.options[e.target.selectedIndex];
+            const topDurationSelect = document.getElementById('top-duration-select');
+            const topDurationText = document.getElementById('top-duration-badge-text');
+            const topLocationSelect = document.getElementById('top-location-select');
+            const topLocationText = document.getElementById('top-location-badge-text');
+
+            function syncAll(value) {
+                // Sync select element values
+                if (selectEl) selectEl.value = value;
+                if (topDurationSelect) topDurationSelect.value = value;
+                if (topLocationSelect) topLocationSelect.value = value;
+
+                // Find the option in the main select
+                if (selectEl) {
+                    const selectedOption = selectEl.options[selectEl.selectedIndex];
                     const price = selectedOption.getAttribute('data-price');
                     const duration = selectedOption.getAttribute('data-duration');
-                    const value = e.target.value;
 
-                    labelEl.textContent = `${value} Package`;
-                    priceEl.textContent = price;
-                    durationEl.innerHTML = `<i class="fa-solid fa-clock"></i> ${duration}`;
-                });
+                    // Update sidebar pricing widget
+                    if (labelEl) labelEl.textContent = `${value} Package`;
+                    if (priceEl) priceEl.textContent = price;
+                    if (durationEl) durationEl.innerHTML = `<i class="fa-solid fa-clock"></i> ${duration}`;
+
+                    // Update top duration badge text
+                    if (topDurationText) {
+                        topDurationText.innerHTML = `<i class="fa-solid fa-clock"></i> ${duration}`;
+                    }
+
+                    // Update top location badge text
+                    if (topLocationText) {
+                        if (value === "Pithoragarh to Pithoragarh") {
+                            topLocationText.innerHTML = `<i class="fa-solid fa-route"></i> Pithoragarh Start`;
+                        } else if (value === "Kathgodam to Kathgodam") {
+                            topLocationText.innerHTML = `<i class="fa-solid fa-route"></i> Kathgodam Start`;
+                        } else {
+                            topLocationText.innerHTML = `<i class="fa-solid fa-route"></i> Delhi / Dehradun Start`;
+                        }
+                    }
+                }
+            }
+
+            // Bind event listeners
+            if (selectEl) {
+                selectEl.addEventListener('change', (e) => syncAll(e.target.value));
+            }
+            if (topDurationSelect) {
+                topDurationSelect.addEventListener('change', (e) => syncAll(e.target.value));
+            }
+            if (topLocationSelect) {
+                topLocationSelect.addEventListener('change', (e) => syncAll(e.target.value));
             }
         });
     </script>
