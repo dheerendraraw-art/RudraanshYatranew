@@ -2880,6 +2880,9 @@ img {
     height: 100%;
     object-fit: cover;
     object-position: center;
+    will-change: transform;
+    backface-visibility: hidden;
+    transform: translate3d(0, 0, 0);
 }
 
 /* Ensure background overlay and content display on top of video */
