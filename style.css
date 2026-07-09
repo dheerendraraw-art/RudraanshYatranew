@@ -3019,3 +3019,10 @@ img {
         display: block !important;
     }
 }
+
+/* Mobile Form Inputs Zoom Mitigation (iOS Safari Auto-zoom fix) */
+@media (max-width: 768px) {
+    input, select, textarea {
+        font-size: 16px !important;
+    }
+}
