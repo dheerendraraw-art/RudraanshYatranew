@@ -600,6 +600,12 @@ header.scrolled {
     animation: fadeInUp 1.4s ease;
 }
 
+@media (min-width: 769px) {
+    .hero .btn-container {
+        justify-content: flex-end;
+    }
+}
+
 /* Button UI Components */
 .btn {
     display: inline-flex;
