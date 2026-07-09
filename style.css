@@ -2859,22 +2859,6 @@ img {
     -webkit-user-drag: none;
 }
 
-/* Homepage Top Badge Position */
-.homepage-top-badge {
-    position: absolute;
-    top: 130px;
-    left: 50%;
-    transform: translateX(-50%);
-    margin-bottom: 0;
-    z-index: 3;
-}
-
-@media (max-width: 768px) {
-    .homepage-top-badge {
-        top: 110px;
-    }
-}
-
 /* Hero Video Background */
 .hero {
     position: relative;
