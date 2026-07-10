@@ -166,18 +166,20 @@
                 <!-- Tab B: Itinerary -->
                 <div id="tab-itinerary" class="tab-content">
                     <h3>Day-Wise Travel Plan</h3>
-                    <div class="timeline">
+                    
+                    <!-- Delhi / Kathgodam 6-Day Route Timeline -->
+                    <div class="timeline" id="itinerary-6day">
 
                         <div class="timeline-item">
                             <div class="timeline-dot"></div>
                             <div class="timeline-header">
-                                <h4>Day 1: Delhi / Dehradun to Pithoragarh via Tanakpur</h4>
+                                <h4 id="day1-title">Day 1: Delhi / Dehradun to Pithoragarh via Tanakpur</h4>
                                 <span>Day 1</span>
                                 <i class="fa-solid fa-chevron-down"></i>
                             </div>
                             <div class="timeline-body">
                                 <div class="timeline-body-content">
-                                    <p>Embark on your journey from Delhi or Dehradun to the base town of Pithoragarh via
+                                    <p id="day1-text">Embark on your journey from Delhi or Dehradun to the base town of Pithoragarh via
                                         Tanakpur. Transition from the plains to the scenic foothills of the Kumaon
                                         Himalayas. Check in at your hotel, relax, and prepare for the sacred yatra ahead.
                                         Overnight stay in Pithoragarh.
@@ -256,13 +258,13 @@
                         <div class="timeline-item">
                             <div class="timeline-dot"></div>
                             <div class="timeline-header">
-                                <h4>Day 6: Return to Delhi / Dehradun via Kathgodam</h4>
+                                <h4 id="day6-title">Day 6: Return to Delhi / Dehradun via Kathgodam</h4>
                                 <span>Day 6</span>
                                 <i class="fa-solid fa-chevron-down"></i>
                             </div>
                             <div class="timeline-body">
                                 <div class="timeline-body-content">
-                                    <p>Depart from Pithoragarh after breakfast. Drive down to Kathgodam, and continue
+                                    <p id="day6-text">Depart from Pithoragarh after breakfast. Drive down to Kathgodam, and continue
                                         your journey back to Delhi or Dehradun, carrying home the spiritual blessings,
                                         divine protection, and unforgettable memories of the sacred peaks.
                                     </p>
@@ -272,26 +274,51 @@
 
                     </div>
 
-                    <!-- Pithoragarh to Pithoragarh Alternate Itinerary -->
-                    <div style="margin-top: 35px; padding: 25px; background: rgba(255, 255, 255, 0.02); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.08);">
-                        <h4 style="color: var(--color-gold); margin-bottom: 12px; font-size: 16px; font-family: var(--font-serif); display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-route"></i> Pithoragarh to Pithoragarh Route (3 Days / 2 Nights)</h4>
-                        <p style="font-size: 14.5px; color: var(--color-text-secondary); margin-bottom: 16px; line-height: 1.6;">
-                            For travelers who prefer to handle their own travel to and from Pithoragarh, we offer a direct 3-Day ground package starting from Pithoragarh base:
-                        </p>
-                        <ul style="list-style: none; padding-left: 0; font-size: 14px; line-height: 2.0; color: var(--color-text-secondary);">
-                            <li style="margin-bottom: 10px; border-bottom: 1px dashed rgba(255,255,255,0.05); padding-bottom: 8px;">
-                                <strong style="color: var(--color-text-light); display: inline-block; width: 70px;">Day 1:</strong> 
-                                Depart from Pithoragarh base, ascend through Chialekh Pass into Vyas Valley. Arrive at Nabi / Gunji homestay.
-                            </li>
-                            <li style="margin-bottom: 10px; border-bottom: 1px dashed rgba(255,255,255,0.05); padding-bottom: 8px;">
-                                <strong style="color: var(--color-text-light); display: inline-block; width: 70px;">Day 2:</strong> 
-                                <span style="color: var(--color-gold); font-weight: 500;">Double Darshan</span> - Drive to Jyolingkong for Adi Kailash (Gauri Kund, Parvati Sarovar) & Nabidhang for Om Parvat. Return to Nabi / Gunji.
-                            </li>
-                            <li style="margin-bottom: 8px;">
-                                <strong style="color: var(--color-text-light); display: inline-block; width: 70px;">Day 3:</strong> 
-                                Morning departure from Nabi / Gunji, drive back down to Pithoragarh base.
-                            </li>
-                        </ul>
+                    <!-- Pithoragarh to Pithoragarh 3-Day Route Timeline -->
+                    <div class="timeline" id="itinerary-3day" style="display: none;">
+
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-header">
+                                <h4>Day 1: Pithoragarh to Nabi / Gunji</h4>
+                                <span>Day 1</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </div>
+                            <div class="timeline-body">
+                                <div class="timeline-body-content">
+                                    <p>Depart early morning from Pithoragarh base. Drive past Dharchula, ascending into the Vyas Valley via Chialekh Pass. Arrive at the high-altitude homestay in Nabi / Gunji (3,200m) and rest to acclimatize.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-header">
+                                <h4>Day 2: Adi Kailash & Om Parvat (Double Darshan)</h4>
+                                <span>Day 2</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </div>
+                            <div class="timeline-body">
+                                <div class="timeline-body-content">
+                                    <p>Drive to Jyolingkong (4,570m) to witness Adi Kailash (Gauri Kund, Parvati Sarovar) and perform sacred puja. Later, drive to Nabidhang (4,246m) for the sacred Om Parvat darshan. Return to Nabi / Gunji homestay for overnight stay.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-header">
+                                <h4>Day 3: Nabi / Gunji to Pithoragarh</h4>
+                                <span>Day 3</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </div>
+                            <div class="timeline-body">
+                                <div class="timeline-body-content">
+                                    <p>Morning departure from Nabi / Gunji homestay. Drive back down through the beautiful mountain valleys to conclude your yatra at the Pithoragarh base office.</p>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
@@ -605,6 +632,13 @@
             const topLocationSelect = document.getElementById('top-location-select');
             const topLocationText = document.getElementById('top-location-badge-text');
 
+            const timeline6day = document.getElementById('itinerary-6day');
+            const timeline3day = document.getElementById('itinerary-3day');
+            const day1TitleEl = document.getElementById('day1-title');
+            const day1TextEl = document.getElementById('day1-text');
+            const day6TitleEl = document.getElementById('day6-title');
+            const day6TextEl = document.getElementById('day6-text');
+
             function syncAll(value) {
                 // Sync select element values
                 if (selectEl) selectEl.value = value;
@@ -637,6 +671,59 @@
                             topLocationText.innerHTML = `<i class="fa-solid fa-route"></i> Delhi / Dehradun Start`;
                         }
                     }
+
+                    // Dynamic Itinerary Toggle & Text Update
+                    if (value === "Pithoragarh to Pithoragarh") {
+                        if (timeline6day) timeline6day.style.display = 'none';
+                        if (timeline3day) timeline3day.style.display = 'block';
+
+                        // Auto-expand first day of 3-day itinerary
+                        if (timeline3day) {
+                            const items = timeline3day.querySelectorAll('.timeline-item');
+                            items.forEach((item, index) => {
+                                const body = item.querySelector('.timeline-body');
+                                if (index === 0) {
+                                    item.classList.add('active');
+                                    if (body) body.style.maxHeight = body.scrollHeight + 'px';
+                                } else {
+                                    item.classList.remove('active');
+                                    if (body) body.style.maxHeight = '0px';
+                                }
+                            });
+                        }
+                    } else {
+                        if (timeline6day) timeline6day.style.display = 'block';
+                        if (timeline3day) timeline3day.style.display = 'none';
+
+                        // Update Day 1 & Day 6 texts for Delhi vs Kathgodam
+                        if (value === "Kathgodam to Kathgodam") {
+                            if (day1TitleEl) day1TitleEl.textContent = "Day 1: Kathgodam to Pithoragarh via Scenic Almora";
+                            if (day1TextEl) day1TextEl.textContent = "Begin your journey at Kathgodam railway station. Drive through the scenic Kumaon hills, passing Almora, to the base town of Pithoragarh. Check in at your hotel, relax, and prepare for the sacred yatra ahead. Overnight stay in Pithoragarh.";
+                            if (day6TitleEl) day6TitleEl.textContent = "Day 6: Return to Kathgodam";
+                            if (day6TextEl) day6TextEl.textContent = "Drive back from Pithoragarh to Kathgodam. Depart for your onward journey, carrying the divine blessings of Adi Kailash and Om Parvat.";
+                        } else {
+                            // Delhi to Delhi
+                            if (day1TitleEl) day1TitleEl.textContent = "Day 1: Delhi / Dehradun to Pithoragarh via Tanakpur";
+                            if (day1TextEl) day1TextEl.textContent = "Embark on your journey from Delhi or Dehradun to the base town of Pithoragarh via Tanakpur. Transition from the plains to the scenic foothills of the Kumaon Himalayas. Check in at your hotel, relax, and prepare for the sacred yatra ahead. Overnight stay in Pithoragarh.";
+                            if (day6TitleEl) day6TitleEl.textContent = "Day 6: Return to Delhi / Dehradun via Kathgodam";
+                            if (day6TextEl) day6TextEl.textContent = "Depart from Pithoragarh after breakfast. Drive down to Kathgodam, and continue your journey back to Delhi or Dehradun, carrying home the spiritual blessings, divine protection, and unforgettable memories of the sacred peaks.";
+                        }
+
+                        // Auto-expand first day of 6-day itinerary
+                        if (timeline6day) {
+                            const items = timeline6day.querySelectorAll('.timeline-item');
+                            items.forEach((item, index) => {
+                                const body = item.querySelector('.timeline-body');
+                                if (index === 0) {
+                                    item.classList.add('active');
+                                    if (body) body.style.maxHeight = body.scrollHeight + 'px';
+                                } else {
+                                    item.classList.remove('active');
+                                    if (body) body.style.maxHeight = '0px';
+                                }
+                            });
+                        }
+                    }
                 }
             }
 
@@ -655,4 +742,3 @@
 </body>
 
 </html>
-
