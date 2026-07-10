@@ -1266,34 +1266,70 @@ header.scrolled {
 
 .price-display {
     text-align: center;
-    background-color: rgba(255, 255, 255, 0.05);
-    border-radius: var(--border-radius-sm);
-    padding: 16px 20px;
-    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--border-radius-sm);
+    padding: 14px 18px;
+    margin-bottom: 16px;
 }
 
 .price-display span {
-    font-size: 12px;
+    font-size: 11px;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: rgba(244, 241, 234, 0.7);
+    letter-spacing: 1px;
+    color: rgba(244, 241, 234, 0.6);
     display: block;
 }
 
 .price-display strong {
     font-family: var(--font-serif);
-    font-size: 38px;
+    font-size: 30px;
     color: var(--color-gold);
     display: block;
-    margin: 8px 0;
+    margin: 6px 0;
     font-weight: 500;
 }
 
 .price-tax-note {
-    font-size: 10.5px !important;
-    color: rgba(244, 241, 234, 0.5) !important;
+    font-size: 10px !important;
+    color: rgba(244, 241, 234, 0.45) !important;
     margin-top: 6px;
+}
+
+.price-display-compact {
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--border-radius-sm);
+    padding: 14px 16px;
+    margin-bottom: 16px;
+}
+
+.price-select-group {
+    margin-bottom: 12px;
+}
+
+.price-details-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+    padding-top: 10px;
+    margin-top: 6px;
+}
+
+.price-val {
+    font-family: var(--font-serif);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-gold);
+}
+
+.price-duration {
+    font-size: 12.5px;
+    color: rgba(244, 241, 234, 0.85);
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
 /* Forms styling */
@@ -1329,7 +1365,7 @@ header.scrolled {
     background-color: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: var(--border-radius-sm);
-    padding: 12px 16px;
+    padding: 10px 14px;
     font-family: var(--font-sans);
     font-size: 14px;
     color: var(--color-text-light);

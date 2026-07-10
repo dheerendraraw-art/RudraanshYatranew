@@ -378,43 +378,43 @@
                 <div class="sidebar-widget">
                     <h3 class="widget-title">Yatra Details</h3>
                     <form class="inquiry-form" data-package="Adi Kailash & Om Parvat Yatra">
-                        <div class="price-display" style="margin-bottom: 14px; padding: 12px 14px; background-color: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px;">
-                            <div style="display: flex; flex-direction: column; gap: 8px;">
-                                <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
-                                    <div style="flex: 1;">
-                                        <label for="yatra-package-select" style="font-size: 10px; font-weight: 700; letter-spacing: 1px; color: rgba(244, 241, 234, 0.6); text-transform: uppercase; margin-bottom: 4px; display: block;">Route / Pickup:</label>
-                                        <select id="yatra-package-select" name="pickup" class="form-control" style="background-color: rgba(255, 255, 255, 0.03); color: #fff; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 8px; padding: 8px 10px; font-size: 13.5px; width: 100%; cursor: pointer; outline: none;">
-                                            <option value="Delhi to Delhi" data-price="₹35,000" data-duration="6 Days / 5 Nights">Delhi to Delhi</option>
-                                            <option value="Kathgodam to Kathgodam" data-price="₹30,000" data-duration="6 Days / 5 Nights">Kathgodam to Kathgodam</option>
-                                            <option value="Pithoragarh to Pithoragarh" data-price="₹18,000" data-duration="3 Days / 2 Nights">Pithoragarh to Pithoragarh</option>
-                                        </select>
-                                    </div>
-                                    <div style="text-align: right; min-width: 100px;">
-                                        <span style="font-size: 9px; font-weight: 700; letter-spacing: 1px; color: var(--color-gold); text-transform: uppercase; display: block; margin-bottom: 2px;" id="selected-route-label">Delhi to Delhi</span>
-                                        <strong style="font-family: var(--font-serif); font-size: 24px; font-weight: 700; color: #fff; display: block; line-height: 1;" id="selected-route-price">₹35,000</strong>
-                                        <span style="font-size: 11px; color: rgba(244, 241, 234, 0.7); display: inline-flex; align-items: center; gap: 4px; justify-content: flex-end;" id="selected-route-duration"><i class="fa-solid fa-clock" style="color: var(--color-gold); font-size: 10px;"></i> 6 Days / 5 Nights</span>
+                        <div class="price-display-compact">
+                            <div class="price-select-group">
+                                <label for="yatra-package-select">Route / Pickup</label>
+                                <select id="yatra-package-select" name="pickup" class="form-control">
+                                    <option value="Delhi to Delhi" data-price="₹35,000" data-duration="6 Days / 5 Nights">Delhi to Delhi</option>
+                                    <option value="Kathgodam to Kathgodam" data-price="₹30,000" data-duration="6 Days / 5 Nights">Kathgodam to Kathgodam</option>
+                                    <option value="Pithoragarh to Pithoragarh" data-price="₹18,000" data-duration="3 Days / 2 Nights">Pithoragarh to Pithoragarh</option>
+                                </select>
+                            </div>
+                            <div class="price-details-row">
+                                <span style="font-size: 10px; font-weight: 700; letter-spacing: 1px; color: rgba(244, 241, 234, 0.6); text-transform: uppercase;" id="selected-route-label">Delhi to Delhi</span>
+                                <div style="text-align: right;">
+                                    <div class="price-val" id="selected-route-price" style="line-height: 1.1; margin-bottom: 2px;">₹35,000</div>
+                                    <div class="price-duration" id="selected-route-duration" style="font-size: 11px; justify-content: flex-end;">
+                                        <i class="fa-solid fa-clock" style="color: var(--color-gold); font-size: 10px;"></i> 6 Days / 5 Nights
                                     </div>
                                 </div>
-                                <div class="price-tax-note" style="margin-top: 4px; font-size: 10.5px; text-align: center; color: rgba(244, 241, 234, 0.45); border-top: 1px solid rgba(255,255,255,0.05); padding-top: 6px;">All permits & local 4x4 Bolero transport included</div>
                             </div>
+                            <div class="price-tax-note" style="margin-top: 8px; font-size: 10px; text-align: center; color: rgba(244, 241, 234, 0.45); border-top: 1px solid rgba(255,255,255,0.05); padding-top: 6px;">All permits & local 4x4 Bolero transport included</div>
                         </div>
 
                         <h4 style="margin-bottom: 12px; color: var(--color-text-light);">Inquire / Book Yatra</h4>
                         <div class="form-grid-2">
                             <div class="form-group">
-                                <label for="booking-name">Full Name</label>
+                                <label for="booking-name">Name</label>
                                 <input type="text" id="booking-name" name="name" class="form-control"
                                     placeholder="E.g. Rajesh Kumar" required>
                             </div>
                             <div class="form-group">
-                                <label for="booking-phone">Phone Number</label>
+                                <label for="booking-phone">Phone</label>
                                 <input type="tel" id="booking-phone" name="phone" class="form-control"
                                     placeholder="+91-XXXXX-XXXXX" required>
                             </div>
                         </div>
                         <div class="form-grid-2">
                             <div class="form-group">
-                                <label for="booking-date">Travel Date</label>
+                                <label for="booking-date">Date</label>
                                 <input type="date" id="booking-date" name="date" class="form-control" required>
                             </div>
                             <div class="form-group">
@@ -428,9 +428,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="booking-msg">Special Notes (Medical conditions, etc.)</label>
-                            <textarea id="booking-msg" name="message" class="form-control"
-                                placeholder="Optional notes..."></textarea>
+                            <label for="booking-msg">Special Notes</label>
+                            <input type="text" id="booking-msg" name="message" class="form-control"
+                                placeholder="Diet, medical conditions (optional)">
                         </div>
                         <button type="submit" class="btn form-btn"><i class="fa-brands fa-whatsapp"></i> Book via WhatsApp</button>
                     </form>
