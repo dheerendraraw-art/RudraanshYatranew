@@ -378,22 +378,25 @@
                 <div class="sidebar-widget">
                     <h3 class="widget-title">Yatra Details</h3>
                     <form class="inquiry-form" data-package="Adi Kailash & Om Parvat Yatra">
-                        <div class="price-display" style="margin-bottom: 16px; padding: 14px 12px; background-color: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; text-align: left;">
-                            <div class="form-group" style="margin-bottom: 12px;">
-                                <label for="yatra-package-select" style="font-size: 11px; font-weight: 700; letter-spacing: 1px; color: rgba(244, 241, 234, 0.6); text-transform: uppercase; margin-bottom: 6px; display: block;">Select Route / Pickup:</label>
-                                <select id="yatra-package-select" name="pickup" class="form-control" style="background-color: rgba(255, 255, 255, 0.03); color: #fff; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 8px; padding: 12px 14px; font-size: 14.5px; width: 100%; cursor: pointer; outline: none; transition: border-color 0.3s ease;">
-                                    <option value="Delhi to Delhi" data-price="₹35,000" data-duration="6 Days / 5 Nights">Delhi to Delhi</option>
-                                    <option value="Kathgodam to Kathgodam" data-price="₹30,000" data-duration="6 Days / 5 Nights">Kathgodam to Kathgodam</option>
-                                    <option value="Pithoragarh to Pithoragarh" data-price="₹18,000" data-duration="3 Days / 2 Nights">Pithoragarh to Pithoragarh</option>
-                                </select>
+                        <div class="price-display" style="margin-bottom: 14px; padding: 12px 14px; background-color: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px;">
+                            <div style="display: flex; flex-direction: column; gap: 8px;">
+                                <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+                                    <div style="flex: 1;">
+                                        <label for="yatra-package-select" style="font-size: 10px; font-weight: 700; letter-spacing: 1px; color: rgba(244, 241, 234, 0.6); text-transform: uppercase; margin-bottom: 4px; display: block;">Route / Pickup:</label>
+                                        <select id="yatra-package-select" name="pickup" class="form-control" style="background-color: rgba(255, 255, 255, 0.03); color: #fff; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 8px; padding: 8px 10px; font-size: 13.5px; width: 100%; cursor: pointer; outline: none;">
+                                            <option value="Delhi to Delhi" data-price="₹35,000" data-duration="6 Days / 5 Nights">Delhi to Delhi</option>
+                                            <option value="Kathgodam to Kathgodam" data-price="₹30,000" data-duration="6 Days / 5 Nights">Kathgodam to Kathgodam</option>
+                                            <option value="Pithoragarh to Pithoragarh" data-price="₹18,000" data-duration="3 Days / 2 Nights">Pithoragarh to Pithoragarh</option>
+                                        </select>
+                                    </div>
+                                    <div style="text-align: right; min-width: 100px;">
+                                        <span style="font-size: 9px; font-weight: 700; letter-spacing: 1px; color: var(--color-gold); text-transform: uppercase; display: block; margin-bottom: 2px;" id="selected-route-label">Delhi to Delhi</span>
+                                        <strong style="font-family: var(--font-serif); font-size: 24px; font-weight: 700; color: #fff; display: block; line-height: 1;" id="selected-route-price">₹35,000</strong>
+                                        <span style="font-size: 11px; color: rgba(244, 241, 234, 0.7); display: inline-flex; align-items: center; gap: 4px; justify-content: flex-end;" id="selected-route-duration"><i class="fa-solid fa-clock" style="color: var(--color-gold); font-size: 10px;"></i> 6 Days / 5 Nights</span>
+                                    </div>
+                                </div>
+                                <div class="price-tax-note" style="margin-top: 4px; font-size: 10.5px; text-align: center; color: rgba(244, 241, 234, 0.45); border-top: 1px solid rgba(255,255,255,0.05); padding-top: 6px;">All permits & local 4x4 Bolero transport included</div>
                             </div>
-                            
-                            <div style="background: linear-gradient(135deg, rgba(197, 160, 89, 0.06) 0%, rgba(255, 255, 255, 0.01) 100%); border: 1px solid rgba(197, 160, 89, 0.15); border-radius: 10px; padding: 8px 10px; margin-top: 10px; text-align: center;">
-                                <span style="font-size: 10px; font-weight: 700; letter-spacing: 1.5px; color: var(--color-gold); text-transform: uppercase; display: block; margin-bottom: 2px;" id="selected-route-label">Delhi to Delhi Package</span>
-                                <strong style="font-family: var(--font-serif); font-size: 28px; font-weight: 700; color: #fff; display: block; margin: 2px 0;" id="selected-route-price">₹35,000</strong>
-                                <span style="font-size: 13px; font-weight: 500; color: rgba(244, 241, 234, 0.85); display: inline-flex; align-items: center; gap: 6px; justify-content: center;" id="selected-route-duration"><i class="fa-solid fa-clock" style="color: var(--color-gold); font-size: 12px;"></i> 6 Days / 5 Nights</span>
-                            </div>
-                            <div class="price-tax-note" style="margin-top: 10px; font-size: 11px; text-align: center; color: rgba(244, 241, 234, 0.45);">All permits & local 4x4 Bolero transport included</div>
                         </div>
 
                         <h4 style="margin-bottom: 12px; color: var(--color-text-light);">Inquire / Book Yatra</h4>
