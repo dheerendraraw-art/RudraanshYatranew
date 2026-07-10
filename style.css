@@ -1013,7 +1013,7 @@ header.scrolled {
 /* Tour Page specific Layouts */
 .tour-grid {
     display: grid;
-    grid-template-columns: 1.8fr 1.2fr;
+    grid-template-columns: 1.7fr 1.3fr;
     gap: 48px;
     margin-top: 50px;
 }
@@ -1230,26 +1230,26 @@ header.scrolled {
     color: var(--color-text-light);
     border: 2px solid var(--color-gold);
     border-radius: var(--border-radius-md);
-    padding: 36px 28px;
+    padding: 24px 18px 18px 18px;
     box-shadow: var(--shadow-lg);
     position: sticky;
-    top: 120px;
+    top: 100px;
 }
 
 .widget-title {
     color: var(--color-text-light);
-    font-size: 24px;
-    margin-bottom: 24px;
+    font-size: 22px;
+    margin-bottom: 18px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding-bottom: 12px;
+    padding-bottom: 10px;
 }
 
 .price-display {
     text-align: center;
     background-color: rgba(255, 255, 255, 0.05);
     border-radius: var(--border-radius-sm);
-    padding: 24px;
-    margin-bottom: 28px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
     border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -1277,8 +1277,21 @@ header.scrolled {
 }
 
 /* Forms styling */
+.form-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+@media (max-width: 480px) {
+    .form-grid-2 {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+}
+
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 14px;
 }
 
 .form-group label {
@@ -1315,7 +1328,7 @@ header.scrolled {
 }
 
 textarea.form-control {
-    min-height: 100px;
+    min-height: 60px;
     resize: vertical;
 }
 

@@ -378,7 +378,7 @@
                 <div class="sidebar-widget">
                     <h3 class="widget-title">Yatra Details</h3>
                     <form class="inquiry-form" data-package="Adi Kailash & Om Parvat Yatra">
-                        <div class="price-display" style="margin-bottom: 20px; padding: 18px 12px; background-color: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; text-align: left;">
+                        <div class="price-display" style="margin-bottom: 16px; padding: 14px 12px; background-color: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; text-align: left;">
                             <div class="form-group" style="margin-bottom: 12px;">
                                 <label for="yatra-package-select" style="font-size: 11px; font-weight: 700; letter-spacing: 1px; color: rgba(244, 241, 234, 0.6); text-transform: uppercase; margin-bottom: 6px; display: block;">Select Route / Pickup:</label>
                                 <select id="yatra-package-select" name="pickup" class="form-control" style="background-color: rgba(255, 255, 255, 0.03); color: #fff; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 8px; padding: 12px 14px; font-size: 14.5px; width: 100%; cursor: pointer; outline: none; transition: border-color 0.3s ease;">
@@ -388,45 +388,48 @@
                                 </select>
                             </div>
                             
-                            <div style="background: linear-gradient(135deg, rgba(197, 160, 89, 0.06) 0%, rgba(255, 255, 255, 0.01) 100%); border: 1px solid rgba(197, 160, 89, 0.15); border-radius: 10px; padding: 14px 10px; margin-top: 12px; text-align: center;">
+                            <div style="background: linear-gradient(135deg, rgba(197, 160, 89, 0.06) 0%, rgba(255, 255, 255, 0.01) 100%); border: 1px solid rgba(197, 160, 89, 0.15); border-radius: 10px; padding: 8px 10px; margin-top: 10px; text-align: center;">
                                 <span style="font-size: 10px; font-weight: 700; letter-spacing: 1.5px; color: var(--color-gold); text-transform: uppercase; display: block; margin-bottom: 2px;" id="selected-route-label">Delhi to Delhi Package</span>
-                                <strong style="font-family: var(--font-serif); font-size: 34px; font-weight: 700; color: #fff; display: block; margin: 2px 0;" id="selected-route-price">₹35,000</strong>
+                                <strong style="font-family: var(--font-serif); font-size: 28px; font-weight: 700; color: #fff; display: block; margin: 2px 0;" id="selected-route-price">₹35,000</strong>
                                 <span style="font-size: 13px; font-weight: 500; color: rgba(244, 241, 234, 0.85); display: inline-flex; align-items: center; gap: 6px; justify-content: center;" id="selected-route-duration"><i class="fa-solid fa-clock" style="color: var(--color-gold); font-size: 12px;"></i> 6 Days / 5 Nights</span>
                             </div>
                             <div class="price-tax-note" style="margin-top: 10px; font-size: 11px; text-align: center; color: rgba(244, 241, 234, 0.45);">All permits & local 4x4 Bolero transport included</div>
                         </div>
 
                         <h4 style="margin-bottom: 12px; color: var(--color-text-light);">Inquire / Book Yatra</h4>
-                        <div class="form-group">
-                            <label for="booking-name">Full Name</label>
-                            <input type="text" id="booking-name" name="name" class="form-control"
-                                placeholder="E.g. Rajesh Kumar" required>
+                        <div class="form-grid-2">
+                            <div class="form-group">
+                                <label for="booking-name">Full Name</label>
+                                <input type="text" id="booking-name" name="name" class="form-control"
+                                    placeholder="E.g. Rajesh Kumar" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="booking-phone">Phone Number</label>
+                                <input type="tel" id="booking-phone" name="phone" class="form-control"
+                                    placeholder="+91-XXXXX-XXXXX" required>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="booking-phone">Phone Number</label>
-                            <input type="tel" id="booking-phone" name="phone" class="form-control"
-                                placeholder="+91-XXXXX-XXXXX" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="booking-date">Preferred Travel Date</label>
-                            <input type="date" id="booking-date" name="date" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="booking-travelers">Number of Travelers</label>
-                            <select id="booking-travelers" name="travelers" class="form-control">
-                                <option value="1">1 Person</option>
-                                <option value="2">2 People</option>
-                                <option value="3-5">3 - 5 People</option>
-                                <option value="6+">6+ People (Group)</option>
-                            </select>
+                        <div class="form-grid-2">
+                            <div class="form-group">
+                                <label for="booking-date">Travel Date</label>
+                                <input type="date" id="booking-date" name="date" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="booking-travelers">Travelers</label>
+                                <select id="booking-travelers" name="travelers" class="form-control">
+                                    <option value="1">1 Person</option>
+                                    <option value="2">2 People</option>
+                                    <option value="3-5">3 - 5 People</option>
+                                    <option value="6+">6+ People</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="booking-msg">Special Notes (Medical conditions, etc.)</label>
                             <textarea id="booking-msg" name="message" class="form-control"
                                 placeholder="Optional notes..."></textarea>
                         </div>
-                        <button type="submit" class="btn form-btn"><i class="fa-brands fa-whatsapp"></i> Book via
-                            WhatsApp</button>
+                        <button type="submit" class="btn form-btn"><i class="fa-brands fa-whatsapp"></i> Book via WhatsApp</button>
                     </form>
                 </div>
             </div>
