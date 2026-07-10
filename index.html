@@ -10,14 +10,58 @@
     <!-- Google Search Site Name & Favicon -->
     <meta property="og:site_name" content="Rudraansh Yatra">
     <link rel="icon" type="image/png" href="assets/images/logo.png">
-    <link rel="shortcut icon" type="image/png" href="assets/images/logo.png">
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Rudraansh Yatra",
-      "alternateName": ["RudraanshYatra"],
-      "url": "https://rudraanshyatra.com/"
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://rudraanshyatra.com/#website",
+          "url": "https://rudraanshyatra.com/",
+          "name": "Rudraansh Yatra",
+          "alternateName": ["RudraanshYatra"],
+          "publisher": {
+            "@id": "https://rudraanshyatra.com/#organization"
+          }
+        },
+        {
+          "@type": "TravelAgency",
+          "@id": "https://rudraanshyatra.com/#organization",
+          "name": "Rudraansh Yatra",
+          "image": "https://rudraanshyatra.com/assets/images/logo.png",
+          "url": "https://rudraanshyatra.com/",
+          "telephone": "+917617617651",
+          "email": "info@rudraanshyatra.com",
+          "priceRange": "₹14999 - ₹35000",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "1st Floor Above Punetha Bookstore, Simailgair Bazaar",
+            "addressLocality": "Pithoragarh",
+            "addressRegion": "Uttarakhand",
+            "postalCode": "262501",
+            "addressCountry": "IN"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Vyas Valley"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Darma Valley"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kumaon Himalayas"
+            }
+          ],
+          "sameAs": [
+            "https://www.facebook.com/profile.php?id=61589223945628",
+            "https://www.instagram.com/yatra_rudraansh?igsh=MXYxdmg0Y2dqNDJ3bg==",
+            "https://www.youtube.com/@Rudra-Anshyatra"
+          ]
+        }
+      ]
     }
     </script>
 
