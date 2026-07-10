@@ -1013,7 +1013,7 @@ header.scrolled {
 /* Tour Page specific Layouts */
 .tour-grid {
     display: grid;
-    grid-template-columns: 1.6fr 1.4fr;
+    grid-template-columns: 1.5fr 1.5fr;
     gap: 36px;
     margin-top: 50px;
 }
