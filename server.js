@@ -166,6 +166,10 @@ app.get('/blog/:slug', async (req, res) => {
                 if (/^[*+-]\s/.test(trimmed)) {
                     return `<p class="blog-bullet">${trimmed.substring(2)}</p>`;
                 }
+                // Bypass paragraph wrapping for script tags, raw HTML tags, or JSON structure lines
+                if (trimmed.startsWith('<script') || trimmed.endsWith('</script>') || trimmed.startsWith('<div') || trimmed.startsWith('</div') || trimmed.startsWith('{') || trimmed.startsWith('}') || trimmed.startsWith('"') || trimmed.startsWith(']')) {
+                    return trimmed;
+                }
                 return `<p class="blog-text">${trimmed}</p>`;
             })
             .join('\n');
