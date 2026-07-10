@@ -61,6 +61,28 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
+p {
+    text-align: justify;
+}
+
+/* Reset alignments for centered/left-aligned blocks */
+.text-center p,
+.hero-desc,
+.section-desc,
+.cta-section p,
+.footer-bottom p,
+.price-display p,
+.price-display-compact p,
+.price-tax-note,
+.discount-badge-container p,
+.modal-subtitle {
+    text-align: center;
+}
+
+.text-left p {
+    text-align: left;
+}
+
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-serif);
     font-weight: 600;
@@ -1232,6 +1254,7 @@ header.scrolled {
     border-radius: var(--border-radius-md);
     padding: 24px 18px 18px 18px;
     box-shadow: var(--shadow-lg);
+    margin-right: 10px;
 }
 
 @media (min-height: 768px) {
