@@ -3110,3 +3110,51 @@ img {
         font-size: 16px !important;
     }
 }
+
+/* Trek/Yatra Facts Table (AI Search Optimization) */
+.trek-facts-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 14.5px;
+    background-color: var(--color-bg-card);
+    border: 1px solid rgba(10, 25, 47, 0.06);
+    border-radius: var(--border-radius-sm);
+    overflow: hidden;
+}
+
+.trek-facts-table th,
+.trek-facts-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid rgba(10, 25, 47, 0.05);
+}
+
+.trek-facts-table th {
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+    font-family: var(--font-sans);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.trek-facts-table tr:last-child td {
+    border-bottom: none;
+}
+
+.trek-facts-table tr:nth-child(even) {
+    background-color: rgba(10, 25, 47, 0.02);
+}
+
+.trek-facts-table td strong {
+    color: var(--color-primary);
+}
+
+.trek-facts-table td i {
+    color: var(--color-gold);
+    margin-right: 8px;
+    width: 16px;
+    text-align: center;
+}
