@@ -824,4 +824,3 @@ function initializeDiscountPopup() {
     window.addEventListener('load', () => {
         setTimeout(initBlogCarousel, 500);
     });
-});
