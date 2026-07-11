@@ -82,15 +82,22 @@ app.get('/', async (req, res) => {
         let indexHtml = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
         
         const replacement = `<!-- Blogs Section -->
-    <section id="homepage-blogs" class="section-padding" style="background-color: var(--color-bg-card);">
+    <section id="homepage-blogs" class="section-padding" style="background-color: var(--color-bg-card); overflow: hidden;">
         <div class="container blog-section-container">
             <div class="section-header text-center">
                 <span class="section-subtitle">Our Travel Diaries</span>
                 <h2 class="section-title">Himalayan Legends & Insights</h2>
                 <p class="section-desc">Stories, guidelines, and cultural experiences straight from our guides trekking across the Kumaon borderlands.</p>
             </div>
-            <div class="blog-grid">
-                ${blogsHtml}
+            
+            <div class="blog-carousel-wrapper">
+                <button class="carousel-control prev" aria-label="Previous Slide"><i class="fa-solid fa-chevron-left"></i></button>
+                <div class="blog-carousel-container">
+                    <div class="blog-carousel-track">
+                        ${blogsHtml}
+                    </div>
+                </div>
+                <button class="carousel-control next" aria-label="Next Slide"><i class="fa-solid fa-chevron-right"></i></button>
             </div>
         </div>`;
 

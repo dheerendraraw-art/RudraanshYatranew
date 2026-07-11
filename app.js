@@ -724,3 +724,104 @@ function initializeDiscountPopup() {
 
     if (emailInput) emailInput.addEventListener('input', updateDiscount);
     if (phoneInput) phoneInput.addEventListener('input', updateDiscount);
+
+    // ── 3D Curved Blog Carousel ──
+    const initBlogCarousel = () => {
+        const container = document.querySelector('.blog-carousel-container');
+        const track = document.querySelector('.blog-carousel-track');
+        const cards = document.querySelectorAll('.blog-carousel-track .blog-card');
+        const prevBtn = document.querySelector('.carousel-control.prev');
+        const nextBtn = document.querySelector('.carousel-control.next');
+
+        if (!container || !track || cards.length === 0) return;
+
+        const update3DTransforms = () => {
+            const containerRect = container.getBoundingClientRect();
+            const containerCenter = containerRect.left + containerRect.width / 2;
+
+            cards.forEach(card => {
+                const cardRect = card.getBoundingClientRect();
+                const cardCenter = cardRect.left + cardRect.width / 2;
+                
+                // Distance from center relative to container half-width
+                const offset = cardCenter - containerCenter;
+                const maxDistance = containerRect.width / 2;
+                
+                // Normalize ratio (-1.5 to 1.5)
+                let ratio = offset / maxDistance;
+                ratio = Math.max(-1.5, Math.min(1.5, ratio));
+
+                // 3D parameters: rotate Y towards center, translate back Z, scale down slightly
+                const rotateY = ratio * -20; // Rotates outer cards inward
+                const translateZ = Math.abs(ratio) * -100; // Push sides back
+                const scale = 1 - Math.min(0.2, Math.abs(ratio) * 0.1); // Scale down sides
+                const opacity = 1 - Math.min(0.5, Math.abs(ratio) * 0.3); // Fade sides slightly
+
+                // Apply transform
+                card.style.transform = `perspective(1000px) rotateY(${rotateY}deg) translateZ(${translateZ}px) scale(${scale})`;
+                card.style.opacity = opacity;
+            });
+        };
+
+        // Scroll listener for real-time 3D curve rendering
+        container.addEventListener('scroll', update3DTransforms);
+        
+        // Resize listener
+        window.addEventListener('resize', update3DTransforms);
+
+        // Navigation button listeners
+        if (prevBtn && nextBtn) {
+            prevBtn.addEventListener('click', () => {
+                const cardWidth = cards[0].offsetWidth + 30; // card width + gap
+                container.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+            });
+
+            nextBtn.addEventListener('click', () => {
+                const cardWidth = cards[0].offsetWidth + 30; // card width + gap
+                container.scrollBy({ left: cardWidth, behavior: 'smooth' });
+            });
+        }
+
+        // Drag to scroll implementation for desktop users
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        container.addEventListener('mousedown', (e) => {
+            if (e.target.closest('a') || e.target.closest('button')) return;
+            isDown = true;
+            container.classList.add('grabbing');
+            startX = e.pageX - container.offsetLeft;
+            scrollLeft = container.scrollLeft;
+        });
+
+        container.addEventListener('mouseleave', () => {
+            isDown = false;
+            container.classList.remove('grabbing');
+        });
+
+        container.addEventListener('mouseup', () => {
+            isDown = false;
+            container.classList.remove('grabbing');
+        });
+
+        container.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - container.offsetLeft;
+            const walk = (x - startX) * 1.5; // Scroll speed multiplier
+            container.scrollLeft = scrollLeft - walk;
+        });
+
+        // Initialize positions
+        setTimeout(update3DTransforms, 200);
+    };
+
+    // Initialize carousel on DOM load
+    initBlogCarousel();
+
+    // Re-initialize when window loads to ensure LCP images are computed correctly
+    window.addEventListener('load', () => {
+        setTimeout(initBlogCarousel, 500);
+    });
+});
