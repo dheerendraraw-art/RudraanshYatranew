@@ -729,17 +729,41 @@ function initializeDiscountPopup() {
     const initBlogCarousel = () => {
         const container = document.querySelector('.blog-carousel-container');
         const track = document.querySelector('.blog-carousel-track');
-        const cards = document.querySelectorAll('.blog-carousel-track .blog-card');
+        const originalCards = Array.from(document.querySelectorAll('.blog-carousel-track .blog-card:not(.blog-card-clone)'));
         const prevBtn = document.querySelector('.carousel-control.prev');
         const nextBtn = document.querySelector('.carousel-control.next');
 
-        if (!container || !track || cards.length === 0) return;
+        if (!container || !track || originalCards.length === 0) return;
+
+        // Clean up previous clones (in case this is called multiple times)
+        track.querySelectorAll('.blog-card-clone').forEach(el => el.remove());
+
+        const N = originalCards.length;
+
+        // Only do infinite loop cloning if we have at least 2 cards to loop
+        if (N >= 2) {
+            // Clone and append
+            originalCards.forEach(card => {
+                const clone = card.cloneNode(true);
+                clone.classList.add('blog-card-clone');
+                track.appendChild(clone);
+            });
+            // Clone and prepend (reverse to preserve original order 1, 2, 3, 4)
+            originalCards.slice().reverse().forEach(card => {
+                const clone = card.cloneNode(true);
+                clone.classList.add('blog-card-clone');
+                track.insertBefore(clone, track.firstChild);
+            });
+        }
+
+        // Get all cards (original + clones)
+        const allCards = document.querySelectorAll('.blog-carousel-track .blog-card');
 
         const update3DTransforms = () => {
             const containerRect = container.getBoundingClientRect();
             const containerCenter = containerRect.left + containerRect.width / 2;
 
-            cards.forEach(card => {
+            allCards.forEach(card => {
                 const cardRect = card.getBoundingClientRect();
                 const cardCenter = cardRect.left + cardRect.width / 2;
                 
@@ -763,8 +787,34 @@ function initializeDiscountPopup() {
             });
         };
 
-        // Scroll listener for real-time 3D curve rendering
-        container.addEventListener('scroll', update3DTransforms);
+        // Scroll repositioning for seamless infinite loop
+        let isJumping = false;
+        const handleScrollLoop = () => {
+            if (isJumping || N < 2) return;
+
+            const cardWidth = originalCards[0].offsetWidth + 30; // card width + gap
+            const totalOriginalWidth = N * cardWidth;
+
+            // Thresholds to trigger instant scroll jump
+            const leftThreshold = (N - 0.5) * cardWidth;
+            const rightThreshold = (2 * N - 0.5) * cardWidth;
+
+            if (container.scrollLeft < leftThreshold) {
+                isJumping = true;
+                container.scrollLeft += totalOriginalWidth;
+                setTimeout(() => { isJumping = false; }, 50);
+            } else if (container.scrollLeft > rightThreshold) {
+                isJumping = true;
+                container.scrollLeft -= totalOriginalWidth;
+                setTimeout(() => { isJumping = false; }, 50);
+            }
+        };
+
+        // Unified scroll event listener
+        container.addEventListener('scroll', () => {
+            handleScrollLoop();
+            update3DTransforms();
+        });
         
         // Resize listener
         window.addEventListener('resize', update3DTransforms);
@@ -772,12 +822,12 @@ function initializeDiscountPopup() {
         // Navigation button listeners
         if (prevBtn && nextBtn) {
             prevBtn.addEventListener('click', () => {
-                const cardWidth = cards[0].offsetWidth + 30; // card width + gap
+                const cardWidth = originalCards[0].offsetWidth + 30; // card width + gap
                 container.scrollBy({ left: -cardWidth, behavior: 'smooth' });
             });
 
             nextBtn.addEventListener('click', () => {
-                const cardWidth = cards[0].offsetWidth + 30; // card width + gap
+                const cardWidth = originalCards[0].offsetWidth + 30; // card width + gap
                 container.scrollBy({ left: cardWidth, behavior: 'smooth' });
             });
         }
@@ -813,8 +863,17 @@ function initializeDiscountPopup() {
             container.scrollLeft = scrollLeft - walk;
         });
 
+        // Set initial scroll position to show original cards
+        const setInitialScroll = () => {
+            if (N >= 2) {
+                const cardWidth = originalCards[0].offsetWidth + 30;
+                container.scrollLeft = N * cardWidth;
+            }
+            update3DTransforms();
+        };
+
         // Initialize positions
-        setTimeout(update3DTransforms, 200);
+        setTimeout(setInitialScroll, 100);
     };
 
     // Initialize carousel on DOM load
