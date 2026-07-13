@@ -142,6 +142,7 @@ app.get('/blog/:slug', async (req, res) => {
 
     try {
         let blog = null;
+        let adjacentBlogsHtml = '';
 
         if (supabase) {
             // Fetch from database by slug
@@ -152,6 +153,50 @@ app.get('/blog/:slug', async (req, res) => {
                 .single();
             if (data && !error) {
                 blog = data;
+            }
+
+            if (blog) {
+                // Fetch all blogs to calculate adjacency
+                const { data: allBlogs } = await supabase
+                    .from('blogs')
+                    .select('id, title, slug, image_url, author, created_at')
+                    .order('created_at', { ascending: false });
+
+                if (allBlogs && allBlogs.length > 1) {
+                    const currentIndex = allBlogs.findIndex(b => b.slug === slug);
+                    const N = allBlogs.length;
+                    const adjacentBlogs = [];
+
+                    // Get next article (wrap around if at the end)
+                    const nextIndex = (currentIndex + 1) % N;
+                    if (nextIndex !== currentIndex) {
+                        adjacentBlogs.push(allBlogs[nextIndex]);
+                    }
+
+                    // Get previous article (wrap around if at the beginning)
+                    const prevIndex = (currentIndex - 1 + N) % N;
+                    if (prevIndex !== currentIndex && !adjacentBlogs.includes(allBlogs[prevIndex])) {
+                        adjacentBlogs.push(allBlogs[prevIndex]);
+                    }
+
+                    // Get next-next article if we have enough and want 3
+                    const nextNextIndex = (currentIndex + 2) % N;
+                    if (nextNextIndex !== currentIndex && nextNextIndex !== prevIndex && nextNextIndex !== nextIndex && !adjacentBlogs.includes(allBlogs[nextNextIndex])) {
+                        adjacentBlogs.push(allBlogs[nextNextIndex]);
+                    }
+
+                    // Render adjacent blogs HTML matching the sidebar link format
+                    adjacentBlogsHtml = adjacentBlogs.map(ab => {
+                        return `
+                    <li class="sidebar-link-item">
+                        <img class="sidebar-link-img" src="${ab.image_url || '/assets/images/adi-kailash-hero.webp'}" alt="${ab.title}" onerror="this.src='/assets/images/adi-kailash-hero.webp'">
+                        <div class="sidebar-link-text">
+                            <a href="/blog/${ab.slug}" class="sidebar-link-name">${ab.title}</a>
+                            <span class="sidebar-link-price">By ${ab.author}</span>
+                        </div>
+                    </li>`;
+                    }).join('\n');
+                }
             }
         }
 
@@ -203,7 +248,8 @@ app.get('/blog/:slug', async (req, res) => {
             .replace(/{{DATE}}/g, dateStr)
             .replace(/{{IMAGE}}/g, blog.image_url || 'assets/images/adi-kailash-hero.webp')
             .replace(/{{IMAGE_ALT}}/g, imageAlt)
-            .replace(/{{CONTENT}}/g, paragraphsHtml);
+            .replace(/{{CONTENT}}/g, paragraphsHtml)
+            .replace(/{{ADJACENT_BLOGS}}/g, adjacentBlogsHtml);
 
         res.send(blogHtml);
     } catch (err) {
