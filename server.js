@@ -249,7 +249,9 @@ app.get('/blog/:slug', async (req, res) => {
             .replace(/{{IMAGE}}/g, blog.image_url || 'assets/images/adi-kailash-hero.webp')
             .replace(/{{IMAGE_ALT}}/g, imageAlt)
             .replace(/{{CONTENT}}/g, paragraphsHtml)
-            .replace(/{{ADJACENT_BLOGS}}/g, adjacentBlogsHtml);
+            .replace(/{{ADJACENT_BLOGS}}/g, adjacentBlogsHtml)
+            .replace(/{{SLUG}}/g, `/blog/${blog.slug}`)
+            .replace(/{{CREATED_AT}}/g, blog.created_at);
 
         res.send(blogHtml);
     } catch (err) {
