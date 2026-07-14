@@ -3280,3 +3280,26 @@ img {
         font-size: 15px;
     }
 }
+
+/* ── VERTICAL STACK BLOG LAYOUT ── */
+.blog-vertical-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    max-width: 650px;
+    margin: 40px auto 0 auto;
+    width: 100%;
+}
+
+.blog-vertical-stack .blog-card {
+    width: 100%;
+    box-shadow: var(--shadow-sm);
+    border-radius: var(--border-radius-md);
+    transition: all 0.3s ease;
+}
+
+.blog-vertical-stack .blog-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-gold);
+}

@@ -77,13 +77,13 @@ app.get('/', async (req, res) => {
             if (data) dbBlogs = data;
         }
 
-        const blogsHtml = renderBlogsHtml(dbBlogs);
+        const blogsHtml = renderBlogsHtml(dbBlogs.slice(0, 2));
 
         // Load index.html template and inject blogs
         let indexHtml = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
         
         const replacement = `<!-- Blogs Section -->
-    <section id="homepage-blogs" class="section-padding" style="background-color: var(--color-bg-card); overflow: hidden;">
+    <section id="homepage-blogs" class="section-padding" style="background-color: var(--color-bg-card);">
         <div class="container blog-section-container">
             <div class="section-header text-center">
                 <span class="section-subtitle">Our Travel Diaries</span>
@@ -91,14 +91,12 @@ app.get('/', async (req, res) => {
                 <p class="section-desc">Stories, guidelines, and cultural experiences straight from our guides trekking across the Kumaon borderlands.</p>
             </div>
             
-            <div class="blog-carousel-wrapper">
-                <button class="carousel-control prev" aria-label="Previous Slide"><i class="fa-solid fa-chevron-left"></i></button>
-                <div class="blog-carousel-container">
-                    <div class="blog-carousel-track">
-                        ${blogsHtml}
-                    </div>
-                </div>
-                <button class="carousel-control next" aria-label="Next Slide"><i class="fa-solid fa-chevron-right"></i></button>
+            <div class="blog-vertical-stack">
+                ${blogsHtml}
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="/blogs" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 8px;">View All Diaries <i class="fa-solid fa-arrow-right"></i></a>
             </div>
         </div>`;
 
