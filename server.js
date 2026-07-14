@@ -49,10 +49,9 @@ function renderBlogsHtml(blogs) {
         });
         const excerpt = blog.content.substring(0, 160) + (blog.content.length > 160 ? '...' : '');
         const slug = blog.slug || slugify(blog.title);
-        const imgUrl = blog.image_url ? (blog.image_url.startsWith('/') ? blog.image_url : `/${blog.image_url}`) : '/assets/images/adi-kailash-hero.webp';
         html += `
             <article class="blog-card" id="blog-post-${blog.id}">
-                <img src="${imgUrl}" alt="${blog.title}" class="blog-card-img" onerror="this.src='/assets/images/adi-kailash-hero.webp'">
+                <img src="${blog.image_url || 'assets/images/adi-kailash-hero.webp'}" alt="${blog.title}" class="blog-card-img" onerror="this.src='assets/images/adi-kailash-hero.webp'">
                 <div class="blog-card-content">
                     <div class="blog-card-meta">By ${blog.author} | ${dateStr}</div>
                     <h3 class="blog-card-title">${blog.title}</h3>
@@ -77,13 +76,13 @@ app.get('/', async (req, res) => {
             if (data) dbBlogs = data;
         }
 
-        const blogsHtml = renderBlogsHtml(dbBlogs.slice(0, 2));
+        const blogsHtml = renderBlogsHtml(dbBlogs);
 
         // Load index.html template and inject blogs
         let indexHtml = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
         
         const replacement = `<!-- Blogs Section -->
-    <section id="homepage-blogs" class="section-padding" style="background-color: var(--color-bg-card);">
+    <section id="homepage-blogs" class="section-padding" style="background-color: var(--color-bg-card); overflow: hidden;">
         <div class="container blog-section-container">
             <div class="section-header text-center">
                 <span class="section-subtitle">Our Travel Diaries</span>
@@ -91,12 +90,14 @@ app.get('/', async (req, res) => {
                 <p class="section-desc">Stories, guidelines, and cultural experiences straight from our guides trekking across the Kumaon borderlands.</p>
             </div>
             
-            <div class="blog-vertical-stack">
-                ${blogsHtml}
-            </div>
-
-            <div style="text-align: center; margin-top: 40px;">
-                <a href="/blogs" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 8px;">View All Diaries <i class="fa-solid fa-arrow-right"></i></a>
+            <div class="blog-carousel-wrapper">
+                <button class="carousel-control prev" aria-label="Previous Slide"><i class="fa-solid fa-chevron-left"></i></button>
+                <div class="blog-carousel-container">
+                    <div class="blog-carousel-track">
+                        ${blogsHtml}
+                    </div>
+                </div>
+                <button class="carousel-control next" aria-label="Next Slide"><i class="fa-solid fa-chevron-right"></i></button>
             </div>
         </div>`;
 
@@ -186,10 +187,10 @@ app.get('/blog/:slug', async (req, res) => {
 
                     // Render adjacent blogs HTML matching the sidebar link format
                     adjacentBlogsHtml = adjacentBlogs.map(ab => {
-                        const abImgUrl = ab.image_url ? (ab.image_url.startsWith('/') ? ab.image_url : `/${ab.image_url}`) : '/assets/images/adi-kailash-hero.webp';
+                        const abImg = ab.image_url ? (ab.image_url.startsWith('http') || ab.image_url.startsWith('/') ? ab.image_url : '/' + ab.image_url) : '/assets/images/adi-kailash-hero.webp';
                         return `
                     <li class="sidebar-link-item">
-                        <img class="sidebar-link-img" src="${abImgUrl}" alt="${ab.title}" onerror="this.src='/assets/images/adi-kailash-hero.webp'">
+                        <img class="sidebar-link-img" src="${abImg}" alt="${ab.title}" onerror="this.src='/assets/images/adi-kailash-hero.webp'">
                         <div class="sidebar-link-text">
                             <a href="/blog/${ab.slug}" class="sidebar-link-name">${ab.title}</a>
                             <span class="sidebar-link-price">By ${ab.author}</span>
@@ -240,7 +241,7 @@ app.get('/blog/:slug', async (req, res) => {
 
         const metaDescriptionVal = blog.meta_description || `${blog.content.substring(0, 150)}...`;
 
-        const mainImgUrl = blog.image_url ? (blog.image_url.startsWith('/') ? blog.image_url : `/${blog.image_url}`) : '/assets/images/adi-kailash-hero.webp';
+        const resolvedMainImg = blog.image_url ? (blog.image_url.startsWith('http') || blog.image_url.startsWith('/') ? blog.image_url : '/' + blog.image_url) : '/assets/images/adi-kailash-hero.webp';
 
         blogHtml = blogHtml
             .replace(/{{META_TITLE}}/g, `${blog.title} - Rudraansh Yatra Diaries`)
@@ -248,7 +249,7 @@ app.get('/blog/:slug', async (req, res) => {
             .replace(/{{TITLE}}/g, blog.title)
             .replace(/{{AUTHOR}}/g, blog.author)
             .replace(/{{DATE}}/g, dateStr)
-            .replace(/{{IMAGE}}/g, mainImgUrl)
+            .replace(/{{IMAGE}}/g, resolvedMainImg)
             .replace(/{{IMAGE_ALT}}/g, imageAlt)
             .replace(/{{CONTENT}}/g, paragraphsHtml)
             .replace(/{{ADJACENT_BLOGS}}/g, adjacentBlogsHtml)
