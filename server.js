@@ -49,9 +49,10 @@ function renderBlogsHtml(blogs) {
         });
         const excerpt = blog.content.substring(0, 160) + (blog.content.length > 160 ? '...' : '');
         const slug = blog.slug || slugify(blog.title);
+        const imgUrl = blog.image_url ? (blog.image_url.startsWith('/') ? blog.image_url : `/${blog.image_url}`) : '/assets/images/adi-kailash-hero.webp';
         html += `
             <article class="blog-card" id="blog-post-${blog.id}">
-                <img src="${blog.image_url || 'assets/images/adi-kailash-hero.webp'}" alt="${blog.title}" class="blog-card-img" onerror="this.src='assets/images/adi-kailash-hero.webp'">
+                <img src="${imgUrl}" alt="${blog.title}" class="blog-card-img" onerror="this.src='/assets/images/adi-kailash-hero.webp'">
                 <div class="blog-card-content">
                     <div class="blog-card-meta">By ${blog.author} | ${dateStr}</div>
                     <h3 class="blog-card-title">${blog.title}</h3>
@@ -187,9 +188,10 @@ app.get('/blog/:slug', async (req, res) => {
 
                     // Render adjacent blogs HTML matching the sidebar link format
                     adjacentBlogsHtml = adjacentBlogs.map(ab => {
+                        const abImgUrl = ab.image_url ? (ab.image_url.startsWith('/') ? ab.image_url : `/${ab.image_url}`) : '/assets/images/adi-kailash-hero.webp';
                         return `
                     <li class="sidebar-link-item">
-                        <img class="sidebar-link-img" src="${ab.image_url || '/assets/images/adi-kailash-hero.webp'}" alt="${ab.title}" onerror="this.src='/assets/images/adi-kailash-hero.webp'">
+                        <img class="sidebar-link-img" src="${abImgUrl}" alt="${ab.title}" onerror="this.src='/assets/images/adi-kailash-hero.webp'">
                         <div class="sidebar-link-text">
                             <a href="/blog/${ab.slug}" class="sidebar-link-name">${ab.title}</a>
                             <span class="sidebar-link-price">By ${ab.author}</span>
@@ -240,13 +242,15 @@ app.get('/blog/:slug', async (req, res) => {
 
         const metaDescriptionVal = blog.meta_description || `${blog.content.substring(0, 150)}...`;
 
+        const mainImgUrl = blog.image_url ? (blog.image_url.startsWith('/') ? blog.image_url : `/${blog.image_url}`) : '/assets/images/adi-kailash-hero.webp';
+
         blogHtml = blogHtml
             .replace(/{{META_TITLE}}/g, `${blog.title} - Rudraansh Yatra Diaries`)
             .replace(/{{META_DESC}}/g, metaDescriptionVal.replace(/"/g, '&quot;'))
             .replace(/{{TITLE}}/g, blog.title)
             .replace(/{{AUTHOR}}/g, blog.author)
             .replace(/{{DATE}}/g, dateStr)
-            .replace(/{{IMAGE}}/g, blog.image_url || 'assets/images/adi-kailash-hero.webp')
+            .replace(/{{IMAGE}}/g, mainImgUrl)
             .replace(/{{IMAGE_ALT}}/g, imageAlt)
             .replace(/{{CONTENT}}/g, paragraphsHtml)
             .replace(/{{ADJACENT_BLOGS}}/g, adjacentBlogsHtml)
