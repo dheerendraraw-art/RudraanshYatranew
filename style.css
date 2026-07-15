@@ -1257,6 +1257,13 @@ header.scrolled {
     margin-right: 10px;
 }
 
+@media (max-width: 768px) {
+    .sidebar-widget {
+        margin-right: 0;
+        padding: 20px 16px;
+    }
+}
+
 @media (min-height: 768px) {
     .sidebar-widget {
         position: sticky;
@@ -1354,7 +1361,7 @@ header.scrolled {
     gap: 16px;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
     .form-grid-2 {
         grid-template-columns: 1fr;
         gap: 0;
