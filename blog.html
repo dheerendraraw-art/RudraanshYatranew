@@ -259,6 +259,196 @@
             font-size: 12px;
             color: var(--color-text-secondary);
         }
+
+        /* Sidebar Promo Card Redesign */
+        .sidebar-promo-card {
+            display: block;
+            background: #FFFFFF !important;
+            border: 1px solid rgba(10, 25, 47, 0.08) !important;
+            border-radius: 16px !important;
+            margin-bottom: 25px !important;
+            box-shadow: 0 4px 20px rgba(10, 25, 47, 0.04) !important;
+            text-decoration: none !important;
+            overflow: hidden !important;
+            transition: var(--transition-smooth) !important;
+            position: relative !important;
+        }
+
+        .sidebar-promo-card:hover {
+            transform: translateY(-4px) !important;
+            box-shadow: 0 10px 30px rgba(10, 25, 47, 0.08) !important;
+            border-color: var(--color-gold) !important;
+        }
+
+        .promo-card-img-wrap {
+            position: relative !important;
+            width: 100% !important;
+            height: 180px !important;
+            overflow: hidden !important;
+        }
+
+        .promo-card-img-wrap img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            display: block !important;
+        }
+
+        .promo-card-badge-top {
+            position: absolute !important;
+            top: 15px !important;
+            left: 15px !important;
+            background: rgba(10, 25, 47, 0.85) !important;
+            border: 1.5px solid var(--color-gold) !important;
+            color: var(--color-gold) !important;
+            font-size: 10px !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1.5px !important;
+            padding: 5px 12px !important;
+            border-radius: 50px !important;
+            font-family: var(--font-sans) !important;
+        }
+
+        .promo-card-badge-bottom {
+            position: absolute !important;
+            bottom: 15px !important;
+            right: 15px !important;
+            background: rgba(10, 25, 47, 0.85) !important;
+            color: #FFFFFF !important;
+            font-size: 11px !important;
+            font-weight: 600 !important;
+            padding: 5px 12px !important;
+            border-radius: 6px !important;
+            font-family: var(--font-sans) !important;
+        }
+
+        .promo-card-body {
+            padding: 20px 22px !important;
+        }
+
+        .promo-card-meta {
+            display: flex !important;
+            gap: 15px !important;
+            margin-bottom: 12px !important;
+            font-size: 12px !important;
+            color: var(--color-text-secondary) !important;
+            font-weight: 600 !important;
+            font-family: var(--font-sans) !important;
+        }
+
+        .promo-card-meta-item {
+            display: flex !important;
+            align-items: center !important;
+            gap: 4px !important;
+        }
+
+        .promo-card-meta-item i {
+            color: var(--color-gold) !important;
+        }
+
+        .promo-card-title {
+            color: var(--color-primary) !important;
+            font-size: 19px !important;
+            font-weight: 700 !important;
+            font-family: var(--font-serif), Georgia, serif !important;
+            line-height: 1.3 !important;
+            margin-bottom: 12px !important;
+        }
+
+        .promo-card-desc {
+            color: var(--color-text-secondary) !important;
+            font-size: 13.5px !important;
+            line-height: 1.55 !important;
+            margin-bottom: 18px !important;
+            font-family: var(--font-sans) !important;
+        }
+
+        .promo-card-separator {
+            height: 1px !important;
+            background: rgba(10, 25, 47, 0.08) !important;
+            margin-bottom: 18px !important;
+            border: none !important;
+        }
+
+        .promo-card-price-row {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: flex-end !important;
+            margin-bottom: 18px !important;
+        }
+
+        .promo-card-price-info {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 2px !important;
+        }
+
+        .promo-card-price-label {
+            font-size: 11px !important;
+            color: var(--color-text-secondary) !important;
+            font-weight: 600 !important;
+            font-family: var(--font-sans) !important;
+        }
+
+        .promo-card-price-val {
+            font-size: 22px !important;
+            font-weight: 800 !important;
+            color: var(--color-primary) !important;
+            font-family: var(--font-sans) !important;
+            line-height: 1 !important;
+        }
+
+        .promo-card-price-unit {
+            font-size: 12px !important;
+            color: var(--color-text-secondary) !important;
+            font-family: var(--font-sans) !important;
+        }
+
+        .promo-card-itinerary-link {
+            color: var(--color-primary) !important;
+            font-size: 12.5px !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 4px !important;
+            font-family: var(--font-sans) !important;
+            border-bottom: 1.5px solid transparent !important;
+            transition: var(--transition-smooth) !important;
+            text-decoration: none !important;
+        }
+
+        .promo-card-itinerary-link:hover {
+            color: var(--color-gold-dark) !important;
+        }
+
+        .promo-card-whatsapp-btn {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 8px !important;
+            background: #25d366 !important;
+            border: 1px solid #25d366 !important;
+            color: #FFFFFF !important;
+            padding: 11px 16px !important;
+            border-radius: 8px !important;
+            font-size: 12px !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+            font-family: var(--font-sans) !important;
+            transition: var(--transition-smooth) !important;
+            width: 100% !important;
+            text-decoration: none !important;
+        }
+
+        .promo-card-whatsapp-btn:hover {
+            background: #20ba56 !important;
+            border-color: #20ba56 !important;
+            transform: translateY(-1px) !important;
+        }
     </style>
 </head>
 
@@ -346,24 +536,76 @@
 
         <!-- Right: Recommended Trips Sidebar -->
         <aside>
-            <div class="sidebar-card">
-                <h2 class="sidebar-title"><i class="fa-solid fa-map" style="color: var(--color-gold); margin-right: 8px;"></i> Popular Yatras</h2>
-                <ul class="sidebar-links">
-                    <li class="sidebar-link-item">
-                        <img class="sidebar-link-img" src="/assets/images/adi-kailash-parvat.jpeg" alt="Adi Kailash">
-                        <div class="sidebar-link-text">
-                            <a href="/adi-kailash" class="sidebar-link-name">Adi Kailash & Om Parvat</a>
-                            <span class="sidebar-link-price">₹35,000 / person</span>
+            <div class="sidebar-card" style="padding: 0; background: transparent; border: none; box-shadow: none;">
+                <h2 class="sidebar-title" style="margin-left: 10px; margin-bottom: 20px;"><i class="fa-solid fa-map" style="color: var(--color-gold); margin-right: 8px;"></i> Popular Yatras</h2>
+                
+                <!-- Adi Kailash Promo Card -->
+                <div class="sidebar-promo-card">
+                    <div class="promo-card-img-wrap">
+                        <img src="/assets/images/adi-kailash-parvat.jpeg" alt="Adi Kailash">
+                        <span class="promo-card-badge-top">Spiritual Yatra</span>
+                        <span class="promo-card-badge-bottom">6 Days / 5 Nights</span>
+                    </div>
+                    <div class="promo-card-body">
+                        <div class="promo-card-meta">
+                            <span class="promo-card-meta-item"><i class="fa-solid fa-route"></i> Delhi / Kathgodam Start</span>
+                            <span class="promo-card-meta-item"><i class="fa-solid fa-mountain"></i> Max: 4,750m</span>
                         </div>
-                    </li>
-                    <li class="sidebar-link-item">
-                        <img class="sidebar-link-img" src="/assets/images/Panchacholi.jpeg" alt="Darma Valley">
-                        <div class="sidebar-link-text">
-                            <a href="/darma-valley" class="sidebar-link-name">Darma Valley Exploration</a>
-                            <span class="sidebar-link-price">₹21,000 / person</span>
+                        <h3 class="promo-card-title">Adi Kailash & Om Parvat Yatra</h3>
+                        <p class="promo-card-desc">Embark on a sacred journey to Vyas Valley. Witness the naturally formed 'Om' on Om Parvat and the spiritual replication of Mt. Kailash.</p>
+                        
+                        <hr class="promo-card-separator">
+                        
+                        <div class="promo-card-price-row">
+                            <div class="promo-card-price-info">
+                                <span class="promo-card-price-label">Starting Point: Delhi / Dun</span>
+                                <div style="display: flex; align-items: flex-end; gap: 4px;">
+                                    <span class="promo-card-price-val">₹35,000</span>
+                                    <span class="promo-card-price-unit">/ person</span>
+                                </div>
+                            </div>
+                            <a href="/adi-kailash" class="promo-card-itinerary-link">Itinerary <i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i></a>
                         </div>
-                    </li>
-                </ul>
+                        
+                        <a href="https://wa.me/917617617651?text=Namaste!%20I%20am%20interested%20in%20requesting%20the%20itinerary%20for%20Adi%20Kailash%20%26%20Om%20Parvat%20Yatra." target="_blank" class="promo-card-whatsapp-btn">
+                            <i class="fa-brands fa-whatsapp"></i> Request Itinerary on WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Darma Valley Promo Card -->
+                <div class="sidebar-promo-card" style="margin-bottom: 0 !important;">
+                    <div class="promo-card-img-wrap">
+                        <img src="/assets/images/Panchacholi.jpeg" alt="Darma Valley">
+                        <span class="promo-card-badge-top">Adventure Trek</span>
+                        <span class="promo-card-badge-bottom">6 Days / 5 Nights</span>
+                    </div>
+                    <div class="promo-card-body">
+                        <div class="promo-card-meta">
+                            <span class="promo-card-meta-item"><i class="fa-solid fa-route"></i> Pithoragarh Start</span>
+                            <span class="promo-card-meta-item"><i class="fa-solid fa-mountain"></i> Max: 3,470m</span>
+                        </div>
+                        <h3 class="promo-card-title">Darma Valley Exploration</h3>
+                        <p class="promo-card-desc">Explore the untouched beauty and cultural heritage of Darma Valley, Uttarakhand. Witness magnificent views of the Panchachuli peaks.</p>
+                        
+                        <hr class="promo-card-separator">
+                        
+                        <div class="promo-card-price-row">
+                            <div class="promo-card-price-info">
+                                <span class="promo-card-price-label">Starting Point: Pithoragarh</span>
+                                <div style="display: flex; align-items: flex-end; gap: 4px;">
+                                    <span class="promo-card-price-val">₹21,000</span>
+                                    <span class="promo-card-price-unit">/ person</span>
+                                </div>
+                            </div>
+                            <a href="/darma-valley" class="promo-card-itinerary-link">Itinerary <i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i></a>
+                        </div>
+                        
+                        <a href="https://wa.me/917617617651?text=Namaste!%20I%20am%20interested%20in%20requesting%20the%20itinerary%20for%20Darma%20Valley%20Exploration." target="_blank" class="promo-card-whatsapp-btn">
+                            <i class="fa-brands fa-whatsapp"></i> Request Itinerary on WhatsApp
+                        </a>
+                    </div>
+                </div>
             </div>
 
             <!-- Related Diaries Section -->
