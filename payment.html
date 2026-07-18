@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Online Payment - Rudraansh Yatra</title>
+    <meta name="description" content="Secure online payment portal for Rudraansh Yatra booking packages and expeditions. Pay your token advance or remaining balance securely.">
+    
+    <!-- Google Search Site Name & Favicon -->
+    <meta property="og:site_name" content="Rudraansh Yatra">
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="shortcut icon" type="image/png" href="/assets/images/logo.png">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <link rel="stylesheet" href="/style.css?v=1.4">
+
+    <!-- Razorpay Checkout Script -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <style>
+        .payment-portal-container {
+            max-width: 650px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .payment-card-glass {
+            background: var(--color-bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius-md);
+            padding: 40px;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition-smooth);
+        }
+
+        .payment-card-glass:hover {
+            box-shadow: 0 30px 60px rgba(10, 25, 47, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .portal-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .portal-header i {
+            font-size: 40px;
+            color: var(--color-gold);
+            margin-bottom: 15px;
+        }
+
+        .portal-title {
+            font-family: var(--font-serif);
+            font-size: 32px;
+            color: var(--color-primary);
+            margin-bottom: 8px;
+        }
+
+        .portal-desc {
+            color: var(--color-text-secondary);
+            font-size: 14px;
+        }
+
+        /* Lookup styling */
+        .lookup-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .lookup-input-group {
+            position: relative;
+        }
+
+        .lookup-input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--color-slate);
+            font-size: 16px;
+        }
+
+        .lookup-input {
+            width: 100%;
+            padding: 14px 15px 14px 45px;
+            border: 1px solid rgba(10, 25, 47, 0.15);
+            border-radius: var(--border-radius-sm);
+            font-family: var(--font-sans);
+            font-size: 16px;
+            font-weight: 500;
+            background: #ffffff;
+            color: var(--color-text-primary);
+            transition: var(--transition-smooth);
+        }
+
+        .lookup-input:focus {
+            border-color: var(--color-gold);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+        }
+
+        .btn-lookup {
+            background: var(--color-primary);
+            color: #ffffff;
+            border: none;
+            padding: 14px;
+            border-radius: var(--border-radius-sm);
+            font-family: var(--font-sans);
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-lookup:hover {
+            background: var(--color-primary-light);
+            letter-spacing: 0.5px;
+        }
+
+        /* Invoice Summary Details */
+        .invoice-details-box {
+            border-top: 1px solid rgba(10, 25, 47, 0.08);
+            margin-top: 25px;
+            padding-top: 25px;
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 14.5px;
+        }
+
+        .detail-label {
+            color: var(--color-text-secondary);
+            font-weight: 500;
+        }
+
+        .detail-value {
+            color: var(--color-text-primary);
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .package-title-badge {
+            background: rgba(10, 25, 47, 0.05);
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 20px;
+            display: inline-block;
+            font-size: 14px;
+        }
+
+        .price-summary-card {
+            background: rgba(10, 25, 47, 0.02);
+            border: 1px solid rgba(10, 25, 47, 0.06);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .balance-highlight-row {
+            border-top: 1px dashed rgba(10, 25, 47, 0.15);
+            margin-top: 15px;
+            padding-top: 15px;
+            font-weight: 700;
+            font-size: 17px;
+            color: var(--color-gold-dark);
+        }
+
+        /* Custom Payment Selector */
+        .payment-amount-options {
+            margin: 25px 0;
+        }
+
+        .amount-selector-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .amount-options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .amount-option-card {
+            border: 1.5px solid rgba(10, 25, 47, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            text-align: center;
+            background: #ffffff;
+        }
+
+        .amount-option-card.selected {
+            border-color: var(--color-gold);
+            background: rgba(212, 175, 55, 0.05);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.1);
+        }
+
+        .amount-option-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--color-text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .amount-option-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        .custom-amount-wrapper {
+            display: none;
+            margin-top: 15px;
+            animation: slideDown 0.3s ease-out forwards;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; max-height: 0; overflow: hidden; }
+            to { opacity: 1; max-height: 100px; }
+        }
+
+        .custom-amount-input-group {
+            position: relative;
+        }
+
+        .custom-amount-input-group span {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        .custom-amount-input {
+            width: 100%;
+            padding: 12px 15px 12px 30px;
+            border: 1px solid rgba(10, 25, 47, 0.15);
+            border-radius: var(--border-radius-sm);
+            font-family: var(--font-sans);
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        /* Pay button */
+        .btn-pay-now {
+            width: 100%;
+            background: var(--color-gold);
+            color: var(--color-primary);
+            border: none;
+            padding: 16px;
+            border-radius: var(--border-radius-sm);
+            font-family: var(--font-sans);
+            font-weight: 800;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            margin-top: 20px;
+        }
+
+        .btn-pay-now:hover {
+            background: var(--color-gold-dark);
+            color: #ffffff;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        .secure-badge-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
+            color: var(--color-slate);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .secure-badge-box i {
+            color: #22c55e;
+        }
+
+        /* Error box */
+        .error-message-box {
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: #b91c1c;
+            padding: 15px;
+            border-radius: 6px;
+            font-size: 13.5px;
+            font-weight: 600;
+            margin-top: 15px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Success screen */
+        .success-panel {
+            text-align: center;
+            animation: scaleIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            display: none;
+        }
+
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .success-icon-wrap {
+            width: 80px;
+            height: 80px;
+            background: rgba(34, 197, 94, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+        }
+
+        .success-icon-wrap i {
+            font-size: 40px;
+            color: #22c55e;
+        }
+
+        .success-title {
+            font-family: var(--font-serif);
+            font-size: 30px;
+            color: var(--color-primary);
+            margin-bottom: 10px;
+        }
+
+        .success-desc {
+            color: var(--color-text-secondary);
+            font-size: 14.5px;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .receipt-summary-box {
+            background: rgba(10, 25, 47, 0.02);
+            border: 1px solid rgba(10, 25, 47, 0.06);
+            border-radius: var(--border-radius-sm);
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .receipt-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .receipt-row:last-child {
+            margin-bottom: 0;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        .btn-invoice-download {
+            background: var(--color-primary);
+            color: #ffffff;
+            border: none;
+            padding: 15px 30px;
+            border-radius: var(--border-radius-sm);
+            font-family: var(--font-sans);
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .btn-invoice-download:hover {
+            background: var(--color-gold);
+            color: var(--color-primary);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+        }
+
+        @media (max-width: 576px) {
+            .payment-portal-container {
+                margin: 30px auto;
+                padding: 0 16px;
+            }
+            .payment-card-glass {
+                padding: 24px 20px;
+            }
+            .portal-title {
+                font-size: 26px;
+            }
+            .amount-options-grid {
+                grid-template-columns: 1fr;
+            }
+            .success-title {
+                font-size: 24px;
+            }
+            .receipt-summary-box {
+                padding: 16px;
+            }
+            .receipt-row {
+                font-size: 13px;
+            }
+            .btn-invoice-download {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-info">
+                <span><i class="fa-solid fa-phone"></i> <a href="tel:+917617617651">+91 7617617651</a></span>
+                <span><i class="fa-solid fa-location-dot"></i> 1st Floor Above Punetha Bookstore, Simailgair Bazaar, Pithoragarh</span>
+            </div>
+            <div class="top-socials">
+                <a href="https://www.facebook.com/profile.php?id=61589223945628" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                <a href="https://www.instagram.com/yatra_rudraansh?igsh=MXYxdmg0Y2dqNDJ3bg==" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@Rudra-Anshyatra" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://medium.com/@rudraanshyatra" target="_blank" rel="noopener noreferrer" aria-label="Medium"><i class="fa-brands fa-medium"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Navbar -->
+    <header>
+        <div class="container navbar-shell">
+            <a href="/" class="logo">
+                <div class="logo-icon-img-wrap">
+                    <img src="/assets/images/logo.png" alt="Rudraansh Yatra Logo" class="logo-icon-img" width="44" height="44" decoding="async">
+                </div>
+                <div class="logo-text">Rudraansh <span>Yatra</span></div>
+            </a>
+
+            <button class="menu-toggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0);" class="nav-link">Destinations <i class="fa-solid fa-chevron-down" style="font-size: 10px; margin-left: 2px;"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/adi-kailash">Adi Kailash & Om Parvat</a></li>
+                        <li><a href="/khaliya-top">Khaliya Top Trek</a></li>
+                        <li><a href="/mt-kailash">Mt. Kailash Yatra</a></li>
+                        <li><a href="/darma-valley">Darma Valley Exploration</a></li>
+                    </ul>
+                </li>
+                <li><a href="/whats-included" class="nav-link">What's Included</a></li>
+                <li><a href="/about" class="nav-link">About Us</a></li>
+                <li><a href="/gallery" class="nav-link">Gallery</a></li>
+                <li><a href="/blogs" class="nav-link">Blogs</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Payment Portal -->
+    <main class="payment-portal-container">
+        <!-- Interactive Checkout Card -->
+        <div class="payment-card-glass">
+            
+            <!-- Lookup State -->
+            <div id="lookup-state">
+                <div class="portal-header">
+                    <i class="fa-solid fa-file-invoice-dollar"></i>
+                    <h1 class="portal-title">Secure Payment Portal</h1>
+                    <p class="portal-desc">Enter your unique Booking ID provided by our team to retrieve your invoice details and pay securely.</p>
+                </div>
+
+                <form class="lookup-form" id="booking-lookup-form" onsubmit="lookupBooking(event)">
+                    <div class="lookup-input-group">
+                        <i class="fa-solid fa-receipt"></i>
+                        <input type="text" id="booking-id-input" class="lookup-input" placeholder="E.g., RY-2026-RAM-389" required autocomplete="off" style="text-transform: uppercase;">
+                    </div>
+                    <button type="submit" class="btn-lookup" id="btn-lookup-submit">
+                        <span>Retrieve Invoice</span> <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </form>
+
+                <div class="error-message-box" id="lookup-error-box">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span id="lookup-error-text">No record found. Please verify the Booking ID.</span>
+                </div>
+            </div>
+
+            <!-- Details & Checkout State (Hidden initially) -->
+            <div id="checkout-state" style="display: none;">
+                <div class="portal-header" style="margin-bottom: 20px;">
+                    <i class="fa-solid fa-shield-halved" style="color: #22c55e;"></i>
+                    <h2 class="portal-title">Verify Booking Details</h2>
+                    <p class="portal-desc">Please confirm the details below before proceeding with the payment.</p>
+                </div>
+
+                <div class="invoice-details-box">
+                    <div style="text-align: center;">
+                        <span class="package-title-badge" id="lbl-package-name">Adi Kailash & Om Parvat Yatra</span>
+                    </div>
+
+                    <div class="detail-row">
+                        <span class="detail-label">Booking ID</span>
+                        <span class="detail-value" id="lbl-booking-id">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Primary Traveler</span>
+                        <span class="detail-value" id="lbl-cust-name">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Contact Number</span>
+                        <span class="detail-value" id="lbl-cust-phone">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Tour Reporting Date</span>
+                        <span class="detail-value" id="lbl-start-date">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Group Size</span>
+                        <span class="detail-value" id="lbl-group-size">- Pax</span>
+                    </div>
+
+                    <!-- Price Card -->
+                    <div class="price-summary-card">
+                        <div class="detail-row">
+                            <span class="detail-label">Total Tour Price</span>
+                            <span class="detail-value" id="lbl-total-amount">₹0.00</span>
+                        </div>
+                        <div class="detail-row" id="row-discount" style="display: none; background: rgba(34, 197, 94, 0.05); padding: 5px 8px; border-radius: 4px; border: 1px dashed rgba(34, 197, 94, 0.3); margin: 6px 0;">
+                            <span class="detail-label" style="color: #22c55e; font-weight: bold;">Web Promo Discount</span>
+                            <span class="detail-value" id="lbl-discount-amount" style="color: #22c55e; font-weight: bold;">-₹0.00</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Amount Paid So Far</span>
+                            <span class="detail-value" id="lbl-total-paid" style="color: #22c55e;">₹0.00</span>
+                        </div>
+                        <div class="detail-row balance-highlight-row">
+                            <span>Remaining Balance Due</span>
+                            <span id="lbl-balance-remaining">₹0.00</span>
+                        </div>
+                    </div>
+
+                    <!-- Discount Code Input Box -->
+                    <div id="promo-code-section" style="margin-top: 15px; margin-bottom: 20px; display: none; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 15px;">
+                        <label for="promo-code-input" style="font-size: 13.5px; color: var(--color-slate); font-weight: 700; margin-bottom: 8px; display: block;">Have a Promo Code / Discount Code?</label>
+                        <div style="display: flex; gap: 8px;">
+                            <input type="text" id="promo-code-input" placeholder="E.g. WEB10" style="flex: 1; text-transform: uppercase; padding: 10px; border: 1.5px solid rgba(255,255,255,0.15); border-radius: 6px; background: rgba(255,255,255,0.05); color: white; font-weight: bold; font-size: 14px;" />
+                            <button type="button" id="btn-apply-promo" onclick="applyPromoCode()" style="background: var(--color-gold); color: var(--color-primary); border: none; padding: 0 18px; border-radius: 6px; font-weight: 700; cursor: pointer; transition: 0.2s;">Apply</button>
+                        </div>
+                        <span id="promo-status-msg" style="font-size: 12px; margin-top: 6px; display: block; font-weight: 700;"></span>
+                    </div>
+
+                    <!-- Already Fully Paid Check -->
+                    <div id="already-paid-container" style="display: none; background: rgba(34, 197, 94, 0.08); border: 1px solid rgba(34, 197, 94, 0.2); border-radius: 8px; padding: 15px; text-align: center; color: #166534; font-weight: 700; margin-bottom: 20px;">
+                        <i class="fa-solid fa-circle-check" style="font-size: 20px; margin-bottom: 8px; display: block; color: #22c55e;"></i>
+                        This booking is already FULLY PAID. No further payment is required.
+                    </div>
+
+                    <!-- Payment selector (only if balance > 0) -->
+                    <div id="payment-input-container">
+                        <div class="payment-amount-options" id="payment-options-wrap">
+                            <span class="amount-selector-label">Choose Payment Amount</span>
+                            <div class="amount-options-grid">
+                                <div class="amount-option-card selected" id="opt-full" onclick="selectAmountOption('full')">
+                                    <div class="amount-option-title">Full Balance</div>
+                                    <div class="amount-option-value" id="opt-full-val">₹0.00</div>
+                                </div>
+                                <div class="amount-option-card" id="opt-custom" onclick="selectAmountOption('custom')">
+                                    <div class="amount-option-title" id="opt-custom-title">Custom Amount</div>
+                                    <div class="amount-option-value" id="opt-token-val">Any Part-Payment</div>
+                                </div>
+                            </div>
+
+                            <!-- Custom Amount input -->
+                            <div class="custom-amount-wrapper" id="custom-amount-field">
+                                <div class="custom-amount-input-group">
+                                    <span>₹</span>
+                                    <input type="number" id="pay-custom-input" class="custom-amount-input" placeholder="Enter amount to pay" min="100" oninput="calculateCustomAmount()">
+                                </div>
+                                <span style="font-size: 11px; color: var(--color-text-secondary); margin-top: 4px; display: block;">Min payment ₹100. Amount cannot exceed remaining balance.</span>
+                            </div>
+                        </div>
+
+                        <!-- Pay Button -->
+                        <button class="btn-pay-now" id="btn-trigger-checkout" onclick="startCheckout()">
+                            <i class="fa-solid fa-lock"></i> <span>Proceed to Pay</span>
+                        </button>
+                    </div>
+
+                    <div class="error-message-box" id="checkout-error-box" style="margin-top: 15px;">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <span id="checkout-error-text">Failed to initiate checkout. Please try again.</span>
+                    </div>
+
+                    <div class="secure-badge-box">
+                        <i class="fa-solid fa-shield-halved"></i> 256-Bit SSL Encrypted Secure Checkout
+                    </div>
+
+                    <!-- Go back option -->
+                    <div style="text-align: center; margin-top: 20px;">
+                        <a href="javascript:void(0);" onclick="resetPortal()" style="color: var(--color-slate); font-size: 13.5px; font-weight: 700; text-decoration: underline;">
+                            <i class="fa-solid fa-chevron-left" style="font-size: 10px;"></i> Search another booking ID
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Success Panel (Hidden initially) -->
+            <div id="success-state" class="success-panel">
+                <div class="success-icon-wrap">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <h2 class="success-title">Payment Successful!</h2>
+                <p class="success-desc">Thank you for your transaction. Your payment has been received, verified, and logged in our system. An updated Bill of Supply has been generated.</p>
+
+                <div class="receipt-summary-box">
+                    <div class="receipt-row">
+                        <span class="detail-label">Booking Reference</span>
+                        <span class="detail-value" id="rec-booking-id">-</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span class="detail-label">Transaction Receipt ID</span>
+                        <span class="detail-value" id="rec-payment-id">-</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span class="detail-label font-bold">Amount Paid Online</span>
+                        <span class="detail-value" id="rec-amount-paid">₹0.00</span>
+                    </div>
+                    <div class="receipt-row" style="margin-top: 10px; border-top: 1px dashed rgba(10, 25, 47, 0.08); padding-top: 10px;">
+                        <span class="detail-label">Outstanding Balance Due</span>
+                        <span class="detail-value" id="rec-balance-remaining" style="color: var(--color-gold-dark);">₹0.00</span>
+                    </div>
+                </div>
+
+                <a href="" id="btn-download-pdf-receipt" class="btn-invoice-download" target="_blank">
+                    <i class="fa-solid fa-file-pdf"></i> Download PDF Bill Receipt
+                </a>
+
+                <div style="text-align: center; margin-top: 25px;">
+                    <a href="/" style="color: var(--color-primary); font-size: 14px; font-weight: 700; text-decoration: underline;">
+                        Return to Homepage
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-grid">
+            <div>
+                <a href="/" class="logo" style="margin-bottom: 20px;">
+                    <div class="logo-icon-img-wrap">
+                        <img src="/assets/images/logo.png" alt="Rudraansh Yatra Logo" class="logo-icon-img" width="44" height="44" loading="lazy">
+                    </div>
+                    <div class="logo-text" style="color: #ffffff;">Rudraansh <span style="color: var(--color-gold);">Yatra</span></div>
+                </a>
+                <p style="color: rgba(255,255,255,0.6); margin-bottom: 24px;">Born in the hills, we are hyper-local experts curating clean, eco-friendly journeys and spiritual yatras across remote Himalayan borders.</p>
+                <div class="top-socials">
+                    <a href="https://www.facebook.com/profile.php?id=61589223945628" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/yatra_rudraansh?igsh=MXYxdmg0Y2dqNDJ3bg==" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.youtube.com/@Rudra-Anshyatra" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="https://medium.com/@rudraanshyatra" target="_blank" rel="noopener noreferrer" aria-label="Medium"><i class="fa-brands fa-medium"></i></a>
+                </div>
+            </div>
+            <div>
+                <h3>Our Yatras</h3>
+                <ul class="footer-links">
+                    <li><a href="/adi-kailash">Adi Kailash & Om Parvat</a></li>
+                    <li><a href="/khaliya-top">Khaliya Top Trek</a></li>
+                    <li><a href="/mt-kailash">Mt. Kailash Yatra</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>Quick Portals</h3>
+                <ul class="footer-links">
+                    <li><a href="/whats-included">What's Included</a></li>
+                    <li><a href="/about">About Us</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>Contact Office</h3>
+                <ul class="footer-contact">
+                    <li>
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>1st Floor Above Punetha Bookstore,<br>Simailgair Bazaar, Pithoragarh, Uttarakhand - 262501</span>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-phone"></i>
+                        <span>+91 7617617651</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Payment Methods -->
+        <div class="footer-payment-methods">
+            <div class="container">
+                <div class="payment-title">UPI and Cards Accepted Securely via Razorpay</div>
+                <div class="payment-badges-wrap">
+                    <div class="payment-card" title="Visa">
+                        <img src="/assets/images/visa.svg" alt="Visa" loading="lazy" width="48" height="30">
+                    </div>
+                    <div class="payment-card" title="Mastercard">
+                        <img src="/assets/images/mastercard.svg" alt="Mastercard" loading="lazy" width="48" height="30">
+                    </div>
+                    <div class="payment-card" title="Google Pay">
+                        <img src="/assets/images/gpay.svg" alt="Google Pay" loading="lazy" width="48" height="30">
+                    </div>
+                    <div class="payment-card" title="PhonePe">
+                        <img src="/assets/images/phonepe.svg" alt="PhonePe" loading="lazy" width="48" height="30">
+                    </div>
+                    <div class="payment-card" title="Razorpay">
+                        <img src="/assets/images/razorpay.svg" alt="Razorpay" loading="lazy" width="48" height="30">
+                    </div>
+                </div>
+            </div>
+        </div>
+                        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2026 Rudraansh Yatra. All Rights Reserved. Managed Directly by Local Ground Experts. | <a href="/admin" style="text-decoration: underline; color: var(--color-gold);">Admin Panel</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Payment Portal JS script -->
+    <script>
+        let currentBill = null;
+        let selectedPaymentMode = 'full'; // 'full', 'token', or 'custom'
+        let finalAmountToPay = 0;
+        let activeDiscountPct = 0;
+        let baseTotalPrice = 0;
+        let netTotalPrice = 0;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const paramPackageName = urlParams.get('packageName');
+            const paramAmount = urlParams.get('amount');
+            const paramName = urlParams.get('name');
+            const paramPhone = urlParams.get('phone');
+            const paramEmail = urlParams.get('email');
+            const paramTravelers = urlParams.get('travelers');
+            const paramDate = urlParams.get('date');
+
+            if (paramPackageName && paramAmount && paramName && paramPhone) {
+                // Skip lookup, show checkout directly
+                document.getElementById('lookup-state').style.display = 'none';
+                document.getElementById('checkout-state').style.display = 'block';
+
+                currentBill = {
+                    booking_id: 'PENDING',
+                    customer_name: paramName,
+                    customer_phone: paramPhone,
+                    customer_email: paramEmail || '',
+                    package_name: paramPackageName,
+                    total_package_amount: parseFloat(paramAmount),
+                    balance_remaining: parseFloat(paramAmount),
+                    group_size: parseInt(paramTravelers) || 1,
+                    tour_start_date: paramDate || new Date().toISOString().split('T')[0]
+                };
+
+                // Update UI elements
+                document.getElementById('lbl-booking-id').innerText = 'New Booking (Pending)';
+                document.getElementById('lbl-cust-name').innerText = currentBill.customer_name;
+                document.getElementById('lbl-cust-phone').innerText = currentBill.customer_phone;
+                document.getElementById('lbl-start-date').innerText = currentBill.tour_start_date;
+                document.getElementById('lbl-group-size').innerText = currentBill.group_size + ' Pax';
+                document.getElementById('lbl-package-name').innerText = currentBill.package_name;
+                document.getElementById('lbl-total-paid').innerText = '₹0.00';
+
+                // Display promo code section
+                document.getElementById('promo-code-section').style.display = 'block';
+
+                // Customize Payment Options Grid for dynamic package checkouts
+                document.getElementById('opt-custom-title').innerText = '10% Booking Token';
+                document.getElementById('opt-full').querySelector('.amount-option-title').innerText = 'Pay Full Amount';
+                document.getElementById('custom-amount-field').style.display = 'none';
+
+                baseTotalPrice = currentBill.total_package_amount;
+                updateCheckoutAmounts();
+            }
+        });
+
+        function updateCheckoutAmounts() {
+            const discountVal = baseTotalPrice * (activeDiscountPct / 100);
+            netTotalPrice = baseTotalPrice - discountVal;
+
+            document.getElementById('lbl-total-amount').innerText = '₹' + netTotalPrice.toLocaleString('en-IN', { minimumFractionDigits: 2 });
+            document.getElementById('lbl-balance-remaining').innerText = '₹' + netTotalPrice.toLocaleString('en-IN', { minimumFractionDigits: 2 });
+
+            if (activeDiscountPct > 0) {
+                document.getElementById('row-discount').style.display = 'flex';
+                document.getElementById('lbl-discount-amount').innerText = `-₹` + discountVal.toLocaleString('en-IN', { minimumFractionDigits: 2 });
+            } else {
+                document.getElementById('row-discount').style.display = 'none';
+            }
+
+            if (currentBill && currentBill.booking_id === 'PENDING') {
+                const fullAmount = netTotalPrice;
+                const tokenAmount = Math.round(netTotalPrice * 0.1);
+
+                document.getElementById('opt-full-val').innerText = '₹' + fullAmount.toLocaleString('en-IN', { minimumFractionDigits: 2 });
+                document.getElementById('opt-token-val').innerText = '₹' + tokenAmount.toLocaleString('en-IN', { minimumFractionDigits: 2 });
+
+                if (selectedPaymentMode === 'full') {
+                    finalAmountToPay = fullAmount;
+                } else if (selectedPaymentMode === 'token') {
+                    finalAmountToPay = tokenAmount;
+                }
+            } else {
+                // Normal lookup mode
+                document.getElementById('opt-full-val').innerText = '₹' + currentBill.balance_remaining.toLocaleString('en-IN', { minimumFractionDigits: 2 });
+                if (selectedPaymentMode === 'full') {
+                    finalAmountToPay = currentBill.balance_remaining;
+                }
+            }
+
+            const btnPay = document.getElementById('btn-trigger-checkout');
+            btnPay.querySelector('span').innerText = `Proceed to Pay ₹${finalAmountToPay.toLocaleString('en-IN')}`;
+        }
+
+        function applyPromoCode() {
+            const promoInput = document.getElementById('promo-code-input').value.trim().toUpperCase();
+            const statusMsg = document.getElementById('promo-status-msg');
+
+            if (!promoInput) {
+                statusMsg.style.color = '#ef4444';
+                statusMsg.innerText = 'Please enter a promo code.';
+                return;
+            }
+
+            if (promoInput === 'WEB10') {
+                activeDiscountPct = 10;
+                statusMsg.style.color = '#22c55e';
+                statusMsg.innerText = 'Promo code applied! 10% Web Discount has been added.';
+            } else if (promoInput === 'RUDRAANSH') {
+                activeDiscountPct = 5;
+                statusMsg.style.color = '#22c55e';
+                statusMsg.innerText = 'Promo code applied! 5% Discount has been added.';
+            } else {
+                statusMsg.style.color = '#ef4444';
+                statusMsg.innerText = 'Invalid promo code. Please try another one.';
+                return;
+            }
+
+            updateCheckoutAmounts();
+        }
+
+        // Toggle Navbar Mobile Menu
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+        if (menuToggle && navMenu) {
+            menuToggle.addEventListener('click', () => {
+                menuToggle.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+        }
+
+        function showLookupError(msg) {
+            const errBox = document.getElementById('lookup-error-box');
+            const errText = document.getElementById('lookup-error-text');
+            errText.innerText = msg;
+            errBox.style.display = 'flex';
+        }
+
+        function clearLookupError() {
+            document.getElementById('lookup-error-box').style.display = 'none';
+        }
+
+        function showCheckoutError(msg) {
+            const errBox = document.getElementById('checkout-error-box');
+            const errText = document.getElementById('checkout-error-text');
+            errText.innerText = msg;
+            errBox.style.display = 'flex';
+        }
+
+        function clearCheckoutError() {
+            document.getElementById('checkout-error-box').style.display = 'none';
+        }
+
+        // 1. Search and Lookup booking details
+        async function lookupBooking(event) {
+            event.preventDefault();
+            clearLookupError();
+
+            const bookingIdInput = document.getElementById('booking-id-input');
+            const bookingId = bookingIdInput.value.trim().toUpperCase();
+
+            if (!bookingId) {
+                showLookupError("Please enter a valid Booking ID.");
+                return;
+            }
+
+            const btnSubmit = document.getElementById('btn-lookup-submit');
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Retrieving...';
+
+            try {
+                const response = await fetch(`/api/payment/lookup/${encodeURIComponent(bookingId)}`);
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Failed to locate booking record.');
+                }
+
+                currentBill = data;
+                renderCheckoutState();
+            } catch (err) {
+                console.error(err);
+                showLookupError(err.message || 'No record found. Please verify the Booking ID.');
+                currentBill = null;
+            } finally {
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = '<span>Retrieve Invoice</span> <i class="fa-solid fa-arrow-right"></i>';
+            }
+        }
+
+        // Render Checkout card values
+        function renderCheckoutState() {
+            if (!currentBill) return;
+
+            document.getElementById('lbl-booking-id').innerText = currentBill.booking_id;
+            document.getElementById('lbl-cust-name').innerText = currentBill.customer_name;
+            document.getElementById('lbl-cust-phone').innerText = currentBill.customer_phone;
+            document.getElementById('lbl-package-name').innerText = currentBill.package_name;
+            
+            // Format start date
+            const dateObj = new Date(currentBill.tour_start_date);
+            const dateStr = isNaN(dateObj.getTime()) ? currentBill.tour_start_date : dateObj.toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' });
+            document.getElementById('lbl-start-date').innerText = dateStr;
+            
+            document.getElementById('lbl-group-size').innerText = currentBill.group_size + ' Pax';
+
+            // Prices
+            document.getElementById('lbl-total-amount').innerText = '₹' + currentBill.total_package_amount.toLocaleString('en-IN', { minimumFractionDigits: 2 });
+            document.getElementById('lbl-total-paid').innerText = '₹' + currentBill.total_paid.toLocaleString('en-IN', { minimumFractionDigits: 2 });
+            
+            const balance = currentBill.balance_remaining;
+            document.getElementById('lbl-balance-remaining').innerText = '₹' + balance.toLocaleString('en-IN', { minimumFractionDigits: 2 });
+            document.getElementById('opt-full-val').innerText = '₹' + balance.toLocaleString('en-IN', { minimumFractionDigits: 2 });
+
+            // Hide or show pay containers based on balance
+            const payInputContainer = document.getElementById('payment-input-container');
+            const alreadyPaidContainer = document.getElementById('already-paid-container');
+
+            if (balance <= 0 || currentBill.payment_status === 'Fully Paid') {
+                payInputContainer.style.display = 'none';
+                alreadyPaidContainer.style.display = 'block';
+            } else {
+                payInputContainer.style.display = 'block';
+                alreadyPaidContainer.style.display = 'none';
+                
+                // Select full amount by default
+                selectAmountOption('full');
+            }
+
+            // Animate transition
+            document.getElementById('lookup-state').style.display = 'none';
+            document.getElementById('checkout-state').style.display = 'block';
+        }
+
+        // Amount option card select handler
+        function selectAmountOption(mode) {
+            const optFull = document.getElementById('opt-full');
+            const optCustom = document.getElementById('opt-custom');
+            const customField = document.getElementById('custom-amount-field');
+            const btnPay = document.getElementById('btn-trigger-checkout');
+
+            if (currentBill && currentBill.booking_id === 'PENDING') {
+                if (mode === 'full') {
+                    selectedPaymentMode = 'full';
+                    optFull.classList.add('selected');
+                    optCustom.classList.remove('selected');
+                } else {
+                    selectedPaymentMode = 'token';
+                    optCustom.classList.add('selected');
+                    optFull.classList.remove('selected');
+                }
+                updateCheckoutAmounts();
+            } else {
+                selectedPaymentMode = mode;
+                if (mode === 'full') {
+                    optFull.classList.add('selected');
+                    optCustom.classList.remove('selected');
+                    customField.style.display = 'none';
+                    finalAmountToPay = currentBill.balance_remaining;
+                    
+                    btnPay.querySelector('span').innerText = `Proceed to Pay ₹${finalAmountToPay.toLocaleString('en-IN')}`;
+                } else {
+                    optCustom.classList.add('selected');
+                    optFull.classList.remove('selected');
+                    customField.style.display = 'block';
+                    
+                    const customInput = document.getElementById('pay-custom-input');
+                    customInput.value = '';
+                    customInput.max = currentBill.balance_remaining;
+                    finalAmountToPay = 0;
+                    
+                    btnPay.querySelector('span').innerText = 'Proceed to Pay';
+                }
+            }
+            clearCheckoutError();
+        }
+
+        // Calculate and validate custom amount input
+        function calculateCustomAmount() {
+            const customInput = document.getElementById('pay-custom-input');
+            let amount = parseFloat(customInput.value);
+            const maxVal = currentBill.balance_remaining;
+
+            const btnPay = document.getElementById('btn-trigger-checkout');
+            clearCheckoutError();
+
+            if (isNaN(amount) || amount <= 0) {
+                finalAmountToPay = 0;
+                btnPay.querySelector('span').innerText = 'Proceed to Pay';
+                return;
+            }
+
+            if (amount > maxVal) {
+                showCheckoutError("Amount cannot exceed the remaining balance of ₹" + maxVal.toLocaleString());
+                customInput.value = maxVal;
+                amount = maxVal;
+            }
+
+            finalAmountToPay = amount;
+            btnPay.querySelector('span').innerText = `Proceed to Pay ₹${finalAmountToPay.toLocaleString('en-IN')}`;
+        }
+
+        // 2. Open Razorpay Modal and initiate Order
+        async function startCheckout() {
+            clearCheckoutError();
+
+            if (finalAmountToPay <= 0) {
+                showCheckoutError("Please specify a valid payment amount.");
+                return;
+            }
+
+            if (finalAmountToPay < 100) {
+                showCheckoutError("Minimum online payment amount is ₹100.");
+                return;
+            }
+
+            const btnPay = document.getElementById('btn-trigger-checkout');
+            btnPay.disabled = true;
+            btnPay.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Initializing Checkout...';
+
+            try {
+                // Request server to create Razorpay Order
+                const orderResponse = await fetch('/api/create-order', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        bookingId: currentBill.booking_id,
+                        amount: finalAmountToPay,
+                        // Add package fields if it's a new booking
+                        customerName: currentBill.customer_name,
+                        customerPhone: currentBill.customer_phone,
+                        customerEmail: currentBill.customer_email,
+                        packageName: currentBill.package_name,
+                        groupSize: currentBill.group_size,
+                        tourStartDate: currentBill.tour_start_date,
+                        totalPackageAmount: (currentBill.booking_id === 'PENDING') ? netTotalPrice : undefined
+                    })
+                });
+
+                const orderData = await orderResponse.json();
+
+                if (!orderResponse.ok) {
+                    throw new Error(orderData.error || 'Failed to initiate server order.');
+                }
+
+                // Initialize Razorpay Options
+                const options = {
+                    key: orderData.keyId,
+                    amount: orderData.amount,
+                    currency: orderData.currency,
+                    name: 'Rudraansh Yatra',
+                    description: `${currentBill.package_name} - ${orderData.bookingId || currentBill.booking_id}`,
+                    image: '/assets/images/logo.png',
+                    order_id: orderData.orderId,
+                    prefill: {
+                        name: currentBill.customer_name,
+                        email: currentBill.customer_email || '',
+                        contact: currentBill.customer_phone || ''
+                    },
+                    theme: {
+                        color: '#0A192F' // Navy matching color-primary
+                    },
+                    modal: {
+                        ondismiss: function() {
+                            btnPay.disabled = false;
+                            btnPay.innerHTML = `<i class="fa-solid fa-lock"></i> <span>Proceed to Pay ₹${finalAmountToPay.toLocaleString('en-IN')}</span>`;
+                        }
+                    },
+                    handler: async function(response) {
+                        btnPay.innerHTML = '<i class="fa-solid fa-shield-halved fa-spin"></i> Verifying Payment...';
+                        
+                        try {
+                            // Call backend to verify signature and save payment
+                            const verifyResponse = await fetch('/api/verify-payment', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                    razorpay_payment_id: response.razorpay_payment_id,
+                                    razorpay_order_id: response.razorpay_order_id,
+                                    razorpay_signature: response.razorpay_signature,
+                                    bookingId: orderData.bookingId || currentBill.booking_id,
+                                    amountPaid: finalAmountToPay
+                                })
+                            });
+
+                            const verifyData = await verifyResponse.json();
+
+                            if (!verifyResponse.ok) {
+                                throw new Error(verifyData.error || 'Signature verification failed.');
+                            }
+
+                            // Show success state
+                            renderSuccessState(verifyData.receiptId, verifyData.bill);
+                        } catch (err) {
+                            console.error(err);
+                            showCheckoutError("Signature verification failed: " + err.message + ". If amount was debited, please contact us with details.");
+                            btnPay.disabled = false;
+                            btnPay.innerHTML = `<i class="fa-solid fa-lock"></i> <span>Proceed to Pay ₹${finalAmountToPay.toLocaleString('en-IN')}</span>`;
+                        }
+                    }
+                };
+
+                // Open Razorpay Standard Checkout
+                const rzp = new Razorpay(options);
+                
+                rzp.on('payment.failed', function(response) {
+                    showCheckoutError("Payment failed! Code: " + response.error.code + ", Reason: " + response.error.description);
+                    btnPay.disabled = false;
+                    btnPay.innerHTML = `<i class="fa-solid fa-lock"></i> <span>Proceed to Pay ₹${finalAmountToPay.toLocaleString('en-IN')}</span>`;
+                });
+
+                rzp.open();
+            } catch (err) {
+                console.error(err);
+                showCheckoutError(err.message || 'Server error. Failed to start checkout session.');
+                btnPay.disabled = false;
+                btnPay.innerHTML = `<i class="fa-solid fa-lock"></i> <span>Proceed to Pay ₹${finalAmountToPay.toLocaleString('en-IN')}</span>`;
+            }
+        }
+
+        // Show Success card
+        function renderSuccessState(receiptId, updatedBill) {
+            document.getElementById('checkout-state').style.display = 'none';
+            document.getElementById('success-state').style.display = 'block';
+
+            document.getElementById('rec-booking-id').innerText = updatedBill.booking_id;
+            document.getElementById('rec-payment-id').innerText = receiptId;
+            document.getElementById('rec-amount-paid').innerText = '₹' + finalAmountToPay.toLocaleString('en-IN', { minimumFractionDigits: 2 });
+            document.getElementById('rec-balance-remaining').innerText = '₹' + parseFloat(updatedBill.balance_remaining).toLocaleString('en-IN', { minimumFractionDigits: 2 });
+
+            // Set PDF receipt download link
+            const pdfBtn = document.getElementById('btn-download-pdf-receipt');
+            pdfBtn.href = `/api/billing/${updatedBill.id}/pdf`;
+        }
+
+        function resetPortal() {
+            currentBill = null;
+            selectedPaymentMode = 'full';
+            finalAmountToPay = 0;
+            document.getElementById('booking-id-input').value = '';
+            clearLookupError();
+            clearCheckoutError();
+            
+            document.getElementById('checkout-state').style.display = 'none';
+            document.getElementById('success-state').style.display = 'none';
+            document.getElementById('lookup-state').style.display = 'block';
+        }
+    </script>
+</body>
+
+</html>

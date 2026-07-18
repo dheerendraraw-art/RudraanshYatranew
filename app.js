@@ -33,8 +33,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const dropdownParent = document.querySelector('.dropdown');
 
     if (menuToggle && navMenu) {
-        menuToggle.addEventListener('click', () => {
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
             navMenu.classList.toggle('active');
+            document.body.classList.toggle('menu-open');
 
             // Hamburger animation
             const spans = menuToggle.querySelectorAll('span');
@@ -49,6 +51,24 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // Dismiss mobile navigation on clicking outside the drawer
+    document.addEventListener('click', (e) => {
+        if (navMenu && navMenu.classList.contains('active')) {
+            if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+                navMenu.classList.remove('active');
+                document.body.classList.remove('menu-open');
+                
+                // Reset hamburger animation
+                const spans = menuToggle.querySelectorAll('span');
+                if (spans.length >= 3) {
+                    spans[0].style.transform = 'none';
+                    spans[1].style.opacity = '1';
+                    spans[2].style.transform = 'none';
+                }
+            }
+        }
+    });
 
     if (dropdownTrigger && dropdownParent) {
         dropdownTrigger.addEventListener('click', (e) => {
@@ -161,24 +181,311 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 6. Homepage Hero Quick Planner Form (To WhatsApp)
-    const heroPlanner = document.getElementById('hero-planner');
-    if (heroPlanner) {
-        heroPlanner.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const destination = document.getElementById('planner-destination').value;
-            const date = document.getElementById('planner-date').value;
-            const travelers = document.getElementById('planner-travelers').value;
+    // 6. Homepage Hero Quick Planner Form (Interactive Multi-step Wizard)
+    const heroPlannerWizard = document.getElementById('hero-planner-wizard');
+    if (heroPlannerWizard) {
+        let currentStep = 1;
+        let selectedDestination = '';
+        let selectedMonth = 'Flexible';
+        const selectedPreferences = [];
+        let travelersCount = 1;
+        let selectedPace = 'Standard';
 
-            let text = `*Rudraansh Yatra - Quick Planner Request*\n\n`;
-            text += `*Target Destination:* ${destination}\n`;
-            text += `*Preferred Month:* ${date || 'Flexible'}\n`;
-            text += `*No. of Travelers:* ${travelers}\n`;
-            text += `\n_Please send me custom quotations starting from Pithoragarh._`;
+        // Elements
+        const steps = document.querySelectorAll('.wizard-progress-step');
+        const panes = document.querySelectorAll('.wizard-step-pane');
+        const progressFill = document.getElementById('wizard-progress-fill');
+        const btnPrev = document.getElementById('btn-wizard-prev');
+        const btnNext = document.getElementById('btn-wizard-next');
+        const btnSubmit = document.getElementById('btn-wizard-submit');
+        const summarySelection = document.getElementById('wizard-summary-selection');
+        const summaryMeta = document.getElementById('wizard-summary-meta');
+        const discountBadge = document.getElementById('wizard-discount-badge');
+
+        const destCards = document.querySelectorAll('.dest-select-card');
+        const monthBtns = document.querySelectorAll('.month-pill-btn');
+        const prefCards = document.querySelectorAll('.preference-checkbox-card');
+        const durationBtns = document.querySelectorAll('.duration-pill-btn');
+
+        const travelerVal = document.getElementById('traveler-val');
+        const btnTravelerMinus = document.getElementById('btn-traveler-minus');
+        const btnTravelerPlus = document.getElementById('btn-traveler-plus');
+
+        // Initial Summary Update
+        updateSummary();
+
+        // 1. Destination Selection
+        destCards.forEach(card => {
+            card.addEventListener('click', () => {
+                destCards.forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                selectedDestination = card.getAttribute('data-value');
+                updateSummary();
+                
+                // Auto-advance with small delay for better feedback
+                setTimeout(() => {
+                    if (currentStep === 1) {
+                        goToStep(2);
+                    }
+                }, 350);
+            });
+        });
+
+        // 2. Month Selection
+        monthBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                monthBtns.forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedMonth = btn.getAttribute('data-value');
+                updateSummary();
+            });
+        });
+
+        // 3. Preference Selection
+        prefCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const val = card.getAttribute('data-value');
+                const idx = selectedPreferences.indexOf(val);
+                if (idx > -1) {
+                    selectedPreferences.splice(idx, 1);
+                    card.classList.remove('checked');
+                } else {
+                    selectedPreferences.push(val);
+                    card.classList.add('checked');
+                }
+                updateSummary();
+            });
+        });
+
+        // 4. Traveler Counter
+        if (btnTravelerMinus && btnTravelerPlus && travelerVal) {
+            btnTravelerMinus.addEventListener('click', () => {
+                if (travelersCount > 1) {
+                    travelersCount--;
+                    travelerVal.innerText = travelersCount;
+                    updateSummary();
+                }
+            });
+            btnTravelerPlus.addEventListener('click', () => {
+                if (travelersCount < 50) {
+                    travelersCount++;
+                    travelerVal.innerText = travelersCount;
+                    updateSummary();
+                }
+            });
+        }
+
+        // 5. Pace Duration
+        durationBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                durationBtns.forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedPace = btn.getAttribute('data-value');
+                updateSummary();
+            });
+        });
+
+        // Step Navigation Logic
+        btnNext.addEventListener('click', () => {
+            if (currentStep === 1 && !selectedDestination) {
+                showToast('Please select a destination to continue.', 'error');
+                return;
+            }
+            if (currentStep < 4) {
+                goToStep(currentStep + 1);
+            }
+        });
+
+        btnPrev.addEventListener('click', () => {
+            if (currentStep > 1) {
+                goToStep(currentStep - 1);
+            }
+        });
+
+        // Step indicators click (only allow going to steps already unlocked/visited)
+        steps.forEach(step => {
+            step.addEventListener('click', () => {
+                const targetStep = parseInt(step.getAttribute('data-step'));
+                if (targetStep === 1 || (targetStep === 2 && selectedDestination) || (targetStep > 2 && selectedDestination && currentStep >= targetStep - 1)) {
+                    goToStep(targetStep);
+                }
+            });
+        });
+
+        function goToStep(stepNum) {
+            panes.forEach(pane => pane.classList.remove('active'));
+            steps.forEach(step => step.classList.remove('active', 'completed'));
+
+            currentStep = stepNum;
+
+            // Highlight progress line fill
+            const fillPercent = ((currentStep - 1) / 3) * 100;
+            progressFill.style.width = fillPercent + '%';
+
+            // Show active pane
+            const activePane = document.getElementById(`step-pane-${currentStep}`);
+            if (activePane) activePane.classList.add('active');
+
+            // Update steps indicator state
+            steps.forEach(step => {
+                const sVal = parseInt(step.getAttribute('data-step'));
+                if (sVal === currentStep) {
+                    step.classList.add('active');
+                } else if (sVal < currentStep) {
+                    step.classList.add('completed');
+                }
+            });
+
+            // Toggle buttons visibility
+            if (currentStep === 1) {
+                btnPrev.style.visibility = 'hidden';
+            } else {
+                btnPrev.style.visibility = 'visible';
+            }
+
+            if (currentStep === 4) {
+                btnNext.style.display = 'none';
+                btnSubmit.style.display = 'inline-flex';
+            } else {
+                btnNext.style.display = 'inline-flex';
+                btnSubmit.style.display = 'none';
+            }
+        }
+
+        function calculateDiscount(count) {
+            if (count >= 8) return 10;
+            if (count >= 5) return 5;
+            if (count >= 3) return 3;
+            return 0;
+        }
+
+        function updateSummary() {
+            if (summarySelection) {
+                summarySelection.innerText = selectedDestination ? `Destination: ${selectedDestination}` : 'Destination: Not Selected';
+            }
+            if (summaryMeta) {
+                const prefStr = selectedPreferences.length > 0 ? ` | Prefs: ${selectedPreferences.join(', ')}` : '';
+                summaryMeta.innerText = `Pace: ${selectedPace} | Month: ${selectedMonth} | Group: ${travelersCount} traveler${travelersCount > 1 ? 's' : ''}${prefStr}`;
+            }
+
+            const discount = calculateDiscount(travelersCount);
+            if (discountBadge) {
+                discountBadge.innerText = `${discount}%`;
+                if (discount > 0) {
+                    discountBadge.style.color = '#ffffff';
+                    discountBadge.style.background = 'var(--color-gold)';
+                } else {
+                    discountBadge.style.color = 'var(--color-text-secondary)';
+                    discountBadge.style.background = 'rgba(10, 25, 47, 0.05)';
+                    discountBadge.style.boxShadow = 'none';
+                }
+            }
+        }
+
+        // Form Submit
+        heroPlannerWizard.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('wizard-name').value.trim();
+            const phone = document.getElementById('wizard-phone').value.trim();
+            const email = document.getElementById('wizard-email').value.trim();
+
+            if (!name || !phone) {
+                showToast('Please enter your Name and WhatsApp number.', 'error');
+                return;
+            }
+
+            // Estimate base days
+            let baseDays = 8;
+            if (selectedDestination.includes('Kailash Yatra')) baseDays = 14;
+            else if (selectedDestination.includes('Darma')) baseDays = 6;
+            else if (selectedDestination.includes('Khaliya')) baseDays = 4;
+
+            const requestData = {
+                name,
+                phone,
+                email,
+                destination: selectedDestination,
+                month: selectedMonth,
+                travelers: travelersCount,
+                pace: selectedPace,
+                preferences: selectedPreferences.length > 0 ? selectedPreferences.join(', ') : 'None',
+                discount: calculateDiscount(travelersCount) + '%',
+                days: baseDays
+            };
+
+            showToast('Saving your trip request...', 'info');
+
+            // Save to database custom_requests
+            await saveWizardRequest(requestData);
+
+            // Trigger WhatsApp
+            let text = `🏔️ *Rudraansh Yatra - Trip Planner Request* 🏔️\n`;
+            text += `-----------------------------------------\n`;
+            text += `👤 *Name:* ${requestData.name}\n`;
+            text += `📞 *Phone:* ${requestData.phone}\n`;
+            if (requestData.email) text += `📧 *Email:* ${requestData.email}\n`;
+            text += `\n`;
+            text += `📍 *Destination:* ${requestData.destination}\n`;
+            text += `📅 *Travel Month:* ${requestData.month}\n`;
+            text += `👥 *Group Size:* ${requestData.travelers} Traveler${requestData.travelers > 1 ? 's' : ''}\n`;
+            text += `🏃‍♂️ *Itinerary Pace:* ${requestData.pace} Pace\n`;
+            text += `✨ *Preferences:* ${requestData.preferences}\n`;
+            text += `🎁 *Estimated Savings:* ${requestData.discount} Off\n`;
+            text += `-----------------------------------------\n`;
+            text += `_Please guide me with the itinerary and direct booking process from Pithoragarh. Thank you!_`;
 
             const encodedText = encodeURIComponent(text);
-            window.open(`https://wa.me/917617617651?text=${encodedText}`, '_blank');
+            const waUrl = `https://wa.me/917617617651?text=${encodedText}`;
+            window.open(waUrl, '_blank');
+
+            showToast('Opening WhatsApp with your customized planner details!', 'success');
+
+            // Reset Form and Step
+            heroPlannerWizard.reset();
+            destCards.forEach(c => c.classList.remove('selected'));
+            monthBtns.forEach(b => b.classList.remove('selected'));
+            prefCards.forEach(c => c.classList.remove('checked'));
+            durationBtns.forEach((b, i) => {
+                if (i === 0) b.classList.add('selected');
+                else b.classList.remove('selected');
+            });
+            
+            selectedDestination = '';
+            selectedMonth = 'Flexible';
+            selectedPreferences.length = 0;
+            travelersCount = 1;
+            selectedPace = 'Standard';
+            
+            if (travelerVal) travelerVal.innerText = '1';
+            
+            updateSummary();
+            goToStep(1);
         });
+    }
+
+    // Save wizard details directly to Supabase
+    async function saveWizardRequest(data) {
+        if (!supabaseClient) return;
+        try {
+            const { data: sessionData } = await supabaseClient.auth.getSession();
+            const userId = sessionData?.session?.user?.id || null;
+            
+            await supabaseClient.from('custom_requests').insert([
+                {
+                    name: data.name,
+                    email: data.email || '',
+                    phone: data.phone || '',
+                    destination: data.destination,
+                    days: data.days,
+                    requests: `Travel Month: ${data.month} | Group Size: ${data.travelers} | Pace: ${data.pace} | Preferences: ${data.preferences} | Est Savings: ${data.discount}`,
+                    user_id: userId
+                }
+            ]);
+            console.log('Wizard request saved to database.');
+        } catch (e) {
+            console.error('Database save error:', e);
+        }
     }
 
     // 7. Book Your Trip Modal Logic (Custom Itinerary Modal)
@@ -883,3 +1190,83 @@ function initializeDiscountPopup() {
     window.addEventListener('load', () => {
         setTimeout(initBlogCarousel, 500);
     });
+
+    // Pay Now Button Handler for direct packages
+    const payNowBtn = document.getElementById('btn-pay-now');
+        if (payNowBtn) {
+            payNowBtn.addEventListener('click', (e) => {
+                const form = payNowBtn.closest('.inquiry-form');
+                if (!form) return;
+
+                const nameInput = form.querySelector('[name="name"]');
+                const phoneInput = form.querySelector('[name="phone"]');
+                const dateInput = form.querySelector('[name="date"]');
+                const travelersInput = form.querySelector('[name="travelers"]');
+                
+                if (!nameInput || !phoneInput) return;
+
+                if (!nameInput.value.trim()) {
+                    showToast('Please enter your Name.', 'error');
+                    nameInput.focus();
+                    return;
+                }
+
+                if (!phoneInput.value.trim()) {
+                    showToast('Please enter your Phone number.', 'error');
+                    phoneInput.focus();
+                    return;
+                }
+
+                if (dateInput && !dateInput.value) {
+                    showToast('Please select your Preferred Date.', 'error');
+                    dateInput.focus();
+                    return;
+                }
+
+                // Get package name and select option
+                const packageNameBase = form.getAttribute('data-package') || 'Package';
+                const pickupElement = form.querySelector('[name="pickup"]');
+                let packageName = packageNameBase;
+                let priceText = '';
+                
+                if (pickupElement) {
+                    packageName = `${packageNameBase} (${pickupElement.value})`;
+                    const selectedOption = pickupElement.options[pickupElement.selectedIndex];
+                    priceText = selectedOption.getAttribute('data-price') || '';
+                } else {
+                    const priceEl = document.querySelector('.price-display strong');
+                    if (priceEl) {
+                        priceText = priceEl.textContent;
+                    }
+                }
+
+                // Parse price
+                const baseAmount = parseInt(priceText.replace(/[^0-9]/g, ''));
+                if (isNaN(baseAmount) || baseAmount <= 0) {
+                    showToast('Payment amount is invalid or on request.', 'error');
+                    return;
+                }
+
+                // Compute total amount based on traveler count multiplier
+                let travelerCount = 1;
+                if (travelersInput) {
+                    const parsedCount = parseInt(travelersInput.value);
+                    if (!isNaN(parsedCount) && parsedCount > 0) {
+                        travelerCount = parsedCount;
+                    }
+                }
+                const amount = baseAmount * travelerCount;
+
+                // Redirect to payment page with pre-filled details
+                const queryParams = new URLSearchParams({
+                    packageName: packageName,
+                    amount: amount,
+                    name: nameInput.value.trim(),
+                    phone: phoneInput.value.trim(),
+                    date: dateInput ? dateInput.value : '',
+                    travelers: travelersInput ? travelersInput.value : '1'
+                });
+
+                window.location.href = `/payment?${queryParams.toString()}`;
+            });
+        }

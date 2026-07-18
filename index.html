@@ -365,40 +365,242 @@
                 <h2 class="section-title">Enquiry & Trip Planner</h2>
                 <p class="section-desc">Select your preferred destination, travel month, and group size to receive a customized quote directly from our ground experts.</p>
             </div>
-            <div class="quick-inquiry-bar" style="margin-top: 0; padding: 0;">
-                <div class="glass-card">
-                    <form id="hero-planner" class="inquiry-grid">
-                        <div class="inquiry-col">
-                            <label for="planner-destination">Where to go</label>
-                            <select id="planner-destination" required>
-                                <option value="" disabled selected>Select Destination</option>
-                                <option value="Adi Kailash & Om Parvat Yatra">Adi Kailash & Om Parvat Yatra</option>
-                                <option value="Khaliya Top Trek">Khaliya Top Trek</option>
-                                <option value="Mt. Kailash Yatra">Mt. Kailash Yatra</option>
-                                <option value="Darma Valley Exploration">Darma Valley Exploration</option>
-                            </select>
-                        </div>
-                        <div class="inquiry-col">
-                            <label for="planner-date">Travel Month</label>
-                            <select id="planner-date">
-                                <option value="" selected>Flexible</option>
-                                <option value="May">May</option>
-                                <option value="June">June</option>
-                                <option value="September">September</option>
-                                <option value="October">October</option>
-                            </select>
-                        </div>
-                        <div class="inquiry-col">
-                            <label for="planner-travelers">No. of travelers</label>
-                            <input type="number" id="planner-travelers" placeholder="1" min="1" required>
-                        </div>
-                        <div>
-                            <button type="submit" class="btn btn-primary" style="padding: 14px 28px; width: 100%;">
-                                Plan My Trip <i class="fa-solid fa-compass"></i>
-                            </button>
-                        </div>
-                    </form>
+            <div class="trip-wizard-card">
+                <!-- Progress bar tracker -->
+                <div class="wizard-progress-bar-wrap">
+                    <div class="wizard-progress-line">
+                        <div class="wizard-progress-line-fill" id="wizard-progress-fill"></div>
+                    </div>
+                    <div class="wizard-progress-step active" data-step="1">
+                        <div class="step-number">1</div>
+                        <span class="step-label">Destination</span>
+                    </div>
+                    <div class="wizard-progress-step" data-step="2">
+                        <div class="step-number">2</div>
+                        <span class="step-label">Preferences</span>
+                    </div>
+                    <div class="wizard-progress-step" data-step="3">
+                        <div class="step-number">3</div>
+                        <span class="step-label">Group Details</span>
+                    </div>
+                    <div class="wizard-progress-step" data-step="4">
+                        <div class="step-number">4</div>
+                        <span class="step-label">Contact</span>
+                    </div>
                 </div>
+
+                <form id="hero-planner-wizard">
+                    <!-- STEP 1: Select Journey & Destination -->
+                    <div class="wizard-step-pane active" id="step-pane-1">
+                        <div class="step-title-wrap">
+                            <h3>Choose Your Himalayan Dream</h3>
+                            <p>Pick a sacred pilgrimage yatra or alpine trek to get started.</p>
+                        </div>
+                        <div class="destination-cards-grid">
+                            <!-- Card 1 -->
+                            <div class="dest-select-card" data-value="Adi Kailash & Om Parvat Yatra">
+                                <span class="dest-card-badge">Spiritual</span>
+                                <div>
+                                    <div class="dest-card-icon"><i class="fa-solid fa-om"></i></div>
+                                    <h4 class="dest-card-title">Adi Kailash & Om Parvat</h4>
+                                    <p class="dest-card-meta">Sacred journey to Kumaon's Mt. Kailash replica. Includes border permissions, direct ground support.</p>
+                                </div>
+                                <div>
+                                    <div class="dest-card-features">
+                                        <span class="dest-card-tag">8 Days</span>
+                                        <span class="dest-card-tag"><i class="fa-solid fa-star" style="color:var(--color-gold);"></i> 4.9</span>
+                                        <span class="dest-card-tag">Pithoragarh Start</span>
+                                    </div>
+                                    <div class="selected-check"><i class="fa-solid fa-check"></i></div>
+                                </div>
+                            </div>
+                            <!-- Card 2 -->
+                            <div class="dest-select-card" data-value="Mt. Kailash Yatra">
+                                <span class="dest-card-badge">Elite Yatra</span>
+                                <div>
+                                    <div class="dest-card-icon"><i class="fa-solid fa-mountain"></i></div>
+                                    <h4 class="dest-card-title">Mt. Kailash (Lipulekh)</h4>
+                                    <p class="dest-card-meta">Premium international pilgrimage via Lipulekh Pass, organized directly by native ground operators.</p>
+                                </div>
+                                <div>
+                                    <div class="dest-card-features">
+                                        <span class="dest-card-tag">14 Days</span>
+                                        <span class="dest-card-tag"><i class="fa-solid fa-star" style="color:var(--color-gold);"></i> 5.0</span>
+                                        <span class="dest-card-tag">Border Permit</span>
+                                    </div>
+                                    <div class="selected-check"><i class="fa-solid fa-check"></i></div>
+                                </div>
+                            </div>
+                            <!-- Card 3 -->
+                            <div class="dest-select-card" data-value="Darma Valley Exploration">
+                                <span class="dest-card-badge">Offbeat</span>
+                                <div>
+                                    <div class="dest-card-icon"><i class="fa-solid fa-campground"></i></div>
+                                    <h4 class="dest-card-title">Darma Valley Exploration</h4>
+                                    <p class="dest-card-meta">Trek through tribal frontier villages, beautiful glacial views, and pristine homestays.</p>
+                                </div>
+                                <div>
+                                    <div class="dest-card-features">
+                                        <span class="dest-card-tag">6 Days</span>
+                                        <span class="dest-card-tag"><i class="fa-solid fa-star" style="color:var(--color-gold);"></i> 4.9</span>
+                                        <span class="dest-card-tag">Frontier Culture</span>
+                                    </div>
+                                    <div class="selected-check"><i class="fa-solid fa-check"></i></div>
+                                </div>
+                            </div>
+                            <!-- Card 4 -->
+                            <div class="dest-select-card" data-value="Khaliya Top Trek">
+                                <span class="dest-card-badge">Alpine Trek</span>
+                                <div>
+                                    <div class="dest-card-icon"><i class="fa-solid fa-person-hiking"></i></div>
+                                    <h4 class="dest-card-title">Khaliya Top (Munsiyari)</h4>
+                                    <p class="dest-card-meta">Short rhododendron alpine trek offering panoramic views of Panchachuli and Kumaon Peaks.</p>
+                                </div>
+                                <div>
+                                    <div class="dest-card-features">
+                                        <span class="dest-card-tag">4 Days</span>
+                                        <span class="dest-card-tag"><i class="fa-solid fa-star" style="color:var(--color-gold);"></i> 4.8</span>
+                                        <span class="dest-card-tag">Easy to Moderate</span>
+                                    </div>
+                                    <div class="selected-check"><i class="fa-solid fa-check"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: Choose Month & Preferences -->
+                    <div class="wizard-step-pane" id="step-pane-2">
+                        <div class="step-title-wrap">
+                            <h3>When are you planning to travel?</h3>
+                            <p>Choose your preferred month. May-June and Sep-Oct offer the best Himalayan clarity.</p>
+                        </div>
+                        <div class="month-pills-grid">
+                            <div class="month-pill-btn" data-value="May">
+                                <span class="month-pill-name">May</span>
+                                <span class="month-pill-status">Spring Peak</span>
+                            </div>
+                            <div class="month-pill-btn" data-value="June">
+                                <span class="month-pill-name">June</span>
+                                <span class="month-pill-status">Summer Peak</span>
+                            </div>
+                            <div class="month-pill-btn" data-value="September">
+                                <span class="month-pill-name">September</span>
+                                <span class="month-pill-status">Autumn Views</span>
+                            </div>
+                            <div class="month-pill-btn" data-value="October">
+                                <span class="month-pill-name">October</span>
+                                <span class="month-pill-status">Golden Autumn</span>
+                            </div>
+                            <div class="month-pill-btn" data-value="Flexible">
+                                <span class="month-pill-name">Flexible</span>
+                                <span class="month-pill-status">Anytime</span>
+                            </div>
+                        </div>
+
+                        <div class="step-title-wrap" style="margin-top: 30px; margin-bottom: 15px;">
+                            <h3>Travel Preferences</h3>
+                            <p>Customize your journey with local support choices.</p>
+                        </div>
+                        <div class="preferences-grid">
+                            <div class="preference-checkbox-card" data-value="Permits Assistance">
+                                <div class="pref-checkbox-custom"><i class="fa-solid fa-check" style="font-size:10px;"></i></div>
+                                <div class="pref-label-wrap">
+                                    <span class="pref-title">Inner Line Permits</span>
+                                    <span class="pref-desc">Assistance with official border verification</span>
+                                </div>
+                            </div>
+                            <div class="preference-checkbox-card" data-value="Porter / Mule Support">
+                                <div class="pref-checkbox-custom"><i class="fa-solid fa-check" style="font-size:10px;"></i></div>
+                                <div class="pref-label-wrap">
+                                    <span class="pref-title">Local Porter Support</span>
+                                    <span class="pref-desc">High-altitude luggage management</span>
+                                </div>
+                            </div>
+                            <div class="preference-checkbox-card" data-value="Premium Homestays">
+                                <div class="pref-checkbox-custom"><i class="fa-solid fa-check" style="font-size:10px;"></i></div>
+                                <div class="pref-label-wrap">
+                                    <span class="pref-title">Community Homestays</span>
+                                    <span class="pref-desc">Experience local culture & Kumaoni food</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: Group Details & Duration -->
+                    <div class="wizard-step-pane" id="step-pane-3">
+                        <div class="step-title-wrap">
+                            <h3>Group Size & Trip Duration</h3>
+                            <p>Tell us how many travelers are joining. Larger groups unlock direct ground savings.</p>
+                        </div>
+                        <div class="step3-controls-grid">
+                            <!-- Group Size Counter -->
+                            <div class="counter-outer">
+                                <div class="counter-title">No. of Travelers</div>
+                                <div class="counter-wrap">
+                                    <button type="button" class="counter-btn" id="btn-traveler-minus">-</button>
+                                    <div class="counter-value" id="traveler-val">1</div>
+                                    <button type="button" class="counter-btn" id="btn-traveler-plus">+</button>
+                                </div>
+                            </div>
+                            <!-- Trip Duration Selector -->
+                            <div class="counter-outer">
+                                <div class="counter-title">Preferred Itinerary Pace</div>
+                                <div class="duration-pills">
+                                    <div class="duration-pill-btn selected" data-value="Standard">
+                                        Standard Pace
+                                    </div>
+                                    <div class="duration-pill-btn" data-value="Compact">
+                                        Compact / Fast
+                                    </div>
+                                    <div class="duration-pill-btn" data-value="Leisurely">
+                                        Leisurely / Extra Days
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 4: Contact Info -->
+                    <div class="wizard-step-pane" id="step-pane-4">
+                        <div class="step-title-wrap">
+                            <h3>Contact Details</h3>
+                            <p>Enter your details below to log your booking quote request.</p>
+                        </div>
+                        <div class="contact-form-grid">
+                            <div class="form-group-custom">
+                                <label for="wizard-name">Full Name <span>*</span></label>
+                                <input type="text" id="wizard-name" class="form-input-custom" placeholder="E.g. Rajesh Dev" required>
+                            </div>
+                            <div class="form-group-custom">
+                                <label for="wizard-phone">WhatsApp Number <span>*</span></label>
+                                <input type="tel" id="wizard-phone" class="form-input-custom" placeholder="E.g. +91 98765 43210" required>
+                            </div>
+                            <div class="form-group-custom" style="grid-column: 1 / -1;">
+                                <label for="wizard-email">Email Address <span style="font-weight:normal; font-size:11px; text-transform:none;">(Optional - for receiving PDF itinerary)</span></label>
+                                <input type="email" id="wizard-email" class="form-input-custom" placeholder="E.g. rajesh@example.com">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- LIVE SUMMARY & PROGRESS BAR -->
+                    <div class="wizard-summary-bar">
+                        <div class="summary-details-wrap">
+                            <div class="summary-selection-text" id="wizard-summary-selection">Destination: Not Selected</div>
+                            <div class="summary-meta-text" id="wizard-summary-meta">Pace: Standard | Month: Flexible | Group: 1 Traveler</div>
+                        </div>
+                        <div class="summary-discount-box">
+                            <div class="discount-label">Est. Group<br>Savings</div>
+                            <div class="discount-val-badge" id="wizard-discount-badge">0%</div>
+                        </div>
+                    </div>
+
+                    <!-- NAVIGATION BUTTONS -->
+                    <div class="wizard-nav-actions">
+                        <button type="button" class="btn-wizard-prev" id="btn-wizard-prev" style="visibility:hidden;"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                        <button type="button" class="btn-wizard-next" id="btn-wizard-next">Next <i class="fa-solid fa-arrow-right"></i></button>
+                        <button type="submit" class="btn-wizard-submit" id="btn-wizard-submit" style="display:none;"><i class="fa-brands fa-whatsapp"></i> Get Custom Quotation</button>
+                    </div>
+                </form>
             </div>
         </div>
     </section>
