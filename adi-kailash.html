@@ -139,6 +139,18 @@
     
     <style>
         /* Redesigned Premium Style Sheet for Adi Kailash */
+        .tour-grid {
+            display: grid;
+            grid-template-columns: 2.1fr 0.9fr !important;
+            gap: 40px !important;
+        }
+
+        @media (max-width: 992px) {
+            .tour-grid {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
         .hero {
             background-image: linear-gradient(to bottom, rgba(10, 25, 47, 0.4), rgba(10, 25, 47, 0.85)), url('assets/images/adi-kailash-hero.webp') !important;
             background-size: cover;
@@ -532,6 +544,8 @@
             color: #FFFFFF !important;
             position: sticky !important;
             top: 100px !important;
+            max-width: 360px !important;
+            width: 100% !important;
         }
 
         .widget-title {
