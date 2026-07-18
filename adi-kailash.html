@@ -704,56 +704,69 @@
         }
 
         /* Related Blog Cards Redesign */
-        .related-blog-card {
-            display: flex;
-            gap: 12px;
-            background: var(--color-bg-card);
-            border: 1px solid var(--glass-border);
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            transition: var(--transition-smooth);
-            text-decoration: none;
-            align-items: center;
+        .related-blog-card-v2 {
+            display: block;
+            background: #FFFFFF !important;
+            border: 1px solid rgba(10, 25, 47, 0.08) !important;
+            border-radius: 16px !important;
+            margin-bottom: 25px !important;
+            box-shadow: 0 4px 20px rgba(10, 25, 47, 0.04) !important;
+            text-decoration: none !important;
+            overflow: hidden !important;
+            transition: var(--transition-smooth) !important;
         }
 
-        .related-blog-card:hover {
+        .related-blog-card-v2:hover {
+            transform: translateY(-4px) !important;
+            box-shadow: 0 10px 30px rgba(10, 25, 47, 0.08) !important;
             border-color: var(--color-gold) !important;
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-subtle);
         }
 
-        .related-blog-card img {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 6px;
-            flex-shrink: 0;
+        .related-blog-card-v2 img {
+            width: 100% !important;
+            height: 180px !important;
+            object-fit: cover !important;
+            display: block !important;
         }
 
-        .related-blog-card-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+        .related-blog-card-v2-body {
+            padding: 20px 22px !important;
         }
 
-        .related-blog-card-tag {
-            font-size: 10px;
-            color: var(--color-gold-dark);
-            font-weight: 700;
-            text-transform: uppercase;
-            margin-bottom: 4px;
-            letter-spacing: 0.5px;
+        .related-blog-card-v2-meta {
+            color: #b8860b !important; /* Gold/yellow shade */
+            font-size: 13px !important;
+            font-weight: 600 !important;
+            margin-bottom: 8px !important;
+            font-family: var(--font-sans) !important;
         }
 
-        .related-blog-card-title {
-            font-size: 13px;
-            color: var(--color-primary);
-            line-height: 1.35;
-            font-weight: 700;
-            margin: 0;
-            font-family: var(--font-sans);
+        .related-blog-card-v2-title {
+            color: var(--color-primary) !important;
+            font-size: 17.5px !important;
+            font-weight: 700 !important;
+            font-family: var(--font-serif), Georgia, serif !important;
+            line-height: 1.35 !important;
+            margin-bottom: 10px !important;
+        }
+
+        .related-blog-card-v2-excerpt {
+            color: var(--color-text-secondary) !important;
+            font-size: 13.5px !important;
+            line-height: 1.55 !important;
+            margin-bottom: 15px !important;
+            font-family: var(--font-sans) !important;
+        }
+
+        .related-blog-card-v2-link {
+            color: #b8860b !important;
+            font-size: 12.5px !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 6px !important;
         }
     </style>
 </head>
@@ -1230,21 +1243,25 @@
 
                 <!-- Related Travel Guides / Blogs -->
                 <div class="related-blogs-widget" style="margin-top: 30px;">
-                    <h3 style="font-size: 15px; margin-bottom: 15px; color: var(--color-primary); border-bottom: 1.5px solid rgba(10, 25, 47, 0.08); padding-bottom: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; font-family: var(--font-sans);">Related Travel Guides</h3>
+                    <h3 style="font-size: 15px; margin-bottom: 20px; color: var(--color-primary); border-bottom: 1.5px solid rgba(10, 25, 47, 0.08); padding-bottom: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; font-family: var(--font-sans);">Related Travel Guides</h3>
                     
-                    <a href="/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates" class="related-blog-card">
-                        <img src="assets/images/adi-kailash-road-closed.jpg" alt="Adi Kailash Monsoon Status" loading="lazy" width="80" height="80">
-                        <div class="related-blog-card-content">
-                            <span class="related-blog-card-tag">Latest Status</span>
-                            <h4 class="related-blog-card-title">Adi Kailash Yatra 2026: Monsoon Suspensions & Reopening Updates</h4>
+                    <a href="/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates" class="related-blog-card-v2">
+                        <img src="assets/images/adi-kailash-road-closed.jpg" alt="Adi Kailash Monsoon Status" loading="lazy" width="360" height="180">
+                        <div class="related-blog-card-v2-body">
+                            <div class="related-blog-card-v2-meta">By Dheerendra Rautela | July 14, 2026</div>
+                            <h4 class="related-blog-card-v2-title">Adi Kailash Yatra 2026 Latest Status: Monsoon Suspensions & Reopening Updates</h4>
+                            <p class="related-blog-card-v2-excerpt">Planning a high-altitude pilgrimage to the Indo-Tibet border requires balancing spiritual intent with strict operational realities. The Adi Kailash and Om Parva...</p>
+                            <span class="related-blog-card-v2-link">Read Diaries <i class="fa-solid fa-arrow-right"></i></span>
                         </div>
                     </a>
 
-                    <a href="/blog/is-adi-kailash-yatra-safe-for-senior-citizens-guide" class="related-blog-card" style="margin-bottom: 0;">
-                        <img src="assets/images/adi-kailash-senior-citizens.jpg" alt="Adi Kailash Safety Guide" loading="lazy" width="80" height="80">
-                        <div class="related-blog-card-content">
-                            <span class="related-blog-card-tag">Safety Guide</span>
-                            <h4 class="related-blog-card-title">Is Adi Kailash Yatra Safe for Senior Citizens? (Complete Guide)</h4>
+                    <a href="/blog/is-adi-kailash-yatra-safe-for-senior-citizens-guide" class="related-blog-card-v2" style="margin-bottom: 0;">
+                        <img src="assets/images/adi-kailash-senior-citizens.jpg" alt="Adi Kailash Safety Guide" loading="lazy" width="360" height="180">
+                        <div class="related-blog-card-v2-body">
+                            <div class="related-blog-card-v2-meta">By Dheerendra Rautela | July 12, 2026</div>
+                            <h4 class="related-blog-card-v2-title">Is Adi Kailash Yatra Safe for Senior Citizens? Guide</h4>
+                            <p class="related-blog-card-v2-excerpt">Embarking on a journey to the sacred peaks of Adi Kailash and Om Parvat is a dream for many elderly pilgrims, but requires careful physical preparation and medical clearance...</p>
+                            <span class="related-blog-card-v2-link">Read Diaries <i class="fa-solid fa-arrow-right"></i></span>
                         </div>
                     </a>
                 </div>
