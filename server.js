@@ -701,15 +701,15 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
            .fontSize(8.5)
            .font('Helvetica-Bold')
            .text('Package Description', 62, tableY + 21)
-           .text('Total Rate (INR)', 450, tableY + 21, { align: 'right', width: 85 });
+           .text('Total Rate (INR)', 425, tableY + 21, { align: 'right', width: 110 });
 
         // Item Row
         doc.fillColor(darkTextColor)
            .font('Helvetica')
            .fontSize(9)
-           .text(`Expedition Package: ${bill.package_name} (Group of ${bill.group_size} Pax)`, 62, tableY + 44, { width: 370 })
+           .text(`Expedition Package: ${bill.package_name} (Group of ${bill.group_size} Pax)`, 62, tableY + 44, { width: 350 })
            .font('Helvetica-Bold')
-           .text(`INR ${parseFloat(bill.total_package_amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 450, tableY + 44, { align: 'right', width: 85 });
+           .text(`INR ${parseFloat(bill.total_package_amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 425, tableY + 44, { align: 'right', width: 110 });
 
         // Border below row
         doc.moveTo(50, tableY + 62).lineTo(545, tableY + 62).strokeColor(borderCol).lineWidth(1).stroke();
@@ -735,7 +735,7 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
            .text('Payment Date', 180, payY + 21)
            .text('Payment Type', 270, payY + 21)
            .text('Method', 370, payY + 21)
-           .text('Amount Received', 450, payY + 21, { align: 'right', width: 85 });
+           .text('Amount Received', 425, payY + 21, { align: 'right', width: 110 });
 
         let currentY = payY + 44;
         const payments = bill.payments_received || [];
@@ -754,7 +754,7 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
                    .text(payment.paymentType || 'Token Advance', 270, currentY)
                    .text(payment.paymentMode || 'UPI', 370, currentY)
                    .font('Helvetica-Bold')
-                   .text(`INR ${parseFloat(payment.amountPaid).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 450, currentY, { align: 'right', width: 85 })
+                   .text(`INR ${parseFloat(payment.amountPaid).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 425, currentY, { align: 'right', width: 110 })
                    .font('Helvetica');
                 
                 currentY += 18;
@@ -766,43 +766,42 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
 
         // 6. Totals & Balance Box
         currentY += 15;
-        const summaryBoxX = 320;
         const totalPaidSoFar = payments.reduce((sum, p) => sum + p.amountPaid, 0);
 
         doc.fillColor(darkTextColor)
            .fontSize(9)
            .font('Helvetica')
-           .text('Total Package Price:', summaryBoxX, currentY)
+           .text('Total Package Price:', 275, currentY)
            .font('Helvetica-Bold')
-           .text(`INR ${parseFloat(bill.total_package_amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 450, currentY, { align: 'right', width: 85 });
+           .text(`INR ${parseFloat(bill.total_package_amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 425, currentY, { align: 'right', width: 110 });
 
         currentY += 16;
         doc.font('Helvetica')
-           .text('Total Amount Paid:', summaryBoxX, currentY)
+           .text('Total Amount Paid:', 275, currentY)
            .font('Helvetica-Bold')
-           .text(`INR ${totalPaidSoFar.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 450, currentY, { align: 'right', width: 85 });
+           .text(`INR ${totalPaidSoFar.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 425, currentY, { align: 'right', width: 110 });
 
         currentY += 20;
         // Balance box
         doc.save()
            .fillColor(accentColor)
            .opacity(0.12)
-           .rect(summaryBoxX - 10, currentY - 6, 235, 26)
+           .rect(265, currentY - 6, 280, 26)
            .fill()
            .restore();
 
         doc.save()
            .strokeColor(accentColor)
            .lineWidth(1)
-           .rect(summaryBoxX - 10, currentY - 6, 235, 26)
+           .rect(265, currentY - 6, 280, 26)
            .stroke()
            .restore();
         
         doc.fillColor('#b2890f')
            .fontSize(9.5)
            .font('Helvetica-Bold')
-           .text('BALANCE DUE ON ARRIVAL:', summaryBoxX, currentY)
-           .text(`INR ${parseFloat(bill.balance_remaining).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 450, currentY, { align: 'right', width: 85 });
+           .text('BALANCE DUE ON ARRIVAL:', 275, currentY)
+           .text(`INR ${parseFloat(bill.balance_remaining).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 425, currentY, { align: 'right', width: 110 });
 
         // 7. Footer disclaimers
         doc.fillColor(lightTextColor)
