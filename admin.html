@@ -1792,7 +1792,10 @@
                                 <span class="admin-item-name">${item.title}</span>
                                 <div class="admin-item-sub">By ${item.author} | Published on ${createdStr}</div>
                             </div>
-                            <div style="display: flex; gap: 8px;">
+                            <div style="display: flex; gap: 8px; align-items: center;">
+                                <a href="/blog/${item.slug}" target="_blank" class="admin-btn-view" style="background-color: rgba(255,255,255,0.05); color: var(--color-gold); border: 1px solid var(--color-gold); width: 32px; height: 32px; border-radius: var(--border-radius-sm); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; text-decoration: none;" title="View Live Blog">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                </a>
                                 <button class="admin-btn-edit" onclick="startEditBlog(${safeItem})" style="background-color: var(--color-gold); color: #0f172a; border: none; width: 32px; height: 32px; border-radius: var(--border-radius-sm); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px;">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </button>
