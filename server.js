@@ -800,10 +800,66 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
         doc.fillColor('#b2890f')
            .fontSize(9.5)
            .font('Helvetica-Bold')
-           .text('BALANCE DUE ON ARRIVAL:', 275, currentY)
+.text('BALANCE DUE ON ARRIVAL:', 275, currentY)
            .text(`INR ${parseFloat(bill.balance_remaining).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 425, currentY, { align: 'right', width: 110 });
 
         // 7. Footer disclaimers
+        doc.addPage({ margin: 50, size: 'A4' });
+
+        // Header on page 2
+        try {
+            if (fs.existsSync(logoPath)) {
+                doc.image(logoPath, 50, 40, { width: 40 });
+            }
+        } catch (imgErr) {
+            console.error('Failed to embed logo in PDF page 2:', imgErr);
+        }
+
+        doc.fillColor(primaryColor)
+           .font('Helvetica-Bold')
+           .fontSize(16)
+           .text('RUDRAANSH YATRA', 100, 43);
+        
+        doc.fillColor(accentColor)
+           .font('Helvetica-Oblique')
+           .fontSize(8.5)
+           .text('Connecting Souls to the Divine', 100, 61);
+
+        doc.moveTo(50, 88).lineTo(545, 88).strokeColor(borderCol).lineWidth(1).stroke();
+
+        // Terms Title
+        doc.fillColor(primaryColor)
+           .font('Helvetica-Bold')
+           .fontSize(12)
+           .text('TERMS & CONDITIONS', 50, 105);
+
+        // Terms List
+        const terms = [
+            { title: 'Code of Conduct', desc: 'The organizers reserve the right to remove any participant at any time, without refund, if rules or safety guidelines are violated.' },
+            { title: 'Damage Policy', desc: 'Any loss or damage to Hotel/Homestays will be chargeable.' },
+            { title: 'Personal Belongings', desc: 'Rudraansh Yatra is not responsible for loss or theft of personal items during the trip.' },
+            { title: 'Delays & Disruptions', desc: 'The company is not liable for delays or changes caused by traffic, weather conditions, landslides, or any other natural or unforeseen events.' },
+            { title: 'Amenities', desc: 'Availability of hot water and other facilities may vary depending on the location.' },
+            { title: 'Itinerary Changes', desc: 'The trip plan and itinerary are subject to modification based on local conditions, weather, or safety concerns.' },
+            { title: 'Booking Policy', desc: 'Once confirmed, bookings are non-cancellable, non-refundable, and non-transferable.' },
+            { title: 'Cleanliness & Cooperation', desc: 'Please help maintain cleanliness and cooperate with your fellow travelers and team members.' },
+            { title: 'Spirit of Travel', desc: 'Travel responsibly, respect others, and enjoy a memorable journey with Rudraansh Yatra.' }
+        ];
+
+        let termsY = 130;
+        terms.forEach(term => {
+            doc.fillColor(primaryColor)
+               .font('Helvetica-Bold')
+               .fontSize(8.5)
+               .text(`${term.title}: `, 50, termsY, { continued: true })
+               .fillColor(darkTextColor)
+               .font('Helvetica')
+               .text(term.desc, { width: 495 });
+
+            termsY += doc.heightOfString(`${term.title}: ${term.desc}`, { width: 495 }) + 8;
+        });
+
+        // 7. Footer disclaimers at the bottom of Page 2
         doc.fillColor(lightTextColor)
            .font('Helvetica-Oblique')
            .fontSize(8)
