@@ -3999,7 +3999,7 @@
 
                 const updatedPayments = [...(bill.payments_received || []), newPayment];
                 const totalPaid = updatedPayments.reduce((sum, p) => sum + p.amountPaid, 0);
-                const newBalance = parseFloat(bill.total_package_amount) - totalPaid;
+                const newBalance = Math.max(0, parseFloat(bill.total_package_amount) - totalPaid);
 
                 let newStatus = 'Pending';
                 if (totalPaid > 0) {

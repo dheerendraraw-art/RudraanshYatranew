@@ -515,7 +515,7 @@ app.post('/api/billing/:id/payment', async (req, res) => {
 
         const updatedPayments = [...(bill.payments_received || []), newPayment];
         const totalPaid = updatedPayments.reduce((sum, p) => sum + p.amountPaid, 0);
-        const newBalance = parseFloat(bill.total_package_amount) - totalPaid;
+        const newBalance = Math.max(0, parseFloat(bill.total_package_amount) - totalPaid);
 
         let newStatus = 'Pending';
         if (totalPaid > 0) {
@@ -813,7 +813,8 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
 
         // Right Column: Totals & Balance due Box
         let rightY = currentY + 15;
-        const totalPaidSoFar = payments.reduce((sum, p) => sum + p.amountPaid, 0);
+        const totalPaidSoFar = payments.reduce((sum, p) => sum + parseFloat(p.amountPaid || 0), 0);
+        const calculatedBalance = Math.max(0, parseFloat(bill.total_package_amount) - totalPaidSoFar);
 
         doc.fillColor(darkTextColor)
            .fontSize(9)
@@ -847,8 +848,8 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
         doc.fillColor('#b2890f')
            .fontSize(9.5)
            .font('Helvetica-Bold')
-           .text('BALANCE DUE ON ARRIVAL:', 320, rightY)
-           .text(`INR ${parseFloat(bill.balance_remaining).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 425, rightY, { align: 'right', width: 110 });
+           .text('BALANCE DUE:', 320, rightY)
+           .text(`INR ${calculatedBalance.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 425, rightY, { align: 'right', width: 110 });
 
         // 7. Footer disclaimers at the bottom of Page 1
         doc.fillColor(lightTextColor)
@@ -1063,7 +1064,7 @@ app.post('/api/verify-payment', async (req, res) => {
 
         const updatedPayments = [...(bill.payments_received || []), newPayment];
         const totalPaid = updatedPayments.reduce((sum, p) => sum + p.amountPaid, 0);
-        const newBalance = parseFloat(bill.total_package_amount) - totalPaid;
+        const newBalance = Math.max(0, parseFloat(bill.total_package_amount) - totalPaid);
 
         let newStatus = 'Pending';
         if (totalPaid > 0) {
