@@ -567,6 +567,9 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
             res.setHeader('Content-Disposition', `attachment; filename="Invoice_${bill.booking_id}.pdf"`);
             res.setHeader('Content-Type', 'application/pdf');
             res.setHeader('Content-Length', pdfBuffer.length);
+            res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+            res.setHeader('Pragma', 'no-cache');
+            res.setHeader('Expires', '0');
             res.send(pdfBuffer);
         });
 
