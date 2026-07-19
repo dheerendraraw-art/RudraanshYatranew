@@ -764,111 +764,102 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
         // Border below payments
         doc.moveTo(50, currentY - 5).lineTo(545, currentY - 5).strokeColor(borderCol).lineWidth(1).stroke();
 
-        // 6. Totals & Balance Box
+        // 6. Side-by-Side Totals & Terms Section
         currentY += 15;
+
+        // Left Column: Terms & Conditions
+        doc.fillColor(primaryColor)
+           .font('Helvetica-Bold')
+           .fontSize(8.5)
+           .text('TERMS & CONDITIONS', 50, currentY);
+
+        const boxY = currentY + 12;
+        const boxHeight = 125;
+        const boxWidth = 250;
+        doc.save()
+           .fillColor(lightBg)
+           .rect(50, boxY, boxWidth, boxHeight)
+           .fill()
+           .strokeColor(borderCol)
+           .lineWidth(1)
+           .rect(50, boxY, boxWidth, boxHeight)
+           .stroke()
+           .restore();
+
+        const shortTerms = [
+            { title: 'Conduct', desc: 'Safety rules violators can be removed without refund.' },
+            { title: 'Damage', desc: 'Any loss/damage to hotels or homestays is chargeable.' },
+            { title: 'Belongings', desc: 'Rudraansh Yatra is not responsible for loss/theft of items.' },
+            { title: 'Delays', desc: 'Not liable for delays/changes due to weather/landslides.' },
+            { title: 'Amenities', desc: 'Hot water & other facilities availability varies by location.' },
+            { title: 'Itinerary', desc: 'Plans subject to change due to weather or safety.' },
+            { title: 'Booking', desc: 'All confirmed bookings are non-refundable/non-cancellable.' },
+            { title: 'Cleanliness', desc: 'Maintain cleanliness and cooperate with team members.' },
+            { title: 'Spirit', desc: 'Travel responsibly, respect others, and enjoy your journey.' }
+        ];
+
+        let termItemY = boxY + 6;
+        doc.fontSize(5.5).lineGap(0.6);
+        shortTerms.forEach(term => {
+            doc.fillColor(primaryColor)
+               .font('Helvetica-Bold')
+               .text(`${term.title}: `, 58, termItemY, { continued: true, width: boxWidth - 16 })
+               .fillColor(darkTextColor)
+               .font('Helvetica')
+               .text(term.desc, { width: boxWidth - 16 });
+
+            termItemY += doc.heightOfString(`${term.title}: ${term.desc}`, { width: boxWidth - 16, lineGap: 0.6 }) + 2.5;
+        });
+
+        // Right Column: Totals & Balance due Box
+        let rightY = currentY + 15;
         const totalPaidSoFar = payments.reduce((sum, p) => sum + p.amountPaid, 0);
 
         doc.fillColor(darkTextColor)
            .fontSize(9)
            .font('Helvetica')
-           .text('Total Package Price:', 275, currentY)
+           .text('Total Package Price:', 320, rightY)
            .font('Helvetica-Bold')
-           .text(`INR ${parseFloat(bill.total_package_amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 425, currentY, { align: 'right', width: 110 });
+           .text(`INR ${parseFloat(bill.total_package_amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 425, rightY, { align: 'right', width: 110 });
 
-        currentY += 16;
+        rightY += 16;
         doc.font('Helvetica')
-           .text('Total Amount Paid:', 275, currentY)
+           .text('Total Amount Paid:', 320, rightY)
            .font('Helvetica-Bold')
-           .text(`INR ${totalPaidSoFar.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 425, currentY, { align: 'right', width: 110 });
+           .text(`INR ${totalPaidSoFar.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 425, rightY, { align: 'right', width: 110 });
 
-        currentY += 20;
+        rightY += 20;
         // Balance box
         doc.save()
            .fillColor(accentColor)
            .opacity(0.12)
-           .rect(265, currentY - 6, 280, 26)
+           .rect(310, rightY - 6, 235, 26)
            .fill()
            .restore();
 
         doc.save()
            .strokeColor(accentColor)
            .lineWidth(1)
-           .rect(265, currentY - 6, 280, 26)
+           .rect(310, rightY - 6, 235, 26)
            .stroke()
            .restore();
         
         doc.fillColor('#b2890f')
            .fontSize(9.5)
            .font('Helvetica-Bold')
-.text('BALANCE DUE ON ARRIVAL:', 275, currentY)
-           .text(`INR ${parseFloat(bill.balance_remaining).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 425, currentY, { align: 'right', width: 110 });
+           .text('BALANCE DUE ON ARRIVAL:', 320, rightY)
+           .text(`INR ${parseFloat(bill.balance_remaining).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 425, rightY, { align: 'right', width: 110 });
 
-        // 7. Footer disclaimers
-        doc.addPage({ margin: 50, size: 'A4' });
-
-        // Header on page 2
-        try {
-            if (fs.existsSync(logoPath)) {
-                doc.image(logoPath, 50, 40, { width: 40 });
-            }
-        } catch (imgErr) {
-            console.error('Failed to embed logo in PDF page 2:', imgErr);
-        }
-
-        doc.fillColor(primaryColor)
-           .font('Helvetica-Bold')
-           .fontSize(16)
-           .text('RUDRAANSH YATRA', 100, 43);
-        
-        doc.fillColor(accentColor)
-           .font('Helvetica-Oblique')
-           .fontSize(8.5)
-           .text('Connecting Souls to the Divine', 100, 61);
-
-        doc.moveTo(50, 88).lineTo(545, 88).strokeColor(borderCol).lineWidth(1).stroke();
-
-        // Terms Title
-        doc.fillColor(primaryColor)
-           .font('Helvetica-Bold')
-           .fontSize(12)
-           .text('TERMS & CONDITIONS', 50, 105);
-
-        // Terms List
-        const terms = [
-            { title: 'Code of Conduct', desc: 'The organizers reserve the right to remove any participant at any time, without refund, if rules or safety guidelines are violated.' },
-            { title: 'Damage Policy', desc: 'Any loss or damage to Hotel/Homestays will be chargeable.' },
-            { title: 'Personal Belongings', desc: 'Rudraansh Yatra is not responsible for loss or theft of personal items during the trip.' },
-            { title: 'Delays & Disruptions', desc: 'The company is not liable for delays or changes caused by traffic, weather conditions, landslides, or any other natural or unforeseen events.' },
-            { title: 'Amenities', desc: 'Availability of hot water and other facilities may vary depending on the location.' },
-            { title: 'Itinerary Changes', desc: 'The trip plan and itinerary are subject to modification based on local conditions, weather, or safety concerns.' },
-            { title: 'Booking Policy', desc: 'Once confirmed, bookings are non-cancellable, non-refundable, and non-transferable.' },
-            { title: 'Cleanliness & Cooperation', desc: 'Please help maintain cleanliness and cooperate with your fellow travelers and team members.' },
-            { title: 'Spirit of Travel', desc: 'Travel responsibly, respect others, and enjoy a memorable journey with Rudraansh Yatra.' }
-        ];
-
-        let termsY = 130;
-        terms.forEach(term => {
-            doc.fillColor(primaryColor)
-               .font('Helvetica-Bold')
-               .fontSize(8.5)
-               .text(`${term.title}: `, 50, termsY, { continued: true })
-               .fillColor(darkTextColor)
-               .font('Helvetica')
-               .text(term.desc, { width: 495 });
-
-            termsY += doc.heightOfString(`${term.title}: ${term.desc}`, { width: 495 }) + 8;
-        });
-
-        // 7. Footer disclaimers at the bottom of Page 2
+        // 7. Footer disclaimers at the bottom of Page 1
         doc.fillColor(lightTextColor)
            .font('Helvetica-Oblique')
-           .fontSize(8)
-           .text('This is a computer generated invoice and requires no physical signature.', 50, 715, { align: 'center', width: 495 });
+           .fontSize(7.5)
+           .text('This is a computer generated invoice and requires no physical signature.', 50, 712, { align: 'center', width: 495 });
 
         doc.fillColor(primaryColor)
            .font('Helvetica-Bold')
-           .fontSize(7.5)
-           .text('This is a non-GST Bill of Supply issued by a non-registered supplier operating within the statutory threshold exemption limits.', 50, 728, { align: 'center', width: 495 });
+           .fontSize(7)
+           .text('This is a non-GST Bill of Supply issued by a non-registered supplier operating within the statutory threshold exemption limits.', 50, 723, { align: 'center', width: 495 });
 
         doc.end();
     } catch (err) {
