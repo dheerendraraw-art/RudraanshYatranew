@@ -1049,16 +1049,29 @@ function initializeDiscountPopup() {
 
         // Only do infinite loop cloning if we have at least 2 cards to loop
         if (N >= 2) {
-            // Clone and append
-            originalCards.forEach(card => {
+            // Helper to prepare clones for accessibility and SEO
+            const prepareClone = (card) => {
                 const clone = card.cloneNode(true);
                 clone.classList.add('blog-card-clone');
+                clone.removeAttribute('id');
+                clone.setAttribute('aria-hidden', 'true');
+                clone.querySelectorAll('a, button').forEach(el => {
+                    el.setAttribute('tabindex', '-1');
+                    if (el.tagName === 'A') {
+                        el.setAttribute('rel', 'nofollow');
+                    }
+                });
+                return clone;
+            };
+
+            // Clone and append
+            originalCards.forEach(card => {
+                const clone = prepareClone(card);
                 track.appendChild(clone);
             });
             // Clone and prepend (reverse to preserve original order 1, 2, 3, 4)
             originalCards.slice().reverse().forEach(card => {
-                const clone = card.cloneNode(true);
-                clone.classList.add('blog-card-clone');
+                const clone = prepareClone(card);
                 track.insertBefore(clone, track.firstChild);
             });
         }
