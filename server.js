@@ -151,6 +151,14 @@ app.get('/blogs', async (req, res) => {
 app.get('/blog/:slug', async (req, res) => {
     const slug = req.params.slug;
 
+    // Redirect legacy long slug to clean optimized slug
+    const legacySlugs = {
+        'due-to-china-denying-clearance-for-the-lipulekh-crossing-28-indian-businessmen-were-forced-to-return': 'china-denies-lipulekh-clearance-indian-traders-return'
+    };
+    if (legacySlugs[slug]) {
+        return res.redirect(301, `/blog/${legacySlugs[slug]}`);
+    }
+
     try {
         let blog = null;
         let adjacentBlogsHtml = '';
@@ -230,8 +238,8 @@ app.get('/blog/:slug', async (req, res) => {
                 if (/^[*+-]\s/.test(trimmed)) {
                     return `<p class="blog-bullet">${trimmed.substring(2)}</p>`;
                 }
-                // Bypass paragraph wrapping for script tags, raw HTML tags, or JSON structure lines
-                if (trimmed.startsWith('<script') || trimmed.endsWith('</script>') || trimmed.startsWith('<div') || trimmed.startsWith('</div') || trimmed.startsWith('{') || trimmed.startsWith('}') || trimmed.startsWith('"') || trimmed.startsWith(']')) {
+                // Bypass paragraph wrapping for HTML tags, script tags, or JSON structure lines
+                if (/^<[a-zA-Z0-9]+/.test(trimmed) || trimmed.endsWith('</script>') || trimmed.startsWith('{') || trimmed.startsWith('}') || trimmed.startsWith('"') || trimmed.startsWith(']')) {
                     return trimmed;
                 }
                 return `<p class="blog-text">${trimmed}</p>`;
