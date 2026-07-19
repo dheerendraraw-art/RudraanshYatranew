@@ -573,162 +573,247 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
         const primaryColor = '#072654';
         const accentColor = '#d4af37';
         const darkTextColor = '#1f2937';
-        const lightTextColor = '#6b7280';
-        const tableHeaderBg = '#f3f4f6';
+        const lightTextColor = '#4b5563';
+        const tableHeaderBg = '#072654';
+        const lightBg = '#f8fafc';
+        const borderCol = '#e2e8f0';
 
+        // 1. Header with Logo & Brand details
+        const logoPath = path.join(__dirname, 'assets/images/logo.png');
+        try {
+            if (fs.existsSync(logoPath)) {
+                doc.image(logoPath, 50, 40, { width: 50 });
+            }
+        } catch (imgErr) {
+            console.error('Failed to embed logo in PDF:', imgErr);
+        }
+
+        // Title and tagline next to logo
         doc.fillColor(primaryColor)
            .font('Helvetica-Bold')
-           .fontSize(22)
-           .text('RUDRAANSH YATRA', 50, 50);
+           .fontSize(20)
+           .text('RUDRAANSH YATRA', 110, 45);
         
-        doc.fillColor(lightTextColor)
-           .font('Helvetica')
-           .fontSize(9)
-           .text('PREMIUM TREK & PILGRIMAGE OPERATOR', 50, 75);
+        doc.fillColor(accentColor)
+           .font('Helvetica-Oblique')
+           .fontSize(10)
+           .text('Connecting Souls to the Divine', 110, 68);
 
+        // Address & Contacts (Right-aligned)
         doc.fillColor(darkTextColor)
-           .fontSize(9)
-           .text('1st Floor Above Punetha Bookstore,', 320, 50, { align: 'right', width: 220 })
-           .text('Simailgair Bazaar, Pithoragarh,', 320, 62, { align: 'right', width: 220 })
-           .text('Uttarakhand - 262501', 320, 74, { align: 'right', width: 220 })
+           .font('Helvetica')
+           .fontSize(8.5)
+           .text('1st Floor Above Punetha Bookstore,', 320, 40, { align: 'right', width: 225 })
+           .text('Simailgair Bazaar, Pithoragarh,', 320, 51, { align: 'right', width: 225 })
+           .text('Uttarakhand - 262501', 320, 62, { align: 'right', width: 225 })
            .fillColor(primaryColor)
-           .text('Phone: +91 7617617651 | info@rudraanshyatra.com', 320, 86, { align: 'right', width: 220 });
+           .font('Helvetica-Bold')
+           .text('Phone: +91 7617617651 | info@rudraanshyatra.com', 320, 73, { align: 'right', width: 225 });
 
-        doc.moveTo(50, 105).lineTo(545, 105).strokeColor('#e5e7eb').lineWidth(1.5).stroke();
+        // Divider
+        doc.moveTo(50, 98).lineTo(545, 98).strokeColor(borderCol).lineWidth(1.5).stroke();
 
+        // 2. Invoice Meta Info
         doc.fillColor(primaryColor)
            .font('Helvetica-Bold')
-           .fontSize(14)
-           .text('BILL OF SUPPLY (NON-GST)', 50, 120);
+           .fontSize(13)
+           .text('BILL OF SUPPLY (NON-GST)', 50, 110);
 
         doc.fillColor(darkTextColor)
            .font('Helvetica')
-           .fontSize(9)
-           .text(`Invoice No: BILL-${bill.booking_id}`, 50, 138)
-           .text(`Date: ${new Date(bill.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`, 50, 150)
-           .text(`Booking ID: ${bill.booking_id}`, 50, 162);
+           .fontSize(8.5)
+           .text(`Invoice No:  BILL-${bill.booking_id}`, 50, 128)
+           .text(`Date:            ${new Date(bill.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`, 50, 139)
+           .text(`Booking ID:   ${bill.booking_id}`, 50, 150);
+
+        // 3. Billing Info Side-by-Side Cards
+        const cardY = 175;
+        const cardHeight = 70;
+        
+        // Left Card (Billed To)
+        doc.save()
+           .fillColor(lightBg)
+           .rect(50, cardY, 235, cardHeight)
+           .fill()
+           .strokeColor(borderCol)
+           .lineWidth(1)
+           .rect(50, cardY, 235, cardHeight)
+           .stroke()
+           .restore();
 
         doc.fillColor(primaryColor)
            .font('Helvetica-Bold')
-           .fontSize(11)
-           .text('BILLED TO', 50, 185)
-           .text('YATRA & TOUR DETAILS', 300, 185);
-
-        doc.fillColor(darkTextColor)
-           .font('Helvetica')
            .fontSize(9.5)
-           .text(bill.customer_name, 50, 202, { width: 220 })
+           .text('BILLED TO', 62, cardY + 10);
+
+        doc.fillColor(darkTextColor)
+           .font('Helvetica-Bold')
+           .fontSize(10)
+           .text(bill.customer_name, 62, cardY + 24, { width: 210, ellipsis: true })
+           .font('Helvetica')
+           .fontSize(8.5)
            .fillColor(lightTextColor)
-           .text(`Phone: ${bill.customer_phone}`, 50, 216)
-           .text(`Email: ${bill.customer_email || 'N/A'}`, 50, 228);
+           .text(`Phone: ${bill.customer_phone}`, 62, cardY + 38)
+           .text(`Email: ${bill.customer_email || 'N/A'}`, 62, cardY + 49);
+
+        // Right Card (Yatra Details)
+        doc.save()
+           .fillColor(lightBg)
+           .rect(300, cardY, 245, cardHeight)
+           .fill()
+           .strokeColor(borderCol)
+           .lineWidth(1)
+           .rect(300, cardY, 245, cardHeight)
+           .stroke()
+           .restore();
+
+        doc.fillColor(primaryColor)
+           .font('Helvetica-Bold')
+           .fontSize(9.5)
+           .text('YATRA & TOUR DETAILS', 312, cardY + 10);
 
         const startDateStr = new Date(bill.tour_start_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
         doc.fillColor(darkTextColor)
+           .font('Helvetica-Bold')
+           .fontSize(10)
+           .text(bill.package_name, 312, cardY + 24, { width: 220, ellipsis: true })
            .font('Helvetica')
-           .fontSize(9.5)
-           .text(bill.package_name, 300, 202, { width: 245 })
+           .fontSize(8.5)
            .fillColor(lightTextColor)
-           .text(`Group Size: ${bill.group_size} Pax`, 300, 216)
-           .text(`Reporting Date: ${startDateStr}`, 300, 228);
+           .text(`Group Size: ${bill.group_size} Pax`, 312, cardY + 38)
+           .text(`Reporting Date: ${startDateStr}`, 312, cardY + 49);
 
-        doc.moveTo(50, 255).lineTo(545, 255).strokeColor('#e5e7eb').lineWidth(1).stroke();
-
+        // 4. Booking Charges Table
+        const tableY = 265;
         doc.fillColor(primaryColor)
            .font('Helvetica-Bold')
-           .fontSize(11)
-           .text('BOOKING CHARGES', 50, 270);
+           .fontSize(10.5)
+           .text('BOOKING CHARGES', 50, tableY);
 
-        doc.rect(50, 285, 495, 20).fill(tableHeaderBg);
-        doc.fillColor(darkTextColor)
-           .fontSize(9)
-           .font('Helvetica-Bold')
-           .text('Package Description', 60, 291)
-           .text('Total Rate (INR)', 450, 291, { align: 'right', width: 85 });
-
-        doc.font('Helvetica')
-           .fontSize(9.5)
-           .text(`Expedition Package: ${bill.package_name} (Group of ${bill.group_size} Pax)`, 60, 314, { width: 370 })
-           .text(`INR ${parseFloat(bill.total_package_amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 450, 314, { align: 'right', width: 85 });
-
-        doc.moveTo(50, 340).lineTo(545, 340).strokeColor('#e5e7eb').lineWidth(1).stroke();
-
-        doc.fillColor(primaryColor)
-           .font('Helvetica-Bold')
-           .fontSize(11)
-           .text('PAYMENTS RECEIVED HISTORY', 50, 360);
-
-        doc.rect(50, 375, 495, 20).fill(tableHeaderBg);
-        doc.fillColor(darkTextColor)
+        // Header Row
+        doc.save()
+           .fillColor(primaryColor)
+           .rect(50, tableY + 15, 495, 20)
+           .fill()
+           .restore();
+        
+        doc.fillColor('#FFFFFF')
            .fontSize(8.5)
            .font('Helvetica-Bold')
-           .text('Receipt ID', 60, 381)
-           .text('Payment Date', 180, 381)
-           .text('Payment Type', 270, 381)
-           .text('Method', 390, 381)
-           .text('Amount Received', 450, 381, { align: 'right', width: 85 });
+           .text('Package Description', 62, tableY + 21)
+           .text('Total Rate (INR)', 450, tableY + 21, { align: 'right', width: 85 });
 
-        let currentY = 403;
+        // Item Row
+        doc.fillColor(darkTextColor)
+           .font('Helvetica')
+           .fontSize(9)
+           .text(`Expedition Package: ${bill.package_name} (Group of ${bill.group_size} Pax)`, 62, tableY + 44, { width: 370 })
+           .font('Helvetica-Bold')
+           .text(`INR ${parseFloat(bill.total_package_amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 450, tableY + 44, { align: 'right', width: 85 });
+
+        // Border below row
+        doc.moveTo(50, tableY + 62).lineTo(545, tableY + 62).strokeColor(borderCol).lineWidth(1).stroke();
+
+        // 5. Payments Received History Table
+        const payY = tableY + 80;
+        doc.fillColor(primaryColor)
+           .font('Helvetica-Bold')
+           .fontSize(10.5)
+           .text('PAYMENTS RECEIVED HISTORY', 50, payY);
+
+        // Header Row
+        doc.save()
+           .fillColor(primaryColor)
+           .rect(50, payY + 15, 495, 20)
+           .fill()
+           .restore();
+
+        doc.fillColor('#FFFFFF')
+           .fontSize(8.5)
+           .font('Helvetica-Bold')
+           .text('Receipt ID', 62, payY + 21)
+           .text('Payment Date', 180, payY + 21)
+           .text('Payment Type', 270, payY + 21)
+           .text('Method', 370, payY + 21)
+           .text('Amount Received', 450, payY + 21, { align: 'right', width: 85 });
+
+        let currentY = payY + 44;
         const payments = bill.payments_received || [];
-
-        doc.font('Helvetica').fontSize(9);
+        doc.font('Helvetica').fontSize(8.5);
 
         if (payments.length === 0) {
             doc.fillColor(lightTextColor)
-               .text('No payment transactions logged yet.', 60, currentY);
+               .text('No payment transactions logged yet.', 62, currentY);
             currentY += 18;
         } else {
             payments.forEach((payment) => {
                 const dateVal = new Date(payment.date).toLocaleDateString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit' });
                 doc.fillColor(darkTextColor)
-                   .text(payment.receiptId, 60, currentY)
+                   .text(payment.receiptId, 62, currentY)
                    .text(dateVal, 180, currentY)
                    .text(payment.paymentType || 'Token Advance', 270, currentY)
-                   .text(payment.paymentMode || 'UPI', 390, currentY)
-                   .text(`INR ${parseFloat(payment.amountPaid).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 450, currentY, { align: 'right', width: 85 });
+                   .text(payment.paymentMode || 'UPI', 370, currentY)
+                   .font('Helvetica-Bold')
+                   .text(`INR ${parseFloat(payment.amountPaid).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 450, currentY, { align: 'right', width: 85 })
+                   .font('Helvetica');
                 
                 currentY += 18;
             });
         }
 
-        doc.moveTo(50, currentY - 5).lineTo(545, currentY - 5).strokeColor('#e5e7eb').lineWidth(1).stroke();
+        // Border below payments
+        doc.moveTo(50, currentY - 5).lineTo(545, currentY - 5).strokeColor(borderCol).lineWidth(1).stroke();
 
+        // 6. Totals & Balance Box
         currentY += 15;
-        const summaryBoxX = 330;
+        const summaryBoxX = 320;
         const totalPaidSoFar = payments.reduce((sum, p) => sum + p.amountPaid, 0);
 
         doc.fillColor(darkTextColor)
-           .fontSize(9.5)
+           .fontSize(9)
            .font('Helvetica')
            .text('Total Package Price:', summaryBoxX, currentY)
+           .font('Helvetica-Bold')
            .text(`INR ${parseFloat(bill.total_package_amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 450, currentY, { align: 'right', width: 85 });
 
         currentY += 16;
-        doc.text('Total Amount Paid:', summaryBoxX, currentY)
+        doc.font('Helvetica')
+           .text('Total Amount Paid:', summaryBoxX, currentY)
+           .font('Helvetica-Bold')
            .text(`INR ${totalPaidSoFar.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 450, currentY, { align: 'right', width: 85 });
 
         currentY += 20;
+        // Balance box
         doc.save()
-           .fillColor('#d4af37')
-           .opacity(0.15)
-           .rect(summaryBoxX - 10, currentY - 6, 225, 26)
+           .fillColor(accentColor)
+           .opacity(0.12)
+           .rect(summaryBoxX - 10, currentY - 6, 235, 26)
            .fill()
+           .restore();
+
+        doc.save()
+           .strokeColor(accentColor)
+           .lineWidth(1)
+           .rect(summaryBoxX - 10, currentY - 6, 235, 26)
+           .stroke()
            .restore();
         
         doc.fillColor('#b2890f')
-           .fontSize(10)
+           .fontSize(9.5)
            .font('Helvetica-Bold')
            .text('BALANCE DUE ON ARRIVAL:', summaryBoxX, currentY)
            .text(`INR ${parseFloat(bill.balance_remaining).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 450, currentY, { align: 'right', width: 85 });
 
+        // 7. Footer disclaimers
         doc.fillColor(lightTextColor)
            .font('Helvetica-Oblique')
-           .fontSize(8.5)
+           .fontSize(8)
            .text('This is a computer generated invoice and requires no physical signature.', 50, 715, { align: 'center', width: 495 });
 
         doc.fillColor(primaryColor)
            .font('Helvetica-Bold')
-           .fontSize(8)
-           .text('This is a non-GST Bill of Supply issued by a non-registered supplier operating within the statutory threshold exemption limits.', 50, 730, { align: 'center', width: 495 });
+           .fontSize(7.5)
+           .text('This is a non-GST Bill of Supply issued by a non-registered supplier operating within the statutory threshold exemption limits.', 50, 728, { align: 'center', width: 495 });
 
         doc.end();
     } catch (err) {
