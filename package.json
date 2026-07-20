@@ -12,6 +12,7 @@
     "express": "^4.19.2",
     "pdfkit": "^0.15.0",
     "puppeteer-core": "^25.3.0",
-    "razorpay": "^2.9.4"
+    "razorpay": "^2.9.4",
+    "sharp": "^0.35.3"
   }
 }
