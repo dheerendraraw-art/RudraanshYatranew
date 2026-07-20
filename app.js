@@ -1283,3 +1283,31 @@ function initializeDiscountPopup() {
                 window.location.href = `/payment?${queryParams.toString()}`;
             });
         }
+    });
+
+    // FAQ Accordion Toggle
+    document.querySelectorAll('.faq-question').forEach(button => {
+        button.addEventListener('click', () => {
+            const faqItem = button.parentElement;
+            const answer = faqItem.querySelector('.faq-answer');
+            const icon = button.querySelector('i');
+            
+            // Check if active
+            const isActive = faqItem.classList.contains('active');
+            
+            // Close all others
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+                item.querySelector('.faq-answer').style.maxHeight = null;
+                const otherIcon = item.querySelector('.faq-question i');
+                if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
+            });
+            
+            if (!isActive) {
+                faqItem.classList.add('active');
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+                if (icon) icon.style.transform = 'rotate(180deg)';
+            }
+        });
+    });
+})();
