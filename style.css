@@ -2617,12 +2617,224 @@ footer h3::after, footer h4::after {
     animation: shake 0.4s ease;
 }
 
-/* Responsive adjust for mobile */
+/* Responsive adjust for mobile staff users */
 @media (max-width: 768px) {
     .admin-navbar {
-        flex-direction: column;
-        gap: 12px;
-        text-align: center;
+        padding: 12px 14px !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+    }
+
+    .admin-logo {
+        font-size: 17px !important;
+        gap: 8px !important;
+    }
+
+    .admin-logo img {
+        height: 32px !important;
+        width: 32px !important;
+    }
+
+    #user-badge {
+        font-size: 11px !important;
+        padding: 4px 8px !important;
+    }
+
+    .admin-logout-btn {
+        padding: 6px 12px !important;
+        font-size: 12px !important;
+    }
+
+    .admin-dashboard-container {
+        margin: 12px auto !important;
+        padding: 0 10px !important;
+    }
+
+    /* Stats Grid on Mobile (Compact 2-Column Grid) */
+    .admin-stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+        margin-bottom: 16px !important;
+    }
+
+    .admin-stat-card {
+        padding: 12px 14px !important;
+        gap: 12px !important;
+        border-radius: 8px !important;
+    }
+
+    .admin-stat-icon {
+        width: 38px !important;
+        height: 38px !important;
+        font-size: 18px !important;
+        border-radius: 6px !important;
+    }
+
+    .admin-stat-num {
+        font-size: 20px !important;
+    }
+
+    .admin-stat-label {
+        font-size: 10px !important;
+        letter-spacing: 0px !important;
+    }
+
+    /* Tab Navigation - Touch Scroll Pill Bar */
+    .admin-tab-nav {
+        display: flex !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        white-space: nowrap !important;
+        padding: 6px !important;
+        margin-bottom: 20px !important;
+        gap: 6px !important;
+        border-radius: 24px !important;
+        scrollbar-width: none !important;
+    }
+
+    .admin-tab-nav::-webkit-scrollbar {
+        display: none !important;
+    }
+
+    .admin-tab-btn {
+        padding: 8px 16px !important;
+        font-size: 12.5px !important;
+        font-weight: 600 !important;
+        border-radius: 20px !important;
+        flex-shrink: 0 !important;
+    }
+
+    /* Filters & Search Header on Mobile */
+    .admin-tab-content-pane > div[style*="justify-content: space-between"] {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 10px !important;
+    }
+
+    .admin-tab-content-pane > div[style*="justify-content: space-between"] > div {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+        width: 100% !important;
+    }
+
+    .admin-tab-content-pane > div[style*="justify-content: space-between"] button {
+        flex: 1 1 auto !important;
+        min-height: 40px !important;
+        justify-content: center !important;
+    }
+
+    /* Mobile Table Card Transformation */
+    .admin-table-container {
+        border: none !important;
+        box-shadow: none !important;
+        background: transparent !important;
+        overflow: visible !important;
+    }
+
+    .admin-table {
+        min-width: 100% !important;
+        display: block !important;
+    }
+
+    .admin-table thead {
+        display: none !important;
+    }
+
+    .admin-table tbody {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+    }
+
+    .admin-table tbody tr {
+        display: flex !important;
+        flex-direction: column !important;
+        background: rgba(30, 41, 59, 0.75) !important;
+        border: 1px solid var(--glass-border) !important;
+        border-left: 4px solid var(--color-gold) !important;
+        border-radius: 12px !important;
+        padding: 14px 16px !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25) !important;
+        margin-bottom: 0 !important;
+    }
+
+    .admin-table tbody tr td {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 8px 0 !important;
+        border-bottom: 1px dashed rgba(255, 255, 255, 0.08) !important;
+        font-size: 13.5px !important;
+        text-align: right !important;
+        min-height: 34px !important;
+    }
+
+    .admin-table tbody tr td::before {
+        content: attr(data-label);
+        font-weight: 700;
+        color: var(--color-slate);
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-right: 12px;
+        text-align: left;
+        flex-shrink: 0;
+    }
+
+    .admin-table tbody tr td:last-child {
+        border-bottom: none !important;
+        margin-top: 6px !important;
+        padding-top: 10px !important;
+        justify-content: flex-start !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+    }
+
+    .admin-table tbody tr td:last-child::before {
+        display: block;
+        width: 100%;
+        margin-bottom: 6px;
+    }
+
+    /* Modal Mobile Adjustments */
+    .admin-lock-card {
+        padding: 24px 18px !important;
+        max-width: 95% !important;
+    }
+
+    .modal-content {
+        width: 95% !important;
+        max-width: 95% !important;
+        padding: 20px 16px !important;
+        border-radius: 14px !important;
+        max-height: 88vh !important;
+        overflow-y: auto !important;
+    }
+
+    .modal-body .form-grid-2,
+    .admin-form-grid,
+    div[style*="grid-template-columns: 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Prevent iOS auto-zoom on input focus */
+    .admin-input, 
+    .admin-select, 
+    .admin-textarea {
+        font-size: 16px !important;
+        padding: 12px !important;
+        border-radius: 6px !important;
+    }
+
+    .btn {
+        min-height: 42px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
 }
 
