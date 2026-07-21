@@ -14,6 +14,28 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // 0. Deferred Hero Background Video Loading (Core Web Vitals LCP Optimization)
+    const initHeroVideo = () => {
+        if (window.innerWidth <= 768) return; // Skip background video on mobile for fast LCP & data saving
+        const video = document.querySelector('.hero-video-bg video');
+        if (!video) return;
+        const source = video.querySelector('source[data-src]');
+        if (source) {
+            source.src = source.getAttribute('data-src');
+            video.load();
+            const playPromise = video.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(() => {});
+            }
+        }
+    };
+
+    if ('requestIdleCallback' in window) {
+        requestIdleCallback(() => setTimeout(initHeroVideo, 800));
+    } else {
+        setTimeout(initHeroVideo, 1200);
+    }
+
     // 1. Sticky Header on Scroll
     const header = document.querySelector('header');
     if (header) {

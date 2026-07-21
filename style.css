@@ -3217,6 +3217,12 @@ img {
     transform: translate3d(0, 0, 0);
 }
 
+@media (max-width: 768px) {
+    .hero-video-bg {
+        display: none !important;
+    }
+}
+
 /* Ensure background overlay and content display on top of video */
 .hero::before {
     z-index: 1 !important;
