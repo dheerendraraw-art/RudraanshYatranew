@@ -14,39 +14,78 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
+      "@graph": [
         {
-          "@type": "Question",
-          "name": "Are you a travel agent or an actual operator?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "We are licensed native ground operators based right here in Pithoragarh, Uttarakhand. We own our fleet of 4x4 vehicles, employ local guides, and manage all homestay partnerships directly—we do not outsource your trip to third-party travel brokers."
-          }
+          "@type": ["LocalBusiness", "TravelAgency", "TourOperator"],
+          "@id": "https://rudraanshyatra.com/#organization",
+          "name": "Rudraansh Yatra",
+          "image": "https://rudraanshyatra.com/assets/images/logo.png",
+          "url": "https://rudraanshyatra.com/about",
+          "telephone": "+917617617651",
+          "email": "info@rudraanshyatra.com",
+          "priceRange": "₹14999 - ₹35000",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "1st Floor Above Punetha Bookstore, Simailgair Bazaar",
+            "addressLocality": "Pithoragarh",
+            "addressRegion": "Uttarakhand",
+            "postalCode": "262501",
+            "addressCountry": "IN"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 29.5829,
+            "longitude": 80.2182
+          },
+          "areaServed": [
+            { "@type": "AdministrativeArea", "name": "Vyas Valley" },
+            { "@type": "AdministrativeArea", "name": "Darma Valley" },
+            { "@type": "AdministrativeArea", "name": "Kumaon Himalayas" }
+          ],
+          "sameAs": [
+            "https://www.facebook.com/profile.php?id=61589223945628",
+            "https://www.instagram.com/yatra_rudraansh?igsh=MXYxdmg0Y2dqNDJ3bg==",
+            "https://www.youtube.com/@Rudra-Anshyatra",
+            "https://www.tripadvisor.in/Profile/Rudraanshyatra?fid=48ae09cc-5151-4403-9190-446ed02e64e8"
+          ]
         },
         {
-          "@type": "Question",
-          "name": "What happens in case of a medical emergency or landslide?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Safety is our highest priority. We carry oxygen cylinders, oximeters, and first-aid kits on all high-altitude trips. We maintain backup 4x4 Boleros at transit points and leverage our deep personal network with SDM offices, local police, and military border checkpoints in Kumaon to coordinate swift emergency evacuations and landslide clearance routes."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How do you handle Inner Line Permits for restricted border zones?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Since our headquarters is physically located in Pithoragarh, our team coordinates directly with the administrative SDM offices in Pithoragarh and Dharchula. You only need to send us your ID proofs and physical documents 15 days in advance—we process all Inner Line Permits for restricted border regions directly."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Why should we trust Rudraansh Yatra over national travel websites?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Unlike national online ticketing portals that resell packages, we execute 100% of our tours directly. We know every mountain road, local homestay owner, and SDM administrator personally. This local presence guarantees transparent pricing, real-time weather updates, and authentic safety accountability."
-          }
+          "@type": "FAQPage",
+          "@id": "https://rudraanshyatra.com/about#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Are you a travel agent or an actual operator?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "We are licensed native ground operators based right here in Pithoragarh, Uttarakhand. We own our fleet of 4x4 vehicles, employ local guides, and manage all homestay partnerships directly—we do not outsource your trip to third-party travel brokers."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What happens in case of a medical emergency or landslide?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Safety is our highest priority. We carry oxygen cylinders, oximeters, and first-aid kits on all high-altitude trips. We maintain backup 4x4 Boleros at transit points and leverage our deep personal network with SDM offices, local police, and military border checkpoints in Kumaon to coordinate swift emergency evacuations and landslide clearance routes."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How do you handle Inner Line Permits for restricted border zones?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Since our headquarters is physically located in Pithoragarh, our team coordinates directly with the administrative SDM offices in Pithoragarh and Dharchula. You only need to send us your ID proofs and physical documents 15 days in advance—we process all Inner Line Permits for restricted border regions directly."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Why should we trust Rudraansh Yatra over national travel websites?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Unlike national online ticketing portals that resell packages, we execute 100% of our tours directly. We know every mountain road, local homestay owner, and SDM administrator personally. This local presence guarantees transparent pricing, real-time weather updates, and authentic safety accountability."
+              }
+            }
+          ]
         }
       ]
     }
