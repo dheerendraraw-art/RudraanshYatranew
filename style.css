@@ -2800,6 +2800,30 @@ footer h3::after, footer h4::after {
         margin-bottom: 6px;
     }
 
+    /* Mobile Card Details Expand & Collapse */
+    .booking-toggle-details-btn {
+        display: block !important;
+    }
+
+    .admin-table tbody tr .mobile-detail-field {
+        display: none !important;
+    }
+
+    .admin-table tbody tr.show-all-details .mobile-detail-field {
+        display: flex !important;
+        animation: fadeIn 0.2s ease-in-out;
+    }
+
+    .admin-table tbody tr.lead-card-row {
+        cursor: pointer !important;
+        transition: border-color 0.2s ease, transform 0.15s ease !important;
+    }
+
+    .admin-table tbody tr.lead-card-row:active {
+        transform: scale(0.99) !important;
+        border-left-color: #ffffff !important;
+    }
+
     /* Modal Mobile Adjustments */
     .admin-lock-card {
         padding: 24px 18px !important;
