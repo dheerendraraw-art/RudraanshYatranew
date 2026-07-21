@@ -1120,13 +1120,11 @@ app.get(['/admin', '/admin.html'], (req, res) => {
     res.sendFile(path.join(__dirname, 'admin.html'));
 });
 
-// Disable caching for CSS and JS files to prevent browser caching of updates
+// Global Cache-Busting Middleware: Disable caching for all static assets, HTML pages, and routes
 app.use((req, res, next) => {
-    if (req.url.includes('.css') || req.url.includes('.js')) {
-        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
-        res.setHeader('Pragma', 'no-cache');
-        res.setHeader('Expires', '0');
-    }
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
     next();
 });
 
