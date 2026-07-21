@@ -2423,8 +2423,46 @@
 
                 if (!tbody) return;
 
+                // Dynamically update Table Header for Staff vs Admin
+                const thead = document.querySelector('#pane-leads thead');
+                if (thead) {
+                    if (currentUserRole === 'staff') {
+                        thead.innerHTML = `
+                            <tr>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th>Remarks</th>
+                                <th>Follow up 1</th>
+                                <th>Follow up 2</th>
+                                <th>Actions</th>
+                            </tr>
+                        `;
+                    } else {
+                        thead.innerHTML = `
+                            <tr>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Source</th>
+                                <th>Travel Date</th>
+                                <th>Status</th>
+                                <th>Assigned To</th>
+                                <th>Remarks</th>
+                                <th>Follow up 1</th>
+                                <th>Follow up 2</th>
+                                <th>Final Status</th>
+                                <th>Created</th>
+                                <th>Actions</th>
+                            </tr>
+                        `;
+                    }
+                }
+
                 if (data.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="12" style="text-align: center; color: var(--color-slate);">No leads registered yet.</td></tr>`;
+                    const colCount = currentUserRole === 'staff' ? 8 : 13;
+                    tbody.innerHTML = `<tr><td colspan="${colCount}" style="text-align: center; color: var(--color-slate);">No leads registered yet.</td></tr>`;
                     return;
                 }
 
@@ -2488,50 +2526,91 @@
                     else if (item.final_status === 'Lost lead') finalClass = 'final-lost';
 
                     const leadPhoneVal = item.phone ? item.phone.trim() : '';
-                    const leadPhoneHtml = leadPhoneVal ? `<a href="tel:${leadPhoneVal}" style="color: var(--color-gold); text-decoration: underline; font-weight: bold;">${leadPhoneVal}</a>` : '—';
+                    const leadPhoneClean = leadPhoneVal.replace(/[^0-9]/g, '');
+                    const waPhone = leadPhoneClean.length === 10 ? '91' + leadPhoneClean : leadPhoneClean;
+                    
+                    const leadPhoneHtml = leadPhoneClean ? `
+                        <div style="display: flex; flex-direction: column; gap: 3px; text-align: left;">
+                            <a href="tel:${leadPhoneClean}" style="color: var(--color-gold); font-weight: 700; text-decoration: none; font-size: 13px; display: inline-flex; align-items: center; gap: 4px;">
+                                <i class="fa-solid fa-phone" style="font-size: 10px;"></i> ${leadPhoneVal}
+                            </a>
+                            <div style="display: inline-flex; gap: 6px; margin-top: 2px;">
+                                <a href="tel:${leadPhoneClean}" style="background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); padding: 2px 8px; border-radius: 12px; font-size: 11px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
+                                    <i class="fa-solid fa-phone"></i> Call
+                                </a>
+                                <a href="https://wa.me/${waPhone}?text=Namaste%20${encodeURIComponent(item.name || 'Guest')}!%20This%20is%20Rudraansh%20Yatra." target="_blank" style="background: rgba(37, 211, 102, 0.15); color: #25D366; border: 1px solid rgba(37, 211, 102, 0.3); padding: 2px 8px; border-radius: 12px; font-size: 11px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
+                                    <i class="fa-brands fa-whatsapp"></i> Chat
+                                </a>
+                            </div>
+                        </div>
+                    ` : '—';
 
-                    html += `
-                        <tr>
-                            <td data-label="Name"><strong>${item.name}</strong></td>
-                            <td data-label="Phone" style="white-space: nowrap;">${leadPhoneHtml}</td>
-                            <td data-label="Email">${item.email || '-'}</td>
-                            <td data-label="Source" class="mobile-detail-field"><span style="font-size: 11px; font-weight: bold; background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px;">${item.source || 'Website'}</span></td>
-                            <td data-label="Travel Date" style="white-space: nowrap;">${item.travel_date ? new Date(item.travel_date).toLocaleDateString() : '-'}</td>
-                            <td data-label="Status">
-                                <select onchange="updateLeadField('${item.id}', 'status', this.value); updateSelectStyle(this)" class="status-select ${statusClass}">
-                                    ${statusOptions}
-                                </select>
-                            </td>
-                            <td data-label="Assigned To" class="mobile-detail-field">
-                                <select ${currentUserRole === "staff" ? "disabled" : ""} onchange="updateLeadField('${item.id}', 'assigned_to', this.value)" style="background: #1f2937; color: white; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 4px; font-size: 12px; width: 150px; cursor: pointer;">
-                                    ${assigneeOptions}
-                                </select>
-                            </td>
-                            <td data-label="Remarks"><small>${item.remarks || '-'}</small></td>
-                            <td data-label="Follow up 1" class="mobile-detail-field"><small>${item.follow_up_1 || '-'}</small></td>
-                            <td data-label="Follow up 2" class="mobile-detail-field"><small>${item.follow_up_2 || '-'}</small></td>
-                            <td data-label="Final Status">
-                                <select onchange="updateLeadField('${item.id}', 'final_status', this.value); updateFinalStyle(this)" class="final-select ${finalClass}">
-                                    ${finalStatusOptions}
-                                </select>
-                            </td>
-                            <td data-label="Created" class="mobile-detail-field">${createdStr}</td>
-                            <td data-label="Actions">
-                                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                                    <button class="admin-btn-edit" onclick="startEditLead(${index})" style="background-color: var(--color-gold); color: #0f172a; border: none; width: 28px; height: 28px; border-radius: var(--border-radius-sm, 4px); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; margin: 0;">
-                                        <i class="fa-solid fa-pen-to-square"></i>
-                                    </button>
-                                    ${currentUserRole === "admin" ? `
-                                    <button class="admin-btn-delete" onclick="deleteRecord('leads', '${item.id}', fetchLeads)" style="width: 28px; height: 28px; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; margin: 0;">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>` : ""}
-                                </div>
-                                <div class="booking-toggle-details-btn" onclick="toggleMobileBookingDetails(this)" style="display: none; color: var(--color-gold); font-size: 11px; font-weight: 700; cursor: pointer; padding: 6px 0; border-top: 1px dashed rgba(255,255,255,0.05); margin-top: 8px; text-align: center; text-transform: uppercase; width: 100%;">
-                                    <i class="fa-solid fa-chevron-down"></i> Show Details
-                                </div>
-                            </td>
-                        </tr>
-                    `;
+                    if (currentUserRole === 'staff') {
+                        html += `
+                            <tr>
+                                <td data-label="Name"><strong>${item.name}</strong></td>
+                                <td data-label="Phone" style="white-space: nowrap;">${leadPhoneHtml}</td>
+                                <td data-label="Email">${item.email || '-'}</td>
+                                <td data-label="Status">
+                                    <select onchange="updateLeadField('${item.id}', 'status', this.value); updateSelectStyle(this)" class="status-select ${statusClass}">
+                                        ${statusOptions}
+                                    </select>
+                                </td>
+                                <td data-label="Remarks"><small>${item.remarks || '-'}</small></td>
+                                <td data-label="Follow up 1" class="mobile-detail-field"><small>${item.follow_up_1 || '-'}</small></td>
+                                <td data-label="Follow up 2" class="mobile-detail-field"><small>${item.follow_up_2 || '-'}</small></td>
+                                <td data-label="Actions">
+                                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                        <button class="admin-btn-edit" onclick="startEditLead(${index})" style="background-color: var(--color-gold); color: #0f172a; border: none; width: 28px; height: 28px; border-radius: var(--border-radius-sm, 4px); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; margin: 0;" title="Edit Lead">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        `;
+                    } else {
+                        html += `
+                            <tr>
+                                <td data-label="Name"><strong>${item.name}</strong></td>
+                                <td data-label="Phone" style="white-space: nowrap;">${leadPhoneHtml}</td>
+                                <td data-label="Email">${item.email || '-'}</td>
+                                <td data-label="Source" class="mobile-detail-field"><span style="font-size: 11px; font-weight: bold; background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px;">${item.source || 'Website'}</span></td>
+                                <td data-label="Travel Date" style="white-space: nowrap;">${item.travel_date ? new Date(item.travel_date).toLocaleDateString() : '-'}</td>
+                                <td data-label="Status">
+                                    <select onchange="updateLeadField('${item.id}', 'status', this.value); updateSelectStyle(this)" class="status-select ${statusClass}">
+                                        ${statusOptions}
+                                    </select>
+                                </td>
+                                <td data-label="Assigned To" class="mobile-detail-field">
+                                    <select ${currentUserRole === "staff" ? "disabled" : ""} onchange="updateLeadField('${item.id}', 'assigned_to', this.value)" style="background: #1f2937; color: white; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 4px; font-size: 12px; width: 150px; cursor: pointer;">
+                                        ${assigneeOptions}
+                                    </select>
+                                </td>
+                                <td data-label="Remarks"><small>${item.remarks || '-'}</small></td>
+                                <td data-label="Follow up 1" class="mobile-detail-field"><small>${item.follow_up_1 || '-'}</small></td>
+                                <td data-label="Follow up 2" class="mobile-detail-field"><small>${item.follow_up_2 || '-'}</small></td>
+                                <td data-label="Final Status">
+                                    <select onchange="updateLeadField('${item.id}', 'final_status', this.value); updateFinalStyle(this)" class="final-select ${finalClass}">
+                                        ${finalStatusOptions}
+                                    </select>
+                                </td>
+                                <td data-label="Created" class="mobile-detail-field">${createdStr}</td>
+                                <td data-label="Actions">
+                                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                        <button class="admin-btn-edit" onclick="startEditLead(${index})" style="background-color: var(--color-gold); color: #0f172a; border: none; width: 28px; height: 28px; border-radius: var(--border-radius-sm, 4px); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; margin: 0;" title="Edit Lead">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </button>
+                                        <button class="admin-btn-delete" onclick="deleteRecord('leads', '${item.id}', fetchLeads)" style="width: 28px; height: 28px; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; margin: 0;" title="Delete Lead">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </div>
+                                    <div class="booking-toggle-details-btn" onclick="toggleMobileBookingDetails(this)" style="display: none; color: var(--color-gold); font-size: 11px; font-weight: 700; cursor: pointer; padding: 6px 0; border-top: 1px dashed rgba(255,255,255,0.05); margin-top: 8px; text-align: center; text-transform: uppercase; width: 100%;">
+                                        <i class="fa-solid fa-chevron-down"></i> Show Details
+                                    </div>
+                                </td>
+                            </tr>
+                        `;
+                    }
                 });
                 tbody.innerHTML = html;
             } catch (err) {
@@ -2605,15 +2684,28 @@
                 el.style.display = '';
             });
 
-            // If logged in as staff, restrict editing permissions to name/phone/email/source/assignee
+            // If logged in as staff, hide fields removed for staff users
             const isStaff = (currentUserRole === 'staff');
             document.getElementById('lead-name').disabled = isStaff;
             document.getElementById('lead-phone').disabled = isStaff;
             document.getElementById('lead-email').disabled = isStaff;
-            document.getElementById('lead-source').disabled = isStaff;
-            document.getElementById('lead-assignee').disabled = isStaff;
-            // Staff can edit the travel date
-            document.getElementById('lead-travel-date').disabled = false;
+
+            const sourceGroup = document.getElementById('lead-source')?.closest('.admin-form-group');
+            const travelDateGroup = document.getElementById('lead-travel-date')?.closest('.admin-form-group');
+            const assigneeGroup = document.getElementById('lead-assignee')?.closest('.admin-form-group');
+            const finalStatusGroup = document.getElementById('lead-finalstatus')?.closest('.admin-form-group');
+
+            if (isStaff) {
+                if (sourceGroup) sourceGroup.style.display = 'none';
+                if (travelDateGroup) travelDateGroup.style.display = 'none';
+                if (assigneeGroup) assigneeGroup.style.display = 'none';
+                if (finalStatusGroup) finalStatusGroup.style.display = 'none';
+            } else {
+                if (sourceGroup) sourceGroup.style.display = 'block';
+                if (travelDateGroup) travelDateGroup.style.display = 'block';
+                if (assigneeGroup) assigneeGroup.style.display = 'block';
+                if (finalStatusGroup) finalStatusGroup.style.display = 'block';
+            }
         };
 
         // Helper to copy a confirmed lead to bookings table
