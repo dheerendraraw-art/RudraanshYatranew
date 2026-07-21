@@ -1291,7 +1291,12 @@
                 <div class="sidebar-widget">
                     <h3 class="widget-title">Yatra Details</h3>
                     <form class="inquiry-form" data-package="Adi Kailash & Om Parvat Yatra">
-                        <div class="price-display-compact">
+                        <div class="price-display-compact" itemscope itemtype="https://schema.org/AggregateOffer">
+                            <meta itemprop="priceCurrency" content="INR" />
+                            <meta itemprop="lowPrice" content="18000" />
+                            <meta itemprop="highPrice" content="35000" />
+                            <meta itemprop="offerCount" content="3" />
+                            <link itemprop="availability" href="https://schema.org/InStock" />
                             <div class="price-select-group">
                                 <label for="yatra-package-select">Route / Pickup</label>
                                 <select id="yatra-package-select" name="pickup" class="form-control">
