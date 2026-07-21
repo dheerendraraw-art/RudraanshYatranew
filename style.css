@@ -4361,4 +4361,148 @@ body.menu-open {
     line-height: 1.6;
     font-size: 14.5px;
     margin: 0;
+}
+
+/* ==========================================
+   COMPREHENSIVE MOBILE OPTIMIZATION ENHANCEMENTS
+   ========================================== */
+
+/* Prevent Horizontal Scroll Jitter & Smooth Touch Behavior */
+html, body {
+    max-width: 100vw;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+}
+
+/* Mobile Touch Targets & Automatic Zoom Prevention on Inputs */
+@media (max-width: 768px) {
+    input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="password"],
+    select,
+    textarea {
+        font-size: 16px !important;
+    }
+}
+
+/* Responsive Containers & Section Padding */
+@media (max-width: 768px) {
+    .container {
+        padding-left: 18px !important;
+        padding-right: 18px !important;
+    }
+    .section-padding {
+        padding: 42px 0 !important;
+    }
+    .section-title {
+        font-size: 25px !important;
+        line-height: 1.3 !important;
+    }
+    .section-subtitle {
+        font-size: 12px !important;
+        letter-spacing: 1.5px !important;
+    }
+    .section-desc {
+        font-size: 14px !important;
+        line-height: 1.55 !important;
+    }
+    h1, .hero-title {
+        font-size: 28px !important;
+        line-height: 1.25 !important;
+    }
+    h2 {
+        font-size: 23px !important;
+    }
+    h3 {
+        font-size: 18px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-padding {
+        padding: 35px 0 !important;
+    }
+    .section-title {
+        font-size: 22px !important;
+    }
+    h1, .hero-title {
+        font-size: 25px !important;
+    }
+}
+
+/* Mobile Responsive Grid & Cards */
+@media (max-width: 768px) {
+    .grid-2, .grid-3, .grid-4, .cards-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+    }
+    .destination-cards-grid {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+    }
+    .month-pills-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 10px !important;
+    }
+    .preferences-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+    .safeguard-banner {
+        flex-direction: column !important;
+        text-align: center !important;
+        padding: 24px 18px !important;
+    }
+    .safeguard-banner i {
+        font-size: 32px !important;
+        margin-bottom: 12px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .month-pills-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    .card {
+        border-radius: 12px !important;
+    }
+}
+
+/* Touch Tables, Modals & Floating Badges */
+@media (max-width: 768px) {
+    .table-responsive, table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    .modal-box {
+        width: 92% !important;
+        max-height: 90vh !important;
+        padding: 24px 18px !important;
+        overflow-y: auto !important;
+        border-radius: 16px !important;
+    }
+    .modal-btn-grid {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+    }
+    .payment-badges-wrap {
+        gap: 10px !important;
+    }
+    .payment-card {
+        width: 75px !important;
+        height: 40px !important;
+        padding: 4px 8px !important;
+    }
+    .whatsapp-floating {
+        bottom: 18px !important;
+        right: 18px !important;
+        width: 52px !important;
+        height: 52px !important;
+        font-size: 26px !important;
+    }
 }
