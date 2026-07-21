@@ -3138,16 +3138,18 @@ footer h3::after, footer h4::after {
 
 /* Payment Methods Section (Above Footer) */
 .payment-methods-section {
-    background-color: var(--color-bg-card);
-    border-top: 1px solid var(--glass-border);
-    border-bottom: 1px solid var(--glass-border);
+    background-color: #FAF6ED;
+    border-top: 2px solid var(--color-gold);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     padding: 35px 0;
     text-align: center;
+    position: relative;
+    z-index: 2;
 }
 
 .payment-methods-section .payment-title,
 .footer-payment-methods .payment-title {
-    color: var(--color-text-primary);
+    color: var(--color-primary);
     font-family: var(--font-sans);
     font-size: 14px;
     font-weight: 700;
