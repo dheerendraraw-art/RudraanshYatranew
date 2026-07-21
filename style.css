@@ -3238,9 +3238,16 @@ img {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
     z-index: 5;
     position: relative;
+    background: rgba(10, 25, 47, 0.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    padding: 6px 18px;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .breadcrumbs-list {
@@ -3257,13 +3264,19 @@ img {
     color: rgba(255, 255, 255, 0.85);
 }
 
+.breadcrumbs-list li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
 .breadcrumbs-list a {
     color: var(--color-gold);
     text-decoration: none;
     transition: var(--transition-smooth);
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 5px;
 }
 
 .breadcrumbs-list a:hover {
@@ -3271,11 +3284,13 @@ img {
     text-decoration: underline;
 }
 
+.breadcrumbs-list .breadcrumb-sep i,
 .breadcrumbs-list i {
     font-size: 9px;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.6);
 }
 
+.breadcrumbs-list li[aria-current="page"] span[itemprop="name"],
 .breadcrumbs-list li[aria-current="page"] {
     color: #ffffff;
     font-weight: 600;
@@ -3285,7 +3300,13 @@ img {
     text-overflow: ellipsis;
 }
 
-/* Light background variant */
+/* Light background variant for white section pages */
+.breadcrumbs-nav.dark-text {
+    background: rgba(244, 241, 234, 0.9);
+    border: 1px solid rgba(10, 25, 47, 0.15);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
 .breadcrumbs-nav.dark-text .breadcrumbs-list {
     color: var(--color-text-secondary);
 }
@@ -3298,10 +3319,12 @@ img {
     color: var(--color-gold);
 }
 
+.breadcrumbs-nav.dark-text .breadcrumb-sep i,
 .breadcrumbs-nav.dark-text .breadcrumbs-list i {
-    color: rgba(10, 25, 47, 0.35);
+    color: rgba(10, 25, 47, 0.4);
 }
 
+.breadcrumbs-nav.dark-text .breadcrumbs-list li[aria-current="page"] span[itemprop="name"],
 .breadcrumbs-nav.dark-text .breadcrumbs-list li[aria-current="page"] {
     color: var(--color-primary);
 }

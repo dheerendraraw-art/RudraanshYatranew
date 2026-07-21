@@ -891,12 +891,21 @@
         style="background-image: url('assets/images/adi-kailash-parvat.webp'); height: 55vh; min-height: 450px;">
         <div class="hero-content">
             <nav class="breadcrumbs-nav" aria-label="Breadcrumbs">
-                <ol class="breadcrumbs-list">
-                    <li><a href="/"><i class="fa-solid fa-house"></i> Home</a></li>
-                    <li><i class="fa-solid fa-chevron-right"></i></li>
-                    <li><a href="/#destinations">Destinations</a></li>
-                    <li><i class="fa-solid fa-chevron-right"></i></li>
-                    <li aria-current="page">Adi Kailash & Om Parvat</li>
+                <ol class="breadcrumbs-list" itemscope itemtype="https://schema.org/BreadcrumbList">
+                    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                        <a itemprop="item" href="/"><span itemprop="name"><i class="fa-solid fa-house"></i> Home</span></a>
+                        <meta itemprop="position" content="1" />
+                    </li>
+                    <li class="breadcrumb-sep"><i class="fa-solid fa-chevron-right"></i></li>
+                    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                        <a itemprop="item" href="/#destinations"><span itemprop="name">Destinations</span></a>
+                        <meta itemprop="position" content="2" />
+                    </li>
+                    <li class="breadcrumb-sep"><i class="fa-solid fa-chevron-right"></i></li>
+                    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" aria-current="page">
+                        <span itemprop="name">Adi Kailash & Om Parvat</span>
+                        <meta itemprop="position" content="3" />
+                    </li>
                 </ol>
             </nav>
             <span class="hero-badge"><span></span> Spiritual Pilgrimage</span>

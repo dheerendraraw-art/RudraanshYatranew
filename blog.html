@@ -539,12 +539,21 @@
         <!-- Left: Article Content -->
         <article class="blog-post-article">
             <nav class="breadcrumbs-nav dark-text" aria-label="Breadcrumbs" style="justify-content: flex-start; margin-bottom: 20px;">
-                <ol class="breadcrumbs-list">
-                    <li><a href="/"><i class="fa-solid fa-house"></i> Home</a></li>
-                    <li><i class="fa-solid fa-chevron-right"></i></li>
-                    <li><a href="/blogs">Diaries</a></li>
-                    <li><i class="fa-solid fa-chevron-right"></i></li>
-                    <li aria-current="page">{{TITLE}}</li>
+                <ol class="breadcrumbs-list" itemscope itemtype="https://schema.org/BreadcrumbList">
+                    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                        <a itemprop="item" href="/"><span itemprop="name"><i class="fa-solid fa-house"></i> Home</span></a>
+                        <meta itemprop="position" content="1" />
+                    </li>
+                    <li class="breadcrumb-sep"><i class="fa-solid fa-chevron-right"></i></li>
+                    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                        <a itemprop="item" href="/blogs"><span itemprop="name">Diaries</span></a>
+                        <meta itemprop="position" content="2" />
+                    </li>
+                    <li class="breadcrumb-sep"><i class="fa-solid fa-chevron-right"></i></li>
+                    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" aria-current="page">
+                        <span itemprop="name">{{TITLE}}</span>
+                        <meta itemprop="position" content="3" />
+                    </li>
                 </ol>
             </nav>
             
