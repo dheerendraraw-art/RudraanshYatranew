@@ -1046,17 +1046,16 @@ function initializeDiscountPopup() {
     const initBlogCarousel = () => {
         const container = document.querySelector('.blog-carousel-container');
         const track = document.querySelector('.blog-carousel-track');
-        const originalCards = Array.from(document.querySelectorAll('.blog-carousel-track .blog-card:not(.blog-card-clone)'));
+        const originalCards = Array.from(document.querySelectorAll('.blog-carousel-track .blog-card'));
         const N = originalCards.length;
         const prevBtn = document.querySelector('.carousel-control.prev');
         const nextBtn = document.querySelector('.carousel-control.next');
 
         if (!container || !track || N === 0) return;
 
-        // Remove any legacy clones to ensure unique posts render
+        // Ensure clones are removed
         track.querySelectorAll('.blog-card-clone').forEach(el => el.remove());
 
-        // Use only the unique original cards without DOM duplication
         const allCards = document.querySelectorAll('.blog-carousel-track .blog-card');
 
         const update3DTransforms = () => {
@@ -1067,71 +1066,50 @@ function initializeDiscountPopup() {
                 const cardRect = card.getBoundingClientRect();
                 const cardCenter = cardRect.left + cardRect.width / 2;
                 
-                // Distance from center relative to container half-width
                 const offset = cardCenter - containerCenter;
                 const maxDistance = containerRect.width / 2;
                 
-                // Normalize ratio (-1.5 to 1.5)
                 let ratio = offset / maxDistance;
                 ratio = Math.max(-1.5, Math.min(1.5, ratio));
 
-                // 3D parameters: rotate Y towards center, translate back Z, scale down slightly
                 const rotateY = ratio * -20;
                 const translateZ = Math.abs(ratio) * -100;
                 const scale = 1 - Math.min(0.2, Math.abs(ratio) * 0.1);
                 const opacity = 1 - Math.min(0.5, Math.abs(ratio) * 0.3);
 
-                // Apply transform
                 card.style.transform = `perspective(1000px) rotateY(${rotateY}deg) translateZ(${translateZ}px) scale(${scale})`;
                 card.style.opacity = opacity;
             });
         };
 
-        // Scroll repositioning for seamless infinite loop
-        let isJumping = false;
-        const handleScrollLoop = () => {
-            if (isJumping || N < 2) return;
-
-            const cardWidth = originalCards[0].offsetWidth + 30;
-            const totalOriginalWidth = N * cardWidth;
-
-            const leftThreshold = (N - 0.5) * cardWidth;
-            const rightThreshold = (2 * N - 0.5) * cardWidth;
-
-            if (container.scrollLeft < leftThreshold) {
-                isJumping = true;
-                container.scrollLeft += totalOriginalWidth;
-                setTimeout(() => { isJumping = false; }, 50);
-            } else if (container.scrollLeft > rightThreshold) {
-                isJumping = true;
-                container.scrollLeft -= totalOriginalWidth;
-                setTimeout(() => { isJumping = false; }, 50);
-            }
-        };
-
-        // Unified scroll event listener
-        container.addEventListener('scroll', () => {
-            handleScrollLoop();
-            update3DTransforms();
-        });
-        
-        // Resize listener
+        // Scroll listener for 3D transforms
+        container.addEventListener('scroll', update3DTransforms);
         window.addEventListener('resize', update3DTransforms);
 
-        // Navigation button listeners
+        // Navigation button listeners with wrap-around loop
         if (prevBtn && nextBtn) {
             prevBtn.addEventListener('click', () => {
                 const cardWidth = originalCards[0].offsetWidth + 30;
-                container.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+                const maxScrollLeft = container.scrollWidth - container.clientWidth;
+                if (container.scrollLeft <= 10) {
+                    container.scrollTo({ left: maxScrollLeft, behavior: 'smooth' });
+                } else {
+                    container.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+                }
             });
 
             nextBtn.addEventListener('click', () => {
                 const cardWidth = originalCards[0].offsetWidth + 30;
-                container.scrollBy({ left: cardWidth, behavior: 'smooth' });
+                const maxScrollLeft = container.scrollWidth - container.clientWidth;
+                if (container.scrollLeft >= maxScrollLeft - 10) {
+                    container.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    container.scrollBy({ left: cardWidth, behavior: 'smooth' });
+                }
             });
         }
 
-        // Drag to scroll implementation for desktop users
+        // Drag to scroll implementation
         let isDown = false;
         let startX;
         let scrollLeft;
@@ -1162,17 +1140,9 @@ function initializeDiscountPopup() {
             container.scrollLeft = scrollLeft - walk;
         });
 
-        // Set initial scroll position to show original cards
-        const setInitialScroll = () => {
-            if (N >= 2) {
-                const cardWidth = originalCards[0].offsetWidth + 30;
-                container.scrollLeft = N * cardWidth;
-            }
-            update3DTransforms();
-        };
-
-        // Initialize positions
-        setTimeout(setInitialScroll, 100);
+        // Initialize positions starting at scrollLeft 0
+        container.scrollLeft = 0;
+        setTimeout(update3DTransforms, 100);
     };
 
     // Initialize carousel on DOM load
