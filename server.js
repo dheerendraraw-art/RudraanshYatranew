@@ -78,12 +78,16 @@ function renderBlogsHtml(blogs) {
 // 1. SSR Route for Homepage (/)
 app.get('/', async (req, res) => {
     try {
+        // Set Vercel Edge CDN Revalidation Header (revalidate: 60 seconds)
+        res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=60, stale-while-revalidate=59');
+
         let dbBlogs = [];
         if (supabase) {
             const { data } = await supabase
                 .from('blogs')
                 .select('*')
-                .order('created_at', { ascending: false });
+                .order('created_at', { ascending: false })
+                .limit(5);
             if (data) dbBlogs = data;
         }
 

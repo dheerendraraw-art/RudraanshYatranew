@@ -1042,41 +1042,10 @@ function initializeDiscountPopup() {
 
         if (!container || !track || originalCards.length === 0) return;
 
-        // Clean up previous clones (in case this is called multiple times)
+        // Remove any legacy clones to ensure 5 unique posts render exactly once
         track.querySelectorAll('.blog-card-clone').forEach(el => el.remove());
 
-        const N = originalCards.length;
-
-        // Only do infinite loop cloning if we have at least 2 cards to loop
-        if (N >= 2) {
-            // Helper to prepare clones for accessibility and SEO
-            const prepareClone = (card) => {
-                const clone = card.cloneNode(true);
-                clone.classList.add('blog-card-clone');
-                clone.removeAttribute('id');
-                clone.setAttribute('aria-hidden', 'true');
-                clone.querySelectorAll('a, button').forEach(el => {
-                    el.setAttribute('tabindex', '-1');
-                    if (el.tagName === 'A') {
-                        el.setAttribute('rel', 'nofollow');
-                    }
-                });
-                return clone;
-            };
-
-            // Clone and append
-            originalCards.forEach(card => {
-                const clone = prepareClone(card);
-                track.appendChild(clone);
-            });
-            // Clone and prepend (reverse to preserve original order 1, 2, 3, 4)
-            originalCards.slice().reverse().forEach(card => {
-                const clone = prepareClone(card);
-                track.insertBefore(clone, track.firstChild);
-            });
-        }
-
-        // Get all cards (original + clones)
+        // Use only the unique original cards without DOM duplication
         const allCards = document.querySelectorAll('.blog-carousel-track .blog-card');
 
         const update3DTransforms = () => {

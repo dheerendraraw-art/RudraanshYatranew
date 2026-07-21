@@ -25,7 +25,7 @@
           }
         },
         {
-          "@type": "TravelAgency",
+          "@type": ["LocalBusiness", "TravelAgency"],
           "@id": "https://rudraanshyatra.com/#organization",
           "name": "Rudraansh Yatra",
           "image": "https://rudraanshyatra.com/assets/images/logo.png",
@@ -73,23 +73,104 @@
               "name": "What is the best time to visit Adi Kailash and Om Parvat?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "The best time to visit is from May to June (pre-monsoon) and September to October (post-monsoon) when skies are clear, roads are safe, and mountain views are sharp."
+                "text": "The best time to visit Adi Kailash and Om Parvat is between May to June (pre-monsoon) and September to October (post-monsoon). During these months, the weather in Kumaon is pleasant, high-altitude mountain passes are clear, and you get crisp, unobstructed views of the sacred peaks."
               }
             },
             {
               "@type": "Question",
-              "name": "Is an Inner Line Permit required for Vyas Valley and Darma Valley?",
+              "name": "Is the Adi Kailash Yatra safe for senior citizens?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Yes, Vyas Valley (Adi Kailash) and Darma Valley are located near international borders. An Inner Line Permit (ILP) is mandatory for all travelers, which we manage directly from the Dharchula SDM office as a native operator."
+                "text": "Yes, the Adi Kailash Yatra is safe for physically fit senior citizens with a medical certificate from a certified doctor. Our packages include 4x4 Mahindra Boleros to reduce trekking fatigue, gradual acclimatization stops in Dharchula and Gunji, and pulse-oximeter health monitoring with emergency oxygen backup."
               }
             },
             {
               "@type": "Question",
-              "name": "What is the starting point for Kumaon Yatras?",
+              "name": "How do I get the Inner Line Permit (ILP) for Vyas Valley?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Most of our Kumaon yatras and treks start from Kathgodam/Haldwani or Pithoragarh, Uttarakhand. We provide direct pickup and private 4x4 Mahindra Boleros transport from these starting locations."
+                "text": "An Inner Line Permit (ILP) is required to visit Vyas Valley due to its proximity to international borders. You will need a color copy of your Aadhaar card, a Police Verification Certificate (PCC), passport-sized photos, and a medical fitness form. As local ground operators in Pithoragarh, Rudraansh Yatra manages the complete permit application directly through the Dharchula SDM office."
+              }
+            }
+          ]
+        },
+        {
+          "@type": "Tour",
+          "@id": "https://rudraanshyatra.com/adi-kailash#tour",
+          "name": "Adi Kailash & Om Parvat Yatra",
+          "description": "Embark on the sacred Adi Kailash & Om Parvat Yatra in Vyas Valley, Uttarakhand. Managed directly by local ground experts with customized options starting from Pithoragarh, Kathgodam, or Delhi.",
+          "image": "https://rudraanshyatra.com/assets/images/adi-kailash-parvat.webp",
+          "touristType": ["Spiritual Pilgrims", "Adventure Trekkers"],
+          "provider": {
+            "@id": "https://rudraanshyatra.com/#organization"
+          },
+          "offers": [
+            {
+              "@type": "Offer",
+              "name": "Pithoragarh to Pithoragarh Route (3 Days / 2 Nights)",
+              "price": "18000",
+              "priceCurrency": "INR",
+              "availability": "https://schema.org/InStock"
+            },
+            {
+              "@type": "Offer",
+              "name": "Kathgodam to Kathgodam Route (6 Days / 5 Nights)",
+              "price": "30000",
+              "priceCurrency": "INR",
+              "availability": "https://schema.org/InStock"
+            },
+            {
+              "@type": "Offer",
+              "name": "Delhi to Delhi Route (6 Days / 5 Nights)",
+              "price": "35000",
+              "priceCurrency": "INR",
+              "availability": "https://schema.org/InStock"
+            }
+          ],
+          "itinerary": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@type": "CreativeWork",
+                "name": "Day 1: Transit to Pithoragarh / Dharchula Base",
+                "description": "Travel to the base town of Pithoragarh and Dharchula with inner line permit processing."
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "item": {
+                "@type": "CreativeWork",
+                "name": "Day 2: Dharchula to Gunji / Nabi Village",
+                "description": "Drive by 4x4 Bolero into Vyas Valley through high mountain gorges."
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "item": {
+                "@type": "CreativeWork",
+                "name": "Day 3: Jyolingkong & Adi Kailash Darshan",
+                "description": "Holy darshan of sacred Adi Kailash peak and Parvati Sarovar."
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 4,
+              "item": {
+                "@type": "CreativeWork",
+                "name": "Day 4: Om Parvat Darshan at Nabhi Dhang",
+                "description": "Witness the miraculous snow-formed Om symbol on Om Parvat peak."
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 5,
+              "item": {
+                "@type": "CreativeWork",
+                "name": "Day 5: Return to Dharchula / Pithoragarh",
+                "description": "Descent drive back concluding the sacred pilgrimage."
               }
             }
           ]
@@ -724,9 +805,9 @@
     <section class="section-padding" style="background-color: var(--color-bg-base); border-top: 1px solid var(--glass-border);">
         <div class="container" style="max-width: 850px;">
             <div class="section-header text-center">
-                <span class="section-subtitle">Common Queries</span>
+                <span class="section-subtitle">AI-Ready Knowledge Hub</span>
                 <h2 class="section-title">Frequently Asked Questions</h2>
-                <p class="section-desc">Find answers to essential questions about permits, timing, and travel logistics in Kumaon.</p>
+                <p class="section-desc">Conversational answers to essential questions about permits, senior safety, and travel timing in Kumaon.</p>
             </div>
             
             <div class="faq-accordion">
@@ -736,25 +817,25 @@
                         <i class="fa-solid fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer">
-                        <p>The best time to visit is from May to June (pre-monsoon) and September to October (post-monsoon) when skies are clear, roads are safe, and mountain views are sharp.</p>
+                        <p>The best time to visit Adi Kailash and Om Parvat is between May to June (pre-monsoon) and September to October (post-monsoon). During these months, the weather in Kumaon is pleasant, high-altitude mountain passes are clear, and you get crisp, unobstructed views of the sacred peaks.</p>
                     </div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question">
-                        <span>Is an Inner Line Permit required for Vyas Valley and Darma Valley?</span>
+                        <span>Is the Adi Kailash Yatra safe for senior citizens?</span>
                         <i class="fa-solid fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer">
-                        <p>Yes, Vyas Valley (Adi Kailash) and Darma Valley are located near international borders. An Inner Line Permit (ILP) is mandatory for all travelers, which we manage directly from the Dharchula SDM office as a native operator.</p>
+                        <p>Yes, the Adi Kailash Yatra is safe for physically fit senior citizens with a medical certificate from a certified doctor. Our packages include 4x4 Mahindra Boleros to reduce trekking fatigue, gradual acclimatization stops in Dharchula and Gunji, and pulse-oximeter health monitoring with emergency oxygen backup.</p>
                     </div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question">
-                        <span>What is the starting point for Kumaon Yatras?</span>
+                        <span>How do I get the Inner Line Permit (ILP) for Vyas Valley?</span>
                         <i class="fa-solid fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer">
-                        <p>Most of our Kumaon yatras and treks start from Kathgodam/Haldwani or Pithoragarh, Uttarakhand. We provide direct pickup and private 4x4 Mahindra Boleros transport from these starting locations.</p>
+                        <p>An Inner Line Permit (ILP) is required to visit Vyas Valley due to its proximity to international borders. You will need a color copy of your Aadhaar card, a Police Verification Certificate (PCC), passport-sized photos, and a medical fitness form. As local ground operators in Pithoragarh, Rudraansh Yatra manages the complete permit application directly through the Dharchula SDM office.</p>
                     </div>
                 </div>
             </div>
