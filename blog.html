@@ -36,6 +36,30 @@
           "datePublished": "{{CREATED_AT}}"
         },
         {
+          "@type": "BreadcrumbList",
+          "@id": "https://rudraanshyatra.com{{SLUG}}#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://rudraanshyatra.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Travel Diaries",
+              "item": "https://rudraanshyatra.com/blogs"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "{{TITLE}}",
+              "item": "https://rudraanshyatra.com{{SLUG}}"
+            }
+          ]
+        },
+        {
           "@type": "TravelAgency",
           "@id": "https://rudraanshyatra.com/#organization",
           "name": "Rudraansh Yatra",
@@ -514,9 +538,15 @@
         
         <!-- Left: Article Content -->
         <article class="blog-post-article">
-            <div class="blog-breadcrumbs">
-                <a href="/">Home</a> / <a href="/blogs">Diaries</a> / <span>{{TITLE}}</span>
-            </div>
+            <nav class="breadcrumbs-nav dark-text" aria-label="Breadcrumbs" style="justify-content: flex-start; margin-bottom: 20px;">
+                <ol class="breadcrumbs-list">
+                    <li><a href="/"><i class="fa-solid fa-house"></i> Home</a></li>
+                    <li><i class="fa-solid fa-chevron-right"></i></li>
+                    <li><a href="/blogs">Diaries</a></li>
+                    <li><i class="fa-solid fa-chevron-right"></i></li>
+                    <li aria-current="page">{{TITLE}}</li>
+                </ol>
+            </nav>
             
             <h1 class="blog-detail-title">{{TITLE}}</h1>
             

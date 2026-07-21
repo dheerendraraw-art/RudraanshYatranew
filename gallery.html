@@ -42,6 +42,26 @@
       ]
     }
     </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://rudraanshyatra.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Gallery",
+          "item": "https://rudraanshyatra.com/gallery"
+        }
+      ]
+    }
+    </script>
     
     <!-- Google Fonts Preconnect & Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -117,6 +137,13 @@
     <section class="hero"
         style="background-image: url('assets/images/gallery-hero.webp'); height: 50vh; min-height: 400px;">
         <div class="hero-content">
+            <nav class="breadcrumbs-nav" aria-label="Breadcrumbs">
+                <ol class="breadcrumbs-list">
+                    <li><a href="/"><i class="fa-solid fa-house"></i> Home</a></li>
+                    <li><i class="fa-solid fa-chevron-right"></i></li>
+                    <li aria-current="page">Gallery</li>
+                </ol>
+            </nav>
             <span class="hero-badge"><span></span> Visual Diaries</span>
             <h1 class="hero-title">Himalayan Photo Gallery</h1>
             <p class="hero-desc">Breathtaking views and spiritual milestones captured directly from our Kumaon borderland expeditions.</p>
