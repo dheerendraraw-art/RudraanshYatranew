@@ -4531,19 +4531,29 @@ html, body {
     }
     .hero {
         height: auto !important;
-        min-height: 380px !important;
-        padding: 60px 0 35px 0 !important;
+        min-height: 280px !important;
+        max-height: 380px !important;
+        padding: 40px 16px 25px 16px !important;
     }
     .hero-content {
-        padding: 0 16px !important;
+        padding: 0 12px !important;
+    }
+    .hero-title {
+        font-size: 24px !important;
+        line-height: 1.25 !important;
+        margin: 10px 0 !important;
+    }
+    .hero-desc {
+        font-size: 13.5px !important;
+        line-height: 1.45 !important;
     }
     .hero-badge {
-        font-size: 11px !important;
-        padding: 5px 12px !important;
+        font-size: 10.5px !important;
+        padding: 4px 10px !important;
     }
     .breadcrumbs-list {
         flex-wrap: wrap !important;
-        gap: 4px 8px !important;
+        gap: 4px 6px !important;
         font-size: 11px !important;
     }
     .tab-navigation {
@@ -4552,7 +4562,7 @@ html, body {
         white-space: nowrap !important;
         gap: 8px !important;
         padding: 6px 4px 10px 4px !important;
-        margin: 20px 0 !important;
+        margin: 18px 0 !important;
         border-bottom: 1px solid rgba(10, 25, 47, 0.1) !important;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
@@ -4656,6 +4666,20 @@ html, body {
 }
 
 @media (max-width: 576px) {
+    .top-bar {
+        padding: 8px 0 !important;
+    }
+    .top-bar .container {
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+    }
+    .top-info span:nth-child(2) {
+        display: none !important;
+    }
+    .top-info {
+        font-size: 12px !important;
+    }
     .tour-meta-badges {
         gap: 6px !important;
         margin-bottom: 15px !important;
