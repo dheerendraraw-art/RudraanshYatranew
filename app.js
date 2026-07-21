@@ -97,6 +97,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const targetContent = document.getElementById(targetTab);
                 if (targetContent) {
                     targetContent.classList.add('active');
+                    // Recalculate heights for any active FAQs inside this tab content
+                    targetContent.querySelectorAll('.faq-item.active .faq-answer').forEach(ans => {
+                        ans.style.maxHeight = (ans.scrollHeight > 0 ? ans.scrollHeight : 500) + 'px';
+                    });
                 }
             });
         });
@@ -143,11 +147,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const packageNameBase = form.getAttribute('data-package') || 'General Inquiry';
             const pickupElement = form.querySelector('[name="pickup"]');
             const packageName = pickupElement ? `${packageNameBase} (${pickupElement.value})` : packageNameBase;
-            const name = form.querySelector('[name="name"]').value.trim();
-            const phone = form.querySelector('[name="phone"]').value.trim();
-            const date = form.querySelector('[name="date"]').value;
-            const travelers = form.querySelector('[name="travelers"]').value;
-            const message = form.querySelector('[name="message"]').value.trim();
+            
+            const nameInput = form.querySelector('[name="name"]');
+            const phoneInput = form.querySelector('[name="phone"]');
+            const dateInput = form.querySelector('[name="date"]');
+            const travelersInput = form.querySelector('[name="travelers"]');
+            const messageInput = form.querySelector('[name="message"]');
+
+            const name = nameInput ? nameInput.value.trim() : '';
+            const phone = phoneInput ? phoneInput.value.trim() : '';
+            const date = dateInput ? dateInput.value : '';
+            const travelers = travelersInput ? travelersInput.value : '1';
+            const message = messageInput ? messageInput.value.trim() : '';
 
             const data = {
                 packageName,
@@ -166,8 +177,8 @@ document.addEventListener('DOMContentLoaded', () => {
             text += `*Package:* ${packageName}\n`;
             text += `*Name:* ${name}\n`;
             text += `*Phone:* ${phone}\n`;
-            text += `*Preferred Date:* ${date}\n`;
-            text += `*No. of Travelers:* ${travelers}\n`;
+            if (date) text += `*Preferred Date:* ${date}\n`;
+            if (travelers) text += `*No. of Travelers:* ${travelers}\n`;
             if (message) {
                 text += `*Special Notes:* ${message}\n`;
             }
@@ -662,7 +673,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // 9. Load Dynamic Components and Dialogs
     injectDialogs();
     initializeDiscountPopup();
-});
 
 // ── SUPABASE LOGGING LOGIC ──
 let supabaseClient = null;
@@ -1037,12 +1047,13 @@ function initializeDiscountPopup() {
         const container = document.querySelector('.blog-carousel-container');
         const track = document.querySelector('.blog-carousel-track');
         const originalCards = Array.from(document.querySelectorAll('.blog-carousel-track .blog-card:not(.blog-card-clone)'));
+        const N = originalCards.length;
         const prevBtn = document.querySelector('.carousel-control.prev');
         const nextBtn = document.querySelector('.carousel-control.next');
 
-        if (!container || !track || originalCards.length === 0) return;
+        if (!container || !track || N === 0) return;
 
-        // Remove any legacy clones to ensure 5 unique posts render exactly once
+        // Remove any legacy clones to ensure unique posts render
         track.querySelectorAll('.blog-card-clone').forEach(el => el.remove());
 
         // Use only the unique original cards without DOM duplication
@@ -1065,10 +1076,10 @@ function initializeDiscountPopup() {
                 ratio = Math.max(-1.5, Math.min(1.5, ratio));
 
                 // 3D parameters: rotate Y towards center, translate back Z, scale down slightly
-                const rotateY = ratio * -20; // Rotates outer cards inward
-                const translateZ = Math.abs(ratio) * -100; // Push sides back
-                const scale = 1 - Math.min(0.2, Math.abs(ratio) * 0.1); // Scale down sides
-                const opacity = 1 - Math.min(0.5, Math.abs(ratio) * 0.3); // Fade sides slightly
+                const rotateY = ratio * -20;
+                const translateZ = Math.abs(ratio) * -100;
+                const scale = 1 - Math.min(0.2, Math.abs(ratio) * 0.1);
+                const opacity = 1 - Math.min(0.5, Math.abs(ratio) * 0.3);
 
                 // Apply transform
                 card.style.transform = `perspective(1000px) rotateY(${rotateY}deg) translateZ(${translateZ}px) scale(${scale})`;
@@ -1081,10 +1092,9 @@ function initializeDiscountPopup() {
         const handleScrollLoop = () => {
             if (isJumping || N < 2) return;
 
-            const cardWidth = originalCards[0].offsetWidth + 30; // card width + gap
+            const cardWidth = originalCards[0].offsetWidth + 30;
             const totalOriginalWidth = N * cardWidth;
 
-            // Thresholds to trigger instant scroll jump
             const leftThreshold = (N - 0.5) * cardWidth;
             const rightThreshold = (2 * N - 0.5) * cardWidth;
 
@@ -1111,12 +1121,12 @@ function initializeDiscountPopup() {
         // Navigation button listeners
         if (prevBtn && nextBtn) {
             prevBtn.addEventListener('click', () => {
-                const cardWidth = originalCards[0].offsetWidth + 30; // card width + gap
+                const cardWidth = originalCards[0].offsetWidth + 30;
                 container.scrollBy({ left: -cardWidth, behavior: 'smooth' });
             });
 
             nextBtn.addEventListener('click', () => {
-                const cardWidth = originalCards[0].offsetWidth + 30; // card width + gap
+                const cardWidth = originalCards[0].offsetWidth + 30;
                 container.scrollBy({ left: cardWidth, behavior: 'smooth' });
             });
         }
@@ -1148,7 +1158,7 @@ function initializeDiscountPopup() {
             if (!isDown) return;
             e.preventDefault();
             const x = e.pageX - container.offsetLeft;
-            const walk = (x - startX) * 1.5; // Scroll speed multiplier
+            const walk = (x - startX) * 1.5;
             container.scrollLeft = scrollLeft - walk;
         });
 
@@ -1175,108 +1185,130 @@ function initializeDiscountPopup() {
 
     // Pay Now Button Handler for direct packages
     const payNowBtn = document.getElementById('btn-pay-now');
-        if (payNowBtn) {
-            payNowBtn.addEventListener('click', (e) => {
-                const form = payNowBtn.closest('.inquiry-form');
-                if (!form) return;
+    if (payNowBtn) {
+        payNowBtn.addEventListener('click', (e) => {
+            const form = payNowBtn.closest('.inquiry-form');
+            if (!form) return;
 
-                const nameInput = form.querySelector('[name="name"]');
-                const phoneInput = form.querySelector('[name="phone"]');
-                const dateInput = form.querySelector('[name="date"]');
-                const travelersInput = form.querySelector('[name="travelers"]');
-                
-                if (!nameInput || !phoneInput) return;
+            const nameInput = form.querySelector('[name="name"]');
+            const phoneInput = form.querySelector('[name="phone"]');
+            const dateInput = form.querySelector('[name="date"]');
+            const travelersInput = form.querySelector('[name="travelers"]');
+            
+            if (!nameInput || !phoneInput) return;
 
-                if (!nameInput.value.trim()) {
-                    showToast('Please enter your Name.', 'error');
-                    nameInput.focus();
-                    return;
+            if (!nameInput.value.trim()) {
+                showToast('Please enter your Name.', 'error');
+                nameInput.focus();
+                return;
+            }
+
+            if (!phoneInput.value.trim()) {
+                showToast('Please enter your Phone number.', 'error');
+                phoneInput.focus();
+                return;
+            }
+
+            if (dateInput && !dateInput.value) {
+                showToast('Please select your Preferred Date.', 'error');
+                dateInput.focus();
+                return;
+            }
+
+            // Get package name and select option
+            const packageNameBase = form.getAttribute('data-package') || 'Package';
+            const pickupElement = form.querySelector('[name="pickup"]');
+            let packageName = packageNameBase;
+            let priceText = '';
+            
+            if (pickupElement) {
+                packageName = `${packageNameBase} (${pickupElement.value})`;
+                const selectedOption = pickupElement.options[pickupElement.selectedIndex];
+                priceText = selectedOption.getAttribute('data-price') || '';
+            } else {
+                const priceEl = document.querySelector('.price-display strong');
+                if (priceEl) {
+                    priceText = priceEl.textContent;
                 }
+            }
 
-                if (!phoneInput.value.trim()) {
-                    showToast('Please enter your Phone number.', 'error');
-                    phoneInput.focus();
-                    return;
+            // Parse price
+            const baseAmount = parseInt(priceText.replace(/[^0-9]/g, ''));
+            if (isNaN(baseAmount) || baseAmount <= 0) {
+                showToast('Payment amount is invalid or on request.', 'error');
+                return;
+            }
+
+            // Compute total amount based on traveler count multiplier
+            let travelerCount = 1;
+            if (travelersInput) {
+                const parsedCount = parseInt(travelersInput.value);
+                if (!isNaN(parsedCount) && parsedCount > 0) {
+                    travelerCount = parsedCount;
                 }
+            }
+            const amount = baseAmount * travelerCount;
 
-                if (dateInput && !dateInput.value) {
-                    showToast('Please select your Preferred Date.', 'error');
-                    dateInput.focus();
-                    return;
-                }
-
-                // Get package name and select option
-                const packageNameBase = form.getAttribute('data-package') || 'Package';
-                const pickupElement = form.querySelector('[name="pickup"]');
-                let packageName = packageNameBase;
-                let priceText = '';
-                
-                if (pickupElement) {
-                    packageName = `${packageNameBase} (${pickupElement.value})`;
-                    const selectedOption = pickupElement.options[pickupElement.selectedIndex];
-                    priceText = selectedOption.getAttribute('data-price') || '';
-                } else {
-                    const priceEl = document.querySelector('.price-display strong');
-                    if (priceEl) {
-                        priceText = priceEl.textContent;
-                    }
-                }
-
-                // Parse price
-                const baseAmount = parseInt(priceText.replace(/[^0-9]/g, ''));
-                if (isNaN(baseAmount) || baseAmount <= 0) {
-                    showToast('Payment amount is invalid or on request.', 'error');
-                    return;
-                }
-
-                // Compute total amount based on traveler count multiplier
-                let travelerCount = 1;
-                if (travelersInput) {
-                    const parsedCount = parseInt(travelersInput.value);
-                    if (!isNaN(parsedCount) && parsedCount > 0) {
-                        travelerCount = parsedCount;
-                    }
-                }
-                const amount = baseAmount * travelerCount;
-
-                // Redirect to payment page with pre-filled details
-                const queryParams = new URLSearchParams({
-                    packageName: packageName,
-                    amount: amount,
-                    name: nameInput.value.trim(),
-                    phone: phoneInput.value.trim(),
-                    date: dateInput ? dateInput.value : '',
-                    travelers: travelersInput ? travelersInput.value : '1'
-                });
-
-                window.location.href = `/payment?${queryParams.toString()}`;
+            // Redirect to payment page with pre-filled details
+            const queryParams = new URLSearchParams({
+                packageName: packageName,
+                amount: amount,
+                name: nameInput.value.trim(),
+                phone: phoneInput.value.trim(),
+                date: dateInput ? dateInput.value : '',
+                travelers: travelersInput ? travelersInput.value : '1'
             });
-        }
-    });
 
-    // FAQ Accordion Toggle
+            window.location.href = `/payment?${queryParams.toString()}`;
+        });
+    }
+
+    // FAQ Accordion Toggle (supports both .faq-item and <details class="faq-accordion">)
     document.querySelectorAll('.faq-question').forEach(button => {
         button.addEventListener('click', () => {
             const faqItem = button.parentElement;
+            if (!faqItem) return;
+
+            // Handle <details> element natively if applicable
+            if (faqItem.tagName.toLowerCase() === 'details') {
+                const icon = button.querySelector('i, .faq-icon');
+                setTimeout(() => {
+                    if (icon) {
+                        icon.style.transform = faqItem.hasAttribute('open') ? 'rotate(180deg)' : 'rotate(0deg)';
+                    }
+                }, 50);
+                return;
+            }
+
             const answer = faqItem.querySelector('.faq-answer');
-            const icon = button.querySelector('i');
+            const icon = button.querySelector('i, .faq-icon');
             
             // Check if active
             const isActive = faqItem.classList.contains('active');
             
             // Close all others
             document.querySelectorAll('.faq-item').forEach(item => {
-                item.classList.remove('active');
-                item.querySelector('.faq-answer').style.maxHeight = null;
-                const otherIcon = item.querySelector('.faq-question i');
-                if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
+                if (item !== faqItem) {
+                    item.classList.remove('active');
+                    const otherAnswer = item.querySelector('.faq-answer');
+                    if (otherAnswer) otherAnswer.style.maxHeight = null;
+                    const otherIcon = item.querySelector('.faq-question i, .faq-question .faq-icon');
+                    if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
+                }
             });
             
-            if (!isActive) {
+            if (isActive) {
+                faqItem.classList.remove('active');
+                if (answer) answer.style.maxHeight = null;
+                if (icon) icon.style.transform = 'rotate(0deg)';
+            } else {
                 faqItem.classList.add('active');
-                answer.style.maxHeight = answer.scrollHeight + 'px';
+                if (answer) {
+                    const h = answer.scrollHeight > 0 ? answer.scrollHeight : 500;
+                    answer.style.maxHeight = h + 'px';
+                }
                 if (icon) icon.style.transform = 'rotate(180deg)';
             }
         });
     });
-})();
+});

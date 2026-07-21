@@ -4240,6 +4240,11 @@ body.menu-open {
     transition: max-height 0.3s ease-out;
     padding: 0 20px;
 }
+.faq-item.active .faq-answer,
+.faq-accordion[open] .faq-answer {
+    max-height: 1000px;
+    padding-bottom: 20px;
+}
 .faq-answer p {
     padding-bottom: 20px;
     color: var(--color-text-secondary);
