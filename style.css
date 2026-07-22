@@ -4973,3 +4973,207 @@ html, body {
         font-size: 10px !important;
     }
 }
+
+/* ==========================================
+   HOMEPAGE — MOBILE OPTIMIZATION v6
+   ========================================== */
+
+@media (max-width: 768px) {
+
+    /* ── Hero (homepage has full video bg; needs taller min-height than tour pages) ── */
+    .hero {
+        min-height: 340px !important;
+        max-height: 480px !important;
+    }
+    .hero-badge {
+        font-size: 10px !important;
+        padding: 6px 14px !important;
+        margin-bottom: 14px !important;
+    }
+    .hero-desc {
+        font-size: 14px !important;
+        line-height: 1.5 !important;
+        max-width: 100% !important;
+    }
+
+    /* ── Destination Cards (package listing) ── */
+    .card-footer-row {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 10px !important;
+    }
+    .card-price {
+        width: 100% !important;
+    }
+    .card-link {
+        align-self: flex-start !important;
+    }
+    .card-meta {
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+        font-size: 12px !important;
+    }
+    .card-title {
+        font-size: 18px !important;
+    }
+    .card-desc {
+        font-size: 13.5px !important;
+    }
+
+    /* ── Why Choose Us / feature-box ── */
+    .feature-box {
+        padding: 22px 18px !important;
+    }
+    .feature-title {
+        font-size: 16px !important;
+    }
+    .feature-desc {
+        font-size: 13.5px !important;
+    }
+
+    /* ── Safeguard banner ── */
+    .safeguard-banner {
+        margin-top: 24px !important;
+        padding: 18px 16px !important;
+    }
+
+    /* ── Trip Planner Wizard card ── */
+    .trip-wizard-card {
+        padding: 20px 16px !important;
+        border-radius: 14px !important;
+    }
+    .wizard-progress-bar-wrap {
+        margin-bottom: 24px !important;
+    }
+    .step-title-wrap h3 {
+        font-size: 19px !important;
+    }
+    .step-title-wrap p {
+        font-size: 13px !important;
+    }
+
+    /* Destination selection cards */
+    .dest-select-card {
+        padding: 16px !important;
+    }
+    .dest-card-icon {
+        font-size: 22px !important;
+        margin-bottom: 10px !important;
+    }
+    .dest-card-title {
+        font-size: 15px !important;
+    }
+    .dest-card-meta {
+        font-size: 12px !important;
+    }
+
+    /* Month pills: stay 3-col but smaller padding */
+    .month-pill-btn {
+        padding: 12px 6px !important;
+    }
+    .month-pill-name {
+        font-size: 13px !important;
+    }
+    .month-pill-status {
+        font-size: 9px !important;
+    }
+
+    /* Duration pills: stack to 1 column (text overflows 3-col at ~96px) */
+    .duration-pills {
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+    }
+    .duration-pill-btn {
+        padding: 12px !important;
+        font-size: 13px !important;
+    }
+
+    /* Wizard summary bar */
+    .wizard-summary-bar {
+        padding: 14px 16px !important;
+        margin-bottom: 20px !important;
+        gap: 12px !important;
+    }
+    .summary-selection-text {
+        font-size: 13px !important;
+    }
+    .summary-meta-text {
+        font-size: 11px !important;
+    }
+
+    /* Wizard nav buttons */
+    .wizard-nav-actions button {
+        padding: 12px 20px !important;
+        font-size: 14px !important;
+    }
+
+    /* ── Certifications cards (override inline min-height + padding) ── */
+    .feature-box[style*="min-height"] {
+        min-height: auto !important;
+        padding: 28px 20px !important;
+    }
+
+    /* ── Custom CTA banner ── */
+    .custom-banner {
+        padding: 36px 22px !important;
+        border-radius: 14px !important;
+    }
+    .custom-banner h2 {
+        font-size: 24px !important;
+        line-height: 1.3 !important;
+        margin-bottom: 14px !important;
+    }
+    .custom-banner p {
+        font-size: 14px !important;
+        margin-bottom: 22px !important;
+    }
+    .custom-banner-content {
+        max-width: 100% !important;
+    }
+
+    /* ── FAQ ── */
+    .faq-question {
+        font-size: 14px !important;
+        padding: 16px !important;
+        line-height: 1.4 !important;
+    }
+    .faq-answer p {
+        font-size: 13.5px !important;
+        padding: 0 16px 16px !important;
+    }
+
+    /* ── CTA section ── */
+    .cta-section h2 {
+        font-size: 22px !important;
+    }
+    .cta-section p {
+        font-size: 14px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Extra-small: hero even more compact */
+    .hero {
+        min-height: 300px !important;
+        max-height: 430px !important;
+    }
+    /* Wizard card tighter */
+    .trip-wizard-card {
+        padding: 16px 12px !important;
+    }
+    /* Dest cards narrower */
+    .dest-select-card {
+        padding: 14px 12px !important;
+    }
+    /* Feature box on certs section */
+    .feature-box[style*="min-height"] {
+        padding: 22px 16px !important;
+    }
+    /* Custom banner heading */
+    .custom-banner h2 {
+        font-size: 21px !important;
+    }
+    .custom-banner {
+        padding: 28px 16px !important;
+    }
+}
