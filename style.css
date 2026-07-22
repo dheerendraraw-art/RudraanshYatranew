@@ -4850,3 +4850,126 @@ html, body {
         padding: 4px 8px !important;
     }
 }
+
+/* ==========================================
+   GALLERY PAGE — MOBILE OPTIMIZATION v5
+   ========================================== */
+
+@media (max-width: 768px) {
+    /* Gallery section spacing */
+    .gallery-section {
+        padding: 40px 0 !important;
+    }
+
+    /* Filter buttons: compact scrollable row */
+    .gallery-filters {
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        justify-content: flex-start !important;
+        gap: 8px !important;
+        margin-bottom: 24px !important;
+        padding-bottom: 8px !important;
+        scrollbar-width: none !important;
+    }
+    .gallery-filters::-webkit-scrollbar {
+        display: none !important;
+    }
+    .gallery-filter-btn {
+        flex-shrink: 0 !important;
+        white-space: nowrap !important;
+        padding: 7px 14px !important;
+        font-size: 12px !important;
+        border-radius: 20px !important;
+    }
+
+    /* Gallery grid: 2 columns on mobile */
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+    }
+
+    /* Gallery item: slightly taller aspect for portrait feel */
+    .gallery-item {
+        aspect-ratio: 3 / 2 !important;
+        border-radius: 8px !important;
+    }
+
+    /* Always show overlay on touch devices (no hover) */
+    .gallery-overlay {
+        opacity: 0.85 !important;
+        background: linear-gradient(
+            to top,
+            rgba(10, 25, 47, 0.9) 0%,
+            rgba(10, 25, 47, 0.4) 50%,
+            rgba(10, 25, 47, 0) 100%
+        ) !important;
+    }
+    .gallery-cat {
+        font-size: 9px !important;
+        letter-spacing: 1px !important;
+        margin-bottom: 3px !important;
+    }
+    .gallery-caption {
+        font-size: 13px !important;
+        line-height: 1.25 !important;
+    }
+
+    /* Lightbox: fill the screen on mobile */
+    .lightbox-content {
+        max-width: 100% !important;
+        max-height: 100% !important;
+        width: 100% !important;
+        padding: 0 8px !important;
+        gap: 12px !important;
+    }
+    .lightbox-content img {
+        max-width: 100% !important;
+        max-height: 65vh !important;
+        border-radius: 8px !important;
+    }
+
+    /* Close button: larger tap target, closer to top-right corner */
+    .lightbox-close-btn {
+        top: 12px !important;
+        right: 14px !important;
+        font-size: 32px !important;
+        width: 44px !important;
+        height: 44px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: rgba(255,255,255,0.08) !important;
+        border-radius: 50% !important;
+    }
+
+    /* Nav buttons: move to bottom of screen, side-by-side */
+    .lightbox-nav-btn {
+        top: auto !important;
+        bottom: 28px !important;
+        transform: none !important;
+        width: 48px !important;
+        height: 48px !important;
+        font-size: 18px !important;
+    }
+    .lightbox-nav-btn.prev {
+        left: 50% !important;
+        transform: translateX(-60px) !important;
+    }
+    .lightbox-nav-btn.next {
+        right: auto !important;
+        left: 50% !important;
+        transform: translateX(12px) !important;
+    }
+
+    /* Caption box */
+    .lightbox-caption-box {
+        padding: 0 16px !important;
+    }
+    .lightbox-title {
+        font-size: 16px !important;
+    }
+    .lightbox-category {
+        font-size: 10px !important;
+    }
+}
