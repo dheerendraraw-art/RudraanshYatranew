@@ -620,7 +620,7 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
            .fontSize(8.5)
            .text('1st Floor Above Punetha Bookstore,', 320, 40, { align: 'right', width: 225 })
            .text('Simailgair Bazaar, Pithoragarh,', 320, 51, { align: 'right', width: 225 })
-           .text('Uttarakhand - 262501 (H6P7+62)', 320, 62, { align: 'right', width: 225 })
+           .text('Uttarakhand - 262501', 320, 62, { align: 'right', width: 225 })
            .fillColor(primaryColor)
            .font('Helvetica-Bold')
            .text('Phone: +91 7617617651 | info@rudraanshyatra.com', 320, 73, { align: 'right', width: 225 });
