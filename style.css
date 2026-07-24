@@ -5915,4 +5915,26 @@ html, body {
         box-sizing: border-box !important;
     }
 }
+
+/* ==================================================
+   STAFF ROLE RESTRICTION — STRICT ACTION BUTTON HIDING
+   ================================================== */
+body.user-role-staff #export-leads-btn,
+body.user-role-staff #leads-template-btn,
+body.user-role-staff #import-leads-btn,
+body.user-role-staff #add-lead-btn,
+body.user-role-staff #leads-action-buttons-wrap,
+body.user-role-staff #tab-passwords-btn,
+body.user-role-staff #tab-attendance-btn,
+body.user-role-staff .admin-only-action {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    height: 0 !important;
+    width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+}
 

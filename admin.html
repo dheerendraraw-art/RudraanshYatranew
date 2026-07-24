@@ -416,12 +416,12 @@
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
                     <h3 class="admin-form-title" style="margin-bottom: 0; border-bottom: none;"><i
                             class="fa-solid fa-people-group" style="color: var(--color-gold);"></i> Leads Manager</h3>
-                    <div style="display: flex; gap: 8px;">
-                        <button type="button" onclick="exportLeads()" class="btn btn-primary" id="export-leads-btn" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-file-export"></i> Export Leads</button>
-                        <button type="button" onclick="downloadLeadsTemplate()" class="btn btn-secondary" id="leads-template-btn" style="border: 1px solid var(--color-gold); background: #1e293b; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: var(--color-gold); font-weight: 600;"><i class="fa-solid fa-download"></i> Template</button>
-                        <button type="button" onclick="triggerImportLeads()" class="btn btn-primary" id="import-leads-btn" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-file-import"></i> Import Leads</button>
+                    <div id="leads-action-buttons-wrap" class="admin-only-action" style="display: flex; gap: 8px;">
+                        <button type="button" onclick="exportLeads()" class="btn btn-primary admin-only-action" id="export-leads-btn" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-file-export"></i> Export Leads</button>
+                        <button type="button" onclick="downloadLeadsTemplate()" class="btn btn-secondary admin-only-action" id="leads-template-btn" style="border: 1px solid var(--color-gold); background: #1e293b; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: var(--color-gold); font-weight: 600;"><i class="fa-solid fa-download"></i> Template</button>
+                        <button type="button" onclick="triggerImportLeads()" class="btn btn-primary admin-only-action" id="import-leads-btn" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-file-import"></i> Import Leads</button>
                         <input type="file" id="leads-csv-file" accept=".csv" style="display: none;" onchange="handleLeadsCSVImport(event)">
-                        <button type="button" onclick="openLeadModal()" class="btn btn-primary" id="add-lead-btn" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-plus"></i> Add New Lead</button>
+                        <button type="button" onclick="openLeadModal()" class="btn btn-primary admin-only-action" id="add-lead-btn" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-plus"></i> Add New Lead</button>
                     </div>
                 </div>
                 <div class="admin-table-container">
@@ -1280,6 +1280,14 @@
             currentUserRole = sessionStorage.getItem('admin_role') || currentUserRole || 'admin';
             const isStaff = (currentUserRole === 'staff');
             
+            if (isStaff) {
+                document.body.classList.add('user-role-staff');
+                document.body.classList.remove('user-role-admin');
+            } else {
+                document.body.classList.add('user-role-admin');
+                document.body.classList.remove('user-role-staff');
+            }
+
             // Staff Accounts & Attendance tabs for staff
             const passwordsTab = document.getElementById('tab-passwords-btn');
             const attendanceTab = document.getElementById('tab-attendance-btn');
@@ -1291,15 +1299,18 @@
             const templateBtn = document.getElementById('leads-template-btn');
             const importBtn = document.getElementById('import-leads-btn');
             const addLeadBtn = document.getElementById('add-lead-btn');
+            const actionWrap = document.getElementById('leads-action-buttons-wrap');
 
             if (exportBtn) exportBtn.style.display = isStaff ? 'none' : '';
             if (templateBtn) templateBtn.style.display = isStaff ? 'none' : '';
             if (importBtn) importBtn.style.display = isStaff ? 'none' : '';
             if (addLeadBtn) addLeadBtn.style.display = isStaff ? 'none' : '';
+            if (actionWrap) actionWrap.style.display = isStaff ? 'none' : 'flex';
         }
 
         // Tab Switch logic
         function switchTab(evt, paneId) {
+            applyRolePermissions();
             const tabs = document.querySelectorAll('.admin-tab-btn');
             const contents = document.querySelectorAll('.admin-tab-content-pane');
 
