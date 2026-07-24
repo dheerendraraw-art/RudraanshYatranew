@@ -1137,65 +1137,7 @@
 
 
 
-        function applyRolePermissions() {
-            const tabs = document.querySelectorAll('.admin-tab-btn');
-            
-            if (currentUserRole === 'staff') {
-                // Staff only sees Bookings and Leads Manager
-                tabs.forEach(tab => {
-                    const target = tab.getAttribute('onclick');
-                    if (target && (target.includes('pane-bookings') || target.includes('pane-leads'))) {
-                        tab.style.display = 'inline-flex';
-                    } else {
-                        tab.style.display = 'none';
-                    }
-                });
 
-                // Hide statistics grid for staff
-                const statsGrid = document.querySelector('.admin-stats-grid');
-                if (statsGrid) statsGrid.style.display = 'none';
-
-                // Hide elements restricted to admin
-                const addLeadBtn = document.getElementById('add-lead-btn');
-                if (addLeadBtn) addLeadBtn.style.display = 'none';
-                
-                const importLeadsBtn = document.getElementById('import-leads-btn');
-                if (importLeadsBtn) importLeadsBtn.style.display = 'none';
-
-                const exportLeadsBtn = document.getElementById('export-leads-btn');
-                if (exportLeadsBtn) exportLeadsBtn.style.display = 'none';
-
-                const importBookingsBtn = document.getElementById('import-bookings-btn');
-                if (importBookingsBtn) importBookingsBtn.style.display = 'none';
-
-                const exportBookingsBtn = document.getElementById('export-bookings-btn');
-                if (exportBookingsBtn) exportBookingsBtn.style.display = 'none';
-
-                // Automatically switch to Leads tab
-                switchTab(null, 'pane-leads');
-            } else {
-                // Admin sees all tabs
-                tabs.forEach(tab => tab.style.display = 'inline-flex');
-                
-                const statsGrid = document.querySelector('.admin-stats-grid');
-                if (statsGrid) statsGrid.style.display = 'grid';
-
-                const addLeadBtn = document.getElementById('add-lead-btn');
-                if (addLeadBtn) addLeadBtn.style.display = 'inline-block';
-                
-                const importLeadsBtn = document.getElementById('import-leads-btn');
-                if (importLeadsBtn) importLeadsBtn.style.display = 'inline-block';
-
-                const exportLeadsBtn = document.getElementById('export-leads-btn');
-                if (exportLeadsBtn) exportLeadsBtn.style.display = 'inline-block';
-
-                const importBookingsBtn = document.getElementById('import-bookings-btn');
-                if (importBookingsBtn) importBookingsBtn.style.display = 'inline-block';
-
-                const exportBookingsBtn = document.getElementById('export-bookings-btn');
-                if (exportBookingsBtn) exportBookingsBtn.style.display = 'inline-block';
-            }
-        }
 
         // Passcode Gate Action querying staff_credentials in Supabase
         async function verifyPasscode(event) {
@@ -1280,9 +1222,12 @@
         }
 
         function applyRolePermissions() {
-            currentUserRole = sessionStorage.getItem('admin_role') || currentUserRole || 'admin';
-            const isStaff = (currentUserRole === 'staff');
+            const role = (sessionStorage.getItem('admin_role') || currentUserRole || '').toString().toLowerCase().trim();
+            const uname = (sessionStorage.getItem('admin_username') || currentUsername || '').toString().toLowerCase().trim();
             
+            // Any logged in user whose username is NOT 'admin' OR whose role is 'staff' is STAFF
+            const isStaff = (uname !== 'admin' || role === 'staff');
+
             if (isStaff) {
                 document.body.classList.add('user-role-staff');
                 document.body.classList.remove('user-role-admin');
@@ -1291,7 +1236,7 @@
                 document.body.classList.remove('user-role-staff');
             }
 
-            // Tabs to hide for Staff: Billing, Requests, Discounts, Blogs, Gallery, Passwords, Attendance
+            // Hide tabs for Staff (Keep only Leads Manager & Bookings for staff)
             const adminOnlyTabIds = [
                 'tab-billing-btn',
                 'tab-requests-btn',
@@ -1303,8 +1248,12 @@
             ];
             adminOnlyTabIds.forEach(id => {
                 const el = document.getElementById(id);
-                if (el) el.style.display = isStaff ? 'none' : '';
+                if (el) el.style.display = isStaff ? 'none' : 'inline-flex';
             });
+
+            // Hide Stats summary grid for staff
+            const statsGrid = document.querySelector('.admin-stats-grid');
+            if (statsGrid) statsGrid.style.display = isStaff ? 'none' : 'grid';
 
             // Action buttons to hide for Staff in Bookings and Leads
             const adminOnlyButtonIds = [
@@ -1321,7 +1270,7 @@
             ];
             adminOnlyButtonIds.forEach(id => {
                 const el = document.getElementById(id);
-                if (el) el.style.display = isStaff ? 'none' : '';
+                if (el) el.style.display = isStaff ? 'none' : 'inline-block';
             });
         }
 
