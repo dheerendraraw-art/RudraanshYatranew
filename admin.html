@@ -3772,19 +3772,19 @@
 
                 const custPhoneClean = (bill.customer_phone || '').replace(/[^0-9]/g, '');
                 const waPhone = custPhoneClean.length === 10 ? '91' + custPhoneClean : custPhoneClean;
-                const custEmail = bill.customer_email ? `<span style="font-size: 11px; opacity: 0.7; display: block;">${bill.customer_email}</span>` : '';
+                const custEmail = bill.customer_email ? `<span style="font-size: 11px; color: #64748b; display: block;">${bill.customer_email}</span>` : '';
                 const customerHtml = `
                     <div style="text-align: left;">
-                        <strong style="color: white; display: block;">${bill.customer_name}</strong>
-                        <a href="tel:${custPhoneClean}" style="color: var(--color-gold); font-size: 12px; display: inline-flex; align-items: center; gap: 4px; text-decoration: none; font-weight: 600;">
+                        <strong style="color: #0f172a; display: block; font-size: 14px; font-weight: 700;">${bill.customer_name}</strong>
+                        <a href="tel:${custPhoneClean}" style="color: #d97706; font-size: 12px; display: inline-flex; align-items: center; gap: 4px; text-decoration: none; font-weight: 700;">
                             <i class="fa-solid fa-phone" style="font-size: 10px;"></i> ${bill.customer_phone}
                         </a>
                         ${custEmail}
                         <div style="display: flex; gap: 6px; margin-top: 4px;">
-                            <a href="tel:${custPhoneClean}" style="background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); padding: 2px 8px; border-radius: 12px; font-size: 11px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
+                            <a href="tel:${custPhoneClean}" style="background: rgba(34, 197, 94, 0.12); color: #15803d; border: 1px solid rgba(34, 197, 94, 0.3); padding: 2px 8px; border-radius: 12px; font-size: 11px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
                                 <i class="fa-solid fa-phone"></i> Call
                             </a>
-                            <a href="https://wa.me/${waPhone}?text=Namaste%20${encodeURIComponent(bill.customer_name)}!%20This%20is%20Rudraansh%20Yatra." target="_blank" style="background: rgba(37, 211, 102, 0.15); color: #25D366; border: 1px solid rgba(37, 211, 102, 0.3); padding: 2px 8px; border-radius: 12px; font-size: 11px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
+                            <a href="https://wa.me/${waPhone}?text=Namaste%20${encodeURIComponent(bill.customer_name)}!%20This%20is%20Rudraansh%20Yatra." target="_blank" style="background: rgba(37, 211, 102, 0.12); color: #15803d; border: 1px solid rgba(37, 211, 102, 0.3); padding: 2px 8px; border-radius: 12px; font-size: 11px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
                                 <i class="fa-brands fa-whatsapp"></i> Chat
                             </a>
                         </div>
@@ -3793,18 +3793,18 @@
 
                 const packageHtml = `
                     <div style="text-align: left;">
-                        <strong style="color: var(--color-gold); display: block;">${bill.package_name}</strong>
-                        <span style="font-size: 12px; display: block;">Start: ${startDateStr} | Pax: ${bill.group_size}</span>
+                        <strong style="color: #b8860b; display: block; font-size: 13.5px; font-weight: 700;">${bill.package_name}</strong>
+                        <span style="font-size: 12px; color: #475569; font-weight: 600; display: block;">Start: ${startDateStr} | Pax: ${bill.group_size}</span>
                     </div>
                 `;
 
                 const progressHtml = `
                     <div style="width: 100%; min-width: 100px;">
-                        <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 3px;">
+                        <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 3px; color: #1e293b; font-weight: 700;">
                             <span>₹${totalPaid.toLocaleString('en-IN')}</span>
                             <span>${progressPct}%</span>
                         </div>
-                        <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden;">
+                        <div style="width: 100%; height: 6px; background: rgba(0,0,0,0.1); border-radius: 3px; overflow: hidden;">
                             <div style="width: ${progressPct}%; height: 100%; background: ${bill.payment_status === 'Fully Paid' ? '#22c55e' : '#eab308'}; border-radius: 3px;"></div>
                         </div>
                     </div>
@@ -3812,19 +3812,19 @@
 
                 html += `
                     <tr>
-                        <td data-label="Booking ID"><strong style="color: white; font-family: monospace;">${bill.booking_id}</strong></td>
+                        <td data-label="Booking ID"><strong style="color: #0f172a; background: rgba(212, 175, 55, 0.18); border: 1px solid rgba(212, 175, 55, 0.4); padding: 4px 8px; border-radius: 6px; font-family: monospace; font-size: 12.5px; font-weight: 800; display: inline-block;">${bill.booking_id}</strong></td>
                         <td data-label="Customer">${customerHtml}</td>
                         <td data-label="Package">${packageHtml}</td>
-                        <td data-label="Billed Amt"><strong style="color: white;">₹${totalBilled.toLocaleString('en-IN')}</strong></td>
+                        <td data-label="Billed Amt"><strong style="color: #0f172a; font-size: 14px; font-weight: 800;">₹${totalBilled.toLocaleString('en-IN')}</strong></td>
                         <td data-label="Paid Progress">${progressHtml}</td>
-                        <td data-label="Outstanding"><strong style="color: ${remaining > 0 ? '#ef4444' : '#22c55e'};">₹${remaining.toLocaleString('en-IN')}</strong></td>
+                        <td data-label="Outstanding"><strong style="color: ${remaining > 0 ? '#dc2626' : '#16a34a'}; font-size: 14px; font-weight: 800;">₹${remaining.toLocaleString('en-IN')}</strong></td>
                         <td data-label="Status"><span class="admin-badge ${statusBadgeClass}" style="padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 11px;">${bill.payment_status}</span></td>
                         <td data-label="Actions">
                             <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-                                <button onclick="openAddPaymentModal('${bill.id}', '${bill.booking_id}', '${bill.customer_name}', ${remaining})" class="btn btn-secondary" style="border: 1px solid var(--color-gold); background: transparent; color: var(--color-gold); padding: 6px 12px; font-size: 11px; cursor: pointer; border-radius: 4px; font-weight: bold; display: inline-flex; align-items: center; gap: 4px;" title="Add Payment">
-                                    <i class="fa-solid fa-plus-minus"></i> Add Pay
+                                <button onclick="openAddPaymentModal('${bill.id}', '${bill.booking_id}', '${bill.customer_name}', ${remaining})" class="btn btn-secondary" style="border: 1.5px solid #d97706; background: transparent; color: #b45309; padding: 6px 12px; font-size: 11px; cursor: pointer; border-radius: 4px; font-weight: bold; display: inline-flex; align-items: center; gap: 4px;" title="Add Payment">
+                                    <i class="fa-solid fa-plus-minus"></i> + ADD PAY
                                 </button>
-                                <a href="/api/billing/${bill.id}/pdf" class="btn btn-secondary" style="border: 1px solid #3b82f6; background: transparent; color: #3b82f6; padding: 6px 12px; font-size: 11px; cursor: pointer; border-radius: 4px; font-weight: bold; display: inline-flex; align-items: center; gap: 4px;" title="Download PDF Bill">
+                                <a href="/api/billing/${bill.id}/pdf" class="btn btn-secondary" style="border: 1.5px solid #2563eb; background: transparent; color: #1d4ed8; padding: 6px 12px; font-size: 11px; cursor: pointer; border-radius: 4px; font-weight: bold; display: inline-flex; align-items: center; gap: 4px;" title="Download PDF Bill">
                                     <i class="fa-solid fa-file-pdf"></i> PDF
                                 </a>
                             </div>
