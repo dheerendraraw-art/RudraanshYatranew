@@ -647,13 +647,22 @@
                                 </div>
                             </div>
 
-                            <!-- Daily Attendance Grid Section with Quick Tools -->
+                            <!-- Daily Attendance Grid Section with Rotational Tools -->
                             <div class="admin-form-group" style="margin-bottom: 20px;">
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 6px;">
                                     <span style="font-size: 13px; font-weight: 700; color: #0f172a;"><i class="fa-solid fa-calendar-days" style="color: var(--color-gold); margin-right: 4px;"></i> Interactive Daily Tracker</span>
-                                    <div style="display: flex; gap: 4px;">
-                                        <button type="button" onclick="setAllDaysStatus('P')" style="font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; border: 1px solid #16a34a; color: #16a34a; background: rgba(34, 197, 94, 0.1); cursor: pointer;">All P</button>
-                                        <button type="button" onclick="setSundaysOff()" style="font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; border: 1px solid #2563eb; color: #2563eb; background: rgba(59, 130, 246, 0.1); cursor: pointer;">Sun Off</button>
+                                    <div style="display: flex; gap: 6px; align-items: center;">
+                                        <button type="button" onclick="setAllDaysStatus('P')" style="font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px; border: 1px solid #16a34a; color: #16a34a; background: rgba(34, 197, 94, 0.1); cursor: pointer;" title="Set all days Present">All P</button>
+                                        <select id="rotational-day-select" onchange="applyRotationalOffDay(this.value)" style="font-size: 10.5px; font-weight: 700; padding: 2px 6px; border-radius: 4px; border: 1.5px solid #2563eb; color: #1d4ed8; background: rgba(59, 130, 246, 0.1); cursor: pointer;" title="Apply Rotational Weekly Off Day">
+                                            <option value="" disabled selected>🔄 Set Rotational Off</option>
+                                            <option value="0">Off: Sundays</option>
+                                            <option value="1">Off: Mondays</option>
+                                            <option value="2">Off: Tuesdays</option>
+                                            <option value="3">Off: Wednesdays</option>
+                                            <option value="4">Off: Thursdays</option>
+                                            <option value="5">Off: Fridays</option>
+                                            <option value="6">Off: Saturdays</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div style="font-size: 11px; font-weight: 600; color: #64748b; margin-bottom: 8px;">Tap day to cycle: <span style="color: #16a34a; font-weight: 800;">P</span> → <span style="color: #d97706; font-weight: 800;">H</span> → <span style="color: #2563eb; font-weight: 800;">L</span> → <span style="color: #dc2626; font-weight: 800;">A</span></div>
@@ -3600,28 +3609,102 @@
             showAdminToast(`Marked all days as ${targetStatus}!`, 'info');
         };
 
-        window.setSundaysOff = function() {
+        window.applyRotationalOffDay = function(targetWeekdayIndex) {
+            if (targetWeekdayIndex === "" || targetWeekdayIndex === undefined) return;
+            const weekdayNum = parseInt(targetWeekdayIndex);
+            const weekdayNames = ['Sundays', 'Mondays', 'Tuesdays', 'Wednesdays', 'Thursdays', 'Fridays', 'Saturdays'];
+            
             const month = document.getElementById('calc-month-select').value;
             const yearVal = parseInt(document.getElementById('calc-year-select').value) || new Date().getFullYear();
-            const daysInMonth = getDaysInMonth(month);
+            const daysInMonth = getDaysInMonth(month, yearVal);
             const startDayIndex = getFirstDayOfMonth(month, yearVal);
 
             for (let d = 1; d <= daysInMonth; d++) {
                 const dayOfWeek = (startDayIndex + d - 1) % 7;
-                if (dayOfWeek === 0) {
-                    const btn = document.getElementById(`day-btn-${d}`);
-                    if (btn) {
-                        btn.setAttribute('data-status', 'L');
+                const btn = document.getElementById(`day-btn-${d}`);
+                if (!btn) continue;
+                
+                if (dayOfWeek === weekdayNum) {
+                    btn.setAttribute('data-status', 'L');
+                    const label = btn.querySelector('.day-status-label');
+                    if (label) label.innerText = 'L';
+                    const colors = statusColors['L'];
+                    btn.style.background = colors.bg;
+                    btn.style.color = colors.text;
+                } else {
+                    const currentStatus = btn.getAttribute('data-status');
+                    if (currentStatus === 'L') {
+                        btn.setAttribute('data-status', 'P');
                         const label = btn.querySelector('.day-status-label');
-                        if (label) label.innerText = 'L';
-                        const colors = statusColors['L'];
+                        if (label) label.innerText = 'P';
+                        const colors = statusColors['P'];
                         btn.style.background = colors.bg;
                         btn.style.color = colors.text;
                     }
                 }
             }
             recalculateFromDailyGrid();
-            showAdminToast('Sundays updated to Weekly Paid Off (L)', 'info');
+            showAdminToast(`Rotational Off Day assigned: ${weekdayNames[weekdayNum]}!`, 'success');
+        };
+
+        window.seedJune2026RotationalAttendanceData = function() {
+            let history = [];
+            try {
+                history = JSON.parse(localStorage.getItem('staff_attendance_history')) || [];
+            } catch(e){}
+
+            const juneRecords = history.filter(h => h.month === 'June' && (h.year ? h.year === 2026 : true));
+            if (juneRecords.length === 0) {
+                // June 2026 starts on Monday (1), 30 days total
+                const sampleStaff = [
+                    { staff: 'Seema', rotOff: 2, rate: 18000, type: 'Monthly' },       // Tuesday Off
+                    { staff: 'Rudra', rotOff: 3, rate: 20000, type: 'Monthly' },       // Wednesday Off
+                    { staff: 'Rajesh Sharma', rotOff: 4, rate: 16500, type: 'Monthly' },// Thursday Off
+                    { staff: 'Dheerendra', rotOff: 25000, rate: 25000, type: 'Monthly', rotOff: 1 } // Monday Off
+                ];
+
+                sampleStaff.forEach(s => {
+                    const dailyStatus = [];
+                    let pCount = 0, lCount = 0, aCount = 0, hCount = 0;
+                    
+                    for (let d = 1; d <= 30; d++) {
+                        const dayOfWeek = (1 + d - 1) % 7; // June 1 2026 is Monday (1)
+                        if (dayOfWeek === s.rotOff) {
+                            dailyStatus.push('L');
+                            lCount++;
+                        } else if (s.staff === 'Rajesh Sharma' && d === 15) {
+                            dailyStatus.push('A');
+                            aCount++;
+                        } else {
+                            dailyStatus.push('P');
+                            pCount++;
+                        }
+                    }
+
+                    const effectivePresent = pCount + (0.5 * hCount) + lCount;
+                    const ratePercent = ((effectivePresent / 30) * 100).toFixed(1);
+                    const payable = Math.round((effectivePresent / 30) * s.rate);
+
+                    history.push({
+                        id: 'june-2026-' + Date.now() + Math.floor(Math.random() * 1000),
+                        staff: s.staff,
+                        month: 'June',
+                        year: 2026,
+                        attendanceRate: ratePercent,
+                        salaryPaid: payable,
+                        type: s.type,
+                        rate: s.rate,
+                        totalDays: 30,
+                        present: pCount,
+                        halfDays: hCount,
+                        leaves: lCount,
+                        absent: aCount,
+                        dailyStatus: dailyStatus
+                    });
+                });
+
+                localStorage.setItem('staff_attendance_history', JSON.stringify(history));
+            }
         };
 
         window.openPayslipModal = function(id) {
@@ -3714,6 +3797,9 @@
         window.renderAttendanceHistory = function() {
             const tbody = document.getElementById('attendance-history-tbody');
             if (!tbody) return;
+            
+            // Seed June 2026 rotational test data if missing
+            seedJune2026RotationalAttendanceData();
             
             const filterMonthEl = document.getElementById('filter-month-select');
             const filterYearEl = document.getElementById('filter-year-select');
