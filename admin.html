@@ -2402,17 +2402,28 @@
             }
         };
 
+        window.getLeadInitials = function(name) {
+            if (!name) return 'Y';
+            const parts = name.trim().split(/\s+/);
+            if (parts.length >= 2) {
+                return (parts[0][0] + parts[1][0]).toUpperCase();
+            }
+            return name.slice(0, 2).toUpperCase();
+        };
+
+        window.toggleMobileLeadRow = function(rowEl, evt) {
+            if (window.innerWidth <= 768) {
+                if (evt && evt.target && (evt.target.closest('a') || evt.target.closest('button') || evt.target.closest('select') || evt.target.closest('input'))) {
+                    return;
+                }
+                rowEl.classList.toggle('expanded');
+            }
+        };
+
         window.toggleMobileBookingDetails = function(btn) {
             const row = btn.closest('.lead-card-row') || btn.closest('tr');
             if (!row) return;
-            const isExpanded = row.classList.contains('expanded');
-            if (isExpanded) {
-                row.classList.remove('expanded');
-                btn.innerHTML = '<i class="fa-solid fa-chevron-down"></i> Show Details';
-            } else {
-                row.classList.add('expanded');
-                btn.innerHTML = '<i class="fa-solid fa-chevron-up"></i> Hide Details';
-            }
+            row.classList.toggle('expanded');
         };
 
         window.fetchLeads = async function() {
@@ -2562,10 +2573,29 @@
                         </div>
                     ` : '—';
 
+                    const initials = getLeadInitials(item.name);
+
                     if (currentUserRole === 'staff') {
                         html += `
-                            <tr class="lead-card-row" onclick="startEditLead(${index})">
-                                <td data-label="Name"><strong style="color: var(--color-gold);">${item.name}</strong></td>
+                            <tr class="lead-card-row" onclick="toggleMobileLeadRow(this, event)">
+                                <td data-label="Name" class="lead-card-name-td">
+                                    <div class="lead-chat-item-header">
+                                        <div class="lead-chat-avatar">${initials}</div>
+                                        <div class="lead-chat-main-info">
+                                            <div class="lead-chat-title-row">
+                                                <strong class="lead-chat-name" style="color: var(--color-gold);">${item.name}</strong>
+                                                <span class="lead-chat-time">${createdStr}</span>
+                                            </div>
+                                            <div class="lead-chat-sub-row">
+                                                <span class="lead-chat-phone">${leadPhoneVal || 'No Phone'}</span>
+                                                <span class="lead-chat-status-tag ${statusClass}">${item.status || 'New'}</span>
+                                            </div>
+                                        </div>
+                                        <div class="lead-chat-expand-chevron">
+                                            <i class="fa-solid fa-chevron-down"></i>
+                                        </div>
+                                    </div>
+                                </td>
                                 <td data-label="Phone" style="white-space: nowrap;" onclick="event.stopPropagation();">${leadPhoneHtml}</td>
                                 <td data-label="Email" class="mobile-detail-field">${item.email || '-'}</td>
                                 <td data-label="Status" onclick="event.stopPropagation();">
@@ -2582,16 +2612,30 @@
                                             <i class="fa-solid fa-folder-open"></i> Open Lead
                                         </button>
                                     </div>
-                                    <div class="booking-toggle-details-btn" onclick="event.stopPropagation(); toggleMobileBookingDetails(this)" style="display: none; color: var(--color-gold); font-size: 11px; font-weight: 700; cursor: pointer; padding: 6px 0; border-top: 1px dashed rgba(255,255,255,0.05); margin-top: 8px; text-align: center; text-transform: uppercase; width: 100%;">
-                                        <i class="fa-solid fa-chevron-down"></i> Show Details
-                                    </div>
                                 </td>
                             </tr>
                         `;
                     } else {
                         html += `
-                            <tr class="lead-card-row" onclick="startEditLead(${index})">
-                                <td data-label="Name"><strong>${item.name}</strong></td>
+                            <tr class="lead-card-row" onclick="toggleMobileLeadRow(this, event)">
+                                <td data-label="Name" class="lead-card-name-td">
+                                    <div class="lead-chat-item-header">
+                                        <div class="lead-chat-avatar">${initials}</div>
+                                        <div class="lead-chat-main-info">
+                                            <div class="lead-chat-title-row">
+                                                <strong class="lead-chat-name">${item.name}</strong>
+                                                <span class="lead-chat-time">${createdStr}</span>
+                                            </div>
+                                            <div class="lead-chat-sub-row">
+                                                <span class="lead-chat-phone">${leadPhoneVal || 'No Phone'}</span>
+                                                <span class="lead-chat-status-tag ${statusClass}">${item.status || 'New'}</span>
+                                            </div>
+                                        </div>
+                                        <div class="lead-chat-expand-chevron">
+                                            <i class="fa-solid fa-chevron-down"></i>
+                                        </div>
+                                    </div>
+                                </td>
                                 <td data-label="Phone" style="white-space: nowrap;" onclick="event.stopPropagation();">${leadPhoneHtml}</td>
                                 <td data-label="Email" class="mobile-detail-field">${item.email || '-'}</td>
                                 <td data-label="Source" class="mobile-detail-field"><span style="font-size: 11px; font-weight: bold; background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px;">${item.source || 'Website'}</span></td>
@@ -2623,9 +2667,6 @@
                                         <button class="admin-btn-delete" onclick="event.stopPropagation(); deleteRecord('leads', '${item.id}', fetchLeads)" style="width: 28px; height: 28px; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; margin: 0;" title="Delete Lead">
                                             <i class="fa-solid fa-trash"></i>
                                         </button>
-                                    </div>
-                                    <div class="booking-toggle-details-btn" onclick="event.stopPropagation(); toggleMobileBookingDetails(this)" style="display: none; color: var(--color-gold); font-size: 11px; font-weight: 700; cursor: pointer; padding: 6px 0; border-top: 1px dashed rgba(255,255,255,0.05); margin-top: 8px; text-align: center; text-transform: uppercase; width: 100%;">
-                                        <i class="fa-solid fa-chevron-down"></i> Show Details
                                     </div>
                                 </td>
                             </tr>
