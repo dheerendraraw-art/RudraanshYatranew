@@ -1580,7 +1580,7 @@
                 if (currentUserRole === 'staff') {
                     const agentUuid = currentUserUuidMapping || AGENT_UUIDS[currentUsername];
                     if (agentUuid) {
-                        query = query.eq('user_id', agentUuid);
+                        query = query.or(`assigned_to.eq.${agentUuid},user_id.eq.${agentUuid}`);
                     }
                 }
 
@@ -2799,6 +2799,8 @@
                     combinedNotes = 'Transferred from Leads Manager';
                 }
 
+                const staffUuid = currentUserUuidMapping || AGENT_UUIDS[currentUsername] || lead.assigned_to || null;
+
                 // Insert into bookings table
                 const { error: insertErr } = await supabaseAdmin
                     .from('bookings')
@@ -2810,8 +2812,8 @@
                         travel_date: lead.travel_date || new Date().toISOString().split('T')[0],
                         travelers: '1',
                         message: combinedNotes,
-                        assigned_to: lead.assigned_to || null,
-                        user_id: lead.assigned_to || null,
+                        assigned_to: staffUuid,
+                        user_id: staffUuid,
                         lead_id: lead.id
                     }]);
 
