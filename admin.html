@@ -2400,6 +2400,19 @@
             }
         };
 
+        window.toggleMobileBookingDetails = function(btn) {
+            const row = btn.closest('.lead-card-row') || btn.closest('tr');
+            if (!row) return;
+            const isExpanded = row.classList.contains('expanded');
+            if (isExpanded) {
+                row.classList.remove('expanded');
+                btn.innerHTML = '<i class="fa-solid fa-chevron-down"></i> Show Details';
+            } else {
+                row.classList.add('expanded');
+                btn.innerHTML = '<i class="fa-solid fa-chevron-up"></i> Hide Details';
+            }
+        };
+
         window.fetchLeads = async function() {
             try {
                 let query = supabaseAdmin

@@ -5781,4 +5781,129 @@ html, body {
         font-size: 12px !important;
     }
 }
+
+/* ==================================================
+   LEADS MANAGER MOBILE 1-BY-1 CARD REDESIGN
+   ================================================== */
+@media (max-width: 768px) {
+    /* Hide traditional table header on mobile */
+    #pane-leads thead {
+        display: none !important;
+    }
+
+    #pane-leads .admin-table-container {
+        background: transparent !important;
+        border: none !important;
+        overflow-x: visible !important;
+        box-shadow: none !important;
+    }
+
+    #pane-leads .admin-table {
+        min-width: 100% !important;
+        width: 100% !important;
+        display: block !important;
+        border-spacing: 0 !important;
+    }
+
+    #pane-leads tbody {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 14px !important;
+    }
+
+    /* Transform each row into a 1-by-1 Lead Card */
+    #pane-leads tr.lead-card-row {
+        display: flex !important;
+        flex-direction: column !important;
+        background-color: var(--color-bg-card, #1e293b) !important;
+        border: 1.5px solid rgba(212, 175, 55, 0.28) !important;
+        border-radius: 12px !important;
+        padding: 14px 16px !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25) !important;
+        margin-bottom: 0 !important;
+        position: relative !important;
+        transition: border-color 0.2s ease !important;
+    }
+
+    #pane-leads tr.lead-card-row:active,
+    #pane-leads tr.lead-card-row:hover {
+        border-color: var(--color-gold) !important;
+    }
+
+    #pane-leads tr.lead-card-row td {
+        display: block !important;
+        padding: 4px 0 !important;
+        border: none !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Outside Visible Primary Fields: Name, Phone, Status */
+    #pane-leads tr.lead-card-row td[data-label="Name"] {
+        font-size: 16px !important;
+        padding-bottom: 6px !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+
+    #pane-leads tr.lead-card-row td[data-label="Phone"] {
+        padding: 8px 0 !important;
+    }
+
+    #pane-leads tr.lead-card-row td[data-label="Status"] {
+        padding: 6px 0 10px 0 !important;
+    }
+
+    #pane-leads tr.lead-card-row td[data-label="Status"] select {
+        width: 100% !important;
+        padding: 10px 12px !important;
+        font-size: 13px !important;
+        border-radius: 8px !important;
+    }
+
+    /* Inside Details Fields: Hidden by default on mobile */
+    #pane-leads tr.lead-card-row .mobile-detail-field {
+        display: none !important;
+        padding: 8px 0 !important;
+        border-top: 1px dashed rgba(255, 255, 255, 0.08) !important;
+        font-size: 13px !important;
+    }
+
+    /* Add field labels when details are shown */
+    #pane-leads tr.lead-card-row .mobile-detail-field::before {
+        content: attr(data-label) ": ";
+        font-weight: 700;
+        color: var(--color-gold);
+        display: inline-block;
+        margin-right: 6px;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    /* When expanded, reveal all details */
+    #pane-leads tr.lead-card-row.expanded .mobile-detail-field {
+        display: block !important;
+    }
+
+    /* Show Mobile Details Toggle Button */
+    #pane-leads .booking-toggle-details-btn {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 6px !important;
+        background: rgba(212, 175, 55, 0.1) !important;
+        border: 1px solid rgba(212, 175, 55, 0.3) !important;
+        border-radius: 8px !important;
+        padding: 10px 14px !important;
+        margin-top: 10px !important;
+        color: var(--color-gold) !important;
+        font-size: 12px !important;
+        font-weight: 700 !important;
+        cursor: pointer !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+}
 
