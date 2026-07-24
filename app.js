@@ -1303,4 +1303,95 @@ function initializeDiscountPopup() {
             }
         });
     });
+
+    // ── 7. Blogs Listing Page: Interactive Live Search & Category Filter ──
+    const blogSearchInput = document.getElementById('blog-search-input');
+    const blogSearchClear = document.getElementById('blog-search-clear');
+    const categoryPills = document.querySelectorAll('.blog-pill');
+    const blogCards = document.querySelectorAll('.blog-grid .blog-card');
+    const blogNoResults = document.getElementById('blog-no-results');
+    const blogResultsMeta = document.getElementById('blog-results-meta');
+    const resetSearchBtn = document.getElementById('reset-blog-search-btn');
+
+    if (blogCards.length > 0 && (blogSearchInput || categoryPills.length > 0)) {
+        let activeCategory = 'all';
+        let searchQuery = '';
+
+        const filterBlogs = () => {
+            let visibleCount = 0;
+
+            blogCards.forEach(card => {
+                const category = card.getAttribute('data-category') || '';
+                const title = card.getAttribute('data-title') || '';
+                const excerpt = card.getAttribute('data-excerpt') || '';
+
+                const matchesCategory = (activeCategory === 'all') || (category.toLowerCase() === activeCategory.toLowerCase());
+                const matchesSearch = !searchQuery || title.includes(searchQuery) || excerpt.includes(searchQuery);
+
+                if (matchesCategory && matchesSearch) {
+                    card.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            if (blogNoResults) {
+                blogNoResults.style.display = visibleCount === 0 ? 'block' : 'none';
+            }
+
+            if (blogResultsMeta) {
+                if (searchQuery) {
+                    blogResultsMeta.textContent = `Showing ${visibleCount} results for "${searchQuery}"`;
+                } else if (activeCategory !== 'all') {
+                    blogResultsMeta.textContent = `Showing ${visibleCount} stories in "${activeCategory}"`;
+                } else {
+                    blogResultsMeta.textContent = `Showing all ${visibleCount} travel stories`;
+                }
+            }
+        };
+
+        if (blogSearchInput) {
+            blogSearchInput.addEventListener('input', (e) => {
+                searchQuery = e.target.value.trim().toLowerCase();
+                if (blogSearchClear) {
+                    blogSearchClear.style.display = searchQuery.length > 0 ? 'block' : 'none';
+                }
+                filterBlogs();
+            });
+        }
+
+        if (blogSearchClear) {
+            blogSearchClear.addEventListener('click', () => {
+                if (blogSearchInput) {
+                    blogSearchInput.value = '';
+                    searchQuery = '';
+                    blogSearchClear.style.display = 'none';
+                    filterBlogs();
+                }
+            });
+        }
+
+        categoryPills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                categoryPills.forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
+                activeCategory = pill.getAttribute('data-filter') || 'all';
+                filterBlogs();
+            });
+        });
+
+        if (resetSearchBtn) {
+            resetSearchBtn.addEventListener('click', () => {
+                if (blogSearchInput) blogSearchInput.value = '';
+                searchQuery = '';
+                if (blogSearchClear) blogSearchClear.style.display = 'none';
+                activeCategory = 'all';
+                categoryPills.forEach(p => p.classList.remove('active'));
+                const firstPill = document.querySelector('.blog-pill[data-filter="all"]');
+                if (firstPill) firstPill.classList.add('active');
+                filterBlogs();
+            });
+        }
+    }
 });

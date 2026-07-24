@@ -179,11 +179,43 @@
     </section>
 
     <!-- Blogs Listing Section -->
-    <section class="gallery-section" style="background-color: var(--color-bg-base); padding: 80px 0;">
+    <section class="gallery-section" style="background-color: var(--color-bg-base); padding: 50px 0 80px;">
         <div class="container">
             <h2 class="sr-only">Latest Stories & Travel Diaries</h2>
-            <div class="blog-grid">
+
+            <!-- Blog Search & Category Filter Toolbar -->
+            <div class="blog-controls-wrapper">
+                <div class="blog-search-box">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" id="blog-search-input" placeholder="Search guides, permit rules, safety tips..." aria-label="Search blogs">
+                    <button type="button" id="blog-search-clear" class="search-clear-btn" style="display: none;" aria-label="Clear search">&times;</button>
+                </div>
+
+                <div class="blog-filter-pills" id="blog-category-pills">
+                    <button type="button" class="blog-pill active" data-filter="all"><i class="fa-solid fa-border-all"></i> All Stories</button>
+                    <button type="button" class="blog-pill" data-filter="Permits & Guidelines"><i class="fa-solid fa-shield-halved"></i> Permits & Rules</button>
+                    <button type="button" class="blog-pill" data-filter="Yatra Updates"><i class="fa-solid fa-bell"></i> Yatra Updates</button>
+                    <button type="button" class="blog-pill" data-filter="Senior Safety & Tips"><i class="fa-solid fa-user-shield"></i> Safety & Tips</button>
+                    <button type="button" class="blog-pill" data-filter="Border News"><i class="fa-solid fa-newspaper"></i> Border News</button>
+                </div>
+            </div>
+
+            <!-- Blog Results Counter Meta -->
+            <div class="blog-results-meta" id="blog-results-meta">
+                Showing all travel stories
+            </div>
+
+            <!-- Blog Cards Grid -->
+            <div class="blog-grid" id="blogs-grid-container">
                 {{BLOGS_GRID}}
+            </div>
+
+            <!-- No Results Message -->
+            <div id="blog-no-results" class="blog-no-results" style="display: none;">
+                <i class="fa-solid fa-magnifying-glass" style="font-size: 36px; color: var(--color-gold); margin-bottom: 12px;"></i>
+                <h3>No Matching Stories Found</h3>
+                <p>We couldn't find any articles matching your search query. Try typing another keyword or selecting a different category.</p>
+                <button type="button" id="reset-blog-search-btn" class="btn btn-secondary" style="margin-top: 15px; border: 1px solid var(--color-gold); color: var(--color-gold); background: #1e293b; padding: 8px 18px; border-radius: 4px; cursor: pointer;">Reset Search</button>
             </div>
         </div>
     </section>

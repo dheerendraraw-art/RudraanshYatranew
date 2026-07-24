@@ -45,9 +45,10 @@ function slugify(text) {
 // Helper to pre-render blogs HTML
 function renderBlogsHtml(blogs) {
     if (!blogs || blogs.length === 0) {
-        return `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--color-text-secondary);">
-            <i class="fa-solid fa-feather-pointed" style="font-size: 40px; color: var(--color-slate); margin-bottom: 12px;"></i>
-            <p>No travel diaries published yet. Check back soon!</p>
+        return `<div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--color-text-secondary);">
+            <i class="fa-solid fa-feather-pointed" style="font-size: 48px; color: var(--color-gold); margin-bottom: 16px;"></i>
+            <h3 style="font-family: var(--font-serif); font-size: 22px; color: var(--color-primary); margin-bottom: 8px;">No Travel Diaries Found</h3>
+            <p style="font-size: 14px;">Check back soon for new expedition guides and Himalayan stories.</p>
         </div>`;
     }
 
@@ -55,19 +56,55 @@ function renderBlogsHtml(blogs) {
     blogs.forEach(blog => {
         const dateStr = new Date(blog.created_at).toLocaleDateString('en-US', {
             year: 'numeric',
-            month: 'long',
+            month: 'short',
             day: 'numeric'
         });
-        const excerpt = blog.content.substring(0, 160) + (blog.content.length > 160 ? '...' : '');
+
+        // Strip HTML tags for clean text excerpt
+        const rawContent = (blog.content || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+        const excerpt = rawContent.substring(0, 150) + (rawContent.length > 150 ? '...' : '');
+
+        // Estimate read time (approx 200 words per minute)
+        const wordCount = rawContent.split(/\s+/).length;
+        const readTime = Math.max(1, Math.ceil(wordCount / 200)) + ' min read';
+
+        // Auto-assign category badge
+        let category = 'Expedition Guide';
+        const titleLower = (blog.title || '').toLowerCase();
+        const contentLower = rawContent.toLowerCase();
+
+        if (titleLower.includes('permit') || titleLower.includes('ilp') || contentLower.includes('inner line permit')) {
+            category = 'Permits & Guidelines';
+        } else if (titleLower.includes('status') || titleLower.includes('suspended') || titleLower.includes('reopening') || titleLower.includes('closure')) {
+            category = 'Yatra Updates';
+        } else if (titleLower.includes('senior') || titleLower.includes('safe') || titleLower.includes('checklist') || titleLower.includes('5 things')) {
+            category = 'Senior Safety & Tips';
+        } else if (titleLower.includes('china') || titleLower.includes('lipulekh') || titleLower.includes('traders')) {
+            category = 'Border News';
+        }
+
         const slug = blog.slug || slugify(blog.title);
+        const imageUrl = blog.image_url || 'assets/images/adi-kailash-hero.webp';
+
         html += `
-            <article class="blog-card" id="blog-post-${blog.id}">
-                <img src="${blog.image_url || 'assets/images/adi-kailash-hero.webp'}" alt="${blog.title} - Sacred Himalayan Travel Diary & Expedition in Kumaon Uttarakhand" class="blog-card-img" onerror="this.src='assets/images/adi-kailash-hero.webp'">
+            <article class="blog-card" id="blog-post-${blog.id}" data-category="${category}" data-title="${(blog.title || '').toLowerCase()}" data-excerpt="${rawContent.toLowerCase()}">
+                <div class="blog-card-img-wrap">
+                    <img src="${imageUrl}" alt="${blog.title} - Sacred Himalayan Travel Diary & Expedition in Kumaon Uttarakhand" class="blog-card-img" loading="lazy" onerror="this.src='assets/images/adi-kailash-hero.webp'">
+                    <span class="blog-card-badge">${category}</span>
+                </div>
                 <div class="blog-card-content">
-                    <div class="blog-card-meta">By ${blog.author} | ${dateStr}</div>
-                    <h3 class="blog-card-title">${blog.title}</h3>
+                    <div class="blog-card-meta">
+                        <span><i class="fa-solid fa-user" style="color: var(--color-gold);"></i> ${blog.author || 'Dheerendra Rautela'}</span>
+                        <span>•</span>
+                        <span><i class="fa-solid fa-calendar-days" style="color: var(--color-gold);"></i> ${dateStr}</span>
+                        <span>•</span>
+                        <span><i class="fa-solid fa-clock" style="color: var(--color-gold);"></i> ${readTime}</span>
+                    </div>
+                    <h3 class="blog-card-title"><a href="/blog/${slug}">${blog.title}</a></h3>
                     <p class="blog-card-excerpt">${excerpt}</p>
-                    <a href="/blog/${slug}" class="blog-card-link">Read Diaries <i class="fa-solid fa-arrow-right-long"></i></a>
+                    <div class="blog-card-footer">
+                        <a href="/blog/${slug}" class="blog-card-link">Read Full Story <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
                 </div>
             </article>
         `;
