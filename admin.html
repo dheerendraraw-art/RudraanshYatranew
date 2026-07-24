@@ -74,7 +74,7 @@
         <div class="admin-dashboard-container">
 
             <!-- Dashboard Summary Header -->
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <div id="stats-summary-header-wrap" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                 <h4 style="margin: 0; font-size: 14px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--color-slate); display: flex; align-items: center; gap: 8px;">
                     <i class="fa-solid fa-chart-simple" style="color: var(--color-gold);"></i> 
                     <span id="stats-header-title">Bookings Summary</span>
@@ -1251,9 +1251,12 @@
                 if (el) el.style.display = isStaff ? 'none' : 'inline-flex';
             });
 
-            // Hide Stats summary grid for staff
+            // Hide Stats summary grid & header for staff
             const statsGrid = document.querySelector('.admin-stats-grid');
             if (statsGrid) statsGrid.style.display = isStaff ? 'none' : 'grid';
+
+            const statsHeaderWrap = document.getElementById('stats-summary-header-wrap');
+            if (statsHeaderWrap) statsHeaderWrap.style.display = isStaff ? 'none' : 'flex';
 
             // Action buttons to hide for Staff in Bookings and Leads
             const adminOnlyButtonIds = [

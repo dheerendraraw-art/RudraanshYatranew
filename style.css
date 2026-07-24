@@ -5936,6 +5936,8 @@ body.user-role-staff #leads-template-btn,
 body.user-role-staff #import-leads-btn,
 body.user-role-staff #add-lead-btn,
 body.user-role-staff #leads-action-buttons-wrap,
+body.user-role-staff #stats-summary-header-wrap,
+body.user-role-staff .admin-stats-grid,
 body.user-role-staff .admin-only-action {
     display: none !important;
     visibility: hidden !important;
@@ -5946,5 +5948,64 @@ body.user-role-staff .admin-only-action {
     margin: 0 !important;
     padding: 0 !important;
     overflow: hidden !important;
+}
+
+/* Mobile Optimization for Staff Admin Panel */
+@media (max-width: 768px) {
+    .admin-navbar {
+        padding: 10px 14px !important;
+    }
+    
+    .admin-logo-title {
+        font-size: 15px !important;
+    }
+
+    #user-badge {
+        font-size: 11.5px !important;
+        padding: 4px 8px !important;
+    }
+
+    .admin-logout-btn {
+        font-size: 11.5px !important;
+        padding: 4px 10px !important;
+    }
+
+    body.user-role-staff #stats-summary-header-wrap,
+    body.user-role-staff .admin-stats-grid {
+        display: none !important;
+    }
+
+    .admin-tab-nav {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+        padding: 4px !important;
+        margin-bottom: 16px !important;
+    }
+
+    .admin-tab-btn {
+        flex: 1 1 auto !important;
+        text-align: center !important;
+        justify-content: center !important;
+        padding: 10px 14px !important;
+        font-size: 13px !important;
+        border-radius: 8px !important;
+    }
+
+    #lead-modal .admin-modal-content {
+        width: 95% !important;
+        max-width: 95% !important;
+        max-height: 88vh !important;
+        padding: 18px 16px !important;
+        border-radius: 12px !important;
+        overflow-y: auto !important;
+    }
+
+    #lead-modal input,
+    #lead-modal select,
+    #lead-modal textarea {
+        font-size: 14px !important;
+        padding: 10px 12px !important;
+    }
 }
 
