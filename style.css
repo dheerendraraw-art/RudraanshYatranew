@@ -1915,12 +1915,32 @@ footer h3::after, footer h4::after {
     line-height: 1.4;
 }
 
-.blog-card-excerpt {
-    font-size: 14px;
-    color: var(--color-text-secondary);
-    line-height: 1.6;
-    margin-bottom: 16px;
-    flex-grow: 1;
+.blog-card-excerpt,
+.blog-card-excerpt * {
+    font-size: 13.5px !important;
+    font-weight: 400 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1.6 !important;
+    color: var(--color-text-secondary) !important;
+    font-family: var(--font-sans) !important;
+    display: inline !important;
+    text-transform: none !important;
+}
+
+.blog-card h1,
+.blog-card h2,
+.blog-card h4,
+.blog-card h5,
+.blog-card h6 {
+    font-size: 13.5px !important;
+    font-weight: 400 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1.6 !important;
+    color: var(--color-text-secondary) !important;
+    font-family: var(--font-sans) !important;
+    display: inline !important;
 }
 
 .blog-card-link {

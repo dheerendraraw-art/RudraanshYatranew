@@ -61,7 +61,14 @@ function renderBlogsHtml(blogs) {
         });
 
         // Strip HTML tags for clean text excerpt
-        const rawContent = (blog.content || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+        let rawContent = (blog.content || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+        
+        // Remove duplicate title heading from start of excerpt if present
+        const titleClean = (blog.title || '').replace(/[^\w\s]/gi, '').toLowerCase();
+        if (rawContent.toLowerCase().startsWith(titleClean)) {
+            rawContent = rawContent.substring(titleClean.length).trim();
+        }
+
         const excerpt = rawContent.substring(0, 150) + (rawContent.length > 150 ? '...' : '');
 
         // Estimate read time (approx 200 words per minute)
