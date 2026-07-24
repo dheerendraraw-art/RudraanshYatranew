@@ -517,13 +517,59 @@
                 </div>
             </div>
 
-            <!-- PANE 8: STAFF ATTENDANCE & CALCULATOR (ADMIN ONLY) -->
+            <!-- PANE 8: STAFF ATTENDANCE & PAYROLL (ADMIN ONLY) -->
             <div id="pane-attendance" class="admin-tab-content-pane" style="display: none;">
+                
+                <!-- Quick Attendance Header Stats Cards -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px;">
+                    <div style="background: var(--color-bg-card); border: 1.5px solid rgba(212, 175, 55, 0.25); border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; gap: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+                        <div style="width: 44px; height: 44px; border-radius: 10px; background: rgba(212, 175, 55, 0.15); color: #d97706; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+                            <i class="fa-solid fa-users-gear"></i>
+                        </div>
+                        <div>
+                            <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #64748b; letter-spacing: 0.5px;">Calculated Staff</div>
+                            <div id="att-kpi-staff-count" style="font-size: 20px; font-weight: 800; color: #0f172a;">0 Staff</div>
+                        </div>
+                    </div>
+
+                    <div style="background: var(--color-bg-card); border: 1.5px solid rgba(34, 197, 94, 0.25); border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; gap: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+                        <div style="width: 44px; height: 44px; border-radius: 10px; background: rgba(34, 197, 94, 0.15); color: #16a34a; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+                            <i class="fa-solid fa-percent"></i>
+                        </div>
+                        <div>
+                            <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #64748b; letter-spacing: 0.5px;">Avg Attendance Rate</div>
+                            <div id="att-kpi-avg-rate" style="font-size: 20px; font-weight: 800; color: #15803d;">—</div>
+                        </div>
+                    </div>
+
+                    <div style="background: var(--color-bg-card); border: 1.5px solid rgba(59, 130, 246, 0.25); border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; gap: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+                        <div style="width: 44px; height: 44px; border-radius: 10px; background: rgba(59, 130, 246, 0.15); color: #2563eb; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+                            <i class="fa-solid fa-indian-rupee-sign"></i>
+                        </div>
+                        <div>
+                            <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #64748b; letter-spacing: 0.5px;">Total Monthly Payout</div>
+                            <div id="att-kpi-total-payout" style="font-size: 20px; font-weight: 800; color: #1d4ed8;">₹0</div>
+                        </div>
+                    </div>
+
+                    <div style="background: var(--color-bg-card); border: 1.5px solid rgba(234, 179, 8, 0.25); border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; gap: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+                        <div style="width: 44px; height: 44px; border-radius: 10px; background: rgba(234, 179, 8, 0.15); color: #b45309; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+                            <i class="fa-solid fa-calendar-check"></i>
+                        </div>
+                        <div>
+                            <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #64748b; letter-spacing: 0.5px;">Active Period</div>
+                            <div id="att-kpi-period" style="font-size: 16px; font-weight: 800; color: #b8860b;">July 2026</div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="admin-form-grid" style="align-items: start; grid-template-columns: 1fr 2fr;">
                     
                     <!-- Left: Attendance & Salary Calculator Form -->
                     <div class="admin-form-card" style="padding: 24px;">
-                        <h3 class="admin-form-title" style="margin-bottom: 20px;"><i class="fa-solid fa-calculator" style="color: var(--color-gold); margin-right: 8px;"></i> Attendance Calculator</h3>
+                        <h3 class="admin-form-title" style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+                            <span><i class="fa-solid fa-calculator" style="color: var(--color-gold); margin-right: 8px;"></i> Attendance Calculator</span>
+                        </h3>
                         
                         <form id="attendance-calc-form" onsubmit="calculateAndSaveAttendance(event)">
                             <div class="admin-form-group">
@@ -533,22 +579,32 @@
                                 </select>
                             </div>
                             
-                            <div class="admin-form-group">
-                                <label for="calc-month-select">Calculation Month</label>
-                                <select id="calc-month-select" class="admin-select" required style="padding: 10px 12px;" onchange="loadStaffAttendanceDefaults()">
-                                    <option value="January">January</option>
-                                    <option value="February">February</option>
-                                    <option value="March">March</option>
-                                    <option value="April">April</option>
-                                    <option value="May">May</option>
-                                    <option value="June">June</option>
-                                    <option value="July">July</option>
-                                    <option value="August">August</option>
-                                    <option value="September">September</option>
-                                    <option value="October">October</option>
-                                    <option value="November">November</option>
-                                    <option value="December">December</option>
-                                </select>
+                            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 12px; margin-bottom: 14px;">
+                                <div class="admin-form-group" style="margin-bottom: 0;">
+                                    <label for="calc-month-select">Calculation Month</label>
+                                    <select id="calc-month-select" class="admin-select" required style="padding: 10px 12px;" onchange="loadStaffAttendanceDefaults()">
+                                        <option value="January">January</option>
+                                        <option value="February">February</option>
+                                        <option value="March">March</option>
+                                        <option value="April">April</option>
+                                        <option value="May">May</option>
+                                        <option value="June">June</option>
+                                        <option value="July">July</option>
+                                        <option value="August">August</option>
+                                        <option value="September">September</option>
+                                        <option value="October">October</option>
+                                        <option value="November">November</option>
+                                        <option value="December">December</option>
+                                    </select>
+                                </div>
+                                <div class="admin-form-group" style="margin-bottom: 0;">
+                                    <label for="calc-year-select">Year</label>
+                                    <select id="calc-year-select" class="admin-select" required style="padding: 10px 12px;" onchange="loadStaffAttendanceDefaults()">
+                                        <option value="2025">2025</option>
+                                        <option value="2026" selected>2026</option>
+                                        <option value="2027">2027</option>
+                                    </select>
+                                </div>
                             </div>
 
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
@@ -587,42 +643,45 @@
                                 </div>
                                 <div class="admin-form-group" style="margin-bottom: 0;">
                                     <label>Absent Days</label>
-                                    <input type="text" id="calc-absent-days" class="admin-input" readonly value="2" style="padding: 8px 12px; background: rgba(0,0,0,0.05); cursor: not-allowed;">
+                                    <input type="text" id="calc-absent-days" class="admin-input" readonly value="2" style="padding: 8px 12px; background: rgba(0,0,0,0.05); cursor: not-allowed; font-weight: 700; color: #dc2626;">
                                 </div>
                             </div>
 
-                            <!-- Daily Attendance Grid Section -->
+                            <!-- Daily Attendance Grid Section with Quick Tools -->
                             <div class="admin-form-group" style="margin-bottom: 20px;">
-                                <label style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                                    <span style="font-size: 13px; font-weight: 600; color: var(--color-primary);"><i class="fa-solid fa-calendar-days" style="color: var(--color-gold); margin-right: 4px;"></i> Daily Tracker Grid</span>
-                                    <span style="font-size: 11px; font-weight: 500; color: var(--color-slate);">Click to cycle: P → H → L → A</span>
-                                </label>
-                                <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; font-weight: 700; font-size: 11px; color: var(--color-slate); margin-bottom: 6px; padding: 0 10px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 6px;">
+                                    <span style="font-size: 13px; font-weight: 700; color: #0f172a;"><i class="fa-solid fa-calendar-days" style="color: var(--color-gold); margin-right: 4px;"></i> Interactive Daily Tracker</span>
+                                    <div style="display: flex; gap: 4px;">
+                                        <button type="button" onclick="setAllDaysStatus('P')" style="font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; border: 1px solid #16a34a; color: #16a34a; background: rgba(34, 197, 94, 0.1); cursor: pointer;">All P</button>
+                                        <button type="button" onclick="setSundaysOff()" style="font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; border: 1px solid #2563eb; color: #2563eb; background: rgba(59, 130, 246, 0.1); cursor: pointer;">Sun Off</button>
+                                    </div>
+                                </div>
+                                <div style="font-size: 11px; font-weight: 600; color: #64748b; margin-bottom: 8px;">Tap day to cycle: <span style="color: #16a34a; font-weight: 800;">P</span> → <span style="color: #d97706; font-weight: 800;">H</span> → <span style="color: #2563eb; font-weight: 800;">L</span> → <span style="color: #dc2626; font-weight: 800;">A</span></div>
+                                <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; font-weight: 700; font-size: 11px; color: #475569; margin-bottom: 6px; padding: 0 6px;">
                                     <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
                                 </div>
-                                <div id="daily-attendance-grid" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; background: rgba(0,0,0,0.02); border: 1.5px solid var(--glass-border); border-radius: 6px; padding: 10px; max-height: 240px; overflow-y: auto;">
-                                    <!-- Days will be generated here -->
+                                <div id="daily-attendance-grid" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; background: rgba(0,0,0,0.02); border: 1.5px solid var(--glass-border); border-radius: 8px; padding: 10px; max-height: 240px; overflow-y: auto;">
                                     <div style="grid-column: span 7; text-align: center; color: var(--color-slate); font-size: 12px; padding: 10px;">Select a staff member to load grid</div>
                                 </div>
                             </div>
 
-                            <div style="background: rgba(212, 175, 55, 0.05); border: 1.5px solid rgba(212, 175, 55, 0.2); border-radius: 6px; padding: 15px; margin-bottom: 20px; text-align: left;">
+                            <div style="background: rgba(212, 175, 55, 0.08); border: 1.5px solid rgba(212, 175, 55, 0.3); border-radius: 8px; padding: 16px; margin-bottom: 20px; text-align: left;">
                                 <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                                    <span style="font-size: 13px; color: var(--color-slate); font-weight: 500;">Attendance Rate:</span>
-                                    <span id="calc-out-rate" style="font-size: 14px; font-weight: 700; color: var(--color-primary);">92.3%</span>
+                                    <span style="font-size: 13px; color: #475569; font-weight: 600;">Attendance Rate:</span>
+                                    <span id="calc-out-rate" style="font-size: 14px; font-weight: 800; color: #0f172a;">92.3%</span>
                                 </div>
                                 <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                                    <span style="font-size: 13px; color: var(--color-slate); font-weight: 500;">Deductions (Absent):</span>
-                                    <span id="calc-out-deductions" style="font-size: 14px; font-weight: 700; color: #ef4444;">₹1,200</span>
+                                    <span style="font-size: 13px; color: #475569; font-weight: 600;">Deductions (Absent):</span>
+                                    <span id="calc-out-deductions" style="font-size: 14px; font-weight: 800; color: #dc2626;">₹1,200</span>
                                 </div>
-                                <div style="display: flex; justify-content: space-between; border-top: 1.5px dashed rgba(212, 175, 55, 0.2); padding-top: 8px;">
-                                    <span style="font-size: 14px; color: var(--color-primary); font-weight: bold;">Net Payable Salary:</span>
-                                    <span id="calc-out-salary" style="font-size: 16px; font-weight: 800; color: var(--color-gold-dark);">₹14,400</span>
+                                <div style="display: flex; justify-content: space-between; border-top: 1.5px dashed rgba(212, 175, 55, 0.3); padding-top: 8px;">
+                                    <span style="font-size: 14px; color: #0f172a; font-weight: 800;">Net Payable Salary:</span>
+                                    <span id="calc-out-salary" style="font-size: 17px; font-weight: 900; color: #b8860b;">₹14,400</span>
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary" style="width: 100%; border: none; padding: 12px; font-size: 14px; font-weight: bold; cursor: pointer; background-color: var(--color-gold); color: #0f172a; border-radius: 4px; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                                <i class="fa-solid fa-floppy-disk"></i> Calculate & Save Log
+                            <button type="submit" class="btn btn-primary" style="width: 100%; border: none; padding: 12px; font-size: 14px; font-weight: bold; cursor: pointer; background-color: var(--color-gold); color: #0f172a; border-radius: 6px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                <i class="fa-solid fa-floppy-disk"></i> Calculate & Save Attendance Log
                             </button>
                         </form>
                     </div>
@@ -630,11 +689,10 @@
                     <!-- Right: Attendance Logs / Sheets -->
                     <div class="admin-form-card" style="padding: 24px;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
-                            <h3 class="admin-form-title" style="margin-bottom: 0; border-bottom: none;"><i class="fa-solid fa-clipboard-user" style="color: var(--color-gold); margin-right: 8px;"></i> Attendance Sheet & Payouts</h3>
+                            <h3 class="admin-form-title" style="margin-bottom: 0; border-bottom: none;"><i class="fa-solid fa-clipboard-user" style="color: var(--color-gold); margin-right: 8px;"></i> Attendance Sheet & Payroll Statements</h3>
                             
-                            <div style="display: flex; align-items: center; gap: 8px;">
-                                <label for="filter-month-select" style="font-size: 13px; font-weight: 600; color: var(--color-slate);">Filter Month:</label>
-                                <select id="filter-month-select" class="admin-select" style="padding: 6px 12px; font-size: 13px; font-weight: 600; border: 1.5px solid var(--color-gold); width: 140px; margin-bottom: 0;" onchange="renderAttendanceHistory()">
+                            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                                <select id="filter-month-select" class="admin-select" style="padding: 6px 10px; font-size: 13px; font-weight: 600; border: 1.5px solid var(--color-gold); width: 130px; margin-bottom: 0;" onchange="renderAttendanceHistory()">
                                     <option value="January">January</option>
                                     <option value="February">February</option>
                                     <option value="March">March</option>
@@ -648,7 +706,15 @@
                                     <option value="November">November</option>
                                     <option value="December">December</option>
                                 </select>
-                                <button onclick="clearAttendanceHistory()" class="btn btn-secondary" style="border: 1px solid #ef4444; background: transparent; color: #ef4444; padding: 6px 12px; font-size: 12px; cursor: pointer; border-radius: 4px; font-weight: bold; display: flex; align-items: center; gap: 4px;" title="Delete all logs">
+                                <select id="filter-year-select" class="admin-select" style="padding: 6px 10px; font-size: 13px; font-weight: 600; border: 1.5px solid var(--color-gold); width: 90px; margin-bottom: 0;" onchange="renderAttendanceHistory()">
+                                    <option value="2025">2025</option>
+                                    <option value="2026" selected>2026</option>
+                                    <option value="2027">2027</option>
+                                </select>
+                                <button onclick="exportAttendanceCSV()" class="btn btn-secondary" style="border: 1.5px solid #16a34a; background: rgba(34, 197, 94, 0.1); color: #16a34a; padding: 6px 12px; font-size: 12px; cursor: pointer; border-radius: 4px; font-weight: bold; display: flex; align-items: center; gap: 4px;" title="Export CSV Spreadsheet">
+                                    <i class="fa-solid fa-file-excel"></i> Export CSV
+                                </button>
+                                <button onclick="clearAttendanceHistory()" class="btn btn-secondary" style="border: 1.5px solid #dc2626; background: transparent; color: #dc2626; padding: 6px 12px; font-size: 12px; cursor: pointer; border-radius: 4px; font-weight: bold; display: flex; align-items: center; gap: 4px;" title="Delete all logs">
                                     <i class="fa-solid fa-trash-can"></i> Clear All
                                 </button>
                             </div>
@@ -659,8 +725,8 @@
                                 <thead>
                                     <tr>
                                         <th>Staff Name</th>
-                                        <th>Month / Year</th>
-                                        <th>Stats (P / L / A)</th>
+                                        <th>Period</th>
+                                        <th>Attendance Stats</th>
                                         <th>Attendance Rate</th>
                                         <th>Net Payable Wage</th>
                                         <th>Actions</th>
@@ -668,7 +734,7 @@
                                 </thead>
                                 <tbody id="attendance-history-tbody">
                                     <tr>
-                                        <td colspan="6" style="text-align: center; color: var(--color-slate); padding: 20px;">No history records saved for the selected month.</td>
+                                        <td colspan="6" style="text-align: center; color: var(--color-slate); padding: 20px;">No history records saved for the selected period.</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -865,6 +931,96 @@
             </div>
             
             <button onclick="closeAttendanceDetailsModal()" class="btn btn-primary" style="width: 100%; border: none; padding: 12px; font-size: 14px; font-weight: bold; background: var(--color-primary); color: #ffffff; border-radius: 4px; cursor: pointer;">Close Calendar</button>
+        </div>
+    </div>
+
+    <!-- Printable Attendance Payslip Modal -->
+    <div class="modal-overlay" id="attendance-payslip-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(4px); z-index: 10000; align-items: center; justify-content: center; overflow-y: auto;">
+        <div class="admin-form-card" style="max-width: 600px; width: 92%; padding: 28px; border: 2px solid var(--color-gold); border-radius: 12px; position: relative; background: #ffffff; color: #0f172a; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); margin: 20px 0;">
+            <button onclick="closePayslipModal()" style="position: absolute; top: 16px; right: 16px; background: transparent; border: none; font-size: 24px; color: #64748b; cursor: pointer; font-weight: bold; line-height: 1;">&times;</button>
+
+            <!-- Printable Voucher Body -->
+            <div id="payslip-print-area">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 16px; margin-bottom: 20px;">
+                    <div>
+                        <h2 style="font-family: var(--font-serif); font-size: 22px; font-weight: 800; color: #0f172a; margin: 0; letter-spacing: -0.5px;">RUDRAANSH YATRA</h2>
+                        <div style="font-size: 11px; color: #d97706; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px;">Official Staff Salary Voucher & Attendance Record</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <span id="payslip-voucher-no" style="font-family: monospace; font-size: 13px; font-weight: 700; background: rgba(212,175,55,0.15); color: #b8860b; padding: 4px 8px; border-radius: 4px; border: 1px solid rgba(212,175,55,0.3);">PAY-2026-001</span>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; background: #f8fafc; padding: 14px 16px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 20px; font-size: 13px;">
+                    <div>
+                        <div style="font-size: 11px; color: #64748b; font-weight: 600;">EMPLOYEE NAME</div>
+                        <div id="payslip-staff-name" style="font-size: 15px; font-weight: 800; color: #0f172a;">Seema</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 11px; color: #64748b; font-weight: 600;">PAYROLL PERIOD</div>
+                        <div id="payslip-period" style="font-size: 15px; font-weight: 800; color: #0f172a;">July 2026</div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <div style="font-size: 12px; font-weight: 700; color: #475569; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px;">Attendance Summary</div>
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; text-align: center;">
+                        <div style="background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); padding: 8px; border-radius: 6px;">
+                            <span style="font-size: 10px; color: #16a34a; font-weight: 700; display: block;">PRESENT</span>
+                            <strong id="payslip-present" style="font-size: 16px; color: #15803d;">24 Days</strong>
+                        </div>
+                        <div style="background: rgba(234, 179, 8, 0.1); border: 1px solid rgba(234, 179, 8, 0.3); padding: 8px; border-radius: 6px;">
+                            <span style="font-size: 10px; color: #b45309; font-weight: 700; display: block;">HALF DAYS</span>
+                            <strong id="payslip-halfdays" style="font-size: 16px; color: #b45309;">0 Days</strong>
+                        </div>
+                        <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); padding: 8px; border-radius: 6px;">
+                            <span style="font-size: 10px; color: #2563eb; font-weight: 700; display: block;">PAID LEAVES</span>
+                            <strong id="payslip-leaves" style="font-size: 16px; color: #1d4ed8;">2 Days</strong>
+                        </div>
+                        <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); padding: 8px; border-radius: 6px;">
+                            <span style="font-size: 10px; color: #dc2626; font-weight: 700; display: block;">ABSENT</span>
+                            <strong id="payslip-absent" style="font-size: 16px; color: #dc2626;">0 Days</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; margin-bottom: 24px; font-size: 13px;">
+                    <div style="display: flex; justify-content: space-between; padding: 10px 16px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; font-weight: 700; color: #475569;">
+                        <span>Particulars</span>
+                        <span>Amount (₹)</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 10px 16px; border-bottom: 1px solid #e2e8f0;">
+                        <span>Base Rate / Fixed Salary</span>
+                        <span id="payslip-base-rate" style="font-weight: 700;">₹15,000</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 10px 16px; border-bottom: 1px solid #e2e8f0; color: #dc2626;">
+                        <span>Unpaid Absence Deductions</span>
+                        <span id="payslip-deductions" style="font-weight: 700;">-₹0</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 14px 16px; background: rgba(212, 175, 55, 0.1); font-size: 16px; font-weight: 800; color: #0f172a;">
+                        <span>Net Salary Payable</span>
+                        <span id="payslip-net-payable" style="color: #b8860b;">₹15,000</span>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 30px; padding-top: 20px; border-top: 1px dashed #cbd5e1; font-size: 12px; color: #64748b;">
+                    <div>
+                        <div>Generated by Admin Portal</div>
+                        <div style="font-size: 10px; margin-top: 2px;">Rudraansh Yatra Management</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="width: 140px; border-bottom: 1px solid #0f172a; margin-bottom: 4px;"></div>
+                        <div style="font-weight: 700; color: #0f172a;">Authorized Signature</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px; border-top: 1px solid #e2e8f0; padding-top: 16px;">
+                <button type="button" onclick="closePayslipModal()" class="btn btn-secondary" style="border: 1px solid #94a3b8; color: #475569; background: transparent; padding: 8px 16px; border-radius: 6px; font-weight: 700; cursor: pointer;">Close</button>
+                <button type="button" onclick="window.print()" class="btn btn-primary" style="background: #0f172a; color: #ffffff; border: none; padding: 8px 20px; border-radius: 6px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                    <i class="fa-solid fa-print"></i> Print Voucher / PDF
+                </button>
+            </div>
         </div>
     </div>
 
@@ -3384,11 +3540,13 @@
                 dailyStatus.push(btn ? btn.getAttribute('data-status') : 'P');
             }
 
+            const yearVal = parseInt(document.getElementById('calc-year-select').value) || new Date().getFullYear();
+
             const record = {
                 id: Date.now().toString(),
                 staff,
                 month,
-                year: new Date().getFullYear(),
+                year: yearVal,
                 attendanceRate: ratePercent,
                 salaryPaid: payable,
                 type: type === 'daily' ? 'Daily' : 'Monthly',
@@ -3406,9 +3564,9 @@
                 history = JSON.parse(localStorage.getItem('staff_attendance_history')) || [];
             } catch(e){}
             
-            const existingIndex = history.findIndex(h => h.staff === staff && h.month === month && h.year === record.year);
+            const existingIndex = history.findIndex(h => h.staff === staff && h.month === month && (h.year ? h.year === record.year : true));
             if (existingIndex > -1) {
-                if (confirm(`A record for ${staff} in ${month} already exists. Overwrite?`)) {
+                if (confirm(`A record for ${staff} in ${month} ${yearVal} already exists. Overwrite?`)) {
                     history[existingIndex] = record;
                 } else {
                     return;
@@ -3418,10 +3576,139 @@
             }
 
             localStorage.setItem('staff_attendance_history', JSON.stringify(history));
-            showAdminToast(`Attendance saved for ${staff} (${month})!`, 'success');
+            showAdminToast(`Attendance saved for ${staff} (${month} ${yearVal})!`, 'success');
             
             renderAttendanceHistory();
             refreshActiveTabStats();
+        };
+
+        window.setAllDaysStatus = function(targetStatus) {
+            const month = document.getElementById('calc-month-select').value;
+            const daysInMonth = getDaysInMonth(month);
+            for (let d = 1; d <= daysInMonth; d++) {
+                const btn = document.getElementById(`day-btn-${d}`);
+                if (btn) {
+                    btn.setAttribute('data-status', targetStatus);
+                    const label = btn.querySelector('.day-status-label');
+                    if (label) label.innerText = targetStatus;
+                    const colors = statusColors[targetStatus] || { bg: '#22c55e', text: '#ffffff' };
+                    btn.style.background = colors.bg;
+                    btn.style.color = colors.text;
+                }
+            }
+            recalculateFromDailyGrid();
+            showAdminToast(`Marked all days as ${targetStatus}!`, 'info');
+        };
+
+        window.setSundaysOff = function() {
+            const month = document.getElementById('calc-month-select').value;
+            const yearVal = parseInt(document.getElementById('calc-year-select').value) || new Date().getFullYear();
+            const daysInMonth = getDaysInMonth(month);
+            const startDayIndex = getFirstDayOfMonth(month, yearVal);
+
+            for (let d = 1; d <= daysInMonth; d++) {
+                const dayOfWeek = (startDayIndex + d - 1) % 7;
+                if (dayOfWeek === 0) {
+                    const btn = document.getElementById(`day-btn-${d}`);
+                    if (btn) {
+                        btn.setAttribute('data-status', 'L');
+                        const label = btn.querySelector('.day-status-label');
+                        if (label) label.innerText = 'L';
+                        const colors = statusColors['L'];
+                        btn.style.background = colors.bg;
+                        btn.style.color = colors.text;
+                    }
+                }
+            }
+            recalculateFromDailyGrid();
+            showAdminToast('Sundays updated to Weekly Paid Off (L)', 'info');
+        };
+
+        window.openPayslipModal = function(id) {
+            let history = [];
+            try {
+                history = JSON.parse(localStorage.getItem('staff_attendance_history')) || [];
+            } catch(e){}
+            
+            const record = history.find(h => h.id === id);
+            if (!record) return;
+
+            const absentVal = record.absent !== undefined ? record.absent : (record.totalDays - record.present - record.leaves);
+            const baseSalary = record.rate || (record.type === 'Daily' ? record.totalDays * 600 : 15000);
+            const deductions = record.type === 'Daily' 
+                ? Math.round(absentVal * record.rate)
+                : Math.round((absentVal / record.totalDays) * baseSalary);
+            
+            document.getElementById('payslip-voucher-no').innerText = `PAY-${record.year || 2026}-${record.id.slice(-4)}`;
+            document.getElementById('payslip-staff-name').innerText = record.staff;
+            document.getElementById('payslip-period').innerText = `${record.month} ${record.year || 2026}`;
+            
+            document.getElementById('payslip-present').innerText = `${record.present} Days`;
+            document.getElementById('payslip-halfdays').innerText = `${record.halfDays || 0} Days`;
+            document.getElementById('payslip-leaves').innerText = `${record.leaves} Days`;
+            document.getElementById('payslip-absent').innerText = `${absentVal} Days`;
+
+            document.getElementById('payslip-base-rate').innerText = `₹${baseSalary.toLocaleString('en-IN')} (${record.type === 'Daily' ? '₹' + record.rate + '/day' : 'Fixed Monthly'})`;
+            document.getElementById('payslip-deductions').innerText = `-₹${deductions.toLocaleString('en-IN')}`;
+            document.getElementById('payslip-net-payable').innerText = `₹${(record.salaryPaid || 0).toLocaleString('en-IN')}`;
+
+            const modal = document.getElementById('attendance-payslip-modal');
+            if (modal) {
+                modal.classList.add('active');
+                modal.style.display = 'flex';
+            }
+        };
+
+        window.closePayslipModal = function() {
+            const modal = document.getElementById('attendance-payslip-modal');
+            if (modal) {
+                modal.classList.remove('active');
+                modal.style.display = 'none';
+            }
+        };
+
+        window.exportAttendanceCSV = function() {
+            const filterMonthEl = document.getElementById('filter-month-select');
+            const filterYearEl = document.getElementById('filter-year-select');
+            const month = filterMonthEl ? filterMonthEl.value : new Date().toLocaleString('en-US', { month: 'long' });
+            const year = filterYearEl ? filterYearEl.value : new Date().getFullYear().toString();
+
+            let history = [];
+            try {
+                history = JSON.parse(localStorage.getItem('staff_attendance_history')) || [];
+            } catch(e){}
+
+            const records = history.filter(item => item.month === month && (item.year ? item.year.toString() === year : true));
+            if (records.length === 0) {
+                showAdminToast(`No attendance records to export for ${month} ${year}.`, 'error');
+                return;
+            }
+
+            const headers = ['Staff Name', 'Month', 'Year', 'Rate Type', 'Base Rate (Rs)', 'Total Days', 'Present Days', 'Half Days', 'Paid Leaves', 'Absent Days', 'Attendance Rate (%)', 'Net Payable (Rs)'];
+            const rows = records.map(r => [
+                `"${r.staff}"`,
+                `"${r.month}"`,
+                `"${r.year || 2026}"`,
+                `"${r.type || 'Monthly'}"`,
+                r.rate || 0,
+                r.totalDays || 26,
+                r.present || 0,
+                r.halfDays || 0,
+                r.leaves || 0,
+                r.absent !== undefined ? r.absent : (r.totalDays - r.present - r.leaves),
+                `"${r.attendanceRate}%"`,
+                r.salaryPaid || 0
+            ]);
+
+            const csvContent = headers.join(',') + '\n' + rows.map(e => e.join(',')).join('\n');
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.setAttribute('download', `Staff_Payroll_${month}_${year}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showAdminToast(`Payroll CSV exported for ${month} ${year}!`, 'success');
         };
 
         window.renderAttendanceHistory = function() {
@@ -3429,22 +3716,43 @@
             if (!tbody) return;
             
             const filterMonthEl = document.getElementById('filter-month-select');
+            const filterYearEl = document.getElementById('filter-year-select');
             if (filterMonthEl && !filterMonthEl.value) {
                 const currentMonthName = new Date().toLocaleString('en-US', { month: 'long' });
                 filterMonthEl.value = currentMonthName;
             }
+            if (filterYearEl && !filterYearEl.value) {
+                filterYearEl.value = new Date().getFullYear().toString();
+            }
             
             const selectedMonth = filterMonthEl ? filterMonthEl.value : '';
+            const selectedYear = filterYearEl ? filterYearEl.value : new Date().getFullYear().toString();
             
             let history = [];
             try {
                 history = JSON.parse(localStorage.getItem('staff_attendance_history')) || [];
             } catch(e){}
 
-            const filteredHistory = history.filter(item => item.month === selectedMonth);
+            const filteredHistory = history.filter(item => item.month === selectedMonth && (item.year ? item.year.toString() === selectedYear : true));
+
+            // Update Top Header KPI Cards
+            const staffCountEl = document.getElementById('att-kpi-staff-count');
+            const avgRateEl = document.getElementById('att-kpi-avg-rate');
+            const totalPayoutEl = document.getElementById('att-kpi-total-payout');
+            const periodEl = document.getElementById('att-kpi-period');
+
+            const totalPayout = filteredHistory.reduce((acc, curr) => acc + (parseFloat(curr.salaryPaid) || 0), 0);
+            const avgRateVal = filteredHistory.length > 0
+                ? (filteredHistory.reduce((acc, curr) => acc + parseFloat(curr.attendanceRate || 0), 0) / filteredHistory.length).toFixed(1) + '%'
+                : '—';
+
+            if (staffCountEl) staffCountEl.innerText = `${filteredHistory.length} Staff`;
+            if (avgRateEl) avgRateEl.innerText = avgRateVal;
+            if (totalPayoutEl) totalPayoutEl.innerText = `₹${totalPayout.toLocaleString('en-IN')}`;
+            if (periodEl) periodEl.innerText = `${selectedMonth} ${selectedYear}`;
 
             if (filteredHistory.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--color-slate); padding: 20px;">No history records saved for ${selectedMonth}.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--color-slate); padding: 20px;">No history records saved for ${selectedMonth} ${selectedYear}.</td></tr>`;
                 return;
             }
 
@@ -3453,27 +3761,36 @@
                 const absentVal = item.absent !== undefined ? item.absent : (item.totalDays - item.present - item.leaves);
                 html += `
                     <tr>
-                        <td><strong>${item.staff}</strong></td>
-                        <td>${item.month} ${item.year}</td>
+                        <td><strong style="color: #0f172a; font-size: 14px; font-weight: 700;">${item.staff}</strong></td>
+                        <td><span style="color: #475569; font-weight: 600;">${item.month} ${item.year || 2026}</span></td>
                         <td>
-                            <span style="font-size: 12px; font-weight: 600; color: #22c55e;">${item.present}P</span> / 
-                            <span style="font-size: 12px; font-weight: 600; color: #3b82f6;">${item.leaves}L</span> / 
-                            <span style="font-size: 12px; font-weight: 600; color: #ef4444;">${absentVal}A</span>
-                            ${item.halfDays > 0 ? ' / <span style="font-size: 12px; font-weight: 600; color: #eab308;">' + item.halfDays + 'H</span>' : ''}
+                            <div style="display: flex; gap: 4px; align-items: center; flex-wrap: wrap;">
+                                <span style="font-size: 11px; font-weight: 700; color: #15803d; background: rgba(34, 197, 94, 0.12); padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(34, 197, 94, 0.3);">${item.present}P</span>
+                                <span style="font-size: 11px; font-weight: 700; color: #1d4ed8; background: rgba(59, 130, 246, 0.12); padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(59, 130, 246, 0.3);">${item.leaves}L</span>
+                                <span style="font-size: 11px; font-weight: 700; color: #dc2626; background: rgba(239, 68, 68, 0.12); padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(239, 68, 68, 0.3);">${absentVal}A</span>
+                                ${item.halfDays > 0 ? '<span style="font-size: 11px; font-weight: 700; color: #b45309; background: rgba(234, 179, 8, 0.12); padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(234, 179, 8, 0.3);">' + item.halfDays + 'H</span>' : ''}
+                            </div>
                         </td>
                         <td>
                             <div style="display: flex; align-items: center; gap: 8px;">
-                                <span style="font-weight: bold; color: var(--color-primary);">${item.attendanceRate}%</span>
-                                <div style="width: 60px; height: 6px; background: rgba(0,0,0,0.1); border-radius: 3px; overflow: hidden;">
-                                    <div style="width: ${item.attendanceRate}%; height: 100%; background: var(--color-gold);"></div>
+                                <span style="font-weight: 800; color: #15803d; font-size: 13px;">${item.attendanceRate}%</span>
+                                <div style="width: 50px; height: 6px; background: rgba(0,0,0,0.1); border-radius: 3px; overflow: hidden;">
+                                    <div style="width: ${item.attendanceRate}%; height: 100%; background: #22c55e;"></div>
                                 </div>
                             </div>
                         </td>
-                        <td><strong>₹${item.salaryPaid.toLocaleString()}</strong> <small style="color: var(--color-slate); font-size: 11px;">(${item.type === 'Daily' ? '₹' + item.rate + '/d' : 'Fixed'})</small></td>
+                        <td><strong style="color: #0f172a; font-size: 14px; font-weight: 800;">₹${item.salaryPaid.toLocaleString('en-IN')}</strong> <small style="color: #64748b; font-size: 11px; display: block;">(${item.type === 'Daily' ? '₹' + item.rate + '/d' : 'Fixed'})</small></td>
                         <td>
-                            <div style="display: flex; gap: 8px; align-items: center;">
-                                <button onclick="viewDailyAttendanceModal('${item.id}')" style="background: transparent; border: none; color: var(--color-gold-dark); cursor: pointer; font-size: 15px;" title="View Calendar Grid"><i class="fa-solid fa-calendar-days"></i></button>
-                                <button onclick="deleteAttendanceHistoryItem('${item.id}')" style="background: transparent; border: none; color: #ef4444; cursor: pointer; font-size: 15px;" title="Delete Record"><i class="fa-solid fa-trash-can"></i></button>
+                            <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+                                <button onclick="viewDailyAttendanceModal('${item.id}')" class="btn btn-secondary" style="border: 1px solid var(--color-gold); background: transparent; color: #b45309; padding: 4px 8px; font-size: 11px; cursor: pointer; border-radius: 4px; font-weight: bold; display: inline-flex; align-items: center; gap: 4px;" title="View Calendar Grid">
+                                    <i class="fa-solid fa-calendar-days"></i> Grid
+                                </button>
+                                <button onclick="openPayslipModal('${item.id}')" class="btn btn-secondary" style="border: 1px solid #2563eb; background: transparent; color: #1d4ed8; padding: 4px 8px; font-size: 11px; cursor: pointer; border-radius: 4px; font-weight: bold; display: inline-flex; align-items: center; gap: 4px;" title="Print Salary Slip">
+                                    <i class="fa-solid fa-file-invoice"></i> Payslip
+                                </button>
+                                <button onclick="deleteAttendanceHistoryItem('${item.id}')" style="background: transparent; border: none; color: #dc2626; cursor: pointer; font-size: 14px; padding: 4px;" title="Delete Record">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
                             </div>
                         </td>
                     </tr>
@@ -3517,36 +3834,34 @@
         window.loadStaffAttendanceDefaults = function() {
             const staff = document.getElementById('calc-staff-select').value;
             const month = document.getElementById('calc-month-select').value;
+            const yearVal = parseInt(document.getElementById('calc-year-select').value) || new Date().getFullYear();
             
             let history = [];
             try {
                 history = JSON.parse(localStorage.getItem('staff_attendance_history')) || [];
             } catch(e){}
             
-            const record = history.find(h => h.staff === staff && h.month === month && h.year === new Date().getFullYear());
+            const record = history.find(h => h.staff === staff && h.month === month && (h.year ? h.year === yearVal : true));
             
             const daysInMonth = getDaysInMonth(month);
             const gridContainer = document.getElementById('daily-attendance-grid');
             if (!gridContainer) return;
             
             // Get starting weekday
-            const startDayIndex = getFirstDayOfMonth(month);
+            const startDayIndex = getFirstDayOfMonth(month, yearVal);
             
             let html = '';
-            // 1. Render empty cells before Day 1
             for (let i = 0; i < startDayIndex; i++) {
                 html += `<div style="min-height: 44px; display: flex; align-items: center; justify-content: center; background: transparent;"></div>`;
             }
             
-            // 2. Render actual day buttons
             for (let d = 1; d <= daysInMonth; d++) {
-                let status = 'P'; // default
+                let status = 'P';
                 if (record && record.dailyStatus && record.dailyStatus[d - 1]) {
                     status = record.dailyStatus[d - 1];
                 } else if (!record) {
-                    // Default Sundays to 'L' (Paid Weekly Off)
                     const dayOfWeek = (startDayIndex + d - 1) % 7;
-                    if (dayOfWeek === 0) { // Sunday
+                    if (dayOfWeek === 0) {
                         status = 'L';
                     }
                 }
