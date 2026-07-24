@@ -132,25 +132,25 @@
 
             <!-- Tab Navigation Control -->
             <div class="admin-tab-nav">
-                <button class="admin-tab-btn active" onclick="switchTab(event, 'pane-bookings')">
+                <button class="admin-tab-btn active" onclick="switchTab(event, 'pane-bookings')" id="tab-bookings-btn">
                     <i class="fa-solid fa-calendar-check"></i> Bookings
                 </button>
-                <button class="admin-tab-btn" onclick="switchTab(event, 'pane-billing')">
+                <button class="admin-tab-btn" onclick="switchTab(event, 'pane-billing')" id="tab-billing-btn">
                     <i class="fa-solid fa-file-invoice-dollar"></i> Billing & Payments
                 </button>
-                <button class="admin-tab-btn" onclick="switchTab(event, 'pane-requests')">
+                <button class="admin-tab-btn" onclick="switchTab(event, 'pane-requests')" id="tab-requests-btn">
                     <i class="fa-solid fa-compass"></i> Custom Requests
                 </button>
-                <button class="admin-tab-btn" onclick="switchTab(event, 'pane-discounts')">
+                <button class="admin-tab-btn" onclick="switchTab(event, 'pane-discounts')" id="tab-discounts-btn">
                     <i class="fa-solid fa-tags"></i> Discount Claims
                 </button>
-                <button class="admin-tab-btn" onclick="switchTab(event, 'pane-blogs')">
+                <button class="admin-tab-btn" onclick="switchTab(event, 'pane-blogs')" id="tab-blogs-btn">
                     <i class="fa-solid fa-newspaper"></i> Manage Blogs
                 </button>
-                <button class="admin-tab-btn" onclick="switchTab(event, 'pane-gallery')">
+                <button class="admin-tab-btn" onclick="switchTab(event, 'pane-gallery')" id="tab-gallery-btn">
                     <i class="fa-solid fa-images"></i> Manage Gallery
                 </button>
-                <button class="admin-tab-btn" onclick="switchTab(event, 'pane-leads')">
+                <button class="admin-tab-btn" onclick="switchTab(event, 'pane-leads')" id="tab-leads-btn">
                     <i class="fa-solid fa-people-group"></i> Leads Manager
                 </button>
                 <button class="admin-tab-btn" onclick="switchTab(event, 'pane-passwords')" id="tab-passwords-btn">
@@ -166,12 +166,12 @@
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
                     <h3 class="admin-form-title" style="margin-bottom: 0; border-bottom: none;"><i
                             class="fa-solid fa-calendar-check" style="color: var(--color-gold);"></i> Travel Booking Inquiries</h3>
-                    <div style="display: flex; gap: 8px;">
-                        <button type="button" id="export-bookings-btn" class="btn btn-primary" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-file-export"></i> Export CSV</button>
-                        <button type="button" onclick="downloadBookingsTemplate()" class="btn btn-secondary" style="border: 1px solid var(--color-gold); background: #1e293b; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: var(--color-gold); font-weight: 600;"><i class="fa-solid fa-download"></i> Template</button>
-                        <button type="button" id="import-bookings-btn" class="btn btn-secondary" style="border: 1px solid var(--color-gold); background: #1e293b; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: var(--color-gold); font-weight: 600;"><i class="fa-solid fa-file-import"></i> Import CSV</button>
+                    <div id="bookings-action-buttons-wrap" class="admin-only-action" style="display: flex; gap: 8px;">
+                        <button type="button" id="export-bookings-btn" class="btn btn-primary admin-only-action" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-file-export"></i> Export CSV</button>
+                        <button type="button" onclick="downloadBookingsTemplate()" id="bookings-template-btn" class="btn btn-secondary admin-only-action" style="border: 1px solid var(--color-gold); background: #1e293b; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: var(--color-gold); font-weight: 600;"><i class="fa-solid fa-download"></i> Template</button>
+                        <button type="button" id="import-bookings-btn" class="btn btn-secondary admin-only-action" style="border: 1px solid var(--color-gold); background: #1e293b; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: var(--color-gold); font-weight: 600;"><i class="fa-solid fa-file-import"></i> Import CSV</button>
                         <input type="file" id="import-bookings-file" style="display: none;" accept=".csv">
-                        <button type="button" onclick="openAddBookingModal()" class="btn btn-primary" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-plus"></i> Add Booking</button>
+                        <button type="button" onclick="openAddBookingModal()" id="add-booking-btn" class="btn btn-primary admin-only-action" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-plus"></i> Add Booking</button>
                     </div>
                 </div>
                 <div class="admin-table-container">
@@ -1260,6 +1260,9 @@
             }
             
             applyRolePermissions();
+            if (currentUserRole === 'staff') {
+                switchTab(null, 'pane-leads');
+            }
 
             // Init client
             if (typeof supabase !== 'undefined') {
@@ -1288,24 +1291,38 @@
                 document.body.classList.remove('user-role-staff');
             }
 
-            // Staff Accounts & Attendance tabs for staff
-            const passwordsTab = document.getElementById('tab-passwords-btn');
-            const attendanceTab = document.getElementById('tab-attendance-btn');
-            if (passwordsTab) passwordsTab.style.display = isStaff ? 'none' : '';
-            if (attendanceTab) attendanceTab.style.display = isStaff ? 'none' : '';
+            // Tabs to hide for Staff: Billing, Requests, Discounts, Blogs, Gallery, Passwords, Attendance
+            const adminOnlyTabIds = [
+                'tab-billing-btn',
+                'tab-requests-btn',
+                'tab-discounts-btn',
+                'tab-blogs-btn',
+                'tab-gallery-btn',
+                'tab-passwords-btn',
+                'tab-attendance-btn'
+            ];
+            adminOnlyTabIds.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.style.display = isStaff ? 'none' : '';
+            });
 
-            // Hide Export Leads, Template, Import Leads, and Add New Lead for staff users
-            const exportBtn = document.getElementById('export-leads-btn');
-            const templateBtn = document.getElementById('leads-template-btn');
-            const importBtn = document.getElementById('import-leads-btn');
-            const addLeadBtn = document.getElementById('add-lead-btn');
-            const actionWrap = document.getElementById('leads-action-buttons-wrap');
-
-            if (exportBtn) exportBtn.style.display = isStaff ? 'none' : '';
-            if (templateBtn) templateBtn.style.display = isStaff ? 'none' : '';
-            if (importBtn) importBtn.style.display = isStaff ? 'none' : '';
-            if (addLeadBtn) addLeadBtn.style.display = isStaff ? 'none' : '';
-            if (actionWrap) actionWrap.style.display = isStaff ? 'none' : 'flex';
+            // Action buttons to hide for Staff in Bookings and Leads
+            const adminOnlyButtonIds = [
+                'export-bookings-btn',
+                'bookings-template-btn',
+                'import-bookings-btn',
+                'add-booking-btn',
+                'bookings-action-buttons-wrap',
+                'export-leads-btn',
+                'leads-template-btn',
+                'import-leads-btn',
+                'add-lead-btn',
+                'leads-action-buttons-wrap'
+            ];
+            adminOnlyButtonIds.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.style.display = isStaff ? 'none' : '';
+            });
         }
 
         // Tab Switch logic

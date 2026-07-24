@@ -5917,15 +5917,25 @@ html, body {
 }
 
 /* ==================================================
-   STAFF ROLE RESTRICTION — STRICT ACTION BUTTON HIDING
+   STAFF ROLE RESTRICTION — STRICT ACTION BUTTON & TAB HIDING
    ================================================== */
+body.user-role-staff #tab-billing-btn,
+body.user-role-staff #tab-requests-btn,
+body.user-role-staff #tab-discounts-btn,
+body.user-role-staff #tab-blogs-btn,
+body.user-role-staff #tab-gallery-btn,
+body.user-role-staff #tab-passwords-btn,
+body.user-role-staff #tab-attendance-btn,
+body.user-role-staff #export-bookings-btn,
+body.user-role-staff #bookings-template-btn,
+body.user-role-staff #import-bookings-btn,
+body.user-role-staff #add-booking-btn,
+body.user-role-staff #bookings-action-buttons-wrap,
 body.user-role-staff #export-leads-btn,
 body.user-role-staff #leads-template-btn,
 body.user-role-staff #import-leads-btn,
 body.user-role-staff #add-lead-btn,
 body.user-role-staff #leads-action-buttons-wrap,
-body.user-role-staff #tab-passwords-btn,
-body.user-role-staff #tab-attendance-btn,
 body.user-role-staff .admin-only-action {
     display: none !important;
     visibility: hidden !important;
