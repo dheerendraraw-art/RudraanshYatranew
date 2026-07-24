@@ -178,6 +178,7 @@
                     <table class="admin-table">
                         <thead>
                             <tr>
+                                <th>Booking ID</th>
                                 <th>Package Name</th>
                                 <th>Client Name</th>
                                 <th>Phone</th>
@@ -191,7 +192,7 @@
                         </thead>
                         <tbody id="bookings-table-body">
                             <tr>
-                                <td colspan="9" style="text-align: center; color: var(--color-slate);">Loading bookings
+                                <td colspan="10" style="text-align: center; color: var(--color-slate);">Loading bookings
                                     data...</td>
                             </tr>
                         </tbody>
@@ -1569,6 +1570,12 @@
             }, 600);
         }
 
+        window.generateAutoBookingId = function(clientName) {
+            const namePrefix = (clientName || 'CUST').replace(/[^a-zA-Z]/g, '').slice(0, 3).toUpperCase() || 'RY';
+            const randomNum = Math.floor(100 + Math.random() * 899);
+            return `RY-2026-${namePrefix}-${randomNum}`;
+        };
+
         // 1. Fetch Bookings
         async function fetchBookings() {
             try {
@@ -1592,12 +1599,18 @@
 
                 const tbody = document.getElementById('bookings-table-body');
                 if (bookingsData.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: var(--color-slate);">No bookings registered yet in Supabase.</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="10" style="text-align: center; color: var(--color-slate);">No bookings registered yet in Supabase.</td></tr>`;
                     return;
                 }
 
                 let html = '';
                 bookingsData.forEach((item, index) => {
+                    const bookingId = item.booking_id || generateAutoBookingId(item.name);
+                    if (!item.booking_id && item.id) {
+                        item.booking_id = bookingId;
+                        supabaseAdmin.from('bookings').update({ booking_id: bookingId }).eq('id', item.id).then();
+                    }
+
                     const dateStr = item.travel_date ? new Date(item.travel_date).toLocaleDateString() : 'N/A';
                     const createdStr = new Date(item.created_at).toLocaleDateString();
 
@@ -1634,6 +1647,7 @@
 
                     html += `
                         <tr>
+                            <td data-label="Booking ID"><strong style="color: #0f172a; background: rgba(212, 175, 55, 0.18); border: 1px solid rgba(212, 175, 55, 0.4); padding: 4px 8px; border-radius: 6px; font-family: monospace; font-size: 12px; font-weight: 800; display: inline-block;">${bookingId}</strong></td>
                             <td data-label="Package Name" class="mobile-detail-field"><strong>${item.package_name}</strong></td>
                             <td data-label="Client Name">${item.name}</td>
                             <td data-label="Phone/Email">${phoneHtml} ${item.email ? '<br><small>' + item.email + '</small>' : ''}</td>
@@ -1671,7 +1685,7 @@
                 console.error(err);
                 const tbody = document.getElementById('bookings-table-body');
                 if (tbody) {
-                    tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: red;">Failed to fetch bookings. Error: ${err.message}</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="10" style="text-align: center; color: red;">Failed to fetch bookings. Error: ${err.message}</td></tr>`;
                 }
             }
         }
@@ -2800,11 +2814,13 @@
                 }
 
                 const staffUuid = currentUserUuidMapping || AGENT_UUIDS[currentUsername] || lead.assigned_to || null;
+                const autoBookingId = generateAutoBookingId(lead.name);
 
                 // Insert into bookings table
                 const { error: insertErr } = await supabaseAdmin
                     .from('bookings')
                     .insert([{
+                        booking_id: autoBookingId,
                         name: lead.name,
                         phone: lead.phone,
                         email: lead.email || '',
@@ -3935,6 +3951,7 @@
                     if (error) throw error;
                     showAdminToast('Booking updated successfully!', 'success');
                 } else {
+                    bookingData.booking_id = generateAutoBookingId(name);
                     bookingData.created_at = new Date().toISOString();
                     const { error } = await supabaseAdmin
                         .from('bookings')
@@ -3998,10 +4015,8 @@
             const booking = bookingsData.find(b => b.id === bookingId);
             if (!booking) return;
 
-            // Generate professional booking ID
-            const namePrefix = (booking.name || 'CUST').replace(/[^a-zA-Z]/g, '').slice(0, 3).toUpperCase();
-            const randomNum = Math.floor(100 + Math.random() * 900);
-            const bookingNo = `RY-2026-${namePrefix}-${randomNum}`;
+            // Reuse exact synchronized booking ID
+            const bookingNo = booking.booking_id || generateAutoBookingId(booking.name);
             
             // Open modal and reset
             document.getElementById('create-bill-form').reset();
