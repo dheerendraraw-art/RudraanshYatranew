@@ -418,7 +418,7 @@
                             class="fa-solid fa-people-group" style="color: var(--color-gold);"></i> Leads Manager</h3>
                     <div style="display: flex; gap: 8px;">
                         <button type="button" onclick="exportLeads()" class="btn btn-primary" id="export-leads-btn" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-file-export"></i> Export Leads</button>
-                        <button type="button" onclick="downloadLeadsTemplate()" class="btn btn-secondary" style="border: 1px solid var(--color-gold); background: #1e293b; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: var(--color-gold); font-weight: 600;"><i class="fa-solid fa-download"></i> Template</button>
+                        <button type="button" onclick="downloadLeadsTemplate()" class="btn btn-secondary" id="leads-template-btn" style="border: 1px solid var(--color-gold); background: #1e293b; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: var(--color-gold); font-weight: 600;"><i class="fa-solid fa-download"></i> Template</button>
                         <button type="button" onclick="triggerImportLeads()" class="btn btn-primary" id="import-leads-btn" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-file-import"></i> Import Leads</button>
                         <input type="file" id="leads-csv-file" accept=".csv" style="display: none;" onchange="handleLeadsCSVImport(event)">
                         <button type="button" onclick="openLeadModal()" class="btn btn-primary" id="add-lead-btn" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-plus"></i> Add New Lead</button>
@@ -1274,6 +1274,28 @@
             sessionStorage.removeItem('admin_username');
             sessionStorage.removeItem('admin_uuid_mapping');
             window.location.reload();
+        }
+
+        function applyRolePermissions() {
+            currentUserRole = sessionStorage.getItem('admin_role') || currentUserRole || 'admin';
+            const isStaff = (currentUserRole === 'staff');
+            
+            // Staff Accounts & Attendance tabs for staff
+            const passwordsTab = document.getElementById('tab-passwords-btn');
+            const attendanceTab = document.getElementById('tab-attendance-btn');
+            if (passwordsTab) passwordsTab.style.display = isStaff ? 'none' : '';
+            if (attendanceTab) attendanceTab.style.display = isStaff ? 'none' : '';
+
+            // Hide Export Leads, Template, Import Leads, and Add New Lead for staff users
+            const exportBtn = document.getElementById('export-leads-btn');
+            const templateBtn = document.getElementById('leads-template-btn');
+            const importBtn = document.getElementById('import-leads-btn');
+            const addLeadBtn = document.getElementById('add-lead-btn');
+
+            if (exportBtn) exportBtn.style.display = isStaff ? 'none' : '';
+            if (templateBtn) templateBtn.style.display = isStaff ? 'none' : '';
+            if (importBtn) importBtn.style.display = isStaff ? 'none' : '';
+            if (addLeadBtn) addLeadBtn.style.display = isStaff ? 'none' : '';
         }
 
         // Tab Switch logic
@@ -2414,6 +2436,7 @@
         };
 
         window.fetchLeads = async function() {
+            applyRolePermissions();
             try {
                 let query = supabaseAdmin
                     .from('leads')

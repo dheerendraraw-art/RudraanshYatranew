@@ -5787,8 +5787,17 @@ html, body {
    ================================================== */
 @media (max-width: 768px) {
     /* Hide traditional table header on mobile */
-    #pane-leads thead {
+    #pane-leads thead,
+    #pane-leads thead tr,
+    #pane-leads thead th,
+    .admin-table thead {
         display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        overflow: hidden !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border: none !important;
     }
 
     #pane-leads .admin-table-container {
