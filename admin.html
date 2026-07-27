@@ -863,10 +863,6 @@
                                 <span style="color: var(--color-text-secondary); font-size: 13px;">Contact No:</span>
                                 <span id="profile-pane-phone" style="color: white; font-weight: 600; font-size: 14px;">+91 0000000000</span>
                             </div>
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
-                                <span style="color: var(--color-text-secondary); font-size: 13px;">Email:</span>
-                                <span id="profile-pane-email" style="color: white; font-weight: 600; font-size: 14px;">email@domain.com</span>
-                            </div>
                             <div style="display: flex; justify-content: space-between;">
                                 <span style="color: var(--color-text-secondary); font-size: 13px;">Role:</span>
                                 <span id="profile-pane-role" style="color: var(--color-gold); font-weight: 600; font-size: 14px; text-transform: uppercase;">role</span>
@@ -1543,9 +1539,6 @@
 
                 const phoneEl = document.getElementById('profile-pane-phone');
                 if (phoneEl) phoneEl.innerText = data.phone || 'Not Set';
-
-                const emailEl = document.getElementById('profile-pane-email');
-                if (emailEl) emailEl.innerText = data.email || 'Not Set';
 
                 const roleEl = document.getElementById('profile-pane-role');
                 if (roleEl) roleEl.innerText = data.role || '';
