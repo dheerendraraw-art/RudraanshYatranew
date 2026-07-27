@@ -516,10 +516,6 @@
                                 <input type="text" id="new-staff-designation" class="admin-input" placeholder="e.g. Tour Guide" style="padding: 10px 12px;">
                             </div>
                             <div class="admin-form-group">
-                                <label for="new-staff-photo">Photo URL</label>
-                                <input type="text" id="new-staff-photo" class="admin-input" placeholder="e.g. https://domain.com/photo.jpg" style="padding: 10px 12px;">
-                            </div>
-                            <div class="admin-form-group">
                                 <label for="new-staff-passcode">Passcode *</label>
                                 <input type="text" id="new-staff-passcode" class="admin-input" placeholder="e.g. 987654" required style="padding: 10px 12px;">
                             </div>
@@ -898,8 +894,14 @@
                                     </div>
                                     <div style="display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 12px;">
                                         <div class="admin-form-group">
-                                            <label for="profile-input-photo">Profile Photo URL</label>
-                                            <input type="text" id="profile-input-photo" class="admin-input" placeholder="https://domain.com/image.jpg" style="padding: 10px 12px;">
+                                            <label>Profile Photo</label>
+                                            <div style="display: flex; gap: 12px; align-items: center;">
+                                                <input type="file" id="profile-input-file" accept="image/*" style="display: none;" onchange="previewProfileImage(this)">
+                                                <button type="button" class="btn btn-secondary" onclick="document.getElementById('profile-input-file').click()" style="border: 1px solid var(--color-gold); background: #1e293b; color: var(--color-gold); padding: 10px 16px; font-weight: 600; cursor: pointer; border-radius: 4px;">
+                                                    <i class="fa-solid fa-cloud-arrow-up"></i> Upload Photo
+                                                </button>
+                                                <span id="profile-file-name" style="color: var(--color-text-secondary); font-size: 13px;">No file chosen</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -1494,6 +1496,24 @@
 
         let loggedInUserDetail = null;
 
+        window.previewProfileImage = function(input) {
+            const file = input.files[0];
+            const nameEl = document.getElementById('profile-file-name');
+            if (file) {
+                if (nameEl) nameEl.innerText = file.name;
+                
+                // Live preview
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const avatarEl = document.getElementById('profile-pane-avatar');
+                    if (avatarEl) avatarEl.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                if (nameEl) nameEl.innerText = 'No file chosen';
+            }
+        };
+
         window.fetchUserProfile = async function() {
             const currentUname = sessionStorage.getItem('admin_username') || currentUsername;
             if (!currentUname) return;
@@ -1548,8 +1568,11 @@
                 const inputPhone = document.getElementById('profile-input-phone');
                 if (inputPhone) inputPhone.value = data.phone || '';
 
-                const inputPhoto = document.getElementById('profile-input-photo');
-                if (inputPhoto) inputPhoto.value = data.photo || '';
+                // Reset file input
+                const inputFile = document.getElementById('profile-input-file');
+                if (inputFile) inputFile.value = '';
+                const nameEl = document.getElementById('profile-file-name');
+                if (nameEl) nameEl.innerText = 'No file chosen';
 
                 // Reset password inputs
                 const inputPasscode = document.getElementById('profile-input-passcode');
@@ -1572,21 +1595,15 @@
 
             const inputName = document.getElementById('profile-input-name');
             const inputPhone = document.getElementById('profile-input-phone');
-            const inputPhoto = document.getElementById('profile-input-photo');
+            const fileInput = document.getElementById('profile-input-file');
             const inputPasscode = document.getElementById('profile-input-passcode');
             const inputConfirm = document.getElementById('profile-input-confirm-passcode');
 
             const name = inputName ? inputName.value.trim() : '';
             const phone = inputPhone ? inputPhone.value.trim() : '';
-            const photo = inputPhoto ? inputPhoto.value.trim() : '';
+            const file = fileInput ? fileInput.files[0] : null;
             const passcode = inputPasscode ? inputPasscode.value.trim() : '';
             const confirmPasscode = inputConfirm ? inputConfirm.value.trim() : '';
-
-            let updates = {
-                name: name || null,
-                phone: phone || null,
-                photo: photo || null
-            };
 
             // If passcode is typed, validate it
             if (passcode) {
@@ -1598,10 +1615,44 @@
                     showAdminToast('Passwords do not match.', 'error');
                     return;
                 }
-                updates.passcode = passcode;
             }
 
+            const formButton = event.target.querySelector('button[type="submit"]');
+            const originalBtnHtml = formButton.innerHTML;
+
             try {
+                let photoUrl = loggedInUserDetail.photo || null;
+
+                if (file) {
+                    formButton.disabled = true;
+                    formButton.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Uploading Photo...`;
+                    showAdminToast('Uploading profile photo to Supabase Storage...', 'info');
+
+                    const fileExt = file.name.split('.').pop();
+                    const fileName = `profiles/avatar_${loggedInUserDetail.id}_${Date.now()}.${fileExt}`;
+                    
+                    const { data: uploadData, error: uploadErr } = await supabaseAdmin.storage
+                        .from('blog-images')
+                        .upload(fileName, file, { cacheControl: '3600', upsert: true });
+
+                    if (uploadErr) throw uploadErr;
+
+                    const { data: urlData } = supabaseAdmin.storage
+                        .from('blog-images')
+                        .getPublicUrl(fileName);
+                    photoUrl = urlData.publicUrl;
+                }
+
+                let updates = {
+                    name: name || null,
+                    phone: phone || null,
+                    photo: photoUrl
+                };
+
+                if (passcode) {
+                    updates.passcode = passcode;
+                }
+
                 const { error } = await supabaseAdmin
                     .from('staff_credentials')
                     .update(updates)
@@ -1619,6 +1670,11 @@
             } catch (err) {
                 console.error('Error updating user profile:', err);
                 showAdminToast('Failed to update profile: ' + err.message, 'error');
+            } finally {
+                if (formButton) {
+                    formButton.disabled = false;
+                    formButton.innerHTML = originalBtnHtml;
+                }
             }
         };
 
@@ -3414,9 +3470,8 @@
                     html += `
                         <tr>
                             <td>
-                                <div style="display: flex; align-items: center; gap: 6px;">
-                                    <img src="${item.photo || 'https://cdn-icons-png.flaticon.com/512/149/149071.png'}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/149/149071.png'" style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover; border: 1px solid var(--color-gold);">
-                                    <input type="text" id="photo-input-${item.id}" value="${item.photo || ''}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 6px 8px; color: #1e293b; font-family: var(--font-sans); font-size: 13px; width: 90px; font-weight: 600;" placeholder="URL" onchange="this.previousElementSibling.src = this.value || 'https://cdn-icons-png.flaticon.com/512/149/149071.png'">
+                                <div style="display: flex; align-items: center; justify-content: center;">
+                                    <img src="${item.photo || 'https://cdn-icons-png.flaticon.com/512/149/149071.png'}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/149/149071.png'" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 1px solid var(--color-gold);">
                                 </div>
                             </td>
                             <td>
@@ -3500,7 +3555,6 @@
             const phoneInput = document.getElementById('new-staff-phone');
             const emailInput = document.getElementById('new-staff-email');
             const designationInput = document.getElementById('new-staff-designation');
-            const photoInput = document.getElementById('new-staff-photo');
             const passcodeInput = document.getElementById('new-staff-passcode');
             const roleInput = document.getElementById('new-staff-role');
             const uuidInput = document.getElementById('new-staff-uuid');
@@ -3510,7 +3564,6 @@
             const phone = phoneInput.value.trim();
             const email = emailInput.value.trim();
             const designation = designationInput.value.trim();
-            const photo = photoInput.value.trim();
             const passcode = passcodeInput.value.trim();
             const role = roleInput.value;
             const uuid_mapping = uuidInput ? (uuidInput.value || null) : null;
@@ -3529,7 +3582,7 @@
                 
                 const { error } = await supabaseAdmin
                     .from('staff_credentials')
-                    .insert([{ username, passcode, role, uuid_mapping, name, phone, email, designation, photo }]);
+                    .insert([{ username, passcode, role, uuid_mapping, name, phone, email, designation, photo: null }]);
                     
                 if (error) throw error;
                 
@@ -3539,7 +3592,6 @@
                 if (phoneInput) phoneInput.value = '';
                 if (emailInput) emailInput.value = '';
                 if (designationInput) designationInput.value = '';
-                if (photoInput) photoInput.value = '';
                 passcodeInput.value = '';
                 roleInput.value = 'staff';
                 if (uuidInput) uuidInput.value = '';
@@ -3561,7 +3613,6 @@
             const phoneInput = document.getElementById(`phone-input-${id}`);
             const emailInput = document.getElementById(`email-input-${id}`);
             const designationInput = document.getElementById(`designation-input-${id}`);
-            const photoInput = document.getElementById(`photo-input-${id}`);
             const passcodeInput = document.getElementById(`passcode-input-${id}`);
             const roleSelect = document.getElementById(`role-select-${id}`);
             const uuidSelect = document.getElementById(`uuid-select-${id}`);
@@ -3571,7 +3622,6 @@
             const newPhone = phoneInput ? phoneInput.value.trim() : null;
             const newEmail = emailInput ? emailInput.value.trim() : null;
             const newDesignation = designationInput ? designationInput.value.trim() : null;
-            const newPhoto = photoInput ? photoInput.value.trim() : null;
             const newPasscode = passcodeInput.value.trim();
             const newRole = roleSelect.value;
             const newUuidMapping = uuidSelect ? (uuidSelect.value || null) : null;
@@ -3592,8 +3642,7 @@
                         name: newName,
                         phone: newPhone,
                         email: newEmail,
-                        designation: newDesignation,
-                        photo: newPhoto
+                        designation: newDesignation
                     })
                     .eq('id', id);
 
