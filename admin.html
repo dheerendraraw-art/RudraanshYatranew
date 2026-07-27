@@ -465,16 +465,21 @@
                             <table class="admin-table">
                                 <thead>
                                     <tr>
+                                        <th>Photo</th>
+                                        <th>Name</th>
                                         <th>Username</th>
+                                        <th>Phone</th>
+                                        <th>Email</th>
+                                        <th>Designation</th>
                                         <th>Role</th>
-                                        <th>UUID Mapping (For Leads)</th>
-                                        <th>Passcode</th>
+                                        <th>UUID Mapping</th>
+                                        <th>Password</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody id="passwords-table-body">
                                     <tr>
-                                        <td colspan="5" style="text-align: center; color: var(--color-slate);">Loading credentials...</td>
+                                        <td colspan="10" style="text-align: center; color: var(--color-slate);">Loading credentials...</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -488,15 +493,35 @@
                         </h3>
                         <form id="add-staff-form" onsubmit="addNewStaffMember(event)">
                             <div class="admin-form-group">
-                                <label for="new-staff-username">Username</label>
+                                <label for="new-staff-name">Name</label>
+                                <input type="text" id="new-staff-name" class="admin-input" placeholder="e.g. Yash Vardhan" style="padding: 10px 12px;">
+                            </div>
+                            <div class="admin-form-group">
+                                <label for="new-staff-username">Username *</label>
                                 <input type="text" id="new-staff-username" class="admin-input" placeholder="e.g. guide_yash" required style="padding: 10px 12px;">
                             </div>
                             <div class="admin-form-group">
-                                <label for="new-staff-passcode">Passcode</label>
+                                <label for="new-staff-phone">Phone Number</label>
+                                <input type="text" id="new-staff-phone" class="admin-input" placeholder="e.g. +91 9988776655" style="padding: 10px 12px;">
+                            </div>
+                            <div class="admin-form-group">
+                                <label for="new-staff-email">Email ID</label>
+                                <input type="email" id="new-staff-email" class="admin-input" placeholder="e.g. yash@rudraansh.com" style="padding: 10px 12px;">
+                            </div>
+                            <div class="admin-form-group">
+                                <label for="new-staff-designation">Designation</label>
+                                <input type="text" id="new-staff-designation" class="admin-input" placeholder="e.g. Tour Guide" style="padding: 10px 12px;">
+                            </div>
+                            <div class="admin-form-group">
+                                <label for="new-staff-photo">Photo URL</label>
+                                <input type="text" id="new-staff-photo" class="admin-input" placeholder="e.g. https://domain.com/photo.jpg" style="padding: 10px 12px;">
+                            </div>
+                            <div class="admin-form-group">
+                                <label for="new-staff-passcode">Passcode *</label>
                                 <input type="text" id="new-staff-passcode" class="admin-input" placeholder="e.g. 987654" required style="padding: 10px 12px;">
                             </div>
                             <div class="admin-form-group" style="margin-bottom: 20px;">
-                                <label for="new-staff-role">Role</label>
+                                <label for="new-staff-role">Role *</label>
                                 <select id="new-staff-role" class="admin-select" required style="padding: 10px 12px;">
                                     <option value="staff" selected>Staff (Limited Access)</option>
                                     <option value="admin">Administrator (Full Access)</option>
@@ -3157,7 +3182,25 @@
                     html += `
                         <tr>
                             <td>
-                                <input type="text" id="username-input-${item.id}" value="${item.username}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 6px 10px; color: #1e293b; font-family: var(--font-sans); font-size: 14px; width: 120px; font-weight: 600;">
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <img src="${item.photo || 'https://cdn-icons-png.flaticon.com/512/149/149071.png'}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/149/149071.png'" style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover; border: 1px solid var(--color-gold);">
+                                    <input type="text" id="photo-input-${item.id}" value="${item.photo || ''}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 6px 8px; color: #1e293b; font-family: var(--font-sans); font-size: 13px; width: 90px; font-weight: 600;" placeholder="URL" onchange="this.previousElementSibling.src = this.value || 'https://cdn-icons-png.flaticon.com/512/149/149071.png'">
+                                </div>
+                            </td>
+                            <td>
+                                <input type="text" id="name-input-${item.id}" value="${item.name || ''}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 6px 10px; color: #1e293b; font-family: var(--font-sans); font-size: 13px; width: 100px; font-weight: 600;" placeholder="Name">
+                            </td>
+                            <td>
+                                <input type="text" id="username-input-${item.id}" value="${item.username}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 6px 10px; color: #1e293b; font-family: var(--font-sans); font-size: 13px; width: 90px; font-weight: 600;">
+                            </td>
+                            <td>
+                                <input type="text" id="phone-input-${item.id}" value="${item.phone || ''}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 6px 10px; color: #1e293b; font-family: var(--font-sans); font-size: 13px; width: 100px; font-weight: 600;" placeholder="Phone">
+                            </td>
+                            <td>
+                                <input type="email" id="email-input-${item.id}" value="${item.email || ''}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 6px 10px; color: #1e293b; font-family: var(--font-sans); font-size: 13px; width: 110px; font-weight: 600;" placeholder="Email">
+                            </td>
+                            <td>
+                                <input type="text" id="designation-input-${item.id}" value="${item.designation || ''}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 6px 10px; color: #1e293b; font-family: var(--font-sans); font-size: 13px; width: 100px; font-weight: 600;" placeholder="Designation">
                             </td>
                             <td>
                                 <select id="role-select-${item.id}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 6px; color: #1e293b; font-family: var(--font-sans); font-size: 13px; font-weight: 600; width: 85px;">
@@ -3166,13 +3209,13 @@
                                 </select>
                             </td>
                             <td>
-                                <select id="uuid-select-${item.id}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 6px; color: #1e293b; font-family: var(--font-sans); font-size: 13px; font-weight: 600; width: 180px;">
+                                <select id="uuid-select-${item.id}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 6px; color: #1e293b; font-family: var(--font-sans); font-size: 13px; font-weight: 600; width: 120px;">
                                     ${mappingOptions}
                                 </select>
                             </td>
                             <td>
-                                <div style="display: flex; gap: 6px; align-items: center;">
-                                    <input type="password" id="passcode-input-${item.id}" value="${item.passcode}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 6px 10px; color: #1e293b; font-family: monospace; font-size: 14px; width: 120px; font-weight: 600;">
+                                <div style="display: flex; gap: 4px; align-items: center;">
+                                    <input type="password" id="passcode-input-${item.id}" value="${item.passcode}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 6px 10px; color: #1e293b; font-family: monospace; font-size: 13px; width: 90px; font-weight: 600;">
                                     <button onclick="togglePasscodeVisibility('${item.id}', this)" class="btn btn-secondary" style="border: 1px solid var(--color-gold); background: #1e293b; padding: 6px 8px; cursor: pointer; border-radius: 4px; color: var(--color-gold); display: flex; align-items: center; justify-content: center; width: 32px; height: 32px;" title="Show/Hide Password">
                                         <i class="fa-solid fa-eye-slash" style="font-size: 12px;"></i>
                                     </button>
@@ -3196,7 +3239,7 @@
                 console.error(err);
                 const tbody = document.getElementById('passwords-table-body');
                 if (tbody) {
-                    tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: red;">Failed to load credentials: ${err.message}</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="10" style="text-align: center; color: red;">Failed to load credentials: ${err.message}</td></tr>`;
                 }
             }
         };
@@ -3220,12 +3263,22 @@
 
         window.addNewStaffMember = async function(event) {
             event.preventDefault();
+            const nameInput = document.getElementById('new-staff-name');
             const usernameInput = document.getElementById('new-staff-username');
+            const phoneInput = document.getElementById('new-staff-phone');
+            const emailInput = document.getElementById('new-staff-email');
+            const designationInput = document.getElementById('new-staff-designation');
+            const photoInput = document.getElementById('new-staff-photo');
             const passcodeInput = document.getElementById('new-staff-passcode');
             const roleInput = document.getElementById('new-staff-role');
             const uuidInput = document.getElementById('new-staff-uuid');
             
+            const name = nameInput.value.trim();
             const username = usernameInput.value.trim().toLowerCase();
+            const phone = phoneInput.value.trim();
+            const email = emailInput.value.trim();
+            const designation = designationInput.value.trim();
+            const photo = photoInput.value.trim();
             const passcode = passcodeInput.value.trim();
             const role = roleInput.value;
             const uuid_mapping = uuidInput ? (uuidInput.value || null) : null;
@@ -3244,12 +3297,17 @@
                 
                 const { error } = await supabaseAdmin
                     .from('staff_credentials')
-                    .insert([{ username, passcode, role, uuid_mapping }]);
+                    .insert([{ username, passcode, role, uuid_mapping, name, phone, email, designation, photo }]);
                     
                 if (error) throw error;
                 
                 showAdminToast(`Successfully added staff member ${username}!`, 'success');
+                if (nameInput) nameInput.value = '';
                 usernameInput.value = '';
+                if (phoneInput) phoneInput.value = '';
+                if (emailInput) emailInput.value = '';
+                if (designationInput) designationInput.value = '';
+                if (photoInput) photoInput.value = '';
                 passcodeInput.value = '';
                 roleInput.value = 'staff';
                 if (uuidInput) uuidInput.value = '';
@@ -3266,12 +3324,22 @@
         };
 
         window.updateStaffCredentials = async function(id, oldUsername) {
+            const nameInput = document.getElementById(`name-input-${id}`);
             const usernameInput = document.getElementById(`username-input-${id}`);
+            const phoneInput = document.getElementById(`phone-input-${id}`);
+            const emailInput = document.getElementById(`email-input-${id}`);
+            const designationInput = document.getElementById(`designation-input-${id}`);
+            const photoInput = document.getElementById(`photo-input-${id}`);
             const passcodeInput = document.getElementById(`passcode-input-${id}`);
             const roleSelect = document.getElementById(`role-select-${id}`);
             const uuidSelect = document.getElementById(`uuid-select-${id}`);
             
+            const newName = nameInput ? nameInput.value.trim() : null;
             const newUsername = usernameInput.value.trim().toLowerCase();
+            const newPhone = phoneInput ? phoneInput.value.trim() : null;
+            const newEmail = emailInput ? emailInput.value.trim() : null;
+            const newDesignation = designationInput ? designationInput.value.trim() : null;
+            const newPhoto = photoInput ? photoInput.value.trim() : null;
             const newPasscode = passcodeInput.value.trim();
             const newRole = roleSelect.value;
             const newUuidMapping = uuidSelect ? (uuidSelect.value || null) : null;
@@ -3284,7 +3352,17 @@
             try {
                 const { error } = await supabaseAdmin
                     .from('staff_credentials')
-                    .update({ username: newUsername, passcode: newPasscode, role: newRole, uuid_mapping: newUuidMapping })
+                    .update({ 
+                        username: newUsername, 
+                        passcode: newPasscode, 
+                        role: newRole, 
+                        uuid_mapping: newUuidMapping,
+                        name: newName,
+                        phone: newPhone,
+                        email: newEmail,
+                        designation: newDesignation,
+                        photo: newPhoto
+                    })
                     .eq('id', id);
 
                 if (error) throw error;
