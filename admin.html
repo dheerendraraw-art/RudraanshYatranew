@@ -15,7 +15,7 @@
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></noscript>
-    <link rel="stylesheet" href="style.css?v=7.0">
+    <link rel="stylesheet" href="style.css?v=8.0">
     <meta name="robots" content="noindex, nofollow">
 </head>
 
@@ -2556,6 +2556,22 @@
                 const updateData = {};
                 updateData[fieldName] = value === "" ? null : value;
                 
+                if (fieldName === 'assigned_to') {
+                    const lead = currentLeads.find(l => l.id === leadId);
+                    const oldAssigneeUuid = lead ? lead.assigned_to : null;
+                    const newAssigneeUuid = value === "" ? null : value;
+                    
+                    const oldName = oldAssigneeUuid ? (usersMap[oldAssigneeUuid] || 'User (' + oldAssigneeUuid.slice(0, 8) + ')') : 'Unassigned';
+                    const newName = newAssigneeUuid ? (usersMap[newAssigneeUuid] || 'User (' + newAssigneeUuid.slice(0, 8) + ')') : 'Unassigned';
+                    
+                    const transferNote = `🔄 Transferred from ${oldName} to ${newName}`;
+                    let updatedRemarks = transferNote;
+                    if (lead && lead.remarks && lead.remarks.trim()) {
+                        updatedRemarks = lead.remarks.trim() + "\n" + transferNote;
+                    }
+                    updateData['remarks'] = updatedRemarks;
+                }
+
                 const { error } = await supabaseAdmin
                     .from('leads')
                     .update(updateData)
@@ -2760,7 +2776,7 @@
                                         <div class="lead-chat-avatar">${initials}</div>
                                         <div class="lead-chat-main-info">
                                             <div class="lead-chat-title-row">
-                                                <strong class="lead-chat-name" style="color: var(--color-gold);">${item.name}</strong>
+                                                <strong class="lead-chat-name" style="color: var(--color-gold); cursor: pointer;" onclick="event.stopPropagation(); startEditLead(${index})">${item.name}</strong>
                                                 <span class="lead-chat-time">${createdStr}</span>
                                             </div>
                                             <div class="lead-chat-sub-row">
@@ -2780,7 +2796,7 @@
                                         ${statusOptions}
                                     </select>
                                 </td>
-                                <td data-label="Remarks" class="mobile-detail-field"><small>${item.remarks || '-'}</small></td>
+                                <td data-label="Remarks" class="mobile-detail-field" style="white-space: pre-line;"><small>${item.remarks || '-'}</small></td>
                                 <td data-label="Follow up 1" class="mobile-detail-field"><small>${item.follow_up_1 || '-'}</small></td>
                                 <td data-label="Follow up 2" class="mobile-detail-field"><small>${item.follow_up_2 || '-'}</small></td>
                                 <td data-label="Actions" onclick="event.stopPropagation();">
@@ -2800,7 +2816,7 @@
                                         <div class="lead-chat-avatar">${initials}</div>
                                         <div class="lead-chat-main-info">
                                             <div class="lead-chat-title-row">
-                                                <strong class="lead-chat-name">${item.name}</strong>
+                                                <strong class="lead-chat-name" style="cursor: pointer;" onclick="event.stopPropagation(); startEditLead(${index})">${item.name}</strong>
                                                 <span class="lead-chat-time">${createdStr}</span>
                                             </div>
                                             <div class="lead-chat-sub-row">
@@ -2827,7 +2843,7 @@
                                         ${assigneeOptions}
                                     </select>
                                 </td>
-                                <td data-label="Remarks" class="mobile-detail-field"><small>${item.remarks || '-'}</small></td>
+                                <td data-label="Remarks" class="mobile-detail-field" style="white-space: pre-line;"><small>${item.remarks || '-'}</small></td>
                                 <td data-label="Follow up 1" class="mobile-detail-field"><small>${item.follow_up_1 || '-'}</small></td>
                                 <td data-label="Follow up 2" class="mobile-detail-field"><small>${item.follow_up_2 || '-'}</small></td>
                                 <td data-label="Final Status" class="mobile-detail-field" onclick="event.stopPropagation();">
@@ -2896,54 +2912,7 @@
         window.startEditLead = function(index) {
             const item = currentLeads[index];
             if (!item) return;
-            
-            const modal = document.getElementById('lead-modal');
-            if (modal) {
-                modal.classList.add('active');
-                modal.style.display = 'flex';
-            }
-            
-            document.getElementById('lead-modal-title').innerText = 'Edit Lead';
-            document.getElementById('lead-id').value = item.id;
-            document.getElementById('lead-name').value = item.name;
-            document.getElementById('lead-phone').value = item.phone || '';
-            document.getElementById('lead-email').value = item.email || '';
-            document.getElementById('lead-source').value = item.source || '';
-            document.getElementById('lead-status').value = item.status || 'New';
-            document.getElementById('lead-assignee').value = item.assigned_to || '';
-            document.getElementById('lead-finalstatus').value = item.final_status || '';
-            document.getElementById('lead-remarks').value = item.remarks || '';
-            document.getElementById('lead-followup1').value = item.follow_up_1 || '';
-            document.getElementById('lead-followup2').value = item.follow_up_2 || '';
-            document.getElementById('lead-travel-date').value = item.travel_date || '';
-
-            // Show edit-only fields
-            document.querySelectorAll('.edit-only-field').forEach(el => {
-                el.style.display = '';
-            });
-
-            // If logged in as staff, hide fields removed for staff users
-            const isStaff = (currentUserRole === 'staff');
-            document.getElementById('lead-name').disabled = isStaff;
-            document.getElementById('lead-phone').disabled = isStaff;
-            document.getElementById('lead-email').disabled = isStaff;
-
-            const sourceGroup = document.getElementById('lead-source')?.closest('.admin-form-group');
-            const travelDateGroup = document.getElementById('lead-travel-date')?.closest('.admin-form-group');
-            const assigneeGroup = document.getElementById('lead-assignee')?.closest('.admin-form-group');
-            const finalStatusGroup = document.getElementById('lead-finalstatus')?.closest('.admin-form-group');
-
-            if (isStaff) {
-                if (sourceGroup) sourceGroup.style.display = 'none';
-                if (travelDateGroup) travelDateGroup.style.display = 'none';
-                if (assigneeGroup) assigneeGroup.style.display = 'none';
-                if (finalStatusGroup) finalStatusGroup.style.display = 'none';
-            } else {
-                if (sourceGroup) sourceGroup.style.display = 'block';
-                if (travelDateGroup) travelDateGroup.style.display = 'block';
-                if (assigneeGroup) assigneeGroup.style.display = 'block';
-                if (finalStatusGroup) finalStatusGroup.style.display = 'block';
-            }
+            window.open(`lead-details.html?id=${item.id}`, '_blank');
         };
 
         // Helper to copy a confirmed lead to bookings table

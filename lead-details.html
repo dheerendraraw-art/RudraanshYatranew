@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lead Details - Rudraansh Yatra Portal</title>
+    <link rel="icon" type="image/png" href="assets/images/logo.png">
+    <link rel="shortcut icon" type="image/png" href="assets/images/logo.png">
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css?v=8.0">
+
+    <style>
+        body {
+            background-color: #0b0f19;
+            color: #f1f5f9;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .details-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        /* Header Styles */
+        .details-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            border-bottom: 1px solid #1e293b;
+            padding-bottom: 16px;
+        }
+
+        .header-title-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .back-btn {
+            color: #d4af37;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: opacity 0.2s;
+        }
+
+        .back-btn:hover {
+            opacity: 0.8;
+        }
+
+        .header-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            color: #ffffff;
+            margin: 6px 0 0 0;
+            font-weight: 700;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(212, 175, 55, 0.15);
+            color: #d4af37;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        /* Layout Columns */
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        @media (max-width: 900px) {
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Left Side Cards */
+        .sidebar-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .profile-card {
+            background: #111726;
+            border: 1px solid #1e293b;
+            border-radius: 8px;
+            padding: 24px;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .profile-avatar {
+            width: 52px;
+            height: 52px;
+            background: #d4af37;
+            color: #0b0f19;
+            font-weight: 800;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .profile-title-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .profile-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0;
+        }
+
+        .profile-role {
+            font-size: 12px;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .profile-details {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            border-top: 1px solid #1e293b;
+            padding-top: 16px;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: #cbd5e1;
+        }
+
+        .detail-item i {
+            color: #d4af37;
+            width: 16px;
+            text-align: center;
+        }
+
+        .detail-item a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .detail-item a:hover {
+            color: #d4af37;
+        }
+
+        .wa-chat-link {
+            background: rgba(37, 211, 102, 0.1);
+            color: #25d366 !important;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 11px;
+            border: 1px solid rgba(37, 211, 102, 0.2);
+            margin-left: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: 700;
+        }
+
+        /* Lead Properties Card */
+        .properties-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #94a3b8;
+            margin: 0 0 16px 0;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .properties-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .property-row {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .property-label {
+            font-size: 11px;
+            color: #94a3b8;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .property-value {
+            font-size: 13.5px;
+            color: #f1f5f9;
+            font-weight: 600;
+        }
+
+        .property-input, .property-select {
+            background: #0b0f19;
+            border: 1px solid #475569;
+            color: #ffffff;
+            border-radius: 4px;
+            padding: 6px 10px;
+            font-size: 13px;
+            width: 100%;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .property-input:focus, .property-select:focus {
+            border-color: #d4af37;
+        }
+
+        /* Right Side Activity */
+        .activity-wrap {
+            background: #111726;
+            border: 1px solid #1e293b;
+            border-radius: 8px;
+            padding: 24px;
+            min-height: 500px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .activity-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #1e293b;
+            padding-bottom: 10px;
+        }
+
+        .act-tab-btn {
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .act-tab-btn:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .act-tab-btn.active {
+            color: #d4af37;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .note-form {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .note-textarea {
+            width: 100%;
+            background: #0b0f19;
+            border: 1px solid #475569;
+            color: #ffffff;
+            border-radius: 4px;
+            padding: 10px;
+            font-size: 13px;
+            resize: none;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .note-textarea:focus {
+            border-color: #d4af37;
+        }
+
+        .note-actions {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .btn-submit-note {
+            background: #d4af37;
+            color: #0b0f19;
+            border: none;
+            padding: 8px 20px;
+            font-size: 12.5px;
+            font-weight: 700;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .btn-submit-note:hover {
+            opacity: 0.9;
+        }
+
+        /* Timeline Feed */
+        .timeline-section-title {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #64748b;
+            margin: 24px 0 16px 0;
+            font-weight: 800;
+        }
+
+        .timeline-container {
+            position: relative;
+            padding-left: 20px;
+            border-left: 2px solid #1e293b;
+            margin-left: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .timeline-item {
+            position: relative;
+        }
+
+        .timeline-bullet {
+            position: absolute;
+            left: -27px;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #d4af37;
+            border: 3px solid #111726;
+        }
+
+        .timeline-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .timeline-content {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .timeline-text {
+            font-size: 13px;
+            color: #f1f5f9;
+            line-height: 1.4;
+            font-weight: 600;
+        }
+
+        .timeline-meta {
+            font-size: 11px;
+            color: #94a3b8;
+        }
+
+        .timeline-badge {
+            background: rgba(34, 197, 94, 0.15);
+            color: #4ade80;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 700;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            white-space: nowrap;
+        }
+
+        /* Toast notifications */
+        #toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .toast {
+            background: #1e293b;
+            border-left: 4px solid #d4af37;
+            color: #ffffff;
+            padding: 12px 20px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="details-container">
+        <!-- Header -->
+        <div class="details-header">
+            <div class="header-title-wrap">
+                <a href="admin.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Leads Dashboard</a>
+                <h1 class="header-title" id="lead-page-title">Lead Details</h1>
+            </div>
+            <div id="lead-status-header">
+                <span class="status-badge" id="header-status-badge">Loading...</span>
+            </div>
+        </div>
+
+        <!-- Details Grid -->
+        <div class="details-grid">
+            
+            <!-- Left Side Cards -->
+            <div class="sidebar-wrap">
+                
+                <!-- Primary Profile Card -->
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <div class="profile-avatar" id="lead-avatar-initials">-</div>
+                        <div class="profile-title-info">
+                            <h2 class="profile-name" id="lead-display-name">Loading...</h2>
+                            <span class="profile-role">Prospect / Travel Lead</span>
+                        </div>
+                    </div>
+
+                    <div class="profile-details">
+                        <div class="detail-item">
+                            <i class="fa-solid fa-phone"></i>
+                            <span id="lead-display-phone">Loading...</span>
+                            <span id="lead-wa-wrapper"></span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fa-solid fa-envelope"></i>
+                            <span id="lead-display-email">Loading...</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fa-solid fa-location-arrow"></i>
+                            <span>Source: <strong id="lead-display-source">Loading...</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Properties Card -->
+                <div class="properties-card">
+                    <h3 class="card-title">Lead Properties</h3>
+                    <div class="properties-list">
+                        
+                        <div class="property-row">
+                            <label class="property-label">Lead Status</label>
+                            <select id="property-status" class="property-select" onchange="updateLeadField('status', this.value)">
+                                <option value="New">✨ New</option>
+                                <option value="Answered">📞 Answered</option>
+                                <option value="Busy">⏳ Busy</option>
+                                <option value="Incorrect Number">🚫 Incorrect Number</option>
+                                <option value="Follow up required">🔁 Follow up required</option>
+                                <option value="Not Answered">🔇 Not Answered</option>
+                                <option value="No. not reachable">📴 No. not reachable</option>
+                            </select>
+                        </div>
+
+                        <div class="property-row">
+                            <label class="property-label">Assigned To Staff</label>
+                            <select id="property-assignee" class="property-select" onchange="updateLeadField('assigned_to', this.value)">
+                                <option value="">Loading...</option>
+                            </select>
+                        </div>
+
+                        <div class="property-row">
+                            <label class="property-label">Travel Date</label>
+                            <input type="date" id="property-travel-date" class="property-input" onchange="updateLeadField('travel_date', this.value)">
+                        </div>
+
+                        <div class="property-row">
+                            <label class="property-label">Final Status</label>
+                            <select id="property-final-status" class="property-select" onchange="updateLeadField('final_status', this.value)">
+                                <option value="">🔘 None</option>
+                                <option value="Booking confirmed">🎉 Booking confirmed</option>
+                                <option value="Booked elsewhere">🏢 Booked elsewhere</option>
+                                <option value="Postpone">⏳ Postpone</option>
+                                <option value="Lost lead">🗑️ Lost lead</option>
+                            </select>
+                        </div>
+
+                        <div class="property-row">
+                            <label class="property-label">Created Date</label>
+                            <div class="property-value" id="property-created-at">Loading...</div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Tags / Quick Labels Card -->
+                <div class="properties-card">
+                    <h3 class="card-title">Quick Information</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;" id="lead-tags-container">
+                        <span style="font-size: 11px; background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px; color: #94a3b8;">Active Lead</span>
+                        <span style="font-size: 11px; background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px; color: #94a3b8;">Yatra Inquiry</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Side Timeline / Actions -->
+            <div class="activity-wrap">
+                <div class="activity-tabs">
+                    <button class="act-tab-btn active"><i class="fa-solid fa-note-sticky"></i> Add Quick Note</button>
+                    <button class="act-tab-btn" onclick="showToast('Feature coming soon!')"><i class="fa-solid fa-phone"></i> Log Call</button>
+                    <button class="act-tab-btn" onclick="showToast('Feature coming soon!')"><i class="fa-solid fa-envelope"></i> Send Email</button>
+                </div>
+
+                <!-- New Note Form -->
+                <form id="new-note-form" class="note-form" onsubmit="submitNote(event)">
+                    <textarea id="note-text" class="note-textarea" rows="3" placeholder="Write an update, remark, or follow-up note here..." required></textarea>
+                    <div class="note-actions">
+                        <button type="submit" class="btn-submit-note">Save Update</button>
+                    </div>
+                </form>
+
+                <!-- Activity Feed -->
+                <h3 class="timeline-section-title">Activity Feed & History</h3>
+                <div class="timeline-container" id="lead-timeline">
+                    <div style="color: #64748b; font-style: italic;">Loading timeline updates...</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div id="toast-container"></div>
+
+    <!-- Supabase Client Loader -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Security Gate check
+        if (sessionStorage.getItem('admin_verified') !== 'true') {
+            window.location.href = 'admin.html';
+        }
+
+        // Credentials matching project settings
+        const supabaseUrl = 'https://ysnzxvvsegmkmkepclti.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlzbnp4dnZzZWdta21rZXBjbHRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NDY3NjMsImV4cCI6MjA5NjMyMjc2M30.V6q3OpJCf6PEu6JTM__6E7PJDrY5lY--FZfjyy_toLM';
+        const supabaseAdmin = supabase.createClient(supabaseUrl, supabaseKey);
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const leadId = urlParams.get('id');
+
+        let currentUserRole = sessionStorage.getItem('admin_role') || 'staff';
+        let currentUsername = sessionStorage.getItem('admin_username') || 'staff';
+        let currentUserUuidMapping = sessionStorage.getItem('admin_uuid_mapping') || '';
+
+        let leadData = null;
+        let uuidToUsernameMap = {};
+
+        // Toast Helper
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerText = message;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Fetch Lead Details
+        async function fetchLeadDetails() {
+            if (!leadId) {
+                alert('No Lead ID provided in URL');
+                window.location.href = 'admin.html';
+                return;
+            }
+
+            try {
+                const { data, error } = await supabaseAdmin
+                    .from('leads')
+                    .select('*')
+                    .eq('id', leadId)
+                    .single();
+
+                if (error) throw error;
+                leadData = data;
+
+                renderLeadDetails();
+                fetchLeadHistory();
+            } catch (err) {
+                console.error(err);
+                showToast('Failed to fetch lead details.');
+            }
+        }
+
+        // Render details to UI elements
+        function renderLeadDetails() {
+            if (!leadData) return;
+
+            // Header status
+            document.getElementById('header-status-badge').innerText = leadData.status || 'New';
+            
+            // Name Card
+            document.getElementById('lead-display-name').innerText = leadData.name || 'Anonymous';
+            document.getElementById('lead-page-title').innerText = `${leadData.name || 'Lead'} - Details`;
+            
+            // Avatar Initials
+            let initials = 'Y';
+            if (leadData.name) {
+                const parts = leadData.name.trim().split(/\s+/);
+                initials = parts.length >= 2 ? (parts[0][0] + parts[1][0]).toUpperCase() : leadData.name.slice(0, 2).toUpperCase();
+            }
+            document.getElementById('lead-avatar-initials').innerText = initials;
+
+            // Details info
+            document.getElementById('lead-display-phone').innerText = leadData.phone || 'No Phone';
+            document.getElementById('lead-display-email').innerText = leadData.email || 'No Email';
+            document.getElementById('lead-display-source').innerText = leadData.source || 'Website';
+
+            // WhatsApp link helper
+            const waWrapper = document.getElementById('lead-wa-wrapper');
+            if (leadData.phone) {
+                const cleanPhone = leadData.phone.replace(/[^0-9]/g, '');
+                const waPhone = cleanPhone.length === 10 ? '91' + cleanPhone : cleanPhone;
+                waWrapper.innerHTML = `<a href="https://wa.me/${waPhone}?text=Namaste%20${encodeURIComponent(leadData.name || 'Guest')}!%20This%20is%20Rudraansh%20Yatra." target="_blank" class="wa-chat-link"><i class="fa-brands fa-whatsapp"></i> Chat</a>`;
+            } else {
+                waWrapper.innerHTML = '';
+            }
+
+            // Properties Form inputs
+            document.getElementById('property-status').value = leadData.status || 'New';
+            document.getElementById('property-travel-date').value = leadData.travel_date || '';
+            document.getElementById('property-final-status').value = leadData.final_status || '';
+            document.getElementById('property-created-at').innerText = new Date(leadData.created_at).toLocaleString('en-IN', {
+                day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+            });
+
+            // Assigned to select option matching
+            document.getElementById('property-assignee').value = leadData.assigned_to || '';
+
+            // Render tags/quick info indicators
+            const tagsWrap = document.getElementById('lead-tags-container');
+            let tagsHtml = `<span style="font-size: 11px; background: rgba(212, 175, 55, 0.1); padding: 4px 8px; border-radius: 4px; color: var(--color-gold); font-weight: 700; border: 1px solid rgba(212, 175, 55, 0.2);">${leadData.source || 'Website'}</span>`;
+            if (leadData.final_status) {
+                tagsHtml += `<span style="font-size: 11px; background: rgba(34, 197, 94, 0.1); padding: 4px 8px; border-radius: 4px; color: #4ade80; font-weight: 700; border: 1px solid rgba(34, 197, 94, 0.2);">${leadData.final_status}</span>`;
+            } else {
+                tagsHtml += `<span style="font-size: 11px; background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px; color: #94a3b8; font-weight: 600;">Active Lead</span>`;
+            }
+            tagsWrap.innerHTML = tagsHtml;
+        }
+
+        // Fetch and Render Timeline
+        async function fetchLeadHistory() {
+            try {
+                const { data, error } = await supabaseAdmin
+                    .from('lead_history')
+                    .select('*')
+                    .eq('lead_id', leadId)
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                const timeline = document.getElementById('lead-timeline');
+                if (!data || data.length === 0) {
+                    timeline.innerHTML = '<div style="color: #64748b; font-style: italic;">No previous activities logged yet.</div>';
+                    return;
+                }
+
+                let html = '';
+                data.forEach(item => {
+                    const timeStr = new Date(item.created_at).toLocaleString('en-IN', {
+                        day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+                    });
+
+                    // Determine icon based on action content
+                    let iconClass = 'fa-solid fa-clock-rotate-left';
+                    let badgeText = 'System';
+                    let badgeColor = 'rgba(255,255,255,0.05)';
+                    let badgeTextColor = '#94a3b8';
+                    let remarksUpdatedLabel = '';
+
+                    if (item.action.includes('Transferred')) {
+                        iconClass = 'fa-solid fa-share-nodes';
+                        badgeText = 'Transfer';
+                        badgeColor = 'rgba(212,175,55,0.15)';
+                        badgeTextColor = '#d4af37';
+                    } else if (item.action.includes('Status')) {
+                        iconClass = 'fa-solid fa-tags';
+                        badgeText = 'Status';
+                        badgeColor = 'rgba(37,99,235,0.15)';
+                        badgeTextColor = '#60a5fa';
+                    } else if (item.action.includes('Note by') || item.action.includes('Remarks')) {
+                        iconClass = 'fa-solid fa-comment-dots';
+                        badgeText = 'Staff Note';
+                        badgeColor = 'rgba(16,185,129,0.15)';
+                        badgeTextColor = '#34d399';
+                        remarksUpdatedLabel = ' <span style="color: #34d399; font-weight: 600; margin-left: 8px;">• Remarks updated</span>';
+                    }
+
+                    html += `
+                        <div class="timeline-item">
+                            <div class="timeline-bullet" style="background: ${badgeTextColor};"></div>
+                            <div class="timeline-card">
+                                <div class="timeline-content">
+                                    <div class="timeline-text"><i class="${iconClass}" style="margin-right: 6px; color: ${badgeTextColor};"></i> ${item.action}</div>
+                                    <div class="timeline-meta">${timeStr}${remarksUpdatedLabel}</div>
+                                </div>
+                                <span class="timeline-badge" style="background: ${badgeColor}; color: ${badgeTextColor}; border-color: ${badgeColor};">${badgeText}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                timeline.innerHTML = html;
+            } catch (err) {
+                console.error(err);
+                document.getElementById('lead-timeline').innerHTML = '<div style="color: red;">Failed to load activity logs.</div>';
+            }
+        }
+
+        // Add Quick Note
+        async function submitNote(event) {
+            event.preventDefault();
+            const textEl = document.getElementById('note-text');
+            const noteText = textEl.value.trim();
+            if (!noteText) return;
+
+            try {
+                // Log note to lead_history
+                const actionDesc = `✍️ Note by ${currentUsername.charAt(0).toUpperCase() + currentUsername.slice(1)}: "${noteText}"`;
+                
+                const { error } = await supabaseAdmin
+                    .from('lead_history')
+                    .insert([{
+                        lead_id: leadId,
+                        action: actionDesc
+                    }]);
+
+                if (error) throw error;
+
+                // Also update leads table remarks field to reflect this latest update (append to maintain previous remarks)
+                let updatedRemarks = noteText;
+                if (leadData && leadData.remarks && leadData.remarks.trim()) {
+                    updatedRemarks = leadData.remarks.trim() + "\n" + noteText;
+                }
+
+                await supabaseAdmin
+                    .from('leads')
+                    .update({ remarks: updatedRemarks })
+                    .eq('id', leadId);
+
+                textEl.value = '';
+                showToast('Note added to timeline successfully.');
+                await fetchLeadDetails();
+            } catch (err) {
+                console.error(err);
+                showToast('Failed to add note.');
+            }
+        }
+
+        // Update lead fields inline
+        async function updateLeadField(fieldName, value) {
+            try {
+                const updateData = {};
+                updateData[fieldName] = value === '' ? null : value;
+
+                if (fieldName === 'assigned_to') {
+                    const oldAssigneeUuid = leadData ? leadData.assigned_to : null;
+                    const newAssigneeUuid = value === '' ? null : value;
+
+                    const oldName = oldAssigneeUuid ? (uuidToUsernameMap[oldAssigneeUuid.toLowerCase()] || 'User (' + oldAssigneeUuid.slice(0, 8) + ')') : 'Unassigned';
+                    const newName = newAssigneeUuid ? (uuidToUsernameMap[newAssigneeUuid.toLowerCase()] || 'User (' + newAssigneeUuid.slice(0, 8) + ')') : 'Unassigned';
+
+                    const transferNote = `🔄 Transferred from ${oldName} to ${newName}`;
+                    let updatedRemarks = transferNote;
+                    if (leadData && leadData.remarks && leadData.remarks.trim()) {
+                        updatedRemarks = leadData.remarks.trim() + "\n" + transferNote;
+                    }
+                    updateData['remarks'] = updatedRemarks;
+                }
+
+                const { error } = await supabaseAdmin
+                    .from('leads')
+                    .update(updateData)
+                    .eq('id', leadId);
+
+                if (error) throw error;
+
+                showToast('Field updated successfully!');
+                
+                // If final status is marked confirmed, move to bookings
+                if (fieldName === 'final_status' && value === 'Booking confirmed') {
+                    await copyLeadToBooking(leadData);
+                }
+
+                // Refresh details and timeline
+                fetchLeadDetails();
+            } catch (err) {
+                console.error(err);
+                showToast('Failed to save update: ' + err.message);
+            }
+        }
+
+        // Helper to copy a confirmed lead to bookings table
+        async function copyLeadToBooking(lead) {
+            try {
+                // Check if this lead already has a booking to avoid duplicate inserts
+                const { data: existing, error: checkErr } = await supabaseAdmin
+                    .from('bookings')
+                    .select('id')
+                    .eq('lead_id', lead.id)
+                    .limit(1);
+                
+                if (checkErr) throw checkErr;
+                
+                if (existing && existing.length > 0) {
+                    showToast('Booking already exists for this lead.');
+                    return;
+                }
+
+                // Combine original lead notes and staff remarks
+                let combinedNotes = '';
+                if (lead.notes && lead.notes.trim()) {
+                    combinedNotes += lead.notes.trim();
+                }
+                if (lead.remarks && lead.remarks.trim()) {
+                    if (combinedNotes) combinedNotes += '\n\nRemarks: ';
+                    combinedNotes += lead.remarks.trim();
+                }
+                if (!combinedNotes) {
+                    combinedNotes = 'Transferred from Leads Manager';
+                }
+
+                const namePrefix = (lead.name || 'CUST').replace(/[^a-zA-Z]/g, '').slice(0, 3).toUpperCase() || 'RY';
+                const randomNum = Math.floor(100 + Math.random() * 899);
+                const autoBookingId = `RY-2026-${namePrefix}-${randomNum}`;
+
+                const staffUuid = currentUserUuidMapping || lead.assigned_to || null;
+
+                // Insert into bookings table
+                const { error: insertErr } = await supabaseAdmin
+                    .from('bookings')
+                    .insert([{
+                        booking_id: autoBookingId,
+                        name: lead.name,
+                        phone: lead.phone,
+                        email: lead.email || '',
+                        package_name: 'Confirmed Lead Booking',
+                        travel_date: lead.travel_date || new Date().toISOString().split('T')[0],
+                        travelers: '1',
+                        message: combinedNotes,
+                        assigned_to: staffUuid,
+                        user_id: staffUuid,
+                        lead_id: lead.id
+                    }]);
+
+                if (insertErr) throw insertErr;
+                showToast('Booking record automatically created!');
+            } catch (err) {
+                console.error('Failed to copy lead to bookings:', err);
+                showToast('Error creating booking: ' + err.message);
+            }
+        }
+
+        // Fetch staff listing
+        async function fetchAssignees() {
+            try {
+                const { data: staffData } = await supabaseAdmin
+                    .from('staff_credentials')
+                    .select('username, uuid_mapping');
+                
+                const uuidToUsername = {};
+                if (staffData) {
+                    staffData.forEach(s => {
+                        if (s.uuid_mapping) {
+                            const name = s.username.charAt(0).toUpperCase() + s.username.slice(1);
+                            uuidToUsername[s.uuid_mapping.toLowerCase()] = name;
+                            uuidToUsernameMap[s.uuid_mapping.toLowerCase()] = name;
+                        }
+                    });
+                }
+
+                const { data: usersData, error } = await supabaseAdmin.from('users_view').select('*');
+                if (error) throw error;
+
+                const selectEl = document.getElementById('property-assignee');
+                let optionsHtml = '<option value="">Unassigned</option>';
+                
+                if (usersData) {
+                    usersData.forEach(user => {
+                        const mappedName = uuidToUsername[user.id.toLowerCase()];
+                        const displayName = mappedName ? mappedName : user.email;
+                        if (mappedName) {
+                            optionsHtml += `<option value="${user.id}">${displayName}</option>`;
+                        }
+                    });
+                }
+                selectEl.innerHTML = optionsHtml;
+            } catch (err) {
+                console.error('Failed to load assignees:', err);
+            }
+        }
+
+        // Initialize Page
+        async function initPage() {
+            await fetchAssignees();
+            await fetchLeadDetails();
+        }
+
+        window.onload = initPage;
+    </script>
+</body>
+
+</html>

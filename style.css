@@ -6129,4 +6129,25 @@ body.user-role-staff .admin-only-action {
         padding: 1px 5px !important;
     }
 }
+
+/* Mobile view adjustments for Bookings Table inside Staff Panel */
+@media (max-width: 768px) {
+    /* Ensure Booking ID and Client Name are fully visible with light text */
+    .admin-table tbody tr td[data-label="Booking ID"],
+    .admin-table tbody tr td[data-label="Client Name"] {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        color: #f1f5f9 !important;
+    }
+
+    /* Fix the dark font color of Booking ID badge on mobile dark background */
+    .admin-table tbody tr td[data-label="Booking ID"] strong {
+        color: #ffffff !important;
+        background-color: rgba(212, 175, 55, 0.25) !important;
+        border: 1px solid rgba(212, 175, 55, 0.5) !important;
+        display: inline-block !important;
+    }
+}
+
 

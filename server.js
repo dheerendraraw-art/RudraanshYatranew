@@ -1168,6 +1168,15 @@ app.get(['/admin', '/admin.html'], (req, res) => {
     res.sendFile(path.join(__dirname, 'admin.html'));
 });
 
+// Serve lead-details.html with explicit cache-busting headers
+app.get(['/lead-details', '/lead-details.html'], (req, res) => {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+    res.sendFile(path.join(__dirname, 'lead-details.html'));
+});
+
+
 // Global Cache-Busting Middleware: Disable caching for all static assets, HTML pages, and routes
 app.use((req, res, next) => {
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
