@@ -138,6 +138,9 @@
                 <button class="admin-tab-btn" onclick="switchTab(event, 'pane-leads')" id="tab-leads-btn">
                     <i class="fa-solid fa-people-group"></i> Leads Manager
                 </button>
+                <button class="admin-tab-btn" onclick="switchTab(event, 'pane-profile')" id="tab-profile-btn">
+                    <i class="fa-solid fa-user-gear"></i> My Profile
+                </button>
                 <button class="admin-tab-btn" onclick="switchTab(event, 'pane-billing')" id="tab-billing-btn">
                     <i class="fa-solid fa-file-invoice-dollar"></i> Billing & Payments
                 </button>
@@ -839,6 +842,92 @@
                 </div>
             </div>
 
+            <!-- PANE 10: USER PROFILE -->
+            <div id="pane-profile" class="admin-tab-content-pane" style="display: none;">
+                <div class="admin-form-grid" style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 24px; align-items: start;">
+                    
+                    <!-- Left: Profile Details Card -->
+                    <div class="admin-form-card" style="text-align: center; padding: 30px 20px;">
+                        <h3 class="admin-form-title" style="border-bottom: none; margin-bottom: 20px; text-align: left;">
+                            <i class="fa-solid fa-id-card" style="color: var(--color-gold); margin-right: 8px;"></i> My Profile
+                        </h3>
+                        <div style="position: relative; display: inline-block; margin: 0 auto 20px;">
+                            <img id="profile-pane-avatar" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" 
+                                 style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid var(--color-gold); box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+                        </div>
+                        <h4 id="profile-pane-name" style="font-family: var(--font-serif); color: white; font-size: 22px; margin-bottom: 6px;">Name</h4>
+                        <p id="profile-pane-designation" style="color: var(--color-gold); font-size: 14px; font-weight: 600; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px;">Designation</p>
+                        
+                        <div style="text-align: left; background: #1f2937; padding: 20px; border-radius: 8px; border: 1.5px solid var(--glass-border);">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                <span style="color: var(--color-text-secondary); font-size: 13px;">Username:</span>
+                                <span id="profile-pane-username" style="color: white; font-weight: 600; font-size: 14px;">username</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                <span style="color: var(--color-text-secondary); font-size: 13px;">Contact No:</span>
+                                <span id="profile-pane-phone" style="color: white; font-weight: 600; font-size: 14px;">+91 0000000000</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                                <span style="color: var(--color-text-secondary); font-size: 13px;">Email:</span>
+                                <span id="profile-pane-email" style="color: white; font-weight: 600; font-size: 14px;">email@domain.com</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: var(--color-text-secondary); font-size: 13px;">Role:</span>
+                                <span id="profile-pane-role" style="color: var(--color-gold); font-weight: 600; font-size: 14px; text-transform: uppercase;">role</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Edit / Security Card -->
+                    <div class="admin-form-card">
+                        <h3 class="admin-form-title"><i class="fa-solid fa-user-shield" style="color: var(--color-gold); margin-right: 8px;"></i> Account Settings</h3>
+                        <form id="profile-update-form" onsubmit="updateUserProfile(event)">
+                            <div class="admin-form-control-wrap">
+                                
+                                <div style="border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px; padding-bottom: 10px;">
+                                    <h4 style="color: var(--color-gold); font-family: var(--font-serif); margin-bottom: 15px; font-size: 16px;">Update Personal Details</h4>
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                                        <div class="admin-form-group">
+                                            <label for="profile-input-name">Name</label>
+                                            <input type="text" id="profile-input-name" class="admin-input" placeholder="Your full name" style="padding: 10px 12px;">
+                                        </div>
+                                        <div class="admin-form-group">
+                                            <label for="profile-input-phone">Contact Number</label>
+                                            <input type="text" id="profile-input-phone" class="admin-input" placeholder="Your contact number" style="padding: 10px 12px;">
+                                        </div>
+                                    </div>
+                                    <div style="display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 12px;">
+                                        <div class="admin-form-group">
+                                            <label for="profile-input-photo">Profile Photo URL</label>
+                                            <input type="text" id="profile-input-photo" class="admin-input" placeholder="https://domain.com/image.jpg" style="padding: 10px 12px;">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style="margin-bottom: 20px;">
+                                    <h4 style="color: var(--color-gold); font-family: var(--font-serif); margin-bottom: 15px; font-size: 16px;">Change Password</h4>
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                                        <div class="admin-form-group">
+                                            <label for="profile-input-passcode">New Password / Passcode</label>
+                                            <input type="password" id="profile-input-passcode" class="admin-input" placeholder="Enter new passcode" style="padding: 10px 12px;">
+                                        </div>
+                                        <div class="admin-form-group">
+                                            <label for="profile-input-confirm-passcode">Confirm Password</label>
+                                            <input type="password" id="profile-input-confirm-passcode" class="admin-input" placeholder="Confirm new passcode" style="padding: 10px 12px;">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary" style="width: 100%; border: none; padding: 12px;">
+                                    Save Changes <i class="fa-solid fa-save" style="margin-left: 6px;"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -1399,8 +1488,139 @@
             if (typeof supabase !== 'undefined') {
                 supabaseAdmin = supabase.createClient(supabaseUrl, supabaseKey);
                 loadAllDashboardData();
+                fetchUserProfile();
             }
         }
+
+        let loggedInUserDetail = null;
+
+        window.fetchUserProfile = async function() {
+            const currentUname = sessionStorage.getItem('admin_username') || currentUsername;
+            if (!currentUname) return;
+
+            try {
+                const { data, error } = await supabaseAdmin
+                    .from('staff_credentials')
+                    .select('*')
+                    .eq('username', currentUname)
+                    .single();
+
+                if (error) throw error;
+                loggedInUserDetail = data;
+
+                // Update UI elements in Profile tab
+                const avatarEl = document.getElementById('profile-pane-avatar');
+                if (avatarEl) avatarEl.src = data.photo || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+
+                const nameEl = document.getElementById('profile-pane-name');
+                if (nameEl) nameEl.innerText = data.name || 'Not Set';
+
+                const desigEl = document.getElementById('profile-pane-designation');
+                if (desigEl) desigEl.innerText = data.designation || 'Staff Member';
+
+                const unameEl = document.getElementById('profile-pane-username');
+                if (unameEl) unameEl.innerText = data.username || '';
+
+                const phoneEl = document.getElementById('profile-pane-phone');
+                if (phoneEl) phoneEl.innerText = data.phone || 'Not Set';
+
+                const emailEl = document.getElementById('profile-pane-email');
+                if (emailEl) emailEl.innerText = data.email || 'Not Set';
+
+                const roleEl = document.getElementById('profile-pane-role');
+                if (roleEl) roleEl.innerText = data.role || '';
+
+                // Update top nav user badge photo & name
+                const userBadgeEl = document.getElementById('user-badge');
+                if (userBadgeEl) {
+                    const displayName = data.name || (data.username.charAt(0).toUpperCase() + data.username.slice(1));
+                    const imgUrl = data.photo || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+                    userBadgeEl.innerHTML = `
+                        <img src="${imgUrl}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/149/149071.png'" style="width: 20px; height: 20px; border-radius: 50%; object-fit: cover; margin-right: 8px; border: 1px solid var(--color-gold);">
+                        <span id="logged-in-username">${displayName}</span>
+                    `;
+                }
+
+                // Pre-populate input fields in form
+                const inputName = document.getElementById('profile-input-name');
+                if (inputName) inputName.value = data.name || '';
+
+                const inputPhone = document.getElementById('profile-input-phone');
+                if (inputPhone) inputPhone.value = data.phone || '';
+
+                const inputPhoto = document.getElementById('profile-input-photo');
+                if (inputPhoto) inputPhoto.value = data.photo || '';
+
+                // Reset password inputs
+                const inputPasscode = document.getElementById('profile-input-passcode');
+                if (inputPasscode) inputPasscode.value = '';
+                const inputConfirm = document.getElementById('profile-input-confirm-passcode');
+                if (inputConfirm) inputConfirm.value = '';
+
+            } catch (err) {
+                console.error('Error fetching user profile:', err);
+                showAdminToast('Failed to load user profile: ' + err.message, 'error');
+            }
+        };
+
+        window.updateUserProfile = async function(event) {
+            event.preventDefault();
+            if (!loggedInUserDetail || !loggedInUserDetail.id) {
+                showAdminToast('Profile not loaded correctly. Please refresh.', 'error');
+                return;
+            }
+
+            const inputName = document.getElementById('profile-input-name');
+            const inputPhone = document.getElementById('profile-input-phone');
+            const inputPhoto = document.getElementById('profile-input-photo');
+            const inputPasscode = document.getElementById('profile-input-passcode');
+            const inputConfirm = document.getElementById('profile-input-confirm-passcode');
+
+            const name = inputName ? inputName.value.trim() : '';
+            const phone = inputPhone ? inputPhone.value.trim() : '';
+            const photo = inputPhoto ? inputPhoto.value.trim() : '';
+            const passcode = inputPasscode ? inputPasscode.value.trim() : '';
+            const confirmPasscode = inputConfirm ? inputConfirm.value.trim() : '';
+
+            let updates = {
+                name: name || null,
+                phone: phone || null,
+                photo: photo || null
+            };
+
+            // If passcode is typed, validate it
+            if (passcode) {
+                if (passcode.length < 4) {
+                    showAdminToast('Passcode must be at least 4 characters long.', 'error');
+                    return;
+                }
+                if (passcode !== confirmPasscode) {
+                    showAdminToast('Passwords do not match.', 'error');
+                    return;
+                }
+                updates.passcode = passcode;
+            }
+
+            try {
+                const { error } = await supabaseAdmin
+                    .from('staff_credentials')
+                    .update(updates)
+                    .eq('id', loggedInUserDetail.id);
+
+                if (error) throw error;
+
+                showAdminToast('Profile updated successfully!', 'success');
+                fetchUserProfile();
+
+                // Refresh the staff list if admin is viewing it
+                if (currentUserRole === 'admin' && window.fetchCredentials) {
+                    window.fetchCredentials();
+                }
+            } catch (err) {
+                console.error('Error updating user profile:', err);
+                showAdminToast('Failed to update profile: ' + err.message, 'error');
+            }
+        };
 
         function logoutAdmin() {
             sessionStorage.removeItem('admin_verified');
@@ -1497,13 +1717,17 @@
                     'pane-gallery': 'Gallery Summary',
                     'pane-leads': 'Leads Pipeline Summary',
                     'pane-passwords': 'Staff Accounts Summary',
-                    'pane-attendance': 'Staff Attendance & Wages'
+                    'pane-attendance': 'Staff Attendance & Wages',
+                    'pane-profile': 'My Profile Settings'
                 };
                 headerTitle.innerText = labelMap[paneId] || 'Dashboard Overview';
             }
 
             if (paneId === 'pane-billing') {
                 if (window.fetchBillingRecords) window.fetchBillingRecords();
+            }
+            if (paneId === 'pane-profile') {
+                if (window.fetchUserProfile) window.fetchUserProfile();
             }
 
             // Update dynamic stats
@@ -1693,6 +1917,14 @@
                 setCard(0, true, '<i class="fa-solid fa-users"></i>', totalCalculated, `Staff Calculated (${selectedMonth})`);
                 setCard(1, true, '<i class="fa-solid fa-indian-rupee-sign" style="color: var(--color-gold);"></i>', '₹' + totalPayout.toLocaleString(), `Total Payout (${selectedMonth})`);
                 setCard(2, true, '<i class="fa-solid fa-percent"></i>', avgRate, `Avg Attendance (${selectedMonth})`);
+                setCard(3, false);
+                setCard(4, false);
+                setCard(5, false);
+            }
+            else if (paneId === 'pane-profile') {
+                setCard(0, false);
+                setCard(1, false);
+                setCard(2, false);
                 setCard(3, false);
                 setCard(4, false);
                 setCard(5, false);
