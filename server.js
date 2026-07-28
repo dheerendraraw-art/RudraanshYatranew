@@ -6,9 +6,49 @@ const { createClient } = require('@supabase/supabase-js');
 const PDFDocument = require('pdfkit');
 const Razorpay = require('razorpay');
 const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const multer = require('multer');
+
+const JWT_SECRET = process.env.JWT_SECRET || 'rudraansh_yatra_secure_jwt_secret_key_2026_xyz';
+const storage = multer.memoryStorage();
+const upload = multer({
+    storage: storage,
+    limits: { fileSize: 5 * 1024 * 1024 }
+});
 
 const app = express();
 app.use(express.json());
+
+// HTTP Security Headers
+app.use((req, res, next) => {
+    res.setHeader('X-Frame-Options', 'DENY');
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('X-XSS-Protection', '1; mode=block');
+    next();
+});
+
+// Authentication Middleware
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    if (!token) return res.status(401).json({ error: 'Access token required' });
+
+    jwt.verify(token, JWT_SECRET, (err, user) => {
+        if (err) return res.status(403).json({ error: 'Invalid or expired token' });
+        req.user = user;
+        next();
+    });
+}
+
+function requireAdmin(req, res, next) {
+    if (req.user && req.user.role === 'admin') {
+        next();
+    } else {
+        res.status(403).json({ error: 'Administrator role required' });
+    }
+}
+
 const PORT = process.env.PORT || 3000;
 
 // Initialize Razorpay Client (gracefully falls back if keys are not set in .env)
@@ -426,11 +466,507 @@ app.get('/api/version', (req, res) => {
 });
 
 // ==========================================
+// SECURITY & AUTHENTICATION API ENDPOINTS
+// ==========================================
+
+// Login Route
+app.post('/api/admin/login', async (req, res) => {
+    const { username, passcode } = req.body;
+    if (!username || !passcode) {
+        return res.status(400).json({ error: 'Username and passcode are required' });
+    }
+
+    try {
+        if (!supabase) {
+            return res.status(500).json({ error: 'Supabase client not initialized' });
+        }
+
+        const { data, error } = await supabase
+            .from('staff_credentials')
+            .select('*')
+            .eq('username', username.toLowerCase())
+            .maybeSingle();
+
+        if (error || !data) {
+            return res.status(400).json({ error: 'Invalid Username or Passcode.' });
+        }
+
+        let isMatch = false;
+        let needsRehash = false;
+
+        if (data.passcode.startsWith('$2a$') || data.passcode.startsWith('$2b$')) {
+            isMatch = await bcrypt.compare(passcode, data.passcode);
+        } else {
+            if (passcode === data.passcode) {
+                isMatch = true;
+                needsRehash = true;
+            }
+        }
+
+        if (!isMatch) {
+            return res.status(400).json({ error: 'Invalid Username or Passcode.' });
+        }
+
+        if (needsRehash) {
+            const hashed = await bcrypt.hash(passcode, 10);
+            await supabase
+                .from('staff_credentials')
+                .update({ passcode: hashed })
+                .eq('id', data.id);
+            console.log(`[Security Upgrade] Passcode progressively hashed for user: ${username}`);
+        }
+
+        const userPayload = {
+            id: data.id,
+            username: data.username,
+            role: data.role,
+            uuid_mapping: data.uuid_mapping || ''
+        };
+        const token = jwt.sign(userPayload, JWT_SECRET, { expiresIn: '12h' });
+
+        res.json({
+            token,
+            user: userPayload
+        });
+    } catch (err) {
+        console.error('Login error:', err);
+        res.status(500).json({ error: 'Internal server error during login' });
+    }
+});
+
+// Logout Route
+app.post('/api/admin/logout', (req, res) => {
+    res.json({ success: true, message: 'Logged out successfully' });
+});
+
+// ==========================================
+// PUBLIC INQUIRY API ENDPOINTS
+// ==========================================
+
+// Create Booking Inquiry from Public page
+app.post('/api/bookings', async (req, res) => {
+    const { packageName, name, phone, date, travelers, message } = req.body;
+    if (!name || !phone) {
+        return res.status(400).json({ error: 'Name and Phone are required' });
+    }
+    try {
+        if (!supabase) return res.status(500).json({ error: 'Supabase client not initialized' });
+
+        const namePrefix = (name || 'CUST').replace(/[^a-zA-Z]/g, '').slice(0, 3).toUpperCase() || 'RY';
+        const randomNum = Math.floor(100 + Math.random() * 899);
+        const autoBookingId = `RY-2026-${namePrefix}-${randomNum}`;
+
+        const bookingData = {
+            booking_id: autoBookingId,
+            package_name: packageName || 'General Inquiry',
+            name,
+            phone,
+            email: req.body.email || '',
+            travel_date: date || null,
+            travelers: travelers ? travelers.toString() : '1',
+            message: message || '',
+            created_at: new Date().toISOString()
+        };
+
+        const { error } = await supabase.from('bookings').insert([bookingData]);
+        if (error) throw error;
+        res.status(201).json({ success: true, booking_id: autoBookingId });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Create Custom Requests from Wizard
+app.post('/api/custom-requests', async (req, res) => {
+    try {
+        if (!supabase) return res.status(500).json({ error: 'Supabase client not initialized' });
+        const { error } = await supabase.from('custom_requests').insert([req.body]);
+        if (error) throw error;
+        res.status(201).json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Create Discount Registrations
+app.post('/api/discount-registrations', async (req, res) => {
+    try {
+        if (!supabase) return res.status(500).json({ error: 'Supabase client not initialized' });
+        const { error } = await supabase.from('discount_registrations').insert([req.body]);
+        if (error) throw error;
+        res.status(201).json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Get Public Gallery
+app.get('/api/gallery', async (req, res) => {
+    try {
+        if (!supabase) return res.status(500).json({ error: 'Supabase client not initialized' });
+        const { data, error } = await supabase.from('gallery').select('*').order('created_at', { ascending: false });
+        if (error) throw error;
+        res.json(data || []);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// ==========================================
+// PROTECTED SECURED ADMIN/STAFF ENDPOINTS
+// ==========================================
+
+// Bookings CRUD
+app.get('/api/admin/bookings', authenticateToken, async (req, res) => {
+    try {
+        let query = supabase.from('bookings').select('*');
+        if (req.user.role === 'staff') {
+            const agentUuid = req.user.uuid_mapping;
+            if (agentUuid) {
+                query = query.or(`assigned_to.eq.${agentUuid},user_id.eq.${agentUuid}`);
+            }
+        }
+        const { data, error } = await query.order('created_at', { ascending: false });
+        if (error) throw error;
+        res.json(data || []);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.post('/api/admin/bookings', authenticateToken, async (req, res) => {
+    try {
+        const { error } = await supabase.from('bookings').insert([req.body]);
+        if (error) throw error;
+        res.status(201).json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.put('/api/admin/bookings/:id', authenticateToken, async (req, res) => {
+    try {
+        const { error } = await supabase.from('bookings').update(req.body).eq('id', req.params.id);
+        if (error) throw error;
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.delete('/api/admin/bookings/:id', authenticateToken, async (req, res) => {
+    try {
+        const { error } = await supabase.from('bookings').delete().eq('id', req.params.id);
+        if (error) throw error;
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Leads CRUD
+app.get('/api/admin/leads', authenticateToken, async (req, res) => {
+    try {
+        let query = supabase.from('leads').select('*');
+        if (req.user.role === 'staff') {
+            const agentUuid = req.user.uuid_mapping;
+            if (agentUuid) {
+                query = query.eq('assigned_to', agentUuid);
+            }
+        }
+        const { data, error } = await query.order('created_at', { ascending: false });
+        if (error) throw error;
+        res.json(data || []);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.get('/api/admin/leads/:id', authenticateToken, async (req, res) => {
+    try {
+        const { data, error } = await supabase.from('leads').select('*').eq('id', req.params.id).single();
+        if (error) throw error;
+        if (req.user.role === 'staff' && data.assigned_to !== req.user.uuid_mapping) {
+            return res.status(403).json({ error: 'Permission denied' });
+        }
+        res.json(data);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.post('/api/admin/leads', authenticateToken, async (req, res) => {
+    try {
+        const { error } = await supabase.from('leads').insert(Array.isArray(req.body) ? req.body : [req.body]);
+        if (error) throw error;
+        res.status(201).json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.put('/api/admin/leads/:id', authenticateToken, async (req, res) => {
+    try {
+        if (req.user.role === 'staff') {
+            const { data: lead } = await supabase.from('leads').select('assigned_to').eq('id', req.params.id).single();
+            if (lead && lead.assigned_to !== req.user.uuid_mapping) {
+                return res.status(403).json({ error: 'Permission denied' });
+            }
+        }
+        const { error } = await supabase.from('leads').update(req.body).eq('id', req.params.id);
+        if (error) throw error;
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.delete('/api/admin/leads/:id', authenticateToken, requireAdmin, async (req, res) => {
+    try {
+        const { error } = await supabase.from('leads').delete().eq('id', req.params.id);
+        if (error) throw error;
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Users/Assignees Mapping
+app.get('/api/admin/users', authenticateToken, async (req, res) => {
+    try {
+        const { data, error } = await supabase.from('users_view').select('*');
+        if (error) throw error;
+        res.json(data || []);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Custom Requests CRUD
+app.get('/api/admin/custom-requests', authenticateToken, requireAdmin, async (req, res) => {
+    try {
+        const { data, error } = await supabase.from('custom_requests').select('*').order('created_at', { ascending: false });
+        if (error) throw error;
+        res.json(data || []);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.delete('/api/admin/custom-requests/:id', authenticateToken, requireAdmin, async (req, res) => {
+    try {
+        const { error } = await supabase.from('custom_requests').delete().eq('id', req.params.id);
+        if (error) throw error;
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Discount Registrations CRUD
+app.get('/api/admin/discount-registrations', authenticateToken, requireAdmin, async (req, res) => {
+    try {
+        const { data, error } = await supabase.from('discount_registrations').select('*').order('created_at', { ascending: false });
+        if (error) throw error;
+        res.json(data || []);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.delete('/api/admin/discount-registrations/:id', authenticateToken, requireAdmin, async (req, res) => {
+    try {
+        const { error } = await supabase.from('discount_registrations').delete().eq('id', req.params.id);
+        if (error) throw error;
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Blogs CRUD
+app.get('/api/admin/blogs', authenticateToken, requireAdmin, async (req, res) => {
+    try {
+        const { data, error } = await supabase.from('blogs').select('*').order('created_at', { ascending: false });
+        if (error) throw error;
+        res.json(data || []);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.post('/api/admin/blogs', authenticateToken, requireAdmin, async (req, res) => {
+    try {
+        const { error } = await supabase.from('blogs').insert([req.body]);
+        if (error) throw error;
+        res.status(201).json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.put('/api/admin/blogs/:id', authenticateToken, requireAdmin, async (req, res) => {
+    try {
+        const { error } = await supabase.from('blogs').update(req.body).eq('id', req.params.id);
+        if (error) throw error;
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.delete('/api/admin/blogs/:id', authenticateToken, requireAdmin, async (req, res) => {
+    try {
+        const { error } = await supabase.from('blogs').delete().eq('id', req.params.id);
+        if (error) throw error;
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Gallery CRUD
+app.get('/api/admin/gallery', authenticateToken, requireAdmin, async (req, res) => {
+    try {
+        const { data, error } = await supabase.from('gallery').select('*').order('created_at', { ascending: false });
+        if (error) throw error;
+        res.json(data || []);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.post('/api/admin/gallery', authenticateToken, requireAdmin, async (req, res) => {
+    try {
+        const { error } = await supabase.from('gallery').insert([req.body]);
+        if (error) throw error;
+        res.status(201).json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.delete('/api/admin/gallery/:id', authenticateToken, requireAdmin, async (req, res) => {
+    try {
+        const { error } = await supabase.from('gallery').delete().eq('id', req.params.id);
+        if (error) throw error;
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Credentials CRUD
+app.get('/api/admin/credentials', authenticateToken, requireAdmin, async (req, res) => {
+    try {
+        const { data, error } = await supabase.from('staff_credentials').select('*').order('username', { ascending: true });
+        if (error) throw error;
+        const masked = (data || []).map(item => ({
+            ...item,
+            passcode: '********'
+        }));
+        res.json(masked);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.post('/api/admin/credentials', authenticateToken, requireAdmin, async (req, res) => {
+    try {
+        const credentialData = { ...req.body };
+        if (credentialData.passcode) {
+            credentialData.passcode = await bcrypt.hash(credentialData.passcode, 10);
+        }
+        const { error } = await supabase.from('staff_credentials').insert([credentialData]);
+        if (error) throw error;
+        res.status(201).json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.put('/api/admin/credentials/:id', authenticateToken, async (req, res) => {
+    try {
+        const isSelf = req.user.id === req.params.id;
+        const isAdmin = req.user.role === 'admin';
+        if (!isSelf && !isAdmin) {
+            return res.status(403).json({ error: 'Permission denied' });
+        }
+
+        const updates = { ...req.body };
+        if (!isAdmin) {
+            delete updates.role;
+            delete updates.uuid_mapping;
+            delete updates.username;
+        }
+
+        if (updates.passcode === '********') {
+            delete updates.passcode;
+        } else if (updates.passcode) {
+            updates.passcode = await bcrypt.hash(updates.passcode, 10);
+        }
+
+        const { error } = await supabase.from('staff_credentials').update(updates).eq('id', req.params.id);
+        if (error) throw error;
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.delete('/api/admin/credentials/:id', authenticateToken, requireAdmin, async (req, res) => {
+    try {
+        const { error } = await supabase.from('staff_credentials').delete().eq('id', req.params.id);
+        if (error) throw error;
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Secure image upload streaming endpoint
+app.post('/api/admin/upload', authenticateToken, upload.single('file'), async (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({ error: 'No file provided' });
+    }
+    
+    const bucket = req.body.bucket || 'blog-images';
+    const folder = req.body.folder ? req.body.folder + '/' : '';
+    const fileExt = req.file.originalname.split('.').pop();
+    const fileName = `${folder}file_${Date.now()}_${Math.floor(Math.random() * 1000)}.${fileExt}`;
+
+    try {
+        if (!supabase) {
+            return res.status(500).json({ error: 'Supabase client not initialized' });
+        }
+
+        const { error } = await supabase.storage
+            .from(bucket)
+            .upload(fileName, req.file.buffer, {
+                contentType: req.file.mimetype,
+                cacheControl: '3600',
+                upsert: true
+            });
+
+        if (error) throw error;
+
+        const { data: urlData } = supabase.storage
+            .from(bucket)
+            .getPublicUrl(fileName);
+
+        res.json({ publicUrl: urlData.publicUrl });
+    } catch (err) {
+        console.error('File upload error:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// ==========================================
 // BILLING & PAYMENT TRACKING API ENDPOINTS
 // ==========================================
 
 // 1. Fetch all billing records with optional search & status filter
-app.get('/api/billing', async (req, res) => {
+app.get('/api/billing', authenticateToken, async (req, res) => {
     try {
         if (!supabase) {
             return res.status(500).json({ error: 'Supabase client not initialized' });
@@ -463,7 +999,7 @@ app.get('/api/billing', async (req, res) => {
 });
 
 // 2. Create a new billing record
-app.post('/api/billing', async (req, res) => {
+app.post('/api/billing', authenticateToken, async (req, res) => {
     try {
         if (!supabase) {
             return res.status(500).json({ error: 'Supabase client not initialized' });
@@ -536,7 +1072,7 @@ app.post('/api/billing', async (req, res) => {
 });
 
 // 3. Log a new payment transaction on an existing bill
-app.post('/api/billing/:id/payment', async (req, res) => {
+app.post('/api/billing/:id/payment', authenticateToken, async (req, res) => {
     try {
         if (!supabase) {
             return res.status(500).json({ error: 'Supabase client not initialized' });

@@ -384,25 +384,15 @@
             const lightboxPrev = document.getElementById('lightbox-prev');
             const lightboxNext = document.getElementById('lightbox-next');
 
-            // Load Supabase Client & Fetch Data
-            const checkSupabaseInit = setInterval(() => {
-                if (typeof supabase !== 'undefined' && supabaseClient) {
-                    clearInterval(checkSupabaseInit);
-                    fetchGalleryData();
-                }
-            }, 100);
+            // Fetch Gallery Data from secure backend API
+            fetchGalleryData();
 
             async function fetchGalleryData() {
                 try {
                     let dbItems = [];
-                    if (supabaseClient) {
-                        const { data, error } = await supabaseClient
-                            .from('gallery')
-                            .select('*')
-                            .order('created_at', { ascending: false });
-                        if (data && !error) {
-                            dbItems = data;
-                        }
+                    const response = await fetch('/api/gallery');
+                    if (response.ok) {
+                        dbItems = await response.json();
                     }
 
                     // Predefined beautiful fallback pictures if DB has no images

@@ -696,66 +696,50 @@ document.addEventListener('DOMContentLoaded', () => {
     injectDialogs();
     initializeDiscountPopup();
 
-// ── SUPABASE LOGGING LOGIC ──
-let supabaseClient = null;
-
-// Load Supabase SDK dynamically
-const script = document.createElement('script');
-script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
-script.onload = () => {
-    initSupabase();
-};
-document.head.appendChild(script);
-
-function initSupabase() {
-    const supabaseUrl = 'https://ysnzxvvsegmkmkepclti.supabase.co';
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlzbnp4dnZzZWdta21rZXBjbHRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NDY3NjMsImV4cCI6MjA5NjMyMjc2M30.V6q3OpJCf6PEu6JTM__6E7PJDrY5lY--FZfjyy_toLM';
-    supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
-}
-
+// ── BACKEND API CALLS (PREVIOUSLY SUPABASE LOGGING) ──
 async function saveBookingRequest(data) {
-    if (!supabaseClient) return;
     try {
-        const { data: sessionData } = await supabaseClient.auth.getSession();
-        const userId = sessionData?.session?.user?.id || null;
-
-        await supabaseClient.from('custom_requests').insert([
-            {
+        const response = await fetch('/api/custom-requests', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
                 name: data.name,
                 email: data.email || '',
                 phone: data.phone || '',
                 destination: data.destination,
                 days: 6,
-                requests: `Applied Discount: ${data.discount}`,
-                user_id: userId
-            }
-        ]);
-        console.log('Booking request saved to database.');
+                requests: `Applied Discount: ${data.discount}`
+            })
+        });
+        if (response.ok) {
+            console.log('Booking request saved to database.');
+        } else {
+            console.error('Failed to save booking request.');
+        }
     } catch (e) {
         console.error('Database save error:', e);
     }
 }
 
 async function saveBookingInquiry(data) {
-    if (!supabaseClient) return;
     try {
-        const { data: sessionData } = await supabaseClient.auth.getSession();
-        const userId = sessionData?.session?.user?.id || null;
-        const email = sessionData?.session?.user?.email || null;
-
-        await supabaseClient.from('bookings').insert([
-            {
-                package_name: data.packageName,
+        const response = await fetch('/api/bookings', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                packageName: data.packageName,
                 name: data.name,
                 phone: data.phone,
-                travel_date: data.date,
+                date: data.date,
                 travelers: data.travelers,
-                message: data.message,
-                user_id: userId,
-                email: email || ''
-            }
-        ]);
-        console.log('Booking inquiry saved to database.');
+                message: data.message
+            })
+        });
+        if (response.ok) {
+            console.log('Booking inquiry saved to database.');
+        } else {
+            console.error('Failed to save booking inquiry.');
+        }
     } catch (e) {
         console.error('Database save error:', e);
     }
@@ -1005,12 +989,14 @@ function initializeDiscountPopup() {
         if (digits === generatedDiscountOtp || digits === '123456') {
             showToast('Email verified successfully!', 'success');
 
-            // Save verified registration to Supabase
-            if (supabaseClient && activeDiscountReg) {
+            // Save verified registration to backend
+            if (activeDiscountReg) {
                 try {
-                    await supabaseClient.from('discount_registrations').insert([
-                        { ...activeDiscountReg, verified: true }
-                    ]);
+                    await fetch('/api/discount-registrations', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ ...activeDiscountReg, verified: true })
+                    });
                 } catch (dbErr) {
                     console.error('Save discount details error:', dbErr);
                 }

@@ -1329,9 +1329,6 @@
         </div>
     </div>
 
-    <!-- Supabase JS Library -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
     <!-- Admin Portal Script -->
     <script>
         // Global error reporting for debugging
@@ -1342,17 +1339,199 @@
             alert('Rudraansh Yatra Admin Unhandled Rejection:\n' + e.reason);
         });
 
-        // Credentials matching project settings
-        const supabaseUrl = 'https://ysnzxvvsegmkmkepclti.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlzbnp4dnZzZWdta21rZXBjbHRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NDY3NjMsImV4cCI6MjA5NjMyMjc2M30.V6q3OpJCf6PEu6JTM__6E7PJDrY5lY--FZfjyy_toLM';
-        let supabaseAdmin = null;
-
-        if (typeof supabase !== 'undefined') {
-            supabaseAdmin = supabase.createClient(supabaseUrl, supabaseKey);
+        async function fetchWithAuth(url, options = {}) {
+            const token = sessionStorage.getItem('admin_token');
+            const headers = {
+                'Content-Type': 'application/json',
+                ...options.headers
+            };
+            if (token) {
+                headers['Authorization'] = `Bearer ${token}`;
+            }
+            // For FormData uploads, don't set Content-Type header so the browser sets the boundary automatically
+            if (options.body instanceof FormData) {
+                delete headers['Content-Type'];
+            }
+            const response = await fetch(url, { ...options, headers });
+            if (response.status === 401 || response.status === 403) {
+                logoutAdmin();
+                throw new Error('Session expired. Please log in again.');
+            }
+            return response;
         }
 
-        // Verification configuration
-        let CORRECT_PIN = 'VandanaDheerendra@2023';
+        class SupabaseQueryBuilder {
+            constructor(tableName) {
+                this.table = tableName;
+                this.operation = 'select';
+                this.body = null;
+                this.filters = [];
+                this.orderBy = null;
+                this.isSingle = false;
+            }
+            select(fields) {
+                this.operation = 'select';
+                return this;
+            }
+            insert(data) {
+                this.operation = 'insert';
+                this.body = data;
+                return this;
+            }
+            update(data) {
+                this.operation = 'update';
+                this.body = data;
+                return this;
+            }
+            delete() {
+                this.operation = 'delete';
+                return this;
+            }
+            eq(field, value) {
+                this.filters.push({ type: 'eq', field, value });
+                return this;
+            }
+            or(filterStr) {
+                this.filters.push({ type: 'or', value: filterStr });
+                return this;
+            }
+            order(field, options) {
+                this.orderBy = { field, ascending: options?.ascending !== false };
+                return this;
+            }
+            single() {
+                this.isSingle = true;
+                return this;
+            }
+            then(onfulfilled, onrejected) {
+                return this.execute().then(onfulfilled, onrejected);
+            }
+            async execute() {
+                let url = '';
+                let method = 'GET';
+                let requestBody = null;
+                
+                let base = '';
+                if (this.table === 'bookings') base = '/api/admin/bookings';
+                else if (this.table === 'leads') base = '/api/admin/leads';
+                else if (this.table === 'custom_requests') base = '/api/admin/custom-requests';
+                else if (this.table === 'discount_registrations') base = '/api/admin/discount-registrations';
+                else if (this.table === 'blogs') base = '/api/admin/blogs';
+                else if (this.table === 'gallery') base = '/api/admin/gallery';
+                else if (this.table === 'staff_credentials') base = '/api/admin/credentials';
+                else if (this.table === 'users_view') base = '/api/admin/users';
+                else if (this.table === 'booking_bills') base = '/api/billing';
+                
+                const idFilter = this.filters.find(f => f.field === 'id' && f.type === 'eq');
+                const idVal = idFilter ? idFilter.value : null;
+                
+                if (this.operation === 'select') {
+                    method = 'GET';
+                    url = base;
+                    if (this.isSingle && this.table === 'leads' && idVal) {
+                        url = `${base}/${idVal}`;
+                    }
+                    if (this.table === 'booking_bills') {
+                        const statusFilter = this.filters.find(f => f.field === 'payment_status');
+                        const queryParams = new URLSearchParams();
+                        if (statusFilter) queryParams.append('status', statusFilter.value);
+                        url = `${base}?${queryParams.toString()}`;
+                    }
+                } else if (this.operation === 'insert') {
+                    method = 'POST';
+                    url = base;
+                    requestBody = this.body;
+                } else if (this.operation === 'update') {
+                    method = 'PUT';
+                    if (idVal) {
+                        url = `${base}/${idVal}`;
+                    } else {
+                        url = base;
+                    }
+                    requestBody = this.body;
+                } else if (this.operation === 'delete') {
+                    method = 'DELETE';
+                    if (idVal) {
+                        url = `${base}/${idVal}`;
+                    } else {
+                        url = base;
+                    }
+                }
+                
+                try {
+                    const fetchOptions = {
+                        method
+                    };
+                    if (requestBody) {
+                        fetchOptions.body = JSON.stringify(requestBody);
+                    }
+                    
+                    const response = await fetchWithAuth(url, fetchOptions);
+                    const responseData = await response.json();
+                    
+                    if (!response.ok) {
+                        return { data: null, error: { message: responseData.error || 'API Request Failed' } };
+                    }
+                    
+                    let resultData = responseData;
+                    if (this.isSingle && Array.isArray(responseData)) {
+                        resultData = responseData[0] || null;
+                    }
+                    
+                    return {
+                        data: resultData,
+                        error: null,
+                        select: () => ({
+                            single: () => ({ data: resultData, error: null })
+                        })
+                    };
+                } catch (err) {
+                    console.error(`Mock Supabase error on ${method} ${url}:`, err);
+                    return { data: null, error: err };
+                }
+            }
+        }
+
+        const supabaseAdmin = {
+            from: (table) => new SupabaseQueryBuilder(table),
+            storage: {
+                from: (bucket) => {
+                    return {
+                        upload: async (fileName, file, options = {}) => {
+                            try {
+                                const formData = new FormData();
+                                formData.append('file', file);
+                                formData.append('bucket', bucket);
+                                const parts = fileName.split('/');
+                                if (parts.length > 1) {
+                                    formData.append('folder', parts.slice(0, -1).join('/'));
+                                }
+                                
+                                const token = sessionStorage.getItem('admin_token');
+                                const response = await fetch('/api/admin/upload', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Authorization': `Bearer ${token}`
+                                    },
+                                    body: formData
+                                });
+                                const responseData = await response.json();
+                                if (!response.ok) {
+                                    return { data: null, error: { message: responseData.error || 'Upload failed' } };
+                                }
+                                return { data: { path: fileName, publicUrl: responseData.publicUrl }, error: null };
+                            } catch (err) {
+                                return { data: null, error: err };
+                            }
+                        },
+                        getPublicUrl: (path) => {
+                            const publicUrl = `https://ysnzxvvsegmkmkepclti.supabase.co/storage/v1/object/public/${bucket}/${path}`;
+                            return { data: { publicUrl } };
+                        }
+                    };
+                }
+            }
+        };
 
         // Global data arrays for dynamic stats
         let bookingsData = [];
@@ -1415,7 +1594,7 @@
 
 
 
-        // Passcode Gate Action querying staff_credentials in Supabase
+        // Passcode Gate Action querying staff_credentials via Backend API
         async function verifyPasscode(event) {
             event.preventDefault();
             const usernameInput = document.getElementById('admin-username');
@@ -1425,20 +1604,15 @@
             const gateCard = document.querySelector('.admin-lock-card');
 
             try {
-                if (!supabaseAdmin) {
-                    showAdminToast('Database client not initialized. Please reload.', 'error');
-                    return;
-                }
+                const response = await fetch('/api/admin/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: usernameVal, passcode: pinVal })
+                });
+                const resData = await response.json();
 
-                const { data, error } = await supabaseAdmin
-                    .from('staff_credentials')
-                    .select('*')
-                    .eq('username', usernameVal)
-                    .eq('passcode', pinVal)
-                    .single();
-
-                if (error || !data) {
-                    showAdminToast('Invalid Username or Passcode.', 'error');
+                if (!response.ok) {
+                    showAdminToast(resData.error || 'Invalid Username or Passcode.', 'error');
                     gateCard.classList.add('shake-animation');
                     setTimeout(() => {
                         gateCard.classList.remove('shake-animation');
@@ -1449,13 +1623,16 @@
                 }
 
                 // Credentials valid!
-                currentUserRole = data.role; // 'admin' or 'staff'
-                currentUsername = data.username;
-                currentUserUuidMapping = data.uuid_mapping || '';
+                currentUserRole = resData.user.role; // 'admin' or 'staff'
+                currentUsername = resData.user.username;
+                currentUserUuidMapping = resData.user.uuid_mapping || '';
+                
                 sessionStorage.setItem('admin_verified', 'true');
+                sessionStorage.setItem('admin_token', resData.token);
                 sessionStorage.setItem('admin_role', currentUserRole);
                 sessionStorage.setItem('admin_username', currentUsername);
                 sessionStorage.setItem('admin_uuid_mapping', currentUserUuidMapping);
+                
                 showAdminToast(`Dashboard unlocked as ${currentUsername}!`, 'success');
                 showDashboard();
             } catch (err) {
@@ -1482,12 +1659,9 @@
                 switchTab(null, 'pane-leads');
             }
 
-            // Init client
-            if (typeof supabase !== 'undefined') {
-                supabaseAdmin = supabase.createClient(supabaseUrl, supabaseKey);
-                loadAllDashboardData();
-                fetchUserProfile();
-            }
+            // Init client data
+            loadAllDashboardData();
+            fetchUserProfile();
         }
 
         let loggedInUserDetail = null;
@@ -1673,6 +1847,7 @@
 
         function logoutAdmin() {
             sessionStorage.removeItem('admin_verified');
+            sessionStorage.removeItem('admin_token');
             sessionStorage.removeItem('admin_role');
             sessionStorage.removeItem('admin_username');
             sessionStorage.removeItem('admin_uuid_mapping');
