@@ -1792,6 +1792,129 @@ app.get('/api/google-reviews', async (req, res) => {
 });
 
 
+// Meta Leads Webhook Verification (GET)
+app.get('/api/webhooks/meta-leads', (req, res) => {
+    const hubMode = req.query['hub.mode'];
+    const hubVerifyToken = req.query['hub.verify_token'];
+    const hubChallenge = req.query['hub.challenge'];
+
+    const localVerifyToken = process.env.META_VERIFY_TOKEN || 'meta_leads_webhook_token_2026';
+
+    if (hubMode === 'subscribe' && hubVerifyToken === localVerifyToken) {
+        console.log('Meta Leads Webhook Verified successfully.');
+        res.status(200).send(hubChallenge);
+    } else {
+        console.warn('Meta Leads Webhook Verification failed. Token mismatch.');
+        res.sendStatus(403);
+    }
+});
+
+// Meta Leads Webhook Event Handler (POST)
+app.post('/api/webhooks/meta-leads', async (req, res) => {
+    try {
+        const body = req.body;
+        console.log('Meta Leads Webhook payload received:', JSON.stringify(body, null, 2));
+
+        if (body.object !== 'page') {
+            return res.sendStatus(404);
+        }
+
+        // Send 200 OK immediately as required by Meta to prevent timeout retries
+        res.status(200).send('EVENT_RECEIVED');
+
+        const entries = body.entry || [];
+        for (const entry of entries) {
+            const changes = entry.changes || [];
+            for (const change of changes) {
+                if (change.field === 'leadgen') {
+                    const leadgenId = change.value.leadgen_id;
+                    const formId = change.value.form_id;
+                    const adId = change.value.ad_id;
+                    
+                    if (leadgenId) {
+                        // Process leadgen event in the background (async)
+                        processMetaLead(leadgenId, formId, adId).catch(err => {
+                            console.error('Error processing Meta Lead in background:', err);
+                        });
+                    }
+                }
+            }
+        }
+    } catch (err) {
+        console.error('Error handling Meta Leads webhook:', err);
+    }
+});
+
+// Helper to fetch details from Meta Graph API and insert into Supabase CRM
+async function processMetaLead(leadgenId, formId, adId) {
+    try {
+        const pageAccessToken = process.env.META_PAGE_ACCESS_TOKEN;
+        
+        let name = 'Meta Lead';
+        let phone = '';
+        let email = '';
+        let source = 'Meta Leads';
+        let remarks = `Form ID: ${formId || 'N/A'}, Ad ID: ${adId || 'N/A'}, Leadgen ID: ${leadgenId}`;
+
+        if (pageAccessToken) {
+            const graphUrl = `https://graph.facebook.com/v19.0/${leadgenId}?fields=field_data,created_time&access_token=${pageAccessToken}`;
+            
+            console.log(`Querying Meta Graph API for lead ID ${leadgenId}...`);
+            const response = await fetch(graphUrl);
+            const data = await response.json();
+            
+            if (response.ok && data.field_data) {
+                data.field_data.forEach(field => {
+                    const fieldName = (field.name || '').toLowerCase();
+                    const fieldVal = field.values ? field.values[0] : '';
+                    
+                    if (fieldName.includes('full_name') || fieldName.includes('first_name') || fieldName === 'name') {
+                        name = fieldVal;
+                    } else if (fieldName.includes('phone') || fieldName.includes('contact')) {
+                        phone = fieldVal;
+                    } else if (fieldName.includes('email')) {
+                        email = fieldVal;
+                    } else {
+                        remarks += `\n${field.name}: ${fieldVal}`;
+                    }
+                });
+                source = `Meta Leads: ${formId || 'Ad Form'}`;
+            } else {
+                console.error('Failed to fetch lead info from Graph API:', data.error || 'Unknown Graph API Error');
+                remarks += `\n(Could not retrieve lead details: Access token or permissions issue)`;
+            }
+        } else {
+            console.log('META_PAGE_ACCESS_TOKEN is missing. Inserting placeholder lead.');
+            name = `Meta Lead #${leadgenId.slice(-4)}`;
+            remarks += `\n(Details pending: Add META_PAGE_ACCESS_TOKEN to environment variables)`;
+        }
+
+        // Insert lead into Supabase leads table
+        if (supabase) {
+            const { error } = await supabase.from('leads').insert([{
+                name,
+                phone: phone || 'Pending',
+                email: email || 'Pending',
+                source,
+                status: 'New',
+                remarks,
+                created_at: new Date()
+            }]);
+            
+            if (error) {
+                console.error('Error inserting Meta Lead into Supabase:', error.message);
+            } else {
+                console.log(`Successfully integrated Meta Lead: ${name}`);
+            }
+        } else {
+            console.error('Supabase client is not initialized. Cannot save lead.');
+        }
+    } catch (err) {
+        console.error('Error processing Meta lead:', err);
+    }
+}
+
+
 // Global Cache-Busting Middleware: Disable caching for all static assets, HTML pages, and routes
 app.use((req, res, next) => {
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
