@@ -2638,22 +2638,45 @@
         // --- 1. RICH TEXT EDITOR ACTIONS ---
         window.execEditorCommand = function(cmd, value = null) {
             const editor = document.getElementById('blog-editor-rich');
-            if (editor) {
-                editor.focus();
+            if (!editor) return;
+
+            // Save the selection before doing anything (crucial for prompts)
+            const selection = window.getSelection();
+            let savedRange = null;
+            if (selection.rangeCount > 0) {
+                savedRange = selection.getRangeAt(0);
             }
-            
+
             if (cmd === 'createLink') {
                 const url = prompt('Enter the URL (e.g., https://example.com):');
                 if (url) {
-                    document.execCommand(cmd, false, url);
+                    // Restore selection range
+                    if (savedRange) {
+                        selection.removeAllRanges();
+                        selection.addRange(savedRange);
+                    }
+                    
+                    editor.focus();
+
+                    const selectedText = selection.toString();
+                    if (selectedText.trim() === '') {
+                        // Insert new link at cursor
+                        const linkHtml = `<a href="${url}" target="_blank">${url}</a>`;
+                        document.execCommand('insertHTML', false, linkHtml);
+                    } else {
+                        // Wrap selected text in a link
+                        const linkHtml = `<a href="${url}" target="_blank">${selectedText}</a>`;
+                        document.execCommand('insertHTML', false, linkHtml);
+                    }
                 }
             } else {
+                editor.focus();
                 document.execCommand(cmd, false, value);
             }
             
             // Sync with textarea and update states
             const textarea = document.getElementById('blog-content');
-            if (editor && textarea) {
+            if (textarea) {
                 textarea.value = editor.innerHTML;
             }
             updateEditorToolbarStates();
