@@ -3453,6 +3453,7 @@
                 tbody.innerHTML = html;
             } catch (err) {
                 console.error(err);
+                const tbody = document.getElementById('leads-table-body');
                 if (tbody) {
                     tbody.innerHTML = `<tr><td colspan="12" style="text-align: center; color: red;">Failed to fetch leads. Error: ${err.message}</td></tr>`;
                 }
