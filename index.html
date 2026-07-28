@@ -1075,8 +1075,13 @@
     <script>
         function scrollReviews(direction) {
             const container = document.querySelector('.reviews-slider-container');
-            const scrollAmount = 320 * direction;
-            container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            const firstCard = container.querySelector('.review-card');
+            if (firstCard) {
+                const cardWidth = firstCard.clientWidth + 20; // card width + gap
+                container.scrollBy({ left: cardWidth * direction, behavior: 'smooth' });
+            } else {
+                container.scrollBy({ left: 320 * direction, behavior: 'smooth' });
+            }
         }
 
         async function loadGoogleReviews() {

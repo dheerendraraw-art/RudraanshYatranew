@@ -6425,21 +6425,25 @@ body.user-role-staff .admin-only-action {
     border-color: var(--color-primary);
 }
 
-/* Responsive styling */
-@media (min-width: 1200px) {
+/* Responsive styling: 3 cards visible at a time starting from 992px */
+@media (max-width: 1200px) {
     .reviews-slider-container {
-        overflow: visible;
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        max-width: var(--max-width);
-        padding: 0;
+        padding: 10px 24px 20px 24px;
     }
+}
+
+@media (min-width: 768px) {
     .review-card {
-        flex: none;
-        width: 100%;
+        flex: 0 0 calc((100% - 20px) / 2); /* 2 cards visible */
     }
-    .slider-nav {
-        display: none;
+}
+
+@media (min-width: 992px) {
+    .review-card {
+        flex: 0 0 calc((100% - 40px) / 3); /* exactly 3 cards visible */
+    }
+    .reviews-slider-container {
+        padding: 10px 0 20px 0;
     }
 }
 
