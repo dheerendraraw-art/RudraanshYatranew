@@ -2861,8 +2861,21 @@ footer h3::after, footer h4::after {
 
     .modal-body .form-grid-2,
     .admin-form-grid,
-    div[style*="grid-template-columns: 1fr 1fr"] {
+    div[style*="grid-template-columns: 1fr 1fr"],
+    div[style*="grid-template-columns: 350px 1fr"],
+    div[style*="grid-template-columns: 2fr 1fr"],
+    div[style*="grid-template-columns: 1fr 2fr"],
+    div[style*="grid-template-columns: 1fr 1.5fr"],
+    div[style*="grid-template-columns: 1.5fr 1fr 1.2fr"] {
         grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+
+    /* Prevent input/select fields from overlapping in responsive table cards */
+    .admin-table tbody tr td input,
+    .admin-table tbody tr td select {
+        max-width: 65% !important;
+        text-align: left !important;
     }
 
     /* Prevent iOS auto-zoom on input focus */
