@@ -2858,6 +2858,11 @@
 
         // Inline field updates helper
         window.updateLeadField = async function(leadId, fieldName, value) {
+            if (fieldName === 'assigned_to' && currentUserRole === 'staff') {
+                showAdminToast('Error: Only Admins can transfer leads.', 'error');
+                fetchLeads();
+                return;
+            }
             try {
                 const updateData = {};
                 updateData[fieldName] = value === "" ? null : value;

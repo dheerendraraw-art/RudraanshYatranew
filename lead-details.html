@@ -824,6 +824,13 @@
 
         // Update lead fields inline
         async function updateLeadField(fieldName, value) {
+            if (fieldName === 'assigned_to' && currentUserRole === 'staff') {
+                showToast('Error: Only Admins can transfer leads.');
+                const selectEl = document.getElementById('property-assignee');
+                if (selectEl) selectEl.value = leadData ? (leadData.assigned_to || '') : '';
+                return;
+            }
+
             try {
                 const updateData = {};
                 updateData[fieldName] = value === '' ? null : value;
@@ -969,6 +976,12 @@
         async function initPage() {
             await fetchAssignees();
             await fetchLeadDetails();
+
+            // Disable assignee select if user is staff
+            if (currentUserRole === 'staff') {
+                const selectEl = document.getElementById('property-assignee');
+                if (selectEl) selectEl.disabled = true;
+            }
         }
 
         window.onload = initPage;
