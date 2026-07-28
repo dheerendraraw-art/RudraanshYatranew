@@ -1685,17 +1685,9 @@
         };
 
         window.fetchUserProfile = async function() {
-            const currentUname = sessionStorage.getItem('admin_username') || currentUsername;
-            if (!currentUname) return;
-
             try {
-                const { data, error } = await supabaseAdmin
-                    .from('staff_credentials')
-                    .select('*')
-                    .eq('username', currentUname)
-                    .single();
-
-                if (error) throw error;
+                const response = await fetchWithAuth('/api/admin/profile');
+                const data = await response.json();
                 loggedInUserDetail = data;
 
                 // Update UI elements in Profile tab
@@ -3066,14 +3058,13 @@
 
         window.fetchUsers = async function() {
             try {
-                // Fetch staff credentials to map UUID to username
-                const { data: staffData, error: staffError } = await supabaseAdmin
-                    .from('staff_credentials')
-                    .select('username, uuid_mapping');
+                // Fetch staff credentials to map UUID to username via the safe mapping endpoint
+                const response = await fetchWithAuth('/api/admin/staff-mapping');
+                const staffData = await response.json();
                 
                 const uuidToUsername = {};
                 mappedUserIds.clear();
-                if (staffData && !staffError) {
+                if (staffData && Array.isArray(staffData)) {
                     staffData.forEach(s => {
                         if (s.uuid_mapping) {
                             uuidToUsername[s.uuid_mapping.toLowerCase()] = s.username.charAt(0).toUpperCase() + s.username.slice(1);

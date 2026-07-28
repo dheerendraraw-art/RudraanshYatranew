@@ -856,6 +856,47 @@ app.delete('/api/admin/gallery/:id', authenticateToken, requireAdmin, async (req
     }
 });
 
+// Get currently logged-in user profile (accessible by all authenticated staff/admins)
+app.get('/api/admin/profile', authenticateToken, async (req, res) => {
+    try {
+        if (!supabase) {
+            return res.status(500).json({ error: 'Supabase client not initialized' });
+        }
+        const { data, error } = await supabase
+            .from('staff_credentials')
+            .select('*')
+            .eq('id', req.user.id)
+            .maybeSingle();
+
+        if (error) throw error;
+        if (!data) return res.status(404).json({ error: 'Profile not found' });
+
+        // Mask passcode hash for safety
+        const profile = { ...data, passcode: '********' };
+        res.json(profile);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Staff/User mapping endpoint (safe for all authenticated staff/admins to map names)
+app.get('/api/admin/staff-mapping', authenticateToken, async (req, res) => {
+    try {
+        if (!supabase) {
+            return res.status(500).json({ error: 'Supabase client not initialized' });
+        }
+        const { data, error } = await supabase
+            .from('staff_credentials')
+            .select('id, username, uuid_mapping, designation, photo, name')
+            .order('username', { ascending: true });
+
+        if (error) throw error;
+        res.json(data || []);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 // Credentials CRUD
 app.get('/api/admin/credentials', authenticateToken, requireAdmin, async (req, res) => {
     try {
