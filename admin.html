@@ -2637,6 +2637,11 @@
 
         // --- 1. RICH TEXT EDITOR ACTIONS ---
         window.execEditorCommand = function(cmd, value = null) {
+            const editor = document.getElementById('blog-editor-rich');
+            if (editor) {
+                editor.focus();
+            }
+            
             if (cmd === 'createLink') {
                 const url = prompt('Enter the URL (e.g., https://example.com):');
                 if (url) {
@@ -2645,22 +2650,79 @@
             } else {
                 document.execCommand(cmd, false, value);
             }
-            // Update hidden textarea
-            const editor = document.getElementById('blog-editor-rich');
+            
+            // Sync with textarea and update states
             const textarea = document.getElementById('blog-content');
             if (editor && textarea) {
                 textarea.value = editor.innerHTML;
             }
+            updateEditorToolbarStates();
         };
 
-        // Live syncing for typing
+        // Update active states of toolbar buttons based on selection
+        function updateEditorToolbarStates() {
+            const boldBtn = document.querySelector('button[title="Bold"]');
+            const italicBtn = document.querySelector('button[title="Italic"]');
+            const underlineBtn = document.querySelector('button[title="Underline"]');
+            
+            if (boldBtn) {
+                if (document.queryCommandState('bold')) {
+                    boldBtn.style.background = 'var(--color-gold)';
+                    boldBtn.style.color = '#0f172a';
+                } else {
+                    boldBtn.style.background = '#1e293b';
+                    boldBtn.style.color = 'var(--color-gold)';
+                }
+            }
+            if (italicBtn) {
+                if (document.queryCommandState('italic')) {
+                    italicBtn.style.background = 'var(--color-gold)';
+                    italicBtn.style.color = '#0f172a';
+                } else {
+                    italicBtn.style.background = '#1e293b';
+                    italicBtn.style.color = 'var(--color-gold)';
+                }
+            }
+            if (underlineBtn) {
+                if (document.queryCommandState('underline')) {
+                    underlineBtn.style.background = 'var(--color-gold)';
+                    underlineBtn.style.color = '#0f172a';
+                } else {
+                    underlineBtn.style.background = '#1e293b';
+                    underlineBtn.style.color = 'var(--color-gold)';
+                }
+            }
+        }
+
+        // Setup listeners for formatting, syncing, and keyboard inputs
         document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 const editor = document.getElementById('blog-editor-rich');
                 const textarea = document.getElementById('blog-content');
                 if (editor && textarea) {
+                    // Sync typed input and check status
                     editor.addEventListener('input', () => {
                         textarea.value = editor.innerHTML;
+                        updateEditorToolbarStates();
+                    });
+
+                    // Track selection changes
+                    editor.addEventListener('keyup', updateEditorToolbarStates);
+                    editor.addEventListener('mouseup', updateEditorToolbarStates);
+
+                    // Support Tab key indentation
+                    editor.addEventListener('keydown', (e) => {
+                        if (e.key === 'Tab') {
+                            e.preventDefault();
+                            document.execCommand('insertHTML', false, '&nbsp;&nbsp;&nbsp;&nbsp;');
+                        }
+                    });
+
+                    // Clean paste - paste as plain text to prevent styling layout corruption
+                    editor.addEventListener('paste', (e) => {
+                        e.preventDefault();
+                        const text = e.clipboardData.getData('text/plain');
+                        document.execCommand('insertText', false, text);
                     });
                 }
             }, 1000);
