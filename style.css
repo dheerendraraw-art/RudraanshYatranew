@@ -5795,6 +5795,14 @@ html, body {
     }
 }
 
+/* Hide mobile-specific details inside the Leads table Name column on desktop */
+.lead-chat-avatar,
+.lead-chat-time,
+.lead-chat-sub-row,
+.lead-chat-expand-chevron {
+    display: none;
+}
+
 /* ==================================================
    MESSENGER / CHAT-LIST STYLE LEADS FOR MOBILE
    ================================================== */
