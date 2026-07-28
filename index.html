@@ -1073,15 +1073,54 @@
     </section>
 
     <script>
-        function scrollReviews(direction) {
+        let autoplayInterval;
+        const AUTOPLAY_DELAY = 5000; // Auto-scroll every 5 seconds
+
+        function scrollReviews(direction, isAuto = false) {
             const container = document.querySelector('.reviews-slider-container');
+            if (!container) return;
+            
             const firstCard = container.querySelector('.review-card');
-            if (firstCard) {
-                const cardWidth = firstCard.clientWidth + 20; // card width + gap
-                container.scrollBy({ left: cardWidth * direction, behavior: 'smooth' });
+            const cardWidth = firstCard ? firstCard.clientWidth + 20 : 320; // card width + gap
+
+            if (direction === 1) {
+                // If sliding next, check if we reached the end (with 15px tolerance)
+                if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 15) {
+                    container.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    container.scrollBy({ left: cardWidth, behavior: 'smooth' });
+                }
             } else {
-                container.scrollBy({ left: 320 * direction, behavior: 'smooth' });
+                // If sliding prev, check if we are at the start
+                if (container.scrollLeft <= 5) {
+                    container.scrollTo({ left: container.scrollWidth, behavior: 'smooth' });
+                } else {
+                    container.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+                }
             }
+
+            // If manual click, reset the autoplay timer so it doesn't jump immediately
+            if (!isAuto) {
+                resetAutoplay();
+            }
+        }
+
+        function startAutoplay() {
+            stopAutoplay();
+            autoplayInterval = setInterval(() => {
+                scrollReviews(1, true);
+            }, AUTOPLAY_DELAY);
+        }
+
+        function stopAutoplay() {
+            if (autoplayInterval) {
+                clearInterval(autoplayInterval);
+            }
+        }
+
+        function resetAutoplay() {
+            stopAutoplay();
+            startAutoplay();
         }
 
         async function loadGoogleReviews() {
@@ -1173,7 +1212,18 @@
             return colors[index % colors.length];
         }
 
-        document.addEventListener('DOMContentLoaded', loadGoogleReviews);
+        document.addEventListener('DOMContentLoaded', () => {
+            loadGoogleReviews().then(() => {
+                startAutoplay();
+                
+                // Add hover pause functionality
+                const sliderContainer = document.querySelector('.reviews-slider-container');
+                if (sliderContainer) {
+                    sliderContainer.addEventListener('mouseenter', stopAutoplay);
+                    sliderContainer.addEventListener('mouseleave', startAutoplay);
+                }
+            });
+        });
     </script>
 
     <!-- Payment Methods Section (Above Footer) -->
