@@ -1713,6 +1713,85 @@ app.get(['/lead-details', '/lead-details.html'], (req, res) => {
 });
 
 
+// Simple in-memory cache for Google Reviews
+let googleReviewsCache = {
+    data: null,
+    timestamp: 0
+};
+const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours
+
+app.get('/api/google-reviews', async (req, res) => {
+    const apiKey = process.env.GOOGLE_MAPS_API_KEY;
+    const placeId = process.env.GOOGLE_PLACE_ID || 'ChIJUaOjOEsloTkRjOLS3RK_S_A';
+    const now = Date.now();
+
+    if (googleReviewsCache.data && (now - googleReviewsCache.timestamp < CACHE_DURATION)) {
+        return res.json(googleReviewsCache.data);
+    }
+
+    const fallbackReviews = {
+        rating: 4.7,
+        user_ratings_total: 711,
+        reviews: [
+            {
+                author_name: "Ajit Garg",
+                profile_photo_url: "",
+                rating: 5,
+                text: "I have gone to Kailash Mansarovar Yatra with other three female family members in a conducted tour by Rudraansh Yatra from 22 Aug to 1st September. It was really an amazing trip, Lord shiv...",
+                relative_time_description: "Meerut"
+            },
+            {
+                author_name: "Mr. Ankit Kedia",
+                profile_photo_url: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=80&auto=format&fit=crop&q=60",
+                rating: 5,
+                text: "It was a dream come true moment for me to travel such a divine and holy place kailash mansarovar yatra. Such a difficult yatra has been made so easy and simple by our travel agency Rudraansh Yatra. I heartily thanks to all...",
+                relative_time_description: "Ranchi"
+            },
+            {
+                author_name: "Balakrishna Siddheshwar",
+                profile_photo_url: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=80&auto=format&fit=crop&q=60",
+                rating: 5,
+                text: "We are very much Thanks to you, & your team supported team, each one is helping nature. The yatra is very beautiful and without any trouble. we have enjoyed lot on every day, by god grace & guidance from...",
+                relative_time_description: "Bangalore"
+            }
+        ]
+    };
+
+    if (!apiKey) {
+        googleReviewsCache = { data: fallbackReviews, timestamp: now };
+        return res.json(fallbackReviews);
+    }
+
+    try {
+        const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=reviews,rating,user_ratings_total&key=${apiKey}`;
+        const response = await fetch(url);
+        const json = await response.json();
+
+        if (json.status === 'OK' && json.result) {
+            const resultData = {
+                rating: json.result.rating || 4.7,
+                user_ratings_total: json.result.user_ratings_total || 711,
+                reviews: (json.result.reviews || []).map(r => ({
+                    author_name: r.author_name,
+                    profile_photo_url: r.profile_photo_url || "",
+                    rating: r.rating || 5,
+                    text: r.text,
+                    relative_time_description: r.relative_time_description || "Verified Customer"
+                }))
+            };
+            googleReviewsCache = { data: resultData, timestamp: now };
+            return res.json(resultData);
+        } else {
+            console.error("Google Places API error:", json.error_message || json.status);
+            return res.json(fallbackReviews);
+        }
+    } catch (err) {
+        console.error("Failed to fetch Google Reviews:", err);
+        return res.json(fallbackReviews);
+    }
+});
+
+
 // Global Cache-Busting Middleware: Disable caching for all static assets, HTML pages, and routes
 app.use((req, res, next) => {
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
