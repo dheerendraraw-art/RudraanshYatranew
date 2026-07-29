@@ -2310,7 +2310,7 @@
                     .order('created_at', { ascending: false });
 
                 if (currentUserRole === 'staff') {
-                    const agentUuid = currentUserUuidMapping || AGENT_UUIDS[currentUsername];
+                    const agentUuid = currentUserUuidMapping || AGENT_UUIDS[(currentUsername || '').toLowerCase()];
                     if (agentUuid) {
                         query = query.or(`assigned_to.eq.${agentUuid},user_id.eq.${agentUuid}`);
                     }
@@ -3314,7 +3314,7 @@
                     .order('created_at', { ascending: false });
 
                 if (currentUserRole === 'staff') {
-                    const agentUuid = currentUserUuidMapping || AGENT_UUIDS[currentUsername];
+                    const agentUuid = currentUserUuidMapping || AGENT_UUIDS[(currentUsername || '').toLowerCase()];
                     if (agentUuid) {
                         query = query.eq('assigned_to', agentUuid);
                     }
@@ -3359,7 +3359,7 @@
 
                 let filteredHistory = historyData || [];
                 if (currentUserRole === 'staff') {
-                    const agentUuid = currentUserUuidMapping || AGENT_UUIDS[currentUsername];
+                    const agentUuid = currentUserUuidMapping || AGENT_UUIDS[(currentUsername || '').toLowerCase()];
                     if (agentUuid) {
                         filteredHistory = filteredHistory.filter(item => {
                             const lead = leadsMap[item.lead_id];
@@ -3899,7 +3899,7 @@
                     combinedNotes = 'Transferred from Leads Manager';
                 }
 
-                const staffUuid = currentUserUuidMapping || AGENT_UUIDS[currentUsername] || lead.assigned_to || null;
+                const staffUuid = currentUserUuidMapping || AGENT_UUIDS[(currentUsername || '').toLowerCase()] || lead.assigned_to || null;
                 const autoBookingId = generateAutoBookingId(lead.name);
 
                 // Insert into bookings table
