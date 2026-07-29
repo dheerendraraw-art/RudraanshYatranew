@@ -540,7 +540,7 @@
                             </select>
                         </div>
 
-                        <div class="property-row">
+                        <div class="property-row" id="prop-assignee-row">
                             <label class="property-label">Assigned To Staff</label>
                             <select id="property-assignee" class="property-select" onchange="updateLeadField('assigned_to', this.value)">
                                 <option value="">Loading...</option>
@@ -898,6 +898,12 @@
 
             // Assigned to select option matching
             document.getElementById('property-assignee').value = leadData.assigned_to || '';
+
+            // Show/hide assigned to staff row (Admin only)
+            const assigneeRow = document.getElementById('prop-assignee-row');
+            if (assigneeRow) {
+                assigneeRow.style.display = currentUserRole === 'admin' ? 'flex' : 'none';
+            }
 
             // Admin only inputs
             if (currentUserRole === 'admin') {
