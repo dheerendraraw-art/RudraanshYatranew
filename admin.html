@@ -3048,7 +3048,7 @@
                     csvContent += `${packageName},${name},${phone},${email},${travelDate},${travelers},${message},${createdAt}\n`;
                 });
 
-                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
                 const url = URL.createObjectURL(blob);
                 const link = document.createElement('a');
                 link.setAttribute('href', url);
@@ -4751,7 +4751,7 @@
             ]);
 
             const csvContent = headers.join(',') + '\n' + rows.map(e => e.join(',')).join('\n');
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
             link.setAttribute('download', `Staff_Payroll_${month}_${year}.csv`);
@@ -5068,7 +5068,7 @@
                     csv += `${q(item.name)},${q(item.phone)},${q(item.email)},${q(item.source)},${q(item.status)},${q(item.remarks)},${q(item.follow_up_1)},${q(item.follow_up_2)},${q(item.final_status)},${q(item.created_at)}\n`;
                 });
 
-                const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
                 const link = document.createElement('a');
                 if (link.download !== undefined) {
                     const url = URL.createObjectURL(blob);
