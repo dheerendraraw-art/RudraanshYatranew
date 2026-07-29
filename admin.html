@@ -3213,12 +3213,14 @@
                 fetchLeads();
                 return;
             }
+            const leadObj = currentLeads.find(l => l.id === leadId);
+            const wasConfirmed = leadObj && leadObj.final_status === 'Booking confirmed';
             try {
                 const updateData = {};
                 updateData[fieldName] = value === "" ? null : value;
                 
                 if (fieldName === 'assigned_to') {
-                    const lead = currentLeads.find(l => l.id === leadId);
+                    const lead = leadObj;
                     const oldAssigneeUuid = lead ? lead.assigned_to : null;
                     const newAssigneeUuid = value === "" ? null : value;
                     
@@ -3241,10 +3243,24 @@
                 if (error) throw error;
                 
                 // If marked as booking confirmed inline, move to bookings tab
-                if (fieldName === 'final_status' && value === 'Booking confirmed') {
-                    const lead = currentLeads.find(l => l.id === leadId);
-                    if (lead) {
-                        await copyLeadToBooking(lead);
+                if (fieldName === 'final_status') {
+                    if (value === 'Booking confirmed') {
+                        const lead = currentLeads.find(l => l.id === leadId);
+                        if (lead) {
+                            await copyLeadToBooking(lead);
+                        }
+                    } else if (wasConfirmed) {
+                        // Reverted from booking confirmed. Delete corresponding booking record.
+                        const { error: deleteBookingErr } = await supabaseAdmin
+                            .from('bookings')
+                            .delete()
+                            .eq('lead_id', leadId);
+                        if (deleteBookingErr) {
+                            console.error('Failed to remove booking on status revert:', deleteBookingErr);
+                        } else {
+                            showAdminToast('Associated booking removed.', 'info');
+                            fetchBookings(); // refresh bookings list
+                        }
                     }
                 }
 

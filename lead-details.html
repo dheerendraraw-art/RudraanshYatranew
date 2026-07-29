@@ -997,6 +997,8 @@
                 return;
             }
 
+            const wasConfirmed = leadData && leadData.final_status === 'Booking confirmed';
+
             try {
                 const updateData = {};
                 updateData[fieldName] = value === '' ? null : value;
@@ -1026,8 +1028,21 @@
                 showToast('Field updated successfully!');
                 
                 // If final status is marked confirmed, move to bookings
-                if (fieldName === 'final_status' && value === 'Booking confirmed') {
-                    await copyLeadToBooking(leadData);
+                if (fieldName === 'final_status') {
+                    if (value === 'Booking confirmed') {
+                        await copyLeadToBooking(leadData);
+                    } else if (wasConfirmed) {
+                        // Reverted from booking confirmed. Delete corresponding booking record.
+                        const { error: deleteBookingErr } = await supabaseAdmin
+                            .from('bookings')
+                            .delete()
+                            .eq('lead_id', leadId);
+                        if (deleteBookingErr) {
+                            console.error('Failed to remove booking on status revert:', deleteBookingErr);
+                        } else {
+                            showToast('Associated booking record removed.');
+                        }
+                    }
                 }
 
                 // Refresh details and timeline
