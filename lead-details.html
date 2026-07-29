@@ -602,21 +602,21 @@
  
     <script>
         // Security Gate check
-        if (sessionStorage.getItem('admin_verified') !== 'true' || !sessionStorage.getItem('admin_token')) {
+        if (localStorage.getItem('admin_verified') !== 'true' || !localStorage.getItem('admin_token')) {
             window.location.href = 'admin.html';
         }
  
         function logoutAdmin() {
-            sessionStorage.removeItem('admin_verified');
-            sessionStorage.removeItem('admin_token');
-            sessionStorage.removeItem('admin_role');
-            sessionStorage.removeItem('admin_username');
-            sessionStorage.removeItem('admin_uuid_mapping');
+            localStorage.removeItem('admin_verified');
+            localStorage.removeItem('admin_token');
+            localStorage.removeItem('admin_role');
+            localStorage.removeItem('admin_username');
+            localStorage.removeItem('admin_uuid_mapping');
             window.location.href = 'admin.html';
         }
  
         async function fetchWithAuth(url, options = {}) {
-            const token = sessionStorage.getItem('admin_token');
+            const token = localStorage.getItem('admin_token');
             const headers = {
                 'Content-Type': 'application/json',
                 ...options.headers
@@ -776,9 +776,9 @@
         const urlParams = new URLSearchParams(window.location.search);
         const leadId = urlParams.get('id');
 
-        let currentUserRole = sessionStorage.getItem('admin_role') || 'staff';
-        let currentUsername = sessionStorage.getItem('admin_username') || 'staff';
-        let currentUserUuidMapping = sessionStorage.getItem('admin_uuid_mapping') || '';
+        let currentUserRole = localStorage.getItem('admin_role') || 'staff';
+        let currentUsername = localStorage.getItem('admin_username') || 'staff';
+        let currentUserUuidMapping = localStorage.getItem('admin_uuid_mapping') || '';
 
         let leadData = null;
         let uuidToUsernameMap = {};

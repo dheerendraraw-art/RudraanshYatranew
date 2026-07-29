@@ -1397,7 +1397,7 @@
         });
 
         async function fetchWithAuth(url, options = {}) {
-            const token = sessionStorage.getItem('admin_token');
+            const token = localStorage.getItem('admin_token');
             const headers = {
                 'Content-Type': 'application/json',
                 ...options.headers
@@ -1572,7 +1572,7 @@
                                     formData.append('folder', parts.slice(0, -1).join('/'));
                                 }
                                 
-                                const token = sessionStorage.getItem('admin_token');
+                                const token = localStorage.getItem('admin_token');
                                 const response = await fetch('/api/admin/upload', {
                                     method: 'POST',
                                     headers: {
@@ -1607,10 +1607,10 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             // Check session security status
-            if (sessionStorage.getItem('admin_verified') === 'true') {
-                currentUserRole = sessionStorage.getItem('admin_role') || 'admin';
-                currentUsername = sessionStorage.getItem('admin_username') || 'admin';
-                currentUserUuidMapping = sessionStorage.getItem('admin_uuid_mapping') || '';
+            if (localStorage.getItem('admin_verified') === 'true') {
+                currentUserRole = localStorage.getItem('admin_role') || 'admin';
+                currentUsername = localStorage.getItem('admin_username') || 'admin';
+                currentUserUuidMapping = localStorage.getItem('admin_uuid_mapping') || '';
                 showDashboard();
             }
         });
@@ -1692,11 +1692,11 @@
                 currentUsername = resData.user.username;
                 currentUserUuidMapping = resData.user.uuid_mapping || '';
                 
-                sessionStorage.setItem('admin_verified', 'true');
-                sessionStorage.setItem('admin_token', resData.token);
-                sessionStorage.setItem('admin_role', currentUserRole);
-                sessionStorage.setItem('admin_username', currentUsername);
-                sessionStorage.setItem('admin_uuid_mapping', currentUserUuidMapping);
+                localStorage.setItem('admin_verified', 'true');
+                localStorage.setItem('admin_token', resData.token);
+                localStorage.setItem('admin_role', currentUserRole);
+                localStorage.setItem('admin_username', currentUsername);
+                localStorage.setItem('admin_uuid_mapping', currentUserUuidMapping);
                 
                 showAdminToast(`Dashboard unlocked as ${currentUsername}!`, 'success');
                 showDashboard();
@@ -1710,9 +1710,9 @@
             document.getElementById('gate-container').style.display = 'none';
             document.getElementById('dashboard-container').style.display = 'flex';
 
-            currentUserRole = sessionStorage.getItem('admin_role') || 'admin';
-            currentUsername = sessionStorage.getItem('admin_username') || 'admin';
-            currentUserUuidMapping = sessionStorage.getItem('admin_uuid_mapping') || '';
+            currentUserRole = localStorage.getItem('admin_role') || 'admin';
+            currentUsername = localStorage.getItem('admin_username') || 'admin';
+            currentUserUuidMapping = localStorage.getItem('admin_uuid_mapping') || '';
 
             const usernameEl = document.getElementById('logged-in-username');
             if (usernameEl) {
@@ -1903,17 +1903,17 @@
         };
 
         function logoutAdmin() {
-            sessionStorage.removeItem('admin_verified');
-            sessionStorage.removeItem('admin_token');
-            sessionStorage.removeItem('admin_role');
-            sessionStorage.removeItem('admin_username');
-            sessionStorage.removeItem('admin_uuid_mapping');
+            localStorage.removeItem('admin_verified');
+            localStorage.removeItem('admin_token');
+            localStorage.removeItem('admin_role');
+            localStorage.removeItem('admin_username');
+            localStorage.removeItem('admin_uuid_mapping');
             window.location.reload();
         }
 
         function applyRolePermissions() {
-            const role = (sessionStorage.getItem('admin_role') || currentUserRole || '').toString().toLowerCase().trim();
-            const uname = (sessionStorage.getItem('admin_username') || currentUsername || '').toString().toLowerCase().trim();
+            const role = (localStorage.getItem('admin_role') || currentUserRole || '').toString().toLowerCase().trim();
+            const uname = (localStorage.getItem('admin_username') || currentUsername || '').toString().toLowerCase().trim();
             
             // Any logged in user whose username is NOT 'admin' OR whose role is 'staff' is STAFF
             const isStaff = (uname !== 'admin' || role === 'staff');
@@ -3374,7 +3374,7 @@
                     });
                     const leadObj = leadsMap[item.lead_id];
                     const leadName = leadObj ? leadObj.name : 'Deleted Lead';
-                    const leadLink = leadObj ? `<a href="lead-details.html?id=${item.lead_id}" target="_blank" style="color: var(--color-gold); font-weight: 700; text-decoration: none;">${leadName}</a>` : leadName;
+                    const leadLink = leadObj ? `<a href="lead-details.html?id=${item.lead_id}" style="color: var(--color-gold); font-weight: 700; text-decoration: none;">${leadName}</a>` : leadName;
                     
                     html += `
                         <tr>
@@ -3849,7 +3849,7 @@
         window.startEditLead = function(index) {
             const item = currentLeads[index];
             if (!item) return;
-            window.open(`lead-details.html?id=${item.id}`, '_blank');
+            window.location.href = `lead-details.html?id=${item.id}`;
         };
 
         // Helper to copy a confirmed lead to bookings table
@@ -4274,8 +4274,8 @@
                 showAdminToast(`Staff details updated successfully!`, 'success');
                 
                 if (oldUsername === currentUsername) {
-                    sessionStorage.setItem('admin_username', newUsername);
-                    sessionStorage.setItem('admin_uuid_mapping', newUuidMapping || '');
+                    localStorage.setItem('admin_username', newUsername);
+                    localStorage.setItem('admin_uuid_mapping', newUuidMapping || '');
                     currentUsername = newUsername;
                     currentUserUuidMapping = newUuidMapping || '';
                     const uEl = document.getElementById('logged-in-username');
