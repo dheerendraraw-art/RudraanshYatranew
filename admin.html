@@ -1425,6 +1425,7 @@
                 this.filters = [];
                 this.orderBy = null;
                 this.isSingle = false;
+                this.limitVal = null;
             }
             select(fields) {
                 this.operation = 'select';
@@ -1458,6 +1459,10 @@
             }
             single() {
                 this.isSingle = true;
+                return this;
+            }
+            limit(num) {
+                this.limitVal = num;
                 return this;
             }
             then(onfulfilled, onrejected) {
@@ -1534,6 +1539,8 @@
                     let resultData = responseData;
                     if (this.isSingle && Array.isArray(responseData)) {
                         resultData = responseData[0] || null;
+                    } else if (this.limitVal !== null && Array.isArray(responseData)) {
+                        resultData = responseData.slice(0, this.limitVal);
                     }
                     
                     return {
