@@ -548,6 +548,11 @@
                         </div>
 
                         <div class="property-row">
+                            <label class="property-label">Travelers</label>
+                            <input type="number" id="property-travelers" class="property-input" min="1" onchange="updateLeadField('travelers', parseInt(this.value) || 1)">
+                        </div>
+
+                        <div class="property-row">
                             <label class="property-label">Created Date</label>
                             <div class="property-value" id="property-created-at">Loading...</div>
                         </div>
@@ -845,6 +850,7 @@
 
             // Properties Form inputs
             document.getElementById('property-status').value = leadData.status || 'New';
+            document.getElementById('property-travelers').value = leadData.travelers || 1;
             document.getElementById('property-travel-date').value = leadData.travel_date || '';
             document.getElementById('property-final-status').value = leadData.final_status || '';
             document.getElementById('property-created-at').innerText = new Date(leadData.created_at).toLocaleString('en-IN', {

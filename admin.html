@@ -449,10 +449,33 @@
                         </thead>
                         <tbody id="leads-table-body">
                             <tr>
-                                <td colspan="9" style="text-align: center; color: var(--color-slate);">Loading leads data...</td>
+                                <td colspan="15" style="text-align: center; color: var(--color-slate);">Loading leads data...</td>
                             </tr>
                         </tbody>
                     </table>
+                </div>
+                <!-- Pagination & Page Size controls -->
+                <div id="leads-pagination-wrap" style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px; padding: 12px 16px; background: rgba(30, 41, 59, 0.5); border-radius: 8px; border: 1.5px solid rgba(212, 175, 55, 0.15); flex-wrap: wrap; gap: 12px; color: white;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 13.5px; color: var(--color-slate);">Leads per page:</span>
+                        <select id="leads-page-size" onchange="changeLeadsPageSize(this.value)" style="background: #0f172a; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 6px; padding: 4px 12px; font-size: 13px; cursor: pointer; outline: none;">
+                            <option value="20">20</option>
+                            <option value="40">40</option>
+                            <option value="60">60</option>
+                        </select>
+                    </div>
+                    <div id="leads-pagination-info" style="font-size: 13.5px; color: var(--color-slate);">
+                        Showing 0-0 of 0 leads
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <button id="leads-prev-btn" onclick="prevLeadsPage()" class="btn" style="border: 1.5px solid rgba(212, 175, 55, 0.4); background: transparent; color: var(--color-gold); padding: 5px 12px; font-size: 12px; cursor: pointer; border-radius: 4px; font-weight: bold; min-width: 60px;">
+                            <i class="fa-solid fa-chevron-left"></i> Prev
+                        </button>
+                        <span id="leads-page-num" style="font-weight: 700; font-size: 14px; padding: 0 8px; color: var(--color-gold);">1</span>
+                        <button id="leads-next-btn" onclick="nextLeadsPage()" class="btn" style="border: 1.5px solid rgba(212, 175, 55, 0.4); background: transparent; color: var(--color-gold); padding: 5px 12px; font-size: 12px; cursor: pointer; border-radius: 4px; font-weight: bold; min-width: 60px;">
+                            Next <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -3055,6 +3078,8 @@
         let usersList = [];
         let mappedUserIds = new Set();
         let currentLeads = [];
+        let leadsCurrentPage = 1;
+        let leadsPageSize = 20;
 
         window.fetchUsers = async function() {
             try {
@@ -3210,244 +3235,309 @@
                 }
 
                 const { data, error } = await query;
-                const tbody = document.getElementById('leads-table-body');
-
                 if (error) throw error;
 
                 currentLeads = data || [];
                 refreshActiveTabStats();
-
-                if (!tbody) return;
-
-                // Dynamically update Table Header for Staff vs Admin
-                const thead = document.querySelector('#pane-leads thead');
-                if (thead) {
-                    if (currentUserRole === 'staff') {
-                        thead.innerHTML = `
-                            <tr>
-                                <th>Name</th>
-                                <th>Phone</th>
-                                <th>Email</th>
-                                <th>Status</th>
-                                <th>Remarks</th>
-                                <th>Follow up 1</th>
-                                <th>Follow up 2</th>
-                                <th>Actions</th>
-                            </tr>
-                        `;
-                    } else {
-                        thead.innerHTML = `
-                            <tr>
-                                <th>Name</th>
-                                <th>Phone</th>
-                                <th>Email</th>
-                                <th>Source</th>
-                                <th>Travel Date</th>
-                                <th>Status</th>
-                                <th>Assigned To</th>
-                                <th>Remarks</th>
-                                <th>Follow up 1</th>
-                                <th>Follow up 2</th>
-                                <th>Final Status</th>
-                                <th>Created</th>
-                                <th>Actions</th>
-                            </tr>
-                        `;
-                    }
-                }
-
-                if (data.length === 0) {
-                    const colCount = currentUserRole === 'staff' ? 8 : 13;
-                    tbody.innerHTML = `<tr><td colspan="${colCount}" style="text-align: center; color: var(--color-slate);">No leads registered yet.</td></tr>`;
-                    return;
-                }
-
-                let html = '';
-                data.forEach((item, index) => {
-                    const createdStr = new Date(item.created_at).toLocaleDateString();
-                    
-                    // Render Status Dropdown options with Emojis
-                    let statusOptions = '';
-                    const statuses = [
-                        { val: "New", text: "✨ New" },
-                        { val: "Answered", text: "📞 Answered" },
-                        { val: "Busy", text: "⏳ Busy" },
-                        { val: "Incorrect Number", text: "🚫 Incorrect Number" },
-                        { val: "Follow up required", text: "🔁 Follow up required" },
-                        { val: "Not Answered", text: "🔇 Not Answered" },
-                        { val: "No. not reachable", text: "📴 No. not reachable" }
-                    ];
-                    statuses.forEach(s => {
-                        const selected = item.status === s.val ? 'selected' : '';
-                        statusOptions += `<option value="${s.val}" ${selected} style="background: #111827; color: white;">${s.text}</option>`;
-                    });
-
-                    // Render Assignee Dropdown options
-                    let assigneeOptions = '<option value="" style="background: #111827; color: white;">Unassigned</option>';
-                    (usersList || []).forEach(user => {
-                        const selected = item.assigned_to === user.id ? 'selected' : '';
-                        const isMapped = mappedUserIds.has(user.id.toLowerCase());
-                        if (isMapped || selected) {
-                            const displayName = usersMap[user.id] || user.email;
-                            assigneeOptions += `<option value="${user.id}" ${selected} style="background: #111827; color: white;">${displayName}</option>`;
-                        }
-                    });
-
-                    // Render Final Status Dropdown options with Emojis
-                    let finalStatusOptions = '<option value="" style="background: #111827; color: white;">🔘 None</option>';
-                    const finalStatuses = [
-                        { val: "Booking confirmed", text: "🎉 Booking confirmed" },
-                        { val: "Booked elsewhere", text: "🏢 Booked elsewhere" },
-                        { val: "Postpone", text: "⏳ Postpone" },
-                        { val: "Lost lead", text: "🗑️ Lost lead" }
-                    ];
-                    finalStatuses.forEach(fs => {
-                        const selected = item.final_status === fs.val ? 'selected' : '';
-                        finalStatusOptions += `<option value="${fs.val}" ${selected} style="background: #111827; color: white;">${fs.text}</option>`;
-                    });
-
-                    // Class style determinations
-                    let statusClass = 'status-new';
-                    if (item.status === 'Answered') statusClass = 'status-answered';
-                    else if (item.status === 'Busy') statusClass = 'status-busy';
-                    else if (item.status === 'Incorrect Number') statusClass = 'status-incorrect';
-                    else if (item.status === 'Follow up required') statusClass = 'status-followup';
-                    else if (item.status === 'Not Answered') statusClass = 'status-notanswered';
-                    else if (item.status === 'No. not reachable') statusClass = 'status-notreachable';
-
-                    let finalClass = 'final-none';
-                    if (item.final_status === 'Booking confirmed') finalClass = 'final-confirmed';
-                    else if (item.final_status === 'Booked elsewhere') finalClass = 'final-elsewhere';
-                    else if (item.final_status === 'Postpone') finalClass = 'final-postpone';
-                    else if (item.final_status === 'Lost lead') finalClass = 'final-lost';
-
-                    const leadPhoneVal = item.phone ? item.phone.trim() : '';
-                    const leadPhoneClean = leadPhoneVal.replace(/[^0-9]/g, '');
-                    const waPhone = leadPhoneClean.length === 10 ? '91' + leadPhoneClean : leadPhoneClean;
-                    
-                    const leadPhoneHtml = leadPhoneClean ? `
-                        <div style="display: flex; flex-direction: column; gap: 3px; text-align: left;">
-                            <a href="tel:${leadPhoneClean}" style="color: var(--color-gold); font-weight: 700; text-decoration: none; font-size: 13px; display: inline-flex; align-items: center; gap: 4px;">
-                                <i class="fa-solid fa-phone" style="font-size: 10px;"></i> ${leadPhoneVal}
-                            </a>
-                            <div style="display: inline-flex; gap: 6px; margin-top: 2px;">
-                                <a href="tel:${leadPhoneClean}" style="background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); padding: 2px 8px; border-radius: 12px; font-size: 11px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
-                                    <i class="fa-solid fa-phone"></i> Call
-                                </a>
-                                <a href="https://wa.me/${waPhone}?text=Namaste%20${encodeURIComponent(item.name || 'Guest')}!%20This%20is%20Rudraansh%20Yatra." target="_blank" style="background: rgba(37, 211, 102, 0.15); color: #25D366; border: 1px solid rgba(37, 211, 102, 0.3); padding: 2px 8px; border-radius: 12px; font-size: 11px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
-                                    <i class="fa-brands fa-whatsapp"></i> Chat
-                                </a>
-                            </div>
-                        </div>
-                    ` : '—';
-
-                    const initials = getLeadInitials(item.name);
-
-                    if (currentUserRole === 'staff') {
-                        html += `
-                            <tr class="lead-card-row" onclick="toggleMobileLeadRow(this, event)">
-                                <td data-label="Name" class="lead-card-name-td">
-                                    <div class="lead-chat-item-header">
-                                        <div class="lead-chat-avatar">${initials}</div>
-                                        <div class="lead-chat-main-info">
-                                            <div class="lead-chat-title-row">
-                                                <strong class="lead-chat-name" style="color: var(--color-gold); cursor: pointer;" onclick="event.stopPropagation(); startEditLead(${index})">${item.name}</strong>
-                                                <span class="lead-chat-time">${createdStr}</span>
-                                            </div>
-                                            <div class="lead-chat-sub-row">
-                                                <span class="lead-chat-phone">${leadPhoneVal || 'No Phone'}</span>
-                                                <span class="lead-chat-status-tag ${statusClass}">${item.status || 'New'}</span>
-                                            </div>
-                                        </div>
-                                        <div class="lead-chat-expand-chevron">
-                                            <i class="fa-solid fa-chevron-down"></i>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td data-label="Phone" style="white-space: nowrap;" onclick="event.stopPropagation();">${leadPhoneHtml}</td>
-                                <td data-label="Email" class="mobile-detail-field">${item.email || '-'}</td>
-                                <td data-label="Status" onclick="event.stopPropagation();">
-                                    <select onchange="updateLeadField('${item.id}', 'status', this.value); updateSelectStyle(this)" class="status-select ${statusClass}">
-                                        ${statusOptions}
-                                    </select>
-                                </td>
-                                <td data-label="Remarks" class="mobile-detail-field" style="white-space: pre-line;"><small>${item.remarks || '-'}</small></td>
-                                <td data-label="Follow up 1" class="mobile-detail-field"><small>${item.follow_up_1 || '-'}</small></td>
-                                <td data-label="Follow up 2" class="mobile-detail-field"><small>${item.follow_up_2 || '-'}</small></td>
-                                <td data-label="Actions" onclick="event.stopPropagation();">
-                                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                                        <button class="admin-btn-edit" onclick="event.stopPropagation(); startEditLead(${index})" style="background-color: var(--color-gold); color: #0f172a; border: none; padding: 6px 12px; border-radius: var(--border-radius-sm, 4px); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; gap: 4px;" title="Open Lead">
-                                            <i class="fa-solid fa-folder-open"></i> Open Lead
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        `;
-                    } else {
-                        html += `
-                            <tr class="lead-card-row" onclick="toggleMobileLeadRow(this, event)">
-                                <td data-label="Name" class="lead-card-name-td">
-                                    <div class="lead-chat-item-header">
-                                        <div class="lead-chat-avatar">${initials}</div>
-                                        <div class="lead-chat-main-info">
-                                            <div class="lead-chat-title-row">
-                                                <strong class="lead-chat-name" style="cursor: pointer;" onclick="event.stopPropagation(); startEditLead(${index})">${item.name}</strong>
-                                                <span class="lead-chat-time">${createdStr}</span>
-                                            </div>
-                                            <div class="lead-chat-sub-row">
-                                                <span class="lead-chat-phone">${leadPhoneVal || 'No Phone'}</span>
-                                                <span class="lead-chat-status-tag ${statusClass}">${item.status || 'New'}</span>
-                                            </div>
-                                        </div>
-                                        <div class="lead-chat-expand-chevron">
-                                            <i class="fa-solid fa-chevron-down"></i>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td data-label="Phone" style="white-space: nowrap;" onclick="event.stopPropagation();">${leadPhoneHtml}</td>
-                                <td data-label="Email" class="mobile-detail-field">${item.email || '-'}</td>
-                                <td data-label="Source" class="mobile-detail-field"><span style="font-size: 11px; font-weight: bold; background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px;">${item.source || 'Website'}</span></td>
-                                <td data-label="Travel Date" class="mobile-detail-field" style="white-space: nowrap;">${item.travel_date ? new Date(item.travel_date).toLocaleDateString() : '-'}</td>
-                                <td data-label="Status" onclick="event.stopPropagation();">
-                                    <select onchange="updateLeadField('${item.id}', 'status', this.value); updateSelectStyle(this)" class="status-select ${statusClass}">
-                                        ${statusOptions}
-                                    </select>
-                                </td>
-                                <td data-label="Assigned To" class="mobile-detail-field" onclick="event.stopPropagation();">
-                                    <select ${currentUserRole === "staff" ? "disabled" : ""} onchange="updateLeadField('${item.id}', 'assigned_to', this.value)" style="background: #1f2937; color: white; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 4px; font-size: 12px; width: 150px; cursor: pointer;">
-                                        ${assigneeOptions}
-                                    </select>
-                                </td>
-                                <td data-label="Remarks" class="mobile-detail-field" style="white-space: pre-line;"><small>${item.remarks || '-'}</small></td>
-                                <td data-label="Follow up 1" class="mobile-detail-field"><small>${item.follow_up_1 || '-'}</small></td>
-                                <td data-label="Follow up 2" class="mobile-detail-field"><small>${item.follow_up_2 || '-'}</small></td>
-                                <td data-label="Final Status" class="mobile-detail-field" onclick="event.stopPropagation();">
-                                    <select onchange="updateLeadField('${item.id}', 'final_status', this.value); updateFinalStyle(this)" class="final-select ${finalClass}">
-                                        ${finalStatusOptions}
-                                    </select>
-                                </td>
-                                <td data-label="Created" class="mobile-detail-field">${createdStr}</td>
-                                <td data-label="Actions" onclick="event.stopPropagation();">
-                                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                                        <button class="admin-btn-edit" onclick="event.stopPropagation(); startEditLead(${index})" style="background-color: var(--color-gold); color: #0f172a; border: none; width: 28px; height: 28px; border-radius: var(--border-radius-sm, 4px); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; margin: 0;" title="Edit Lead">
-                                            <i class="fa-solid fa-pen-to-square"></i>
-                                        </button>
-                                        <button class="admin-btn-delete" onclick="event.stopPropagation(); deleteRecord('leads', '${item.id}', fetchLeads)" style="width: 28px; height: 28px; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; margin: 0;" title="Delete Lead">
-                                            <i class="fa-solid fa-trash"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        `;
-                    }
-                });
-                tbody.innerHTML = html;
+                window.renderLeadsTableOnly();
             } catch (err) {
                 console.error(err);
                 const tbody = document.getElementById('leads-table-body');
                 if (tbody) {
-                    tbody.innerHTML = `<tr><td colspan="12" style="text-align: center; color: red;">Failed to fetch leads. Error: ${err.message}</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="15" style="text-align: center; color: red;">Failed to fetch leads. Error: ${err.message}</td></tr>`;
                 }
+            }
+        };
+
+        window.renderLeadsTableOnly = function() {
+            const tbody = document.getElementById('leads-table-body');
+            if (!tbody) return;
+
+            const totalLeads = currentLeads.length;
+            const totalPages = Math.ceil(totalLeads / leadsPageSize) || 1;
+            
+            if (leadsCurrentPage > totalPages) {
+                leadsCurrentPage = totalPages;
+            }
+            if (leadsCurrentPage < 1) {
+                leadsCurrentPage = 1;
+            }
+
+            const startIndex = (leadsCurrentPage - 1) * leadsPageSize;
+            const endIndex = Math.min(startIndex + leadsPageSize, totalLeads);
+            const leadsToRender = currentLeads.slice(startIndex, endIndex);
+
+            // Update Pagination UI
+            const pagInfo = document.getElementById('leads-pagination-info');
+            const pageNumSpan = document.getElementById('leads-page-num');
+            const prevBtn = document.getElementById('leads-prev-btn');
+            const nextBtn = document.getElementById('leads-next-btn');
+
+            if (pagInfo) {
+                pagInfo.innerText = totalLeads === 0 ? 'Showing 0-0 of 0 leads' : `Showing ${startIndex + 1}-${endIndex} of ${totalLeads} leads`;
+            }
+            if (pageNumSpan) {
+                pageNumSpan.innerText = leadsCurrentPage;
+            }
+            if (prevBtn) {
+                prevBtn.disabled = leadsCurrentPage === 1;
+                prevBtn.style.opacity = leadsCurrentPage === 1 ? '0.5' : '1';
+            }
+            if (nextBtn) {
+                nextBtn.disabled = leadsCurrentPage === totalPages;
+                nextBtn.style.opacity = leadsCurrentPage === totalPages ? '0.5' : '1';
+            }
+
+            // Dynamically update Table Header for Staff vs Admin
+            const thead = document.querySelector('#pane-leads thead');
+            if (thead) {
+                if (currentUserRole === 'staff') {
+                    thead.innerHTML = `
+                        <tr>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Travelers</th>
+                            <th>Created Date</th>
+                            <th>Status</th>
+                            <th>Remarks</th>
+                            <th>Follow up 1</th>
+                            <th>Follow up 2</th>
+                            <th>Actions</th>
+                        </tr>
+                    `;
+                } else {
+                    thead.innerHTML = `
+                        <tr>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Source</th>
+                            <th>Travelers</th>
+                            <th>Travel Date</th>
+                            <th>Status</th>
+                            <th>Assigned To</th>
+                            <th>Remarks</th>
+                            <th>Follow up 1</th>
+                            <th>Follow up 2</th>
+                            <th>Final Status</th>
+                            <th>Created</th>
+                            <th>Actions</th>
+                        </tr>
+                    `;
+                }
+            }
+
+            if (leadsToRender.length === 0) {
+                const colCount = currentUserRole === 'staff' ? 10 : 15;
+                tbody.innerHTML = `<tr><td colspan="${colCount}" style="text-align: center; color: var(--color-slate);">No leads registered yet.</td></tr>`;
+                return;
+            }
+
+            let html = '';
+            leadsToRender.forEach((item, index) => {
+                const globalIndex = startIndex + index;
+                const createdStr = new Date(item.created_at).toLocaleDateString();
+                
+                // Render Status Dropdown options with Emojis
+                let statusOptions = '';
+                const statuses = [
+                    { val: "New", text: "✨ New" },
+                    { val: "Answered", text: "📞 Answered" },
+                    { val: "Busy", text: "⏳ Busy" },
+                    { val: "Incorrect Number", text: "🚫 Incorrect Number" },
+                    { val: "Follow up required", text: "🔁 Follow up required" },
+                    { val: "Not Answered", text: "🔇 Not Answered" },
+                    { val: "No. not reachable", text: "📴 No. not reachable" }
+                ];
+                statuses.forEach(s => {
+                    const selected = item.status === s.val ? 'selected' : '';
+                    statusOptions += `<option value="${s.val}" ${selected} style="background: #111827; color: white;">${s.text}</option>`;
+                });
+
+                // Render Assignee Dropdown options
+                let assigneeOptions = '<option value="" style="background: #111827; color: white;">Unassigned</option>';
+                (usersList || []).forEach(user => {
+                    const selected = item.assigned_to === user.id ? 'selected' : '';
+                    const isMapped = mappedUserIds.has(user.id.toLowerCase());
+                    if (isMapped || selected) {
+                        const displayName = usersMap[user.id] || user.email;
+                        assigneeOptions += `<option value="${user.id}" ${selected} style="background: #111827; color: white;">${displayName}</option>`;
+                    }
+                });
+
+                // Render Final Status Dropdown options with Emojis
+                let finalStatusOptions = '<option value="" style="background: #111827; color: white;">🔘 None</option>';
+                const finalStatuses = [
+                    { val: "Booking confirmed", text: "🎉 Booking confirmed" },
+                    { val: "Booked elsewhere", text: "🏢 Booked elsewhere" },
+                    { val: "Postpone", text: "⏳ Postpone" },
+                    { val: "Lost lead", text: "🗑️ Lost lead" }
+                ];
+                finalStatuses.forEach(fs => {
+                    const selected = item.final_status === fs.val ? 'selected' : '';
+                    finalStatusOptions += `<option value="${fs.val}" ${selected} style="background: #111827; color: white;">${fs.text}</option>`;
+                });
+
+                // Class style determinations
+                let statusClass = 'status-new';
+                if (item.status === 'Answered') statusClass = 'status-answered';
+                else if (item.status === 'Busy') statusClass = 'status-busy';
+                else if (item.status === 'Incorrect Number') statusClass = 'status-incorrect';
+                else if (item.status === 'Follow up required') statusClass = 'status-followup';
+                else if (item.status === 'Not Answered') statusClass = 'status-notanswered';
+                else if (item.status === 'No. not reachable') statusClass = 'status-notreachable';
+
+                let finalClass = 'final-none';
+                if (item.final_status === 'Booking confirmed') finalClass = 'final-confirmed';
+                else if (item.final_status === 'Booked elsewhere') finalClass = 'final-elsewhere';
+                else if (item.final_status === 'Postpone') finalClass = 'final-postpone';
+                else if (item.final_status === 'Lost lead') finalClass = 'final-lost';
+
+                const leadPhoneVal = item.phone ? item.phone.trim() : '';
+                const leadPhoneClean = leadPhoneVal.replace(/[^0-9]/g, '');
+                const waPhone = leadPhoneClean.length === 10 ? '91' + leadPhoneClean : leadPhoneClean;
+                
+                const leadPhoneHtml = leadPhoneClean ? `
+                    <div style="display: flex; flex-direction: column; gap: 3px; text-align: left;">
+                        <a href="tel:${leadPhoneClean}" style="color: var(--color-gold); font-weight: 700; text-decoration: none; font-size: 13px; display: inline-flex; align-items: center; gap: 4px;">
+                            <i class="fa-solid fa-phone" style="font-size: 10px;"></i> ${leadPhoneVal}
+                        </a>
+                        <div style="display: inline-flex; gap: 6px; margin-top: 2px;">
+                            <a href="tel:${leadPhoneClean}" style="background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); padding: 2px 8px; border-radius: 12px; font-size: 11px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
+                                <i class="fa-solid fa-phone"></i> Call
+                            </a>
+                            <a href="https://wa.me/${waPhone}?text=Namaste%20${encodeURIComponent(item.name || 'Guest')}!%20This%20is%20Rudraansh%20Yatra." target="_blank" style="background: rgba(37, 211, 102, 0.15); color: #25D366; border: 1px solid rgba(37, 211, 102, 0.3); padding: 2px 8px; border-radius: 12px; font-size: 11px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
+                                <i class="fa-brands fa-whatsapp"></i> Chat
+                            </a>
+                        </div>
+                    </div>
+                ` : '—';
+
+                const initials = getLeadInitials(item.name);
+
+                if (currentUserRole === 'staff') {
+                    html += `
+                        <tr class="lead-card-row" onclick="toggleMobileLeadRow(this, event)">
+                            <td data-label="Name" class="lead-card-name-td">
+                                <div class="lead-chat-item-header">
+                                    <div class="lead-chat-avatar">${initials}</div>
+                                    <div class="lead-chat-main-info">
+                                        <div class="lead-chat-title-row">
+                                            <strong class="lead-chat-name" style="color: var(--color-gold); cursor: pointer;" onclick="event.stopPropagation(); startEditLead(${globalIndex})">${item.name}</strong>
+                                            <span class="lead-chat-time">${createdStr}</span>
+                                        </div>
+                                        <div class="lead-chat-sub-row">
+                                            <span class="lead-chat-phone">${leadPhoneVal || 'No Phone'}</span>
+                                            <span class="lead-chat-status-tag ${statusClass}">${item.status || 'New'}</span>
+                                        </div>
+                                    </div>
+                                    <div class="lead-chat-expand-chevron">
+                                        <i class="fa-solid fa-chevron-down"></i>
+                                    </div>
+                                </div>
+                            </td>
+                            <td data-label="Phone" style="white-space: nowrap;" onclick="event.stopPropagation();">${leadPhoneHtml}</td>
+                            <td data-label="Email" class="mobile-detail-field">${item.email || '-'}</td>
+                            <td data-label="Travelers" class="mobile-detail-field">${item.travelers || 1}</td>
+                            <td data-label="Created Date" class="mobile-detail-field">${createdStr}</td>
+                            <td data-label="Status" onclick="event.stopPropagation();">
+                                <select onchange="updateLeadField('${item.id}', 'status', this.value); updateSelectStyle(this)" class="status-select ${statusClass}">
+                                    ${statusOptions}
+                                </select>
+                            </td>
+                            <td data-label="Remarks" class="mobile-detail-field" style="white-space: pre-line;"><small>${item.remarks || '-'}</small></td>
+                            <td data-label="Follow up 1" class="mobile-detail-field"><small>${item.follow_up_1 || '-'}</small></td>
+                            <td data-label="Follow up 2" class="mobile-detail-field"><small>${item.follow_up_2 || '-'}</small></td>
+                            <td data-label="Actions" onclick="event.stopPropagation();">
+                                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                    <button class="admin-btn-edit" onclick="event.stopPropagation(); startEditLead(${globalIndex})" style="background-color: var(--color-gold); color: #0f172a; border: none; padding: 6px 12px; border-radius: var(--border-radius-sm, 4px); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; gap: 4px;" title="Open Lead">
+                                        <i class="fa-solid fa-folder-open"></i> Open Lead
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                } else {
+                    html += `
+                        <tr class="lead-card-row" onclick="toggleMobileLeadRow(this, event)">
+                            <td data-label="Name" class="lead-card-name-td">
+                                <div class="lead-chat-item-header">
+                                    <div class="lead-chat-avatar">${initials}</div>
+                                    <div class="lead-chat-main-info">
+                                        <div class="lead-chat-title-row">
+                                            <strong class="lead-chat-name" style="cursor: pointer;" onclick="event.stopPropagation(); startEditLead(${globalIndex})">${item.name}</strong>
+                                            <span class="lead-chat-time">${createdStr}</span>
+                                        </div>
+                                        <div class="lead-chat-sub-row">
+                                            <span class="lead-chat-phone">${leadPhoneVal || 'No Phone'}</span>
+                                            <span class="lead-chat-status-tag ${statusClass}">${item.status || 'New'}</span>
+                                        </div>
+                                    </div>
+                                    <div class="lead-chat-expand-chevron">
+                                        <i class="fa-solid fa-chevron-down"></i>
+                                    </div>
+                                </div>
+                            </td>
+                            <td data-label="Phone" style="white-space: nowrap;" onclick="event.stopPropagation();">${leadPhoneHtml}</td>
+                            <td data-label="Email" class="mobile-detail-field">${item.email || '-'}</td>
+                            <td data-label="Source" class="mobile-detail-field"><span style="font-size: 11px; font-weight: bold; background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px;">${item.source || 'Website'}</span></td>
+                            <td data-label="Travelers" class="mobile-detail-field">${item.travelers || 1}</td>
+                            <td data-label="Travel Date" class="mobile-detail-field" style="white-space: nowrap;">${item.travel_date ? new Date(item.travel_date).toLocaleDateString() : '-'}</td>
+                            <td data-label="Status" onclick="event.stopPropagation();">
+                                <select onchange="updateLeadField('${item.id}', 'status', this.value); updateSelectStyle(this)" class="status-select ${statusClass}">
+                                    ${statusOptions}
+                                </select>
+                            </td>
+                            <td data-label="Assigned To" class="mobile-detail-field" onclick="event.stopPropagation();">
+                                <select ${currentUserRole === "staff" ? "disabled" : ""} onchange="updateLeadField('${item.id}', 'assigned_to', this.value)" style="background: #1f2937; color: white; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 4px; font-size: 12px; width: 150px; cursor: pointer;">
+                                    ${assigneeOptions}
+                                </select>
+                            </td>
+                            <td data-label="Remarks" class="mobile-detail-field" style="white-space: pre-line;"><small>${item.remarks || '-'}</small></td>
+                            <td data-label="Follow up 1" class="mobile-detail-field"><small>${item.follow_up_1 || '-'}</small></td>
+                            <td data-label="Follow up 2" class="mobile-detail-field"><small>${item.follow_up_2 || '-'}</small></td>
+                            <td data-label="Final Status" class="mobile-detail-field" onclick="event.stopPropagation();">
+                                <select onchange="updateLeadField('${item.id}', 'final_status', this.value); updateFinalStyle(this)" class="final-select ${finalClass}">
+                                    ${finalStatusOptions}
+                                </select>
+                            </td>
+                            <td data-label="Created" class="mobile-detail-field">${createdStr}</td>
+                            <td data-label="Actions" onclick="event.stopPropagation();">
+                                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                    <button class="admin-btn-edit" onclick="event.stopPropagation(); startEditLead(${globalIndex})" style="background-color: var(--color-gold); color: #0f172a; border: none; width: 28px; height: 28px; border-radius: var(--border-radius-sm, 4px); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; margin: 0;" title="Edit Lead">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </button>
+                                    <button class="admin-btn-delete" onclick="event.stopPropagation(); deleteRecord('leads', '${item.id}', fetchLeads)" style="width: 28px; height: 28px; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; margin: 0;" title="Delete Lead">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                }
+            });
+            tbody.innerHTML = html;
+        };
+
+        window.changeLeadsPageSize = function(val) {
+            leadsPageSize = parseInt(val) || 20;
+            leadsCurrentPage = 1;
+            window.renderLeadsTableOnly();
+        };
+
+        window.prevLeadsPage = function() {
+            if (leadsCurrentPage > 1) {
+                leadsCurrentPage--;
+                window.renderLeadsTableOnly();
+            }
+        };
+
+        window.nextLeadsPage = function() {
+            const totalPages = Math.ceil(currentLeads.length / leadsPageSize) || 1;
+            if (leadsCurrentPage < totalPages) {
+                leadsCurrentPage++;
+                window.renderLeadsTableOnly();
             }
         };
 
