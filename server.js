@@ -664,6 +664,32 @@ app.delete('/api/admin/bookings/:id', authenticateToken, async (req, res) => {
     }
 });
 
+// Lead History Log Endpoints
+app.get('/api/admin/leads-history', authenticateToken, async (req, res) => {
+    try {
+        const { data, error } = await supabase
+            .from('lead_history')
+            .select('*')
+            .order('created_at', { ascending: false });
+        if (error) throw error;
+        res.json(data || []);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.post('/api/admin/leads-history', authenticateToken, async (req, res) => {
+    try {
+        const { error } = await supabase
+            .from('lead_history')
+            .insert(Array.isArray(req.body) ? req.body : [req.body]);
+        if (error) throw error;
+        res.status(201).json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 // Leads CRUD
 app.get('/api/admin/leads', authenticateToken, async (req, res) => {
     try {
