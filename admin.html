@@ -1410,9 +1410,12 @@
                 delete headers['Content-Type'];
             }
             const response = await fetch(url, { ...options, headers });
-            if (response.status === 401 || response.status === 403) {
+            if (response.status === 401) {
                 logoutAdmin();
                 throw new Error('Session expired. Please log in again.');
+            }
+            if (response.status === 403) {
+                throw new Error('Permission denied.');
             }
             return response;
         }
