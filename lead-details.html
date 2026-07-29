@@ -752,10 +752,22 @@
                     }
                     
                     let resultData = responseData;
-                    if (this.isSingle && Array.isArray(responseData)) {
-                        resultData = responseData[0] || null;
-                    } else if (this.limitVal !== null && Array.isArray(responseData)) {
-                        resultData = responseData.slice(0, this.limitVal);
+                    if (Array.isArray(resultData)) {
+                        this.filters.forEach(filter => {
+                            if (filter.type === 'eq') {
+                                resultData = resultData.filter(item => {
+                                    const itemVal = item[filter.field];
+                                    if (itemVal === undefined) return true;
+                                    if (itemVal === null || filter.value === null) return itemVal === filter.value;
+                                    return itemVal.toString() === filter.value.toString();
+                                });
+                            }
+                        });
+                    }
+                    if (this.isSingle && Array.isArray(resultData)) {
+                        resultData = resultData[0] || null;
+                    } else if (this.limitVal !== null && Array.isArray(resultData)) {
+                        resultData = resultData.slice(0, this.limitVal);
                     }
                     
                     return {
