@@ -580,7 +580,9 @@ app.post('/api/bookings', async (req, res) => {
 app.post('/api/custom-requests', async (req, res) => {
     try {
         if (!supabase) return res.status(500).json({ error: 'Supabase client not initialized' });
-        const { error } = await supabase.from('custom_requests').insert([req.body]);
+        const { error } = await supabase
+            .from('custom_requests')
+            .insert(Array.isArray(req.body) ? req.body : [req.body]);
         if (error) throw error;
         res.status(201).json({ success: true });
     } catch (err) {
@@ -592,7 +594,9 @@ app.post('/api/custom-requests', async (req, res) => {
 app.post('/api/discount-registrations', async (req, res) => {
     try {
         if (!supabase) return res.status(500).json({ error: 'Supabase client not initialized' });
-        const { error } = await supabase.from('discount_registrations').insert([req.body]);
+        const { error } = await supabase
+            .from('discount_registrations')
+            .insert(Array.isArray(req.body) ? req.body : [req.body]);
         if (error) throw error;
         res.status(201).json({ success: true });
     } catch (err) {
@@ -636,7 +640,9 @@ app.get('/api/admin/bookings', authenticateToken, async (req, res) => {
 
 app.post('/api/admin/bookings', authenticateToken, async (req, res) => {
     try {
-        const { error } = await supabase.from('bookings').insert([req.body]);
+        const { error } = await supabase
+            .from('bookings')
+            .insert(Array.isArray(req.body) ? req.body : [req.body]);
         if (error) throw error;
         res.status(201).json({ success: true });
     } catch (err) {
@@ -823,7 +829,9 @@ app.get('/api/admin/blogs', authenticateToken, requireAdmin, async (req, res) =>
 
 app.post('/api/admin/blogs', authenticateToken, requireAdmin, async (req, res) => {
     try {
-        const { error } = await supabase.from('blogs').insert([req.body]);
+        const { error } = await supabase
+            .from('blogs')
+            .insert(Array.isArray(req.body) ? req.body : [req.body]);
         if (error) throw error;
         res.status(201).json({ success: true });
     } catch (err) {
@@ -864,7 +872,9 @@ app.get('/api/admin/gallery', authenticateToken, requireAdmin, async (req, res) 
 
 app.post('/api/admin/gallery', authenticateToken, requireAdmin, async (req, res) => {
     try {
-        const { error } = await supabase.from('gallery').insert([req.body]);
+        const { error } = await supabase
+            .from('gallery')
+            .insert(Array.isArray(req.body) ? req.body : [req.body]);
         if (error) throw error;
         res.status(201).json({ success: true });
     } catch (err) {
