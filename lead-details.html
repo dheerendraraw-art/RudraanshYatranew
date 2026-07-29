@@ -511,6 +511,22 @@
                     <h3 class="card-title">Lead Properties</h3>
                     <div class="properties-list">
                         
+                        <!-- Admin Only: Editable Name, Phone, Email -->
+                        <div class="property-row admin-only-field" style="display: none;">
+                            <label class="property-label">Client Name</label>
+                            <input type="text" id="property-name" class="property-input" onchange="updateLeadField('name', this.value)" style="border: 1.5px solid var(--color-gold);">
+                        </div>
+
+                        <div class="property-row admin-only-field" style="display: none;">
+                            <label class="property-label">Phone Number</label>
+                            <input type="text" id="property-phone" class="property-input" onchange="updateLeadField('phone', this.value)" style="border: 1.5px solid var(--color-gold);">
+                        </div>
+
+                        <div class="property-row admin-only-field" style="display: none;">
+                            <label class="property-label">Email Address</label>
+                            <input type="email" id="property-email" class="property-input" onchange="updateLeadField('email', this.value)" style="border: 1.5px solid var(--color-gold);">
+                        </div>
+
                         <div class="property-row">
                             <label class="property-label">Lead Status</label>
                             <select id="property-status" class="property-select" onchange="updateLeadField('status', this.value)">
@@ -883,6 +899,16 @@
             // Assigned to select option matching
             document.getElementById('property-assignee').value = leadData.assigned_to || '';
 
+            // Admin only inputs
+            if (currentUserRole === 'admin') {
+                document.querySelectorAll('.admin-only-field').forEach(el => el.style.display = 'flex');
+                document.getElementById('property-name').value = leadData.name || '';
+                document.getElementById('property-phone').value = leadData.phone || '';
+                document.getElementById('property-email').value = leadData.email || '';
+            } else {
+                document.querySelectorAll('.admin-only-field').forEach(el => el.style.display = 'none');
+            }
+
             // Render tags/quick info indicators
             const tagsWrap = document.getElementById('lead-tags-container');
             let tagsHtml = `<span style="font-size: 11px; background: rgba(212, 175, 55, 0.1); padding: 4px 8px; border-radius: 4px; color: var(--color-gold); font-weight: 700; border: 1px solid rgba(212, 175, 55, 0.2);">${leadData.source || 'Website'}</span>`;
@@ -1005,6 +1031,14 @@
 
         // Update lead fields inline
         async function updateLeadField(fieldName, value) {
+            if ((fieldName === 'name' || fieldName === 'phone' || fieldName === 'email') && currentUserRole !== 'admin') {
+                showToast('Error: Only Admins can edit Client details.');
+                if (fieldName === 'name') document.getElementById('property-name').value = leadData ? (leadData.name || '') : '';
+                if (fieldName === 'phone') document.getElementById('property-phone').value = leadData ? (leadData.phone || '') : '';
+                if (fieldName === 'email') document.getElementById('property-email').value = leadData ? (leadData.email || '') : '';
+                return;
+            }
+
             if (fieldName === 'assigned_to' && currentUserRole === 'staff') {
                 showToast('Error: Only Admins can transfer leads.');
                 const selectEl = document.getElementById('property-assignee');

@@ -3229,6 +3229,11 @@
 
         // Inline field updates helper
         window.updateLeadField = async function(leadId, fieldName, value) {
+            if ((fieldName === 'name' || fieldName === 'phone' || fieldName === 'email') && currentUserRole !== 'admin') {
+                showAdminToast('Error: Only Admins can edit Client details.', 'error');
+                fetchLeads();
+                return;
+            }
             if (fieldName === 'assigned_to' && currentUserRole === 'staff') {
                 showAdminToast('Error: Only Admins can transfer leads.', 'error');
                 fetchLeads();
