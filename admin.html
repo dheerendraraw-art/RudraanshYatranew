@@ -424,51 +424,13 @@
                     <h3 class="admin-form-title" style="margin-bottom: 0; border-bottom: none;"><i
                             class="fa-solid fa-people-group" style="color: var(--color-gold);"></i> Leads Manager</h3>
                     <div id="leads-action-buttons-wrap" class="admin-only-action" style="display: flex; gap: 8px;">
+                        <button type="button" onclick="resetLeadsFilters()" class="btn btn-secondary" style="border: 1px solid var(--color-gold); background: #1e293b; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: var(--color-gold); font-weight: 600;"><i class="fa-solid fa-arrow-rotate-left"></i> Clear Filters</button>
                         <button type="button" onclick="exportLeads()" class="btn btn-primary admin-only-action" id="export-leads-btn" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-file-export"></i> Export Leads</button>
                         <button type="button" onclick="downloadLeadsTemplate()" class="btn btn-secondary admin-only-action" id="leads-template-btn" style="border: 1px solid var(--color-gold); background: #1e293b; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: var(--color-gold); font-weight: 600;"><i class="fa-solid fa-download"></i> Template</button>
                         <button type="button" onclick="triggerImportLeads()" class="btn btn-primary admin-only-action" id="import-leads-btn" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-file-import"></i> Import Leads</button>
                         <input type="file" id="leads-csv-file" accept=".csv" style="display: none;" onchange="handleLeadsCSVImport(event)">
                         <button type="button" onclick="openLeadModal()" class="btn btn-primary admin-only-action" id="add-lead-btn" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-plus"></i> Add New Lead</button>
                     </div>
-                </div>
-
-                <!-- Leads Filters Bar -->
-                <div style="display: flex; gap: 16px; align-items: center; margin-bottom: 16px; background: rgba(30, 41, 59, 0.4); padding: 12px 16px; border-radius: 8px; border: 1.5px solid rgba(212, 175, 55, 0.15); flex-wrap: wrap;">
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <span style="font-size: 13px; color: var(--color-slate);">Source:</span>
-                        <select id="filter-lead-source" onchange="applyLeadsFilters()" style="background: #0f172a; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 6px; padding: 4px 12px; font-size: 13px; cursor: pointer; outline: none; min-width: 120px;">
-                            <option value="">All Sources</option>
-                            <option value="Website">Website</option>
-                            <option value="Facebook">Facebook</option>
-                            <option value="Instagram">Instagram</option>
-                            <option value="Manual">Manual</option>
-                        </select>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <span style="font-size: 13px; color: var(--color-slate);">Status:</span>
-                        <select id="filter-lead-status" onchange="applyLeadsFilters()" style="background: #0f172a; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 6px; padding: 4px 12px; font-size: 13px; cursor: pointer; outline: none; min-width: 120px;">
-                            <option value="">All Statuses</option>
-                            <option value="New">New</option>
-                            <option value="Answered">Answered</option>
-                            <option value="Busy">Busy</option>
-                            <option value="Incorrect Number">Incorrect Number</option>
-                            <option value="Follow up required">Follow up required</option>
-                            <option value="Not Answered">Not Answered</option>
-                            <option value="No. not reachable">No. not reachable</option>
-                            <option value="Won">Won</option>
-                            <option value="Lost">Lost</option>
-                        </select>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <span style="font-size: 13px; color: var(--color-slate);">Assigned To:</span>
-                        <select id="filter-lead-assignee" onchange="applyLeadsFilters()" style="background: #0f172a; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 6px; padding: 4px 12px; font-size: 13px; cursor: pointer; outline: none; min-width: 150px;">
-                            <option value="">All Agents</option>
-                            <!-- Dynamically populated -->
-                        </select>
-                    </div>
-                    <button type="button" onclick="resetLeadsFilters()" class="btn btn-secondary" style="border: 1px solid var(--color-gold); background: transparent; padding: 6px 12px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: var(--color-gold); font-weight: 500; display: flex; align-items: center; gap: 4px;">
-                        <i class="fa-solid fa-arrow-rotate-left"></i> Reset
-                    </button>
                 </div>
 
                 <div class="admin-table-container">
@@ -3208,17 +3170,7 @@
                 if (assigneeSelect) assigneeSelect.innerHTML = optionsHtml;
                 if (bookingAssigneeSelect) bookingAssigneeSelect.innerHTML = optionsHtml;
                 
-                let filterAssigneeSelect = document.getElementById('filter-lead-assignee');
-                if (filterAssigneeSelect) {
-                    let filterOptions = '<option value="">All Agents</option>';
-                    usersList.forEach(user => {
-                        const mappedName = uuidToUsername[user.id.toLowerCase()];
-                        if (mappedName) {
-                            filterOptions += `<option value="${user.id}">${mappedName}</option>`;
-                        }
-                    });
-                    filterAssigneeSelect.innerHTML = filterOptions;
-                }
+                window.populateAssigneeFilter();
             } catch (err) {
                 console.error('Failed to load assignment users:', err);
             }
@@ -3425,9 +3377,18 @@
             const assignee = document.getElementById('filter-lead-assignee') ? document.getElementById('filter-lead-assignee').value : '';
 
             filteredLeads = currentLeads.filter(lead => {
-                const matchSource = !source || lead.source === source;
-                const matchStatus = !status || lead.status === status;
-                const matchAssignee = !assignee || lead.assigned_to === assignee;
+                const leadSource = (lead.source || '').trim().toLowerCase();
+                const filterSource = (source || '').trim().toLowerCase();
+                const matchSource = !filterSource || leadSource === filterSource;
+
+                const leadStatus = (lead.status || '').trim().toLowerCase();
+                const filterStatus = (status || '').trim().toLowerCase();
+                const matchStatus = !filterStatus || leadStatus === filterStatus;
+
+                const leadAssignee = (lead.assigned_to || '').trim().toLowerCase();
+                const filterAssignee = (assignee || '').trim().toLowerCase();
+                const matchAssignee = !filterAssignee || leadAssignee === filterAssignee;
+
                 return matchSource && matchStatus && matchAssignee;
             });
 
@@ -3446,6 +3407,21 @@
             if (assigneeSelect) assigneeSelect.value = '';
 
             window.applyLeadsFilters();
+        };
+
+        window.populateAssigneeFilter = function() {
+            let filterAssigneeSelect = document.getElementById('filter-lead-assignee');
+            if (filterAssigneeSelect) {
+                let filterOptions = '<option value="">All</option>';
+                (usersList || []).forEach(user => {
+                    const displayName = usersMap[user.id] || user.email;
+                    const isMapped = mappedUserIds.has(user.id.toLowerCase());
+                    if (isMapped) {
+                        filterOptions += `<option value="${user.id}">${displayName}</option>`;
+                    }
+                });
+                filterAssigneeSelect.innerHTML = filterOptions;
+            }
         };
 
         window.renderLeadsTableOnly = function() {
@@ -3490,40 +3466,113 @@
             // Dynamically update Table Header for Staff vs Admin
             const thead = document.querySelector('#pane-leads thead');
             if (thead) {
+                const currentSource = document.getElementById('filter-lead-source')?.value || '';
+                const currentStatus = document.getElementById('filter-lead-status')?.value || '';
+                const currentAssignee = document.getElementById('filter-lead-assignee')?.value || '';
+
                 if (currentUserRole === 'staff') {
-                    thead.innerHTML = `
-                        <tr>
-                            <th>Name</th>
-                            <th>Phone</th>
-                            <th>Email</th>
-                            <th>Travelers</th>
-                            <th>Created Date</th>
-                            <th>Status</th>
-                            <th>Remarks</th>
-                            <th>Follow up 1</th>
-                            <th>Follow up 2</th>
-                            <th>Actions</th>
-                        </tr>
-                    `;
+                    const isRendered = document.getElementById('filter-lead-status') !== null;
+                    if (!isRendered) {
+                        thead.innerHTML = `
+                            <tr>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Travelers</th>
+                                <th>Created Date</th>
+                                <th>
+                                    <div style="display: flex; flex-direction: column; gap: 4px; align-items: center;">
+                                        <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Status</span>
+                                        <select id="filter-lead-status" onchange="applyLeadsFilters()" style="background: #0f172a; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 4px; padding: 2px 4px; font-size: 11px; cursor: pointer; outline: none; min-width: 90px; font-weight: 500;">
+                                            <option value="">All</option>
+                                            <option value="New">New</option>
+                                            <option value="Answered">Answered</option>
+                                            <option value="Busy">Busy</option>
+                                            <option value="Incorrect Number">Incorrect Number</option>
+                                            <option value="Follow up required">Follow up required</option>
+                                            <option value="Not Answered">Not Answered</option>
+                                            <option value="No. not reachable">No. not reachable</option>
+                                            <option value="Won">Won</option>
+                                            <option value="Lost">Lost</option>
+                                        </select>
+                                    </div>
+                                </th>
+                                <th>Remarks</th>
+                                <th>Follow up 1</th>
+                                <th>Follow up 2</th>
+                                <th>Actions</th>
+                            </tr>
+                        `;
+                    }
                 } else {
-                    thead.innerHTML = `
-                        <tr>
-                            <th>Name</th>
-                            <th>Phone</th>
-                            <th>Email</th>
-                            <th>Source</th>
-                            <th>Travelers</th>
-                            <th>Travel Date</th>
-                            <th>Status</th>
-                            <th>Assigned To</th>
-                            <th>Remarks</th>
-                            <th>Follow up 1</th>
-                            <th>Follow up 2</th>
-                            <th>Final Status</th>
-                            <th>Created</th>
-                            <th>Actions</th>
-                        </tr>
-                    `;
+                    const isRendered = document.getElementById('filter-lead-source') !== null;
+                    if (!isRendered) {
+                        thead.innerHTML = `
+                            <tr>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>
+                                    <div style="display: flex; flex-direction: column; gap: 4px; align-items: center;">
+                                        <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Source</span>
+                                        <select id="filter-lead-source" onchange="applyLeadsFilters()" style="background: #0f172a; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 4px; padding: 2px 4px; font-size: 11px; cursor: pointer; outline: none; min-width: 90px; font-weight: 500;">
+                                            <option value="">All</option>
+                                            <option value="Website">Website</option>
+                                            <option value="Facebook">Facebook</option>
+                                            <option value="Instagram">Instagram</option>
+                                            <option value="Manual">Manual</option>
+                                        </select>
+                                    </div>
+                                </th>
+                                <th>Travelers</th>
+                                <th>Travel Date</th>
+                                <th>
+                                    <div style="display: flex; flex-direction: column; gap: 4px; align-items: center;">
+                                        <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Status</span>
+                                        <select id="filter-lead-status" onchange="applyLeadsFilters()" style="background: #0f172a; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 4px; padding: 2px 4px; font-size: 11px; cursor: pointer; outline: none; min-width: 100px; font-weight: 500;">
+                                            <option value="">All</option>
+                                            <option value="New">New</option>
+                                            <option value="Answered">Answered</option>
+                                            <option value="Busy">Busy</option>
+                                            <option value="Incorrect Number">Incorrect Number</option>
+                                            <option value="Follow up required">Follow up required</option>
+                                            <option value="Not Answered">Not Answered</option>
+                                            <option value="No. not reachable">No. not reachable</option>
+                                            <option value="Won">Won</option>
+                                            <option value="Lost">Lost</option>
+                                        </select>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div style="display: flex; flex-direction: column; gap: 4px; align-items: center;">
+                                        <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Assigned To</span>
+                                        <select id="filter-lead-assignee" onchange="applyLeadsFilters()" style="background: #0f172a; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 4px; padding: 2px 4px; font-size: 11px; cursor: pointer; outline: none; min-width: 100px; font-weight: 500;">
+                                            <option value="">All</option>
+                                            <!-- Dynamically populated -->
+                                        </select>
+                                    </div>
+                                </th>
+                                <th>Remarks</th>
+                                <th>Follow up 1</th>
+                                <th>Follow up 2</th>
+                                <th>Final Status</th>
+                                <th>Created</th>
+                                <th>Actions</th>
+                            </tr>
+                        `;
+                        window.populateAssigneeFilter();
+                    }
+                }
+
+                // Restore active selections
+                if (document.getElementById('filter-lead-source') && currentSource) {
+                    document.getElementById('filter-lead-source').value = currentSource;
+                }
+                if (document.getElementById('filter-lead-status') && currentStatus) {
+                    document.getElementById('filter-lead-status').value = currentStatus;
+                }
+                if (document.getElementById('filter-lead-assignee') && currentAssignee) {
+                    document.getElementById('filter-lead-assignee').value = currentAssignee;
                 }
             }
 
