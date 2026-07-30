@@ -2251,6 +2251,8 @@ function syncStaticFiles() {
         'panchachuli.html',
         'payment.html',
         'whats-included.html',
+        'sitemap.xml',
+        'robots.txt',
         '.htaccess'
     ];
     
