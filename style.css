@@ -3440,10 +3440,10 @@ img {
         justify-content: space-between;
         align-items: center;
         padding: 10px 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
         font-size: 13px;
         text-align: right;
-        color: #ffffff;
+        color: var(--color-text-primary, #1e293b);
     }
 
     .admin-table td::before {
@@ -5910,7 +5910,7 @@ html, body {
         display: inline-block !important;
         font-size: 15px !important;
         font-weight: 700 !important;
-        color: #ffffff !important;
+        color: var(--color-text-primary, #1e293b) !important;
         white-space: nowrap !important;
         overflow: hidden !important;
         text-overflow: ellipsis !important;
@@ -6185,14 +6185,14 @@ body.user-role-staff .admin-only-action {
         display: flex !important;
         visibility: visible !important;
         opacity: 1 !important;
-        color: #f1f5f9 !important;
+        color: var(--color-text-primary, #1e293b) !important;
     }
 
-    /* Fix the dark font color of Booking ID badge on mobile dark background */
+    /* Fix the font color of Booking ID badge on mobile light background */
     .admin-table tbody tr td[data-label="Booking ID"] strong {
-        color: #ffffff !important;
-        background-color: rgba(212, 175, 55, 0.25) !important;
-        border: 1px solid rgba(212, 175, 55, 0.5) !important;
+        color: var(--color-text-primary, #1e293b) !important;
+        background-color: rgba(212, 175, 55, 0.18) !important;
+        border: 1px solid rgba(212, 175, 55, 0.4) !important;
         display: inline-block !important;
     }
 }
