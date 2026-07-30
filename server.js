@@ -934,6 +934,9 @@ app.get('/api/admin/credentials', authenticateToken, requireAdmin, async (req, r
 app.post('/api/admin/credentials', authenticateToken, requireAdmin, async (req, res) => {
     try {
         const credentialData = { ...req.body };
+        if (credentialData.passcode) {
+            credentialData.passcode = await bcrypt.hash(credentialData.passcode, 10);
+        }
         const { error } = await supabase.from('staff_credentials').insert([credentialData]);
         if (error) throw error;
         res.status(201).json({ success: true });
@@ -959,6 +962,11 @@ app.put('/api/admin/credentials/:id', authenticateToken, async (req, res) => {
 
         if (updates.passcode === '********' || !updates.passcode) {
             delete updates.passcode;
+        } else {
+            const isAlreadyHashed = updates.passcode.startsWith('$2a$') || updates.passcode.startsWith('$2b$');
+            if (!isAlreadyHashed) {
+                updates.passcode = await bcrypt.hash(updates.passcode, 10);
+            }
         }
 
         const { error } = await supabase.from('staff_credentials').update(updates).eq('id', req.params.id);

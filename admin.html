@@ -353,50 +353,175 @@
                                     </div>
                                 </div>
                                 <div class="admin-form-group">
-                                    <label for="blog-content">Article Content</label>
-                                        <div class="rich-editor-toolbar" style="display: flex; gap: 6px; flex-wrap: wrap; background: #111827; padding: 8px; border-radius: 4px; border: 1.5px solid var(--color-gold); align-items: center;">
-                                            <button type="button" class="btn-editor-tool" onclick="execEditorCommand('bold')" title="Bold" style="padding: 6px 10px; border: 1px solid var(--color-gold); background: #1e293b; color: var(--color-gold); cursor: pointer; border-radius: 3px; font-weight: bold;"><i class="fa-solid fa-bold"></i></button>
-                                            <button type="button" class="btn-editor-tool" onclick="execEditorCommand('italic')" title="Italic" style="padding: 6px 10px; border: 1px solid var(--color-gold); background: #1e293b; color: var(--color-gold); cursor: pointer; border-radius: 3px; font-style: italic;"><i class="fa-solid fa-italic"></i></button>
-                                            <button type="button" class="btn-editor-tool" onclick="execEditorCommand('underline')" title="Underline" style="padding: 6px 10px; border: 1px solid var(--color-gold); background: #1e293b; color: var(--color-gold); cursor: pointer; border-radius: 3px; text-decoration: underline;"><i class="fa-solid fa-underline"></i></button>
-                                            
-                                            <!-- Font Style Select -->
-                                            <select class="btn-editor-tool" onchange="execEditorCommand('fontName', this.value); this.selectedIndex = 0;" style="padding: 6px; border: 1px solid var(--color-gold); background: #1e293b; color: var(--color-gold); cursor: pointer; border-radius: 3px; font-size: 12px; font-weight: 600; min-width: 110px;">
-                                                <option value="" disabled selected>Font Style</option>
-                                                <option value="Plus Jakarta Sans">Plus Jakarta Sans</option>
-                                                <option value="Cormorant Garamond">Cormorant Garamond</option>
+                                    <label for="blog-content" style="display:flex; align-items:center; gap:8px; margin-bottom:10px; font-size:13px; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:1px;">
+                                        <i class="fa-solid fa-pen-to-square" style="color:var(--color-gold);"></i> Article Content
+                                    </label>
+                                    <!-- Modern Rich Editor Wrapper -->
+                                    <div class="rich-editor-wrap" style="border:1.5px solid rgba(212,175,55,0.5); border-radius:10px; overflow:hidden; box-shadow:0 4px 24px rgba(0,0,0,0.18); background:#1a2234;">
+
+                                        <!-- Toolbar Row 1: Text Formatting -->
+                                        <div class="rich-editor-toolbar-v2" style="display:flex; flex-wrap:wrap; align-items:center; gap:2px; padding:8px 10px; background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%); border-bottom:1px solid rgba(212,175,55,0.2);">
+
+                                            <!-- Group: Text Style -->
+                                            <div class="editor-btn-group" style="display:flex; gap:2px; background:rgba(255,255,255,0.04); border-radius:7px; padding:3px;">
+                                                <button type="button" onclick="execEditorCommand('bold')" title="Bold (Ctrl+B)" class="rte-btn" style="font-weight:800;">
+                                                    <i class="fa-solid fa-bold"></i>
+                                                </button>
+                                                <button type="button" onclick="execEditorCommand('italic')" title="Italic (Ctrl+I)" class="rte-btn" style="font-style:italic;">
+                                                    <i class="fa-solid fa-italic"></i>
+                                                </button>
+                                                <button type="button" onclick="execEditorCommand('underline')" title="Underline (Ctrl+U)" class="rte-btn" style="text-decoration:underline;">
+                                                    <i class="fa-solid fa-underline"></i>
+                                                </button>
+                                                <button type="button" onclick="execEditorCommand('strikeThrough')" title="Strikethrough" class="rte-btn">
+                                                    <i class="fa-solid fa-strikethrough"></i>
+                                                </button>
+                                            </div>
+
+                                            <div style="width:1px;height:28px;background:rgba(212,175,55,0.25);margin:0 4px;flex-shrink:0;"></div>
+
+                                            <!-- Group: Alignment -->
+                                            <div class="editor-btn-group" style="display:flex; gap:2px; background:rgba(255,255,255,0.04); border-radius:7px; padding:3px;">
+                                                <button type="button" onclick="execEditorCommand('justifyLeft')" title="Align Left" class="rte-btn">
+                                                    <i class="fa-solid fa-align-left"></i>
+                                                </button>
+                                                <button type="button" onclick="execEditorCommand('justifyCenter')" title="Align Center" class="rte-btn">
+                                                    <i class="fa-solid fa-align-center"></i>
+                                                </button>
+                                                <button type="button" onclick="execEditorCommand('justifyRight')" title="Align Right" class="rte-btn">
+                                                    <i class="fa-solid fa-align-right"></i>
+                                                </button>
+                                            </div>
+
+                                            <div style="width:1px;height:28px;background:rgba(212,175,55,0.25);margin:0 4px;flex-shrink:0;"></div>
+
+                                            <!-- Group: Lists -->
+                                            <div class="editor-btn-group" style="display:flex; gap:2px; background:rgba(255,255,255,0.04); border-radius:7px; padding:3px;">
+                                                <button type="button" onclick="execEditorCommand('insertUnorderedList')" title="Bullet List" class="rte-btn">
+                                                    <i class="fa-solid fa-list-ul"></i>
+                                                </button>
+                                                <button type="button" onclick="execEditorCommand('insertOrderedList')" title="Numbered List" class="rte-btn">
+                                                    <i class="fa-solid fa-list-ol"></i>
+                                                </button>
+                                            </div>
+
+                                            <div style="width:1px;height:28px;background:rgba(212,175,55,0.25);margin:0 4px;flex-shrink:0;"></div>
+
+                                            <!-- Group: Links -->
+                                            <div class="editor-btn-group" style="display:flex; gap:2px; background:rgba(255,255,255,0.04); border-radius:7px; padding:3px;">
+                                                <button type="button" onclick="execEditorCommand('createLink')" title="Insert Link" class="rte-btn">
+                                                    <i class="fa-solid fa-link"></i>
+                                                </button>
+                                                <button type="button" onclick="execEditorCommand('unlink')" title="Remove Link" class="rte-btn">
+                                                    <i class="fa-solid fa-link-slash"></i>
+                                                </button>
+                                            </div>
+
+                                            <div style="width:1px;height:28px;background:rgba(212,175,55,0.25);margin:0 4px;flex-shrink:0;"></div>
+
+                                            <!-- Format Block Dropdown -->
+                                            <select onchange="execEditorCommand('formatBlock', this.value); this.value='';" class="rte-select" title="Paragraph Format">
+                                                <option value="" disabled selected>¶ Format</option>
+                                                <option value="p">Paragraph</option>
+                                                <option value="h2">Heading 2</option>
+                                                <option value="h3">Heading 3</option>
+                                                <option value="h4">Heading 4</option>
+                                                <option value="blockquote">Blockquote</option>
+                                            </select>
+
+                                            <!-- Font Style Dropdown -->
+                                            <select onchange="execEditorCommand('fontName', this.value); this.value='';" class="rte-select" title="Font Family">
+                                                <option value="" disabled selected>Aa Font</option>
+                                                <option value="Plus Jakarta Sans">Jakarta Sans</option>
+                                                <option value="Cormorant Garamond">Cormorant</option>
                                                 <option value="Georgia">Georgia</option>
                                                 <option value="Arial">Arial</option>
                                                 <option value="Courier New">Monospace</option>
                                             </select>
 
-                                            <!-- Font Size Select -->
-                                            <select class="btn-editor-tool" onchange="execEditorCommand('fontSize', this.value); this.selectedIndex = 0;" style="padding: 6px; border: 1px solid var(--color-gold); background: #1e293b; color: var(--color-gold); cursor: pointer; border-radius: 3px; font-size: 12px; font-weight: 600;">
-                                                <option value="" disabled selected>Font Size</option>
-                                                <option value="1">Smallest</option>
-                                                <option value="2">Small</option>
-                                                <option value="3">Normal</option>
-                                                <option value="4">Large</option>
-                                                <option value="5">Larger</option>
-                                                <option value="6">Very Large</option>
-                                                <option value="7">Largest</option>
+                                            <!-- Font Size Dropdown -->
+                                            <select onchange="execEditorCommand('fontSize', this.value); this.value='';" class="rte-select" title="Font Size">
+                                                <option value="" disabled selected>Size</option>
+                                                <option value="1">XS</option>
+                                                <option value="2">S</option>
+                                                <option value="3">M</option>
+                                                <option value="4">L</option>
+                                                <option value="5">XL</option>
+                                                <option value="6">2XL</option>
+                                                <option value="7">3XL</option>
                                             </select>
 
-                                            <!-- Headings Format Select -->
-                                            <select class="btn-editor-tool" onchange="execEditorCommand('formatBlock', this.value); this.selectedIndex = 0;" style="padding: 6px; border: 1px solid var(--color-gold); background: #1e293b; color: var(--color-gold); cursor: pointer; border-radius: 3px; font-size: 12px; font-weight: 600;">
-                                                <option value="" disabled selected>Format</option>
-                                                <option value="&lt;p&gt;">Paragraph</option>
-                                                <option value="&lt;h2&gt;">Heading 2</option>
-                                                <option value="&lt;h3&gt;">Heading 3</option>
-                                                <option value="&lt;h4&gt;">Heading 4</option>
-                                            </select>
-
-                                            <button type="button" class="btn-editor-tool" onclick="execEditorCommand('createLink')" title="Add Link" style="padding: 6px 10px; border: 1px solid var(--color-gold); background: #1e293b; color: var(--color-gold); cursor: pointer; border-radius: 3px;"><i class="fa-solid fa-link"></i></button>
-                                            <button type="button" class="btn-editor-tool" onclick="execEditorCommand('unlink')" title="Remove Link" style="padding: 6px 10px; border: 1px solid var(--color-gold); background: #1e293b; color: var(--color-gold); cursor: pointer; border-radius: 3px;"><i class="fa-solid fa-link-slash"></i></button>
+                                            <!-- Undo/Redo -->
+                                            <div style="margin-left:auto; display:flex; gap:2px; background:rgba(255,255,255,0.04); border-radius:7px; padding:3px;">
+                                                <button type="button" onclick="execEditorCommand('undo')" title="Undo (Ctrl+Z)" class="rte-btn">
+                                                    <i class="fa-solid fa-rotate-left"></i>
+                                                </button>
+                                                <button type="button" onclick="execEditorCommand('redo')" title="Redo (Ctrl+Y)" class="rte-btn">
+                                                    <i class="fa-solid fa-rotate-right"></i>
+                                                </button>
+                                            </div>
                                         </div>
-                                        <div id="blog-editor-rich" contenteditable="true" class="admin-textarea" style="min-height: 280px; background: #ffffff; color: var(--color-text-primary); padding: 12px; border: 1.5px solid var(--color-gold); border-radius: 4px; overflow-y: auto; text-align: left; line-height: 1.6;" placeholder="Type the complete yatra stories or advice..."></div>
-                                        <textarea id="blog-content" name="content" style="display: none;"></textarea>
+
+                                        <!-- Content Editable Area -->
+                                        <div id="blog-editor-rich"
+                                             contenteditable="true"
+                                             class="rte-content-area"
+                                             data-placeholder="Begin writing your Himalayan story here... Share the journey, the peaks, the people."
+                                             oninput="updateWordCount()"
+                                             style="min-height:320px; background:#fff; color:#1e293b; padding:20px 24px; overflow-y:auto; line-height:1.8; font-size:15px; font-family:'Plus Jakarta Sans',sans-serif; outline:none;">
+                                        </div>
+
+                                        <!-- Footer: word count + hint -->
+                                        <div style="display:flex; justify-content:space-between; align-items:center; padding:7px 14px; background:#0f172a; border-top:1px solid rgba(212,175,55,0.15);">
+                                            <span style="font-size:11px; color:#475569; font-style:italic;">
+                                                <i class="fa-regular fa-lightbulb" style="color:rgba(212,175,55,0.6); margin-right:4px;"></i>
+                                                Tip: Select text and click a formatting button to apply styles.
+                                            </span>
+                                            <span id="rte-word-count" style="font-size:11px; font-weight:700; color:rgba(212,175,55,0.8); letter-spacing:0.5px;">0 words</span>
+                                        </div>
                                     </div>
+                                    <textarea id="blog-content" name="content" style="display:none;"></textarea>
                                 </div>
+
+                                <!-- RTE Styles & Word Counter -->
+                                <style>
+                                    .rte-btn {
+                                        display: inline-flex; align-items: center; justify-content: center;
+                                        width: 32px; height: 32px; border: none; background: transparent;
+                                        color: #94a3b8; cursor: pointer; border-radius: 5px;
+                                        font-size: 13px; transition: all 0.15s ease;
+                                    }
+                                    .rte-btn:hover { background: rgba(212,175,55,0.18); color: #d4af37; transform: translateY(-1px); }
+                                    .rte-btn:active { background: rgba(212,175,55,0.35); transform: translateY(0); }
+                                    .rte-select {
+                                        background: rgba(255,255,255,0.06); color: #94a3b8;
+                                        border: 1px solid rgba(212,175,55,0.25); border-radius: 6px;
+                                        padding: 5px 8px; font-size: 12px; font-weight: 600; cursor: pointer;
+                                        outline: none; transition: all 0.15s ease;
+                                    }
+                                    .rte-select:hover { border-color: rgba(212,175,55,0.6); color: #d4af37; }
+                                    .rte-select option { background: #1e293b; color: #e2e8f0; }
+                                    .rte-content-area[data-placeholder]:empty:before {
+                                        content: attr(data-placeholder);
+                                        color: #94a3b8; pointer-events: none; display: block;
+                                        font-style: italic;
+                                    }
+                                    .rte-content-area:focus { box-shadow: inset 0 0 0 2px rgba(212,175,55,0.3); }
+                                    .rte-content-area h2 { font-size: 1.5em; font-weight: 700; margin: 0.8em 0 0.4em; color: #0f172a; }
+                                    .rte-content-area h3 { font-size: 1.2em; font-weight: 700; margin: 0.7em 0 0.3em; color: #1e293b; }
+                                    .rte-content-area h4 { font-size: 1em; font-weight: 700; margin: 0.6em 0 0.3em; color: #334155; }
+                                    .rte-content-area blockquote { border-left: 3px solid #d4af37; padding-left: 14px; margin: 12px 0; color: #475569; font-style: italic; }
+                                    .rte-content-area a { color: #2563eb; text-decoration: underline; }
+                                    .rich-editor-wrap:focus-within { border-color: rgba(212,175,55,0.85); box-shadow: 0 0 0 3px rgba(212,175,55,0.12); }
+                                </style>
+                                <script>
+                                    function updateWordCount() {
+                                        const el = document.getElementById('blog-editor-rich');
+                                        const text = el.innerText || '';
+                                        const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+                                        document.getElementById('rte-word-count').textContent = words + ' word' + (words !== 1 ? 's' : '');
+                                    }
+                                </script>
                                 <div class="admin-form-group">
                                     <label for="blog-slug">URL Slug (Optional)</label>
                                     <input type="text" id="blog-slug" class="admin-input" placeholder="E.g., custom-slug-here (auto-generated if empty)">
