@@ -5841,6 +5841,10 @@ html, body {
         gap: 10px !important;
     }
 
+    #pane-leads tr.lead-card-row td.lead-card-name-td::before {
+        display: none !important;
+    }
+
     /* Transform each tr into a Chat-List Card */
     #pane-leads tr.lead-card-row {
         display: block !important;
@@ -5903,6 +5907,7 @@ html, body {
     }
 
     .lead-chat-name {
+        display: inline-block !important;
         font-size: 15px !important;
         font-weight: 700 !important;
         color: #ffffff !important;
@@ -6150,7 +6155,12 @@ body.user-role-staff .admin-only-action {
 
     .lead-chat-name {
         font-size: 14px !important;
-        max-width: 140px !important;
+        max-width: 180px !important;
+        display: inline-block !important;
+    }
+
+    #pane-leads tr.lead-card-row td.lead-card-name-td::before {
+        display: none !important;
     }
 
     .lead-chat-time {
