@@ -1393,133 +1393,258 @@
     </div>
 
     <!-- Create Bill Modal -->
-    <div class="modal-overlay" id="create-bill-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 10000; justify-content: center; align-items: center; overflow-y: auto;">
-        <div class="modal-box" style="background: #111827; border: 2px solid var(--color-gold); max-width: 600px; width: 90%; padding: 24px; border-radius: var(--border-radius-md); position: relative; margin: 40px auto;">
-            <button type="button" class="modal-close" onclick="closeCreateBillModal()" style="position: absolute; top: 12px; right: 16px; font-size: 24px; background: none; border: none; color: var(--color-text-secondary); cursor: pointer;">&times;</button>
-            <h3 style="font-family: var(--font-serif); color: white; margin-bottom: 16px; font-size: 20px; display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-file-invoice-dollar" style="color: var(--color-gold)"></i> Create Booking Bill</h3>
-            
-            <div id="bill-debug-box" style="margin-bottom: 16px; padding: 12px; background: #1e293b; border: 1.5px solid #eab308; border-radius: 4px; color: #4ade80; font-family: monospace; font-size: 12px; display: none; line-height: 1.4;">
+    <style>
+        #create-bill-modal .cbm-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.82); backdrop-filter: blur(6px); z-index: 10000; display: flex; align-items: center; justify-content: center; overflow-y: auto; padding: 20px; }
+        #create-bill-modal .cbm-card { background: linear-gradient(145deg, #0f1f38 0%, #0d1526 100%); border: 1px solid rgba(212,175,55,0.4); border-radius: 20px; width: 100%; max-width: 620px; box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04) inset; overflow: hidden; position: relative; }
+        #create-bill-modal .cbm-header { padding: 24px 28px 20px; border-bottom: 1px solid rgba(255,255,255,0.07); display: flex; align-items: center; justify-content: space-between; background: linear-gradient(90deg, rgba(212,175,55,0.08) 0%, transparent 60%); }
+        #create-bill-modal .cbm-header-left { display: flex; align-items: center; gap: 14px; }
+        #create-bill-modal .cbm-icon-wrap { width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #d4af37, #f5c842); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(212,175,55,0.35); flex-shrink: 0; }
+        #create-bill-modal .cbm-icon-wrap i { color: #0f1526; font-size: 18px; }
+        #create-bill-modal .cbm-title { font-size: 20px; font-weight: 700; color: #fff; letter-spacing: -0.3px; margin: 0; }
+        #create-bill-modal .cbm-subtitle { font-size: 12px; color: rgba(255,255,255,0.4); margin: 2px 0 0; }
+        #create-bill-modal .cbm-close { width: 32px; height: 32px; border-radius: 8px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+        #create-bill-modal .cbm-close:hover { background: rgba(255,255,255,0.12); color: #fff; }
+        #create-bill-modal .cbm-body { padding: 24px 28px; }
+        #create-bill-modal .cbm-section { margin-bottom: 22px; }
+        #create-bill-modal .cbm-section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+        #create-bill-modal .cbm-section-badge { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #d4af37; background: rgba(212,175,55,0.12); border: 1px solid rgba(212,175,55,0.25); border-radius: 20px; padding: 3px 10px; }
+        #create-bill-modal .cbm-section-line { flex: 1; height: 1px; background: rgba(255,255,255,0.06); }
+        #create-bill-modal .cbm-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        #create-bill-modal .cbm-grid-3 { display: grid; grid-template-columns: 1.5fr 1fr 1.1fr; gap: 14px; }
+        #create-bill-modal .cbm-field { display: flex; flex-direction: column; gap: 6px; }
+        #create-bill-modal .cbm-field label { font-size: 11px; font-weight: 600; letter-spacing: 0.6px; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+        #create-bill-modal .cbm-field label span.req { color: #d4af37; margin-left: 2px; }
+        #create-bill-modal .cbm-input { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 11px 14px; color: #fff; font-size: 14px; width: 100%; box-sizing: border-box; transition: all 0.2s; outline: none; }
+        #create-bill-modal .cbm-input::placeholder { color: rgba(255,255,255,0.2); }
+        #create-bill-modal .cbm-input:focus { border-color: rgba(212,175,55,0.6); background: rgba(212,175,55,0.06); box-shadow: 0 0 0 3px rgba(212,175,55,0.12); }
+        #create-bill-modal .cbm-select { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 11px 14px; color: #fff; font-size: 14px; width: 100%; box-sizing: border-box; transition: all 0.2s; outline: none; appearance: none; cursor: pointer; }
+        #create-bill-modal .cbm-select:focus { border-color: rgba(212,175,55,0.6); box-shadow: 0 0 0 3px rgba(212,175,55,0.12); }
+        #create-bill-modal .cbm-select option { background: #1a2a44; color: #fff; }
+        #create-bill-modal .cbm-amount-wrap { position: relative; }
+        #create-bill-modal .cbm-amount-prefix { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #d4af37; font-weight: 700; font-size: 15px; pointer-events: none; }
+        #create-bill-modal .cbm-amount-input { padding-left: 30px !important; font-size: 16px !important; font-weight: 600 !important; color: #f5c842 !important; }
+        #create-bill-modal .cbm-payment-box { background: rgba(212,175,55,0.04); border: 1px solid rgba(212,175,55,0.18); border-radius: 14px; padding: 18px; }
+        #create-bill-modal .cbm-payment-toggle { display: flex; align-items: center; gap: 10px; margin-bottom: 0; cursor: pointer; }
+        #create-bill-modal .cbm-payment-toggle-label { font-size: 12px; font-weight: 600; color: #d4af37; letter-spacing: 0.5px; text-transform: uppercase; }
+        #create-bill-modal .cbm-payment-optional { font-size: 11px; color: rgba(255,255,255,0.3); margin-left: auto; }
+        #create-bill-modal .cbm-payment-fields { margin-top: 16px; }
+        #create-bill-modal .cbm-submit { width: 100%; padding: 14px; border: none; border-radius: 12px; background: linear-gradient(135deg, #d4af37, #f0c040); color: #0d1526; font-size: 14px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: all 0.25s; box-shadow: 0 4px 20px rgba(212,175,55,0.3); display: flex; align-items: center; justify-content: center; gap: 10px; }
+        #create-bill-modal .cbm-submit:hover { transform: translateY(-1px); box-shadow: 0 8px 28px rgba(212,175,55,0.45); }
+        #create-bill-modal .cbm-submit:active { transform: translateY(0); }
+        @media (max-width: 520px) {
+            #create-bill-modal .cbm-grid-2, #create-bill-modal .cbm-grid-3 { grid-template-columns: 1fr; }
+        }
+    </style>
+    <div id="create-bill-modal" style="display:none; position:fixed; inset:0; z-index:10000; align-items:center; justify-content:center; overflow-y:auto; padding:20px; background:rgba(0,0,0,0.82); backdrop-filter:blur(6px);">
+        <div class="cbm-card">
+            <!-- Header -->
+            <div class="cbm-header">
+                <div class="cbm-header-left">
+                    <div class="cbm-icon-wrap"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                    <div>
+                        <p class="cbm-title">Create Booking Bill</p>
+                        <p class="cbm-subtitle">Fill in the details below to generate a new bill</p>
+                    </div>
+                </div>
+                <button type="button" class="cbm-close" onclick="closeCreateBillModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <!-- Debug box (hidden by default) -->
+            <div id="bill-debug-box" style="margin: 0 28px; margin-top: 16px; padding: 12px; background: #1e293b; border: 1.5px solid #eab308; border-radius: 8px; color: #4ade80; font-family: monospace; font-size: 12px; display: none; line-height: 1.4;">
                 <strong>Diagnostics:</strong> <span id="bill-debug-text">Ready</span>
             </div>
 
-            <form id="create-bill-form" onsubmit="submitCreateBill(event)">
-                <!-- Row 1: Booking ID & Package -->
-                <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 12px; margin-bottom: 12px;">
-                    <div class="admin-form-group">
-                        <label for="bill-booking-id">Booking ID *</label>
-                        <input type="text" id="bill-booking-id" class="admin-input" required placeholder="e.g. RY-2026-001">
-                    </div>
-                    <div class="admin-form-group">
-                        <label for="bill-package-name">Tour Package Name *</label>
-                        <input type="text" id="bill-package-name" class="admin-input" required placeholder="e.g. Adi Kailash & Om Parvat Yatra">
-                    </div>
-                </div>
+            <!-- Form Body -->
+            <div class="cbm-body">
+                <form id="create-bill-form" onsubmit="submitCreateBill(event)">
 
-                <!-- Row 2: Customer Name & Phone -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
-                    <div class="admin-form-group">
-                        <label for="bill-cust-name">Client Name *</label>
-                        <input type="text" id="bill-cust-name" class="admin-input" required placeholder="Full Name">
-                    </div>
-                    <div class="admin-form-group">
-                        <label for="bill-cust-phone">Phone Number *</label>
-                        <input type="tel" id="bill-cust-phone" class="admin-input" required placeholder="Mobile Number">
-                    </div>
-                </div>
-
-                <!-- Row 3: Customer Email, Group Size, Start Date -->
-                <div style="display: grid; grid-template-columns: 1.5fr 1fr 1.2fr; gap: 12px; margin-bottom: 12px;">
-                    <div class="admin-form-group">
-                        <label for="bill-cust-email">Email Address</label>
-                        <input type="email" id="bill-cust-email" class="admin-input" placeholder="email@example.com">
-                    </div>
-                    <div class="admin-form-group">
-                        <label for="bill-group-size">Group Size *</label>
-                        <input type="number" id="bill-group-size" class="admin-input" required min="1" value="1">
-                    </div>
-                    <div class="admin-form-group">
-                        <label for="bill-start-date">Start Date *</label>
-                        <input type="date" id="bill-start-date" class="admin-input" required>
-                    </div>
-                </div>
-
-                <!-- Row 4: Total Package Cost -->
-                <div class="admin-form-group" style="margin-bottom: 16px;">
-                    <label for="bill-total-amount">Total Package Cost (₹) *</label>
-                    <input type="number" id="bill-total-amount" class="admin-input" required min="0" placeholder="e.g. 85000">
-                </div>
-
-                <!-- Row 5: Initial Payment (Token Advance) Section -->
-                <div style="background: rgba(255,255,255,0.03); border: 1px dashed rgba(212,175,55,0.3); border-radius: 6px; padding: 14px; margin-bottom: 20px;">
-                    <h4 style="margin-top: 0; margin-bottom: 8px; font-size: 13px; color: var(--color-gold); text-transform: uppercase; letter-spacing: 0.5px;">Optional: Log Initial Payment (Token Advance)</h4>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
-                        <div class="admin-form-group" style="margin-bottom: 0;">
-                            <label for="bill-init-paid">Amount Paid (₹)</label>
-                            <input type="number" id="bill-init-paid" class="admin-input" min="0" value="0">
+                    <!-- Section 1: Booking Info -->
+                    <div class="cbm-section">
+                        <div class="cbm-section-header">
+                            <span class="cbm-section-badge"><i class="fa-solid fa-hashtag" style="margin-right:4px;font-size:9px"></i>Booking Info</span>
+                            <div class="cbm-section-line"></div>
                         </div>
-                        <div class="admin-form-group" style="margin-bottom: 0;">
-                            <label for="bill-init-mode">Payment Mode</label>
-                            <select id="bill-init-mode" class="admin-select" style="margin-bottom: 0; padding: 8px;">
-                                <option value="UPI">UPI</option>
-                                <option value="NetBanking">Net Banking</option>
-                                <option value="Cash">Cash</option>
-                            </select>
-                        </div>
-                        <div class="admin-form-group" style="margin-bottom: 0;">
-                            <label for="bill-init-type">Receipt Type</label>
-                            <select id="bill-init-type" class="admin-select" style="margin-bottom: 0; padding: 8px;">
-                                <option value="Token Advance">Token Advance</option>
-                                <option value="Second Installment">Second Installment</option>
-                                <option value="Final Cash on Arrival">Final Cash on Arrival</option>
-                            </select>
+                        <div class="cbm-grid-2">
+                            <div class="cbm-field">
+                                <label for="bill-booking-id">Booking ID <span class="req">*</span></label>
+                                <input type="text" id="bill-booking-id" class="cbm-input" required placeholder="e.g. RY-2026-001">
+                            </div>
+                            <div class="cbm-field">
+                                <label for="bill-package-name">Tour Package <span class="req">*</span></label>
+                                <input type="text" id="bill-package-name" class="cbm-input" required placeholder="e.g. Adi Kailash Yatra">
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <button type="submit" class="btn btn-primary" style="width: 100%; border: none; padding: 12px; font-weight: bold; background-color: var(--color-gold); color: #111827; cursor: pointer; border-radius: 4px;">
-                    Create Booking Bill & Save
-                </button>
-            </form>
+                    <!-- Section 2: Client Details -->
+                    <div class="cbm-section">
+                        <div class="cbm-section-header">
+                            <span class="cbm-section-badge"><i class="fa-solid fa-user" style="margin-right:4px;font-size:9px"></i>Client Details</span>
+                            <div class="cbm-section-line"></div>
+                        </div>
+                        <div class="cbm-grid-2" style="margin-bottom: 14px;">
+                            <div class="cbm-field">
+                                <label for="bill-cust-name">Full Name <span class="req">*</span></label>
+                                <input type="text" id="bill-cust-name" class="cbm-input" required placeholder="Client full name">
+                            </div>
+                            <div class="cbm-field">
+                                <label for="bill-cust-phone">Phone Number <span class="req">*</span></label>
+                                <input type="tel" id="bill-cust-phone" class="cbm-input" required placeholder="+91 98765 43210">
+                            </div>
+                        </div>
+                        <div class="cbm-grid-3">
+                            <div class="cbm-field">
+                                <label for="bill-cust-email">Email Address</label>
+                                <input type="email" id="bill-cust-email" class="cbm-input" placeholder="email@example.com">
+                            </div>
+                            <div class="cbm-field">
+                                <label for="bill-group-size">Group Size <span class="req">*</span></label>
+                                <input type="number" id="bill-group-size" class="cbm-input" required min="1" value="1">
+                            </div>
+                            <div class="cbm-field">
+                                <label for="bill-start-date">Tour Start Date <span class="req">*</span></label>
+                                <input type="date" id="bill-start-date" class="cbm-input" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Package Cost -->
+                    <div class="cbm-section">
+                        <div class="cbm-section-header">
+                            <span class="cbm-section-badge"><i class="fa-solid fa-indian-rupee-sign" style="margin-right:4px;font-size:9px"></i>Package Cost</span>
+                            <div class="cbm-section-line"></div>
+                        </div>
+                        <div class="cbm-field">
+                            <label for="bill-total-amount">Total Package Amount <span class="req">*</span></label>
+                            <div class="cbm-amount-wrap">
+                                <span class="cbm-amount-prefix">₹</span>
+                                <input type="number" id="bill-total-amount" class="cbm-input cbm-amount-input" required min="0" placeholder="0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 4: Initial Payment (Optional) -->
+                    <div class="cbm-section" style="margin-bottom: 24px;">
+                        <div class="cbm-payment-box">
+                            <div class="cbm-payment-toggle">
+                                <i class="fa-solid fa-coins" style="color:#d4af37; font-size:13px;"></i>
+                                <span class="cbm-payment-toggle-label">Log Initial Payment</span>
+                                <span class="cbm-payment-optional">Optional — Token Advance</span>
+                            </div>
+                            <div class="cbm-payment-fields">
+                                <div class="cbm-grid-3">
+                                    <div class="cbm-field">
+                                        <label for="bill-init-paid">Amount Paid (₹)</label>
+                                        <div class="cbm-amount-wrap">
+                                            <span class="cbm-amount-prefix">₹</span>
+                                            <input type="number" id="bill-init-paid" class="cbm-input cbm-amount-input" min="0" value="0" style="font-size:13px!important;">
+                                        </div>
+                                    </div>
+                                    <div class="cbm-field">
+                                        <label for="bill-init-mode">Payment Mode</label>
+                                        <select id="bill-init-mode" class="cbm-select">
+                                            <option value="UPI">UPI</option>
+                                            <option value="NetBanking">Net Banking</option>
+                                            <option value="Cash">Cash</option>
+                                        </select>
+                                    </div>
+                                    <div class="cbm-field">
+                                        <label for="bill-init-type">Receipt Type</label>
+                                        <select id="bill-init-type" class="cbm-select">
+                                            <option value="Token Advance">Token Advance</option>
+                                            <option value="Second Installment">2nd Installment</option>
+                                            <option value="Final Cash on Arrival">Final Payment</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="cbm-submit">
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
+                        Create Bill &amp; Save
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 
     <!-- Add Payment Modal -->
-    <div class="modal-overlay" id="add-payment-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 10000; justify-content: center; align-items: center;">
-        <div class="modal-box" style="background: #111827; border: 2px solid var(--color-gold); max-width: 450px; width: 90%; padding: 24px; border-radius: var(--border-radius-md); position: relative;">
-            <button type="button" class="modal-close" onclick="closeAddPaymentModal()" style="position: absolute; top: 12px; right: 16px; font-size: 24px; background: none; border: none; color: var(--color-text-secondary); cursor: pointer;">&times;</button>
-            <h3 style="font-family: var(--font-serif); color: white; margin-bottom: 12px; font-size: 19px; display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-cash-register" style="color: var(--color-gold)"></i> Log Payment Transaction</h3>
-            <p id="payment-modal-subtitle" style="font-size: 13px; color: var(--color-slate); margin-bottom: 20px;"></p>
-            
-            <form id="add-payment-form" onsubmit="submitAddPayment(event)">
-                <input type="hidden" id="payment-bill-id">
-                
-                <div class="admin-form-group" style="margin-bottom: 12px;">
-                    <label for="pay-amount">Amount Paid (₹) *</label>
-                    <input type="number" id="pay-amount" class="admin-input" required min="1" placeholder="e.g. 25000">
+    <style>
+        #add-payment-modal .apm-card { background: linear-gradient(145deg, #0f1f38 0%, #0d1526 100%); border: 1px solid rgba(212,175,55,0.35); border-radius: 20px; width: 100%; max-width: 440px; box-shadow: 0 40px 80px rgba(0,0,0,0.6); overflow: hidden; }
+        #add-payment-modal .apm-header { padding: 22px 24px 18px; border-bottom: 1px solid rgba(255,255,255,0.07); display: flex; align-items: center; justify-content: space-between; background: linear-gradient(90deg, rgba(212,175,55,0.08) 0%, transparent 60%); }
+        #add-payment-modal .apm-icon-wrap { width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, #d4af37, #f5c842); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(212,175,55,0.3); flex-shrink: 0; }
+        #add-payment-modal .apm-close { width: 30px; height: 30px; border-radius: 8px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+        #add-payment-modal .apm-close:hover { background: rgba(255,255,255,0.12); color: #fff; }
+        #add-payment-modal .apm-body { padding: 22px 24px 24px; }
+        #add-payment-modal .apm-subtitle { font-size: 12px; color: rgba(255,255,255,0.35); margin: 0 0 20px; line-height: 1.5; padding: 10px 12px; background: rgba(255,255,255,0.03); border-radius: 8px; border-left: 3px solid rgba(212,175,55,0.4); }
+        #add-payment-modal .apm-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+        #add-payment-modal .apm-field label { font-size: 11px; font-weight: 600; letter-spacing: 0.6px; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+        #add-payment-modal .apm-field label span { color: #d4af37; margin-left: 2px; }
+        #add-payment-modal .apm-input { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 11px 14px; color: #fff; font-size: 14px; width: 100%; box-sizing: border-box; transition: all 0.2s; outline: none; }
+        #add-payment-modal .apm-input::placeholder { color: rgba(255,255,255,0.2); }
+        #add-payment-modal .apm-input:focus { border-color: rgba(212,175,55,0.6); background: rgba(212,175,55,0.05); box-shadow: 0 0 0 3px rgba(212,175,55,0.12); }
+        #add-payment-modal .apm-select { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 11px 14px; color: #fff; font-size: 14px; width: 100%; box-sizing: border-box; outline: none; appearance: none; cursor: pointer; transition: all 0.2s; }
+        #add-payment-modal .apm-select:focus { border-color: rgba(212,175,55,0.6); box-shadow: 0 0 0 3px rgba(212,175,55,0.12); }
+        #add-payment-modal .apm-select option { background: #1a2a44; color: #fff; }
+        #add-payment-modal .apm-amount-wrap { position: relative; }
+        #add-payment-modal .apm-amount-prefix { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #d4af37; font-weight: 700; font-size: 15px; pointer-events: none; }
+        #add-payment-modal .apm-amount-input { padding-left: 30px !important; font-size: 20px !important; font-weight: 700 !important; color: #4ade80 !important; letter-spacing: -0.5px; }
+        #add-payment-modal .apm-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        #add-payment-modal .apm-submit { width: 100%; padding: 14px; border: none; border-radius: 12px; background: linear-gradient(135deg, #22c55e, #16a34a); color: #fff; font-size: 13px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: all 0.25s; box-shadow: 0 4px 20px rgba(34,197,94,0.3); display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 8px; }
+        #add-payment-modal .apm-submit:hover { transform: translateY(-1px); box-shadow: 0 8px 28px rgba(34,197,94,0.45); }
+    </style>
+    <div id="add-payment-modal" style="display:none; position:fixed; inset:0; z-index:10000; align-items:center; justify-content:center; background:rgba(0,0,0,0.82); backdrop-filter:blur(6px);">
+        <div class="apm-card">
+            <div class="apm-header">
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <div class="apm-icon-wrap"><i class="fa-solid fa-cash-register" style="color:#0d1526;font-size:16px;"></i></div>
+                    <div>
+                        <p style="margin:0;font-size:17px;font-weight:700;color:#fff;">Log Payment</p>
+                        <p style="margin:2px 0 0;font-size:11px;color:rgba(255,255,255,0.38);">Record a new transaction</p>
+                    </div>
                 </div>
+                <button type="button" class="apm-close" onclick="closeAddPaymentModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="apm-body">
+                <form id="add-payment-form" onsubmit="submitAddPayment(event)">
+                    <input type="hidden" id="payment-bill-id">
+                    <p id="payment-modal-subtitle" class="apm-subtitle"></p>
 
-                <div class="admin-form-group" style="margin-bottom: 12px;">
-                    <label for="pay-mode">Payment Mode *</label>
-                    <select id="pay-mode" class="admin-select" required>
-                        <option value="UPI">UPI</option>
-                        <option value="NetBanking">Net Banking</option>
-                        <option value="Cash">Cash</option>
-                    </select>
-                </div>
+                    <div class="apm-field" style="margin-bottom:18px;">
+                        <label for="pay-amount">Amount Received <span>*</span></label>
+                        <div class="apm-amount-wrap">
+                            <span class="apm-amount-prefix">₹</span>
+                            <input type="number" id="pay-amount" class="apm-input apm-amount-input" required min="1" placeholder="0">
+                        </div>
+                    </div>
 
-                <div class="admin-form-group" style="margin-bottom: 20px;">
-                    <label for="pay-type">Payment Type / Stage *</label>
-                    <select id="pay-type" class="admin-select" required>
-                        <option value="Token Advance">Token Advance</option>
-                        <option value="Second Installment" selected>Second Installment</option>
-                        <option value="Final Cash on Arrival">Final Cash on Arrival</option>
-                    </select>
-                </div>
+                    <div class="apm-grid-2">
+                        <div class="apm-field" style="margin-bottom:0;">
+                            <label for="pay-mode">Payment Mode <span>*</span></label>
+                            <select id="pay-mode" class="apm-select" required>
+                                <option value="UPI">📱 UPI</option>
+                                <option value="NetBanking">🏦 Net Banking</option>
+                                <option value="Cash">💵 Cash</option>
+                            </select>
+                        </div>
+                        <div class="apm-field" style="margin-bottom:0;">
+                            <label for="pay-type">Payment Stage <span>*</span></label>
+                            <select id="pay-type" class="apm-select" required>
+                                <option value="Token Advance">Token Advance</option>
+                                <option value="Second Installment" selected>2nd Installment</option>
+                                <option value="Final Cash on Arrival">Final Payment</option>
+                            </select>
+                        </div>
+                    </div>
 
-                <button type="submit" class="btn btn-primary" style="width: 100%; border: none; padding: 11px; font-weight: bold; background-color: var(--color-gold); color: #111827; cursor: pointer; border-radius: 4px;">
-                    Log Payment & Update Balance
-                </button>
-            </form>
+                    <button type="submit" class="apm-submit">
+                        <i class="fa-solid fa-check"></i>
+                        Confirm &amp; Update Balance
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 
