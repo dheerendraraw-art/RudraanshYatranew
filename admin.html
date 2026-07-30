@@ -627,7 +627,14 @@
                     
                     <!-- Left: Staff Accounts List -->
                     <div class="admin-form-card" style="padding: 24px;">
-                        <h3 class="admin-form-title" style="margin-bottom: 20px;"><i class="fa-solid fa-users-gear" style="color: var(--color-gold); margin-right: 8px;"></i> Staff Accounts</h3>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+                            <h3 class="admin-form-title" style="margin-bottom: 0;">
+                                <i class="fa-solid fa-users-gear" style="color: var(--color-gold); margin-right: 8px;"></i> Staff Accounts
+                            </h3>
+                            <button type="button" onclick="saveAllStaffChanges()" id="btn-save-all-staff" class="btn btn-primary" style="background-color: var(--color-gold); color: #0f172a; border: none; padding: 8px 16px; font-size: 13px; font-weight: 700; cursor: pointer; border-radius: 4px; display: inline-flex; align-items: center; gap: 6px;" title="Save all password, username, and account changes">
+                                <i class="fa-solid fa-floppy-disk"></i> Save All Changes
+                            </button>
+                        </div>
                         
                         <div class="admin-table-container" style="overflow-x: auto; margin-bottom: 0;">
                             <table class="admin-table">
@@ -697,8 +704,8 @@
                                     <option value="" selected>None</option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-primary" style="width: 100%; border: none; padding: 12px; font-size: 14px; font-weight: 600; cursor: pointer; background-color: var(--color-gold); color: #0f172a; border-radius: 4px;">
-                                <i class="fa-solid fa-plus"></i> Add Staff Member
+                            <button type="submit" class="btn btn-primary" style="width: 100%; border: none; padding: 12px; font-size: 14px; font-weight: 700; cursor: pointer; background-color: var(--color-gold); color: #0f172a; border-radius: 4px;">
+                                <i class="fa-solid fa-user-plus"></i> Save New Staff Member
                             </button>
                         </form>
                     </div>
@@ -4639,6 +4646,107 @@
             }
         };
 
+        window.saveAllStaffChanges = async function() {
+            if (!staffCredentialsList || staffCredentialsList.length === 0) {
+                showAdminToast('No staff accounts to save.', 'info');
+                return;
+            }
+
+            const btn = document.getElementById('btn-save-all-staff');
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+            }
+
+            let updatedCount = 0;
+            let errorCount = 0;
+
+            for (const item of staffCredentialsList) {
+                const id = item.id;
+                const nameInput = document.getElementById(`name-input-${id}`);
+                const usernameInput = document.getElementById(`username-input-${id}`);
+                const phoneInput = document.getElementById(`phone-input-${id}`);
+                const emailInput = document.getElementById(`email-input-${id}`);
+                const designationInput = document.getElementById(`designation-input-${id}`);
+                const passcodeInput = document.getElementById(`passcode-input-${id}`);
+                const roleSelect = document.getElementById(`role-select-${id}`);
+                const uuidSelect = document.getElementById(`uuid-select-${id}`);
+
+                if (!usernameInput || !passcodeInput || !roleSelect) continue;
+
+                const newName = nameInput ? nameInput.value.trim() : null;
+                const newUsername = usernameInput.value.trim().toLowerCase();
+                const newPhone = phoneInput ? phoneInput.value.trim() : null;
+                const newEmail = emailInput ? emailInput.value.trim() : null;
+                const newDesignation = designationInput ? designationInput.value.trim() : null;
+                const newPasscode = passcodeInput.value.trim();
+                const newRole = roleSelect.value;
+                const newUuidMapping = uuidSelect ? (uuidSelect.value || null) : null;
+
+                if (!newUsername || !newPasscode) continue;
+
+                const nameChanged = newName !== (item.name || '');
+                const usernameChanged = newUsername !== item.username;
+                const phoneChanged = newPhone !== (item.phone || '');
+                const emailChanged = newEmail !== (item.email || '');
+                const designationChanged = newDesignation !== (item.designation || '');
+                const passcodeChanged = newPasscode !== item.passcode;
+                const roleChanged = newRole !== item.role;
+                const uuidChanged = newUuidMapping !== (item.uuid_mapping || null);
+
+                if (nameChanged || usernameChanged || phoneChanged || emailChanged || designationChanged || passcodeChanged || roleChanged || uuidChanged) {
+                    try {
+                        const { error } = await supabaseAdmin
+                            .from('staff_credentials')
+                            .update({ 
+                                username: newUsername, 
+                                passcode: newPasscode, 
+                                role: newRole, 
+                                uuid_mapping: newUuidMapping,
+                                name: newName,
+                                phone: newPhone,
+                                email: newEmail,
+                                designation: newDesignation
+                            })
+                            .eq('id', id);
+
+                        if (error) throw error;
+                        updatedCount++;
+
+                        if (item.username === currentUsername) {
+                            localStorage.setItem('admin_username', newUsername);
+                            localStorage.setItem('admin_uuid_mapping', newUuidMapping || '');
+                            currentUsername = newUsername;
+                            currentUserUuidMapping = newUuidMapping || '';
+                            const uEl = document.getElementById('logged-in-username');
+                            if (uEl) uEl.innerText = newUsername.charAt(0).toUpperCase() + newUsername.slice(1);
+                        }
+
+                        if (id === 'admin') {
+                            CORRECT_PIN = newPasscode;
+                        }
+                    } catch (err) {
+                        console.error(`Error saving staff ${item.username}:`, err);
+                        errorCount++;
+                    }
+                }
+            }
+
+            if (btn) {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save All Changes';
+            }
+
+            if (updatedCount > 0) {
+                showAdminToast(`Successfully saved changes for ${updatedCount} staff account(s)!`, 'success');
+                fetchCredentials();
+            } else if (errorCount > 0) {
+                showAdminToast('Errors occurred while saving some staff changes.', 'error');
+            } else {
+                showAdminToast('No staff changes detected to save.', 'info');
+            }
+        };
+
         window.updateStaffCredentials = async function(id, oldUsername) {
             const nameInput = document.getElementById(`name-input-${id}`);
             const usernameInput = document.getElementById(`username-input-${id}`);
@@ -4679,7 +4787,7 @@
                     .eq('id', id);
 
                 if (error) throw error;
-                showAdminToast(`Staff details updated successfully!`, 'success');
+                showAdminToast(`Changes for staff "${newUsername}" saved successfully!`, 'success');
                 
                 if (oldUsername === currentUsername) {
                     localStorage.setItem('admin_username', newUsername);
