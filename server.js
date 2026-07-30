@@ -14,7 +14,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'rudraansh_yatra_secure_jwt_secret_
 const storage = multer.memoryStorage();
 const upload = multer({
     storage: storage,
-    limits: { fileSize: 5 * 1024 * 1024 }
+    limits: { fileSize: 10 * 1024 * 1024 }
 });
 
 const app = express();
@@ -2003,6 +2003,18 @@ app.use((req, res, next) => {
 
 // Serve static files from the root directory with clean URL support (lower priority than our SSR routes)
 app.use(express.static(__dirname, { extensions: ['html'] }));
+
+// Global Error Handling Middleware
+app.use((err, req, res, next) => {
+    console.error('Unhandled server error:', err);
+    if (err instanceof multer.MulterError) {
+        if (err.code === 'LIMIT_FILE_SIZE') {
+            return res.status(400).json({ error: 'File is too large. Maximum size allowed is 10MB.' });
+        }
+        return res.status(400).json({ error: `Upload error: ${err.message}` });
+    }
+    res.status(err.status || 500).json({ error: err.message || 'Internal Server Error' });
+});
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
