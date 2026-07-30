@@ -938,13 +938,55 @@
                 if (error) throw error;
 
                 const timeline = document.getElementById('lead-timeline');
-                if (!data || data.length === 0) {
+                let filteredData = data || [];
+                
+                if (currentUserRole === 'staff') {
+                    const staffUsername = (currentUsername || '').trim().toLowerCase();
+                    if (staffUsername) {
+                        const cleanUser = (str) => (str || '').replace(/[^a-zA-Z0-9]/g, '').trim().toLowerCase();
+                        
+                        // Sort chronologically ascending
+                        const sorted = [...filteredData].sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+                        
+                        let currentAssignee = 'unassigned';
+                        const firstTransferIndex = sorted.findIndex(item => (item.action || '').includes('Transferred'));
+                        if (firstTransferIndex !== -1) {
+                            const match = sorted[firstTransferIndex].action.match(/Transferred from (.*?) to (.*?)\.?$/i);
+                            if (match) {
+                                currentAssignee = cleanUser(match[1]);
+                            }
+                        }
+                        
+                        const itemAssignee = [];
+                        for (let i = 0; i < sorted.length; i++) {
+                            const item = sorted[i];
+                            const match = (item.action || '').match(/Transferred from (.*?) to (.*?)\.?$/i);
+                            if (match) {
+                                const fromUser = cleanUser(match[1]);
+                                const toUser = cleanUser(match[2]);
+                                itemAssignee.push([fromUser, toUser]);
+                                currentAssignee = toUser;
+                            } else {
+                                itemAssignee.push([currentAssignee]);
+                            }
+                        }
+                        
+                        const filteredSorted = sorted.filter((item, i) => {
+                            return itemAssignee[i].includes(staffUsername);
+                        });
+                        
+                        // Sort back to descending (newest first)
+                        filteredData = filteredSorted.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                    }
+                }
+
+                if (filteredData.length === 0) {
                     timeline.innerHTML = '<div style="color: #64748b; font-style: italic;">No previous activities logged yet.</div>';
                     return;
                 }
 
                 let html = '';
-                data.forEach(item => {
+                filteredData.forEach(item => {
                     const timeStr = new Date(item.created_at).toLocaleString('en-IN', {
                         day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
                     });
