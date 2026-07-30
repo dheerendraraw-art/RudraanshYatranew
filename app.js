@@ -810,64 +810,116 @@ function injectDialogs() {
     // 1. Discount Popup Modal
     const discountPopupHtml = `
         <div class="modal-overlay" id="discount-modal">
-            <div class="modal-box" style="max-width: 500px;">
-                <button class="modal-close" id="discount-close-btn">&times;</button>
-                <h3 class="modal-title" style="font-size: 24px; color: var(--color-gold);">🎁 10% Discount Offer!</h3>
-                <p class="modal-subtitle">Register your details below to instantly avail a 10% discount for your upcoming Kumaon adventure.</p>
-                
-                <form id="discount-form">
-                    <div class="form-group">
-                        <label for="discount-name">Full Name</label>
-                        <input type="text" id="discount-name" class="form-control" placeholder="E.g. Ramesh Dev" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="discount-phone">Phone Number</label>
-                        <input type="tel" id="discount-phone" class="form-control" placeholder="E.g. +91 9876543210" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="discount-email">Email Address</label>
-                        <input type="email" id="discount-email" class="form-control" placeholder="E.g. ramesh@example.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="discount-travelers">Number of Travellers</label>
-                        <input type="number" id="discount-travelers" class="form-control" min="1" placeholder="E.g. 4" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="discount-destination">Trip Location</label>
-                        <select id="discount-destination" class="form-control" required>
-                            <option value="" disabled selected>Select destination</option>
-                            <option value="Adi Kailash & Om Parvat Yatra">Adi Kailash & Om Parvat Yatra</option>
-                            <option value="Khaliya Top Trek">Khaliya Top Trek</option>
-                            <option value="Mt. Kailash Yatra">Mt. Kailash Yatra</option>
-                            <option value="Darma Valley Exploration">Darma Valley Exploration</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary" style="width: 100%; border: none;">Get Verification Code</button>
-                </form>
+            <div class="discount-modal-box" id="discount-modal-inner">
+                <!-- Decorative top bar -->
+                <div class="dmo-top-bar"></div>
 
-                <div id="discount-otp-section" style="display: none; text-align: center;">
-                    <p class="modal-subtitle" style="margin-bottom: 12px;">We have sent a 6-digit verification code to <strong id="discount-otp-email"></strong>.</p>
-                    <div class="otp-input-group">
-                        <input type="text" maxlength="1" class="discount-otp-digit otp-digit" required>
-                        <input type="text" maxlength="1" class="discount-otp-digit otp-digit" required>
-                        <input type="text" maxlength="1" class="discount-otp-digit otp-digit" required>
-                        <input type="text" maxlength="1" class="discount-otp-digit otp-digit" required>
-                        <input type="text" maxlength="1" class="discount-otp-digit otp-digit" required>
-                        <input type="text" maxlength="1" class="discount-otp-digit otp-digit" required>
+                <button class="dmo-close-btn" id="discount-close-btn" aria-label="Close">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M1 1L17 17M17 1L1 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                </button>
+
+                <!-- Header -->
+                <div class="dmo-header">
+                    <div class="dmo-badge">LIMITED OFFER</div>
+                    <div class="dmo-discount-pill">
+                        <span class="dmo-discount-num">10%</span>
+                        <span class="dmo-discount-off">OFF</span>
                     </div>
-                    <button id="discount-verify-btn" class="btn btn-primary" style="width: 100%; border: none; margin-bottom: 12px;">Verify & Claim 10% Discount</button>
-                    <button id="discount-otp-back" class="btn btn-secondary" style="width: 100%;">Back to Form</button>
+                    <h2 class="dmo-title">Exclusive Discount<br><span>For Your Kumaon Adventure</span></h2>
+                    <p class="dmo-subtitle">Fill in your details and receive a verified coupon code instantly on your email.</p>
                 </div>
 
-                <div id="discount-success-section" style="display: none; text-align: center; padding: 20px 0;">
-                    <i class="fa-solid fa-circle-check" style="font-size: 60px; color: #22c55e; margin-bottom: 20px;"></i>
-                    <h4 style="font-size: 20px; color: #ffffff; margin-bottom: 8px;">Email Verified Successfully!</h4>
-                    <p class="modal-subtitle" style="margin-bottom: 24px;">Your 10% discount registration is confirmed.</p>
-                    <div style="background-color: rgba(212, 175, 55, 0.1); border: 2px dashed var(--color-gold); padding: 16px; border-radius: var(--border-radius-sm); font-family: monospace; font-size: 24px; font-weight: 700; color: var(--color-gold); margin-bottom: 24px; letter-spacing: 2px;">
-                        RUDRA10
+                <!-- Form Section -->
+                <form id="discount-form" class="dmo-form" autocomplete="off">
+                    <div class="dmo-fields-grid">
+                        <div class="dmo-field">
+                            <label class="dmo-label" for="discount-name">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                Full Name
+                            </label>
+                            <input type="text" id="discount-name" class="dmo-input" placeholder="e.g. Ramesh Dev" required autocomplete="off">
+                        </div>
+                        <div class="dmo-field">
+                            <label class="dmo-label" for="discount-phone">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.19h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.79a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                                Phone Number
+                            </label>
+                            <input type="tel" id="discount-phone" class="dmo-input" placeholder="e.g. +91 9876543210" required autocomplete="off">
+                        </div>
+                        <div class="dmo-field dmo-field--full">
+                            <label class="dmo-label" for="discount-email">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                                Email Address
+                            </label>
+                            <input type="email" id="discount-email" class="dmo-input" placeholder="e.g. ramesh@example.com" required autocomplete="off">
+                        </div>
+                        <div class="dmo-field">
+                            <label class="dmo-label" for="discount-travelers">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                                No. of Travellers
+                            </label>
+                            <input type="number" id="discount-travelers" class="dmo-input" min="1" placeholder="e.g. 4" required autocomplete="off">
+                        </div>
+                        <div class="dmo-field">
+                            <label class="dmo-label" for="discount-destination">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                Trip Destination
+                            </label>
+                            <select id="discount-destination" class="dmo-input dmo-select" required>
+                                <option value="" disabled selected>Select destination</option>
+                                <option value="Adi Kailash &amp; Om Parvat Yatra">Adi Kailash &amp; Om Parvat Yatra</option>
+                                <option value="Khaliya Top Trek">Khaliya Top Trek</option>
+                                <option value="Mt. Kailash Yatra">Mt. Kailash Yatra</option>
+                                <option value="Darma Valley Exploration">Darma Valley Exploration</option>
+                            </select>
+                        </div>
                     </div>
-                    <p style="font-size: 13px; color: rgba(255,255,255,0.6);">Use this coupon code when finalizing your booking via WhatsApp.</p>
-                    <button id="discount-claim-close" class="btn btn-primary" style="width: 100%; border: none; margin-top: 24px;">Awesome, Thanks!</button>
+                    <button type="submit" class="dmo-submit-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
+                        Get Verification Code
+                    </button>
+                    <p class="dmo-privacy">🔒 Your information is 100% secure and never shared.</p>
+                </form>
+
+                <!-- OTP Section -->
+                <div id="discount-otp-section" style="display: none;">
+                    <div class="dmo-otp-header">
+                        <div class="dmo-otp-icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        </div>
+                        <h3 class="dmo-otp-title">Check Your Inbox</h3>
+                        <p class="dmo-otp-sub">A 6-digit code has been sent to<br><strong id="discount-otp-email" style="color: var(--color-gold);"></strong></p>
+                    </div>
+                    <div class="otp-input-group" style="margin: 24px 0;">
+                        <input type="text" maxlength="1" class="discount-otp-digit otp-digit" required inputmode="numeric">
+                        <input type="text" maxlength="1" class="discount-otp-digit otp-digit" required inputmode="numeric">
+                        <input type="text" maxlength="1" class="discount-otp-digit otp-digit" required inputmode="numeric">
+                        <input type="text" maxlength="1" class="discount-otp-digit otp-digit" required inputmode="numeric">
+                        <input type="text" maxlength="1" class="discount-otp-digit otp-digit" required inputmode="numeric">
+                        <input type="text" maxlength="1" class="discount-otp-digit otp-digit" required inputmode="numeric">
+                    </div>
+                    <button id="discount-verify-btn" class="dmo-submit-btn" style="margin-bottom: 12px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        Verify &amp; Claim 10% Discount
+                    </button>
+                    <button id="discount-otp-back" class="dmo-back-btn">&larr; Back to Form</button>
+                </div>
+
+                <!-- Success Section -->
+                <div id="discount-success-section" style="display: none; text-align: center; padding: 16px 0;">
+                    <div class="dmo-success-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <h4 class="dmo-success-title">Email Verified!</h4>
+                    <p class="dmo-success-sub">Your 10% discount is confirmed. Use the code below when finalizing your booking.</p>
+                    <div class="dmo-coupon-box">
+                        <span class="dmo-coupon-label">YOUR COUPON CODE</span>
+                        <span class="dmo-coupon-code">RUDRA10</span>
+                        <span class="dmo-coupon-tip">Share this code on WhatsApp to avail discount</span>
+                    </div>
+                    <button id="discount-claim-close" class="dmo-submit-btn" style="margin-top: 20px;">
+                        🎉 Awesome, Thanks!
+                    </button>
                 </div>
             </div>
         </div>
