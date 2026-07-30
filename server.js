@@ -465,6 +465,23 @@ app.get('/api/version', (req, res) => {
     const { exec } = require('child_process');
     exec('git log -n 1 --oneline && git status --porcelain', (err, stdout, stderr) => {
         const gitInfo = err ? `Error: ${err.message}` : stdout;
+        
+        const fs = require('fs');
+        const path = require('path');
+        const filesToCheck = ['admin.html', 'server.js', '.env', 'app.js'];
+        const fileDetails = {};
+        filesToCheck.forEach(file => {
+            try {
+                const stats = fs.statSync(path.join(__dirname, file));
+                fileDetails[file] = {
+                    size: stats.size,
+                    mtime: stats.mtime.toISOString()
+                };
+            } catch (e) {
+                fileDetails[file] = `Error: ${e.message}`;
+            }
+        });
+
         res.json({
             version: '1.0.9-diagnostics',
             status: 'Running',
@@ -472,7 +489,8 @@ app.get('/api/version', (req, res) => {
             supabase_initialized: !!supabase,
             supabase_url_exists: !!process.env.SUPABASE_URL,
             supabase_key_exists: !!process.env.SUPABASE_KEY,
-            git: gitInfo.trim().split('\n')
+            git: gitInfo.trim().split('\n'),
+            files: fileDetails
         });
     });
 });
