@@ -490,7 +490,8 @@ app.get('/api/version', (req, res) => {
             supabase_url_exists: !!process.env.SUPABASE_URL,
             supabase_key_exists: !!process.env.SUPABASE_KEY,
             git: gitInfo.trim().split('\n'),
-            files: fileDetails
+            files: fileDetails,
+            dirname: __dirname
         });
     });
 });
