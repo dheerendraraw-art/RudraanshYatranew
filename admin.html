@@ -1719,7 +1719,11 @@
                 this.limitVal = null;
             }
             select(fields) {
-                this.operation = 'select';
+                // Only set operation to 'select' if not already an insert/update
+                // (Supabase chaining: .insert(...).select() should still POST, then return data)
+                if (this.operation !== 'insert' && this.operation !== 'update') {
+                    this.operation = 'select';
+                }
                 return this;
             }
             insert(data) {
