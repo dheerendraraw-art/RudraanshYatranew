@@ -3170,11 +3170,50 @@
                         }
                     });
 
-                    // Clean paste - paste as plain text to prevent styling layout corruption
+                    // Support paste as it is (formatted html) while cleaning styling/layout corruption
                     editor.addEventListener('paste', (e) => {
                         e.preventDefault();
-                        const text = e.clipboardData.getData('text/plain');
-                        document.execCommand('insertText', false, text);
+                        let html = e.clipboardData.getData('text/html');
+                        let text = e.clipboardData.getData('text/plain');
+
+                        if (html) {
+                            try {
+                                const parser = new DOMParser();
+                                const doc = parser.parseFromString(html, 'text/html');
+                                
+                                // Remove scripts, styles, meta, head elements
+                                const toRemove = doc.querySelectorAll('script, style, meta, link, head, title');
+                                toRemove.forEach(el => el.remove());
+                                
+                                // Strip classes, IDs, styles and keep structural attributes
+                                const allElements = doc.querySelectorAll('*');
+                                const allowedAttrs = ['href', 'src', 'target', 'rel', 'colspan', 'rowspan'];
+                                allElements.forEach(el => {
+                                    Array.from(el.attributes).forEach(attr => {
+                                        if (!allowedAttrs.includes(attr.name)) {
+                                            el.removeAttribute(attr.name);
+                                        }
+                                    });
+                                    // Fix any anchor links opening in new tab safely
+                                    if (el.tagName === 'A') {
+                                        el.setAttribute('target', '_blank');
+                                        el.setAttribute('rel', 'noopener noreferrer');
+                                    }
+                                });
+                                
+                                document.execCommand('insertHTML', false, doc.body.innerHTML);
+                            } catch (err) {
+                                console.error('HTML paste parsing failed, falling back to plain text', err);
+                                document.execCommand('insertText', false, text);
+                            }
+                        } else if (text) {
+                            document.execCommand('insertText', false, text);
+                        }
+
+                        // Update word count after paste
+                        if (typeof updateWordCount === 'function') {
+                            setTimeout(updateWordCount, 50);
+                        }
                     });
                 }
             }, 1000);
