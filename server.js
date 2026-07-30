@@ -462,7 +462,19 @@ ${urls.join('\n')}
 
 // GET application version for testing
 app.get('/api/version', (req, res) => {
-    res.json({ version: '1.0.7', status: 'Running', timestamp: '2026-07-07T06:01:00Z' });
+    const { exec } = require('child_process');
+    exec('git log -n 1 --oneline && git status --porcelain', (err, stdout, stderr) => {
+        const gitInfo = err ? `Error: ${err.message}` : stdout;
+        res.json({
+            version: '1.0.9-diagnostics',
+            status: 'Running',
+            timestamp: new Date().toISOString(),
+            supabase_initialized: !!supabase,
+            supabase_url_exists: !!process.env.SUPABASE_URL,
+            supabase_key_exists: !!process.env.SUPABASE_KEY,
+            git: gitInfo.trim().split('\n')
+        });
+    });
 });
 
 // ==========================================
