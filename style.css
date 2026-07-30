@@ -3424,15 +3424,15 @@ img {
     .admin-table tbody tr {
         display: block;
         margin-bottom: 20px;
-        border: 2px solid var(--color-gold);
+        border: 1.5px solid rgba(212, 175, 55, 0.22) !important;
         border-radius: var(--border-radius-md);
-        background: #111827 !important; /* dark cards matching admin look */
+        background: var(--color-bg-card, #1e293b) !important; /* premium cards matching admin look */
         padding: 16px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     }
 
     .admin-table tbody tr:hover {
-        background-color: #111827 !important;
+        background-color: #243347 !important;
     }
 
     .admin-table td {
@@ -6073,6 +6073,22 @@ body.user-role-staff .admin-only-action {
         padding: 10px 14px !important;
         font-size: 13px !important;
         border-radius: 8px !important;
+        background: rgba(255, 255, 255, 0.05) !important;
+        border: 1.5px solid rgba(255, 255, 255, 0.1) !important;
+        color: #94a3b8 !important;
+        transition: all 0.2s ease !important;
+    }
+
+    .admin-tab-btn:hover {
+        background-color: rgba(255, 255, 255, 0.08) !important;
+        color: #ffffff !important;
+        border-color: rgba(255, 255, 255, 0.2) !important;
+    }
+
+    .admin-tab-btn.active {
+        background-color: rgba(212, 175, 55, 0.15) !important;
+        border: 1.5px solid var(--color-gold) !important;
+        color: var(--color-gold) !important;
     }
 
     #lead-modal .admin-modal-content {
@@ -6453,6 +6469,17 @@ body.user-role-staff .admin-only-action {
     .reviews-slider-container {
         padding: 10px 0 20px 0;
     }
+}
+
+/* Disabled Form Controls styling for consistent color and visibility */
+select:disabled,
+input:disabled {
+    background-color: rgba(30, 41, 59, 0.4) !important;
+    color: #94a3b8 !important;
+    border-color: rgba(212, 175, 55, 0.15) !important;
+    opacity: 0.85 !important;
+    cursor: not-allowed !important;
+    -webkit-text-fill-color: #94a3b8 !important; /* Force override for iOS rendering */
 }
 
 
