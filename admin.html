@@ -2607,10 +2607,25 @@
             }, 600);
         }
 
+        window.fetchNextBookingId = async function() {
+            try {
+                const response = await fetchWithAuth('/api/bookings/next-id');
+                const data = await response.json();
+                if (data && data.booking_id) {
+                    return data.booking_id;
+                }
+            } catch (err) {
+                console.error('Error fetching next booking ID:', err);
+            }
+            const year = new Date().getFullYear();
+            const randomNum = Math.floor(1000 + Math.random() * 8999);
+            return `RY-${year}-${randomNum}`;
+        };
+
         window.generateAutoBookingId = function(clientName) {
-            const namePrefix = (clientName || 'CUST').replace(/[^a-zA-Z]/g, '').slice(0, 3).toUpperCase() || 'RY';
-            const randomNum = Math.floor(100 + Math.random() * 899);
-            return `RY-2026-${namePrefix}-${randomNum}`;
+            const year = new Date().getFullYear();
+            const randomNum = Math.floor(1000 + Math.random() * 8999);
+            return `RY-${year}-${randomNum}`;
         };
 
         // 1. Fetch Bookings
@@ -4272,7 +4287,7 @@
                 }
 
                 const staffUuid = currentUserUuidMapping || AGENT_UUIDS[(currentUsername || '').toLowerCase()] || lead.assigned_to || null;
-                const autoBookingId = generateAutoBookingId(lead.name);
+                const autoBookingId = await fetchNextBookingId();
 
                 // Insert into bookings table
                 const { error: insertErr } = await supabaseAdmin
@@ -5709,7 +5724,7 @@
                     if (error) throw error;
                     showAdminToast('Booking updated successfully!', 'success');
                 } else {
-                    bookingData.booking_id = generateAutoBookingId(name);
+                    bookingData.booking_id = await fetchNextBookingId();
                     bookingData.created_at = new Date().toISOString();
                     const { error } = await supabaseAdmin
                         .from('bookings')

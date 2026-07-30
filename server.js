@@ -561,6 +561,49 @@ app.post('/api/admin/logout', (req, res) => {
 // PUBLIC INQUIRY API ENDPOINTS
 // ==========================================
 
+// ─── Sequential Booking ID Generator ─────────────────────────────────────────
+// Format: RY-YYYY-NNNN  e.g. RY-2026-0001, RY-2026-0002, ...
+// Queries the DB for the highest existing serial in the current year and
+// returns the next one. Thread-safe enough for the traffic volume of this app.
+async function getNextBookingId() {
+    const year = new Date().getFullYear();
+    const prefix = `RY-${year}-`;
+
+    // Fetch all booking_ids that match the current year's sequential format
+    const { data, error } = await supabase
+        .from('bookings')
+        .select('booking_id')
+        .like('booking_id', `${prefix}%`);
+
+    let maxSeq = 0;
+    if (data && data.length > 0) {
+        data.forEach(row => {
+            // Match only the clean sequential format RY-YYYY-NNNN (4+ digits, no extra dashes)
+            const match = (row.booking_id || '').match(/^RY-\d{4}-(\d+)$/);
+            if (match) {
+                const seq = parseInt(match[1], 10);
+                if (seq > maxSeq) maxSeq = seq;
+            }
+        });
+    }
+
+    const nextSeq = maxSeq + 1;
+    // Zero-pad to 4 digits (grows automatically beyond 9999: 10000, 10001, ...)
+    const paddedSeq = String(nextSeq).padStart(4, '0');
+    return `${prefix}${paddedSeq}`;
+}
+
+// GET /api/bookings/next-id  — Admin panel calls this to get the next ID before saving
+app.get('/api/bookings/next-id', authenticateToken, async (req, res) => {
+    try {
+        if (!supabase) return res.status(500).json({ error: 'Supabase not initialized' });
+        const nextId = await getNextBookingId();
+        res.json({ booking_id: nextId });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 // Create Booking Inquiry from Public page
 app.post('/api/bookings', async (req, res) => {
     const { packageName, name, phone, date, travelers, message } = req.body;
@@ -570,9 +613,7 @@ app.post('/api/bookings', async (req, res) => {
     try {
         if (!supabase) return res.status(500).json({ error: 'Supabase client not initialized' });
 
-        const namePrefix = (name || 'CUST').replace(/[^a-zA-Z]/g, '').slice(0, 3).toUpperCase() || 'RY';
-        const randomNum = Math.floor(100 + Math.random() * 899);
-        const autoBookingId = `RY-2026-${namePrefix}-${randomNum}`;
+        const autoBookingId = await getNextBookingId();
 
         const bookingData = {
             booking_id: autoBookingId,
