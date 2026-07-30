@@ -1300,8 +1300,17 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
 
         // 3. Billing Info Side-by-Side Cards
         const cardY = 175;
-        const cardHeight = 70;
         
+        // Measure dynamic heights for Name and Package Name to prevent overlapping and overflow
+        doc.font('Helvetica-Bold').fontSize(10);
+        const leftNameHeight = doc.heightOfString(bill.customer_name || 'Anonymous', { width: 210 });
+        const rightNameHeight = doc.heightOfString(bill.package_name || 'Yatra Package', { width: 220 });
+
+        // Calculate cardHeight (Title padding: 10 + 12, spacing: 4, dynamic name: height, Phone & Email lines: 25, padding bottom: 10)
+        const calculatedLeftHeight = 10 + 12 + leftNameHeight + 4 + 25 + 10;
+        const calculatedRightHeight = 10 + 12 + rightNameHeight + 4 + 25 + 10;
+        const cardHeight = Math.max(calculatedLeftHeight, calculatedRightHeight, 70);
+
         // Left Card (Billed To)
         doc.save()
            .fillColor(lightBg)
@@ -1321,12 +1330,15 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
         doc.fillColor(darkTextColor)
            .font('Helvetica-Bold')
            .fontSize(10)
-           .text(bill.customer_name, 62, cardY + 24, { width: 210, ellipsis: true })
-           .font('Helvetica')
+           .text(bill.customer_name || 'Anonymous', 62, cardY + 24, { width: 210 });
+
+        const leftNextY = doc.y + 4; // Dynamic position below name
+
+        doc.font('Helvetica')
            .fontSize(8.5)
            .fillColor(lightTextColor)
-           .text(`Phone: ${bill.customer_phone}`, 62, cardY + 38)
-           .text(`Email: ${bill.customer_email || 'N/A'}`, 62, cardY + 49);
+           .text(`Phone: ${bill.customer_phone || 'N/A'}`, 62, leftNextY)
+           .text(`Email: ${bill.customer_email || 'N/A'}`, 62, leftNextY + 11);
 
         // Right Card (Yatra Details)
         doc.save()
@@ -1348,15 +1360,18 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
         doc.fillColor(darkTextColor)
            .font('Helvetica-Bold')
            .fontSize(10)
-           .text(bill.package_name, 312, cardY + 24, { width: 220, ellipsis: true })
-           .font('Helvetica')
+           .text(bill.package_name || 'Yatra Package', 312, cardY + 24, { width: 220 });
+
+        const rightNextY = doc.y + 4; // Dynamic position below package name
+
+        doc.font('Helvetica')
            .fontSize(8.5)
            .fillColor(lightTextColor)
-           .text(`Group Size: ${bill.group_size} Pax`, 312, cardY + 38)
-           .text(`Reporting Date: ${startDateStr}`, 312, cardY + 49);
+           .text(`Group Size: ${bill.group_size || 1} Pax`, 312, rightNextY)
+           .text(`Reporting Date: ${startDateStr}`, 312, rightNextY + 11);
 
         // 4. Booking Charges Table
-        const tableY = 265;
+        const tableY = cardY + cardHeight + 20;
         doc.fillColor(primaryColor)
            .font('Helvetica-Bold')
            .fontSize(10.5)
