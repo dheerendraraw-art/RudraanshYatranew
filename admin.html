@@ -357,10 +357,10 @@
                                         <i class="fa-solid fa-pen-to-square" style="color:var(--color-gold);"></i> Article Content
                                     </label>
                                     <!-- Modern Rich Editor Wrapper -->
-                                    <div class="rich-editor-wrap" style="border:1.5px solid rgba(212,175,55,0.5); border-radius:10px; overflow:hidden; box-shadow:0 4px 24px rgba(0,0,0,0.18); background:#1a2234;">
+                                    <div class="rich-editor-wrap" style="border:1.5px solid rgba(212,175,55,0.5); border-radius:10px; overflow:visible; box-shadow:0 4px 24px rgba(0,0,0,0.18); background:#1a2234; position:relative;">
 
                                         <!-- Toolbar Row 1: Text Formatting -->
-                                        <div class="rich-editor-toolbar-v2" style="display:flex; flex-wrap:wrap; align-items:center; gap:2px; padding:8px 10px; background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%); border-bottom:1px solid rgba(212,175,55,0.2);">
+                                        <div class="rich-editor-toolbar-v2" style="display:flex; flex-wrap:wrap; align-items:center; gap:2px; padding:8px 10px; background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%); border-bottom:1px solid rgba(212,175,55,0.2); position:sticky; top:0; z-index:100; border-top-left-radius:9px; border-top-right-radius:9px;">
 
                                             <!-- Group: Text Style -->
                                             <div class="editor-btn-group" style="display:flex; gap:2px; background:rgba(255,255,255,0.04); border-radius:7px; padding:3px;">
@@ -468,11 +468,11 @@
                                              class="rte-content-area"
                                              data-placeholder="Begin writing your Himalayan story here... Share the journey, the peaks, the people."
                                              oninput="updateWordCount()"
-                                             style="min-height:320px; background:#fff; color:#1e293b; padding:20px 24px; overflow-y:auto; line-height:1.8; font-size:15px; font-family:'Plus Jakarta Sans',sans-serif; outline:none;">
+                                             style="min-height:320px; max-height:480px; background:#fff; color:#1e293b; padding:20px 24px; overflow-y:auto; line-height:1.8; font-size:15px; font-family:'Plus Jakarta Sans',sans-serif; outline:none;">
                                         </div>
 
                                         <!-- Footer: word count + hint -->
-                                        <div style="display:flex; justify-content:space-between; align-items:center; padding:7px 14px; background:#0f172a; border-top:1px solid rgba(212,175,55,0.15);">
+                                        <div style="display:flex; justify-content:space-between; align-items:center; padding:7px 14px; background:#0f172a; border-top:1px solid rgba(212,175,55,0.15); border-bottom-left-radius:9px; border-bottom-right-radius:9px;">
                                             <span style="font-size:11px; color:#475569; font-style:italic;">
                                                 <i class="fa-regular fa-lightbulb" style="color:rgba(212,175,55,0.6); margin-right:4px;"></i>
                                                 Tip: Select text and click a formatting button to apply styles.
