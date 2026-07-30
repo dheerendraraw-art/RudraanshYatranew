@@ -1185,13 +1185,15 @@ app.post('/api/billing/:id/payment', authenticateToken, async (req, res) => {
             paymentType: paymentType || 'Second Installment'
         };
 
+        const discount = parseFloat(bill.discount || 0);
+        const netAmount = parseFloat(bill.total_package_amount) - discount;
         const updatedPayments = [...(bill.payments_received || []), newPayment];
         const totalPaid = updatedPayments.reduce((sum, p) => sum + p.amountPaid, 0);
-        const newBalance = Math.max(0, parseFloat(bill.total_package_amount) - totalPaid);
+        const newBalance = Math.max(0, netAmount - totalPaid);
 
         let newStatus = 'Pending';
         if (totalPaid > 0) {
-            newStatus = totalPaid >= parseFloat(bill.total_package_amount) ? 'Fully Paid' : 'Partially Paid';
+            newStatus = totalPaid >= netAmount ? 'Fully Paid' : 'Partially Paid';
         }
 
         const { data: updatedBill, error: updateErr } = await supabase
@@ -1287,7 +1289,6 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
 
         // Divider
         doc.moveTo(50, 98).lineTo(545, 98).strokeColor(borderCol).lineWidth(1.5).stroke();
-
         // 2. Invoice Meta Info
         doc.fillColor(primaryColor)
            .font('Helvetica-Bold')
@@ -1301,7 +1302,6 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
            .text(`Date:            ${new Date(bill.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`, 50, 139)
            .text(`Booking ID:   ${bill.booking_id}`, 50, 150);
 
-        // 3. Billing Info Side-by-Side Cards
         const cardY = 175;
         
         // Measure dynamic heights for Name and Package Name to prevent overlapping and overflow
@@ -1311,17 +1311,17 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
 
         // Calculate cardHeight (Title padding: 10 + 12, spacing: 4, dynamic name: height, Phone & Email lines: 25, padding bottom: 10)
         const calculatedLeftHeight = 10 + 12 + leftNameHeight + 4 + 25 + 10;
-        const calculatedRightHeight = 10 + 12 + rightNameHeight + 4 + 25 + 10;
+        const calculatedRightHeight = 10 + 12 + rightNameHeight + 4 + (bill.pickup_point ? 36 : 25) + 10;
         const cardHeight = Math.max(calculatedLeftHeight, calculatedRightHeight, 70);
 
         // Left Card (Billed To)
         doc.save()
            .fillColor(lightBg)
-           .rect(50, cardY, 235, cardHeight)
+           .rect(50, cardY, 245, cardHeight)
            .fill()
            .strokeColor(borderCol)
            .lineWidth(1)
-           .rect(50, cardY, 235, cardHeight)
+           .rect(50, cardY, 245, cardHeight)
            .stroke()
            .restore();
 
@@ -1368,10 +1368,13 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
         const rightNextY = doc.y + 4; // Dynamic position below package name
 
         doc.font('Helvetica')
-           .fontSize(8.5)
-           .fillColor(lightTextColor)
-           .text(`Group Size: ${bill.group_size || 1} Pax`, 312, rightNextY)
-           .text(`Reporting Date: ${startDateStr}`, 312, rightNextY + 11);
+            .fontSize(8.5)
+            .fillColor(lightTextColor)
+            .text(`Group Size: ${bill.group_size || 1} Pax`, 312, rightNextY)
+            .text(`Reporting Date: ${startDateStr}`, 312, rightNextY + 11);
+         if (bill.pickup_point) {
+             doc.text(`Pickup Point: ${bill.pickup_point}`, 312, rightNextY + 22);
+         }
 
         // 4. Booking Charges Table
         const tableY = cardY + cardHeight + 20;
@@ -1504,7 +1507,9 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
         // Right Column: Totals & Balance due Box
         let rightY = currentY + 15;
         const totalPaidSoFar = payments.reduce((sum, p) => sum + parseFloat(p.amountPaid || 0), 0);
-        const calculatedBalance = Math.max(0, parseFloat(bill.total_package_amount) - totalPaidSoFar);
+        const discount = parseFloat(bill.discount || 0);
+        const netAmount = parseFloat(bill.total_package_amount) - discount;
+        const calculatedBalance = Math.max(0, netAmount - totalPaidSoFar);
 
         doc.fillColor(darkTextColor)
            .fontSize(9)
@@ -1513,8 +1518,18 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
            .font('Helvetica-Bold')
            .text(`INR ${parseFloat(bill.total_package_amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 425, rightY, { align: 'right', width: 110 });
 
+        if (discount > 0) {
+            rightY += 16;
+            doc.fillColor('#dc2626')
+               .font('Helvetica')
+               .text('Discount:', 320, rightY)
+               .font('Helvetica-Bold')
+               .text(`- INR ${discount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 425, rightY, { align: 'right', width: 110 });
+        }
+
         rightY += 16;
-        doc.font('Helvetica')
+        doc.fillColor(darkTextColor)
+           .font('Helvetica')
            .text('Total Amount Paid:', 320, rightY)
            .font('Helvetica-Bold')
            .text(`INR ${totalPaidSoFar.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 425, rightY, { align: 'right', width: 110 });
