@@ -1264,7 +1264,7 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
             return res.status(404).send('Invoice not found');
         }
 
-        const doc = new PDFDocument({ margin: 50, size: 'A4' });
+        const doc = new PDFDocument({ margin: 0, size: 'A4' });
         const chunks = [];
         doc.on('data', chunk => chunks.push(chunk));
         doc.on('end', () => {
@@ -1278,325 +1278,425 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
             res.send(pdfBuffer);
         });
 
-        const primaryColor = '#072654';
-        const accentColor = '#d4af37';
-        const darkTextColor = '#1f2937';
-        const lightTextColor = '#4b5563';
-        const tableHeaderBg = '#072654';
-        const lightBg = '#f8fafc';
-        const borderCol = '#e2e8f0';
+        // ─── DESIGN TOKENS ───────────────────────────────────────────────────
+        const navy      = '#0B1F3A';   // Deep navy – header bg, headings
+        const gold      = '#C9A84C';   // Rich gold – accents & highlights
+        const goldLight = '#F5E9C8';   // Pale gold – balance-due box bg
+        const white     = '#FFFFFF';
+        const ink       = '#1A2742';   // Dark body text
+        const slate     = '#5A6A7E';   // Muted body text / labels
+        const silver    = '#E8EDF4';   // Light rule / row separator
+        const rowAlt    = '#F7F9FC';   // Alternating table row bg
+        const redAccent = '#C0392B';   // Discount / negative amount
+        const greenText = '#1A6B3A';   // Paid amounts
 
-        // 1. Header with Logo & Brand details
+        const pageW = 595.28;
+        const pageH = 841.89;
+        const gutter = 40;
+        const contentW = pageW - gutter * 2;
+
+        // ─── HELPER FUNCTIONS ─────────────────────────────────────────────────
+        const drawRoundRect = (x, y, w, h, r, fillColor, strokeColor, lineW = 0.75) => {
+            doc.save();
+            if (fillColor) doc.fillColor(fillColor);
+            if (strokeColor) doc.strokeColor(strokeColor).lineWidth(lineW);
+            doc.roundedRect(x, y, w, h, r);
+            if (fillColor && strokeColor) doc.fillAndStroke();
+            else if (fillColor) doc.fill();
+            else if (strokeColor) doc.stroke();
+            doc.restore();
+        };
+
+        const drawRect = (x, y, w, h, fillColor, strokeColor, lineW = 0.75) => {
+            doc.save();
+            if (fillColor) doc.fillColor(fillColor);
+            if (strokeColor) doc.strokeColor(strokeColor).lineWidth(lineW);
+            doc.rect(x, y, w, h);
+            if (fillColor && strokeColor) doc.fillAndStroke();
+            else if (fillColor) doc.fill();
+            else if (strokeColor) doc.stroke();
+            doc.restore();
+        };
+
+        const hrLine = (y, color = silver, lw = 0.75) => {
+            doc.moveTo(gutter, y).lineTo(pageW - gutter, y)
+               .strokeColor(color).lineWidth(lw).stroke();
+        };
+
+        const fmt = (num, decimals = 2) =>
+            parseFloat(num || 0).toLocaleString('en-IN', { minimumFractionDigits: decimals });
+
+        // ─── 1. HEADER BAND ───────────────────────────────────────────────────
+        const headerH = 115;
+        drawRect(0, 0, pageW, headerH, navy, null);
+
+        // Gold accent stripe at very top
+        drawRect(0, 0, pageW, 4, gold, null);
+
+        // Logo
         const logoPath = path.join(__dirname, 'assets/images/logo.png');
         try {
             if (fs.existsSync(logoPath)) {
-                doc.image(logoPath, 50, 40, { width: 50 });
+                doc.image(logoPath, gutter, 18, { width: 60, height: 60 });
             }
-        } catch (imgErr) {
-            console.error('Failed to embed logo in PDF:', imgErr);
-        }
+        } catch (e) { /* skip */ }
 
-        // Title and tagline next to logo
-        doc.fillColor(primaryColor)
+        // Brand name
+        doc.fillColor(white)
            .font('Helvetica-Bold')
-           .fontSize(20)
-           .text('RUDRAANSH YATRA', 110, 45);
-        
-        doc.fillColor(accentColor)
+           .fontSize(22)
+           .text('RUDRAANSH YATRA', gutter + 72, 22);
+
+        doc.fillColor(gold)
            .font('Helvetica-Oblique')
            .fontSize(10)
-           .text('Connecting Souls to the Divine', 110, 68);
+           .text('Connecting Souls to the Divine', gutter + 72, 47);
 
-        // Address & Contacts (Right-aligned)
-        doc.fillColor(darkTextColor)
+        // Tagline separator line
+        doc.moveTo(gutter + 72, 62).lineTo(gutter + 72 + 170, 62)
+           .strokeColor(gold).lineWidth(0.5).stroke();
+
+        // Contact block on right
+        doc.fillColor('#A8BBCF')
            .font('Helvetica')
-           .fontSize(8.5)
-           .text('1st Floor Above Maniram Punetha & Sons,', 320, 40, { align: 'right', width: 225 })
-           .text('Simalgair Bazaar, Pithoragarh,', 320, 51, { align: 'right', width: 225 })
-           .text('Uttarakhand - 262501', 320, 62, { align: 'right', width: 225 })
-           .fillColor(primaryColor)
-           .font('Helvetica-Bold')
-           .text('Phone: +91 7617617651 | info@rudraanshyatra.com', 320, 73, { align: 'right', width: 225 });
-
-        // Divider
-        doc.moveTo(50, 98).lineTo(545, 98).strokeColor(borderCol).lineWidth(1.5).stroke();
-        // 2. Invoice Meta Info
-        doc.fillColor(primaryColor)
-           .font('Helvetica-Bold')
-           .fontSize(13)
-           .text('BILL OF SUPPLY (NON-GST)', 50, 110);
-
-        doc.fillColor(darkTextColor)
-           .font('Helvetica')
-           .fontSize(8.5)
-           .text(`Invoice No:  BILL-${bill.booking_id}`, 50, 128)
-           .text(`Date:            ${new Date(bill.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`, 50, 139)
-           .text(`Booking ID:   ${bill.booking_id}`, 50, 150);
-
-        const cardY = 175;
-        
-        // Measure dynamic heights for Name and Package Name to prevent overlapping and overflow
-        doc.font('Helvetica-Bold').fontSize(10);
-        const leftNameHeight = doc.heightOfString(bill.customer_name || 'Anonymous', { width: 210 });
-        const rightNameHeight = doc.heightOfString(bill.package_name || 'Yatra Package', { width: 220 });
-
-        // Calculate cardHeight (Title padding: 10 + 12, spacing: 4, dynamic name: height, Phone & Email lines: 25, padding bottom: 10)
-        const calculatedLeftHeight = 10 + 12 + leftNameHeight + 4 + 25 + 10;
-        const calculatedRightHeight = 10 + 12 + rightNameHeight + 4 + (bill.pickup_point ? 36 : 25) + 10;
-        const cardHeight = Math.max(calculatedLeftHeight, calculatedRightHeight, 70);
-
-        // Left Card (Billed To)
-        doc.save()
-           .fillColor(lightBg)
-           .rect(50, cardY, 245, cardHeight)
-           .fill()
-           .strokeColor(borderCol)
-           .lineWidth(1)
-           .rect(50, cardY, 245, cardHeight)
-           .stroke()
-           .restore();
-
-        doc.fillColor(primaryColor)
-           .font('Helvetica-Bold')
-           .fontSize(9.5)
-           .text('BILLED TO', 62, cardY + 10);
-
-        doc.fillColor(darkTextColor)
-           .font('Helvetica-Bold')
-           .fontSize(10)
-           .text(bill.customer_name || 'Anonymous', 62, cardY + 24, { width: 210 });
-
-        const leftNextY = doc.y + 4; // Dynamic position below name
-
-        doc.font('Helvetica')
-           .fontSize(8.5)
-           .fillColor(lightTextColor)
-           .text(`Phone: ${bill.customer_phone || 'N/A'}`, 62, leftNextY)
-           .text(`Email: ${bill.customer_email || 'N/A'}`, 62, leftNextY + 11);
-
-        // Right Card (Yatra Details)
-        doc.save()
-           .fillColor(lightBg)
-           .rect(300, cardY, 245, cardHeight)
-           .fill()
-           .strokeColor(borderCol)
-           .lineWidth(1)
-           .rect(300, cardY, 245, cardHeight)
-           .stroke()
-           .restore();
-
-        doc.fillColor(primaryColor)
-           .font('Helvetica-Bold')
-           .fontSize(9.5)
-           .text('YATRA & TOUR DETAILS', 312, cardY + 10);
-
-        const startDateStr = new Date(bill.tour_start_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-        doc.fillColor(darkTextColor)
-           .font('Helvetica-Bold')
-           .fontSize(10)
-           .text(bill.package_name || 'Yatra Package', 312, cardY + 24, { width: 220 });
-
-        const rightNextY = doc.y + 4; // Dynamic position below package name
-
-        doc.font('Helvetica')
-            .fontSize(8.5)
-            .fillColor(lightTextColor)
-            .text(`Group Size: ${bill.group_size || 1} Pax`, 312, rightNextY)
-            .text(`Reporting Date: ${startDateStr}`, 312, rightNextY + 11);
-         if (bill.pickup_point) {
-             doc.text(`Pickup Point: ${bill.pickup_point}`, 312, rightNextY + 22);
-         }
-
-        // 4. Booking Charges Table
-        const tableY = cardY + cardHeight + 20;
-        doc.fillColor(primaryColor)
-           .font('Helvetica-Bold')
-           .fontSize(10.5)
-           .text('BOOKING CHARGES', 50, tableY);
-
-        // Header Row
-        doc.save()
-           .fillColor(primaryColor)
-           .rect(50, tableY + 15, 495, 20)
-           .fill()
-           .restore();
-        
-        doc.fillColor('#FFFFFF')
-           .fontSize(8.5)
-           .font('Helvetica-Bold')
-           .text('Package Description', 62, tableY + 21)
-           .text('Total Rate (INR)', 425, tableY + 21, { align: 'right', width: 110 });
-
-        // Item Row
-        doc.fillColor(darkTextColor)
-           .font('Helvetica')
-           .fontSize(9)
-           .text(`Expedition Package: ${bill.package_name} (Group of ${bill.group_size} Pax)`, 62, tableY + 44, { width: 350 })
-           .font('Helvetica-Bold')
-           .text(`INR ${parseFloat(bill.total_package_amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 425, tableY + 44, { align: 'right', width: 110 });
-
-        // Border below row
-        doc.moveTo(50, tableY + 62).lineTo(545, tableY + 62).strokeColor(borderCol).lineWidth(1).stroke();
-
-        // 5. Payments Received History Table
-        const payY = tableY + 80;
-        doc.fillColor(primaryColor)
-           .font('Helvetica-Bold')
-           .fontSize(10.5)
-           .text('PAYMENTS RECEIVED HISTORY', 50, payY);
-
-        // Header Row
-        doc.save()
-           .fillColor(primaryColor)
-           .rect(50, payY + 15, 495, 20)
-           .fill()
-           .restore();
-
-        doc.fillColor('#FFFFFF')
-           .fontSize(8.5)
-           .font('Helvetica-Bold')
-           .text('Receipt ID', 62, payY + 21)
-           .text('Payment Date', 180, payY + 21)
-           .text('Payment Type', 270, payY + 21)
-           .text('Method', 370, payY + 21)
-           .text('Amount Received', 425, payY + 21, { align: 'right', width: 110 });
-
-        let currentY = payY + 44;
-        const payments = bill.payments_received || [];
-        doc.font('Helvetica').fontSize(8.5);
-
-        if (payments.length === 0) {
-            doc.fillColor(lightTextColor)
-               .text('No payment transactions logged yet.', 62, currentY);
-            currentY += 18;
-        } else {
-            payments.forEach((payment) => {
-                const dateVal = new Date(payment.date).toLocaleDateString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit' });
-                doc.fillColor(darkTextColor)
-                   .text(payment.receiptId, 62, currentY)
-                   .text(dateVal, 180, currentY)
-                   .text(payment.paymentType || 'Token Advance', 270, currentY)
-                   .text(payment.paymentMode || 'UPI', 370, currentY)
-                   .font('Helvetica-Bold')
-                   .text(`INR ${parseFloat(payment.amountPaid).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 425, currentY, { align: 'right', width: 110 })
-                   .font('Helvetica');
-                
-                currentY += 18;
-            });
-        }
-
-        // Border below payments
-        doc.moveTo(50, currentY - 5).lineTo(545, currentY - 5).strokeColor(borderCol).lineWidth(1).stroke();
-
-        // 6. Side-by-Side Totals & Terms Section
-        currentY += 15;
-
-        // Left Column: Terms & Conditions
-        doc.fillColor(primaryColor)
-           .font('Helvetica-Bold')
-           .fontSize(8.5)
-           .text('TERMS & CONDITIONS', 50, currentY);
-
-        const boxY = currentY + 12;
-        const boxHeight = 125;
-        const boxWidth = 250;
-        doc.save()
-           .fillColor(lightBg)
-           .rect(50, boxY, boxWidth, boxHeight)
-           .fill()
-           .strokeColor(borderCol)
-           .lineWidth(1)
-           .rect(50, boxY, boxWidth, boxHeight)
-           .stroke()
-           .restore();
-
-        const shortTerms = [
-            { title: 'Conduct', desc: 'Safety rules violators can be removed without refund.' },
-            { title: 'Damage', desc: 'Any loss/damage to hotels or homestays is chargeable.' },
-            { title: 'Belongings', desc: 'Rudraansh Yatra is not responsible for loss/theft of items.' },
-            { title: 'Delays', desc: 'Not liable for delays/changes due to weather/landslides.' },
-            { title: 'Amenities', desc: 'Hot water & other facilities availability varies by location.' },
-            { title: 'Itinerary', desc: 'Plans subject to change due to weather or safety.' },
-            { title: 'Booking', desc: 'All confirmed bookings are non-refundable/non-cancellable.' },
-            { title: 'Cleanliness', desc: 'Maintain cleanliness and cooperate with team members.' },
-            { title: 'Spirit', desc: 'Travel responsibly, respect others, and enjoy your journey.' }
-        ];
-
-        let termItemY = boxY + 6;
-        doc.fontSize(5.5).lineGap(0.6);
-        shortTerms.forEach(term => {
-            doc.fillColor(primaryColor)
-               .font('Helvetica-Bold')
-               .text(`${term.title}: `, 58, termItemY, { continued: true, width: boxWidth - 16 })
-               .fillColor(darkTextColor)
-               .font('Helvetica')
-               .text(term.desc, { width: boxWidth - 16 });
-
-            termItemY += doc.heightOfString(`${term.title}: ${term.desc}`, { width: boxWidth - 16, lineGap: 0.6 }) + 2.5;
-        });
-
-        // Right Column: Totals & Balance due Box
-        let rightY = currentY + 15;
-        const totalPaidSoFar = payments.reduce((sum, p) => sum + parseFloat(p.amountPaid || 0), 0);
-        const discount = parseFloat(bill.discount || 0);
-        const netAmount = parseFloat(bill.total_package_amount) - discount;
-        const calculatedBalance = Math.max(0, netAmount - totalPaidSoFar);
-
-        doc.fillColor(darkTextColor)
-           .fontSize(9)
-           .font('Helvetica')
-           .text('Total Package Price:', 320, rightY)
-           .font('Helvetica-Bold')
-           .text(`INR ${parseFloat(bill.total_package_amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 425, rightY, { align: 'right', width: 110 });
-
-        if (discount > 0) {
-            rightY += 16;
-            doc.fillColor('#dc2626')
-               .font('Helvetica')
-               .text('Discount:', 320, rightY)
-               .font('Helvetica-Bold')
-               .text(`- INR ${discount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 425, rightY, { align: 'right', width: 110 });
-        }
-
-        rightY += 16;
-        doc.fillColor(darkTextColor)
-           .font('Helvetica')
-           .text('Total Amount Paid:', 320, rightY)
-           .font('Helvetica-Bold')
-           .text(`INR ${totalPaidSoFar.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 425, rightY, { align: 'right', width: 110 });
-
-        rightY += 20;
-        // Balance box
-        doc.save()
-           .fillColor(accentColor)
-           .opacity(0.12)
-           .rect(310, rightY - 6, 235, 26)
-           .fill()
-           .restore();
-
-        doc.save()
-           .strokeColor(accentColor)
-           .lineWidth(1)
-           .rect(310, rightY - 6, 235, 26)
-           .stroke()
-           .restore();
-        
-        doc.fillColor('#b2890f')
-           .fontSize(9.5)
-           .font('Helvetica-Bold')
-           .text('BALANCE DUE:', 320, rightY)
-           .text(`INR ${calculatedBalance.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`, 425, rightY, { align: 'right', width: 110 });
-
-        // 7. Footer disclaimers at the bottom of Page 1
-        doc.fillColor(lightTextColor)
-           .font('Helvetica-Oblique')
            .fontSize(7.5)
-           .text('This is a computer generated invoice and requires no physical signature.', 50, 712, { align: 'center', width: 495 });
+           .text('1st Floor Above Maniram Punetha & Sons,', pageW - gutter - 220, 20, { align: 'right', width: 220 })
+           .text('Simalgair Bazaar, Pithoragarh, Uttarakhand – 262501', pageW - gutter - 220, 31, { align: 'right', width: 220 });
 
-        doc.fillColor(primaryColor)
+        doc.fillColor(gold)
+           .font('Helvetica-Bold')
+           .fontSize(8)
+           .text('+91 7617617651', pageW - gutter - 220, 46, { align: 'right', width: 220 })
+           .fillColor('#A8BBCF')
+           .font('Helvetica')
+           .fontSize(7.5)
+           .text('info@rudraanshyatra.com', pageW - gutter - 220, 57, { align: 'right', width: 220 })
+           .text('www.rudraanshyatra.com', pageW - gutter - 220, 68, { align: 'right', width: 220 });
+
+        // Invoice type badge bottom of header
+        doc.save();
+        doc.roundedRect(gutter, 82, 175, 20, 4).fillColor('#1D3557').fill();
+        doc.restore();
+        doc.fillColor(gold)
+           .font('Helvetica-Bold')
+           .fontSize(8)
+           .text('BILL OF SUPPLY  ·  NON-GST INVOICE', gutter + 8, 87.5);
+
+        // Invoice number & date on right side of header bar
+        doc.fillColor('#A8BBCF')
+           .font('Helvetica')
+           .fontSize(7.5)
+           .text(`Invoice No: BILL-${bill.booking_id}`, pageW - gutter - 220, 82, { align: 'right', width: 220 })
+           .text(`Date: ${new Date(bill.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`, pageW - gutter - 220, 93, { align: 'right', width: 220 });
+
+        // ─── 2. BOOKING ID RIBBON ─────────────────────────────────────────────
+        const ribbonY = headerH;
+        drawRect(0, ribbonY, pageW, 26, '#F0F4FA', null);
+        doc.moveTo(0, ribbonY).lineTo(pageW, ribbonY).strokeColor(silver).lineWidth(1).stroke();
+        doc.moveTo(0, ribbonY + 26).lineTo(pageW, ribbonY + 26).strokeColor(silver).lineWidth(1).stroke();
+
+        doc.fillColor(slate)
+           .font('Helvetica')
+           .fontSize(8)
+           .text('BOOKING REFERENCE:', gutter, ribbonY + 8);
+
+        doc.fillColor(navy)
+           .font('Helvetica-Bold')
+           .fontSize(9)
+           .text(bill.booking_id, gutter + 115, ribbonY + 7);
+
+        // Dot separator
+        doc.fillColor(silver)
+           .circle(gutter + 285, ribbonY + 13, 2).fill();
+
+        doc.fillColor(slate)
+           .font('Helvetica')
+           .fontSize(8)
+           .text('PAYMENT STATUS:', gutter + 298, ribbonY + 8);
+
+        const statusLabel = bill.payment_status || 'Pending';
+        const statusColor = statusLabel === 'Fully Paid' ? '#1A6B3A' : statusLabel === 'Partially Paid' ? '#92400E' : '#7C3AED';
+        const statusBg    = statusLabel === 'Fully Paid' ? '#D1FAE5' : statusLabel === 'Partially Paid' ? '#FEF3C7' : '#EDE9FE';
+        const statusW     = doc.widthOfString(statusLabel, { fontSize: 8 }) + 16;
+
+        drawRoundRect(gutter + 385, ribbonY + 5, statusW, 16, 3, statusBg, null);
+        doc.fillColor(statusColor)
+           .font('Helvetica-Bold')
+           .fontSize(7.5)
+           .text(statusLabel, gutter + 393, ribbonY + 9);
+
+        // ─── 3. CLIENT + TOUR CARDS ───────────────────────────────────────────
+        const cardsY = ribbonY + 26 + 16;
+        const halfW  = (contentW - 14) / 2;
+
+        // Left card – Billed To
+        drawRoundRect(gutter, cardsY, halfW, 90, 6, white, silver, 0.75);
+
+        // Gold left border accent
+        drawRect(gutter, cardsY, 3, 90, gold, null);
+
+        doc.fillColor(slate)
            .font('Helvetica-Bold')
            .fontSize(7)
-           .text('This is a non-GST Bill of Supply issued by a non-registered supplier operating within the statutory threshold exemption limits.', 50, 723, { align: 'center', width: 495 });
+           .text('BILLED TO', gutter + 14, cardsY + 12);
+
+        doc.fillColor(navy)
+           .font('Helvetica-Bold')
+           .fontSize(13)
+           .text(bill.customer_name || 'Guest', gutter + 14, cardsY + 24, { width: halfW - 20 });
+
+        const afterNameY = doc.y + 4;
+        doc.fillColor(slate)
+           .font('Helvetica')
+           .fontSize(8)
+           .text(`📞  ${bill.customer_phone || 'N/A'}`, gutter + 14, afterNameY, { width: halfW - 20 });
+        doc.text(`✉  ${bill.customer_email || 'N/A'}`, gutter + 14, doc.y + 2, { width: halfW - 20 });
+
+        // Right card – Tour Details
+        const rightCardX = gutter + halfW + 14;
+        drawRoundRect(rightCardX, cardsY, halfW, 90, 6, white, silver, 0.75);
+        drawRect(rightCardX, cardsY, 3, 90, gold, null);
+
+        doc.fillColor(slate)
+           .font('Helvetica-Bold')
+           .fontSize(7)
+           .text('YATRA & TOUR DETAILS', rightCardX + 14, cardsY + 12);
+
+        doc.fillColor(navy)
+           .font('Helvetica-Bold')
+           .fontSize(12)
+           .text(bill.package_name || 'Yatra Package', rightCardX + 14, cardsY + 24, { width: halfW - 20 });
+
+        const afterPkgY = doc.y + 6;
+        const startDateStr = new Date(bill.tour_start_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+        doc.fillColor(slate)
+           .font('Helvetica')
+           .fontSize(8)
+           .text(`Group Size:`, rightCardX + 14, afterPkgY, { continued: true, width: halfW - 20 })
+           .fillColor(ink).font('Helvetica-Bold')
+           .text(`  ${bill.group_size || 1} Pax`);
+
+        doc.fillColor(slate).font('Helvetica').fontSize(8)
+           .text(`Reporting Date:`, rightCardX + 14, doc.y + 2, { continued: true, width: halfW - 20 })
+           .fillColor(ink).font('Helvetica-Bold')
+           .text(`  ${startDateStr}`);
+
+        if (bill.pickup_point) {
+            doc.fillColor(slate).font('Helvetica').fontSize(8)
+               .text(`Pickup:`, rightCardX + 14, doc.y + 2, { continued: true, width: halfW - 20 })
+               .fillColor(ink).font('Helvetica-Bold')
+               .text(`  ${bill.pickup_point}`);
+        }
+
+        // ─── 4. BOOKING CHARGES TABLE ─────────────────────────────────────────
+        const tblY = cardsY + 90 + 20;
+
+        // Section heading with gold rule
+        doc.fillColor(navy).font('Helvetica-Bold').fontSize(10)
+           .text('BOOKING CHARGES', gutter, tblY);
+        doc.moveTo(gutter + 118, tblY + 7).lineTo(pageW - gutter, tblY + 7)
+           .strokeColor(gold).lineWidth(1).stroke();
+
+        // Table header
+        const thY = tblY + 16;
+        drawRect(gutter, thY, contentW, 22, navy, null);
+
+        doc.fillColor(white).font('Helvetica-Bold').fontSize(8.5)
+           .text('Package Description', gutter + 12, thY + 7)
+           .text('Rate (INR)', pageW - gutter - 12, thY + 7, { align: 'right', width: 100 });
+
+        // Table row
+        const trY = thY + 22;
+        drawRect(gutter, trY, contentW, 28, rowAlt, silver, 0.5);
+
+        doc.fillColor(ink).font('Helvetica').fontSize(9)
+           .text(`Expedition Package: ${bill.package_name} (Group of ${bill.group_size} Pax)`, gutter + 12, trY + 9, { width: contentW - 130 });
+        doc.fillColor(navy).font('Helvetica-Bold').fontSize(9)
+           .text(`₹ ${fmt(bill.total_package_amount)}`, pageW - gutter - 12, trY + 9, { align: 'right', width: 100 });
+
+        hrLine(trY + 28, silver, 0.5);
+
+        // ─── 5. PAYMENT HISTORY TABLE ─────────────────────────────────────────
+        const paySecY = trY + 28 + 18;
+
+        doc.fillColor(navy).font('Helvetica-Bold').fontSize(10)
+           .text('PAYMENT HISTORY', gutter, paySecY);
+        doc.moveTo(gutter + 108, paySecY + 7).lineTo(pageW - gutter, paySecY + 7)
+           .strokeColor(gold).lineWidth(1).stroke();
+
+        const phY = paySecY + 16;
+        drawRect(gutter, phY, contentW, 22, navy, null);
+
+        const phCols = [
+            { label: 'Receipt ID',      x: gutter + 12,  w: 130 },
+            { label: 'Date',            x: gutter + 150,  w: 75  },
+            { label: 'Type',            x: gutter + 228,  w: 110 },
+            { label: 'Method',          x: gutter + 340,  w: 70  },
+            { label: 'Amount (INR)',     x: pageW - gutter - 12, w: 100, align: 'right' }
+        ];
+
+        phCols.forEach(col => {
+            doc.fillColor(white).font('Helvetica-Bold').fontSize(8)
+               .text(col.label, col.x, phY + 7, { width: col.w, align: col.align || 'left' });
+        });
+
+        const payments = bill.payments_received || [];
+        let curY = phY + 22;
+
+        if (payments.length === 0) {
+            drawRect(gutter, curY, contentW, 24, rowAlt, silver, 0.5);
+            doc.fillColor(slate).font('Helvetica-Oblique').fontSize(8.5)
+               .text('No payment transactions logged yet.', gutter + 12, curY + 7);
+            curY += 24;
+        } else {
+            payments.forEach((pay, idx) => {
+                const rowBg = idx % 2 === 0 ? white : rowAlt;
+                drawRect(gutter, curY, contentW, 22, rowBg, silver, 0.3);
+
+                const payDate = pay.date
+                    ? new Date(pay.date).toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' })
+                    : '—';
+
+                doc.fillColor(ink).font('Helvetica').fontSize(7.8)
+                   .text(pay.receiptId || '—',           gutter + 12,  curY + 7, { width: 130 })
+                   .text(payDate,                         gutter + 150, curY + 7, { width: 75  })
+                   .text(pay.paymentType || 'Advance',    gutter + 228, curY + 7, { width: 110 })
+                   .text(pay.paymentMode  || 'UPI',       gutter + 340, curY + 7, { width: 70  });
+
+                doc.fillColor(greenText).font('Helvetica-Bold').fontSize(8)
+                   .text(`₹ ${fmt(pay.amountPaid)}`, pageW - gutter - 12, curY + 7, { align: 'right', width: 100 });
+
+                curY += 22;
+            });
+        }
+        hrLine(curY, silver, 0.5);
+
+        // ─── 6. SUMMARY + TERMS (TWO COLUMNS) ────────────────────────────────
+        const summaryY = curY + 18;
+        const termColW = 230;
+        const summColW = contentW - termColW - 14;
+        const summColX = gutter + termColW + 14;
+
+        // --- Terms column ---
+        doc.fillColor(navy).font('Helvetica-Bold').fontSize(9)
+           .text('TERMS & CONDITIONS', gutter, summaryY);
+        doc.moveTo(gutter + 133, summaryY + 6).lineTo(gutter + termColW, summaryY + 6)
+           .strokeColor(gold).lineWidth(0.75).stroke();
+
+        const terms = [
+            { t: 'Conduct',      d: 'Safety rules violators can be removed without refund.' },
+            { t: 'Damage',       d: 'Any loss/damage to hotels or homestays is chargeable.' },
+            { t: 'Belongings',   d: 'We are not responsible for loss or theft of items.' },
+            { t: 'Delays',       d: 'Not liable for delays due to weather or landslides.' },
+            { t: 'Amenities',    d: 'Facilities availability varies by location.' },
+            { t: 'Itinerary',    d: 'Plans subject to change due to weather or safety.' },
+            { t: 'Booking',      d: 'Confirmed bookings are non-refundable/non-cancellable.' },
+            { t: 'Cleanliness',  d: 'Maintain cleanliness and cooperate with team members.' },
+            { t: 'Spirit',       d: 'Travel responsibly, respect others, enjoy the journey.' }
+        ];
+
+        const termBoxH = terms.length * 14 + 14;
+        drawRoundRect(gutter, summaryY + 12, termColW, termBoxH, 5, '#F7F9FC', silver, 0.5);
+
+        let termItemY = summaryY + 20;
+        terms.forEach(term => {
+            doc.fillColor(navy).font('Helvetica-Bold').fontSize(6.5)
+               .text(`${term.t}:`, gutter + 8, termItemY, { continued: true, width: termColW - 16 })
+               .fillColor(slate).font('Helvetica').fontSize(6.5)
+               .text(` ${term.d}`, { width: termColW - 16 });
+            termItemY += 14;
+        });
+
+        // --- Summary column ---
+        const totalPackage = parseFloat(bill.total_package_amount || 0);
+        const discount     = parseFloat(bill.discount || 0);
+        const netAmount    = totalPackage - discount;
+        const totalPaid    = payments.reduce((s, p) => s + parseFloat(p.amountPaid || 0), 0);
+        const balance      = Math.max(0, netAmount - totalPaid);
+
+        const summLineH = 22;
+        let sY = summaryY;
+
+        const drawSummaryRow = (label, value, labelCol, valCol, isBold = false) => {
+            doc.fillColor(slate).font(isBold ? 'Helvetica-Bold' : 'Helvetica').fontSize(8.5)
+               .text(label, summColX, sY, { width: summColW * 0.58 });
+            doc.fillColor(isBold ? navy : ink).font('Helvetica-Bold').fontSize(8.5)
+               .text(value, summColX + summColW * 0.58, sY, { align: 'right', width: summColW * 0.42 });
+            sY += summLineH;
+        };
+
+        drawSummaryRow('Package Price:', `₹ ${fmt(totalPackage)}`);
+        hrLine(sY - 6, silver, 0.4);
+
+        if (discount > 0) {
+            doc.fillColor(slate).font('Helvetica').fontSize(8.5)
+               .text('Discount:', summColX, sY, { width: summColW * 0.58 });
+            doc.fillColor(redAccent).font('Helvetica-Bold').fontSize(8.5)
+               .text(`– ₹ ${fmt(discount)}`, summColX + summColW * 0.58, sY, { align: 'right', width: summColW * 0.42 });
+            sY += summLineH;
+            hrLine(sY - 6, silver, 0.4);
+
+            doc.fillColor(slate).font('Helvetica').fontSize(8.5)
+               .text('Net Package Price:', summColX, sY, { width: summColW * 0.58 });
+            doc.fillColor(ink).font('Helvetica-Bold').fontSize(8.5)
+               .text(`₹ ${fmt(netAmount)}`, summColX + summColW * 0.58, sY, { align: 'right', width: summColW * 0.42 });
+            sY += summLineH;
+            hrLine(sY - 6, silver, 0.4);
+        }
+
+        doc.fillColor(slate).font('Helvetica').fontSize(8.5)
+           .text('Total Amount Paid:', summColX, sY, { width: summColW * 0.58 });
+        doc.fillColor(greenText).font('Helvetica-Bold').fontSize(8.5)
+           .text(`₹ ${fmt(totalPaid)}`, summColX + summColW * 0.58, sY, { align: 'right', width: summColW * 0.42 });
+        sY += summLineH + 6;
+
+        // Balance Due box – premium design
+        const balBoxH = 40;
+        // Outer shadow layer
+        drawRoundRect(summColX + 2, sY + 2, summColW, balBoxH, 6, '#D4B86A22', null);
+        // Main box
+        drawRoundRect(summColX, sY, summColW, balBoxH, 6, goldLight, gold, 1.5);
+
+        doc.fillColor('#7A5C00').font('Helvetica').fontSize(8)
+           .text('BALANCE DUE', summColX + 12, sY + 8);
+        doc.fillColor('#4A3500').font('Helvetica-Bold').fontSize(16)
+           .text(`₹ ${fmt(balance)}`, summColX + 12, sY + 18, { width: summColW - 24, align: 'right' });
+
+        // ─── 7. DECORATIVE MOUNTAIN DIVIDER ──────────────────────────────────
+        const footDivY = 760;
+        // Full-width thin gold line
+        doc.moveTo(0, footDivY).lineTo(pageW, footDivY)
+           .strokeColor(gold).lineWidth(0.75).stroke();
+
+        // Mountain silhouette (simple polygon)
+        doc.save()
+           .fillColor(navy)
+           .opacity(0.06)
+           .moveTo(gutter, footDivY)
+           .lineTo(gutter + 40, footDivY - 18)
+           .lineTo(gutter + 70, footDivY - 8)
+           .lineTo(gutter + 100, footDivY - 28)
+           .lineTo(gutter + 145, footDivY - 12)
+           .lineTo(gutter + 170, footDivY)
+           .fill()
+           .restore();
+
+        // ─── 8. FOOTER ────────────────────────────────────────────────────────
+        doc.fillColor(slate)
+           .font('Helvetica-Oblique')
+           .fontSize(7)
+           .text('This is a computer generated invoice and requires no physical signature.', 0, footDivY + 8, { align: 'center', width: pageW });
+
+        doc.fillColor(navy)
+           .font('Helvetica-Bold')
+           .fontSize(6.5)
+           .text('This is a non-GST Bill of Supply issued by a non-registered supplier operating within the statutory threshold exemption limits.', 0, footDivY + 20, { align: 'center', width: pageW });
+
+        // Page number badge
+        drawRoundRect(pageW / 2 - 24, footDivY + 33, 48, 14, 3, navy, null);
+        doc.fillColor(gold).font('Helvetica-Bold').fontSize(7)
+           .text('Page 1 of 1', pageW / 2 - 22, footDivY + 37);
 
         doc.end();
     } catch (err) {
