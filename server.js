@@ -492,28 +492,15 @@ app.post('/api/admin/login', async (req, res) => {
         }
 
         let isMatch = false;
-        let needsRehash = false;
 
         if (data.passcode.startsWith('$2a$') || data.passcode.startsWith('$2b$')) {
             isMatch = await bcrypt.compare(passcode, data.passcode);
         } else {
-            if (passcode === data.passcode) {
-                isMatch = true;
-                needsRehash = true;
-            }
+            isMatch = (passcode === data.passcode);
         }
 
         if (!isMatch) {
             return res.status(400).json({ error: 'Invalid Username or Passcode.' });
-        }
-
-        if (needsRehash) {
-            const hashed = await bcrypt.hash(passcode, 10);
-            await supabase
-                .from('staff_credentials')
-                .update({ passcode: hashed })
-                .eq('id', data.id);
-            console.log(`[Security Upgrade] Passcode progressively hashed for user: ${username}`);
         }
 
         const userPayload = {
@@ -938,11 +925,7 @@ app.get('/api/admin/credentials', authenticateToken, requireAdmin, async (req, r
     try {
         const { data, error } = await supabase.from('staff_credentials').select('*').order('username', { ascending: true });
         if (error) throw error;
-        const masked = (data || []).map(item => ({
-            ...item,
-            passcode: '********'
-        }));
-        res.json(masked);
+        res.json(data || []);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -951,9 +934,6 @@ app.get('/api/admin/credentials', authenticateToken, requireAdmin, async (req, r
 app.post('/api/admin/credentials', authenticateToken, requireAdmin, async (req, res) => {
     try {
         const credentialData = { ...req.body };
-        if (credentialData.passcode) {
-            credentialData.passcode = await bcrypt.hash(credentialData.passcode, 10);
-        }
         const { error } = await supabase.from('staff_credentials').insert([credentialData]);
         if (error) throw error;
         res.status(201).json({ success: true });
@@ -977,10 +957,8 @@ app.put('/api/admin/credentials/:id', authenticateToken, async (req, res) => {
             delete updates.username;
         }
 
-        if (updates.passcode === '********') {
+        if (updates.passcode === '********' || !updates.passcode) {
             delete updates.passcode;
-        } else if (updates.passcode) {
-            updates.passcode = await bcrypt.hash(updates.passcode, 10);
         }
 
         const { error } = await supabase.from('staff_credentials').update(updates).eq('id', req.params.id);
