@@ -170,8 +170,14 @@
             <!-- PANE 1: BOOKINGS -->
             <div id="pane-bookings" class="admin-tab-content-pane">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
-                    <h3 class="admin-form-title" style="margin-bottom: 0; border-bottom: none;"><i
-                            class="fa-solid fa-calendar-check" style="color: var(--color-gold);"></i> Travel Booking Inquiries</h3>
+                    <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap; flex-grow: 1;">
+                        <h3 class="admin-form-title" style="margin-bottom: 0; border-bottom: none;"><i
+                                class="fa-solid fa-calendar-check" style="color: var(--color-gold);"></i> Travel Booking Inquiries</h3>
+                        <div style="position: relative; width: 260px; max-width: 100%;">
+                            <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: rgba(212, 175, 55, 0.6); font-size: 13px;"></i>
+                            <input type="text" id="search-bookings-input" placeholder="Search name, phone, email..." oninput="applyBookingsFilters()" style="background: #1e293b; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: var(--border-radius-sm, 4px); padding: 8px 12px 8px 32px; font-size: 13px; outline: none; width: 100%; font-weight: 500; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); transition: border-color 0.2s ease;">
+                        </div>
+                    </div>
                     <div id="bookings-action-buttons-wrap" class="admin-only-action" style="display: flex; gap: 8px;">
                         <button type="button" id="export-bookings-btn" class="btn btn-primary admin-only-action" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-file-export"></i> Export CSV</button>
                         <button type="button" onclick="downloadBookingsTemplate()" id="bookings-template-btn" class="btn btn-secondary admin-only-action" style="border: 1px solid var(--color-gold); background: #1e293b; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: var(--color-gold); font-weight: 600;"><i class="fa-solid fa-download"></i> Template</button>
@@ -2334,91 +2340,7 @@
 
                 bookingsData = data || [];
                 refreshActiveTabStats();
-
-                const tbody = document.getElementById('bookings-table-body');
-                if (bookingsData.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="10" style="text-align: center; color: var(--color-slate);">No bookings registered yet in Supabase.</td></tr>`;
-                    return;
-                }
-
-                let html = '';
-                bookingsData.forEach((item, index) => {
-                    const bookingId = item.booking_id || generateAutoBookingId(item.name);
-                    if (!item.booking_id && item.id) {
-                        item.booking_id = bookingId;
-                        supabaseAdmin.from('bookings').update({ booking_id: bookingId }).eq('id', item.id).then();
-                    }
-
-                    const dateStr = item.travel_date ? new Date(item.travel_date).toLocaleDateString() : 'N/A';
-                    const createdStr = new Date(item.created_at).toLocaleDateString();
-
-                    // Render Booking Assignee Dropdown options
-                    let bookingAssigneeOptions = '<option value="" style="background: #111827; color: white;">Unassigned</option>';
-                    (usersList || []).forEach(user => {
-                        const selected = (item.assigned_to === user.id || item.user_id === user.id) ? 'selected' : '';
-                        const isMapped = mappedUserIds.has(user.id.toLowerCase());
-                        if (isMapped || selected) {
-                            const displayName = usersMap[user.id] || user.email;
-                            bookingAssigneeOptions += `<option value="${user.id}" ${selected} style="background: #111827; color: white;">${displayName}</option>`;
-                        }
-                    });
-
-                    const phoneVal = item.phone ? item.phone.trim() : '';
-                    const phoneClean = phoneVal.replace(/[^0-9]/g, '');
-                    const waPhone = phoneClean.length === 10 ? '91' + phoneClean : phoneClean;
-                    
-                    const phoneHtml = phoneClean ? `
-                        <div style="display: flex; flex-direction: column; gap: 3px; text-align: left;">
-                            <a href="tel:${phoneClean}" style="color: var(--color-gold); font-weight: 700; text-decoration: none; font-size: 13px; display: inline-flex; align-items: center; gap: 4px;">
-                                <i class="fa-solid fa-phone" style="font-size: 10px;"></i> ${phoneVal}
-                            </a>
-                            <div style="display: inline-flex; gap: 6px; margin-top: 2px;">
-                                <a href="tel:${phoneClean}" style="background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); padding: 2px 8px; border-radius: 12px; font-size: 11px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
-                                    <i class="fa-solid fa-phone"></i> Call
-                                </a>
-                                <a href="https://wa.me/${waPhone}?text=Namaste%20${encodeURIComponent(item.name || 'Guest')}!%20This%20is%20Rudraansh%20Yatra." target="_blank" style="background: rgba(37, 211, 102, 0.15); color: #25D366; border: 1px solid rgba(37, 211, 102, 0.3); padding: 2px 8px; border-radius: 12px; font-size: 11px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
-                                    <i class="fa-brands fa-whatsapp"></i> Chat
-                                </a>
-                            </div>
-                        </div>
-                    ` : '—';
-
-                    html += `
-                        <tr>
-                            <td data-label="Booking ID"><strong style="color: #0f172a; background: rgba(212, 175, 55, 0.18); border: 1px solid rgba(212, 175, 55, 0.4); padding: 4px 8px; border-radius: 6px; font-family: monospace; font-size: 12px; font-weight: 800; display: inline-block;">${bookingId}</strong></td>
-                            <td data-label="Package Name" class="mobile-detail-field"><strong>${item.package_name}</strong></td>
-                            <td data-label="Client Name">${item.name}</td>
-                            <td data-label="Phone/Email">${phoneHtml} ${item.email ? '<br><small>' + item.email + '</small>' : ''}</td>
-                            <td data-label="Travel Date">${dateStr}</td>
-                            <td data-label="Travelers" class="mobile-detail-field">${item.travelers}</td>
-                            <td data-label="Special Notes"><small>${item.message || '—'}</small></td>
-                            <td data-label="Assigned To">
-                                <select ${currentUserRole === "staff" ? "disabled" : ""} onchange="updateBookingField('${item.id}', 'assigned_to', this.value)" style="background: #1f2937; color: white; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 4px; font-size: 12px; width: 150px; cursor: pointer;">
-                                    ${bookingAssigneeOptions}
-                                </select>
-                            </td>
-                            <td data-label="Created" class="mobile-detail-field">${createdStr}</td>
-                            <td data-label="Actions">
-                                <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
-                                    ${currentUserRole !== 'staff' ? `
-                                    <button class="btn btn-primary" onclick="openCreateBillForBooking('${item.id}')" style="padding: 4px 8px; font-size: 11px; background-color: var(--color-gold); color: #111827; border: none; font-weight: bold; cursor: pointer; border-radius: 3px;" title="Create Bill">
-                                        <i class="fa-solid fa-file-invoice-dollar"></i> Create Bill
-                                    </button>` : ''}
-                                    <button class="btn btn-primary" onclick="startEditBooking(${index})" style="width: 28px; height: 28px; font-size: 12px; padding: 0; background-color: var(--color-gold); color: #111827; border: none; font-weight: bold; cursor: pointer; border-radius: 3px; display: inline-flex; align-items: center; justify-content: center;" title="Edit Booking">
-                                        <i class="fa-solid fa-pen"></i>
-                                    </button>
-                                    <button class="admin-btn-delete" onclick="deleteRecord('bookings', '${item.id}', fetchBookings)" style="width: 28px; height: 28px; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; margin: 0;">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
-                                </div>
-                                <div class="booking-toggle-details-btn" onclick="toggleMobileBookingDetails(this)" style="display: none; color: var(--color-gold); font-size: 11px; font-weight: 700; cursor: pointer; padding: 6px 0; border-top: 1px dashed rgba(255,255,255,0.05); margin-top: 8px; text-align: center; text-transform: uppercase; width: 100%;">
-                                    <i class="fa-solid fa-chevron-down"></i> Show Details
-                                </div>
-                            </td>
-                        </tr>
-                    `;
-                });
-                tbody.innerHTML = html;
+                window.applyBookingsFilters();
             } catch (err) {
                 console.error(err);
                 const tbody = document.getElementById('bookings-table-body');
@@ -2427,6 +2349,106 @@
                 }
             }
         }
+
+        window.applyBookingsFilters = function() {
+            const searchVal = document.getElementById('search-bookings-input') ? document.getElementById('search-bookings-input').value.trim().toLowerCase() : '';
+            
+            const filteredBookings = bookingsData.filter(item => {
+                const matchSearch = !searchVal ||
+                    (item.name || '').toLowerCase().includes(searchVal) ||
+                    (item.phone || '').toLowerCase().includes(searchVal) ||
+                    (item.email || '').toLowerCase().includes(searchVal);
+                return matchSearch;
+            });
+
+            const tbody = document.getElementById('bookings-table-body');
+            if (!tbody) return;
+
+            if (filteredBookings.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="10" style="text-align: center; color: var(--color-slate);">No bookings match your search.</td></tr>`;
+                return;
+            }
+
+            let html = '';
+            filteredBookings.forEach((item, index) => {
+                const globalIndex = bookingsData.findIndex(b => b.id === item.id);
+                const bookingId = item.booking_id || generateAutoBookingId(item.name);
+                if (!item.booking_id && item.id) {
+                    item.booking_id = bookingId;
+                    supabaseAdmin.from('bookings').update({ booking_id: bookingId }).eq('id', item.id).then();
+                }
+
+                const dateStr = item.travel_date ? new Date(item.travel_date).toLocaleDateString() : 'N/A';
+                const createdStr = new Date(item.created_at).toLocaleDateString();
+
+                // Render Booking Assignee Dropdown options
+                let bookingAssigneeOptions = '<option value="" style="background: #111827; color: white;">Unassigned</option>';
+                (usersList || []).forEach(user => {
+                    const selected = (item.assigned_to === user.id || item.user_id === user.id) ? 'selected' : '';
+                    const isMapped = mappedUserIds.has(user.id.toLowerCase());
+                    if (isMapped || selected) {
+                        const displayName = usersMap[user.id] || user.email;
+                        bookingAssigneeOptions += `<option value="${user.id}" ${selected} style="background: #111827; color: white;">${displayName}</option>`;
+                    }
+                });
+
+                const phoneVal = item.phone ? item.phone.trim() : '';
+                const phoneClean = phoneVal.replace(/[^0-9]/g, '');
+                const waPhone = phoneClean.length === 10 ? '91' + phoneClean : phoneClean;
+                
+                const phoneHtml = phoneClean ? `
+                    <div style="display: flex; flex-direction: column; gap: 3px; text-align: left;">
+                        <a href="tel:${phoneClean}" style="color: var(--color-gold); font-weight: 700; text-decoration: none; font-size: 13px; display: inline-flex; align-items: center; gap: 4px;">
+                            <i class="fa-solid fa-phone" style="font-size: 10px;"></i> ${phoneVal}
+                        </a>
+                        <div style="display: inline-flex; gap: 6px; margin-top: 2px;">
+                            <a href="tel:${phoneClean}" style="background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); padding: 2px 8px; border-radius: 12px; font-size: 11px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
+                                <i class="fa-solid fa-phone"></i> Call
+                            </a>
+                            <a href="https://wa.me/${waPhone}?text=Namaste%20${encodeURIComponent(item.name || 'Guest')}!%20This%20is%20Rudraansh%20Yatra." target="_blank" style="background: rgba(37, 211, 102, 0.15); color: #25D366; border: 1px solid rgba(37, 211, 102, 0.3); padding: 2px 8px; border-radius: 12px; font-size: 11px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
+                                <i class="fa-brands fa-whatsapp"></i> Chat
+                            </a>
+                        </div>
+                    </div>
+                ` : '—';
+
+                html += `
+                    <tr>
+                        <td data-label="Booking ID"><strong style="color: #0f172a; background: rgba(212, 175, 55, 0.18); border: 1px solid rgba(212, 175, 55, 0.4); padding: 4px 8px; border-radius: 6px; font-family: monospace; font-size: 12px; font-weight: 800; display: inline-block;">${bookingId}</strong></td>
+                        <td data-label="Package Name" class="mobile-detail-field"><strong>${item.package_name}</strong></td>
+                        <td data-label="Client Name">${item.name}</td>
+                        <td data-label="Phone/Email">${phoneHtml} ${item.email ? '<br><small>' + item.email + '</small>' : ''}</td>
+                        <td data-label="Travel Date">${dateStr}</td>
+                        <td data-label="Travelers" class="mobile-detail-field">${item.travelers}</td>
+                        <td data-label="Special Notes"><small>${item.message || '—'}</small></td>
+                        <td data-label="Assigned To">
+                            <select ${currentUserRole === "staff" ? "disabled" : ""} onchange="updateBookingField('${item.id}', 'assigned_to', this.value)" style="background: #1f2937; color: white; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 4px; font-size: 12px; width: 150px; cursor: pointer;">
+                                ${bookingAssigneeOptions}
+                            </select>
+                        </td>
+                        <td data-label="Created" class="mobile-detail-field">${createdStr}</td>
+                        <td data-label="Actions">
+                            <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+                                ${currentUserRole !== 'staff' ? `
+                                <button class="btn btn-primary" onclick="openCreateBillForBooking('${item.id}')" style="padding: 4px 8px; font-size: 11px; background-color: var(--color-gold); color: #111827; border: none; font-weight: bold; cursor: pointer; border-radius: 3px;" title="Create Bill">
+                                    <i class="fa-solid fa-file-invoice-dollar"></i> Create Bill
+                                </button>` : ''}
+                                <button class="btn btn-primary" onclick="startEditBooking(${globalIndex})" style="width: 28px; height: 28px; font-size: 12px; padding: 0; background-color: var(--color-gold); color: #111827; border: none; font-weight: bold; cursor: pointer; border-radius: 3px; display: inline-flex; align-items: center; justify-content: center;" title="Edit Booking">
+                                    <i class="fa-solid fa-pen"></i>
+                                </button>
+                                <button class="admin-btn-delete" onclick="deleteRecord('bookings', '${item.id}', fetchBookings)" style="width: 28px; height: 28px; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; margin: 0;">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </div>
+                            <div class="booking-toggle-details-btn" onclick="toggleMobileBookingDetails(this)" style="display: none; color: var(--color-gold); font-size: 11px; font-weight: 700; cursor: pointer; padding: 6px 0; border-top: 1px dashed rgba(255,255,255,0.05); margin-top: 8px; text-align: center; text-transform: uppercase; width: 100%;">
+                                <i class="fa-solid fa-chevron-down"></i> Show Details
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        };
 
         window.toggleMobileBookingDetails = function(btn) {
             const tr = btn.closest('tr');
