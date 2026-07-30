@@ -2079,6 +2079,59 @@ app.use((err, req, res, next) => {
     res.status(err.status || 500).json({ error: err.message || 'Internal Server Error' });
 });
 
+
+function syncStaticFiles() {
+    const fs = require('fs');
+    const path = require('path');
+    
+    // Resolve public_html directory (from hidden .builds/versions/... path to parent domain root)
+    const publicHtmlDir = path.resolve(__dirname, '../../../../public_html');
+    if (!fs.existsSync(publicHtmlDir)) {
+        console.log(`[Static Sync] Public directory not found at: ${publicHtmlDir}`);
+        return;
+    }
+    
+    console.log(`[Static Sync] Syncing static files from ${__dirname} to ${publicHtmlDir}...`);
+    
+    const filesToSync = [
+        'admin.html',
+        'app.js',
+        'style.css',
+        'about.html',
+        'adi-kailash.html',
+        'blog.html',
+        'blogs.html',
+        'darma-valley.html',
+        'gallery.html',
+        'index.html',
+        'khaliya-top.html',
+        'lead-details.html',
+        'mt-kailash.html',
+        'panchachuli.html',
+        'payment.html',
+        'whats-included.html',
+        '.htaccess'
+    ];
+    
+    filesToSync.forEach(file => {
+        try {
+            const srcPath = path.join(__dirname, file);
+            const destPath = path.join(publicHtmlDir, file);
+            if (fs.existsSync(srcPath)) {
+                fs.copyFileSync(srcPath, destPath);
+                console.log(`[Static Sync] Synced ${file}`);
+            }
+        } catch (e) {
+            console.error(`[Static Sync] Failed to sync ${file}: ${e.message}`);
+        }
+    });
+}
+
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
+    try {
+        syncStaticFiles();
+    } catch (e) {
+        console.error('Error during static files sync:', e);
+    }
 });
