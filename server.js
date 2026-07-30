@@ -1068,6 +1068,23 @@ app.post('/api/billing', authenticateToken, async (req, res) => {
             return res.status(500).json({ error: 'Supabase client not initialized' });
         }
 
+        // Support direct table insert format (e.g. from mock client)
+        let directBills = null;
+        if (Array.isArray(req.body)) {
+            directBills = req.body;
+        } else if (req.body && req.body.booking_id) {
+            directBills = [req.body];
+        }
+
+        if (directBills && directBills.length > 0) {
+            const { data, error } = await supabase
+                .from('booking_bills')
+                .insert(directBills)
+                .select();
+            if (error) throw error;
+            return res.status(201).json(data);
+        }
+
         const { 
             bookingId, 
             customerDetails, 
