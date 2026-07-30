@@ -4148,6 +4148,10 @@
                         mappingOptions += `<option value="${u.id}" ${selected} style="background: #ffffff; color: #1e293b;">${u.email}</option>`;
                     });
 
+                    const isHashed = (item.passcode || '').startsWith('$2a$') || (item.passcode || '').startsWith('$2b$');
+                    const inputTitle = isHashed ? 'Password is securely hashed (encrypted) for safety. Type a new password here to reset/change it.' : 'Plain text password.';
+                    const btnTitle = isHashed ? 'This password is securely hashed and cannot be decrypted. Type a new password here to reset it.' : 'Show/Hide Password';
+
                     html += `
                         <tr>
                             <td>
@@ -4183,8 +4187,8 @@
                             </td>
                             <td>
                                 <div style="display: flex; gap: 4px; align-items: center;">
-                                    <input type="password" id="passcode-input-${item.id}" value="${item.passcode}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 6px 10px; color: #1e293b; font-family: monospace; font-size: 13px; width: 90px; font-weight: 600;">
-                                    <button onclick="togglePasscodeVisibility('${item.id}', this)" class="btn btn-secondary" style="border: 1px solid var(--color-gold); background: #1e293b; padding: 6px 8px; cursor: pointer; border-radius: 4px; color: var(--color-gold); display: flex; align-items: center; justify-content: center; width: 32px; height: 32px;" title="Show/Hide Password">
+                                    <input type="password" id="passcode-input-${item.id}" value="${item.passcode}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 6px 10px; color: #1e293b; font-family: monospace; font-size: 13px; width: 90px; font-weight: 600;" title="${inputTitle}">
+                                    <button onclick="togglePasscodeVisibility('${item.id}', this)" class="btn btn-secondary" style="border: 1px solid var(--color-gold); background: #1e293b; padding: 6px 8px; cursor: pointer; border-radius: 4px; color: var(--color-gold); display: flex; align-items: center; justify-content: center; width: 32px; height: 32px;" title="${btnTitle}">
                                         <i class="fa-solid fa-eye-slash" style="font-size: 12px;"></i>
                                     </button>
                                 </div>
