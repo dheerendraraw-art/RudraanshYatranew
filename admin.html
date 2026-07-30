@@ -641,11 +641,8 @@
                                 <thead>
                                     <tr>
                                         <th>Photo</th>
-                                        <th>Name</th>
                                         <th>Username</th>
                                         <th>Phone</th>
-                                        <th>Email</th>
-                                        <th>Designation</th>
                                         <th>Role</th>
                                         <th>UUID Mapping</th>
                                         <th>Password</th>
@@ -4514,19 +4511,10 @@
                                 </div>
                             </td>
                             <td style="padding: 6px 4px;">
-                                <input type="text" id="name-input-${item.id}" value="${item.name || ''}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 5px 8px; color: #1e293b; font-family: var(--font-sans); font-size: 12px; width: 100%; min-width: 95px; font-weight: 600; box-sizing: border-box;" placeholder="Name">
+                                <input type="text" id="username-input-${item.id}" value="${item.username}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 5px 8px; color: #1e293b; font-family: var(--font-sans); font-size: 12px; width: 100%; min-width: 90px; font-weight: 600; box-sizing: border-box;">
                             </td>
                             <td style="padding: 6px 4px;">
-                                <input type="text" id="username-input-${item.id}" value="${item.username}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 5px 8px; color: #1e293b; font-family: var(--font-sans); font-size: 12px; width: 100%; min-width: 85px; font-weight: 600; box-sizing: border-box;">
-                            </td>
-                            <td style="padding: 6px 4px;">
-                                <input type="text" id="phone-input-${item.id}" value="${item.phone || ''}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 5px 8px; color: #1e293b; font-family: var(--font-sans); font-size: 12px; width: 100%; min-width: 95px; font-weight: 600; box-sizing: border-box;" placeholder="Phone">
-                            </td>
-                            <td style="padding: 6px 4px;">
-                                <input type="email" id="email-input-${item.id}" value="${item.email || ''}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 5px 8px; color: #1e293b; font-family: var(--font-sans); font-size: 12px; width: 100%; min-width: 110px; font-weight: 600; box-sizing: border-box;" placeholder="Email">
-                            </td>
-                            <td style="padding: 6px 4px;">
-                                <input type="text" id="designation-input-${item.id}" value="${item.designation || ''}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 5px 8px; color: #1e293b; font-family: var(--font-sans); font-size: 12px; width: 100%; min-width: 90px; font-weight: 600; box-sizing: border-box;" placeholder="Designation">
+                                <input type="text" id="phone-input-${item.id}" value="${item.phone || ''}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 5px 8px; color: #1e293b; font-family: var(--font-sans); font-size: 12px; width: 100%; min-width: 100px; font-weight: 600; box-sizing: border-box;" placeholder="Phone">
                             </td>
                             <td style="padding: 6px 4px;">
                                 <select id="role-select-${item.id}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 5px 4px; color: #1e293b; font-family: var(--font-sans); font-size: 12px; font-weight: 600; width: 100%; min-width: 75px; box-sizing: border-box;">
@@ -4674,40 +4662,42 @@
 
                 if (!usernameInput || !passcodeInput || !roleSelect) continue;
 
-                const newName = nameInput ? nameInput.value.trim() : null;
+                const newName = nameInput ? nameInput.value.trim() : (item.name || null);
                 const newUsername = usernameInput.value.trim().toLowerCase();
-                const newPhone = phoneInput ? phoneInput.value.trim() : null;
-                const newEmail = emailInput ? emailInput.value.trim() : null;
-                const newDesignation = designationInput ? designationInput.value.trim() : null;
+                const newPhone = phoneInput ? phoneInput.value.trim() : (item.phone || null);
+                const newEmail = emailInput ? emailInput.value.trim() : (item.email || null);
+                const newDesignation = designationInput ? designationInput.value.trim() : (item.designation || null);
                 const newPasscode = passcodeInput.value.trim();
                 const newRole = roleSelect.value;
                 const newUuidMapping = uuidSelect ? (uuidSelect.value || null) : null;
 
                 if (!newUsername || !newPasscode) continue;
 
-                const nameChanged = newName !== (item.name || '');
+                const nameChanged = nameInput && newName !== (item.name || '');
                 const usernameChanged = newUsername !== item.username;
                 const phoneChanged = newPhone !== (item.phone || '');
-                const emailChanged = newEmail !== (item.email || '');
-                const designationChanged = newDesignation !== (item.designation || '');
+                const emailChanged = emailInput && newEmail !== (item.email || '');
+                const designationChanged = designationInput && newDesignation !== (item.designation || '');
                 const passcodeChanged = newPasscode !== item.passcode;
                 const roleChanged = newRole !== item.role;
                 const uuidChanged = newUuidMapping !== (item.uuid_mapping || null);
 
                 if (nameChanged || usernameChanged || phoneChanged || emailChanged || designationChanged || passcodeChanged || roleChanged || uuidChanged) {
                     try {
+                        const updates = { 
+                            username: newUsername, 
+                            passcode: newPasscode, 
+                            role: newRole, 
+                            uuid_mapping: newUuidMapping,
+                            phone: newPhone
+                        };
+                        if (nameInput) updates.name = newName;
+                        if (emailInput) updates.email = newEmail;
+                        if (designationInput) updates.designation = newDesignation;
+
                         const { error } = await supabaseAdmin
                             .from('staff_credentials')
-                            .update({ 
-                                username: newUsername, 
-                                passcode: newPasscode, 
-                                role: newRole, 
-                                uuid_mapping: newUuidMapping,
-                                name: newName,
-                                phone: newPhone,
-                                email: newEmail,
-                                designation: newDesignation
-                            })
+                            .update(updates)
                             .eq('id', id);
 
                         if (error) throw error;
@@ -4748,6 +4738,7 @@
         };
 
         window.updateStaffCredentials = async function(id, oldUsername) {
+            const existingItem = staffCredentialsList.find(s => s.id === id);
             const nameInput = document.getElementById(`name-input-${id}`);
             const usernameInput = document.getElementById(`username-input-${id}`);
             const phoneInput = document.getElementById(`phone-input-${id}`);
@@ -4757,11 +4748,11 @@
             const roleSelect = document.getElementById(`role-select-${id}`);
             const uuidSelect = document.getElementById(`uuid-select-${id}`);
             
-            const newName = nameInput ? nameInput.value.trim() : null;
+            const newName = nameInput ? nameInput.value.trim() : (existingItem ? existingItem.name : null);
             const newUsername = usernameInput.value.trim().toLowerCase();
-            const newPhone = phoneInput ? phoneInput.value.trim() : null;
-            const newEmail = emailInput ? emailInput.value.trim() : null;
-            const newDesignation = designationInput ? designationInput.value.trim() : null;
+            const newPhone = phoneInput ? phoneInput.value.trim() : (existingItem ? existingItem.phone : null);
+            const newEmail = emailInput ? emailInput.value.trim() : (existingItem ? existingItem.email : null);
+            const newDesignation = designationInput ? designationInput.value.trim() : (existingItem ? existingItem.designation : null);
             const newPasscode = passcodeInput.value.trim();
             const newRole = roleSelect.value;
             const newUuidMapping = uuidSelect ? (uuidSelect.value || null) : null;
@@ -4772,18 +4763,20 @@
             }
 
             try {
+                const updates = { 
+                    username: newUsername, 
+                    passcode: newPasscode, 
+                    role: newRole, 
+                    uuid_mapping: newUuidMapping,
+                    phone: newPhone
+                };
+                if (nameInput) updates.name = newName;
+                if (emailInput) updates.email = newEmail;
+                if (designationInput) updates.designation = newDesignation;
+
                 const { error } = await supabaseAdmin
                     .from('staff_credentials')
-                    .update({ 
-                        username: newUsername, 
-                        passcode: newPasscode, 
-                        role: newRole, 
-                        uuid_mapping: newUuidMapping,
-                        name: newName,
-                        phone: newPhone,
-                        email: newEmail,
-                        designation: newDesignation
-                    })
+                    .update(updates)
                     .eq('id', id);
 
                 if (error) throw error;
