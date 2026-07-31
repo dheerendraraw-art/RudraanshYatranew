@@ -4583,7 +4583,8 @@
         let staffCredentialsList = [];
 
         window.fetchCredentials = async function() {
-            if (currentUserRole !== 'admin') return;
+            const roleClean = (currentUserRole || localStorage.getItem('admin_role') || '').toString().toLowerCase().trim();
+            if (roleClean !== 'admin') return;
             try {
                 const { data, error } = await supabaseAdmin
                     .from('staff_credentials')
@@ -4624,6 +4625,11 @@
 
                 const tbody = document.getElementById('passwords-table-body');
                 if (!tbody) return;
+
+                if (!staffCredentialsList || staffCredentialsList.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--color-slate); padding: 30px;">No staff accounts found. Fill out the "Add New Staff" form to create one.</td></tr>`;
+                    return;
+                }
 
                 let html = '';
                 staffCredentialsList.forEach((item, index) => {
