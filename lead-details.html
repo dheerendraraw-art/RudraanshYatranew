@@ -1076,7 +1076,13 @@
                 fetchLeadHistory();
             } catch (err) {
                 console.error(err);
-                showToast('Failed to fetch lead details.');
+                showToast('Failed to fetch lead details: ' + (err.message || 'Error'));
+                const nameEl = document.getElementById('lead-display-name');
+                if (nameEl) nameEl.innerText = 'Lead Not Found';
+                const phoneEl = document.getElementById('lead-display-phone');
+                if (phoneEl) phoneEl.innerText = 'Unable to load data';
+                const badgeEl = document.getElementById('header-status-badge');
+                if (badgeEl) badgeEl.innerText = 'Error';
             }
         }
 
@@ -1318,6 +1324,8 @@
                 console.error(err);
                 showToast('Failed to add note.');
             }
+        }
+
         // Save all changes made in the form
         async function saveAllLeadProperties() {
             if (!leadData || !leadId) return;
