@@ -17,6 +17,9 @@
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></noscript>
     <link rel="stylesheet" href="style.css?v=8.0">
     <meta name="robots" content="noindex, nofollow">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
 </head>
 
 <body style="background-color: var(--color-bg-base); font-family: var(--font-sans);">
@@ -577,10 +580,11 @@
                                 <th>Name</th>
                                 <th>Phone</th>
                                 <th>Email</th>
-                                <th>Source</th>
+                                <th>Assigned To</th>
+                                <th>Travelers</th>
                                 <th>Travel Date</th>
                                 <th>Status</th>
-                                <th>Assigned To</th>
+                                <th>Source</th>
                                 <th>Remarks</th>
                                 <th>Follow up 1</th>
                                 <th>Follow up 2</th>
@@ -3811,7 +3815,14 @@
 
                 const leadAssignee = (lead.assigned_to || '').trim().toLowerCase();
                 const filterAssignee = (assignee || '').trim().toLowerCase();
-                const matchAssignee = !filterAssignee || leadAssignee === filterAssignee;
+                let matchAssignee = false;
+                if (!filterAssignee) {
+                    matchAssignee = true;
+                } else if (filterAssignee === 'unassigned') {
+                    matchAssignee = !leadAssignee || leadAssignee === 'unassigned' || leadAssignee === 'null';
+                } else {
+                    matchAssignee = (leadAssignee === filterAssignee);
+                }
 
                 const matchSearch = !searchVal ||
                     (lead.name || '').toLowerCase().includes(searchVal) ||
@@ -3843,7 +3854,7 @@
         window.populateAssigneeFilter = function() {
             let filterAssigneeSelect = document.getElementById('filter-lead-assignee');
             if (filterAssigneeSelect) {
-                let filterOptions = '<option value="">All</option>';
+                let filterOptions = '<option value="">All</option><option value="unassigned">Unassigned</option>';
                 (usersList || []).forEach(user => {
                     const displayName = usersMap[user.id] || user.email;
                     const isMapped = mappedUserIds.has(user.id.toLowerCase());
@@ -3901,9 +3912,10 @@
                 const currentStatus = document.getElementById('filter-lead-status')?.value || '';
                 const currentAssignee = document.getElementById('filter-lead-assignee')?.value || '';
 
-                if (currentUserRole === 'staff') {
-                    const isRendered = document.getElementById('filter-lead-status') !== null;
-                    if (!isRendered) {
+                const targetRole = currentUserRole || 'admin';
+                if (thead.dataset.renderedRole !== targetRole) {
+                    thead.dataset.renderedRole = targetRole;
+                    if (targetRole === 'staff') {
                         thead.innerHTML = `
                             <tr>
                                 <th>Name</th>
@@ -3934,10 +3946,7 @@
                                 <th>Actions</th>
                             </tr>
                         `;
-                    }
-                } else {
-                    const isRendered = document.getElementById('filter-lead-source') !== null;
-                    if (!isRendered) {
+                    } else {
                         thead.innerHTML = `
                             <tr>
                                 <th>Name</th>
@@ -3945,13 +3954,11 @@
                                 <th>Email</th>
                                 <th>
                                     <div style="display: flex; flex-direction: column; gap: 4px; align-items: center;">
-                                        <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Source</span>
-                                        <select id="filter-lead-source" onchange="applyLeadsFilters()" style="background: #0f172a; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 4px; padding: 2px 4px; font-size: 11px; cursor: pointer; outline: none; min-width: 90px; font-weight: 500;">
+                                        <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Assigned To</span>
+                                        <select id="filter-lead-assignee" onchange="applyLeadsFilters()" style="background: #0f172a; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 4px; padding: 2px 4px; font-size: 11px; cursor: pointer; outline: none; min-width: 100px; font-weight: 500;">
                                             <option value="">All</option>
-                                            <option value="Website">Website</option>
-                                            <option value="Facebook">Facebook</option>
-                                            <option value="Instagram">Instagram</option>
-                                            <option value="Manual">Manual</option>
+                                            <option value="unassigned">Unassigned</option>
+                                            <!-- Dynamically populated -->
                                         </select>
                                     </div>
                                 </th>
@@ -3976,10 +3983,13 @@
                                 </th>
                                 <th>
                                     <div style="display: flex; flex-direction: column; gap: 4px; align-items: center;">
-                                        <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Assigned To</span>
-                                        <select id="filter-lead-assignee" onchange="applyLeadsFilters()" style="background: #0f172a; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 4px; padding: 2px 4px; font-size: 11px; cursor: pointer; outline: none; min-width: 100px; font-weight: 500;">
+                                        <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Source</span>
+                                        <select id="filter-lead-source" onchange="applyLeadsFilters()" style="background: #0f172a; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 4px; padding: 2px 4px; font-size: 11px; cursor: pointer; outline: none; min-width: 90px; font-weight: 500;">
                                             <option value="">All</option>
-                                            <!-- Dynamically populated -->
+                                            <option value="Website">Website</option>
+                                            <option value="Facebook">Facebook</option>
+                                            <option value="Instagram">Instagram</option>
+                                            <option value="Manual">Manual</option>
                                         </select>
                                     </div>
                                 </th>
@@ -4160,7 +4170,11 @@
                             </td>
                             <td data-label="Phone" style="white-space: nowrap;" onclick="event.stopPropagation();">${leadPhoneHtml}</td>
                             <td data-label="Email" class="mobile-detail-field">${item.email || '-'}</td>
-                            <td data-label="Source" class="mobile-detail-field"><span style="font-size: 11px; font-weight: bold; background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px;">${item.source || 'Website'}</span></td>
+                            <td data-label="Assigned To" class="mobile-detail-field" onclick="event.stopPropagation();">
+                                <select ${currentUserRole === "staff" ? "disabled" : ""} onchange="updateLeadField('${item.id}', 'assigned_to', this.value)" style="background: #1f2937; color: white; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 4px; font-size: 12px; width: 150px; cursor: pointer;">
+                                    ${assigneeOptions}
+                                </select>
+                            </td>
                             <td data-label="Travelers" class="mobile-detail-field">${item.travelers || 1}</td>
                             <td data-label="Travel Date" class="mobile-detail-field" style="white-space: nowrap;">${item.travel_date ? new Date(item.travel_date).toLocaleDateString() : '-'}</td>
                             <td data-label="Status" onclick="event.stopPropagation();">
@@ -4168,11 +4182,7 @@
                                     ${statusOptions}
                                 </select>
                             </td>
-                            <td data-label="Assigned To" class="mobile-detail-field" onclick="event.stopPropagation();">
-                                <select ${currentUserRole === "staff" ? "disabled" : ""} onchange="updateLeadField('${item.id}', 'assigned_to', this.value)" style="background: #1f2937; color: white; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 4px; font-size: 12px; width: 150px; cursor: pointer;">
-                                    ${assigneeOptions}
-                                </select>
-                            </td>
+                            <td data-label="Source" class="mobile-detail-field"><span style="font-size: 11px; font-weight: bold; background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px;">${item.source || 'Website'}</span></td>
                             <td data-label="Remarks" class="mobile-detail-field" style="white-space: pre-line;"><small>${item.remarks || '-'}</small></td>
                             <td data-label="Follow up 1" class="mobile-detail-field"><small>${item.follow_up_1 || '-'}</small></td>
                             <td data-label="Follow up 2" class="mobile-detail-field"><small>${item.follow_up_2 || '-'}</small></td>
