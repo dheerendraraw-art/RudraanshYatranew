@@ -559,6 +559,7 @@
             </div>
             <div id="lead-status-header" class="header-actions">
                 <a id="header-call-btn" href="#" class="header-action-btn call-btn" onclick="logCallInitiated()"><i class="fa-solid fa-phone"></i> Call Lead</a>
+                <button type="button" onclick="openLeadReminderModal()" class="header-action-btn reminder-btn" style="background: rgba(245,158,11,0.2); color: #fbbf24; border: 1px solid rgba(245,158,11,0.4);"><i class="fa-solid fa-bell"></i> Set Reminder</button>
                 <button type="button" onclick="saveAllLeadProperties()" class="header-action-btn save-btn"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button>
                 <span class="status-badge" id="header-status-badge">Loading...</span>
             </div>
@@ -691,7 +692,7 @@
                 <div class="activity-tabs">
                     <button class="act-tab-btn active"><i class="fa-solid fa-note-sticky"></i> Add Quick Note</button>
                     <button class="act-tab-btn" onclick="logCallWithPrompt()"><i class="fa-solid fa-phone"></i> Call & Log</button>
-                    <button class="act-tab-btn" onclick="showToast('Email feature coming soon!')"><i class="fa-solid fa-envelope"></i> Send Email</button>
+                    <button class="act-tab-btn" onclick="openLeadReminderModal()"><i class="fa-solid fa-bell" style="color:#fbbf24;"></i> Set Reminder</button>
                 </div>
 
                 <!-- New Note Form -->
@@ -1477,6 +1478,56 @@
             }
         }
 
+        // Lead Reminder Modal Helpers
+        function openLeadReminderModal() {
+            const modal = document.getElementById('lead-reminder-modal');
+            if (!modal) return;
+
+            document.getElementById('lead-reminder-note').value = `Follow up call with ${leadData ? (leadData.name || 'client') : 'client'}`;
+            document.getElementById('lead-reminder-due-date').value = new Date().toISOString().split('T')[0];
+            document.getElementById('lead-reminder-due-time').value = '10:00';
+            modal.style.display = 'flex';
+        }
+
+        function closeLeadReminderModal() {
+            const modal = document.getElementById('lead-reminder-modal');
+            if (modal) modal.style.display = 'none';
+        }
+
+        async function submitLeadReminderForm(event) {
+            event.preventDefault();
+            if (!leadData || !leadId) return;
+
+            const note = document.getElementById('lead-reminder-note').value.trim();
+            const dueDate = document.getElementById('lead-reminder-due-date').value;
+            const dueTime = document.getElementById('lead-reminder-due-time').value || '10:00';
+            const priority = document.getElementById('lead-reminder-priority').value;
+
+            try {
+                const payload = {
+                    lead_id: leadId,
+                    lead_name: leadData.name || 'Client',
+                    lead_phone: leadData.phone || '',
+                    note,
+                    due_date: dueDate,
+                    due_time: dueTime,
+                    priority,
+                    assigned_to: leadData.assigned_to || null,
+                    status: 'Pending'
+                };
+
+                const { error } = await supabaseAdmin.from('reminders').insert([payload]);
+                if (error) throw error;
+
+                showToast('Follow-up reminder set successfully!');
+                closeLeadReminderModal();
+                fetchLeadHistory();
+            } catch (err) {
+                console.error(err);
+                showToast('Failed to set reminder: ' + err.message);
+            }
+        }
+
         // Initialize Page
         async function initPage() {
             await fetchAssignees();
@@ -1491,6 +1542,46 @@
 
         window.onload = initPage;
     </script>
+
+    <!-- Set Reminder Modal for Lead Details -->
+    <div id="lead-reminder-modal" style="display:none; position:fixed; inset:0; z-index:10000; align-items:center; justify-content:center; background:rgba(0,0,0,0.82); backdrop-filter:blur(6px);">
+        <div style="background: linear-gradient(145deg, #0f1f38 0%, #0d1526 100%); border: 1px solid rgba(212,175,55,0.35); border-radius: 16px; width: 90%; max-width: 450px; padding: 24px; box-shadow: 0 40px 80px rgba(0,0,0,0.6);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px;">
+                <h3 style="margin: 0; color: #ffffff; font-size: 16px; font-weight: 700;">
+                    <i class="fa-solid fa-bell" style="color: #fbbf24; margin-right: 8px;"></i> Set Follow-up Reminder
+                </h3>
+                <button type="button" onclick="closeLeadReminderModal()" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: #fff; width: 28px; height: 28px; border-radius: 6px; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center;">&times;</button>
+            </div>
+            <form onsubmit="submitLeadReminderForm(event)">
+                <div style="margin-bottom: 14px;">
+                    <label style="display: block; color: #94a3b8; font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 4px;">Reminder Action / Note *</label>
+                    <input type="text" id="lead-reminder-note" class="property-input" required style="padding: 10px; width: 100%;">
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
+                    <div>
+                        <label style="display: block; color: #94a3b8; font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 4px;">Due Date *</label>
+                        <input type="date" id="lead-reminder-due-date" class="property-input" required style="padding: 10px; width: 100%;">
+                    </div>
+                    <div>
+                        <label style="display: block; color: #94a3b8; font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 4px;">Due Time</label>
+                        <input type="time" id="lead-reminder-due-time" class="property-input" value="10:00" style="padding: 10px; width: 100%;">
+                    </div>
+                </div>
+                <div style="margin-bottom: 18px;">
+                    <label style="display: block; color: #94a3b8; font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 4px;">Priority</label>
+                    <select id="lead-reminder-priority" class="property-select" style="padding: 10px; width: 100%;">
+                        <option value="High">🔥 High Priority</option>
+                        <option value="Medium" selected>⚡ Medium Priority</option>
+                        <option value="Low">🟢 Low Priority</option>
+                    </select>
+                </div>
+                <div style="display: flex; justify-content: flex-end; gap: 8px;">
+                    <button type="button" onclick="closeLeadReminderModal()" class="act-tab-btn" style="padding: 8px 14px;">Cancel</button>
+                    <button type="submit" class="btn-submit-note" style="padding: 8px 18px;">Set Reminder</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 
 </html>

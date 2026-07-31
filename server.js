@@ -894,6 +894,161 @@ app.delete('/api/admin/leads/:id', authenticateToken, requireAdmin, async (req, 
     }
 });
 
+// ==========================================
+// REMINDERS API ENDPOINTS
+// ==========================================
+const REMINDERS_FILE = path.join(__dirname, 'reminders.json');
+
+function getLocalReminders() {
+    try {
+        if (fs.existsSync(REMINDERS_FILE)) {
+            return JSON.parse(fs.readFileSync(REMINDERS_FILE, 'utf8'));
+        }
+    } catch (e) {
+        console.error('Error reading local reminders:', e);
+    }
+    return [];
+}
+
+function saveLocalReminders(list) {
+    try {
+        fs.writeFileSync(REMINDERS_FILE, JSON.stringify(list, null, 2), 'utf8');
+    } catch (e) {
+        console.error('Error writing local reminders:', e);
+    }
+}
+
+app.get('/api/admin/reminders', authenticateToken, async (req, res) => {
+    try {
+        if (supabase) {
+            let query = supabase.from('reminders').select('*');
+            if (req.user.role === 'staff') {
+                const agentUuid = req.user.uuid_mapping;
+                if (agentUuid) {
+                    query = query.or(`assigned_to.eq.${agentUuid},created_by.eq.${req.user.username}`);
+                }
+            }
+            const { data, error } = await query.order('due_date', { ascending: true });
+            if (!error && data) {
+                return res.json(data);
+            }
+        }
+        
+        // Fallback local store if Supabase table does not exist
+        let list = getLocalReminders();
+        if (req.user.role === 'staff' && req.user.uuid_mapping) {
+            list = list.filter(r => r.assigned_to === req.user.uuid_mapping || r.created_by === req.user.username);
+        }
+        res.json(list);
+    } catch (err) {
+        console.error('GET Reminders Error:', err);
+        res.json(getLocalReminders());
+    }
+});
+
+app.post('/api/admin/reminders', authenticateToken, async (req, res) => {
+    try {
+        const item = Array.isArray(req.body) ? req.body[0] : req.body;
+        const newItem = {
+            id: item.id || `rem_${Date.now()}_${Math.floor(Math.random()*1000)}`,
+            lead_id: item.lead_id || null,
+            lead_name: item.lead_name || 'General',
+            lead_phone: item.lead_phone || '',
+            note: item.note || '',
+            due_date: item.due_date || new Date().toISOString().split('T')[0],
+            due_time: item.due_time || '10:00',
+            priority: item.priority || 'Medium',
+            assigned_to: item.assigned_to || null,
+            status: item.status || 'Pending',
+            created_by: req.user.username || 'staff',
+            created_at: new Date().toISOString()
+        };
+
+        if (supabase) {
+            try {
+                await supabase.from('reminders').insert([newItem]);
+            } catch (e) {
+                console.warn('Supabase reminders insert failed, saving locally:', e.message);
+            }
+        }
+
+        const list = getLocalReminders();
+        list.unshift(newItem);
+        saveLocalReminders(list);
+
+        // Also log history entry for lead if lead_id exists
+        if (newItem.lead_id && supabase) {
+            try {
+                await supabase.from('lead_history').insert([{
+                    lead_id: newItem.lead_id,
+                    action: `⏰ Follow-up Reminder set for ${newItem.due_date} ${newItem.due_time}: "${newItem.note}" by ${req.user.username}`
+                }]);
+            } catch (e) {
+                console.warn('History log for reminder failed:', e.message);
+            }
+        }
+
+        res.status(201).json(newItem);
+    } catch (err) {
+        console.error('POST Reminder Error:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.put('/api/admin/reminders/:id', authenticateToken, async (req, res) => {
+    try {
+        const id = req.params.id;
+        const updates = req.body;
+
+        if (supabase) {
+            try {
+                await supabase.from('reminders').update(updates).eq('id', id);
+            } catch (e) {}
+        }
+
+        const list = getLocalReminders();
+        const index = list.findIndex(r => r.id === id || r.id == id);
+        if (index !== -1) {
+            list[index] = { ...list[index], ...updates };
+            saveLocalReminders(list);
+
+            if (updates.status === 'Completed' && list[index].lead_id && supabase) {
+                try {
+                    await supabase.from('lead_history').insert([{
+                        lead_id: list[index].lead_id,
+                        action: `✅ Follow-up Reminder completed: "${list[index].note}" by ${req.user.username}`
+                    }]);
+                } catch (e) {}
+            }
+        }
+
+        res.json({ success: true });
+    } catch (err) {
+        console.error('PUT Reminder Error:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.delete('/api/admin/reminders/:id', authenticateToken, async (req, res) => {
+    try {
+        const id = req.params.id;
+        if (supabase) {
+            try {
+                await supabase.from('reminders').delete().eq('id', id);
+            } catch (e) {}
+        }
+
+        let list = getLocalReminders();
+        list = list.filter(r => r.id !== id && r.id != id);
+        saveLocalReminders(list);
+
+        res.json({ success: true });
+    } catch (err) {
+        console.error('DELETE Reminder Error:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
 // Users/Assignees Mapping
 app.get('/api/admin/users', authenticateToken, async (req, res) => {
     try {

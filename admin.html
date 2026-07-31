@@ -141,6 +141,10 @@
                 <button class="admin-tab-btn" onclick="switchTab(event, 'pane-leads')" id="tab-leads-btn">
                     <i class="fa-solid fa-people-group"></i> Leads Manager
                 </button>
+                <button class="admin-tab-btn" onclick="switchTab(event, 'pane-reminders')" id="tab-reminders-btn">
+                    <i class="fa-solid fa-bell" style="color: #f59e0b;"></i> Reminders
+                    <span id="reminders-count-badge" style="display:none; background: #ef4444; color: white; padding: 2px 6px; border-radius: 10px; font-size: 10px; margin-left: 4px; font-weight: 800;">0</span>
+                </button>
                 <button class="admin-tab-btn" onclick="switchTab(event, 'pane-billing')" id="tab-billing-btn">
                     <i class="fa-solid fa-file-invoice-dollar"></i> Billing & Payments
                 </button>
@@ -622,6 +626,52 @@
                             Next <i class="fa-solid fa-chevron-right"></i>
                         </button>
                     </div>
+                </div>
+            <!-- PANE: FOLLOW-UP REMINDERS -->
+            <div id="pane-reminders" class="admin-tab-content-pane" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+                    <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap; flex-grow: 1;">
+                        <h3 class="admin-form-title" style="margin-bottom: 0; border-bottom: none;"><i
+                                class="fa-solid fa-bell" style="color: var(--color-gold);"></i> Follow-up Reminders</h3>
+                        <div style="position: relative; width: 280px; max-width: 100%;">
+                            <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: rgba(212, 175, 55, 0.6); font-size: 13px;"></i>
+                            <input type="text" id="search-reminders-input" placeholder="Search lead name, note, phone..." oninput="applyRemindersFilters()" style="background: #1e293b; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: var(--border-radius-sm, 4px); padding: 8px 12px 8px 32px; font-size: 13px; outline: none; width: 100%; font-weight: 500; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); transition: border-color 0.2s ease;">
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button type="button" onclick="openReminderModal()" class="btn btn-primary" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;"><i class="fa-solid fa-plus"></i> Add New Reminder</button>
+                    </div>
+                </div>
+
+                <!-- Quick Filter Pills Bar -->
+                <div style="display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;" id="reminder-filter-pills">
+                    <button type="button" class="act-tab-btn active" onclick="setReminderFilter('all', this)"><i class="fa-solid fa-list-ul"></i> All (<span id="count-rem-all">0</span>)</button>
+                    <button type="button" class="act-tab-btn" onclick="setReminderFilter('today', this)" style="border-color: rgba(245,158,11,0.4); color: #fbbf24;"><i class="fa-solid fa-calendar-day"></i> Today (<span id="count-rem-today">0</span>)</button>
+                    <button type="button" class="act-tab-btn" onclick="setReminderFilter('overdue', this)" style="border-color: rgba(239,68,68,0.4); color: #f87171;"><i class="fa-solid fa-triangle-exclamation"></i> Overdue (<span id="count-rem-overdue">0</span>)</button>
+                    <button type="button" class="act-tab-btn" onclick="setReminderFilter('upcoming', this)" style="border-color: rgba(59,130,246,0.4); color: #60a5fa;"><i class="fa-solid fa-clock"></i> Upcoming (<span id="count-rem-upcoming">0</span>)</button>
+                    <button type="button" class="act-tab-btn" onclick="setReminderFilter('completed', this)" style="border-color: rgba(34,197,94,0.4); color: #4ade80;"><i class="fa-solid fa-circle-check"></i> Completed (<span id="count-rem-completed">0</span>)</button>
+                </div>
+
+                <div class="admin-table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Lead Name</th>
+                                <th>Phone & Call</th>
+                                <th>Reminder Action / Note</th>
+                                <th>Due Date & Time</th>
+                                <th>Priority</th>
+                                <th>Assigned To</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reminders-table-body">
+                            <tr>
+                                <td colspan="8" style="text-align: center; color: var(--color-slate);">Loading follow-up reminders...</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
@@ -1682,6 +1732,66 @@
         </div>
     </div>
 
+    <!-- Add / Edit Reminder Modal -->
+    <div id="reminder-modal" style="display:none; position:fixed; inset:0; z-index:10000; align-items:center; justify-content:center; background:rgba(0,0,0,0.82); backdrop-filter:blur(6px);">
+        <div style="background: linear-gradient(145deg, #0f1f38 0%, #0d1526 100%); border: 1px solid rgba(212,175,55,0.35); border-radius: 16px; width: 92%; max-width: 500px; padding: 24px; box-shadow: 0 40px 80px rgba(0,0,0,0.6);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px;">
+                <h3 id="reminder-modal-title" style="margin: 0; color: #ffffff; font-size: 17px; font-weight: 700;">
+                    <i class="fa-solid fa-bell" style="color: var(--color-gold); margin-right: 8px;"></i> Schedule Follow-up Reminder
+                </h3>
+                <button type="button" onclick="closeReminderModal()" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: #fff; width: 30px; height: 30px; border-radius: 6px; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center;">&times;</button>
+            </div>
+            <form id="reminder-form" onsubmit="saveReminderForm(event)">
+                <input type="hidden" id="reminder-id">
+                
+                <div class="admin-form-group" style="margin-bottom: 14px;">
+                    <label for="reminder-lead-id" style="display: block; color: #94a3b8; font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 4px;">Select Lead *</label>
+                    <select id="reminder-lead-id" class="admin-select" onchange="onReminderLeadSelect(this.value)" required style="padding: 10px 12px; width: 100%; background: #1e293b; color: white; border: 1px solid rgba(212,175,55,0.3); border-radius: 6px; outline: none;">
+                        <option value="">Select a Lead...</option>
+                    </select>
+                </div>
+
+                <div class="admin-form-group" style="margin-bottom: 14px;">
+                    <label for="reminder-note" style="display: block; color: #94a3b8; font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 4px;">Reminder Note / Action *</label>
+                    <input type="text" id="reminder-note" class="admin-input" placeholder="e.g. Call client for itinerary approval & advance payment" required style="padding: 10px 12px; background: #1e293b; color: white; border: 1px solid rgba(212,175,55,0.3); border-radius: 6px; width: 100%; box-sizing: border-box;">
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
+                    <div class="admin-form-group" style="margin-bottom: 0;">
+                        <label for="reminder-due-date" style="display: block; color: #94a3b8; font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 4px;">Due Date *</label>
+                        <input type="date" id="reminder-due-date" class="admin-input" required style="padding: 10px 12px; background: #1e293b; color: white; border: 1px solid rgba(212,175,55,0.3); border-radius: 6px; width: 100%; box-sizing: border-box;">
+                    </div>
+                    <div class="admin-form-group" style="margin-bottom: 0;">
+                        <label for="reminder-due-time" style="display: block; color: #94a3b8; font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 4px;">Due Time</label>
+                        <input type="time" id="reminder-due-time" class="admin-input" value="10:00" style="padding: 10px 12px; background: #1e293b; color: white; border: 1px solid rgba(212,175,55,0.3); border-radius: 6px; width: 100%; box-sizing: border-box;">
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px;">
+                    <div class="admin-form-group" style="margin-bottom: 0;">
+                        <label for="reminder-priority" style="display: block; color: #94a3b8; font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 4px;">Priority *</label>
+                        <select id="reminder-priority" class="admin-select" style="padding: 10px 12px; background: #1e293b; color: white; border: 1px solid rgba(212,175,55,0.3); border-radius: 6px; width: 100%; outline: none;">
+                            <option value="High">🔥 High Priority</option>
+                            <option value="Medium" selected>⚡ Medium Priority</option>
+                            <option value="Low">🟢 Low Priority</option>
+                        </select>
+                    </div>
+                    <div class="admin-form-group" style="margin-bottom: 0;">
+                        <label for="reminder-assignee" style="display: block; color: #94a3b8; font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 4px;">Assign Staff</label>
+                        <select id="reminder-assignee" class="admin-select" style="padding: 10px 12px; background: #1e293b; color: white; border: 1px solid rgba(212,175,55,0.3); border-radius: 6px; width: 100%; outline: none;">
+                            <option value="">Unassigned</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+                    <button type="button" onclick="closeReminderModal()" class="btn btn-secondary" style="border: 1px solid #475569; background: transparent; color: #cbd5e1; padding: 10px 18px; cursor: pointer; border-radius: 6px; font-weight: 600;">Cancel</button>
+                    <button type="submit" id="btn-save-reminder" class="btn btn-primary" style="background-color: var(--color-gold); border: none; color: #0f172a; padding: 10px 20px; font-weight: 800; cursor: pointer; border-radius: 6px;">Save Reminder</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Admin Portal Script -->
     <script>
         // Global error reporting for debugging
@@ -1787,6 +1897,7 @@
                 else if (this.table === 'users_view') base = '/api/admin/users';
                 else if (this.table === 'booking_bills') base = '/api/billing';
                 else if (this.table === 'lead_history') base = '/api/admin/leads-history';
+                else if (this.table === 'reminders') base = '/api/admin/reminders';
                 
                 const idFilter = this.filters.find(f => f.field === 'id' && f.type === 'eq');
                 const idVal = idFilter ? idFilter.value : null;
@@ -2326,6 +2437,7 @@
                     'pane-blogs': 'Blogs & News Summary',
                     'pane-gallery': 'Gallery Summary',
                     'pane-leads': 'Leads Pipeline Summary',
+                    'pane-reminders': 'Follow-up Reminders Overview',
                     'pane-lead-history': 'Lead History Summary',
                     'pane-passwords': 'Staff Accounts Summary',
                     'pane-attendance': 'Staff Attendance & Wages',
@@ -2334,6 +2446,9 @@
                 headerTitle.innerText = labelMap[paneId] || 'Dashboard Overview';
             }
 
+            if (paneId === 'pane-reminders') {
+                if (window.fetchRemindersData) window.fetchRemindersData();
+            }
             if (paneId === 'pane-billing') {
                 if (window.fetchBillingRecords) window.fetchBillingRecords();
             }
@@ -6160,6 +6275,399 @@
             } catch (err) {
                 console.error(err);
                 showAdminToast('Error logging payment: ' + err.message, 'error');
+            }
+        };
+
+        // ==========================================
+        // REMINDERS MANAGEMENT MODULE
+        // ==========================================
+        let allReminders = [];
+        let filteredReminders = [];
+        let reminderActiveFilter = 'all';
+
+        window.fetchRemindersData = async function() {
+            const tbody = document.getElementById('reminders-table-body');
+            if (tbody) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: var(--color-slate);"><i class="fa-solid fa-spinner fa-spin"></i> Loading follow-up reminders...</td></tr>';
+            }
+
+            try {
+                const { data, error } = await supabaseAdmin
+                    .from('reminders')
+                    .select('*')
+                    .order('due_date', { ascending: true });
+
+                if (error) throw error;
+                allReminders = data || [];
+
+                applyRemindersFilters();
+                updateRemindersCountBadge();
+            } catch (err) {
+                console.error('Fetch reminders failed:', err);
+                if (tbody) tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: #ef4444;">Failed to load reminders: ${err.message}</td></tr>`;
+            }
+        };
+
+        window.setReminderFilter = function(filter, buttonEl) {
+            reminderActiveFilter = filter;
+            const buttons = document.querySelectorAll('#reminder-filter-pills .act-tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            if (buttonEl) buttonEl.classList.add('active');
+
+            applyRemindersFilters();
+        };
+
+        window.applyRemindersFilters = function() {
+            const searchInput = document.getElementById('search-reminders-input');
+            const searchVal = searchInput ? searchInput.value.trim().toLowerCase() : '';
+
+            const todayStr = new Date().toISOString().split('T')[0];
+
+            let list = [...allReminders];
+
+            // 1. Status/Time Filter
+            if (reminderActiveFilter === 'today') {
+                list = list.filter(r => (r.due_date === todayStr) && r.status !== 'Completed');
+            } else if (reminderActiveFilter === 'overdue') {
+                list = list.filter(r => (r.due_date < todayStr) && r.status !== 'Completed');
+            } else if (reminderActiveFilter === 'upcoming') {
+                list = list.filter(r => (r.due_date > todayStr) && r.status !== 'Completed');
+            } else if (reminderActiveFilter === 'completed') {
+                list = list.filter(r => r.status === 'Completed');
+            }
+
+            // 2. Search query filter
+            if (searchVal) {
+                list = list.filter(r => 
+                    (r.lead_name || '').toLowerCase().includes(searchVal) ||
+                    (r.lead_phone || '').toLowerCase().includes(searchVal) ||
+                    (r.note || '').toLowerCase().includes(searchVal)
+                );
+            }
+
+            filteredReminders = list;
+            renderRemindersTable();
+            updateReminderFilterCounts();
+        };
+
+        function updateReminderFilterCounts() {
+            const todayStr = new Date().toISOString().split('T')[0];
+
+            const allCount = allReminders.length;
+            const todayCount = allReminders.filter(r => r.due_date === todayStr && r.status !== 'Completed').length;
+            const overdueCount = allReminders.filter(r => r.due_date < todayStr && r.status !== 'Completed').length;
+            const upcomingCount = allReminders.filter(r => r.due_date > todayStr && r.status !== 'Completed').length;
+            const completedCount = allReminders.filter(r => r.status === 'Completed').length;
+
+            const elAll = document.getElementById('count-rem-all');
+            const elToday = document.getElementById('count-rem-today');
+            const elOverdue = document.getElementById('count-rem-overdue');
+            const elUpcoming = document.getElementById('count-rem-upcoming');
+            const elCompleted = document.getElementById('count-rem-completed');
+
+            if (elAll) elAll.innerText = allCount;
+            if (elToday) elToday.innerText = todayCount;
+            if (elOverdue) elOverdue.innerText = overdueCount;
+            if (elUpcoming) elUpcoming.innerText = upcomingCount;
+            if (elCompleted) elCompleted.innerText = completedCount;
+        }
+
+        window.updateRemindersCountBadge = function() {
+            const todayStr = new Date().toISOString().split('T')[0];
+            const pendingCount = allReminders.filter(r => r.due_date <= todayStr && r.status !== 'Completed').length;
+
+            const badge = document.getElementById('reminders-count-badge');
+            if (badge) {
+                if (pendingCount > 0) {
+                    badge.innerText = pendingCount;
+                    badge.style.display = 'inline-block';
+                } else {
+                    badge.style.display = 'none';
+                }
+            }
+        };
+
+        window.renderRemindersTable = function() {
+            const tbody = document.getElementById('reminders-table-body');
+            if (!tbody) return;
+
+            if (filteredReminders.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: var(--color-slate); font-style: italic; padding: 24px;">No reminders found matching criteria.</td></tr>';
+                return;
+            }
+
+            const todayStr = new Date().toISOString().split('T')[0];
+            let html = '';
+
+            filteredReminders.forEach((r) => {
+                const leadName = r.lead_name || 'General Inquiry';
+                const leadPhone = r.lead_phone || 'No Phone';
+                const isCompleted = r.status === 'Completed';
+
+                let dueBadge = '';
+                if (isCompleted) {
+                    dueBadge = '<span style="background: rgba(34,197,94,0.15); color: #4ade80; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 700;">Completed</span>';
+                } else if (r.due_date < todayStr) {
+                    dueBadge = '<span style="background: rgba(239,68,68,0.2); color: #f87171; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 700;">⚠️ Overdue</span>';
+                } else if (r.due_date === todayStr) {
+                    dueBadge = '<span style="background: rgba(245,158,11,0.2); color: #fbbf24; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 700;">🔔 Today</span>';
+                } else {
+                    dueBadge = '<span style="background: rgba(59,130,246,0.15); color: #60a5fa; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 700;">Upcoming</span>';
+                }
+
+                // Priority Badge
+                let priorityBadge = '';
+                if (r.priority === 'High') {
+                    priorityBadge = '<span style="color: #ef4444; font-weight: 700; font-size: 12px;">🔥 High</span>';
+                } else if (r.priority === 'Low') {
+                    priorityBadge = '<span style="color: #3b82f6; font-weight: 600; font-size: 12px;">🟢 Low</span>';
+                } else {
+                    priorityBadge = '<span style="color: #f59e0b; font-weight: 600; font-size: 12px;">⚡ Medium</span>';
+                }
+
+                // Assignee Name
+                const staffUuid = r.assigned_to ? r.assigned_to.toLowerCase() : '';
+                const staffName = staffUuid && window.uuidToUsernameMap ? (window.uuidToUsernameMap[staffUuid] || 'Staff') : 'Unassigned';
+
+                // Phone Call Link
+                let phoneHtml = leadPhone;
+                if (leadPhone && leadPhone !== 'No Phone') {
+                    const cleanPhone = leadPhone.replace(/[^0-9+]/g, '');
+                    const telPhone = cleanPhone.startsWith('+') ? cleanPhone : '+91' + cleanPhone.replace(/^91/, '');
+                    phoneHtml = `
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <span>${leadPhone}</span>
+                            <a href="tel:${telPhone}" class="call-btn-link" onclick="logCallInitiatedFromReminder('${r.id}')" title="Call Lead" style="text-decoration:none;"><i class="fa-solid fa-phone"></i></a>
+                        </div>
+                    `;
+                }
+
+                // Lead Link
+                const leadLink = r.lead_id ? `<a href="lead-details.html?id=${r.lead_id}" style="color: var(--color-gold); font-weight: 700; text-decoration: none;">${leadName}</a>` : `<strong>${leadName}</strong>`;
+
+                const formattedDate = new Date(r.due_date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+
+                html += `
+                    <tr style="${isCompleted ? 'opacity: 0.6;' : ''}">
+                        <td>${leadLink}</td>
+                        <td>${phoneHtml}</td>
+                        <td><div style="max-width: 260px; font-weight: 600; color: #f8fafc;">${r.note}</div></td>
+                        <td>
+                            <div style="display: flex; flex-direction: column; gap: 2px;">
+                                <span>${formattedDate} at ${r.due_time || '10:00'}</span>
+                                <div>${dueBadge}</div>
+                            </div>
+                        </td>
+                        <td>${priorityBadge}</td>
+                        <td><span style="font-size: 12px; color: #cbd5e1;">${staffName}</span></td>
+                        <td>
+                            <span class="status-badge" style="${isCompleted ? 'background: rgba(34,197,94,0.15); color: #4ade80; border-color: rgba(34,197,94,0.3);' : 'background: rgba(245,158,11,0.15); color: #fbbf24; border-color: rgba(245,158,11,0.3);'}">
+                                ${r.status || 'Pending'}
+                            </span>
+                        </td>
+                        <td>
+                            <div style="display: flex; gap: 6px;">
+                                <button type="button" onclick="toggleReminderStatus('${r.id}', '${r.status}')" class="btn" style="background: ${isCompleted ? 'rgba(245,158,11,0.2)' : 'rgba(34,197,94,0.2)'}; color: ${isCompleted ? '#fbbf24' : '#4ade80'}; border: 1px solid ${isCompleted ? 'rgba(245,158,11,0.4)' : 'rgba(34,197,94,0.4)'}; padding: 4px 8px; font-size: 11px; cursor: pointer; border-radius: 4px; font-weight: 700;" title="${isCompleted ? 'Reopen' : 'Mark Completed'}">
+                                    <i class="${isCompleted ? 'fa-solid fa-rotate-left' : 'fa-solid fa-check'}"></i> ${isCompleted ? 'Reopen' : 'Done'}
+                                </button>
+                                ${!isCompleted ? `<button type="button" onclick="snoozeReminder('${r.id}', 1)" class="btn" style="background: rgba(59,130,246,0.15); color: #60a5fa; border: 1px solid rgba(59,130,246,0.3); padding: 4px 8px; font-size: 11px; cursor: pointer; border-radius: 4px;" title="Snooze +1 Day"><i class="fa-solid fa-clock-rotate-left"></i> +1D</button>` : ''}
+                                <button type="button" onclick="deleteReminder('${r.id}')" class="btn" style="background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.3); padding: 4px 8px; font-size: 11px; cursor: pointer; border-radius: 4px;" title="Delete Reminder"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            tbody.innerHTML = html;
+        };
+
+        window.openReminderModal = async function(prefillLeadId) {
+            const modal = document.getElementById('reminder-modal');
+            if (!modal) return;
+
+            modal.style.display = 'flex';
+            document.getElementById('reminder-form').reset();
+            document.getElementById('reminder-id').value = '';
+            document.getElementById('reminder-due-date').value = new Date().toISOString().split('T')[0];
+            document.getElementById('reminder-due-time').value = '10:00';
+
+            // Populate Leads Select Dropdown
+            const leadSelect = document.getElementById('reminder-lead-id');
+            if (leadSelect) {
+                let optionsHtml = '<option value="">Select a Lead...</option>';
+                if (window.currentLeads && window.currentLeads.length > 0) {
+                    window.currentLeads.forEach(l => {
+                        const cleanName = (l.name || 'Anonymous').replace(/"/g, '&quot;');
+                        const cleanPhone = (l.phone || '').replace(/"/g, '&quot;');
+                        optionsHtml += `<option value="${l.id}" data-name="${cleanName}" data-phone="${cleanPhone}">${cleanName} (${cleanPhone || 'No phone'}) - ${l.status || 'New'}</option>`;
+                    });
+                }
+                leadSelect.innerHTML = optionsHtml;
+
+                if (prefillLeadId) {
+                    leadSelect.value = prefillLeadId;
+                    onReminderLeadSelect(prefillLeadId);
+                }
+            }
+
+            // Populate Staff Select Dropdown
+            const staffSelect = document.getElementById('reminder-assignee');
+            if (staffSelect && window.currentStaffCredentials) {
+                let staffHtml = '<option value="">Unassigned</option>';
+                window.currentStaffCredentials.forEach(s => {
+                    if (s.uuid_mapping) {
+                        staffHtml += `<option value="${s.uuid_mapping}">${s.name || s.username}</option>`;
+                    }
+                });
+                staffSelect.innerHTML = staffHtml;
+            }
+        };
+
+        window.closeReminderModal = function() {
+            const modal = document.getElementById('reminder-modal');
+            if (modal) modal.style.display = 'none';
+        };
+
+        window.onReminderLeadSelect = function(leadId) {
+            const leadSelect = document.getElementById('reminder-lead-id');
+            if (!leadSelect || !leadId) return;
+            const selectedOpt = leadSelect.options[leadSelect.selectedIndex];
+            if (selectedOpt) {
+                const leadName = selectedOpt.getAttribute('data-name');
+                const noteInput = document.getElementById('reminder-note');
+                if (noteInput && !noteInput.value) {
+                    noteInput.value = `Follow up call with ${leadName || 'client'}`;
+                }
+            }
+        };
+
+        window.saveReminderForm = async function(event) {
+            event.preventDefault();
+            const btn = document.getElementById('btn-save-reminder');
+            const origHtml = btn ? btn.innerHTML : '';
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+            }
+
+            try {
+                const id = document.getElementById('reminder-id').value;
+                const leadSelect = document.getElementById('reminder-lead-id');
+                const leadId = leadSelect.value;
+                const selectedOpt = leadSelect.options[leadSelect.selectedIndex];
+                const leadName = selectedOpt ? selectedOpt.getAttribute('data-name') : 'General';
+                const leadPhone = selectedOpt ? selectedOpt.getAttribute('data-phone') : '';
+
+                const note = document.getElementById('reminder-note').value.trim();
+                const dueDate = document.getElementById('reminder-due-date').value;
+                const dueTime = document.getElementById('reminder-due-time').value || '10:00';
+                const priority = document.getElementById('reminder-priority').value;
+                const assignedTo = document.getElementById('reminder-assignee').value;
+
+                const payload = {
+                    lead_id: leadId || null,
+                    lead_name: leadName || 'General Inquiry',
+                    lead_phone: leadPhone || '',
+                    note,
+                    due_date: dueDate,
+                    due_time: dueTime,
+                    priority,
+                    assigned_to: assignedTo || null,
+                    status: 'Pending'
+                };
+
+                if (id) {
+                    const { error } = await supabaseAdmin
+                        .from('reminders')
+                        .update(payload)
+                        .eq('id', id);
+                    if (error) throw error;
+                    showAdminToast('Reminder updated successfully!', 'success');
+                } else {
+                    const { error } = await supabaseAdmin
+                        .from('reminders')
+                        .insert([payload]);
+                    if (error) throw error;
+                    showAdminToast('Follow-up reminder set successfully!', 'success');
+                }
+
+                closeReminderModal();
+                await fetchRemindersData();
+            } catch (err) {
+                console.error(err);
+                showAdminToast('Failed to save reminder: ' + err.message, 'error');
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = origHtml;
+                }
+            }
+        };
+
+        window.toggleReminderStatus = async function(id, currentStatus) {
+            const newStatus = currentStatus === 'Completed' ? 'Pending' : 'Completed';
+            try {
+                const { error } = await supabaseAdmin
+                    .from('reminders')
+                    .update({ status: newStatus })
+                    .eq('id', id);
+                if (error) throw error;
+                showAdminToast(`Reminder marked as ${newStatus}!`, 'success');
+                await fetchRemindersData();
+            } catch (err) {
+                console.error(err);
+                showAdminToast('Failed to update status: ' + err.message, 'error');
+            }
+        };
+
+        window.snoozeReminder = async function(id, daysToAdd) {
+            try {
+                const item = allReminders.find(r => r.id === id || r.id == id);
+                if (!item) return;
+                const currDate = new Date(item.due_date || new Date());
+                currDate.setDate(currDate.getDate() + (parseInt(daysToAdd) || 1));
+                const newDateStr = currDate.toISOString().split('T')[0];
+
+                const { error } = await supabaseAdmin
+                    .from('reminders')
+                    .update({ due_date: newDateStr, status: 'Pending' })
+                    .eq('id', id);
+
+                if (error) throw error;
+                showAdminToast(`Reminder snoozed to ${newDateStr}`, 'info');
+                await fetchRemindersData();
+            } catch (err) {
+                console.error(err);
+                showAdminToast('Failed to snooze: ' + err.message, 'error');
+            }
+        };
+
+        window.deleteReminder = async function(id) {
+            if (!confirm('Are you sure you want to delete this follow-up reminder?')) return;
+            try {
+                const { error } = await supabaseAdmin
+                    .from('reminders')
+                    .delete()
+                    .eq('id', id);
+                if (error) throw error;
+                showAdminToast('Reminder deleted.', 'info');
+                await fetchRemindersData();
+            } catch (err) {
+                console.error(err);
+                showAdminToast('Failed to delete reminder: ' + err.message, 'error');
+            }
+        };
+
+        window.logCallInitiatedFromReminder = async function(reminderId) {
+            const item = allReminders.find(r => r.id === reminderId || r.id == reminderId);
+            if (item && item.lead_id) {
+                try {
+                    await supabaseAdmin.from('lead_history').insert([{
+                        lead_id: item.lead_id,
+                        action: `📞 Follow-up Call placed to ${item.lead_name} for reminder: "${item.note}" by ${currentUsername}`
+                    }]);
+                    showAdminToast('Call logged to lead activity timeline.', 'success');
+                } catch (e) {}
             }
         };
     </script>
