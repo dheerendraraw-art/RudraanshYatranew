@@ -2449,6 +2449,9 @@
             if (paneId === 'pane-reminders') {
                 if (window.fetchRemindersData) window.fetchRemindersData();
             }
+            if (paneId === 'pane-passwords') {
+                if (window.fetchCredentials) window.fetchCredentials();
+            }
             if (paneId === 'pane-billing') {
                 if (window.fetchBillingRecords) window.fetchBillingRecords();
             }
@@ -4634,29 +4637,29 @@
 
                     html += `
                         <tr>
-                            <td style="padding: 6px 4px; text-align: center;">
+                            <td data-label="Photo" style="padding: 6px 4px; text-align: center;">
                                 <div style="display: flex; align-items: center; justify-content: center;">
                                     <img src="${item.photo || 'https://cdn-icons-png.flaticon.com/512/149/149071.png'}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/149/149071.png'" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 1px solid var(--color-gold);">
                                 </div>
                             </td>
-                            <td style="padding: 6px 4px;">
+                            <td data-label="Username" style="padding: 6px 4px;">
                                 <input type="text" id="username-input-${item.id}" value="${item.username}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 5px 8px; color: #1e293b; font-family: var(--font-sans); font-size: 12px; width: 100%; min-width: 90px; font-weight: 600; box-sizing: border-box;">
                             </td>
-                            <td style="padding: 6px 4px;">
+                            <td data-label="Phone" style="padding: 6px 4px;">
                                 <input type="text" id="phone-input-${item.id}" value="${item.phone || ''}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 5px 8px; color: #1e293b; font-family: var(--font-sans); font-size: 12px; width: 100%; min-width: 100px; font-weight: 600; box-sizing: border-box;" placeholder="Phone">
                             </td>
-                            <td style="padding: 6px 4px;">
+                            <td data-label="Role" style="padding: 6px 4px;">
                                 <select id="role-select-${item.id}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 5px 4px; color: #1e293b; font-family: var(--font-sans); font-size: 12px; font-weight: 600; width: 100%; min-width: 75px; box-sizing: border-box;">
                                     <option value="staff" ${item.role === 'staff' ? 'selected' : ''}>STAFF</option>
                                     <option value="admin" ${item.role === 'admin' ? 'selected' : ''}>ADMIN</option>
                                 </select>
                             </td>
-                            <td style="padding: 6px 4px;">
+                            <td data-label="UUID Mapping" style="padding: 6px 4px;">
                                 <select id="uuid-select-${item.id}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 5px 4px; color: #1e293b; font-family: var(--font-sans); font-size: 12px; font-weight: 600; width: 100%; min-width: 135px; box-sizing: border-box;">
                                     ${mappingOptions}
                                 </select>
                             </td>
-                            <td style="padding: 6px 4px;">
+                            <td data-label="Password" style="padding: 6px 4px;">
                                 <div style="display: flex; gap: 3px; align-items: center;">
                                     <input type="password" id="passcode-input-${item.id}" value="${item.passcode}" style="background: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 5px 8px; color: #1e293b; font-family: monospace; font-size: 12px; width: 100%; min-width: 80px; font-weight: 600; box-sizing: border-box;" title="${inputTitle}">
                                     <button onclick="togglePasscodeVisibility('${item.id}', this)" class="btn btn-secondary" style="border: 1px solid var(--color-gold); background: #1e293b; padding: 0; cursor: pointer; border-radius: 4px; color: var(--color-gold); display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; flex-shrink: 0;" title="${btnTitle}">
@@ -4664,7 +4667,7 @@
                                     </button>
                                 </div>
                             </td>
-                            <td style="padding: 6px 4px; white-space: nowrap;">
+                            <td data-label="Actions" style="padding: 6px 4px; white-space: nowrap;">
                                 <div style="display: flex; gap: 4px;">
                                     <button onclick="updateStaffCredentials('${item.id}', '${item.username}')" class="btn btn-primary" style="background-color: var(--color-gold); border: none; padding: 5px 8px; font-size: 11px; cursor: pointer; border-radius: 3px; color: #0f172a; font-weight: 700; display: inline-flex; align-items: center; gap: 3px;" title="Save changes">
                                         <i class="fa-solid fa-floppy-disk"></i> Save
