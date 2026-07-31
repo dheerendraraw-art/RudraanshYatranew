@@ -299,7 +299,7 @@ app.get('/blog/:slug', async (req, res) => {
                         const abImg = ab.image_url ? (ab.image_url.startsWith('http') || ab.image_url.startsWith('/') ? ab.image_url : '/' + ab.image_url) : '/assets/images/adi-kailash-hero.webp';
                         return `
                     <li class="sidebar-link-item">
-                        <img class="sidebar-link-img" src="${abImg}" alt="${ab.title} - Kumaon Himalayan Travel Diary" onerror="this.src='/assets/images/adi-kailash-hero.webp'">
+                        <img class="sidebar-link-img" src="${abImg}" alt="${ab.title} - Kumaon Himalayan Travel Diary" width="60" height="45" loading="lazy" decoding="async" onerror="this.src='/assets/images/adi-kailash-hero.webp'">
                         <div class="sidebar-link-text">
                             <a href="/blog/${ab.slug}" class="sidebar-link-name">${ab.title}</a>
                             <span class="sidebar-link-price">By ${ab.author}</span>
@@ -433,6 +433,8 @@ app.get('/blog/:slug', async (req, res) => {
             );
         }
 
+        // Enable HTTP Edge Cache Control for fast TTFB & instant response
+        res.setHeader('Cache-Control', 'public, max-age=300, s-maxage=3600, stale-while-revalidate=86400');
         res.send(blogHtml);
     } catch (err) {
         console.error('SSR Blog Error:', err);

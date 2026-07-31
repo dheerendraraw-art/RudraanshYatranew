@@ -118,8 +118,8 @@
         rel="stylesheet">
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></noscript>
     
-    <!-- Preload LCP Hero Banner -->
-    <link rel='preload' as='image' href='{{IMAGE}}' type='image/webp'>
+    <!-- Preload LCP Hero Banner with high fetch priority -->
+    <link rel="preload" as="image" href="{{IMAGE}}" fetchpriority="high">
     <link rel="stylesheet" href="/style.css?v=7.0">
     
     <style>
@@ -567,7 +567,7 @@
             </div>
             
             <div class="blog-detail-img-wrap">
-                <img src="{{IMAGE}}" alt="{{IMAGE_ALT}}" width="1200" height="675" onerror="this.src='/assets/images/adi-kailash-hero.webp'">
+                <img src="{{IMAGE}}" alt="{{IMAGE_ALT}}" width="1200" height="675" fetchpriority="high" decoding="async" onerror="this.src='/assets/images/adi-kailash-hero.webp'">
             </div>
             
             <div class="blog-detail-body">
@@ -577,7 +577,7 @@
             <!-- Task 2.3: Author Bio Box — E-E-A-T signal for Google & AI search -->
             <div class="author-bio-box" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar-wrap">
-                    <img src="/assets/images/logo.png" alt="Dheerendra Rautela — Himalayan Guide & Founder, Rudraansh Yatra" class="author-avatar" itemprop="image" width="72" height="72">
+                    <img src="/assets/images/logo.png" alt="Dheerendra Rautela — Himalayan Guide & Founder, Rudraansh Yatra" class="author-avatar" itemprop="image" width="72" height="72" loading="lazy" decoding="async">
                 </div>
                 <div class="author-bio-content">
                     <p class="author-bio-name" itemprop="name">{{AUTHOR}}</p>
@@ -604,7 +604,7 @@
                 <!-- Adi Kailash Promo Card -->
                 <div class="sidebar-promo-card" itemscope itemtype="https://schema.org/Product">
                     <div class="promo-card-img-wrap">
-                        <img itemprop="image" src="/assets/images/adi-kailash-parvat.webp" alt="Sacred Adi Kailash peak snow-capped mountain range reflection in Vyas Valley Uttarakhand Himalaya">
+                        <img itemprop="image" src="/assets/images/adi-kailash-parvat.webp" alt="Sacred Adi Kailash peak snow-capped mountain range reflection in Vyas Valley Uttarakhand Himalaya" width="400" height="225" loading="lazy" decoding="async">
                         <span class="promo-card-badge-top">Spiritual Yatra</span>
                         <span class="promo-card-badge-bottom">6 Days / 5 Nights</span>
                     </div>
@@ -660,7 +660,7 @@
                 <!-- Darma Valley Promo Card -->
                 <div class="sidebar-promo-card" style="margin-bottom: 0 !important;" itemscope itemtype="https://schema.org/Product">
                     <div class="promo-card-img-wrap">
-                        <img itemprop="image" src="/assets/images/Panchacholi.webp" alt="Panchachuli Peaks view and Darma Valley exploration trek path with traditional tribal villages of Dharchula Kumaon">
+                        <img itemprop="image" src="/assets/images/Panchacholi.webp" alt="Panchachuli Peaks view and Darma Valley exploration trek path with traditional tribal villages of Dharchula Kumaon" width="400" height="225" loading="lazy" decoding="async">
                         <span class="promo-card-badge-top">Adventure Trek</span>
                         <span class="promo-card-badge-bottom">6 Days / 5 Nights</span>
                     </div>
