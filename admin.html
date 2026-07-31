@@ -2538,14 +2538,18 @@
                 setCard(5, true, '<i class="fa-solid fa-person-hiking"></i>', otherBookings, 'Other Treks');
             }
             else if (paneId === 'pane-billing') {
-                const totalBilled = billingRecords.reduce((sum, b) => sum + parseFloat(b.total_package_amount), 0);
+                const totalBilled = billingRecords.reduce((sum, b) => {
+                    const gross = parseFloat(b.total_package_amount || 0);
+                    const disc = parseFloat(b.discount || 0);
+                    return sum + (gross - disc);
+                }, 0);
                 const totalPaid = billingRecords.reduce((sum, b) => {
                     const payments = b.payments_received || [];
-                    return sum + payments.reduce((pSum, p) => pSum + p.amountPaid, 0);
+                    return sum + payments.reduce((pSum, p) => pSum + (parseFloat(p.amountPaid) || 0), 0);
                 }, 0);
-                const totalOutstanding = totalBilled - totalPaid;
+                const totalOutstanding = Math.max(0, totalBilled - totalPaid);
 
-                setCard(0, true, '<i class="fa-solid fa-indian-rupee-sign" style="color: var(--color-gold);"></i>', '₹' + totalBilled.toLocaleString('en-IN'), 'Total Billed');
+                setCard(0, true, '<i class="fa-solid fa-indian-rupee-sign" style="color: var(--color-gold);"></i>', '₹' + totalBilled.toLocaleString('en-IN'), 'Total Billed (Net)');
                 setCard(1, true, '<i class="fa-solid fa-circle-check" style="color: #22c55e;"></i>', '₹' + totalPaid.toLocaleString('en-IN'), 'Total Collected');
                 setCard(2, true, '<i class="fa-solid fa-triangle-exclamation" style="color: #ef4444;"></i>', '₹' + totalOutstanding.toLocaleString('en-IN'), 'Outstanding Balance');
                 setCard(3, false);
