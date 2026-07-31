@@ -592,7 +592,18 @@
                                 <th>Remarks</th>
                                 <th>Follow up 1</th>
                                 <th>Follow up 2</th>
-                                <th>Final Status</th>
+                                <th>
+                                    <div style="display: flex; flex-direction: column; gap: 4px; align-items: center;">
+                                        <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Final Status</span>
+                                        <select id="filter-lead-finalstatus" onchange="applyLeadsFilters()" style="background: #0f172a; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 4px; padding: 2px 4px; font-size: 11px; cursor: pointer; outline: none; min-width: 100px; font-weight: 500;">
+                                            <option value="">All</option>
+                                            <option value="Booking confirmed">Booking confirmed</option>
+                                            <option value="Booked elsewhere">Booked elsewhere</option>
+                                            <option value="Postpone">Postpone</option>
+                                            <option value="Lost lead">Lost lead</option>
+                                        </select>
+                                    </div>
+                                </th>
                                 <th>Created</th>
                                 <th>Actions</th>
                             </tr>
@@ -3923,6 +3934,7 @@
         window.applyLeadsFilters = function() {
             const source = document.getElementById('filter-lead-source') ? document.getElementById('filter-lead-source').value : '';
             const status = document.getElementById('filter-lead-status') ? document.getElementById('filter-lead-status').value : '';
+            const finalStatus = document.getElementById('filter-lead-finalstatus') ? document.getElementById('filter-lead-finalstatus').value : '';
             const assignee = document.getElementById('filter-lead-assignee') ? document.getElementById('filter-lead-assignee').value : '';
             const searchVal = document.getElementById('search-leads-input') ? document.getElementById('search-leads-input').value.trim().toLowerCase() : '';
 
@@ -3934,6 +3946,10 @@
                 const leadStatus = (lead.status || '').trim().toLowerCase();
                 const filterStatus = (status || '').trim().toLowerCase();
                 const matchStatus = !filterStatus || leadStatus === filterStatus;
+
+                const leadFinalStatus = (lead.final_status || '').trim().toLowerCase();
+                const filterFinalStatus = (finalStatus || '').trim().toLowerCase();
+                const matchFinalStatus = !filterFinalStatus || leadFinalStatus === filterFinalStatus;
 
                 const leadAssignee = (lead.assigned_to || '').trim().toLowerCase();
                 const filterAssignee = (assignee || '').trim().toLowerCase();
@@ -3951,7 +3967,7 @@
                     (lead.phone || '').toLowerCase().includes(searchVal) ||
                     (lead.email || '').toLowerCase().includes(searchVal);
 
-                return matchSource && matchStatus && matchAssignee && matchSearch;
+                return matchSource && matchStatus && matchFinalStatus && matchAssignee && matchSearch;
             });
 
             leadsCurrentPage = 1;
@@ -3962,11 +3978,13 @@
         window.resetLeadsFilters = function() {
             const sourceSelect = document.getElementById('filter-lead-source');
             const statusSelect = document.getElementById('filter-lead-status');
+            const finalStatusSelect = document.getElementById('filter-lead-finalstatus');
             const assigneeSelect = document.getElementById('filter-lead-assignee');
             const searchInput = document.getElementById('search-leads-input');
 
             if (sourceSelect) sourceSelect.value = '';
             if (statusSelect) statusSelect.value = '';
+            if (finalStatusSelect) finalStatusSelect.value = '';
             if (assigneeSelect) assigneeSelect.value = '';
             if (searchInput) searchInput.value = '';
 
@@ -4032,6 +4050,7 @@
             if (thead) {
                 const currentSource = document.getElementById('filter-lead-source')?.value || '';
                 const currentStatus = document.getElementById('filter-lead-status')?.value || '';
+                const currentFinalStatus = document.getElementById('filter-lead-finalstatus')?.value || '';
                 const currentAssignee = document.getElementById('filter-lead-assignee')?.value || '';
 
                 const targetRole = currentUserRole || 'admin';
@@ -4118,7 +4137,18 @@
                                 <th>Remarks</th>
                                 <th>Follow up 1</th>
                                 <th>Follow up 2</th>
-                                <th>Final Status</th>
+                                <th>
+                                    <div style="display: flex; flex-direction: column; gap: 4px; align-items: center;">
+                                        <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Final Status</span>
+                                        <select id="filter-lead-finalstatus" onchange="applyLeadsFilters()" style="background: #0f172a; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 4px; padding: 2px 4px; font-size: 11px; cursor: pointer; outline: none; min-width: 100px; font-weight: 500;">
+                                            <option value="">All</option>
+                                            <option value="Booking confirmed">Booking confirmed</option>
+                                            <option value="Booked elsewhere">Booked elsewhere</option>
+                                            <option value="Postpone">Postpone</option>
+                                            <option value="Lost lead">Lost lead</option>
+                                        </select>
+                                    </div>
+                                </th>
                                 <th>Created</th>
                                 <th>Actions</th>
                             </tr>
@@ -4133,6 +4163,9 @@
                 }
                 if (document.getElementById('filter-lead-status') && currentStatus) {
                     document.getElementById('filter-lead-status').value = currentStatus;
+                }
+                if (document.getElementById('filter-lead-finalstatus') && currentFinalStatus) {
+                    document.getElementById('filter-lead-finalstatus').value = currentFinalStatus;
                 }
                 if (document.getElementById('filter-lead-assignee') && currentAssignee) {
                     document.getElementById('filter-lead-assignee').value = currentAssignee;
