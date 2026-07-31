@@ -1,4 +1,4 @@
-﻿/* Rudraansh Yatra Premium Design System - style.css */
+/* Rudraansh Yatra Premium Design System - style.css */
 
 :root {
     /* Color System */
@@ -309,14 +309,6 @@ header.scrolled {
     color: var(--color-gold-dark);
 }
 
-.logo-icon-img-wrap {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    border: 1.5px solid var(--color-gold);
-    box-shadow: var(--shadow-sm);
-    overflow: hidden;
-    display: flex;
     align-items: center;
     justify-content: center;
     background-color: transparent;
@@ -4312,11 +4304,6 @@ img {
     border-radius: 50%;
     border: 2px solid var(--color-primary);
     background: transparent;
-    color: var(--color-primary);
-    font-size: 20px;
-    font-weight: 700;
-    cursor: pointer;
-    display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
@@ -6648,6 +6635,7 @@ body.user-role-staff .admin-only-action {
     margin-bottom: 12px;
     display: -webkit-box;
     -webkit-line-clamp: 5;
+    line-clamp: 5;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -6667,6 +6655,95 @@ body.user-role-staff .admin-only-action {
 
 .read-more:hover {
     text-decoration: underline;
+}
+
+/* Review Photos & Lightbox Styling */
+.review-photos {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.review-photo-thumb {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    object-fit: cover;
+    cursor: pointer;
+    border: 1.5px solid rgba(10, 25, 47, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.review-photo-thumb:hover {
+    transform: scale(1.06);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+    border-color: var(--color-primary);
+}
+
+.review-lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(10, 25, 47, 0.85);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease-in-out;
+}
+
+.review-lightbox.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.review-lightbox-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 85vh;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
+    background: #000000;
+}
+
+.review-lightbox-content img {
+    display: block;
+    max-width: 90vw;
+    max-height: 85vh;
+    object-fit: contain;
+}
+
+.review-lightbox-close {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    background: rgba(0, 0, 0, 0.65);
+    color: #ffffff;
+    border: none;
+    font-size: 24px;
+    line-height: 1;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease, transform 0.2s ease;
+    z-index: 10;
+}
+
+.review-lightbox-close:hover {
+    background: #ef4444;
+    transform: scale(1.1);
 }
 
 /* Slider Navigation */

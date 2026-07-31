@@ -1012,6 +1012,10 @@
                         </div>
                     </div>
                     <p class="review-text">I have gone to Kailash Mansarovar Yatra with other three female family members in a conducted tour by Rudraansh Yatra from 22 Aug to 1st September. It was really an amazing trip, Lord shiv...</p>
+                    <div class="review-photos">
+                        <img src="assets/images/om-parvat-group.webp" alt="Om Parvat Yatra Group" class="review-photo-thumb" onclick="openReviewLightbox(this.src)">
+                        <img src="assets/images/adi-kailash-senior-citizens.webp" alt="Senior Citizens Yatra" class="review-photo-thumb" onclick="openReviewLightbox(this.src)">
+                    </div>
                     <a href="https://search.google.com/local/reviews?placeid=ChIJUaOjOEsloTkRjOLS3RK_S_A" class="read-more" target="_blank">Read more..</a>
                 </div>
 
@@ -1036,6 +1040,10 @@
                         </div>
                     </div>
                     <p class="review-text">It was a dream come true moment for me to travel such a divine and holy place kailash mansarovar yatra. Such a difficult yatra has been made so easy and simple by our travel agency Rudraansh Yatra. I heartily thanks to all...</p>
+                    <div class="review-photos">
+                        <img src="assets/images/Kailash.webp" alt="Kailash Peak" class="review-photo-thumb" onclick="openReviewLightbox(this.src)">
+                        <img src="assets/images/adi-kailash-panchachuli.webp" alt="Panchachuli Trek" class="review-photo-thumb" onclick="openReviewLightbox(this.src)">
+                    </div>
                     <a href="https://search.google.com/local/reviews?placeid=ChIJUaOjOEsloTkRjOLS3RK_S_A" class="read-more" target="_blank">Read more..</a>
                 </div>
 
@@ -1060,6 +1068,10 @@
                         </div>
                     </div>
                     <p class="review-text">We are very much Thanks to you, & your team supported team, each one is helping nature. The yatra is very beautiful and without any trouble. we have enjoyed lot on every day, by god grace & guidance from...</p>
+                    <div class="review-photos">
+                        <img src="assets/images/Panchacholi.webp" alt="Panchachuli Peak" class="review-photo-thumb" onclick="openReviewLightbox(this.src)">
+                        <img src="assets/images/khaliya-top.webp" alt="Khaliya Top Trek" class="review-photo-thumb" onclick="openReviewLightbox(this.src)">
+                    </div>
                     <a href="https://search.google.com/local/reviews?placeid=ChIJUaOjOEsloTkRjOLS3RK_S_A" class="read-more" target="_blank">Read more..</a>
                 </div>
             </div>
@@ -1068,6 +1080,14 @@
             <div class="slider-nav">
                 <button class="slider-arrow prev-arrow" onclick="scrollReviews(-1)"><i class="fa-solid fa-chevron-left"></i></button>
                 <button class="slider-arrow next-arrow" onclick="scrollReviews(1)"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+        </div>
+
+        <!-- Lightbox Modal for Review Photos -->
+        <div id="reviewLightbox" class="review-lightbox" onclick="closeReviewLightbox(event)">
+            <div class="review-lightbox-content" onclick="event.stopPropagation()">
+                <button class="review-lightbox-close" onclick="closeReviewLightbox(event)">&times;</button>
+                <img id="reviewLightboxImg" src="" alt="Enlarged Review Photo">
             </div>
         </div>
     </section>
@@ -1121,6 +1141,25 @@
         function resetAutoplay() {
             stopAutoplay();
             startAutoplay();
+        }
+
+        function openReviewLightbox(src) {
+            const modal = document.getElementById('reviewLightbox');
+            const img = document.getElementById('reviewLightboxImg');
+            if (modal && img) {
+                img.src = src;
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeReviewLightbox(e) {
+            if (e) e.stopPropagation();
+            const modal = document.getElementById('reviewLightbox');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
         }
 
         async function loadGoogleReviews() {
@@ -1177,7 +1216,13 @@
                             }
                         }
 
-                        const textSnippet = r.text.length > 200 ? r.text.substring(0, 197) + '...' : r.text;
+                        const textSnippet = r.text.length > 180 ? r.text.substring(0, 177) + '...' : r.text;
+
+                        const photosHtml = (r.photos && r.photos.length > 0) 
+                            ? `<div class="review-photos">` + 
+                                r.photos.map(pSrc => `<img src="${pSrc}" alt="Yatra Photo" class="review-photo-thumb" onclick="openReviewLightbox(this.src)">`).join('') + 
+                              `</div>`
+                            : '';
 
                         newHtml += `
                         <div class="review-card detail-card">
@@ -1196,6 +1241,7 @@
                                 </div>
                             </div>
                             <p class="review-text">${textSnippet}</p>
+                            ${photosHtml}
                             <a href="https://search.google.com/local/reviews?placeid=ChIJUaOjOEsloTkRjOLS3RK_S_A" class="read-more" target="_blank">Read more..</a>
                         </div>`;
                     });

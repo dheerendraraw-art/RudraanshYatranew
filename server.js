@@ -2092,21 +2092,33 @@ app.get('/api/google-reviews', async (req, res) => {
                 profile_photo_url: "",
                 rating: 5,
                 text: "I have gone to Kailash Mansarovar Yatra with other three female family members in a conducted tour by Rudraansh Yatra from 22 Aug to 1st September. It was really an amazing trip, Lord shiv...",
-                relative_time_description: "Meerut"
+                relative_time_description: "Meerut",
+                photos: [
+                    "assets/images/om-parvat-group.webp",
+                    "assets/images/adi-kailash-senior-citizens.webp"
+                ]
             },
             {
                 author_name: "Mr. Ankit Kedia",
                 profile_photo_url: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=80&auto=format&fit=crop&q=60",
                 rating: 5,
                 text: "It was a dream come true moment for me to travel such a divine and holy place kailash mansarovar yatra. Such a difficult yatra has been made so easy and simple by our travel agency Rudraansh Yatra. I heartily thanks to all...",
-                relative_time_description: "Ranchi"
+                relative_time_description: "Ranchi",
+                photos: [
+                    "assets/images/Kailash.webp",
+                    "assets/images/adi-kailash-panchachuli.webp"
+                ]
             },
             {
                 author_name: "Balakrishna Siddheshwar",
                 profile_photo_url: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=80&auto=format&fit=crop&q=60",
                 rating: 5,
                 text: "We are very much Thanks to you, & your team supported team, each one is helping nature. The yatra is very beautiful and without any trouble. we have enjoyed lot on every day, by god grace & guidance from...",
-                relative_time_description: "Bangalore"
+                relative_time_description: "Bangalore",
+                photos: [
+                    "assets/images/Panchacholi.webp",
+                    "assets/images/khaliya-top.webp"
+                ]
             }
         ]
     };
@@ -2130,7 +2142,10 @@ app.get('/api/google-reviews', async (req, res) => {
                     profile_photo_url: r.profile_photo_url || "",
                     rating: r.rating || 5,
                     text: r.text,
-                    relative_time_description: r.relative_time_description || "Verified Customer"
+                    relative_time_description: r.relative_time_description || "Verified Customer",
+                    photos: (r.photos && r.photos.length > 0)
+                        ? r.photos.map(p => `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${p.photo_reference}&key=${apiKey}`)
+                        : []
                 }))
             };
             googleReviewsCache = { data: resultData, timestamp: now };
