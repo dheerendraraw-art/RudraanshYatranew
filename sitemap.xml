@@ -65,9 +65,16 @@
 
   <url>
     <loc>https://rudraanshyatra.com/blogs</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.70</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/blog/adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitude-ultra-marathon-guide</loc>
+    <lastmod>2026-07-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
   </url>
 
 </urlset>
