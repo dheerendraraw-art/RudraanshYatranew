@@ -6449,24 +6449,24 @@
 
                 html += `
                     <tr style="${isCompleted ? 'opacity: 0.6;' : ''}">
-                        <td>${leadLink}</td>
-                        <td>${phoneHtml}</td>
-                        <td><div style="max-width: 260px; font-weight: 600; color: #f8fafc;">${r.note}</div></td>
-                        <td>
+                        <td data-label="Lead Name">${leadLink}</td>
+                        <td data-label="Phone & Call">${phoneHtml}</td>
+                        <td data-label="Action / Note"><div style="max-width: 260px; font-weight: 600; color: #f8fafc;">${r.note}</div></td>
+                        <td data-label="Due Date">
                             <div style="display: flex; flex-direction: column; gap: 2px;">
                                 <span>${formattedDate} at ${r.due_time || '10:00'}</span>
                                 <div>${dueBadge}</div>
                             </div>
                         </td>
-                        <td>${priorityBadge}</td>
-                        <td><span style="font-size: 12px; color: #cbd5e1;">${staffName}</span></td>
-                        <td>
+                        <td data-label="Priority">${priorityBadge}</td>
+                        <td data-label="Assigned To"><span style="font-size: 12px; color: #cbd5e1;">${staffName}</span></td>
+                        <td data-label="Status">
                             <span class="status-badge" style="${isCompleted ? 'background: rgba(34,197,94,0.15); color: #4ade80; border-color: rgba(34,197,94,0.3);' : 'background: rgba(245,158,11,0.15); color: #fbbf24; border-color: rgba(245,158,11,0.3);'}">
                                 ${r.status || 'Pending'}
                             </span>
                         </td>
-                        <td>
-                            <div style="display: flex; gap: 6px;">
+                        <td data-label="Actions">
+                            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
                                 <button type="button" onclick="toggleReminderStatus('${r.id}', '${r.status}')" class="btn" style="background: ${isCompleted ? 'rgba(245,158,11,0.2)' : 'rgba(34,197,94,0.2)'}; color: ${isCompleted ? '#fbbf24' : '#4ade80'}; border: 1px solid ${isCompleted ? 'rgba(245,158,11,0.4)' : 'rgba(34,197,94,0.4)'}; padding: 4px 8px; font-size: 11px; cursor: pointer; border-radius: 4px; font-weight: 700;" title="${isCompleted ? 'Reopen' : 'Mark Completed'}">
                                     <i class="${isCompleted ? 'fa-solid fa-rotate-left' : 'fa-solid fa-check'}"></i> ${isCompleted ? 'Reopen' : 'Done'}
                                 </button>
