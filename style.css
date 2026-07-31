@@ -6732,4 +6732,92 @@ input:disabled {
     -webkit-text-fill-color: #94a3b8 !important; /* Force override for iOS rendering */
 }
 
-
+
+/* =============================================================
+   Task 2.3: Author Bio Box - E-E-A-T signal on all blog articles
+   ============================================================= */
+.author-bio-box {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    background: rgba(212, 175, 55, 0.04);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 14px;
+    padding: 24px;
+    margin-top: 44px;
+}
+.author-avatar-wrap { flex-shrink: 0; }
+.author-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    border: 2px solid var(--color-gold);
+    object-fit: cover;
+    display: block;
+}
+.author-bio-content { flex: 1; min-width: 0; }
+.author-bio-name {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-gold);
+    margin: 0 0 4px;
+    line-height: 1.3;
+}
+.author-bio-title {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.45);
+    margin: 0 0 12px;
+}
+.author-bio-desc {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.75;
+    margin: 0 0 16px;
+}
+.author-bio-links { display: flex; gap: 12px; flex-wrap: wrap; }
+.author-bio-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--color-gold);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 6px 14px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: var(--transition-smooth);
+}
+.author-bio-link:hover {
+    background: rgba(212, 175, 55, 0.1);
+    border-color: var(--color-gold);
+    color: var(--color-gold);
+    transform: translateY(-1px);
+}
+@media (max-width: 576px) {
+    .author-bio-box { flex-direction: column; gap: 14px; padding: 18px; }
+    .author-avatar { width: 56px; height: 56px; }
+}
+
+/* =============================================================
+   Task 2.5: Blog Listing Section Heading - visible H2 for SEO
+   ============================================================= */
+.blog-listing-section-heading {
+    font-family: var(--font-serif);
+    font-size: clamp(20px, 3vw, 26px);
+    color: var(--color-primary);
+    font-weight: 600;
+    margin: 0 0 28px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid rgba(212, 175, 55, 0.18);
+    letter-spacing: -0.3px;
+}

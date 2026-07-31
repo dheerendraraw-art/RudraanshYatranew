@@ -33,7 +33,8 @@
           "publisher": {
             "@id": "https://rudraanshyatra.com/#organization"
           },
-          "datePublished": "{{CREATED_AT}}"
+          "datePublished": "{{CREATED_AT}}",
+          "dateModified": "{{UPDATED_AT}}"
         },
         {
           "@type": "BreadcrumbList",
@@ -197,7 +198,8 @@
             margin-bottom: 20px;
             text-align: justify;
         }
-        .blog-heading {
+        /* Task 1.3: Updated selector to match h2 (was h3) */
+        h2.blog-heading, .blog-heading {
             font-family: var(--font-serif);
             font-size: 24px;
             color: var(--color-primary);
@@ -565,12 +567,33 @@
             </div>
             
             <div class="blog-detail-img-wrap">
-                <img src="{{IMAGE}}" alt="{{IMAGE_ALT}}" onerror="this.src='/assets/images/adi-kailash-hero.webp'">
+                <img src="{{IMAGE}}" alt="{{IMAGE_ALT}}" width="1200" height="675" onerror="this.src='/assets/images/adi-kailash-hero.webp'">
             </div>
             
             <div class="blog-detail-body">
                 {{CONTENT}}
             </div>
+
+            <!-- Task 2.3: Author Bio Box — E-E-A-T signal for Google & AI search -->
+            <div class="author-bio-box" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar-wrap">
+                    <img src="/assets/images/logo.png" alt="Dheerendra Rautela — Himalayan Guide & Founder, Rudraansh Yatra" class="author-avatar" itemprop="image" width="72" height="72">
+                </div>
+                <div class="author-bio-content">
+                    <p class="author-bio-name" itemprop="name">{{AUTHOR}}</p>
+                    <p class="author-bio-title" itemprop="jobTitle">Himalayan Expedition Guide &amp; Ground Operator &middot; Rudraansh Yatra, Pithoragarh</p>
+                    <p class="author-bio-desc" itemprop="description">
+                        Native of Pithoragarh with 8+ years guiding pilgrimages across Kumaon's border valleys. 
+                        Has personally escorted 500+ yatris to Adi Kailash, Om Parvat, and Darma Valley. 
+                        Co-founder of Rudraansh Yatra — a NIDHI-certified direct ground operator based in Simalgair Bazaar, Pithoragarh.
+                    </p>
+                    <div class="author-bio-links">
+                        <a href="/about" class="author-bio-link"><i class="fa-solid fa-user"></i> About Us</a>
+                        <a href="/blogs" class="author-bio-link"><i class="fa-solid fa-pen-nib"></i> More Articles</a>
+                    </div>
+                </div>
+            </div>
+
         </article>
 
         <!-- Right: Recommended Trips Sidebar -->

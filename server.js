@@ -241,7 +241,9 @@ app.get('/blog/:slug', async (req, res) => {
 
     // Redirect legacy long slug to clean optimized slug
     const legacySlugs = {
-        'due-to-china-denying-clearance-for-the-lipulekh-crossing-28-indian-businessmen-were-forced-to-return': 'china-denies-lipulekh-clearance-indian-traders-return'
+        'due-to-china-denying-clearance-for-the-lipulekh-crossing-28-indian-businessmen-were-forced-to-return': 'china-denies-lipulekh-clearance-indian-traders-return',
+        // Task 1.1: Fix typo slug for Lipulekh trade resumption article ('ndia-' → 'india-')
+        'ndia-tibet-border-trade-through-lipulekh-pass-finally-resumes-on-august-1-2026-after-a-seven-year-pause-heres-what-changed-since-traders-were-turned-back-in-july': 'india-tibet-border-trade-lipulekh-pass-resumes-august-2026'
     };
     if (legacySlugs[slug]) {
         return res.redirect(301, `/blog/${legacySlugs[slug]}`);
@@ -313,26 +315,81 @@ app.get('/blog/:slug', async (req, res) => {
         }
 
         // Render Paragraphs
-        const paragraphsHtml = blog.content
-            .split('\n')
-            .filter(p => p.trim() !== '')
-            .map(p => {
-                const trimmed = p.trim();
-                // Check if it starts with a number followed by a dot and space (e.g. "1. Understand the Age Suitability")
+        // Task 1.2: Detect FAQ JSON blocks & wrap as valid <script> JSON-LD (fixes broken schema)
+        // Task 1.3: Use <h2> (not <h3>) for numbered section headings
+        const paragraphsHtml = (function renderContent(rawContent) {
+            const lines = rawContent.split('\n');
+            const output = [];
+            let jsonBuffer = [];
+            let inJsonBlock = false;
+            let braceDepth = 0;
+
+            for (let i = 0; i < lines.length; i++) {
+                const trimmed = lines[i].trim();
+                if (!trimmed) continue;
+
+                // --- Task 1.2: Detect start of embedded FAQ/schema JSON block ---
+                if (!inJsonBlock && trimmed.startsWith('{') &&
+                    (trimmed.includes('@type') || trimmed.includes('mainEntity') || trimmed.includes('FAQPage') || trimmed.includes('faqpage'))) {
+                    inJsonBlock = true;
+                    jsonBuffer = [];
+                    braceDepth = 0;
+                }
+
+                if (inJsonBlock) {
+                    // Count brace depth to detect end of JSON object
+                    for (const ch of trimmed) {
+                        if (ch === '{') braceDepth++;
+                        else if (ch === '}') braceDepth--;
+                    }
+                    // Unescape any double-escaped quotes from DB storage
+                    jsonBuffer.push(trimmed.replace(/\\"/g, '"').replace(/\\n/g, '\n'));
+                    if (braceDepth <= 0) {
+                        // JSON block complete — emit as valid <script> JSON-LD
+                        const schemaJson = jsonBuffer.join('\n');
+                        try {
+                            JSON.parse(schemaJson); // validate before emitting
+                            output.push(`<script type="application/ld+json">\n${schemaJson}\n</script>`);
+                        } catch(e) {
+                            // If invalid JSON, skip silently (don't show raw text to user)
+                            console.warn('Blog FAQ schema JSON parse error, skipping:', e.message);
+                        }
+                        inJsonBlock = false;
+                        jsonBuffer = [];
+                    }
+                    continue;
+                }
+
+                // --- Task 1.3: Numbered headings → <h2> (not <h3>) ---
                 if (/^\d+\.\s/.test(trimmed)) {
-                    return `<h3 class="blog-heading">${trimmed}</h3>`;
+                    output.push(`<h2 class="blog-heading">${trimmed}</h2>`);
+                    continue;
                 }
-                // Check if it starts with a bullet marker like * or - (e.g. "* Clothing:")
-                if (/^[*+-]\s/.test(trimmed)) {
-                    return `<p class="blog-bullet">${trimmed.substring(2)}</p>`;
+
+                // Bullet points
+                if (/^[*+\-]\s/.test(trimmed)) {
+                    output.push(`<p class="blog-bullet">${trimmed.substring(2)}</p>`);
+                    continue;
                 }
-                // Bypass paragraph wrapping for HTML tags, script tags, or JSON structure lines
-                if (/^<[a-zA-Z0-9]+/.test(trimmed) || trimmed.endsWith('</script>') || trimmed.startsWith('{') || trimmed.startsWith('}') || trimmed.startsWith('"') || trimmed.startsWith(']')) {
-                    return trimmed;
+
+                // Pass-through raw HTML tags
+                if (/^<[a-zA-Z0-9/]+/.test(trimmed) || trimmed.endsWith('</script>')) {
+                    output.push(trimmed);
+                    continue;
                 }
-                return `<p class="blog-text">${trimmed}</p>`;
-            })
-            .join('\n');
+
+                // Skip stray JSON fragment lines (escaped quotes, lone braces, brackets)
+                if (trimmed.startsWith('}') || trimmed.startsWith(']') ||
+                    (trimmed.startsWith('"') && trimmed.endsWith(',')) ||
+                    (trimmed.startsWith('"') && trimmed.includes('@'))) {
+                    continue;
+                }
+
+                output.push(`<p class="blog-text">${trimmed}</p>`);
+            }
+            return output.join('\n');
+        })(blog.content);
+
 
         // Load blog.html template and replace placeholders
         let blogHtml = fs.readFileSync(path.join(__dirname, 'blog.html'), 'utf8');
@@ -361,7 +418,20 @@ app.get('/blog/:slug', async (req, res) => {
             .replace(/{{CONTENT}}/g, paragraphsHtml)
             .replace(/{{ADJACENT_BLOGS}}/g, adjacentBlogsHtml)
             .replace(/{{SLUG}}/g, `/blog/${blog.slug}`)
-            .replace(/{{CREATED_AT}}/g, blog.created_at);
+            .replace(/{{CREATED_AT}}/g, blog.created_at)
+            .replace(/{{UPDATED_AT}}/g, blog.updated_at || blog.created_at); // Task 2.1: dateModified
+
+        // Task 2.4: Canonical override for near-duplicate monsoon closure articles
+        const canonicalOverrides = {
+            'adi-kailash-yatra-2026-suspended-due-to-weather-official-reopening-date':
+                'adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates'
+        };
+        if (canonicalOverrides[slug]) {
+            blogHtml = blogHtml.replace(
+                `<link rel="canonical" href="https://rudraanshyatra.com/blog/${slug}">`,
+                `<link rel="canonical" href="https://rudraanshyatra.com/blog/${canonicalOverrides[slug]}">`
+            );
+        }
 
         res.send(blogHtml);
     } catch (err) {
@@ -440,7 +510,7 @@ app.get('/sitemap.xml', async (req, res) => {
                         urls.push(`  <url>
     <loc>${baseUrl}/blog/${slug}</loc>${lastModTag}
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>`);
                     }
                 });
