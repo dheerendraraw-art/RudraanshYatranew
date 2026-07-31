@@ -1533,75 +1533,94 @@
             </div>
 
             <!-- Right Column: Sidebar Booking Form -->
-            <div>
-                <div class="sidebar-widget">
-                    <h3 class="widget-title">Yatra Details</h3>
-                    <form class="inquiry-form" data-package="Adi Kailash & Om Parvat Yatra">
-                        <div class="price-display-compact" itemscope itemtype="https://schema.org/AggregateOffer">
-                            <meta itemprop="priceCurrency" content="INR" />
-                            <meta itemprop="lowPrice" content="18000" />
-                            <meta itemprop="highPrice" content="35000" />
-                            <meta itemprop="offerCount" content="3" />
-                            <link itemprop="availability" href="https://schema.org/InStock" />
-                            <div class="price-select-group">
-                                <label for="yatra-package-select">Route / Pickup</label>
-                                <select id="yatra-package-select" name="pickup" class="form-control">
-                                    <option value="Delhi to Delhi" data-price="₹35,000" data-duration="6 Days / 5 Nights">Delhi to Delhi</option>
-                                    <option value="Kathgodam to Kathgodam" data-price="₹30,000" data-duration="6 Days / 5 Nights">Kathgodam to Kathgodam</option>
-                                    <option value="Pithoragarh to Pithoragarh" data-price="₹18,000" data-duration="3 Days / 2 Nights">Pithoragarh to Pithoragarh</option>
-                                </select>
-                            </div>
-                            <div class="price-details-row">
-                                <span style="font-size: 10px; font-weight: 700; letter-spacing: 1px; color: rgba(244, 241, 234, 0.6); text-transform: uppercase;" id="selected-route-label">Delhi to Delhi</span>
-                                <div style="text-align: right;">
-                                    <div class="price-val" id="selected-route-price" style="line-height: 1.1; margin-bottom: 2px;">₹35,000</div>
-                                    <div class="price-duration" id="selected-route-duration" style="font-size: 11px; justify-content: flex-end;">
-                                        <i class="fa-solid fa-clock" style="color: var(--color-gold); font-size: 10px;"></i> 6 Days / 5 Nights
-                                    </div>
+            <div class="bw-card">
+
+                    <!-- Header -->
+                    <div class="bw-header">
+                        <div class="bw-header-icon"><i class="fa-solid fa-mountain"></i></div>
+                        <span class="bw-header-text">Yatra Details</span>
+                    </div>
+
+                    <!-- Price Block -->
+                    <div class="bw-price-block" itemscope itemtype="https://schema.org/AggregateOffer">
+                        <meta itemprop="priceCurrency" content="INR" />
+                        <meta itemprop="lowPrice" content="18000" />
+                        <meta itemprop="highPrice" content="35000" />
+                        <meta itemprop="offerCount" content="3" />
+                        <link itemprop="availability" href="https://schema.org/InStock" />
+                        <span class="bw-route-label"><i class="fa-solid fa-location-crosshairs" style="margin-right:5px;"></i>Route / Pickup Point</span>
+                        <select id="yatra-package-select" name="pickup" class="bw-select" aria-label="Select Route">
+                            <option value="Delhi to Delhi" data-price="₹35,000" data-duration="6 Days / 5 Nights">Delhi to Delhi</option>
+                            <option value="Kathgodam to Kathgodam" data-price="₹30,000" data-duration="6 Days / 5 Nights">Kathgodam to Kathgodam</option>
+                            <option value="Pithoragarh to Pithoragarh" data-price="₹18,000" data-duration="3 Days / 2 Nights">Pithoragarh to Pithoragarh</option>
+                        </select>
+                        <div class="bw-price-row">
+                            <span class="bw-price-route-name" id="selected-route-label">Delhi to Delhi</span>
+                            <div class="bw-price-right">
+                                <div class="bw-price-amount" id="selected-route-price">₹35,000</div>
+                                <div class="bw-price-duration" id="selected-route-duration">
+                                    <i class="fa-solid fa-clock" style="color:var(--color-gold);font-size:9px;"></i>
+                                    6 Days / 5 Nights
                                 </div>
                             </div>
-                            <div class="price-tax-note" style="margin-top: 8px; font-size: 10px; text-align: center; color: rgba(244, 241, 234, 0.45); border-top: 1px solid rgba(255,255,255,0.05); padding-top: 6px;">All permits & local 4x4 Bolero transport included</div>
+                        </div>
+                        <div class="bw-price-note"><i class="fa-solid fa-circle-check" style="color:rgba(212,175,55,0.5);margin-right:5px;"></i>All permits &amp; local 4×4 Bolero transport included</div>
+                    </div>
+
+                    <!-- Inquiry Form -->
+                    <form class="inquiry-form bw-form-section" data-package="Adi Kailash &amp; Om Parvat Yatra">
+                        <div class="bw-form-title">Inquire / Book Yatra</div>
+
+                        <div class="bw-grid-2">
+                            <div class="bw-form-group">
+                                <label for="booking-name">Name</label>
+                                <input type="text" id="booking-name" name="name" class="bw-input" placeholder="E.g. Rajesh Kumar" required>
+                            </div>
+                            <div class="bw-form-group">
+                                <label for="booking-phone">Phone</label>
+                                <input type="tel" id="booking-phone" name="phone" class="bw-input" placeholder="+91-XXXXX-XXXXX" required>
+                            </div>
                         </div>
 
-                        <h4 style="margin-bottom: 12px; color: var(--color-text-light);">Inquire / Book Yatra</h4>
-                        <div class="form-grid-2">
-                            <div class="form-group">
-                                <label for="booking-name">Name</label>
-                                <input type="text" id="booking-name" name="name" class="form-control"
-                                    placeholder="E.g. Rajesh Kumar" required>
+                        <div class="bw-grid-2">
+                            <div class="bw-form-group">
+                                <label for="booking-date">Travel Date</label>
+                                <input type="date" id="booking-date" name="date" class="bw-input" required>
                             </div>
-                            <div class="form-group">
-                                <label for="booking-phone">Phone</label>
-                                <input type="tel" id="booking-phone" name="phone" class="form-control"
-                                    placeholder="+91-XXXXX-XXXXX" required>
-                            </div>
-                        </div>
-                        <div class="form-grid-2">
-                            <div class="form-group">
-                                <label for="booking-date">Date</label>
-                                <input type="date" id="booking-date" name="date" class="form-control" required>
-                            </div>
-                            <div class="form-group">
+                            <div class="bw-form-group">
                                 <label for="booking-travelers">Travelers</label>
-                                <select id="booking-travelers" name="travelers" class="form-control">
+                                <select id="booking-travelers" name="travelers" class="bw-input">
                                     <option value="1">1 Person</option>
                                     <option value="2">2 People</option>
-                                    <option value="3-5">3 - 5 People</option>
+                                    <option value="3-5">3 – 5 People</option>
                                     <option value="6+">6+ People</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
+
+                        <div class="bw-form-group">
                             <label for="booking-msg">Special Notes</label>
-                            <input type="text" id="booking-msg" name="message" class="form-control"
-                                placeholder="Diet, medical conditions (optional)">
+                            <input type="text" id="booking-msg" name="message" class="bw-input" placeholder="Diet, medical conditions (optional)">
                         </div>
-                        <div class="inclusions-grid" style="gap: 10px; margin-top: 15px;">
-                            <button type="submit" class="btn form-btn" style="margin-top: 0; width: 100%;"><i class="fa-brands fa-whatsapp"></i> WhatsApp</button>
-                            <button type="button" class="btn pay-now-btn" id="btn-pay-now" style="width: 100%; background: var(--color-gold); color: var(--color-primary); border: 1.5px solid var(--color-gold); font-weight: 700; display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: var(--border-radius-sm); text-transform: uppercase; font-size: 12px; letter-spacing: 1.5px; cursor: pointer; transition: var(--transition-smooth);"><i class="fa-solid fa-credit-card"></i> Pay Now</button>
+
+                        <div class="bw-cta-row">
+                            <button type="submit" class="bw-btn bw-btn-whatsapp">
+                                <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                            </button>
+                            <button type="button" class="bw-btn bw-btn-pay" id="btn-pay-now">
+                                <i class="fa-solid fa-credit-card"></i> Pay Now
+                            </button>
+                        </div>
+
+                        <div class="bw-trust-row">
+                            <span class="bw-trust-item"><i class="fa-solid fa-lock"></i> Secure Payment</span>
+                            <span class="bw-trust-item"><i class="fa-solid fa-shield-halved"></i> Permit Handled</span>
+                            <span class="bw-trust-item"><i class="fa-solid fa-star"></i> 4.9 Rated</span>
                         </div>
                     </form>
+
                 </div>
+         </div>
 
                 <!-- Related Travel Guides / Blogs -->
                 <div class="related-blogs-widget" style="margin-top: 30px;">

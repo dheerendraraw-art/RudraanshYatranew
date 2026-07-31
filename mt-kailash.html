@@ -572,68 +572,95 @@
                 </div>
 
             </div>
-
             <!-- Right Column: Sidebar Booking Form -->
             <div>
-                <div class="sidebar-widget">
-                    <h3 class="widget-title">Yatra Details</h3>
-                    <div class="price-display" itemscope itemtype="https://schema.org/Offer">
+                <div class="bw-card">
+
+                    <!-- Header -->
+                    <div class="bw-header">
+                        <div class="bw-header-icon"><i class="fa-solid fa-mountain"></i></div>
+                        <span class="bw-header-text">Yatra Details</span>
+                    </div>
+
+                    <!-- Price Block -->
+                    <div class="bw-price-block" itemscope itemtype="https://schema.org/Offer">
                         <meta itemprop="priceCurrency" content="INR" />
                         <meta itemprop="price" content="0" />
                         <meta itemprop="description" content="Price on Request based on international Lipulekh pass permit season" />
                         <link itemprop="availability" href="https://schema.org/InStock" />
-                        <span>Standard Package Cost</span>
-                        <strong style="font-size: 24px;">Price on Request</strong>
-                        <span>Premium Package</span>
-                        <div class="price-tax-note"
-                            style="color: var(--color-gold) !important; font-weight: 700; margin-top: 10px;">Starting
-                            Point: Pithoragarh</div>
-                        <div class="price-tax-note">Includes complete Visa, Permits, Guide & Liaison</div>
-                    </div>
-
-                    <h4 style="margin-bottom: 12px; color: var(--color-text-light);">Inquire about Kailash</h3>
-                    <form class="inquiry-form" data-package="Mt. Kailash Yatra">
-                        <div class="form-grid-2">
-                            <div class="form-group">
-                                <label for="booking-name">Name</label>
-                                <input type="text" id="booking-name" name="name" class="form-control"
-                                    placeholder="E.g. Rajesh Kumar" required>
+                        <div class="bw-price-row" style="border-top: none; padding-top: 0; margin-top: 0;">
+                            <div>
+                                <span class="bw-route-label" style="margin-bottom: 4px;">Standard Package Cost</span>
+                                <span class="bw-price-route-name" style="display:block;">Starting: Pithoragarh</span>
                             </div>
-                            <div class="form-group">
-                                <label for="booking-phone">Phone</label>
-                                <input type="tel" id="booking-phone" name="phone" class="form-control"
-                                    placeholder="+91-XXXXX-XXXXX" required>
+                            <div class="bw-price-right">
+                                <div class="bw-price-amount" style="font-size:18px;">Price on Request</div>
+                                <div class="bw-price-duration">
+                                    <i class="fa-solid fa-crown" style="color:var(--color-gold);font-size:9px;"></i>
+                                    Premium Package
+                                </div>
                             </div>
                         </div>
-                        <div class="form-grid-2">
-                            <div class="form-group">
+                        <div class="bw-price-note"><i class="fa-solid fa-circle-check" style="color:rgba(212,175,55,0.5);margin-right:5px;"></i>Includes complete Visa, Permits, Guide &amp; Liaison</div>
+                    </div>
+
+                    <!-- Inquiry Form -->
+                    <form class="inquiry-form bw-form-section" data-package="Mt. Kailash Yatra">
+                        <div class="bw-form-title">Inquire about Kailash</div>
+
+                        <div class="bw-grid-2">
+                            <div class="bw-form-group">
+                                <label for="booking-name">Name</label>
+                                <input type="text" id="booking-name" name="name" class="bw-input" placeholder="E.g. Rajesh Kumar" required>
+                            </div>
+                            <div class="bw-form-group">
+                                <label for="booking-phone">Phone</label>
+                                <input type="tel" id="booking-phone" name="phone" class="bw-input" placeholder="+91-XXXXX-XXXXX" required>
+                            </div>
+                        </div>
+
+                        <div class="bw-grid-2">
+                            <div class="bw-form-group">
                                 <label for="booking-date">Month</label>
-                                <select id="booking-date" name="date" class="form-control" required>
+                                <select id="booking-date" name="date" class="bw-input" required>
                                     <option value="June">June 2026</option>
                                     <option value="July">July 2026</option>
                                     <option value="August">August 2026</option>
                                     <option value="September">September 2026</option>
                                 </select>
                             </div>
-                            <div class="form-group">
+                            <div class="bw-form-group">
                                 <label for="booking-travelers">Travelers</label>
-                                <select id="booking-travelers" name="travelers" class="form-control">
+                                <select id="booking-travelers" name="travelers" class="bw-input">
                                     <option value="1">1 Person</option>
                                     <option value="2">2 People</option>
-                                    <option value="3-5">3 - 5 People</option>
+                                    <option value="3-5">3 – 5 People</option>
                                     <option value="6+">6+ People</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
+
+                        <div class="bw-form-group">
                             <label for="booking-msg">Special Notes</label>
-                            <input type="text" id="booking-msg" name="message" class="form-control"
-                                placeholder="Passport details, medical issues, questions...">
+                            <input type="text" id="booking-msg" name="message" class="bw-input" placeholder="Passport details, medical issues, questions...">
                         </div>
-                        <button type="submit" class="btn form-btn"><i class="fa-brands fa-whatsapp"></i> Inquire via WhatsApp</button>
+
+                        <div class="bw-cta-row" style="grid-template-columns: 1fr;">
+                            <button type="submit" class="bw-btn bw-btn-whatsapp">
+                                <i class="fa-brands fa-whatsapp"></i> Inquire via WhatsApp
+                            </button>
+                        </div>
+
+                        <div class="bw-trust-row">
+                            <span class="bw-trust-item"><i class="fa-solid fa-lock"></i> Secure</span>
+                            <span class="bw-trust-item"><i class="fa-solid fa-shield-halved"></i> Tibet Permit</span>
+                            <span class="bw-trust-item"><i class="fa-solid fa-star"></i> 4.9 Rated</span>
+                        </div>
                     </form>
+
                 </div>
             </div>
+
 
         </div>
     </section>

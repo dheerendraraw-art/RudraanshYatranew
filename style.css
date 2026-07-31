@@ -6821,3 +6821,276 @@ input:disabled {
     border-bottom: 2px solid rgba(212, 175, 55, 0.18);
     letter-spacing: -0.3px;
 }
+
+/* =============================================================
+   BOOKING WIDGET REDESIGN — bw- namespace
+   Premium glassmorphism booking sidebar card
+   ============================================================= */
+
+/* --- Container --- */
+.bw-card {
+    background: linear-gradient(145deg, #0d2040 0%, #0a192f 60%, #0b1e38 100%);
+    border: 1px solid rgba(212, 175, 55, 0.28);
+    border-radius: 20px;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.45), 0 0 0 1px rgba(212,175,55,0.08) inset;
+    position: sticky;
+    top: 100px;
+}
+
+/* --- Header band --- */
+.bw-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 18px 22px 14px;
+    border-bottom: 1px solid rgba(212,175,55,0.12);
+    background: rgba(212,175,55,0.04);
+}
+.bw-header-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(212,175,55,0.22), rgba(212,175,55,0.08));
+    border: 1px solid rgba(212,175,55,0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 14px;
+    color: var(--color-gold);
+}
+.bw-header-text {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    font-weight: 600;
+    color: #f4f1ea;
+    letter-spacing: -0.2px;
+}
+
+/* --- Price card --- */
+.bw-price-block {
+    margin: 16px 18px 0;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 14px;
+    padding: 16px;
+}
+.bw-route-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(212,175,55,0.65);
+    margin-bottom: 8px;
+    display: block;
+}
+.bw-select {
+    width: 100%;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: #f4f1ea;
+    outline: none;
+    transition: border-color 0.2s ease;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23d4af37' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    cursor: pointer;
+}
+.bw-select:focus { border-color: rgba(212,175,55,0.6); background-color: rgba(255,255,255,0.1); }
+.bw-select option { color: #0a192f; background-color: #1e3a5f; }
+
+.bw-price-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed rgba(255,255,255,0.1);
+}
+.bw-price-route-name {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(244,241,234,0.45);
+}
+.bw-price-right { text-align: right; }
+.bw-price-amount {
+    font-family: var(--font-serif);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-gold);
+    line-height: 1;
+    letter-spacing: -0.5px;
+}
+.bw-price-duration {
+    font-size: 11px;
+    color: rgba(244,241,234,0.7);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    justify-content: flex-end;
+    margin-top: 3px;
+}
+.bw-price-note {
+    margin-top: 10px;
+    font-size: 10px;
+    text-align: center;
+    color: rgba(244,241,234,0.35);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding-top: 8px;
+    letter-spacing: 0.2px;
+}
+
+/* --- Form section --- */
+.bw-form-section {
+    padding: 18px 18px 0;
+}
+.bw-form-title {
+    font-family: var(--font-sans);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(212,175,55,0.7);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+.bw-form-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, rgba(212,175,55,0.25), transparent);
+}
+
+.bw-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+.bw-form-group { margin-bottom: 12px; }
+.bw-form-group label {
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(244,241,234,0.5);
+    margin-bottom: 6px;
+}
+.bw-input {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    padding: 10px 13px;
+    font-family: var(--font-sans);
+    font-size: 13.5px;
+    color: #f4f1ea;
+    outline: none;
+    transition: border-color 0.2s ease, background 0.2s ease;
+    box-sizing: border-box;
+}
+.bw-input::placeholder { color: rgba(244,241,234,0.28); }
+.bw-input:focus {
+    border-color: rgba(212,175,55,0.55);
+    background: rgba(255,255,255,0.09);
+}
+select.bw-input {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23d4af37' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 13px center;
+    cursor: pointer;
+}
+select.bw-input option { color: #0a192f; background: #1e3a5f; }
+input[type="date"].bw-input::-webkit-calendar-picker-indicator {
+    filter: invert(0.6) sepia(1) saturate(2) hue-rotate(5deg);
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+/* --- CTA Buttons --- */
+.bw-cta-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 16px 18px 18px;
+}
+.bw-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: none;
+    border-radius: 12px;
+    padding: 13px 10px;
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-decoration: none;
+}
+.bw-btn-whatsapp {
+    background: linear-gradient(135deg, #25d366, #20ba56);
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(37,211,102,0.28);
+}
+.bw-btn-whatsapp:hover {
+    background: linear-gradient(135deg, #20ba56, #1aa348);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 22px rgba(37,211,102,0.38);
+    color: #fff;
+}
+.bw-btn-pay {
+    background: linear-gradient(135deg, #d4af37, #b8952a);
+    color: #0a192f;
+    box-shadow: 0 4px 16px rgba(212,175,55,0.28);
+}
+.bw-btn-pay:hover {
+    background: linear-gradient(135deg, #e0bc42, #c9a130);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 22px rgba(212,175,55,0.42);
+    color: #0a192f;
+}
+
+/* --- Trust badges row --- */
+.bw-trust-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 0 18px 16px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding-top: 12px;
+    flex-wrap: wrap;
+}
+.bw-trust-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    color: rgba(244,241,234,0.4);
+    font-family: var(--font-sans);
+    letter-spacing: 0.3px;
+}
+.bw-trust-item i { color: rgba(212,175,55,0.6); font-size: 10px; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .bw-card { position: relative; top: 0; }
+    .bw-grid-2 { grid-template-columns: 1fr; gap: 0; }
+    .bw-price-amount { font-size: 24px; }
+}
