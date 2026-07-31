@@ -4617,8 +4617,10 @@
                     filterMonthEl.value = currentMonthName;
                 }
                 
-                // Render attendance history
-                renderAttendanceHistory();
+                // Render attendance history if defined
+                if (typeof renderAttendanceHistory === 'function') {
+                    renderAttendanceHistory();
+                }
 
                 const tbody = document.getElementById('passwords-table-body');
                 if (!tbody) return;
