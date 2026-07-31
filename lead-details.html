@@ -84,6 +84,95 @@
             border: 1px solid rgba(212, 175, 55, 0.3);
         }
 
+        /* Call & Save Button Styles */
+        .call-btn-link {
+            background: rgba(34, 197, 94, 0.15);
+            color: #4ade80 !important;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            margin-left: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .call-btn-link:hover {
+            background: #22c55e;
+            color: #0b0f19 !important;
+            border-color: #22c55e;
+        }
+
+        .btn-save-properties {
+            width: 100%;
+            background: #d4af37;
+            color: #0b0f19;
+            border: none;
+            padding: 10px 16px;
+            font-size: 13.5px;
+            font-weight: 800;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2);
+        }
+
+        .btn-save-properties:hover {
+            background: #f59e0b;
+            box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .header-action-btn.call-btn {
+            background: rgba(34, 197, 94, 0.2);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.4);
+        }
+
+        .header-action-btn.call-btn:hover {
+            background: #22c55e;
+            color: #0b0f19;
+        }
+
+        .header-action-btn.save-btn {
+            background: rgba(212, 175, 55, 0.2);
+            color: #d4af37;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+        }
+
+        .header-action-btn.save-btn:hover {
+            background: #d4af37;
+            color: #0b0f19;
+        }
+
         /* Layout Columns */
         .details-grid {
             display: grid;
@@ -468,7 +557,9 @@
                 <a href="admin.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Leads Dashboard</a>
                 <h1 class="header-title" id="lead-page-title">Lead Details</h1>
             </div>
-            <div id="lead-status-header">
+            <div id="lead-status-header" class="header-actions">
+                <a id="header-call-btn" href="#" class="header-action-btn call-btn" onclick="logCallInitiated()"><i class="fa-solid fa-phone"></i> Call Lead</a>
+                <button type="button" onclick="saveAllLeadProperties()" class="header-action-btn save-btn"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button>
                 <span class="status-badge" id="header-status-badge">Loading...</span>
             </div>
         </div>
@@ -493,6 +584,7 @@
                         <div class="detail-item">
                             <i class="fa-solid fa-phone"></i>
                             <span id="lead-display-phone">Loading...</span>
+                            <span id="lead-call-wrapper"></span>
                             <span id="lead-wa-wrapper"></span>
                         </div>
                         <div class="detail-item">
@@ -514,22 +606,22 @@
                         <!-- Admin Only: Editable Name, Phone, Email -->
                         <div class="property-row admin-only-field" style="display: none;">
                             <label class="property-label">Client Name</label>
-                            <input type="text" id="property-name" class="property-input" onchange="updateLeadField('name', this.value)" style="border: 1.5px solid var(--color-gold);">
+                            <input type="text" id="property-name" class="property-input" style="border: 1.5px solid var(--color-gold);">
                         </div>
 
                         <div class="property-row admin-only-field" style="display: none;">
                             <label class="property-label">Phone Number</label>
-                            <input type="text" id="property-phone" class="property-input" onchange="updateLeadField('phone', this.value)" style="border: 1.5px solid var(--color-gold);">
+                            <input type="text" id="property-phone" class="property-input" style="border: 1.5px solid var(--color-gold);">
                         </div>
 
                         <div class="property-row admin-only-field" style="display: none;">
                             <label class="property-label">Email Address</label>
-                            <input type="email" id="property-email" class="property-input" onchange="updateLeadField('email', this.value)" style="border: 1.5px solid var(--color-gold);">
+                            <input type="email" id="property-email" class="property-input" style="border: 1.5px solid var(--color-gold);">
                         </div>
 
                         <div class="property-row">
                             <label class="property-label">Lead Status</label>
-                            <select id="property-status" class="property-select" onchange="updateLeadField('status', this.value)">
+                            <select id="property-status" class="property-select">
                                 <option value="New">✨ New</option>
                                 <option value="Answered">📞 Answered</option>
                                 <option value="Busy">⏳ Busy</option>
@@ -542,19 +634,19 @@
 
                         <div class="property-row" id="prop-assignee-row">
                             <label class="property-label">Assigned To Staff</label>
-                            <select id="property-assignee" class="property-select" onchange="updateLeadField('assigned_to', this.value)">
+                            <select id="property-assignee" class="property-select">
                                 <option value="">Loading...</option>
                             </select>
                         </div>
 
                         <div class="property-row">
                             <label class="property-label">Travel Date</label>
-                            <input type="date" id="property-travel-date" class="property-input" onchange="updateLeadField('travel_date', this.value)">
+                            <input type="date" id="property-travel-date" class="property-input">
                         </div>
 
                         <div class="property-row">
                             <label class="property-label">Final Status</label>
-                            <select id="property-final-status" class="property-select" onchange="updateLeadField('final_status', this.value)">
+                            <select id="property-final-status" class="property-select">
                                 <option value="">🔘 None</option>
                                 <option value="Booking confirmed">🎉 Booking confirmed</option>
                                 <option value="Booked elsewhere">🏢 Booked elsewhere</option>
@@ -565,7 +657,7 @@
 
                         <div class="property-row">
                             <label class="property-label">Travelers</label>
-                            <input type="number" id="property-travelers" class="property-input" min="1" onchange="updateLeadField('travelers', parseInt(this.value) || 1)">
+                            <input type="number" id="property-travelers" class="property-input" min="1">
                         </div>
 
                         <div class="property-row">
@@ -573,6 +665,13 @@
                             <div class="property-value" id="property-created-at">Loading...</div>
                         </div>
 
+                    </div>
+
+                    <!-- Save Lead Changes Option -->
+                    <div style="margin-top: 18px; border-top: 1px solid #334155; padding-top: 16px;">
+                        <button type="button" id="btn-save-lead-properties" onclick="saveAllLeadProperties()" class="btn-save-properties">
+                            <i class="fa-solid fa-floppy-disk"></i> Save Lead Changes
+                        </button>
                     </div>
                 </div>
 
@@ -591,8 +690,8 @@
             <div class="activity-wrap">
                 <div class="activity-tabs">
                     <button class="act-tab-btn active"><i class="fa-solid fa-note-sticky"></i> Add Quick Note</button>
-                    <button class="act-tab-btn" onclick="showToast('Feature coming soon!')"><i class="fa-solid fa-phone"></i> Log Call</button>
-                    <button class="act-tab-btn" onclick="showToast('Feature coming soon!')"><i class="fa-solid fa-envelope"></i> Send Email</button>
+                    <button class="act-tab-btn" onclick="logCallWithPrompt()"><i class="fa-solid fa-phone"></i> Call & Log</button>
+                    <button class="act-tab-btn" onclick="showToast('Email feature coming soon!')"><i class="fa-solid fa-envelope"></i> Send Email</button>
                 </div>
 
                 <!-- New Note Form -->
@@ -872,19 +971,35 @@
             }
             document.getElementById('lead-avatar-initials').innerText = initials;
 
-            // Details info
-            document.getElementById('lead-display-phone').innerText = leadData.phone || 'No Phone';
+            // Phone & Call links
+            const displayPhone = leadData.phone || 'No Phone';
+            document.getElementById('lead-display-phone').innerText = displayPhone;
             document.getElementById('lead-display-email').innerText = leadData.email || 'No Email';
             document.getElementById('lead-display-source').innerText = leadData.source || 'Website';
 
-            // WhatsApp link helper
+            const callWrapper = document.getElementById('lead-call-wrapper');
+            const headerCallBtn = document.getElementById('header-call-btn');
             const waWrapper = document.getElementById('lead-wa-wrapper');
+
             if (leadData.phone) {
-                const cleanPhone = leadData.phone.replace(/[^0-9]/g, '');
-                const waPhone = cleanPhone.length === 10 ? '91' + cleanPhone : cleanPhone;
-                waWrapper.innerHTML = `<a href="https://wa.me/${waPhone}?text=Namaste%20${encodeURIComponent(leadData.name || 'Guest')}!%20This%20is%20Rudraansh%20Yatra." target="_blank" class="wa-chat-link"><i class="fa-brands fa-whatsapp"></i> Chat</a>`;
+                const cleanPhone = leadData.phone.replace(/[^0-9+]/g, '');
+                const telPhone = cleanPhone.startsWith('+') ? cleanPhone : '+91' + cleanPhone.replace(/^91/, '');
+                
+                if (callWrapper) {
+                    callWrapper.innerHTML = `<a href="tel:${telPhone}" class="call-btn-link" onclick="logCallInitiated()"><i class="fa-solid fa-phone"></i> Call</a>`;
+                }
+                if (headerCallBtn) {
+                    headerCallBtn.href = `tel:${telPhone}`;
+                }
+                if (waWrapper) {
+                    const cleanDigits = leadData.phone.replace(/[^0-9]/g, '');
+                    const waPhone = cleanDigits.length === 10 ? '91' + cleanDigits : cleanDigits;
+                    waWrapper.innerHTML = `<a href="https://wa.me/${waPhone}?text=Namaste%20${encodeURIComponent(leadData.name || 'Guest')}!%20This%20is%20Rudraansh%20Yatra." target="_blank" class="wa-chat-link"><i class="fa-brands fa-whatsapp"></i> Chat</a>`;
+                }
             } else {
-                waWrapper.innerHTML = '';
+                if (callWrapper) callWrapper.innerHTML = '';
+                if (headerCallBtn) headerCallBtn.href = '#';
+                if (waWrapper) waWrapper.innerHTML = '';
             }
 
             // Properties Form inputs
@@ -1075,6 +1190,118 @@
                 console.error(err);
                 showToast('Failed to add note.');
             }
+        // Save all changes made in the form
+        async function saveAllLeadProperties() {
+            if (!leadData || !leadId) return;
+
+            const btn = document.getElementById('btn-save-lead-properties');
+            const originalText = btn ? btn.innerHTML : '';
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving Changes...';
+            }
+
+            try {
+                const newStatus = document.getElementById('property-status').value;
+                const newAssignee = document.getElementById('property-assignee').value;
+                const newTravelDate = document.getElementById('property-travel-date').value;
+                const newFinalStatus = document.getElementById('property-final-status').value;
+                const newTravelers = parseInt(document.getElementById('property-travelers').value) || 1;
+
+                const updateData = {
+                    status: newStatus || 'New',
+                    assigned_to: newAssignee || null,
+                    travel_date: newTravelDate || null,
+                    final_status: newFinalStatus || null,
+                    travelers: newTravelers
+                };
+
+                if (currentUserRole === 'admin') {
+                    const newName = document.getElementById('property-name').value.trim();
+                    const newPhone = document.getElementById('property-phone').value.trim();
+                    const newEmail = document.getElementById('property-email').value.trim();
+                    if (newName) updateData.name = newName;
+                    if (newPhone) updateData.phone = newPhone;
+                    if (newEmail) updateData.email = newEmail;
+                }
+
+                const oldStatus = leadData.status || 'New';
+                const statusChanged = (oldStatus !== newStatus);
+                const oldFinalStatus = leadData.final_status || '';
+                const finalStatusChanged = (oldFinalStatus !== newFinalStatus);
+
+                const { error } = await supabaseAdmin
+                    .from('leads')
+                    .update(updateData)
+                    .eq('id', leadId);
+
+                if (error) throw error;
+
+                // Log status changes to lead history
+                if (statusChanged) {
+                    await supabaseAdmin
+                        .from('lead_history')
+                        .insert([{
+                            lead_id: leadId,
+                            action: `🏷️ Status updated from "${oldStatus}" to "${newStatus}" by ${currentUsername}`
+                        }]);
+                }
+
+                if (finalStatusChanged && newFinalStatus) {
+                    await supabaseAdmin
+                        .from('lead_history')
+                        .insert([{
+                            lead_id: leadId,
+                            action: `🏁 Final Status set to "${newFinalStatus}" by ${currentUsername}`
+                        }]);
+                }
+
+                // If final status is confirmed, create booking record
+                if (newFinalStatus === 'Booking confirmed' && oldFinalStatus !== 'Booking confirmed') {
+                    await copyLeadToBooking({ ...leadData, ...updateData, id: leadId });
+                } else if (oldFinalStatus === 'Booking confirmed' && newFinalStatus !== 'Booking confirmed') {
+                    await supabaseAdmin.from('bookings').delete().eq('lead_id', leadId);
+                }
+
+                showToast('Form changes saved successfully!');
+                await fetchLeadDetails();
+            } catch (err) {
+                console.error(err);
+                showToast('Failed to save form changes: ' + err.message);
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
+                }
+            }
+        }
+
+        // Call & Log Helpers
+        async function logCallInitiated() {
+            if (!leadData) return;
+            try {
+                const clientName = leadData.name || 'Client';
+                const actionDesc = `📞 Phone call initiated to ${clientName} (${leadData.phone || 'Phone'}) by ${currentUsername}`;
+                await supabaseAdmin
+                    .from('lead_history')
+                    .insert([{
+                        lead_id: leadId,
+                        action: actionDesc
+                    }]);
+                showToast('Call action logged to timeline.');
+                fetchLeadHistory();
+            } catch (err) {
+                console.error('Call logging failed:', err);
+            }
+        }
+
+        function logCallWithPrompt() {
+            if (leadData && leadData.phone) {
+                const cleanPhone = leadData.phone.replace(/[^0-9+]/g, '');
+                const telPhone = cleanPhone.startsWith('+') ? cleanPhone : '+91' + cleanPhone.replace(/^91/, '');
+                window.location.href = `tel:${telPhone}`;
+            }
+            logCallInitiated();
         }
 
         // Update lead fields inline
