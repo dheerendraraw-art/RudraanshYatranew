@@ -6821,3 +6821,206 @@ input:disabled {
     border-bottom: 2px solid rgba(212, 175, 55, 0.18);
     letter-spacing: -0.3px;
 }
+
+/* =============================================================
+   BOOKING WIDGET VISUAL REDESIGN — CSS-only, no layout changes
+   Scoped to .sidebar-widget to avoid affecting other components
+   ============================================================= */
+
+/* --- Card shell --- */
+.sidebar-widget {
+    background: linear-gradient(160deg, #0d2040 0%, #0a192f 55%, #091728 100%) !important;
+    border: 1px solid rgba(212, 175, 55, 0.35) !important;
+    border-radius: 18px !important;
+    box-shadow: 0 12px 48px rgba(0,0,0,0.55), 0 0 0 1px rgba(212,175,55,0.06) inset !important;
+}
+
+/* --- Widget title --- */
+.sidebar-widget .widget-title {
+    font-family: var(--font-serif);
+    font-size: 21px;
+    font-weight: 600;
+    color: #f4f1ea;
+    letter-spacing: -0.2px;
+    border-bottom: none !important;
+    padding-bottom: 12px;
+    position: relative;
+}
+.sidebar-widget .widget-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(to right, var(--color-gold), transparent);
+    border-radius: 2px;
+}
+
+/* --- Price block (route selector card) --- */
+.sidebar-widget .price-display-compact {
+    background: rgba(255,255,255,0.04) !important;
+    border: 1px solid rgba(212,175,55,0.2) !important;
+    border-radius: 12px !important;
+    padding: 14px 16px !important;
+    position: relative;
+    overflow: hidden;
+}
+.sidebar-widget .price-display-compact::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, rgba(212,175,55,0.7), rgba(212,175,55,0.1));
+    border-radius: 12px 12px 0 0;
+}
+
+/* Route/Pickup label above dropdown */
+.sidebar-widget .price-select-group > label {
+    font-size: 10px !important;
+    font-weight: 800 !important;
+    letter-spacing: 1.8px !important;
+    text-transform: uppercase !important;
+    color: rgba(212, 175, 55, 0.7) !important;
+    margin-bottom: 8px !important;
+    display: block;
+}
+
+/* Route dropdown */
+.sidebar-widget .price-select-group .form-control {
+    background: rgba(255,255,255,0.07) !important;
+    border: 1px solid rgba(255,255,255,0.14) !important;
+    border-radius: 9px !important;
+    font-size: 14.5px !important;
+    color: #f4f1ea !important;
+    padding: 10px 14px !important;
+}
+.sidebar-widget .price-select-group .form-control:focus {
+    border-color: rgba(212,175,55,0.6) !important;
+    background: rgba(255,255,255,0.11) !important;
+}
+
+/* Price details row separator */
+.sidebar-widget .price-details-row {
+    border-top: 1px dashed rgba(212,175,55,0.2) !important;
+    margin-top: 12px !important;
+    padding-top: 12px !important;
+}
+
+/* Price value — bigger, sharper */
+.sidebar-widget .price-val {
+    font-size: 28px !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.5px !important;
+    text-shadow: 0 0 20px rgba(212,175,55,0.25);
+}
+
+/* Duration text */
+.sidebar-widget .price-duration {
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    color: rgba(244,241,234,0.8) !important;
+}
+
+/* Tax note */
+.sidebar-widget .price-tax-note {
+    font-size: 10px !important;
+    color: rgba(244,241,234,0.38) !important;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.05) !important;
+    padding-top: 8px !important;
+    margin-top: 10px !important;
+}
+
+/* --- Section heading "Inquire / Book Yatra" --- */
+.sidebar-widget h4 {
+    font-family: var(--font-sans) !important;
+    font-size: 10px !important;
+    font-weight: 900 !important;
+    letter-spacing: 2.5px !important;
+    text-transform: uppercase !important;
+    color: rgba(212,175,55,0.75) !important;
+    margin-top: 4px !important;
+    margin-bottom: 16px !important;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.sidebar-widget h4::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, rgba(212,175,55,0.2), transparent);
+}
+
+/* --- Form labels --- */
+.sidebar-widget .form-group label {
+    font-size: 10px !important;
+    font-weight: 800 !important;
+    letter-spacing: 1.5px !important;
+    color: rgba(244,241,234,0.5) !important;
+    text-transform: uppercase !important;
+    margin-bottom: 6px !important;
+}
+
+/* --- Form inputs & selects --- */
+.sidebar-widget .inquiry-form .form-control {
+    background: rgba(255,255,255,0.05) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    border-radius: 9px !important;
+    padding: 10px 13px !important;
+    font-size: 13.5px !important;
+    color: #f4f1ea !important;
+    transition: border-color 0.2s ease, background 0.2s ease !important;
+}
+.sidebar-widget .inquiry-form .form-control::placeholder {
+    color: rgba(244,241,234,0.28) !important;
+}
+.sidebar-widget .inquiry-form .form-control:focus {
+    border-color: rgba(212,175,55,0.55) !important;
+    background: rgba(255,255,255,0.09) !important;
+    box-shadow: 0 0 0 3px rgba(212,175,55,0.07) !important;
+}
+input[type="date"].form-control::-webkit-calendar-picker-indicator {
+    filter: invert(0.6) sepia(1) saturate(2) hue-rotate(5deg);
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+/* --- WhatsApp button --- */
+.sidebar-widget .btn.form-btn {
+    background: linear-gradient(135deg, #25d366 0%, #1db954 100%) !important;
+    border: none !important;
+    color: #fff !important;
+    font-weight: 800 !important;
+    letter-spacing: 1.5px !important;
+    border-radius: 10px !important;
+    font-size: 12px !important;
+    box-shadow: 0 4px 18px rgba(37,211,102,0.28) !important;
+    transition: all 0.22s ease !important;
+}
+.sidebar-widget .btn.form-btn:hover {
+    background: linear-gradient(135deg, #20ba56 0%, #189c46 100%) !important;
+    box-shadow: 0 6px 24px rgba(37,211,102,0.42) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* --- Pay Now button --- */
+.sidebar-widget .pay-now-btn {
+    background: linear-gradient(135deg, #d4af37 0%, #b8952a 100%) !important;
+    border: none !important;
+    color: #0a192f !important;
+    font-weight: 800 !important;
+    letter-spacing: 1.5px !important;
+    border-radius: 10px !important;
+    font-size: 12px !important;
+    box-shadow: 0 4px 18px rgba(212,175,55,0.28) !important;
+    transition: all 0.22s ease !important;
+    padding: 0 !important;
+}
+.sidebar-widget .pay-now-btn:hover {
+    background: linear-gradient(135deg, #e0bc42 0%, #c9a130 100%) !important;
+    box-shadow: 0 6px 24px rgba(212,175,55,0.45) !important;
+    transform: translateY(-2px) !important;
+    color: #0a192f !important;
+}
