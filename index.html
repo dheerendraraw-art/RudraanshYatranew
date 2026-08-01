@@ -760,29 +760,201 @@
         100% { transform: translateY(0); opacity: 0; }
     }
 
-    /* ─── Hero Mobile ────────────────────────────── */
-    @media (max-width: 900px) {
+    /* ═══════════════════════════════════════════════
+       HERO & HEADER — COMPREHENSIVE MOBILE OPTIMISATION
+       Breakpoints: 992 / 768 / 480 / 375
+       ═══════════════════════════════════════════════ */
+
+    /* --- Tablet / Small Laptop (≤ 992px) ---------- */
+    @media (max-width: 992px) {
+        /* Ticker: slightly shorter */
+        .ry-ticker-bar { height: 34px; }
+        .ry-ticker-item { font-size: 11.5px; }
+
+        /* Navbar: socials hidden via existing rule, CTA hidden */
+        .ry-nav-cta { display: none !important; }
+
+        /* Hero: switch to single column, reduce top padding */
+        .ry-hero { min-height: 100svh; min-height: 100vh; }
         .ry-hero-inner {
             grid-template-columns: 1fr;
-            gap: 40px;
-            padding: 80px 20px 60px;
+            gap: 36px;
+            padding: 90px 20px 70px;
         }
+
+        /* Stats: 4 in a row strip under the text */
         .ry-hero-stats {
             grid-template-columns: repeat(4, 1fr);
             gap: 12px;
+            order: 2;
         }
+        .ry-hero-content { order: 1; }
         .ry-stat-card { padding: 16px 10px; }
-        .ry-stat-num { font-size: 28px; }
-        .ry-stat-num span { font-size: 16px; }
+        .ry-stat-num { font-size: 26px; }
+        .ry-stat-num span { font-size: 15px; }
+        .ry-stat-label { font-size: 10px; letter-spacing: 0.5px; }
+
+        /* Hero badge: smaller */
+        .ry-hero-badge {
+            font-size: 11px;
+            padding: 7px 14px;
+            margin-bottom: 20px;
+        }
+
+        /* Title */
+        .ry-hero-title {
+            font-size: clamp(36px, 8vw, 58px);
+            margin-bottom: 16px;
+        }
+
+        /* Desc */
+        .ry-hero-desc {
+            font-size: 15.5px;
+            margin-bottom: 24px;
+        }
+
+        /* Tags: smaller */
+        .ry-hero-tag {
+            font-size: 11px;
+            padding: 6px 12px;
+        }
+        .ry-hero-tags { gap: 8px; margin-bottom: 28px; }
+
+        /* CTAs */
+        .ry-hero-ctas { gap: 12px; }
+        .ry-btn-primary { padding: 13px 26px; font-size: 12.5px; }
+        .ry-btn-whatsapp { padding: 12px 22px; font-size: 12.5px; }
     }
-    @media (max-width: 600px) {
-        .ry-hero-title { font-size: clamp(34px, 10vw, 52px); }
-        .ry-hero-desc { font-size: 15px; }
-        .ry-hero-stats { grid-template-columns: repeat(2, 1fr); }
-        .ry-hero-ctas { flex-direction: column; align-items: flex-start; }
-        .ry-btn-primary, .ry-btn-whatsapp { width: 100%; justify-content: center; }
-        .ry-ticker-bar { height: 32px; }
-        .ry-ticker-item { font-size: 11px; }
+
+    /* --- Mobile (≤ 768px) ------------------------- */
+    @media (max-width: 768px) {
+        /* Ticker: 30px strip, slower animation on small screens */
+        .ry-ticker-bar { height: 30px; }
+        .ry-ticker-item { font-size: 11px; gap: 5px; }
+        .ry-ticker-track { animation-duration: 22s; }
+
+        /* Hero: use dynamic viewport height for browser chrome safety */
+        .ry-hero {
+            min-height: 100svh;
+            min-height: -webkit-fill-available;
+        }
+        .ry-hero-inner {
+            padding: 76px 16px 80px;
+            gap: 28px;
+        }
+
+        /* Stats: 2×2 grid on mobile */
+        .ry-hero-stats { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .ry-stat-card {
+            padding: 14px 10px;
+            border-radius: 12px;
+        }
+        .ry-stat-num { font-size: 24px; margin-bottom: 4px; }
+        .ry-stat-num span { font-size: 14px; }
+        .ry-stat-label { font-size: 10px; letter-spacing: 0.4px; }
+
+        /* Badge */
+        .ry-hero-badge {
+            font-size: 10.5px;
+            letter-spacing: 1.2px;
+            padding: 6px 13px;
+            margin-bottom: 16px;
+        }
+        .ry-hero-badge-dot { width: 6px; height: 6px; }
+
+        /* Title */
+        .ry-hero-title {
+            font-size: clamp(32px, 9vw, 48px);
+            letter-spacing: -0.5px;
+            margin-bottom: 14px;
+        }
+
+        /* Desc */
+        .ry-hero-desc {
+            font-size: 14.5px;
+            line-height: 1.65;
+            margin-bottom: 20px;
+        }
+
+        /* Destination tags: wrap nicely, smaller */
+        .ry-hero-tags { gap: 7px; margin-bottom: 22px; }
+        .ry-hero-tag { font-size: 10.5px; padding: 6px 11px; gap: 5px; }
+        .ry-hero-tag i { font-size: 10px; }
+
+        /* CTAs: stack vertically, full width */
+        .ry-hero-ctas {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 10px;
+        }
+        .ry-btn-primary {
+            width: 100%;
+            justify-content: center;
+            padding: 14px 20px;
+            font-size: 12.5px;
+        }
+        .ry-btn-whatsapp {
+            width: 100%;
+            justify-content: center;
+            padding: 13px 20px;
+            font-size: 12.5px;
+        }
+
+        /* Scroll indicator: move up slightly */
+        .ry-hero-scroll { bottom: 20px; }
+    }
+
+    /* --- Small Mobile (≤ 480px) ------------------- */
+    @media (max-width: 480px) {
+        /* Ticker: minimal */
+        .ry-ticker-bar { height: 28px; }
+        .ry-ticker-item { font-size: 10.5px; }
+        .ry-ticker-sep { display: none; } /* cleaner on very small */
+
+        /* Hero inner */
+        .ry-hero-inner { padding: 68px 14px 72px; gap: 24px; }
+
+        /* Badge: hide detailed text, show only icon + short label */
+        .ry-hero-badge { font-size: 10px; padding: 5px 12px; letter-spacing: 1px; }
+
+        /* Title */
+        .ry-hero-title {
+            font-size: clamp(28px, 9.5vw, 42px);
+            margin-bottom: 12px;
+        }
+
+        /* Desc: shorter max-width not needed, just text */
+        .ry-hero-desc { font-size: 14px; margin-bottom: 18px; }
+
+        /* Tags: tighter */
+        .ry-hero-tags { gap: 6px; margin-bottom: 18px; }
+        .ry-hero-tag { font-size: 10px; padding: 5px 10px; }
+
+        /* Stats: 2×2, compact */
+        .ry-hero-stats { gap: 8px; }
+        .ry-stat-card { padding: 12px 8px; border-radius: 10px; }
+        .ry-stat-num { font-size: 22px; }
+        .ry-stat-num span { font-size: 13px; }
+        .ry-stat-label { font-size: 9px; }
+
+        /* CTAs */
+        .ry-btn-primary, .ry-btn-whatsapp {
+            font-size: 12px;
+            padding: 13px 16px;
+            letter-spacing: 1px;
+        }
+
+        /* Hide scroll indicator on short phones */
+        .ry-hero-scroll { display: none; }
+    }
+
+    /* --- Tiny phones (≤ 375px) -------------------- */
+    @media (max-width: 375px) {
+        .ry-hero-inner { padding: 60px 12px 64px; }
+        .ry-hero-title { font-size: 27px; }
+        .ry-hero-desc { font-size: 13.5px; }
+        .ry-hero-badge { letter-spacing: 0.8px; font-size: 9.5px; }
+        .ry-stat-num { font-size: 20px; }
     }
     </style>
 
