@@ -7098,7 +7098,11 @@ input:disabled {
     margin-top: 44px;
     overflow: hidden;
 }
-.author-avatar-wrap { flex-shrink: 0; }
+.author-avatar-wrap {
+    flex: 0 0 72px;
+    width: 72px;
+    height: 72px;
+}
 .author-avatar {
     width: 72px;
     height: 72px;
@@ -7108,7 +7112,8 @@ input:disabled {
     display: block;
 }
 .author-bio-content {
-    flex: 1;
+    flex: 1 1 0%;
+    width: 0;
     min-width: 0;
     overflow: hidden;
     word-break: break-word;
