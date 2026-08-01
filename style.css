@@ -309,6 +309,14 @@ header.scrolled {
     color: var(--color-gold-dark);
 }
 
+.logo-icon-img-wrap {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1.5px solid var(--color-gold);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    display: flex;
     align-items: center;
     justify-content: center;
     background-color: transparent;
@@ -6075,6 +6083,7 @@ html, body {
         /* Limit to 3 lines on small screens */
         display: -webkit-box;
         -webkit-line-clamp: 3;
+        line-clamp: 3;
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
