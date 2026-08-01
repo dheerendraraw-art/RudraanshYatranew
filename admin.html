@@ -2156,6 +2156,11 @@
                 localStorage.setItem('admin_username', currentUsername);
                 localStorage.setItem('admin_uuid_mapping', currentUserUuidMapping);
                 
+                // Request desktop notification permission on user gesture (login submission)
+                if ('Notification' in window && Notification.permission === 'default') {
+                    Notification.requestPermission().catch(() => {});
+                }
+                
                 showAdminToast(`Dashboard unlocked as ${currentUsername}!`, 'success');
                 showDashboard();
             } catch (err) {
@@ -2185,6 +2190,11 @@
             // Init client data
             loadAllDashboardData();
             fetchUserProfile();
+
+            // Start background desktop notifications for due reminders
+            if (typeof startReminderChecker === 'function') {
+                startReminderChecker();
+            }
         }
 
         let loggedInUserDetail = null;
@@ -6332,6 +6342,107 @@
                 console.error(err);
                 showAdminToast('Error logging payment: ' + err.message, 'error');
             }
+        };
+
+        // ==========================================
+        // DESKTOP NOTIFICATIONS FOR REMINDERS
+        // ==========================================
+        let reminderCheckInterval = null;
+
+        // Request desktop notification permission on first user interaction if default
+        document.addEventListener('click', () => {
+            if ('Notification' in window && Notification.permission === 'default') {
+                Notification.requestPermission().catch(err => console.log('Notification permission request failed:', err));
+            }
+        }, { once: true });
+
+        async function checkReminderNotifications() {
+            if (!('Notification' in window) || Notification.permission !== 'granted') return;
+
+            try {
+                // Fetch reminders using backend API via fetchWithAuth
+                const response = await fetchWithAuth('/api/admin/reminders');
+                if (!response.ok) return;
+                const reminders = await response.json();
+                if (!reminders || !Array.isArray(reminders)) return;
+
+                const now = new Date();
+                const todayStr = now.toISOString().split('T')[0];
+
+                // Format time as HH:MM
+                const hrs = String(now.getHours()).padStart(2, '0');
+                const mins = String(now.getMinutes()).padStart(2, '0');
+                const currentTimeStr = `${hrs}:${mins}`;
+
+                // Retrieve list of already notified reminder IDs in this session
+                let notifiedIds = [];
+                try {
+                    notifiedIds = JSON.parse(sessionStorage.getItem('notified_reminders') || '[]');
+                } catch (e) {}
+
+                const loggedInUser = localStorage.getItem('admin_username') || '';
+                const loggedInUserUuid = localStorage.getItem('admin_uuid_mapping') || '';
+
+                const pendingAlerts = reminders.filter(r => {
+                    if (r.status === 'Completed') return false;
+                    if (notifiedIds.includes(r.id)) return false;
+
+                    // Filter: must be due today or overdue
+                    if (r.due_date > todayStr) return false;
+                    if (r.due_date === todayStr) {
+                        const dueTime = r.due_time || '10:00';
+                        if (dueTime > currentTimeStr) return false;
+                    }
+
+                    // Filter by assignee
+                    const assignedTo = r.assigned_to ? r.assigned_to.toLowerCase() : '';
+                    const createdBy = r.created_by || '';
+
+                    const isAssignedToMe = loggedInUserUuid && (assignedTo === loggedInUserUuid.toLowerCase());
+                    const isCreatedByMe = createdBy === loggedInUser;
+
+                    return isAssignedToMe || (!assignedTo && isCreatedByMe);
+                });
+
+                if (pendingAlerts.length > 0) {
+                    pendingAlerts.forEach(r => {
+                        const title = `⏰ Follow-up: ${r.lead_name || 'Client'}`;
+                        const options = {
+                            body: `Due at ${r.due_time || '10:00'}: "${r.note}"\nPhone: ${r.lead_phone || 'N/A'}`,
+                            icon: '/assets/images/logo.png',
+                            tag: r.id,
+                            requireInteraction: true
+                        };
+
+                        const notification = new Notification(title, options);
+                        notification.onclick = function() {
+                            window.focus();
+                            // Switch to reminders tab or open lead details in a new tab
+                            if (r.lead_id) {
+                                window.open(`lead-details.html?id=${r.lead_id}`, '_blank');
+                            } else {
+                                const tabBtn = document.getElementById('tab-reminders-btn');
+                                if (tabBtn) tabBtn.click();
+                            }
+                            notification.close();
+                        };
+
+                        notifiedIds.push(r.id);
+                    });
+
+                    sessionStorage.setItem('notified_reminders', JSON.stringify(notifiedIds));
+                }
+            } catch (err) {
+                console.error('Error in background reminder checker:', err);
+            }
+        }
+
+        window.startReminderChecker = function() {
+            if (reminderCheckInterval) clearInterval(reminderCheckInterval);
+            // Run initially
+            checkReminderNotifications();
+            // Run every 30 seconds
+            reminderCheckInterval = setInterval(checkReminderNotifications, 30000);
         };
 
         // ==========================================
