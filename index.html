@@ -843,15 +843,8 @@
             gap: 28px;
         }
 
-        /* Stats: 2×2 grid on mobile */
-        .ry-hero-stats { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        .ry-stat-card {
-            padding: 14px 10px;
-            border-radius: 12px;
-        }
-        .ry-stat-num { font-size: 24px; margin-bottom: 4px; }
-        .ry-stat-num span { font-size: 14px; }
-        .ry-stat-label { font-size: 10px; letter-spacing: 0.4px; }
+        /* Hide stats grid on mobile — too much space */
+        .ry-hero-stats { display: none !important; }
 
         /* Badge */
         .ry-hero-badge {
