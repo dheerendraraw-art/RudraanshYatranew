@@ -948,6 +948,7 @@
                 else if (this.table === 'users_view') base = '/api/admin/users';
                 else if (this.table === 'booking_bills') base = '/api/billing';
                 else if (this.table === 'lead_history') base = '/api/admin/leads-history';
+                else if (this.table === 'reminders') base = '/api/admin/reminders';
                 
                 const idFilter = this.filters.find(f => f.field === 'id' && f.type === 'eq');
                 const idVal = idFilter ? idFilter.value : null;
