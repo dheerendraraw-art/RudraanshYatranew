@@ -194,20 +194,85 @@
             color: var(--color-text-primary);
             line-height: 1.8;
         }
+        .blog-detail-body p,
         .blog-text {
             margin-bottom: 20px;
             text-align: justify;
+            line-height: 1.8;
+            font-size: 16px;
         }
-        /* Task 1.3: Updated selector to match h2 (was h3) */
-        h2.blog-heading, .blog-heading {
-            font-family: var(--font-serif);
-            font-size: 24px;
-            color: var(--color-primary);
-            margin-top: 35px;
-            margin-bottom: 15px;
-            font-weight: 700;
-            line-height: 1.4;
+        @media (max-width: 576px) {
+            .blog-detail-body p,
+            .blog-text {
+                font-size: 15px;
+                line-height: 1.65;
+                text-align: left;
+            }
         }
+        /* Handle inline headings in blog body */
+        .blog-detail-body h1,
+        .blog-detail-body h2,
+        .blog-detail-body h3,
+        .blog-detail-body h4,
+        h2.blog-heading, 
+        .blog-heading {
+            font-family: var(--font-serif) !important;
+            color: var(--color-primary) !important;
+            font-weight: 700 !important;
+            line-height: 1.3 !important;
+            margin-top: 36px !important;
+            margin-bottom: 16px !important;
+        }
+        .blog-detail-body h1 {
+            font-size: clamp(22px, 3.5vw, 26px) !important;
+        }
+        .blog-detail-body h2,
+        h2.blog-heading, 
+        .blog-heading {
+            font-size: clamp(20px, 3vw, 23px) !important;
+        }
+        .blog-detail-body h3 {
+            font-size: clamp(18px, 2.5vw, 20px) !important;
+        }
+        @media (max-width: 768px) {
+            .blog-detail-body h1 { font-size: 22px !important; margin-top: 28px !important; }
+            .blog-detail-body h2, h2.blog-heading, .blog-heading { font-size: 20px !important; margin-top: 26px !important; }
+            .blog-detail-body h3 { font-size: 18px !important; margin-top: 24px !important; }
+        }
+        /* Custom and Tailwind-style Lists Handling */
+        .blog-detail-body ul,
+        .blog-detail-body ol {
+            display: block !important;
+            list-style-position: outside !important;
+            margin: 18px 0 18px 24px !important;
+            padding-left: 0 !important;
+            flex-direction: unset !important;
+            gap: unset !important;
+        }
+        .blog-detail-body ul,
+        .blog-detail-body ul.list-disc {
+            list-style-type: disc !important;
+        }
+        .blog-detail-body ol,
+        .blog-detail-body ol.list-decimal {
+            list-style-type: decimal !important;
+        }
+        .blog-detail-body li {
+            display: list-item !important;
+            margin-bottom: 8px !important;
+            padding-left: 4px !important;
+            line-height: 1.7 !important;
+            font-size: 16px !important;
+            color: var(--color-text-primary) !important;
+            font-family: var(--font-sans) !important;
+        }
+        @media (max-width: 768px) {
+            .blog-detail-body li {
+                font-size: 15px !important;
+                margin-bottom: 6px !important;
+            }
+        }
+        /* Standard block bullets parsed from Markdown */
         .blog-bullet {
             margin-bottom: 12px;
             padding-left: 20px;
