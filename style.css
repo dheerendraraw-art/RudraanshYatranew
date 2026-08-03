@@ -6217,19 +6217,55 @@ html, body {
     /* Author bio box */
     .author-bio-box {
         flex-direction: column !important;
-        gap: 14px !important;
-        padding: 18px 14px !important;
+        align-items: center !important;
+        text-align: center !important;
+        gap: 16px !important;
+        padding: 20px 16px !important;
         margin-top: 30px !important;
         border-radius: 12px !important;
     }
 
+    .author-avatar-wrap {
+        flex: 0 0 72px !important;
+        width: 72px !important;
+        height: 72px !important;
+        margin: 0 auto !important;
+    }
+
+    .author-avatar {
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    .author-bio-content {
+        width: 100% !important;
+        flex: none !important;
+    }
+
     .author-bio-name {
-        font-size: 16px !important;
+        text-align: center !important;
+        font-size: 18px !important;
+        margin-bottom: 4px !important;
+    }
+
+    .author-bio-title {
+        text-align: center !important;
+        font-size: 11.5px !important;
+        margin-bottom: 12px !important;
+        line-height: 1.4 !important;
     }
 
     .author-bio-desc {
-        font-size: 13px !important;
+        text-align: center !important;
+        font-size: 13.5px !important;
         line-height: 1.65 !important;
+        margin-bottom: 16px !important;
+    }
+
+    .author-bio-links {
+        justify-content: center !important;
+        width: 100% !important;
+        gap: 10px !important;
     }
 
     /* Sidebar promo cards — full-width, lighter padding */
@@ -7176,10 +7212,6 @@ input:disabled {
     border-color: var(--color-gold);
     color: var(--color-gold);
     transform: translateY(-1px);
-}
-@media (max-width: 576px) {
-    .author-bio-box { flex-direction: column; gap: 14px; padding: 18px; }
-    .author-avatar { width: 56px; height: 56px; }
 }
 
 /* =============================================================
