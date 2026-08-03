@@ -121,6 +121,7 @@
     <!-- Preload LCP Hero Banner with high fetch priority -->
     <link rel="preload" as="image" href="{{IMAGE}}" fetchpriority="high">
     <link rel="stylesheet" href="/style.css?v=7.2">
+    
     <style>
         .blog-detail-container {
             display: grid;
@@ -128,8 +129,12 @@
             gap: 40px;
             margin: 50px auto;
         }
-
-        /* ─── Article Card ────────────────────────────────────────────── */
+        @media (max-width: 992px) {
+            .blog-detail-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
         .blog-post-article {
             background-color: var(--color-bg-card);
             border: 1px solid var(--glass-border);
@@ -137,30 +142,10 @@
             padding: 40px;
             box-shadow: var(--shadow-subtle);
         }
-
-        /* ─── Breadcrumbs ─────────────────────────────────────────────── */
-        .breadcrumbs-nav { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        .breadcrumbs-list {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            list-style: none;
-            flex-wrap: nowrap;
-            white-space: nowrap;
-            font-size: 12.5px;
-            color: var(--color-text-secondary);
-        }
-        .breadcrumbs-list a { color: var(--color-text-secondary); text-decoration: none; }
-        .breadcrumbs-list a:hover { color: var(--color-gold); }
-        .breadcrumb-sep { color: var(--color-text-secondary); font-size: 10px; }
-        .breadcrumbs-list [aria-current="page"] span {
-            color: var(--color-primary);
-            font-weight: 600;
-            max-width: 220px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: inline-block;
-            vertical-align: bottom;
+        @media (max-width: 576px) {
+            .blog-post-article {
+                padding: 24px 16px;
+            }
         }
         .blog-breadcrumbs {
             font-size: 13px;
@@ -172,11 +157,9 @@
             color: var(--color-gold);
             text-decoration: underline;
         }
-
-        /* ─── Title & Meta ────────────────────────────────────────────── */
         .blog-detail-title {
             font-family: var(--font-serif);
-            font-size: clamp(26px, 4vw, 42px);
+            font-size: clamp(28px, 4vw, 42px);
             color: var(--color-primary);
             line-height: 1.2;
             margin-bottom: 16px;
@@ -188,17 +171,11 @@
             padding-bottom: 15px;
             border-bottom: 1px solid var(--glass-border);
             font-family: var(--font-sans);
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            align-items: center;
         }
         .blog-detail-meta i {
             color: var(--color-gold);
             margin-right: 4px;
         }
-
-        /* ─── Hero Image ──────────────────────────────────────────────── */
         .blog-detail-img-wrap {
             border-radius: var(--border-radius-md);
             overflow: hidden;
@@ -212,8 +189,6 @@
             height: 100%;
             object-fit: cover;
         }
-
-        /* ─── Body Content ────────────────────────────────────────────── */
         .blog-detail-body {
             font-size: 16px;
             color: var(--color-text-primary);
@@ -225,6 +200,14 @@
             text-align: justify;
             line-height: 1.8;
             font-size: 16px;
+        }
+        @media (max-width: 576px) {
+            .blog-detail-body p,
+            .blog-text {
+                font-size: 15px;
+                line-height: 1.65;
+                text-align: left;
+            }
         }
         /* Handle inline headings in blog body */
         .blog-detail-body h1,
@@ -240,13 +223,23 @@
             margin-top: 36px !important;
             margin-bottom: 16px !important;
         }
-        .blog-detail-body h1 { font-size: clamp(22px, 3.5vw, 26px) !important; }
+        .blog-detail-body h1 {
+            font-size: clamp(22px, 3.5vw, 26px) !important;
+        }
         .blog-detail-body h2,
         h2.blog-heading, 
-        .blog-heading { font-size: clamp(20px, 3vw, 23px) !important; }
-        .blog-detail-body h3 { font-size: clamp(18px, 2.5vw, 20px) !important; }
-
-        /* Lists */
+        .blog-heading {
+            font-size: clamp(20px, 3vw, 23px) !important;
+        }
+        .blog-detail-body h3 {
+            font-size: clamp(18px, 2.5vw, 20px) !important;
+        }
+        @media (max-width: 768px) {
+            .blog-detail-body h1 { font-size: 22px !important; margin-top: 28px !important; }
+            .blog-detail-body h2, h2.blog-heading, .blog-heading { font-size: 20px !important; margin-top: 26px !important; }
+            .blog-detail-body h3 { font-size: 18px !important; margin-top: 24px !important; }
+        }
+        /* Custom and Tailwind-style Lists Handling */
         .blog-detail-body ul,
         .blog-detail-body ol {
             display: block !important;
@@ -257,9 +250,13 @@
             gap: unset !important;
         }
         .blog-detail-body ul,
-        .blog-detail-body ul.list-disc { list-style-type: disc !important; }
+        .blog-detail-body ul.list-disc {
+            list-style-type: disc !important;
+        }
         .blog-detail-body ol,
-        .blog-detail-body ol.list-decimal { list-style-type: decimal !important; }
+        .blog-detail-body ol.list-decimal {
+            list-style-type: decimal !important;
+        }
         .blog-detail-body li {
             display: list-item !important;
             margin-bottom: 8px !important;
@@ -269,6 +266,13 @@
             color: var(--color-text-primary) !important;
             font-family: var(--font-sans) !important;
         }
+        @media (max-width: 768px) {
+            .blog-detail-body li {
+                font-size: 15px !important;
+                margin-bottom: 6px !important;
+            }
+        }
+        /* Standard block bullets parsed from Markdown */
         .blog-bullet {
             margin-bottom: 12px;
             padding-left: 20px;
@@ -281,10 +285,7 @@
             position: absolute;
             left: 5px;
         }
-
-
-
-        /* ─── Sidebar ─────────────────────────────────────────────────── */
+        /* Sidebar items */
         .sidebar-card {
             background-color: var(--color-bg-card);
             border: 1px solid var(--glass-border);
@@ -292,6 +293,8 @@
             padding: 30px;
             box-shadow: var(--shadow-subtle);
             margin-bottom: 30px;
+            position: sticky;
+            top: 100px;
         }
         .sidebar-title {
             font-family: var(--font-serif);
@@ -315,8 +318,13 @@
             border-bottom: 1px dashed var(--glass-border);
             transition: var(--transition-smooth);
         }
-        .sidebar-link-item:last-child { border-bottom: none; padding-bottom: 0; }
-        .sidebar-link-item:hover { transform: translateX(4px); }
+        .sidebar-link-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .sidebar-link-item:hover {
+            transform: translateX(4px);
+        }
         .sidebar-link-img {
             width: 60px;
             height: 45px;
@@ -324,7 +332,10 @@
             border-radius: var(--border-radius-sm);
             border: 1px solid var(--glass-border);
         }
-        .sidebar-link-text { display: flex; flex-direction: column; }
+        .sidebar-link-text {
+            display: flex;
+            flex-direction: column;
+        }
         .sidebar-link-name {
             font-family: var(--font-serif);
             font-size: 15px;
@@ -332,10 +343,15 @@
             color: var(--color-primary);
             transition: var(--transition-smooth);
         }
-        .sidebar-link-name:hover { color: var(--color-gold-dark); }
-        .sidebar-link-price { font-size: 12px; color: var(--color-text-secondary); }
+        .sidebar-link-name:hover {
+            color: var(--color-gold-dark);
+        }
+        .sidebar-link-price {
+            font-size: 12px;
+            color: var(--color-text-secondary);
+        }
 
-        /* ─── Promo Cards ─────────────────────────────────────────────── */
+        /* Sidebar Promo Card Redesign */
         .sidebar-promo-card {
             display: block;
             background: #FFFFFF !important;
@@ -346,247 +362,183 @@
             text-decoration: none !important;
             overflow: hidden !important;
             transition: var(--transition-smooth) !important;
+            position: relative !important;
         }
+
         .sidebar-promo-card:hover {
             transform: translateY(-4px) !important;
             box-shadow: 0 10px 30px rgba(10, 25, 47, 0.08) !important;
             border-color: var(--color-gold) !important;
         }
+
         .promo-card-img-wrap {
             position: relative !important;
             width: 100% !important;
             height: 180px !important;
             overflow: hidden !important;
         }
+
         .promo-card-img-wrap img {
-            width: 100% !important; height: 100% !important;
-            object-fit: cover !important; display: block !important;
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            display: block !important;
         }
+
         .promo-card-badge-top {
-            position: absolute !important; top: 15px !important; left: 15px !important;
+            position: absolute !important;
+            top: 15px !important;
+            left: 15px !important;
             background: rgba(10, 25, 47, 0.85) !important;
             border: 1.5px solid var(--color-gold) !important;
             color: var(--color-gold) !important;
-            font-size: 10px !important; font-weight: 700 !important;
-            text-transform: uppercase !important; letter-spacing: 1.5px !important;
-            padding: 5px 12px !important; border-radius: 50px !important;
+            font-size: 10px !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1.5px !important;
+            padding: 5px 12px !important;
+            border-radius: 50px !important;
             font-family: var(--font-sans) !important;
         }
+
         .promo-card-badge-bottom {
-            position: absolute !important; bottom: 15px !important; right: 15px !important;
-            background: rgba(10, 25, 47, 0.85) !important; color: #FFFFFF !important;
-            font-size: 11px !important; font-weight: 600 !important;
-            padding: 5px 12px !important; border-radius: 6px !important;
+            position: absolute !important;
+            bottom: 15px !important;
+            right: 15px !important;
+            background: rgba(10, 25, 47, 0.85) !important;
+            color: #FFFFFF !important;
+            font-size: 11px !important;
+            font-weight: 600 !important;
+            padding: 5px 12px !important;
+            border-radius: 6px !important;
             font-family: var(--font-sans) !important;
         }
-        .promo-card-body { padding: 20px 22px !important; }
+
+        .promo-card-body {
+            padding: 20px 22px !important;
+        }
+
         .promo-card-meta {
-            display: flex !important; gap: 15px !important; margin-bottom: 12px !important;
-            font-size: 12px !important; color: var(--color-text-secondary) !important;
-            font-weight: 600 !important; font-family: var(--font-sans) !important;
-            flex-wrap: wrap !important;
-        }
-        .promo-card-meta-item { display: flex !important; align-items: center !important; gap: 4px !important; }
-        .promo-card-meta-item i { color: var(--color-gold) !important; }
-        .promo-card-title {
-            color: var(--color-primary) !important; font-size: 19px !important;
-            font-weight: 700 !important; font-family: var(--font-serif), Georgia, serif !important;
-            line-height: 1.3 !important; margin-bottom: 12px !important;
-        }
-        .promo-card-desc {
-            color: var(--color-text-secondary) !important; font-size: 13.5px !important;
-            line-height: 1.55 !important; margin-bottom: 18px !important;
+            display: flex !important;
+            gap: 15px !important;
+            margin-bottom: 12px !important;
+            font-size: 12px !important;
+            color: var(--color-text-secondary) !important;
+            font-weight: 600 !important;
             font-family: var(--font-sans) !important;
         }
+
+        .promo-card-meta-item {
+            display: flex !important;
+            align-items: center !important;
+            gap: 4px !important;
+        }
+
+        .promo-card-meta-item i {
+            color: var(--color-gold) !important;
+        }
+
+        .promo-card-title {
+            color: var(--color-primary) !important;
+            font-size: 19px !important;
+            font-weight: 700 !important;
+            font-family: var(--font-serif), Georgia, serif !important;
+            line-height: 1.3 !important;
+            margin-bottom: 12px !important;
+        }
+
+        .promo-card-desc {
+            color: var(--color-text-secondary) !important;
+            font-size: 13.5px !important;
+            line-height: 1.55 !important;
+            margin-bottom: 18px !important;
+            font-family: var(--font-sans) !important;
+        }
+
         .promo-card-separator {
-            height: 1px !important; background: rgba(10, 25, 47, 0.08) !important;
-            margin-bottom: 18px !important; border: none !important;
+            height: 1px !important;
+            background: rgba(10, 25, 47, 0.08) !important;
+            margin-bottom: 18px !important;
+            border: none !important;
         }
+
         .promo-card-price-row {
-            display: flex !important; justify-content: space-between !important;
-            align-items: flex-end !important; margin-bottom: 18px !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: flex-end !important;
+            margin-bottom: 18px !important;
         }
-        .promo-card-price-info { display: flex !important; flex-direction: column !important; gap: 2px !important; }
+
+        .promo-card-price-info {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 2px !important;
+        }
+
         .promo-card-price-label {
-            font-size: 11px !important; color: var(--color-text-secondary) !important;
-            font-weight: 600 !important; font-family: var(--font-sans) !important;
+            font-size: 11px !important;
+            color: var(--color-text-secondary) !important;
+            font-weight: 600 !important;
+            font-family: var(--font-sans) !important;
         }
+
         .promo-card-price-val {
-            font-size: 22px !important; font-weight: 800 !important;
-            color: var(--color-primary) !important; font-family: var(--font-sans) !important;
+            font-size: 22px !important;
+            font-weight: 800 !important;
+            color: var(--color-primary) !important;
+            font-family: var(--font-sans) !important;
             line-height: 1 !important;
         }
+
         .promo-card-price-unit {
-            font-size: 12px !important; color: var(--color-text-secondary) !important;
+            font-size: 12px !important;
+            color: var(--color-text-secondary) !important;
             font-family: var(--font-sans) !important;
         }
+
         .promo-card-itinerary-link {
-            color: var(--color-primary) !important; font-size: 12.5px !important;
-            font-weight: 700 !important; text-transform: uppercase !important;
-            letter-spacing: 0.5px !important; display: inline-flex !important;
-            align-items: center !important; gap: 4px !important;
+            color: var(--color-primary) !important;
+            font-size: 12.5px !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 4px !important;
             font-family: var(--font-sans) !important;
             border-bottom: 1.5px solid transparent !important;
-            transition: var(--transition-smooth) !important; text-decoration: none !important;
-        }
-        .promo-card-itinerary-link:hover { color: var(--color-gold-dark) !important; }
-        .promo-card-whatsapp-btn {
-            display: flex !important; align-items: center !important;
-            justify-content: center !important; gap: 8px !important;
-            background: #25d366 !important; border: 1px solid #25d366 !important;
-            color: #FFFFFF !important; padding: 11px 16px !important;
-            border-radius: 8px !important; font-size: 12px !important;
-            font-weight: 700 !important; text-transform: uppercase !important;
-            letter-spacing: 0.5px !important; font-family: var(--font-sans) !important;
-            transition: var(--transition-smooth) !important; width: 100% !important;
+            transition: var(--transition-smooth) !important;
             text-decoration: none !important;
         }
+
+        .promo-card-itinerary-link:hover {
+            color: var(--color-gold-dark) !important;
+        }
+
+        .promo-card-whatsapp-btn {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 8px !important;
+            background: #25d366 !important;
+            border: 1px solid #25d366 !important;
+            color: #FFFFFF !important;
+            padding: 11px 16px !important;
+            border-radius: 8px !important;
+            font-size: 12px !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+            font-family: var(--font-sans) !important;
+            transition: var(--transition-smooth) !important;
+            width: 100% !important;
+            text-decoration: none !important;
+        }
+
         .promo-card-whatsapp-btn:hover {
-            background: #20ba56 !important; border-color: #20ba56 !important;
+            background: #20ba56 !important;
+            border-color: #20ba56 !important;
             transform: translateY(-1px) !important;
-        }
-
-        /* ─── Mobile Floating CTA Bar (hidden on desktop) ─────────────── */
-        .mob-wa-bar { display: none; }
-
-        /* ═══════════════════════════════════════════════════════════════
-           RESPONSIVE BREAKPOINTS
-           ═══════════════════════════════════════════════════════════════ */
-
-        /* Tablet (992px): collapse to single column */
-        @media (max-width: 992px) {
-            .blog-detail-container {
-                grid-template-columns: 1fr;
-                gap: 24px;
-                margin: 32px auto;
-            }
-            .sidebar-card { position: static; top: auto; }
-            /* Horizontal promo cards on tablet */
-            .sidebar-promo-card {
-                display: grid !important;
-                grid-template-columns: 200px 1fr !important;
-            }
-            .promo-card-img-wrap { height: 100% !important; min-height: 160px !important; }
-        }
-
-        /* Small tablet / large phone (768px) */
-        @media (max-width: 768px) {
-            .blog-detail-body h1 { font-size: 22px !important; margin-top: 28px !important; }
-            .blog-detail-body h2, h2.blog-heading, .blog-heading { font-size: 20px !important; margin-top: 26px !important; }
-            .blog-detail-body h3 { font-size: 18px !important; margin-top: 24px !important; }
-            .blog-detail-body li { font-size: 15px !important; margin-bottom: 6px !important; }
-            .blog-detail-body p, .blog-text { font-size: 15px; line-height: 1.7; text-align: left; }
-        }
-
-        /* Phone (680px and below) */
-        @media (max-width: 680px) {
-            .blog-detail-container { margin: 10px auto; gap: 14px; }
-
-            /* Article: less horizontal padding */
-            .blog-post-article {
-                padding: 18px 14px;
-                border-radius: 10px;
-            }
-
-            /* Title: bigger clamp floor on phone */
-            .blog-detail-title {
-                font-size: clamp(21px, 6.5vw, 28px);
-                line-height: 1.28;
-                margin-bottom: 10px;
-            }
-
-            /* Meta: wrap inline items */
-            .blog-detail-meta {
-                font-size: 12px;
-                gap: 4px 10px;
-                margin-bottom: 16px;
-                padding-bottom: 10px;
-            }
-
-            /* Hero image: 4:3 feels better on tall phone screens */
-            .blog-detail-img-wrap {
-                aspect-ratio: 4 / 3;
-                margin-bottom: 18px;
-                border-radius: 10px;
-            }
-
-            /* Body text */
-            .blog-detail-body { font-size: 15px; line-height: 1.7; }
-            .blog-detail-body p, .blog-text {
-                font-size: 15px; line-height: 1.7;
-                margin-bottom: 14px; text-align: left;
-            }
-
-            /* Breadcrumbs */
-            .breadcrumbs-list { font-size: 11px; }
-            .breadcrumbs-list [aria-current="page"] span { max-width: 120px; }
-
-            /* Promo cards: back to vertical stack */
-            .sidebar-promo-card {
-                display: block !important;
-                grid-template-columns: unset !important;
-            }
-            .promo-card-img-wrap { height: 155px !important; }
-            .promo-card-body { padding: 14px 14px !important; }
-            .promo-card-title { font-size: 17px !important; }
-            .promo-card-desc { font-size: 13px !important; }
-            .promo-card-price-val { font-size: 20px !important; }
-
-            /* Sidebar */
-            .sidebar-card { padding: 16px 14px; border-radius: 10px; margin-bottom: 16px; }
-            .sidebar-title { font-size: 19px; margin-bottom: 14px; }
-            .sidebar-link-img { width: 52px; height: 40px; }
-            .sidebar-link-name { font-size: 14px; }
-
-
-
-            /* Bottom padding so floating bar doesn't cover content */
-            main.blog-detail-container { padding-bottom: 76px; }
-
-            /* Floating mobile CTA bar */
-            .mob-wa-bar {
-                display: flex;
-                position: fixed;
-                bottom: 0; left: 0; right: 0;
-                z-index: 999;
-                background: rgba(255,255,255,0.97);
-                border-top: 1px solid rgba(10,25,47,0.1);
-                backdrop-filter: blur(12px);
-                -webkit-backdrop-filter: blur(12px);
-                padding: 10px 14px;
-                padding-bottom: calc(10px + env(safe-area-inset-bottom));
-                gap: 8px;
-                box-shadow: 0 -4px 20px rgba(10,25,47,0.08);
-            }
-            .mob-wa-btn {
-                flex: 1;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 7px;
-                padding: 12px 10px;
-                border-radius: 10px;
-                font-size: 13px;
-                font-weight: 700;
-                text-decoration: none;
-                font-family: var(--font-sans);
-                transition: all 0.18s;
-                border: none;
-                cursor: pointer;
-            }
-            .mob-wa-btn.wa { background: #25d366; color: #fff; }
-            .mob-wa-btn.wa:active { background: #1da552; transform: scale(0.98); }
-            .mob-wa-btn.call { background: var(--color-primary); color: #fff; }
-            .mob-wa-btn.call:active { background: #172A45; transform: scale(0.98); }
-        }
-
-        /* Extra-small (≤380px) */
-        @media (max-width: 380px) {
-            .blog-detail-title { font-size: 19px; }
-            .blog-detail-body p, .blog-text { font-size: 14.5px; }
-            .promo-card-img-wrap { height: 130px !important; }
-            .mob-wa-btn { font-size: 12px; padding: 10px 6px; }
-            .blog-detail-meta { font-size: 11px; }
         }
     </style>
 </head>
@@ -836,16 +788,6 @@
             </div>
         </aside>
     </main>
-
-    <!-- ── Mobile Floating CTA Bar (shown on phones via CSS) ── -->
-    <div class="mob-wa-bar">
-        <a href="https://wa.me/917617617651?text=Namaste!%20I%20read%20your%20blog%20and%20I%20am%20interested%20in%20a%20Yatra.%20Please%20share%20details." target="_blank" class="mob-wa-btn wa">
-            <i class="fa-brands fa-whatsapp"></i> WhatsApp Us
-        </a>
-        <a href="tel:+917617617651" class="mob-wa-btn call">
-            <i class="fa-solid fa-phone"></i> Call Now
-        </a>
-    </div>
 
         <!-- Payment Methods Section (Above Footer) -->
     <section class="payment-methods-section">

@@ -11,780 +11,745 @@
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css?v=8.0">
 
     <style>
-        :root {
-            --gold: #d4af37;
-            --gold-light: #f0cc5a;
-            --gold-dim: rgba(212, 175, 55, 0.12);
-            --gold-dim-h: rgba(212, 175, 55, 0.2);
-            --gold-border: rgba(212, 175, 55, 0.28);
-            --bg-base: #060a11;
-            --bg-card: rgba(12, 18, 32, 0.92);
-            --bg-card-alt: rgba(16, 24, 44, 0.75);
-            --bg-input: rgba(6, 10, 20, 0.8);
-            --bg-hover: rgba(255,255,255,0.035);
-            --border: rgba(255, 255, 255, 0.06);
-            --border-bright: rgba(255, 255, 255, 0.12);
-            --border-gold: rgba(212, 175, 55, 0.22);
-            --text-primary: #eef2f8;
-            --text-secondary: #8899b4;
-            --text-muted: #4a5670;
-            --green: #4ade80;
-            --green-dim: rgba(74, 222, 128, 0.1);
-            --blue: #60a5fa;
-            --blue-dim: rgba(96, 165, 250, 0.1);
-            --amber: #fbbf24;
-            --amber-dim: rgba(251, 191, 36, 0.1);
-            --red: #f87171;
-            --red-dim: rgba(248, 113, 113, 0.1);
-            --teal: #34d399;
-            --teal-dim: rgba(52, 211, 153, 0.1);
-            --purple: #a78bfa;
-            --purple-dim: rgba(167, 139, 250, 0.1);
-            --radius-sm: 8px;
-            --radius-md: 12px;
-            --radius-lg: 18px;
-            --radius-xl: 24px;
-            --shadow-card: 0 4px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.04);
-            --shadow-glow-gold: 0 0 30px rgba(212,175,55,0.12);
-            --transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
-
         body {
-            background-color: var(--bg-base);
-            background-image:
-                radial-gradient(ellipse 70% 45% at 5% -5%, rgba(212,175,55,0.07) 0%, transparent 55%),
-                radial-gradient(ellipse 50% 35% at 95% 105%, rgba(96,165,250,0.05) 0%, transparent 55%),
-                radial-gradient(ellipse 40% 30% at 50% 50%, rgba(167,139,250,0.02) 0%, transparent 60%);
-            color: var(--text-primary);
-            font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
+            background-color: #0b0f19;
+            color: #f1f5f9;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            padding: 0;
             min-height: 100vh;
-            -webkit-font-smoothing: antialiased;
         }
 
-        /* Page Shell */
-        .page-wrap { max-width: 1380px; margin: 0 auto; padding: 16px 20px 56px; }
+        .details-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 24px;
+        }
 
-        /* ── COMMAND BAR ── */
-        .command-bar {
+        /* Header Styles */
+        .details-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 16px;
-            padding: 10px 16px 10px 14px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-bottom-color: var(--border-gold);
-            border-radius: var(--radius-lg);
-            margin-bottom: 18px;
-            backdrop-filter: blur(28px);
-            -webkit-backdrop-filter: blur(28px);
-            position: sticky;
-            top: 10px;
-            z-index: 100;
-            box-shadow: 0 8px 40px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.04);
+            margin-bottom: 24px;
+            border-bottom: 1px solid #1e293b;
+            padding-bottom: 16px;
         }
-        .cb-left { display: flex; align-items: center; gap: 14px; min-width: 0; }
-        .back-pill {
-            display: inline-flex; align-items: center; gap: 6px;
-            padding: 6px 12px;
-            background: rgba(255,255,255,0.04);
-            border: 1px solid var(--border);
-            border-radius: 50px;
-            color: var(--text-secondary);
+
+        .header-title-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .back-btn {
+            color: #d4af37;
             text-decoration: none;
-            font-size: 11.5px; font-weight: 600;
-            transition: var(--transition);
-            white-space: nowrap; flex-shrink: 0;
+            font-size: 13px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: opacity 0.2s;
         }
-        .back-pill:hover { background: rgba(255,255,255,0.08); color: var(--text-primary); border-color: var(--border-bright); }
-        .back-pill i { font-size: 10px; }
-        .cb-title-group { min-width: 0; }
-        .cb-eyebrow {
-            font-size: 9.5px; font-weight: 700; text-transform: uppercase;
-            letter-spacing: 1.2px; color: var(--gold); opacity: 0.7; margin-bottom: 1px;
-        }
-        .cb-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 20px; font-weight: 700; color: #fff;
-            letter-spacing: -0.2px;
-            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-        }
-        .cb-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
 
-        /* Status Badge */
+        .back-btn:hover {
+            opacity: 0.8;
+        }
+
+        .header-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            color: #ffffff;
+            margin: 6px 0 0 0;
+            font-weight: 700;
+        }
+
         .status-badge {
-            display: inline-flex; align-items: center; gap: 5px;
-            padding: 5px 13px; border-radius: 50px;
-            font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;
-            background: var(--gold-dim); color: var(--gold); border: 1px solid var(--gold-border);
-        }
-        .status-badge::before {
-            content: ''; width: 5px; height: 5px; border-radius: 50%;
-            background: currentColor; animation: pulse-dot 2s ease-in-out infinite; flex-shrink: 0;
-        }
-        @keyframes pulse-dot {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(0.65); }
+            display: inline-flex;
+            align-items: center;
+            background: rgba(212, 175, 55, 0.15);
+            color: #d4af37;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
         }
 
-        /* Command Buttons */
-        .cmd-btn {
-            display: inline-flex; align-items: center; gap: 6px;
-            padding: 7px 15px; border-radius: var(--radius-sm);
-            font-size: 11.5px; font-weight: 700; cursor: pointer;
-            border: 1px solid transparent; text-decoration: none;
-            letter-spacing: 0.3px; white-space: nowrap;
-            transition: var(--transition); font-family: 'Inter', sans-serif;
+        /* Call & Save Button Styles */
+        .call-btn-link {
+            background: rgba(34, 197, 94, 0.15);
+            color: #4ade80 !important;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            margin-left: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.2s ease;
         }
-        .cmd-btn.call { background: var(--green-dim); color: var(--green); border-color: rgba(74,222,128,0.22); }
-        .cmd-btn.call:hover { background: var(--green); color: #060a11; box-shadow: 0 0 22px rgba(74,222,128,0.3); }
-        .cmd-btn.reminder { background: var(--amber-dim); color: var(--amber); border-color: rgba(251,191,36,0.22); }
-        .cmd-btn.reminder:hover { background: var(--amber); color: #060a11; box-shadow: 0 0 22px rgba(251,191,36,0.28); }
-        .cmd-btn.save { background: linear-gradient(135deg, rgba(212,175,55,0.18), rgba(212,175,55,0.1)); color: var(--gold); border-color: var(--gold-border); }
-        .cmd-btn.save:hover { background: linear-gradient(135deg, var(--gold) 0%, #c9a227 100%); color: #060a11; box-shadow: 0 0 22px rgba(212,175,55,0.32); }
 
-        /* ── MAIN LAYOUT ── */
-        .main-grid { display: grid; grid-template-columns: 330px 1fr; gap: 18px; align-items: start; }
-        .sidebar { display: flex; flex-direction: column; gap: 14px; }
+        .call-btn-link:hover {
+            background: #22c55e;
+            color: #0b0f19 !important;
+            border-color: #22c55e;
+        }
 
-        /* Base Card */
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            box-shadow: var(--shadow-card);
-            overflow: hidden;
-            transition: border-color 0.3s;
-        }
-        .card:hover { border-color: rgba(255,255,255,0.09); }
-        .card-body { padding: 20px; }
-        .card-body-sm { padding: 16px 18px; }
-        .card-hdr {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 12px 18px;
-            border-bottom: 1px solid var(--border);
-            background: rgba(0,0,0,0.15);
-        }
-        .card-hdr-label {
-            font-size: 9.5px; font-weight: 800; text-transform: uppercase;
-            letter-spacing: 1.3px; color: var(--text-secondary);
-            display: flex; align-items: center; gap: 7px;
-        }
-        .card-hdr-label .lbl-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
-
-        /* ── Profile Card ── */
-        .profile-hero {
-            padding: 22px 20px 0;
-            display: flex; flex-direction: column; align-items: center; text-align: center;
-            background: linear-gradient(180deg, rgba(212,175,55,0.05) 0%, transparent 100%);
-        }
-        .avatar-stage { position: relative; margin-bottom: 14px; }
-        .avatar-ring {
-            position: absolute; inset: -4px; border-radius: 50%;
-            background: conic-gradient(var(--gold), #f0cc5a, rgba(212,175,55,0.2), var(--gold));
-            animation: ring-spin 10s linear infinite; z-index: 0;
-        }
-        @keyframes ring-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        .avatar-glow {
-            position: absolute; inset: -12px; border-radius: 50%;
-            background: radial-gradient(circle, rgba(212,175,55,0.2) 0%, transparent 70%);
-            animation: glow-pulse 3s ease-in-out infinite; z-index: -1;
-        }
-        @keyframes glow-pulse {
-            0%, 100% { opacity: 0.5; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.15); }
-        }
-        .avatar-inner {
-            position: relative; z-index: 1;
-            width: 72px; height: 72px;
-            background: linear-gradient(135deg, #192038, #0c1324);
-            border: 2.5px solid var(--bg-base);
-            color: var(--gold); font-weight: 800; font-size: 24px;
-            display: flex; align-items: center; justify-content: center;
-            border-radius: 50%; letter-spacing: -0.5px;
-            font-family: 'Cormorant Garamond', serif;
-        }
-        .profile-name { font-size: 20px; font-weight: 700; color: #fff; letter-spacing: -0.3px; margin-bottom: 3px; }
-        .profile-sub { font-size: 11px; color: var(--text-secondary); font-weight: 500; }
-
-        /* Indicators */
-        .profile-indicators {
-            display: flex; gap: 0; width: 100%;
-            border-top: 1px solid var(--border); margin-top: 16px;
-        }
-        .indicator-cell { flex: 1; padding: 10px 8px; text-align: center; border-right: 1px solid var(--border); }
-        .indicator-cell:last-child { border-right: none; }
-        .indicator-val { font-size: 14px; font-weight: 800; color: var(--text-primary); line-height: 1; margin-bottom: 3px; }
-        .indicator-val.gold { color: var(--gold); }
-        .indicator-val.green { color: var(--green); }
-        .indicator-val.blue { color: var(--blue); }
-        .indicator-lbl { font-size: 9px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
-
-        /* ── Contact Items ── */
-        .contact-section { padding: 14px 18px; }
-        .contact-item {
-            display: flex; align-items: center; gap: 10px;
-            padding: 9px 11px; border-radius: var(--radius-md);
-            border: 1px solid var(--border); background: var(--bg-input);
-            margin-bottom: 7px; transition: var(--transition);
-            position: relative; overflow: hidden;
-        }
-        .contact-item:last-child { margin-bottom: 0; }
-        .contact-item::before {
-            content: ''; position: absolute; left: 0; top: 0; bottom: 0;
-            width: 2px; border-radius: 4px 0 0 4px; opacity: 0; transition: opacity 0.2s;
-        }
-        .contact-item:hover { border-color: var(--border-bright); }
-        .contact-item:hover::before { opacity: 1; }
-        .contact-item.phone::before { background: var(--green); }
-        .contact-item.email::before { background: var(--blue); }
-        .contact-item.source::before { background: var(--gold); }
-        .ci-icon { width: 30px; height: 30px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; }
-        .ci-icon.phone { background: var(--green-dim); color: var(--green); }
-        .ci-icon.email { background: var(--blue-dim); color: var(--blue); }
-        .ci-icon.source { background: var(--gold-dim); color: var(--gold); }
-        .ci-info { flex: 1; min-width: 0; }
-        .ci-label { font-size: 9px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 1px; }
-        .ci-value { font-size: 12.5px; color: var(--text-primary); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .ci-actions { display: flex; gap: 4px; flex-shrink: 0; }
-        .action-chip {
-            display: inline-flex; align-items: center; gap: 3px;
-            padding: 3px 9px; border-radius: 50px;
-            font-size: 10px; font-weight: 700; text-decoration: none;
-            transition: var(--transition); border: 1px solid transparent;
-            cursor: pointer; white-space: nowrap; font-family: 'Inter', sans-serif;
-        }
-        .action-chip.call-chip { background: var(--green-dim); color: var(--green); border-color: rgba(74,222,128,0.2); }
-        .action-chip.call-chip:hover { background: var(--green); color: #060a11; }
-        .action-chip.wa-chip { background: rgba(37,211,102,0.1); color: #25d366; border-color: rgba(37,211,102,0.2); }
-        .action-chip.wa-chip:hover { background: #25d366; color: #060a11; }
-
-        /* ── Properties ── */
-        .props-body { padding: 16px 18px; }
-        .props-grid { display: flex; flex-direction: column; gap: 12px; }
-        .prop-field { display: flex; flex-direction: column; gap: 4px; }
-        .prop-label { font-size: 9.5px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; display: flex; align-items: center; gap: 5px; }
-        .prop-label i { font-size: 8.5px; opacity: 0.7; }
-        .prop-input, .prop-select {
-            background: var(--bg-input); border: 1px solid rgba(255,255,255,0.07);
-            color: var(--text-primary); border-radius: var(--radius-sm);
-            padding: 8px 11px; font-size: 12.5px; font-family: 'Inter', sans-serif;
-            width: 100%; outline: none; transition: border-color 0.2s, box-shadow 0.2s;
-            -webkit-appearance: none; appearance: none;
-        }
-        .prop-input:focus, .prop-select:focus { border-color: rgba(212,175,55,0.35); box-shadow: 0 0 0 3px rgba(212,175,55,0.08); }
-        .prop-input.gold-accent { border-color: rgba(212,175,55,0.22); }
-        .prop-static { font-size: 12.5px; color: var(--text-secondary); padding: 8px 11px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); border-radius: var(--radius-sm); }
-        .props-sep { height: 1px; background: var(--border); margin: 4px 0; }
-        .save-btn-full {
+        .btn-save-properties {
             width: 100%;
-            background: linear-gradient(135deg, var(--gold) 0%, #b8941f 100%);
-            color: #060a11; border: none; padding: 11px 16px;
-            font-size: 12.5px; font-weight: 800; border-radius: var(--radius-sm);
-            cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
-            transition: var(--transition);
-            box-shadow: 0 4px 18px rgba(212,175,55,0.2), inset 0 1px 0 rgba(255,255,255,0.15);
-            font-family: 'Inter', sans-serif; letter-spacing: 0.3px;
+            background: #d4af37;
+            color: #0b0f19;
+            border: none;
+            padding: 10px 16px;
+            font-size: 13.5px;
+            font-weight: 800;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2);
         }
-        .save-btn-full:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(212,175,55,0.38), inset 0 1px 0 rgba(255,255,255,0.15); }
-        .save-btn-full:active { transform: translateY(0); }
 
-        /* Tags */
-        .tags-zone { padding: 14px 18px; display: flex; flex-wrap: wrap; gap: 6px; }
-        .info-tag { font-size: 10.5px; font-weight: 700; padding: 4px 12px; border-radius: 50px; border: 1px solid transparent; letter-spacing: 0.2px; }
-        .info-tag.gold { background: var(--gold-dim); color: var(--gold); border-color: var(--gold-border); }
-        .info-tag.green { background: var(--green-dim); color: var(--green); border-color: rgba(74,222,128,0.22); }
-        .info-tag.blue { background: var(--blue-dim); color: var(--blue); border-color: rgba(96,165,250,0.22); }
-        .info-tag.muted { background: rgba(255,255,255,0.03); color: var(--text-secondary); border-color: var(--border); }
-        .info-tag.red { background: var(--red-dim); color: var(--red); border-color: rgba(248,113,113,0.22); }
-
-        /* ── ACTIVITY COLUMN ── */
-        .activity-col { display: flex; flex-direction: column; gap: 16px; }
-
-        /* Hub Tabs */
-        .action-hub { overflow: hidden; }
-        .hub-tabs { display: flex; background: rgba(0,0,0,0.25); border-bottom: 1px solid var(--border); }
-        .hub-tab {
-            display: flex; align-items: center; gap: 6px;
-            padding: 13px 20px; font-size: 12px; font-weight: 600;
-            color: var(--text-muted); background: transparent; border: none;
-            border-bottom: 2px solid transparent; margin-bottom: -1px;
-            cursor: pointer; transition: var(--transition); font-family: 'Inter', sans-serif; white-space: nowrap;
+        .btn-save-properties:hover {
+            background: #f59e0b;
+            box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
+            transform: translateY(-1px);
         }
-        .hub-tab:hover { color: var(--text-secondary); }
-        .hub-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
-        .hub-tab i { font-size: 11px; }
-        .hub-body { padding: 20px; }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .header-action-btn.call-btn {
+            background: rgba(34, 197, 94, 0.2);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.4);
+        }
+
+        .header-action-btn.call-btn:hover {
+            background: #22c55e;
+            color: #0b0f19;
+        }
+
+        .header-action-btn.save-btn {
+            background: rgba(212, 175, 55, 0.2);
+            color: #d4af37;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+        }
+
+        .header-action-btn.save-btn:hover {
+            background: #d4af37;
+            color: #0b0f19;
+        }
+
+        /* Layout Columns */
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        @media (max-width: 900px) {
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Left Side Cards */
+        .sidebar-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .profile-card {
+            background: #111726;
+            border: 1px solid #1e293b;
+            border-radius: 8px;
+            padding: 24px;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .profile-avatar {
+            width: 52px;
+            height: 52px;
+            background: #d4af37;
+            color: #0b0f19;
+            font-weight: 800;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .profile-title-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .profile-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0;
+        }
+
+        .profile-role {
+            font-size: 12px;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .profile-details {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            border-top: 1px solid #1e293b;
+            padding-top: 16px;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: #cbd5e1;
+        }
+
+        .detail-item i {
+            color: #d4af37;
+            width: 16px;
+            text-align: center;
+        }
+
+        .detail-item a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .detail-item a:hover {
+            color: #d4af37;
+        }
+
+        .wa-chat-link {
+            background: rgba(37, 211, 102, 0.1);
+            color: #25d366 !important;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 11px;
+            border: 1px solid rgba(37, 211, 102, 0.2);
+            margin-left: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: 700;
+        }
+
+        /* Lead Properties Card */
+        .properties-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #94a3b8;
+            margin: 0 0 16px 0;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .properties-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .property-row {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .property-label {
+            font-size: 11px;
+            color: #94a3b8;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .property-value {
+            font-size: 13.5px;
+            color: #f1f5f9;
+            font-weight: 600;
+        }
+
+        .property-input, .property-select {
+            background: #0b0f19;
+            border: 1px solid #475569;
+            color: #ffffff;
+            border-radius: 4px;
+            padding: 6px 10px;
+            font-size: 13px;
+            width: 100%;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .property-input:focus, .property-select:focus {
+            border-color: #d4af37;
+        }
+
+        /* Right Side Activity */
+        .activity-wrap {
+            background: #111726;
+            border: 1px solid #1e293b;
+            border-radius: 8px;
+            padding: 24px;
+            min-height: 500px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .activity-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #1e293b;
+            padding-bottom: 10px;
+        }
+
+        .act-tab-btn {
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .act-tab-btn:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .act-tab-btn.active {
+            color: #d4af37;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .note-form {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
         .note-textarea {
-            width: 100%; background: var(--bg-input);
-            border: 1px solid rgba(255,255,255,0.07);
-            color: var(--text-primary); border-radius: var(--radius-md);
-            padding: 13px 16px; font-size: 13px; resize: none; outline: none;
-            font-family: 'Inter', sans-serif; transition: border-color 0.2s, box-shadow 0.2s; line-height: 1.65;
+            width: 100%;
+            background: #0b0f19;
+            border: 1px solid #475569;
+            color: #ffffff;
+            border-radius: 4px;
+            padding: 10px;
+            font-size: 13px;
+            resize: none;
+            box-sizing: border-box;
+            outline: none;
         }
-        .note-textarea:focus { border-color: rgba(212,175,55,0.3); box-shadow: 0 0 0 3px rgba(212,175,55,0.07); }
-        .note-textarea::placeholder { color: var(--text-muted); }
-        .hub-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; gap: 10px; }
-        .hub-hint { font-size: 11px; color: var(--text-muted); }
-        .submit-note-btn {
-            background: linear-gradient(135deg, var(--gold), #b8941f);
-            color: #060a11; border: none; padding: 9px 24px;
-            font-size: 12px; font-weight: 800; border-radius: var(--radius-sm);
-            cursor: pointer; transition: var(--transition); font-family: 'Inter', sans-serif;
-            display: inline-flex; align-items: center; gap: 7px;
-            box-shadow: 0 4px 14px rgba(212,175,55,0.2);
-        }
-        .submit-note-btn:hover { transform: translateY(-1px); box-shadow: 0 7px 20px rgba(212,175,55,0.35); }
 
-        /* Feed Panel */
-        .feed-hdr {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 14px 20px; border-bottom: 1px solid var(--border); background: rgba(0,0,0,0.15);
+        .note-textarea:focus {
+            border-color: #d4af37;
         }
-        .feed-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.3px; color: var(--text-secondary); display: flex; align-items: center; gap: 7px; }
-        .feed-label .dot { width: 5px; height: 5px; border-radius: 50%; }
-        .feed-count { font-size: 10px; font-weight: 700; color: var(--text-muted); background: rgba(255,255,255,0.04); padding: 3px 10px; border-radius: 50px; border: 1px solid var(--border); }
-        .feed-body { padding: 20px; }
 
-        /* Timeline */
-        .timeline { position: relative; padding-left: 28px; }
-        .timeline::before {
-            content: ''; position: absolute; left: 10px; top: 4px; bottom: 4px; width: 1px;
-            background: linear-gradient(to bottom, rgba(212,175,55,0.3), rgba(212,175,55,0.05) 60%, transparent);
+        .note-actions {
+            display: flex;
+            justify-content: flex-end;
         }
-        .tl-item { position: relative; margin-bottom: 12px; animation: tl-enter 0.35s cubic-bezier(0.4, 0, 0.2, 1) both; }
-        @keyframes tl-enter { from { opacity: 0; transform: translateX(-12px); } to { opacity: 1; transform: translateX(0); } }
-        .tl-dot { position: absolute; left: -22px; top: 12px; width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--bg-base); box-shadow: 0 0 0 2px rgba(0,0,0,0.5); }
-        .tl-card {
-            background: var(--bg-card-alt); border: 1px solid var(--border); border-radius: var(--radius-md);
-            padding: 11px 14px; display: flex; align-items: flex-start; gap: 11px;
-            transition: border-color 0.2s, transform 0.2s, background 0.2s;
+
+        .btn-submit-note {
+            background: #d4af37;
+            color: #0b0f19;
+            border: none;
+            padding: 8px 20px;
+            font-size: 12.5px;
+            font-weight: 700;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: opacity 0.2s;
         }
-        .tl-card:hover { border-color: rgba(255,255,255,0.1); background: rgba(20,30,50,0.85); transform: translateX(2px); }
-        .tl-icon { width: 32px; height: 32px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
-        .tl-content { flex: 1; min-width: 0; }
-        .tl-text { font-size: 12.5px; color: var(--text-primary); font-weight: 600; line-height: 1.5; margin-bottom: 2px; word-break: break-word; }
-        .tl-time { font-size: 10.5px; color: var(--text-muted); font-weight: 500; }
-        .tl-badge { padding: 3px 9px; border-radius: 5px; font-size: 9.5px; font-weight: 700; flex-shrink: 0; border: 1px solid transparent; align-self: flex-start; letter-spacing: 0.3px; }
 
-        /* Empty State */
-        .empty-state { text-align: center; padding: 36px 16px; color: var(--text-muted); }
-        .empty-state i { font-size: 30px; margin-bottom: 10px; opacity: 0.3; display: block; }
-        .empty-state p { font-size: 13px; }
+        .btn-submit-note:hover {
+            opacity: 0.9;
+        }
 
-        /* Toast */
-        #toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
+        /* Timeline Feed */
+        .timeline-section-title {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #64748b;
+            margin: 24px 0 16px 0;
+            font-weight: 800;
+        }
+
+        .timeline-container {
+            position: relative;
+            padding-left: 20px;
+            border-left: 2px solid #1e293b;
+            margin-left: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .timeline-item {
+            position: relative;
+        }
+
+        .timeline-bullet {
+            position: absolute;
+            left: -27px;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #d4af37;
+            border: 3px solid #111726;
+        }
+
+        .timeline-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .timeline-content {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .timeline-text {
+            font-size: 13px;
+            color: #f1f5f9;
+            line-height: 1.4;
+            font-weight: 600;
+        }
+
+        .timeline-meta {
+            font-size: 11px;
+            color: #94a3b8;
+        }
+
+        .timeline-badge {
+            background: rgba(34, 197, 94, 0.15);
+            color: #4ade80;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 700;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            white-space: nowrap;
+        }
+
+        /* Toast notifications */
+        #toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
         .toast {
-            background: rgba(12, 18, 32, 0.97); border: 1px solid var(--border-bright);
-            border-left: 3px solid var(--gold); color: #fff; padding: 11px 18px;
-            border-radius: var(--radius-md); font-size: 12.5px; font-weight: 600;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5); backdrop-filter: blur(24px);
-            animation: toast-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-            transition: opacity 0.3s; pointer-events: auto; max-width: 300px;
+            background: #1e293b;
+            border-left: 4px solid #d4af37;
+            color: #ffffff;
+            padding: 12px 20px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            animation: slideIn 0.3s ease;
         }
-        @keyframes toast-in { from { transform: translateX(120%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
-        /* Modal */
-        .modal-overlay { display: none; position: fixed; inset: 0; z-index: 10000; align-items: center; justify-content: center; background: rgba(0,0,0,0.72); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
-        .modal-box {
-            background: linear-gradient(145deg, #0e1d36 0%, #08101f 100%);
-            border: 1px solid var(--gold-border); border-radius: var(--radius-xl);
-            width: 90%; max-width: 450px; padding: 26px;
-            box-shadow: 0 40px 80px rgba(0,0,0,0.65), var(--shadow-glow-gold);
-            animation: modal-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
-        @keyframes modal-in { from { opacity: 0; transform: scale(0.88) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
-        .modal-title { font-size: 16px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 9px; }
-        .modal-close { background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--text-secondary); width: 30px; height: 30px; border-radius: var(--radius-sm); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition); }
-        .modal-close:hover { background: rgba(255,255,255,0.12); color: #fff; }
-        .modal-field { margin-bottom: 14px; }
-        .modal-label { display: block; color: var(--text-muted); font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 5px; }
-        .modal-input { background: var(--bg-input); border: 1px solid rgba(255,255,255,0.07); color: var(--text-primary); border-radius: var(--radius-sm); padding: 9px 13px; font-size: 13px; font-family: 'Inter', sans-serif; width: 100%; outline: none; transition: border-color 0.2s, box-shadow 0.2s; -webkit-appearance: none; }
-        .modal-input:focus { border-color: rgba(212,175,55,0.35); box-shadow: 0 0 0 3px rgba(212,175,55,0.08); }
-        .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
-        .modal-footer { display: flex; justify-content: flex-end; gap: 8px; margin-top: 6px; }
-        .modal-cancel { background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--text-secondary); padding: 9px 18px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; transition: var(--transition); }
-        .modal-cancel:hover { background: rgba(255,255,255,0.09); color: #fff; }
-        .modal-submit { background: linear-gradient(135deg, var(--gold), #b8941f); color: #060a11; border: none; padding: 9px 22px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 800; cursor: pointer; font-family: 'Inter', sans-serif; transition: var(--transition); display: inline-flex; align-items: center; gap: 6px; }
-        .modal-submit:hover { box-shadow: 0 6px 22px rgba(212,175,55,0.38); }
 
-        /* Mobile action bar */
-        .mob-action-bar { display: none; }
+        /* Mobile Responsive Optimizations for Lead Details */
+        @media (max-width: 768px) {
+            .details-container {
+                padding: 12px;
+            }
 
-        /* ── RESPONSIVE ── */
-        @media (max-width: 1040px) { .main-grid { grid-template-columns: 300px 1fr; gap: 14px; } }
-        @media (max-width: 900px) { .main-grid { grid-template-columns: 1fr; gap: 14px; } .page-wrap { padding: 14px 14px 40px; } }
-        @media (max-width: 680px) {
-            .page-wrap { padding: 8px 10px 96px; }
-            .command-bar { position: relative; top: auto; flex-direction: column; align-items: flex-start; gap: 10px; padding: 14px; border-radius: var(--radius-md); margin-bottom: 12px; }
-            .cb-left { flex-wrap: wrap; gap: 8px; }
-            .cb-title { font-size: 17px; }
-            .cb-right { width: 100%; }
-            .cmd-btn .btn-label { display: none; }
-            .cmd-btn { padding: 9px 13px; min-width: 40px; justify-content: center; }
-            .avatar-inner { width: 60px; height: 60px; font-size: 20px; }
-            .profile-name { font-size: 18px; }
-            .hub-tab { padding: 11px 14px; font-size: 11.5px; }
-            .hub-body { padding: 14px; }
-            .feed-body { padding: 14px; }
-            .timeline { padding-left: 22px; }
-            .timeline::before { left: 8px; }
-            .tl-dot { left: -17px; width: 8px; height: 8px; }
-            #toast-container { bottom: 82px; right: 8px; left: 8px; }
-            .toast { max-width: 100%; }
-            .modal-overlay { align-items: flex-end; }
-            .modal-box { width: 100%; max-width: 100%; border-radius: 20px 20px 0 0; padding: 22px 16px 32px; animation: sheet-in 0.32s cubic-bezier(0.34, 1.2, 0.64, 1); }
-            @keyframes sheet-in { from { transform: translateY(100%); } to { transform: translateY(0); } }
-            .modal-grid { grid-template-columns: 1fr; gap: 8px; }
-            .mob-action-bar { display: flex; position: fixed; bottom: 0; left: 0; right: 0; z-index: 200; background: rgba(6,10,17,0.97); border-top: 1px solid var(--border-bright); backdrop-filter: blur(24px); padding: 10px 12px; padding-bottom: calc(10px + env(safe-area-inset-bottom)); gap: 8px; box-shadow: 0 -8px 36px rgba(0,0,0,0.45); }
-            .mob-bar-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 11px 8px; border-radius: var(--radius-sm); font-size: 11.5px; font-weight: 700; border: 1px solid transparent; cursor: pointer; text-decoration: none; font-family: 'Inter', sans-serif; transition: var(--transition); }
-            .mob-bar-btn.call { background: var(--green-dim); color: var(--green); border-color: rgba(74,222,128,0.25); }
-            .mob-bar-btn.call:active { background: var(--green); color: #060a11; }
-            .mob-bar-btn.save { background: var(--gold-dim); color: var(--gold); border-color: var(--gold-border); }
-            .mob-bar-btn.save:active { background: var(--gold); color: #060a11; }
-            .mob-bar-btn.remind { background: var(--amber-dim); color: var(--amber); border-color: rgba(251,191,36,0.25); }
-            .mob-bar-btn.remind:active { background: var(--amber); color: #060a11; }
+            .details-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 14px;
+                padding-bottom: 14px;
+            }
+
+            .header-title-wrap {
+                width: 100%;
+            }
+
+            .header-title {
+                font-size: 22px;
+            }
+
+            .header-actions {
+                width: 100%;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .header-action-btn {
+                flex: 1 1 auto;
+                justify-content: center;
+                text-align: center;
+                padding: 10px 12px;
+                font-size: 12.5px;
+            }
+
+            .status-badge {
+                margin-left: auto;
+            }
+
+            .sidebar-wrap {
+                gap: 14px;
+            }
+
+            .profile-card, .properties-card, .activity-wrap {
+                padding: 16px;
+                border-radius: 8px;
+            }
+
+            .profile-header {
+                gap: 12px;
+                margin-bottom: 14px;
+            }
+
+            .profile-avatar {
+                width: 44px;
+                height: 44px;
+                font-size: 16px;
+            }
+
+            .profile-name {
+                font-size: 17px;
+            }
+
+            .detail-item {
+                flex-wrap: wrap;
+                gap: 6px;
+                font-size: 13px;
+            }
+
+            .call-btn-link, .wa-chat-link {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+
+            .property-input, .property-select {
+                font-size: 14px;
+                padding: 10px 12px;
+            }
+
+            .btn-save-properties {
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+
+            .activity-tabs {
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+
+            .act-tab-btn {
+                flex: 1 1 auto;
+                justify-content: center;
+                padding: 10px 12px;
+                font-size: 12px;
+            }
+
+            .timeline-container {
+                padding-left: 14px;
+                margin-left: 6px;
+                gap: 14px;
+            }
+
+            .timeline-bullet {
+                left: -21px;
+                width: 10px;
+                height: 10px;
+            }
+
+            .timeline-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+                padding: 10px 12px;
+            }
+
+            #toast-container {
+                bottom: 12px;
+                right: 12px;
+                left: 12px;
+            }
+
+            .toast {
+                padding: 10px 14px;
+                font-size: 12.5px;
+            }
         }
-        @media (max-width: 380px) { .cb-title { font-size: 15px; } .card-body, .card-body-sm { padding: 12px; } .hub-tab { padding: 10px 10px; font-size: 11px; } }
     </style>
 </head>
 
 <body>
 
-    <div class="page-wrap">
-
-        <!-- ── COMMAND BAR ── -->
-        <div class="command-bar">
-            <div class="cb-left">
-                <a href="admin.html" class="back-pill">
-                    <i class="fa-solid fa-arrow-left"></i> Dashboard
-                </a>
-                <div class="cb-title-group">
-                    <div class="cb-eyebrow">Lead CRM &mdash; Rudraansh Yatra</div>
-                    <div class="cb-title" id="lead-page-title">Lead Details</div>
-                </div>
+    <div class="details-container">
+        <!-- Header -->
+        <div class="details-header">
+            <div class="header-title-wrap">
+                <a href="admin.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Leads Dashboard</a>
+                <h1 class="header-title" id="lead-page-title">Lead Details</h1>
             </div>
-            <div class="cb-right">
-                <a id="header-call-btn" href="#" class="cmd-btn call" onclick="logCallInitiated()">
-                    <i class="fa-solid fa-phone"></i><span class="btn-label"> Call Lead</span>
-                </a>
-                <button type="button" onclick="openLeadReminderModal()" class="cmd-btn reminder">
-                    <i class="fa-solid fa-bell"></i><span class="btn-label"> Reminder</span>
-                </button>
-                <button type="button" onclick="saveAllLeadProperties()" class="cmd-btn save">
-                    <i class="fa-solid fa-floppy-disk"></i><span class="btn-label"> Save</span>
-                </button>
-                <span class="status-badge" id="header-status-badge">Loading&hellip;</span>
+            <div id="lead-status-header" class="header-actions">
+                <a id="header-call-btn" href="#" class="header-action-btn call-btn" onclick="logCallInitiated()"><i class="fa-solid fa-phone"></i> Call Lead</a>
+                <button type="button" onclick="openLeadReminderModal()" class="header-action-btn reminder-btn" style="background: rgba(245,158,11,0.2); color: #fbbf24; border: 1px solid rgba(245,158,11,0.4);"><i class="fa-solid fa-bell"></i> Set Reminder</button>
+                <button type="button" onclick="saveAllLeadProperties()" class="header-action-btn save-btn"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button>
+                <span class="status-badge" id="header-status-badge">Loading...</span>
             </div>
         </div>
 
-        <!-- ── MAIN GRID ── -->
-        <div class="main-grid">
-
-            <!-- ── LEFT SIDEBAR ── -->
-            <div class="sidebar">
-
-                <!-- Profile Card -->
-                <div class="card">
-                    <div class="profile-hero">
-                        <div class="avatar-stage">
-                            <div class="avatar-glow"></div>
-                            <div class="avatar-ring"></div>
-                            <div class="avatar-inner" id="lead-avatar-initials">-</div>
-                        </div>
-                        <div class="profile-name" id="lead-display-name">Loading&hellip;</div>
-                        <div class="profile-sub">Prospect &bull; Travel Lead</div>
-                        <div class="profile-indicators">
-                            <div class="indicator-cell">
-                                <div class="indicator-val gold" id="ind-status-val">&mdash;</div>
-                                <div class="indicator-lbl">Status</div>
-                            </div>
-                            <div class="indicator-cell">
-                                <div class="indicator-val blue" id="ind-travelers-val">&mdash;</div>
-                                <div class="indicator-lbl">Travelers</div>
-                            </div>
-                            <div class="indicator-cell">
-                                <div class="indicator-val green" id="ind-source-val">&mdash;</div>
-                                <div class="indicator-lbl">Source</div>
-                            </div>
+        <!-- Details Grid -->
+        <div class="details-grid">
+            
+            <!-- Left Side Cards -->
+            <div class="sidebar-wrap">
+                
+                <!-- Primary Profile Card -->
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <div class="profile-avatar" id="lead-avatar-initials">-</div>
+                        <div class="profile-title-info">
+                            <h2 class="profile-name" id="lead-display-name">Loading...</h2>
+                            <span class="profile-role">Prospect / Travel Lead</span>
                         </div>
                     </div>
-                    <div class="contact-section">
-                        <div class="contact-item phone">
-                            <div class="ci-icon phone"><i class="fa-solid fa-phone"></i></div>
-                            <div class="ci-info">
-                                <div class="ci-label">Phone</div>
-                                <div class="ci-value" id="lead-display-phone">&mdash;</div>
-                            </div>
-                            <div class="ci-actions">
-                                <span id="lead-call-wrapper"></span>
-                                <span id="lead-wa-wrapper"></span>
-                            </div>
+
+                    <div class="profile-details">
+                        <div class="detail-item">
+                            <i class="fa-solid fa-phone"></i>
+                            <span id="lead-display-phone">Loading...</span>
+                            <span id="lead-call-wrapper"></span>
+                            <span id="lead-wa-wrapper"></span>
                         </div>
-                        <div class="contact-item email">
-                            <div class="ci-icon email"><i class="fa-solid fa-envelope"></i></div>
-                            <div class="ci-info">
-                                <div class="ci-label">Email</div>
-                                <div class="ci-value" id="lead-display-email">&mdash;</div>
-                            </div>
+                        <div class="detail-item">
+                            <i class="fa-solid fa-envelope"></i>
+                            <span id="lead-display-email">Loading...</span>
                         </div>
-                        <div class="contact-item source">
-                            <div class="ci-icon source"><i class="fa-solid fa-location-arrow"></i></div>
-                            <div class="ci-info">
-                                <div class="ci-label">Inquiry Source</div>
-                                <div class="ci-value" id="lead-display-source">&mdash;</div>
-                            </div>
+                        <div class="detail-item">
+                            <i class="fa-solid fa-location-arrow"></i>
+                            <span>Source: <strong id="lead-display-source">Loading...</strong></span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Lead Properties Card -->
-                <div class="card">
-                    <div class="card-hdr">
-                        <div class="card-hdr-label">
-                            <span class="lbl-dot" style="background:var(--gold);"></span>
-                            Lead Properties
-                        </div>
-                    </div>
-                    <div class="props-body">
-                        <div class="props-grid">
-                            <div class="prop-field admin-only-field" style="display:none;">
-                                <label class="prop-label"><i class="fa-solid fa-user"></i> Client Name</label>
-                                <input type="text" id="property-name" class="prop-input gold-accent" placeholder="Full name">
-                            </div>
-                            <div class="prop-field admin-only-field" style="display:none;">
-                                <label class="prop-label"><i class="fa-solid fa-phone"></i> Phone Number</label>
-                                <input type="text" id="property-phone" class="prop-input gold-accent" placeholder="+91 XXXXX XXXXX">
-                            </div>
-                            <div class="prop-field admin-only-field" style="display:none;">
-                                <label class="prop-label"><i class="fa-solid fa-envelope"></i> Email Address</label>
-                                <input type="email" id="property-email" class="prop-input gold-accent" placeholder="email@example.com">
-                            </div>
-                            <div class="prop-field">
-                                <label class="prop-label"><i class="fa-solid fa-circle-dot"></i> Lead Status</label>
-                                <select id="property-status" class="prop-select">
-                                    <option value="New">✨ New</option>
-                                    <option value="Answered">📞 Answered</option>
-                                    <option value="Busy">⏳ Busy</option>
-                                    <option value="Incorrect Number">🚫 Incorrect Number</option>
-                                    <option value="Follow up required">🔁 Follow up required</option>
-                                    <option value="Not Answered">🔇 Not Answered</option>
-                                    <option value="No. not reachable">📴 No. not reachable</option>
-                                </select>
-                            </div>
-                            <div class="prop-field" id="prop-assignee-row">
-                                <label class="prop-label"><i class="fa-solid fa-user-tie"></i> Assigned To Staff</label>
-                                <select id="property-assignee" class="prop-select">
-                                    <option value="">Loading&hellip;</option>
-                                </select>
-                            </div>
-                            <div class="prop-field">
-                                <label class="prop-label"><i class="fa-solid fa-calendar-days"></i> Travel Date</label>
-                                <input type="date" id="property-travel-date" class="prop-input">
-                            </div>
-                            <div class="prop-field">
-                                <label class="prop-label"><i class="fa-solid fa-flag-checkered"></i> Final Status</label>
-                                <select id="property-final-status" class="prop-select">
-                                    <option value="">🔘 None</option>
-                                    <option value="Booking confirmed">🎉 Booking confirmed</option>
-                                    <option value="Booked elsewhere">🏢 Booked elsewhere</option>
-                                    <option value="Postpone">⏳ Postpone</option>
-                                    <option value="Lost lead">🗑️ Lost lead</option>
-                                </select>
-                            </div>
-                            <div class="prop-field">
-                                <label class="prop-label"><i class="fa-solid fa-users"></i> No. of Travelers</label>
-                                <input type="number" id="property-travelers" class="prop-input" min="1" placeholder="1">
-                            </div>
-                            <div class="props-sep"></div>
-                            <div class="prop-field">
-                                <label class="prop-label"><i class="fa-regular fa-clock"></i> Created At</label>
-                                <div class="prop-static" id="property-created-at">&mdash;</div>
-                            </div>
-                        </div>
-                        <div style="margin-top: 16px; border-top: 1px solid var(--border); padding-top: 14px;">
-                            <button type="button" id="btn-save-lead-properties" onclick="saveAllLeadProperties()" class="save-btn-full">
-                                <i class="fa-solid fa-floppy-disk"></i> Save Lead Changes
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Quick Info Tags -->
-                <div class="card">
-                    <div class="card-hdr">
-                        <div class="card-hdr-label">
-                            <span class="lbl-dot" style="background:var(--teal);"></span>
-                            Quick Information
-                        </div>
-                    </div>
-                    <div class="tags-zone" id="lead-tags-container">
-                        <span class="info-tag muted">Active Lead</span>
-                        <span class="info-tag muted">Yatra Inquiry</span>
-                    </div>
-                </div>
-
-            </div>
-            <!-- END SIDEBAR -->
-
-            <!-- ── RIGHT ACTIVITY COLUMN ── -->
-            <div class="activity-col">
-
-                <!-- Action Hub -->
-                <div class="card action-hub">
-                    <div class="hub-tabs">
-                        <button class="hub-tab active" id="tab-note"><i class="fa-solid fa-note-sticky"></i> Add Note</button>
-                        <button class="hub-tab" onclick="logCallWithPrompt()"><i class="fa-solid fa-phone-volume"></i> Call &amp; Log</button>
-                        <button class="hub-tab" onclick="openLeadReminderModal()"><i class="fa-solid fa-bell" style="color:var(--amber);"></i> Set Reminder</button>
-                    </div>
-                    <div class="hub-body">
-                        <form id="new-note-form" onsubmit="submitNote(event)">
-                            <textarea id="note-text" class="note-textarea" rows="4"
-                                placeholder="Write an update, follow-up note, or client remark&hellip;" required></textarea>
-                            <div class="hub-footer">
-                                <span class="hub-hint"><i class="fa-solid fa-clock" style="color:var(--gold);opacity:0.6;"></i> Logs to timeline instantly</span>
-                                <button type="submit" class="submit-note-btn">
-                                    <i class="fa-solid fa-paper-plane"></i> Save Update
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <!-- Activity Feed -->
-                <div class="card feed-panel">
-                    <div class="feed-hdr">
-                        <div class="feed-label">
-                            <span class="dot" style="background:var(--blue);"></span>
-                            Activity Feed &amp; History
-                        </div>
-                        <span class="feed-count" id="history-count-badge">&mdash;</span>
-                    </div>
-                    <div class="feed-body">
-                        <div class="timeline" id="lead-timeline">
-                            <div class="empty-state">
-                                <i class="fa-solid fa-timeline"></i>
-                                <p>Loading timeline updates&hellip;</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <!-- END ACTIVITY COLUMN -->
-
-        </div>
-    </div>
-            <div class="top-bar-left">
-                <a href="admin.html" class="back-btn">
-                    <i class="fa-solid fa-arrow-left"></i> Back to Leads Dashboard
-                </a>
-                <div class="top-bar-title" id="lead-page-title">Lead Details</div>
-            </div>
-            <div class="top-bar-actions" id="lead-status-header">
-                <a id="header-call-btn" href="#" class="hdr-btn call" onclick="logCallInitiated()">
-                    <i class="fa-solid fa-phone"></i><span class="btn-label"> Call Lead</span>
-                </a>
-                <button type="button" onclick="openLeadReminderModal()" class="hdr-btn reminder">
-                    <i class="fa-solid fa-bell"></i><span class="btn-label"> Reminder</span>
-                </button>
-                <button type="button" onclick="saveAllLeadProperties()" class="hdr-btn save">
-                    <i class="fa-solid fa-floppy-disk"></i><span class="btn-label"> Save</span>
-                </button>
-                <span class="status-chip" id="header-status-badge">Loading…</span>
-            </div>
-        </div>
-
-        <!-- ── Main Layout ── -->
-        <div class="main-grid">
-
-            <!-- ── LEFT SIDEBAR ── -->
-            <div class="sidebar">
-
-                <!-- Profile Card -->
-                <div class="glass-card">
-                    <div class="profile-top">
-                        <div class="avatar-ring">
-                            <div class="avatar-inner" id="lead-avatar-initials">-</div>
-                        </div>
-                        <div class="profile-meta">
-                            <div class="profile-name-text" id="lead-display-name">Loading…</div>
-                            <div class="profile-role-text">Prospect / Travel Lead</div>
-                        </div>
-                    </div>
-
-                    <div class="contact-grid">
-                        <!-- Phone Row -->
-                        <div class="contact-row">
-                            <div class="contact-icon phone"><i class="fa-solid fa-phone"></i></div>
-                            <div class="contact-info">
-                                <div class="contact-label">Phone</div>
-                                <div class="contact-value" id="lead-display-phone">—</div>
-                            </div>
-                            <div class="contact-actions">
-                                <span id="lead-call-wrapper"></span>
-                                <span id="lead-wa-wrapper"></span>
-                            </div>
-                        </div>
-                        <!-- Email Row -->
-                        <div class="contact-row">
-                            <div class="contact-icon email"><i class="fa-solid fa-envelope"></i></div>
-                            <div class="contact-info">
-                                <div class="contact-label">Email</div>
-                                <div class="contact-value" id="lead-display-email">—</div>
-                            </div>
-                        </div>
-                        <!-- Source Row -->
-                        <div class="contact-row">
-                            <div class="contact-icon source"><i class="fa-solid fa-location-arrow"></i></div>
-                            <div class="contact-info">
-                                <div class="contact-label">Source</div>
-                                <div class="contact-value" id="lead-display-source">—</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Lead Properties Card -->
-                <div class="glass-card">
-                    <div class="section-hdr">
-                        <div class="section-title">
-                            <span class="dot"></span>
-                            Lead Properties
-                        </div>
-                    </div>
-
-                    <div class="props-grid">
-
-                        <!-- Admin-only fields -->
-                        <div class="prop-field admin-only-field" style="display:none;">
-                            <label class="prop-label">Client Name</label>
-                            <input type="text" id="property-name" class="prop-input prop-input gold-accent">
+                <!-- Interactive Properties Card -->
+                <div class="properties-card">
+                    <h3 class="card-title">Lead Properties</h3>
+                    <div class="properties-list">
+                        
+                        <!-- Admin Only: Editable Name, Phone, Email -->
+                        <div class="property-row admin-only-field" style="display: none;">
+                            <label class="property-label">Client Name</label>
+                            <input type="text" id="property-name" class="property-input" style="border: 1.5px solid var(--color-gold);">
                         </div>
 
-                        <div class="prop-field admin-only-field" style="display:none;">
-                            <label class="prop-label">Phone Number</label>
-                            <input type="text" id="property-phone" class="prop-input gold-accent">
+                        <div class="property-row admin-only-field" style="display: none;">
+                            <label class="property-label">Phone Number</label>
+                            <input type="text" id="property-phone" class="property-input" style="border: 1.5px solid var(--color-gold);">
                         </div>
 
-                        <div class="prop-field admin-only-field" style="display:none;">
-                            <label class="prop-label">Email Address</label>
-                            <input type="email" id="property-email" class="prop-input gold-accent">
+                        <div class="property-row admin-only-field" style="display: none;">
+                            <label class="property-label">Email Address</label>
+                            <input type="email" id="property-email" class="property-input" style="border: 1.5px solid var(--color-gold);">
                         </div>
 
-                        <div class="prop-field">
-                            <label class="prop-label">Lead Status</label>
-                            <select id="property-status" class="prop-select">
+                        <div class="property-row">
+                            <label class="property-label">Lead Status</label>
+                            <select id="property-status" class="property-select">
                                 <option value="New">✨ New</option>
                                 <option value="Answered">📞 Answered</option>
                                 <option value="Busy">⏳ Busy</option>
@@ -795,21 +760,21 @@
                             </select>
                         </div>
 
-                        <div class="prop-field" id="prop-assignee-row">
-                            <label class="prop-label">Assigned To Staff</label>
-                            <select id="property-assignee" class="prop-select">
-                                <option value="">Loading…</option>
+                        <div class="property-row" id="prop-assignee-row">
+                            <label class="property-label">Assigned To Staff</label>
+                            <select id="property-assignee" class="property-select">
+                                <option value="">Loading...</option>
                             </select>
                         </div>
 
-                        <div class="prop-field">
-                            <label class="prop-label">Travel Date</label>
-                            <input type="date" id="property-travel-date" class="prop-input">
+                        <div class="property-row">
+                            <label class="property-label">Travel Date</label>
+                            <input type="date" id="property-travel-date" class="property-input">
                         </div>
 
-                        <div class="prop-field">
-                            <label class="prop-label">Final Status</label>
-                            <select id="property-final-status" class="prop-select">
+                        <div class="property-row">
+                            <label class="property-label">Final Status</label>
+                            <select id="property-final-status" class="property-select">
                                 <option value="">🔘 None</option>
                                 <option value="Booking confirmed">🎉 Booking confirmed</option>
                                 <option value="Booked elsewhere">🏢 Booked elsewhere</option>
@@ -818,145 +783,66 @@
                             </select>
                         </div>
 
-                        <div class="prop-field">
-                            <label class="prop-label">Travelers</label>
-                            <input type="number" id="property-travelers" class="prop-input" min="1">
+                        <div class="property-row">
+                            <label class="property-label">Travelers</label>
+                            <input type="number" id="property-travelers" class="property-input" min="1">
                         </div>
 
-                        <div class="prop-field">
-                            <label class="prop-label">Created Date</label>
-                            <div class="prop-static" id="property-created-at">—</div>
+                        <div class="property-row">
+                            <label class="property-label">Created Date</label>
+                            <div class="property-value" id="property-created-at">Loading...</div>
                         </div>
 
                     </div>
 
-                    <div style="margin-top: 16px; border-top: 1px solid var(--border); padding-top: 14px;">
-                        <button type="button" id="btn-save-lead-properties" onclick="saveAllLeadProperties()" class="save-full-btn">
+                    <!-- Save Lead Changes Option -->
+                    <div style="margin-top: 18px; border-top: 1px solid #334155; padding-top: 16px;">
+                        <button type="button" id="btn-save-lead-properties" onclick="saveAllLeadProperties()" class="btn-save-properties">
                             <i class="fa-solid fa-floppy-disk"></i> Save Lead Changes
                         </button>
                     </div>
                 </div>
 
-                <!-- Quick Info Tags Card -->
-                <div class="glass-card">
-                    <div class="section-hdr">
-                        <div class="section-title">
-                            <span class="dot" style="background:var(--teal);"></span>
-                            Quick Information
-                        </div>
-                    </div>
-                    <div class="tags-wrap" id="lead-tags-container">
-                        <span class="info-tag muted">Active Lead</span>
-                        <span class="info-tag muted">Yatra Inquiry</span>
+                <!-- Tags / Quick Labels Card -->
+                <div class="properties-card">
+                    <h3 class="card-title">Quick Information</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;" id="lead-tags-container">
+                        <span style="font-size: 11px; background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px; color: #94a3b8;">Active Lead</span>
+                        <span style="font-size: 11px; background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px; color: #94a3b8;">Yatra Inquiry</span>
                     </div>
                 </div>
 
             </div>
-            <!-- END SIDEBAR -->
 
-            <!-- ── RIGHT ACTIVITY PANEL ── -->
-            <div class="activity-panel">
-
-                <!-- Quick Note / Actions Panel -->
-                <div class="note-panel">
-                    <div class="note-tabs">
-                        <button class="ntab active"><i class="fa-solid fa-note-sticky"></i> Add Quick Note</button>
-                        <button class="ntab" onclick="logCallWithPrompt()"><i class="fa-solid fa-phone-volume"></i> Call & Log</button>
-                        <button class="ntab" onclick="openLeadReminderModal()"><i class="fa-solid fa-bell" style="color:var(--amber);"></i> Set Reminder</button>
-                    </div>
-                    <div class="note-body">
-                        <form id="new-note-form" onsubmit="submitNote(event)">
-                            <textarea id="note-text" class="note-area" rows="4"
-                                placeholder="Write an update, remark, or follow-up note here…" required></textarea>
-                            <div class="note-footer">
-                                <button type="submit" class="submit-note-btn">
-                                    <i class="fa-solid fa-paper-plane"></i>&nbsp; Save Update
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+            <!-- Right Side Timeline / Actions -->
+            <div class="activity-wrap">
+                <div class="activity-tabs">
+                    <button class="act-tab-btn active"><i class="fa-solid fa-note-sticky"></i> Add Quick Note</button>
+                    <button class="act-tab-btn" onclick="logCallWithPrompt()"><i class="fa-solid fa-phone"></i> Call & Log</button>
+                    <button class="act-tab-btn" onclick="openLeadReminderModal()"><i class="fa-solid fa-bell" style="color:#fbbf24;"></i> Set Reminder</button>
                 </div>
 
-                <!-- Activity History Panel -->
-                <div class="history-panel">
-                    <div class="history-hdr">
-                        <div class="history-label">
-                            <span class="dot"></span>
-                            Activity Feed &amp; History
-                        </div>
-                        <span class="history-count" id="history-count-badge">—</span>
+                <!-- New Note Form -->
+                <form id="new-note-form" class="note-form" onsubmit="submitNote(event)">
+                    <textarea id="note-text" class="note-textarea" rows="3" placeholder="Write an update, remark, or follow-up note here..." required></textarea>
+                    <div class="note-actions">
+                        <button type="submit" class="btn-submit-note">Save Update</button>
                     </div>
+                </form>
 
-                    <div class="timeline" id="lead-timeline">
-                        <div class="empty-state">
-                            <i class="fa-solid fa-timeline"></i>
-                            <p>Loading timeline updates…</p>
-                        </div>
-                    </div>
+                <!-- Activity Feed -->
+                <h3 class="timeline-section-title">Activity Feed & History</h3>
+                <div class="timeline-container" id="lead-timeline">
+                    <div style="color: #64748b; font-style: italic;">Loading timeline updates...</div>
                 </div>
-
             </div>
-            <!-- END ACTIVITY PANEL -->
 
         </div>
     </div>
 
-    <!-- Toast Container -->
+    <!-- Toast Notifications Container -->
     <div id="toast-container"></div>
-
-    <!-- ── Mobile Quick-Action Bar ── -->
-    <div class="mob-action-bar">
-        <a id="mob-call-btn" href="#" class="mob-bar-btn call" onclick="logCallInitiated()">
-            <i class="fa-solid fa-phone"></i> Call
-        </a>
-        <button type="button" onclick="openLeadReminderModal()" class="mob-bar-btn remind">
-            <i class="fa-solid fa-bell"></i> Remind
-        </button>
-        <button type="button" onclick="saveAllLeadProperties()" class="mob-bar-btn save">
-            <i class="fa-solid fa-floppy-disk"></i> Save
-        </button>
-    </div>
-
-    <!-- ── Set Reminder Modal ── -->
-    <div id="lead-reminder-modal" class="modal-overlay">
-        <div class="modal-box">
-            <div class="modal-header">
-                <div class="modal-title">
-                    <i class="fa-solid fa-bell" style="color:var(--amber);"></i> Set Follow-up Reminder
-                </div>
-                <button type="button" class="modal-close" onclick="closeLeadReminderModal()">&times;</button>
-            </div>
-            <form onsubmit="submitLeadReminderForm(event)">
-                <div class="modal-field">
-                    <label class="modal-label">Reminder Action / Note *</label>
-                    <input type="text" id="lead-reminder-note" class="modal-input" required>
-                </div>
-                <div class="modal-grid">
-                    <div>
-                        <label class="modal-label">Due Date *</label>
-                        <input type="date" id="lead-reminder-due-date" class="modal-input" required>
-                    </div>
-                    <div>
-                        <label class="modal-label">Due Time</label>
-                        <input type="time" id="lead-reminder-due-time" class="modal-input" value="10:00">
-                    </div>
-                </div>
-                <div class="modal-field">
-                    <label class="modal-label">Priority</label>
-                    <select id="lead-reminder-priority" class="modal-input">
-                        <option value="High">🔥 High Priority</option>
-                        <option value="Medium" selected>⚡ Medium Priority</option>
-                        <option value="Low">🟢 Low Priority</option>
-                    </select>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="modal-cancel" onclick="closeLeadReminderModal()">Cancel</button>
-                    <button type="submit" class="modal-submit"><i class="fa-solid fa-bell"></i> Set Reminder</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
+ 
     <script>
         // Security Gate check
         if (localStorage.getItem('admin_verified') !== 'true' || !localStorage.getItem('admin_token')) {
@@ -1157,18 +1043,16 @@
         let uuidToUsernameMap = {};
 
         // Toast Helper
-        function showToast(message, type = 'default') {
+        function showToast(message) {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
             toast.className = 'toast';
-            const colors = { success: 'var(--green)', error: 'var(--red)', warning: 'var(--amber)', default: 'var(--gold)' };
-            toast.style.borderLeftColor = colors[type] || colors.default;
             toast.innerText = message;
             container.appendChild(toast);
             setTimeout(() => {
                 toast.style.opacity = '0';
                 setTimeout(() => toast.remove(), 300);
-            }, 3500);
+            }, 3000);
         }
 
         // Fetch Lead Details
@@ -1207,17 +1091,12 @@
         function renderLeadDetails() {
             if (!leadData) return;
 
+            // Header status
             document.getElementById('header-status-badge').innerText = leadData.status || 'New';
+            
+            // Name Card
             document.getElementById('lead-display-name').innerText = leadData.name || 'Anonymous';
-            document.getElementById('lead-page-title').innerText = `${leadData.name || 'Lead'} — Details`;
-
-            // Quick indicators
-            const statusEl = document.getElementById('ind-status-val');
-            if (statusEl) statusEl.innerText = (leadData.status || 'New').split(' ')[0];
-            const travelersEl = document.getElementById('ind-travelers-val');
-            if (travelersEl) travelersEl.innerText = leadData.travelers || '1';
-            const srcEl = document.getElementById('ind-source-val');
-            if (srcEl) srcEl.innerText = (leadData.source || 'Web').split(' ')[0];
+            document.getElementById('lead-page-title').innerText = `${leadData.name || 'Lead'} - Details`;
             
             // Avatar Initials
             let initials = 'Y';
@@ -1242,25 +1121,19 @@
                 const telPhone = cleanPhone.startsWith('+') ? cleanPhone : '+91' + cleanPhone.replace(/^91/, '');
                 
                 if (callWrapper) {
-                    callWrapper.innerHTML = `<a href="tel:${telPhone}" class="action-chip call-chip" onclick="logCallInitiated()"><i class="fa-solid fa-phone"></i> Call</a>`;
+                    callWrapper.innerHTML = `<a href="tel:${telPhone}" class="call-btn-link" onclick="logCallInitiated()"><i class="fa-solid fa-phone"></i> Call</a>`;
                 }
                 if (headerCallBtn) {
                     headerCallBtn.href = `tel:${telPhone}`;
                 }
-                // Also wire mobile action bar call button
-                const mobCallBtn = document.getElementById('mob-call-btn');
-                if (mobCallBtn) mobCallBtn.href = `tel:${telPhone}`;
-
                 if (waWrapper) {
                     const cleanDigits = leadData.phone.replace(/[^0-9]/g, '');
                     const waPhone = cleanDigits.length === 10 ? '91' + cleanDigits : cleanDigits;
-                    waWrapper.innerHTML = `<a href="https://wa.me/${waPhone}?text=Namaste%20${encodeURIComponent(leadData.name || 'Guest')}!%20This%20is%20Rudraansh%20Yatra." target="_blank" class="action-chip wa-chip"><i class="fa-brands fa-whatsapp"></i> Chat</a>`;
+                    waWrapper.innerHTML = `<a href="https://wa.me/${waPhone}?text=Namaste%20${encodeURIComponent(leadData.name || 'Guest')}!%20This%20is%20Rudraansh%20Yatra." target="_blank" class="wa-chat-link"><i class="fa-brands fa-whatsapp"></i> Chat</a>`;
                 }
             } else {
                 if (callWrapper) callWrapper.innerHTML = '';
                 if (headerCallBtn) headerCallBtn.href = '#';
-                const mobCallBtn = document.getElementById('mob-call-btn');
-                if (mobCallBtn) mobCallBtn.href = '#';
                 if (waWrapper) waWrapper.innerHTML = '';
             }
 
@@ -1292,21 +1165,13 @@
                 document.querySelectorAll('.admin-only-field').forEach(el => el.style.display = 'none');
             }
 
-            // Tags
+            // Render tags/quick info indicators
             const tagsWrap = document.getElementById('lead-tags-container');
-            let tagsHtml = `<span class="info-tag gold">${leadData.source || 'Website'}</span>`;
+            let tagsHtml = `<span style="font-size: 11px; background: rgba(212, 175, 55, 0.1); padding: 4px 8px; border-radius: 4px; color: var(--color-gold); font-weight: 700; border: 1px solid rgba(212, 175, 55, 0.2);">${leadData.source || 'Website'}</span>`;
             if (leadData.final_status) {
-                const fsColors = { 'Booking confirmed': 'green', 'Booked elsewhere': 'blue', 'Postpone': 'gold', 'Lost lead': 'red' };
-                const fsColor = fsColors[leadData.final_status] || 'muted';
-                tagsHtml += `<span class="info-tag ${fsColor}">${leadData.final_status}</span>`;
+                tagsHtml += `<span style="font-size: 11px; background: rgba(34, 197, 94, 0.1); padding: 4px 8px; border-radius: 4px; color: #4ade80; font-weight: 700; border: 1px solid rgba(34, 197, 94, 0.2);">${leadData.final_status}</span>`;
             } else {
-                tagsHtml += `<span class="info-tag muted">Active Lead</span>`;
-            }
-            if (leadData.travelers && leadData.travelers > 1) {
-                tagsHtml += `<span class="info-tag blue">${leadData.travelers} Travelers</span>`;
-            }
-            if (leadData.travel_date) {
-                tagsHtml += `<span class="info-tag muted"><i class="fa-solid fa-calendar-days" style="margin-right:4px;opacity:0.6;"></i>${leadData.travel_date}</span>`;
+                tagsHtml += `<span style="font-size: 11px; background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px; color: #94a3b8; font-weight: 600;">Active Lead</span>`;
             }
             tagsWrap.innerHTML = tagsHtml;
         }
@@ -1330,6 +1195,7 @@
                     if (staffUsername) {
                         const cleanUser = (str) => (str || '').replace(/[^a-zA-Z0-9]/g, '').trim().toLowerCase();
                         
+                        // Sort chronologically ascending
                         const sorted = [...filteredData].sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
                         
                         let currentAssignee = 'unassigned';
@@ -1359,70 +1225,56 @@
                             return itemAssignee[i].includes(staffUsername);
                         });
                         
+                        // Sort back to descending (newest first)
                         filteredData = filteredSorted.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
                     }
                 }
 
-                // Update count badge
-                const countBadge = document.getElementById('history-count-badge');
-                if (countBadge) countBadge.innerText = `${filteredData.length} event${filteredData.length !== 1 ? 's' : ''}`;
-
                 if (filteredData.length === 0) {
-                    timeline.innerHTML = `
-                        <div class="empty-state">
-                            <i class="fa-solid fa-inbox"></i>
-                            <p>No activities logged yet.</p>
-                        </div>`;
+                    timeline.innerHTML = '<div style="color: #64748b; font-style: italic;">No previous activities logged yet.</div>';
                     return;
                 }
 
                 let html = '';
-                filteredData.forEach((item, idx) => {
+                filteredData.forEach(item => {
                     const timeStr = new Date(item.created_at).toLocaleString('en-IN', {
                         day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
                     });
 
+                    // Determine icon based on action content
                     let iconClass = 'fa-solid fa-clock-rotate-left';
                     let badgeText = 'System';
-                    let color = '#8899b4';
-                    let iconBg = 'rgba(136,153,180,0.1)';
-                    let badgeBg = 'rgba(136,153,180,0.08)';
-                    let dotColor = '#8899b4';
-                    let remarksLabel = '';
+                    let badgeColor = 'rgba(255,255,255,0.05)';
+                    let badgeTextColor = '#94a3b8';
+                    let remarksUpdatedLabel = '';
 
                     if (item.action.includes('Transferred')) {
-                        iconClass = 'fa-solid fa-share-nodes'; badgeText = 'Transfer';
-                        color = '#d4af37'; iconBg = 'rgba(212,175,55,0.12)'; badgeBg = 'rgba(212,175,55,0.1)'; dotColor = '#d4af37';
+                        iconClass = 'fa-solid fa-share-nodes';
+                        badgeText = 'Transfer';
+                        badgeColor = 'rgba(212,175,55,0.15)';
+                        badgeTextColor = '#d4af37';
                     } else if (item.action.includes('Status')) {
-                        iconClass = 'fa-solid fa-tags'; badgeText = 'Status';
-                        color = '#60a5fa'; iconBg = 'rgba(96,165,250,0.12)'; badgeBg = 'rgba(96,165,250,0.1)'; dotColor = '#60a5fa';
+                        iconClass = 'fa-solid fa-tags';
+                        badgeText = 'Status';
+                        badgeColor = 'rgba(37,99,235,0.15)';
+                        badgeTextColor = '#60a5fa';
                     } else if (item.action.includes('Note by') || item.action.includes('Remarks')) {
-                        iconClass = 'fa-solid fa-comment-dots'; badgeText = 'Note';
-                        color = '#34d399'; iconBg = 'rgba(52,211,153,0.12)'; badgeBg = 'rgba(52,211,153,0.1)'; dotColor = '#34d399';
-                        remarksLabel = `<span style="color:#34d399;font-size:10px;font-weight:700;margin-left:6px;opacity:0.8;">• Remark</span>`;
-                    } else if (item.action.includes('reminder') || item.action.includes('Reminder')) {
-                        iconClass = 'fa-solid fa-bell'; badgeText = 'Reminder';
-                        color = '#fbbf24'; iconBg = 'rgba(251,191,36,0.12)'; badgeBg = 'rgba(251,191,36,0.1)'; dotColor = '#fbbf24';
-                    } else if (item.action.includes('call') || item.action.includes('Call') || item.action.includes('Phone')) {
-                        iconClass = 'fa-solid fa-phone'; badgeText = 'Call';
-                        color = '#4ade80'; iconBg = 'rgba(74,222,128,0.12)'; badgeBg = 'rgba(74,222,128,0.1)'; dotColor = '#4ade80';
-                    } else if (item.action.includes('Booking')) {
-                        iconClass = 'fa-solid fa-check-circle'; badgeText = 'Booking';
-                        color = '#a78bfa'; iconBg = 'rgba(167,139,250,0.12)'; badgeBg = 'rgba(167,139,250,0.1)'; dotColor = '#a78bfa';
+                        iconClass = 'fa-solid fa-comment-dots';
+                        badgeText = 'Staff Note';
+                        badgeColor = 'rgba(16,185,129,0.15)';
+                        badgeTextColor = '#34d399';
+                        remarksUpdatedLabel = ' <span style="color: #34d399; font-weight: 600; margin-left: 8px;">• Remarks updated</span>';
                     }
 
                     html += `
-                        <div class="tl-item" style="animation-delay:${idx * 0.04}s;">
-                            <div class="tl-dot" style="background:${dotColor};"></div>
-                            <div class="tl-card">
-                                <div class="tl-icon" style="background:${iconBg};color:${color};">
-                                    <i class="${iconClass}"></i>
+                        <div class="timeline-item">
+                            <div class="timeline-bullet" style="background: ${badgeTextColor};"></div>
+                            <div class="timeline-card">
+                                <div class="timeline-content">
+                                    <div class="timeline-text"><i class="${iconClass}" style="margin-right: 6px; color: ${badgeTextColor};"></i> ${item.action}</div>
+                                    <div class="timeline-meta">${timeStr}${remarksUpdatedLabel}</div>
                                 </div>
-                                <div class="tl-content">
-                                    <div class="tl-text">${item.action}${remarksLabel}</div>
-                                    <div class="tl-time">${timeStr}</div>
-                                </div>
-                                <span class="tl-badge" style="background:${badgeBg};color:${color};border-color:${badgeBg};">${badgeText}</span>
+                                <span class="timeline-badge" style="background: ${badgeColor}; color: ${badgeTextColor}; border-color: ${badgeColor};">${badgeText}</span>
                             </div>
                         </div>
                     `;
@@ -1431,7 +1283,7 @@
                 timeline.innerHTML = html;
             } catch (err) {
                 console.error(err);
-                document.getElementById('lead-timeline').innerHTML = '<div style="color: var(--red); padding: 12px; font-size:13px;">Failed to load activity logs.</div>';
+                document.getElementById('lead-timeline').innerHTML = '<div style="color: red;">Failed to load activity logs.</div>';
             }
         }
 
@@ -1442,29 +1294,36 @@
             const noteText = textEl.value.trim();
             if (!noteText) return;
 
-            const btn = event.target.querySelector('.submit-note-btn');
-            const origHtml = btn ? btn.innerHTML : '';
-            if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving…'; }
-
             try {
+                // Log note to lead_history
                 const actionDesc = `✍️ Note by ${currentUsername.charAt(0).toUpperCase() + currentUsername.slice(1)}: "${noteText}"`;
-                const { error } = await supabaseAdmin.from('lead_history').insert([{ lead_id: leadId, action: actionDesc }]);
+                
+                const { error } = await supabaseAdmin
+                    .from('lead_history')
+                    .insert([{
+                        lead_id: leadId,
+                        action: actionDesc
+                    }]);
+
                 if (error) throw error;
 
+                // Also update leads table remarks field to reflect this latest update (append to maintain previous remarks)
                 let updatedRemarks = noteText;
                 if (leadData && leadData.remarks && leadData.remarks.trim()) {
                     updatedRemarks = leadData.remarks.trim() + "\n" + noteText;
                 }
-                await supabaseAdmin.from('leads').update({ remarks: updatedRemarks }).eq('id', leadId);
+
+                await supabaseAdmin
+                    .from('leads')
+                    .update({ remarks: updatedRemarks })
+                    .eq('id', leadId);
 
                 textEl.value = '';
-                showToast('Note saved to timeline.', 'success');
+                showToast('Note added to timeline successfully.');
                 await fetchLeadDetails();
             } catch (err) {
                 console.error(err);
-                showToast('Failed to add note.', 'error');
-            } finally {
-                if (btn) { btn.disabled = false; btn.innerHTML = origHtml; }
+                showToast('Failed to add note.');
             }
         }
 
@@ -1476,7 +1335,7 @@
             const originalText = btn ? btn.innerHTML : '';
             if (btn) {
                 btn.disabled = true;
-                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving Changes…';
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving Changes...';
             }
 
             try {
@@ -1515,6 +1374,7 @@
 
                 if (error) throw error;
 
+                // Log status changes to lead history
                 if (statusChanged) {
                     await supabaseAdmin
                         .from('lead_history')
@@ -1533,17 +1393,18 @@
                         }]);
                 }
 
+                // If final status is confirmed, create booking record
                 if (newFinalStatus === 'Booking confirmed' && oldFinalStatus !== 'Booking confirmed') {
                     await copyLeadToBooking({ ...leadData, ...updateData, id: leadId });
                 } else if (oldFinalStatus === 'Booking confirmed' && newFinalStatus !== 'Booking confirmed') {
                     await supabaseAdmin.from('bookings').delete().eq('lead_id', leadId);
                 }
 
-                showToast('Lead changes saved successfully!', 'success');
+                showToast('Form changes saved successfully!');
                 await fetchLeadDetails();
             } catch (err) {
                 console.error(err);
-                showToast('Failed to save: ' + err.message, 'error');
+                showToast('Failed to save form changes: ' + err.message);
             } finally {
                 if (btn) {
                     btn.disabled = false;
@@ -1625,12 +1486,14 @@
 
                 if (error) throw error;
 
-                showToast('Field updated successfully!', 'success');
+                showToast('Field updated successfully!');
                 
+                // If final status is marked confirmed, move to bookings
                 if (fieldName === 'final_status') {
                     if (value === 'Booking confirmed') {
                         await copyLeadToBooking(leadData);
                     } else if (wasConfirmed) {
+                        // Reverted from booking confirmed. Delete corresponding booking record.
                         const { error: deleteBookingErr } = await supabaseAdmin
                             .from('bookings')
                             .delete()
@@ -1643,6 +1506,7 @@
                     }
                 }
 
+                // Refresh details and timeline
                 fetchLeadDetails();
             } catch (err) {
                 console.error(err);
@@ -1653,6 +1517,7 @@
         // Helper to copy a confirmed lead to bookings table
         async function copyLeadToBooking(lead) {
             try {
+                // Check if this lead already has a booking to avoid duplicate inserts
                 const { data: existing, error: checkErr } = await supabaseAdmin
                     .from('bookings')
                     .select('id')
@@ -1666,6 +1531,7 @@
                     return;
                 }
 
+                // Combine original lead notes and staff remarks
                 let combinedNotes = '';
                 if (lead.notes && lead.notes.trim()) {
                     combinedNotes += lead.notes.trim();
@@ -1684,6 +1550,7 @@
 
                 const staffUuid = currentUserUuidMapping || lead.assigned_to || null;
 
+                // Insert into bookings table
                 const { error: insertErr } = await supabaseAdmin
                     .from('bookings')
                     .insert([{
@@ -1788,12 +1655,12 @@
                 const { error } = await supabaseAdmin.from('reminders').insert([payload]);
                 if (error) throw error;
 
-                showToast('Follow-up reminder set!', 'success');
+                showToast('Follow-up reminder set successfully!');
                 closeLeadReminderModal();
                 fetchLeadHistory();
             } catch (err) {
                 console.error(err);
-                showToast('Failed to set reminder: ' + err.message, 'error');
+                showToast('Failed to set reminder: ' + err.message);
             }
         }
 
@@ -1802,6 +1669,7 @@
             await fetchAssignees();
             await fetchLeadDetails();
 
+            // Disable assignee select if user is staff
             if (currentUserRole === 'staff') {
                 const selectEl = document.getElementById('property-assignee');
                 if (selectEl) selectEl.disabled = true;
@@ -1811,6 +1679,45 @@
         window.onload = initPage;
     </script>
 
+    <!-- Set Reminder Modal for Lead Details -->
+    <div id="lead-reminder-modal" style="display:none; position:fixed; inset:0; z-index:10000; align-items:center; justify-content:center; background:rgba(0,0,0,0.82); backdrop-filter:blur(6px);">
+        <div style="background: linear-gradient(145deg, #0f1f38 0%, #0d1526 100%); border: 1px solid rgba(212,175,55,0.35); border-radius: 16px; width: 90%; max-width: 450px; padding: 24px; box-shadow: 0 40px 80px rgba(0,0,0,0.6);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px;">
+                <h3 style="margin: 0; color: #ffffff; font-size: 16px; font-weight: 700;">
+                    <i class="fa-solid fa-bell" style="color: #fbbf24; margin-right: 8px;"></i> Set Follow-up Reminder
+                </h3>
+                <button type="button" onclick="closeLeadReminderModal()" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: #fff; width: 28px; height: 28px; border-radius: 6px; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center;">&times;</button>
+            </div>
+            <form onsubmit="submitLeadReminderForm(event)">
+                <div style="margin-bottom: 14px;">
+                    <label style="display: block; color: #94a3b8; font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 4px;">Reminder Action / Note *</label>
+                    <input type="text" id="lead-reminder-note" class="property-input" required style="padding: 10px; width: 100%;">
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
+                    <div>
+                        <label style="display: block; color: #94a3b8; font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 4px;">Due Date *</label>
+                        <input type="date" id="lead-reminder-due-date" class="property-input" required style="padding: 10px; width: 100%;">
+                    </div>
+                    <div>
+                        <label style="display: block; color: #94a3b8; font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 4px;">Due Time</label>
+                        <input type="time" id="lead-reminder-due-time" class="property-input" value="10:00" style="padding: 10px; width: 100%;">
+                    </div>
+                </div>
+                <div style="margin-bottom: 18px;">
+                    <label style="display: block; color: #94a3b8; font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 4px;">Priority</label>
+                    <select id="lead-reminder-priority" class="property-select" style="padding: 10px; width: 100%;">
+                        <option value="High">🔥 High Priority</option>
+                        <option value="Medium" selected>⚡ Medium Priority</option>
+                        <option value="Low">🟢 Low Priority</option>
+                    </select>
+                </div>
+                <div style="display: flex; justify-content: flex-end; gap: 8px;">
+                    <button type="button" onclick="closeLeadReminderModal()" class="act-tab-btn" style="padding: 8px 14px;">Cancel</button>
+                    <button type="submit" class="btn-submit-note" style="padding: 8px 18px;">Set Reminder</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 
 </html>
