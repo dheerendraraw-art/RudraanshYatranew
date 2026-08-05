@@ -41,6 +41,13 @@
     <priority>0.90</priority>
   </url>
 
+  <url>
+    <loc>https://rudraanshyatra.com/panchachuli</loc>
+    <lastmod>2026-08-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
   <!-- Supporting Pages -->
   <url>
     <loc>https://rudraanshyatra.com/whats-included</loc>
