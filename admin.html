@@ -2393,11 +2393,12 @@
                 document.body.classList.remove('user-role-staff');
             }
 
-            // Hide tabs for Staff (Keep Leads, Bookings, Blogs & Gallery accessible)
+            // Hide tabs for Staff (Keep Leads, Bookings & Blogs accessible for staff)
             const adminOnlyTabIds = [
                 'tab-billing-btn',
                 'tab-requests-btn',
                 'tab-discounts-btn',
+                'tab-gallery-btn',
                 'tab-passwords-btn',
                 'tab-attendance-btn',
                 'tab-lead-history-btn'
@@ -2760,7 +2761,6 @@
                 fetchBookings();
                 fetchLeads();
                 fetchBlogs();
-                fetchGallery();
                 fetchBillingRecords();
                 fetchGlobalLeadHistory();
             }
