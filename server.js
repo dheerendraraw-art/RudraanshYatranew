@@ -1172,7 +1172,7 @@ app.delete('/api/admin/blogs/:id', authenticateToken, requireAdmin, async (req, 
 });
 
 // Gallery CRUD
-app.get('/api/admin/gallery', authenticateToken, requireAdmin, async (req, res) => {
+app.get('/api/admin/gallery', authenticateToken, async (req, res) => {
     try {
         const { data, error } = await supabase.from('gallery').select('*').order('created_at', { ascending: false });
         if (error) throw error;
@@ -1182,7 +1182,7 @@ app.get('/api/admin/gallery', authenticateToken, requireAdmin, async (req, res) 
     }
 });
 
-app.post('/api/admin/gallery', authenticateToken, requireAdmin, async (req, res) => {
+app.post('/api/admin/gallery', authenticateToken, async (req, res) => {
     try {
         const { error } = await supabase
             .from('gallery')
@@ -1194,7 +1194,7 @@ app.post('/api/admin/gallery', authenticateToken, requireAdmin, async (req, res)
     }
 });
 
-app.delete('/api/admin/gallery/:id', authenticateToken, requireAdmin, async (req, res) => {
+app.delete('/api/admin/gallery/:id', authenticateToken, async (req, res) => {
     try {
         const { error } = await supabase.from('gallery').delete().eq('id', req.params.id);
         if (error) throw error;

@@ -2393,13 +2393,11 @@
                 document.body.classList.remove('user-role-staff');
             }
 
-            // Hide tabs for Staff (Keep only Leads Manager & Bookings for staff)
+            // Hide tabs for Staff (Keep Leads, Bookings, Blogs & Gallery accessible)
             const adminOnlyTabIds = [
                 'tab-billing-btn',
                 'tab-requests-btn',
                 'tab-discounts-btn',
-                'tab-blogs-btn',
-                'tab-gallery-btn',
                 'tab-passwords-btn',
                 'tab-attendance-btn',
                 'tab-lead-history-btn'
@@ -2488,6 +2486,12 @@
             }
             if (paneId === 'pane-lead-history') {
                 if (window.fetchGlobalLeadHistory) window.fetchGlobalLeadHistory();
+            }
+            if (paneId === 'pane-gallery') {
+                if (window.fetchGallery) window.fetchGallery();
+            }
+            if (paneId === 'pane-blogs') {
+                if (window.fetchBlogs) window.fetchBlogs();
             }
 
             // Update dynamic stats
@@ -2755,6 +2759,8 @@
             } else {
                 fetchBookings();
                 fetchLeads();
+                fetchBlogs();
+                fetchGallery();
                 fetchBillingRecords();
                 fetchGlobalLeadHistory();
             }
@@ -3093,17 +3099,16 @@
         // 5. Fetch Gallery
         async function fetchGallery() {
             try {
-                const { data, error } = await supabaseAdmin
-                    .from('gallery')
-                    .select('*')
-                    .order('created_at', { ascending: false });
-
-                if (error) throw error;
+                const response = await fetchWithAuth('/api/admin/gallery');
+                if (!response.ok) throw new Error(`HTTP Error ${response.status}`);
+                const data = await response.json();
 
                 galleryData = data || [];
                 refreshActiveTabStats();
 
                 const container = document.getElementById('gallery-list');
+                if (!container) return;
+
                 if (galleryData.length === 0) {
                     container.innerHTML = `<p style="text-align: center; color: var(--color-slate); padding: 20px;">No photographs uploaded. Public view displays local default pictures.</p>`;
                     return;
@@ -3118,7 +3123,7 @@
                                 <span class="admin-item-name">${item.caption || 'Himalayan Capture'}</span>
                                 <div class="admin-item-sub">Category: <strong>${item.category}</strong></div>
                             </div>
-                            <button class="admin-btn-delete" onclick="deleteRecord('gallery', '${item.id}', fetchGallery)">
+                            <button class="admin-btn-delete" onclick="deleteGalleryItem('${item.id}')">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
                         </div>
@@ -3126,11 +3131,28 @@
                 });
                 container.innerHTML = html;
             } catch (err) {
-                console.error(err);
+                console.error('Fetch gallery error:', err);
                 const container = document.getElementById('gallery-list');
                 if (container) {
-                    container.innerHTML = `<p style="text-align: center; color: red; padding: 20px;">Failed to fetch gallery items.</p>`;
+                    container.innerHTML = `<p style="text-align: center; color: red; padding: 20px;">Failed to fetch gallery items: ${err.message}</p>`;
                 }
+            }
+        }
+
+        async function deleteGalleryItem(id) {
+            if (!confirm('Are you sure you want to delete this photograph from the gallery?')) return;
+            showAdminToast('Deleting photograph...', 'info');
+            try {
+                const response = await fetchWithAuth(`/api/admin/gallery/${id}`, { method: 'DELETE' });
+                if (!response.ok) {
+                    const errData = await response.json().catch(() => ({}));
+                    throw new Error(errData.error || `HTTP ${response.status}`);
+                }
+                showAdminToast('Photograph successfully deleted.', 'success');
+                fetchGallery();
+            } catch (e) {
+                console.error('Delete gallery error:', e);
+                showAdminToast('Failed to delete photograph: ' + e.message, 'error');
             }
         }
 
@@ -3372,13 +3394,18 @@
                 // 2. Fetch Public URL
                 const imageUrl = (uploadData && uploadData.publicUrl) ? uploadData.publicUrl : supabaseAdmin.storage.from('gallery-images').getPublicUrl(fileName).data.publicUrl;
 
-                // 3. Save gallery item row
+                // 3. Save gallery item row via API bridge
                 showAdminToast('Saving picture details to database...', 'info');
-                const { error: dbErr } = await supabaseAdmin
-                    .from('gallery')
-                    .insert([{ caption, category, image_url: imageUrl }]);
+                const response = await fetchWithAuth('/api/admin/gallery', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ caption, category, image_url: imageUrl })
+                });
 
-                if (dbErr) throw dbErr;
+                if (!response.ok) {
+                    const errData = await response.json().catch(() => ({}));
+                    throw new Error(errData.error || `HTTP ${response.status}`);
+                }
 
                 showAdminToast('Photograph successfully uploaded!', 'success');
                 document.getElementById('gallery-form').reset();
