@@ -2039,7 +2039,7 @@
                             }
                         },
                         getPublicUrl: (path) => {
-                            const publicUrl = `https://ysnzxvvsegmkmkepclti.supabase.co/storage/v1/object/public/${bucket}/${path}`;
+                            const publicUrl = `https://wmtplfckllatgkgllvhg.supabase.co/storage/v1/object/public/${bucket}/${path}`;
                             return { data: { publicUrl } };
                         }
                     };
@@ -3275,10 +3275,14 @@
                     if (uploadErr) throw uploadErr;
 
                     // 2. Fetch Public URL
-                    const { data: urlData } = supabaseAdmin.storage
-                        .from('blog-images')
-                        .getPublicUrl(fileName);
-                    imageUrl = urlData.publicUrl;
+                    imageUrl = (uploadData && uploadData.publicUrl) ? uploadData.publicUrl : supabaseAdmin.storage.from('blog-images').getPublicUrl(fileName).data.publicUrl;
+                }
+
+                if (!content || content.trim() === '' || content === '<br>' || content === '<p><br></p>') {
+                    showAdminToast('Please write some content for the article.', 'error');
+                    btn.disabled = false;
+                    btn.innerHTML = `Publish Article <i class="fa-solid fa-paper-plane" style="margin-left: 6px;"></i>`;
+                    return;
                 }
 
                 // Helper to slugify
@@ -3366,10 +3370,7 @@
                 if (uploadErr) throw uploadErr;
 
                 // 2. Fetch Public URL
-                const { data: urlData } = supabaseAdmin.storage
-                    .from('gallery-images')
-                    .getPublicUrl(fileName);
-                const imageUrl = urlData.publicUrl;
+                const imageUrl = (uploadData && uploadData.publicUrl) ? uploadData.publicUrl : supabaseAdmin.storage.from('gallery-images').getPublicUrl(fileName).data.publicUrl;
 
                 // 3. Save gallery item row
                 showAdminToast('Saving picture details to database...', 'info');

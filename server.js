@@ -18,7 +18,8 @@ const upload = multer({
 });
 
 const app = express();
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 // HTTP Security Headers
 app.use((req, res, next) => {
@@ -1127,7 +1128,7 @@ app.delete('/api/admin/discount-registrations/:id', authenticateToken, requireAd
 });
 
 // Blogs CRUD
-app.get('/api/admin/blogs', authenticateToken, requireAdmin, async (req, res) => {
+app.get('/api/admin/blogs', authenticateToken, async (req, res) => {
     try {
         const { data, error } = await supabase.from('blogs').select('*').order('created_at', { ascending: false });
         if (error) throw error;
@@ -1137,7 +1138,7 @@ app.get('/api/admin/blogs', authenticateToken, requireAdmin, async (req, res) =>
     }
 });
 
-app.post('/api/admin/blogs', authenticateToken, requireAdmin, async (req, res) => {
+app.post('/api/admin/blogs', authenticateToken, async (req, res) => {
     try {
         const { error } = await supabase
             .from('blogs')
@@ -1149,7 +1150,7 @@ app.post('/api/admin/blogs', authenticateToken, requireAdmin, async (req, res) =
     }
 });
 
-app.put('/api/admin/blogs/:id', authenticateToken, requireAdmin, async (req, res) => {
+app.put('/api/admin/blogs/:id', authenticateToken, async (req, res) => {
     try {
         const { error } = await supabase.from('blogs').update(req.body).eq('id', req.params.id);
         if (error) throw error;
