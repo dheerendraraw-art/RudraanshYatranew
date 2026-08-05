@@ -404,13 +404,26 @@ app.get('/blog/:slug', async (req, res) => {
         // Set alt tags on dynamic images automatically
         const imageAlt = `${blog.title} Cover Photo - Rudraansh Yatra`;
 
-        const metaDescriptionVal = blog.meta_description || `${blog.content.substring(0, 150)}...`;
+        const plainTextContent = (blog.content || '').replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+        const metaDescriptionVal = blog.meta_description || `${plainTextContent.substring(0, 155)}...`;
 
         const resolvedMainImg = blog.image_url ? (blog.image_url.startsWith('http') || blog.image_url.startsWith('/') ? blog.image_url : '/' + blog.image_url) : '/assets/images/adi-kailash-hero.webp';
+        
+        const ogImageUrl = resolvedMainImg.startsWith('http') ? resolvedMainImg : `https://rudraanshyatra.com${resolvedMainImg.startsWith('/') ? '' : '/'}${resolvedMainImg}`;
+
+        const canonicalOverrides = {
+            'adi-kailash-yatra-2026-suspended-due-to-weather-official-reopening-date':
+                'adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates'
+        };
+        const canonicalUrl = canonicalOverrides[slug]
+            ? `https://rudraanshyatra.com/blog/${canonicalOverrides[slug]}`
+            : `https://rudraanshyatra.com/blog/${slug}`;
 
         blogHtml = blogHtml
             .replace(/{{META_TITLE}}/g, `${blog.title} - Rudraansh Yatra Diaries`)
             .replace(/{{META_DESC}}/g, metaDescriptionVal.replace(/"/g, '&quot;'))
+            .replace(/{{CANONICAL_URL}}/g, canonicalUrl)
+            .replace(/{{OG_IMAGE}}/g, ogImageUrl)
             .replace(/{{TITLE}}/g, blog.title)
             .replace(/{{AUTHOR}}/g, blog.author)
             .replace(/{{DATE}}/g, dateStr)
@@ -420,19 +433,7 @@ app.get('/blog/:slug', async (req, res) => {
             .replace(/{{ADJACENT_BLOGS}}/g, adjacentBlogsHtml)
             .replace(/{{SLUG}}/g, `/blog/${blog.slug}`)
             .replace(/{{CREATED_AT}}/g, blog.created_at)
-            .replace(/{{UPDATED_AT}}/g, blog.updated_at || blog.created_at); // Task 2.1: dateModified
-
-        // Task 2.4: Canonical override for near-duplicate monsoon closure articles
-        const canonicalOverrides = {
-            'adi-kailash-yatra-2026-suspended-due-to-weather-official-reopening-date':
-                'adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates'
-        };
-        if (canonicalOverrides[slug]) {
-            blogHtml = blogHtml.replace(
-                `<link rel="canonical" href="https://rudraanshyatra.com/blog/${slug}">`,
-                `<link rel="canonical" href="https://rudraanshyatra.com/blog/${canonicalOverrides[slug]}">`
-            );
-        }
+            .replace(/{{UPDATED_AT}}/g, blog.updated_at || blog.created_at);
 
         // Enable HTTP Edge Cache Control for fast TTFB & instant response
         res.setHeader('Cache-Control', 'public, max-age=300, s-maxage=3600, stale-while-revalidate=86400');
