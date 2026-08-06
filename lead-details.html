@@ -1101,11 +1101,10 @@
         // Fetch Staff
         async function fetchAssignees() {
             try {
-                const { data: staffData } = await supabaseAdmin
-                    .from('staff_credentials')
-                    .select('username, uuid_mapping');
+                const response = await fetchWithAuth('/api/admin/staff-mapping');
+                const staffData = await response.json();
                 
-                if (staffData) {
+                if (staffData && Array.isArray(staffData)) {
                     staffData.forEach(s => {
                         if (s.uuid_mapping) {
                             const name = s.username.charAt(0).toUpperCase() + s.username.slice(1);
@@ -1118,14 +1117,14 @@
                 const selectEl = document.getElementById('property-assignee');
                 let optionsHtml = '<option value="">Unassigned</option>';
                 
-                if (usersData) {
+                if (usersData && Array.isArray(usersData)) {
                     usersData.forEach(user => {
                         const mappedName = uuidToUsernameMap[user.id.toLowerCase()];
                         const displayName = mappedName ? mappedName : user.email;
                         optionsHtml += `<option value="${user.id}">${displayName}</option>`;
                     });
                 }
-                selectEl.innerHTML = optionsHtml;
+                if (selectEl) selectEl.innerHTML = optionsHtml;
             } catch (err) {
                 console.error('Failed to load assignees:', err);
             }

@@ -880,7 +880,8 @@ app.get('/api/admin/leads/:id', authenticateToken, async (req, res) => {
     try {
         const { data, error } = await supabase.from('leads').select('*').eq('id', req.params.id).single();
         if (error) throw error;
-        if (req.user.role === 'staff' && data.assigned_to !== req.user.uuid_mapping) {
+        if (!data) return res.status(404).json({ error: 'Lead not found' });
+        if (req.user.role === 'staff' && data.assigned_to && req.user.uuid_mapping && data.assigned_to !== req.user.uuid_mapping) {
             return res.status(403).json({ error: 'Permission denied' });
         }
         res.json(data);
@@ -903,7 +904,7 @@ app.put('/api/admin/leads/:id', authenticateToken, async (req, res) => {
     try {
         if (req.user.role === 'staff') {
             const { data: lead } = await supabase.from('leads').select('assigned_to').eq('id', req.params.id).single();
-            if (lead && lead.assigned_to !== req.user.uuid_mapping) {
+            if (lead && lead.assigned_to && req.user.uuid_mapping && lead.assigned_to !== req.user.uuid_mapping) {
                 return res.status(403).json({ error: 'Permission denied' });
             }
         }
