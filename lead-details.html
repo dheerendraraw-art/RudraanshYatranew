@@ -744,22 +744,8 @@
                 document.getElementById('header-call-btn').href = `tel:${telPhone}`;
                 document.getElementById('mob-call-btn').href = `tel:${telPhone}`;
             }
-        }
 
-        function formatDateTimeISO(dateStr) {
-            if (!dateStr) return '-';
-            const d = new Date(dateStr);
-            if (isNaN(d.getTime())) return '-';
-            const year = d.getFullYear();
-            const month = String(d.getMonth() + 1).padStart(2, '0');
-            const day = String(d.getDate()).padStart(2, '0');
-            const hours = String(d.getHours()).padStart(2, '0');
-            const minutes = String(d.getMinutes()).padStart(2, '0');
-            const seconds = String(d.getSeconds()).padStart(2, '0');
-            return `${year}-${month}-${day}:${hours}:${minutes}:${seconds}`;
-        }
-
-        // Editable inputs
+            // Editable inputs
             document.getElementById('property-status').value = leadData.status || 'New';
             if (leadData.assigned_to) {
                 document.getElementById('property-assignee').value = leadData.assigned_to;
@@ -794,6 +780,19 @@
                 tagsHtml += `<span class="tag-item blue">${leadData.travelers} Travelers</span>`;
             }
             tagsWrap.innerHTML = tagsHtml;
+        }
+
+        function formatDateTimeISO(dateStr) {
+            if (!dateStr) return '-';
+            const d = new Date(dateStr);
+            if (isNaN(d.getTime())) return '-';
+            const year = d.getFullYear();
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            const hours = String(d.getHours()).padStart(2, '0');
+            const minutes = String(d.getMinutes()).padStart(2, '0');
+            const seconds = String(d.getSeconds()).padStart(2, '0');
+            return `${year}-${month}-${day}:${hours}:${minutes}:${seconds}`;
         }
 
         // Fetch Timeline History
