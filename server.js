@@ -576,13 +576,14 @@ app.get('/api/version', (req, res) => {
 
 // Login Route
 app.post('/api/admin/login', async (req, res) => {
-    const { username, passcode } = req.body;
+    const { username, passcode } = req.body || {};
     if (!username || !passcode) {
         return res.status(400).json({ error: 'Username and passcode are required' });
     }
 
     const cleanUsername = (username || '').toString().trim().toLowerCase();
     const cleanPasscode = (passcode || '').toString().trim();
+    const rawPasscode = (passcode || '').toString();
 
     const fallbackCredentials = {
         'admin': { id: '8de78fbd-2bfe-48c8-a83b-0d971d68cb92', username: 'admin', passcode: 'VandanaDheerendra@2023', role: 'admin', uuid_mapping: 'c380f706-58c2-4f0d-a74e-cd3691b62dd5' },
@@ -621,11 +622,15 @@ app.post('/api/admin/login', async (req, res) => {
         }
 
         let isMatch = false;
+        const storedPass = (userRecord.passcode || '').toString();
 
-        if (userRecord.passcode.startsWith('$2a$') || userRecord.passcode.startsWith('$2b$')) {
-            isMatch = await bcrypt.compare(cleanPasscode, userRecord.passcode);
+        if (storedPass.startsWith('$2a$') || storedPass.startsWith('$2b$')) {
+            isMatch = (await bcrypt.compare(cleanPasscode, storedPass)) || (await bcrypt.compare(rawPasscode, storedPass));
         } else {
-            isMatch = (cleanPasscode === userRecord.passcode) || (cleanPasscode === userRecord.passcode.trim());
+            isMatch = (cleanPasscode === storedPass) ||
+                      (cleanPasscode === storedPass.trim()) ||
+                      (rawPasscode === storedPass) ||
+                      (rawPasscode === storedPass.trim());
         }
 
         if (!isMatch) {
@@ -635,10 +640,10 @@ app.post('/api/admin/login', async (req, res) => {
         const userPayload = {
             id: userRecord.id,
             username: userRecord.username,
-            role: userRecord.role,
+            role: userRecord.role || 'staff',
             uuid_mapping: userRecord.uuid_mapping || ''
         };
-        const token = jwt.sign(userPayload, JWT_SECRET, { expiresIn: '12h' });
+        const token = jwt.sign(userPayload, JWT_SECRET, { expiresIn: '7d' });
 
         res.json({
             token,

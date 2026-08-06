@@ -2115,15 +2115,31 @@
             event.preventDefault();
             const usernameInput = document.getElementById('admin-username');
             const passcodeInput = document.getElementById('admin-passcode');
+            const submitBtn = event.target ? event.target.querySelector('button[type="submit"]') : null;
+
+            if (!usernameInput || !passcodeInput) return;
+
             const usernameVal = usernameInput.value.trim().toLowerCase();
-            const pinVal = passcodeInput.value.trim();
+            const pinVal = passcodeInput.value ? passcodeInput.value.trim() : '';
+            const rawPinVal = passcodeInput.value || '';
             const gateCard = document.querySelector('.admin-lock-card');
+
+            if (!usernameVal || (!pinVal && !rawPinVal)) {
+                showAdminToast('Please enter both Username and Passcode.', 'error');
+                return;
+            }
+
+            const origBtnHtml = submitBtn ? submitBtn.innerHTML : '';
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying...';
+            }
 
             try {
                 const response = await fetch('/api/admin/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username: usernameVal, passcode: pinVal })
+                    body: JSON.stringify({ username: usernameVal, passcode: pinVal || rawPinVal })
                 });
 
                 let resData = {};
@@ -2137,10 +2153,10 @@
 
                 if (!response.ok) {
                     showAdminToast(resData.error || 'Invalid Username or Passcode.', 'error');
-                    gateCard.classList.add('shake-animation');
-                    setTimeout(() => {
-                        gateCard.classList.remove('shake-animation');
-                    }, 400);
+                    if (gateCard) {
+                        gateCard.classList.add('shake-animation');
+                        setTimeout(() => gateCard.classList.remove('shake-animation'), 400);
+                    }
                     passcodeInput.value = '';
                     passcodeInput.focus();
                     return;
@@ -2165,8 +2181,13 @@
                 showAdminToast(`Dashboard unlocked as ${currentUsername}!`, 'success');
                 showDashboard();
             } catch (err) {
-                console.error(err);
+                console.error('Login error:', err);
                 showAdminToast('Login verification failed: ' + err.message, 'error');
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = origBtnHtml;
+                }
             }
         }
 
