@@ -600,6 +600,7 @@
                                             <option value="Booking confirmed">Booking confirmed</option>
                                             <option value="Booked elsewhere">Booked elsewhere</option>
                                             <option value="Postpone">Postpone</option>
+                                            <option value="Not Interested">Not Interested</option>
                                             <option value="Lost lead">Lost lead</option>
                                         </select>
                                     </div>
@@ -1264,6 +1265,7 @@
                             <option value="Booking confirmed">🎉 Booking confirmed</option>
                             <option value="Booked elsewhere">🏢 Booked elsewhere</option>
                             <option value="Postpone">⏳ Postpone</option>
+                            <option value="Not Interested">🚫 Not Interested</option>
                             <option value="Lost lead">🗑️ Lost lead</option>
                         </select>
                     </div>
@@ -2646,7 +2648,7 @@
                 const newLeads = currentLeads.filter(l => l.status === 'New').length;
                 const contacted = currentLeads.filter(l => l.status === 'Contacted' || l.status === 'In Progress').length;
                 const converted = currentLeads.filter(l => l.status === 'Won' || l.status === 'Converted' || l.final_status === 'Won' || l.final_status === 'Booked').length;
-                const lost = currentLeads.filter(l => l.status === 'Lost' || l.final_status === 'Lost' || l.final_status === 'Cancelled').length;
+                const lost = currentLeads.filter(l => l.status === 'Lost' || l.final_status === 'Lost' || l.final_status === 'Cancelled' || l.final_status === 'Not Interested' || l.final_status === 'Lost lead').length;
 
                 setCard(0, true, '<i class="fa-solid fa-people-group"></i>', total, 'Total Leads');
                 setCard(1, true, '<i class="fa-solid fa-sparkles" style="color: #eab308;"></i>', newLeads, 'New Leads');
@@ -3780,6 +3782,7 @@
             else if (val === 'Booking confirmed') el.classList.add('final-confirmed');
             else if (val === 'Booked elsewhere') el.classList.add('final-elsewhere');
             else if (val === 'Postpone') el.classList.add('final-postpone');
+            else if (val === 'Not Interested') el.classList.add('final-notinterested');
             else if (val === 'Lost lead') el.classList.add('final-lost');
         };
 
@@ -4190,6 +4193,7 @@
                                             <option value="Booking confirmed">Booking confirmed</option>
                                             <option value="Booked elsewhere">Booked elsewhere</option>
                                             <option value="Postpone">Postpone</option>
+                                            <option value="Not Interested">Not Interested</option>
                                             <option value="Lost lead">Lost lead</option>
                                         </select>
                                     </div>
@@ -4261,6 +4265,7 @@
                     { val: "Booking confirmed", text: "🎉 Booking confirmed" },
                     { val: "Booked elsewhere", text: "🏢 Booked elsewhere" },
                     { val: "Postpone", text: "⏳ Postpone" },
+                    { val: "Not Interested", text: "🚫 Not Interested" },
                     { val: "Lost lead", text: "🗑️ Lost lead" }
                 ];
                 finalStatuses.forEach(fs => {
@@ -4281,6 +4286,7 @@
                 if (item.final_status === 'Booking confirmed') finalClass = 'final-confirmed';
                 else if (item.final_status === 'Booked elsewhere') finalClass = 'final-elsewhere';
                 else if (item.final_status === 'Postpone') finalClass = 'final-postpone';
+                else if (item.final_status === 'Not Interested') finalClass = 'final-notinterested';
                 else if (item.final_status === 'Lost lead') finalClass = 'final-lost';
 
                 const leadPhoneVal = item.phone ? item.phone.trim() : '';
