@@ -744,8 +744,22 @@
                 document.getElementById('header-call-btn').href = `tel:${telPhone}`;
                 document.getElementById('mob-call-btn').href = `tel:${telPhone}`;
             }
+        }
 
-            // Editable inputs
+        function formatDateTimeISO(dateStr) {
+            if (!dateStr) return '-';
+            const d = new Date(dateStr);
+            if (isNaN(d.getTime())) return '-';
+            const year = d.getFullYear();
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            const hours = String(d.getHours()).padStart(2, '0');
+            const minutes = String(d.getMinutes()).padStart(2, '0');
+            const seconds = String(d.getSeconds()).padStart(2, '0');
+            return `${year}-${month}-${day}:${hours}:${minutes}:${seconds}`;
+        }
+
+        // Editable inputs
             document.getElementById('property-status').value = leadData.status || 'New';
             if (leadData.assigned_to) {
                 document.getElementById('property-assignee').value = leadData.assigned_to;
@@ -755,10 +769,7 @@
             document.getElementById('property-travelers').value = leadData.travelers || 1;
 
             if (leadData.created_at) {
-                const dateObj = new Date(leadData.created_at);
-                document.getElementById('property-created-at').innerText = dateObj.toLocaleString('en-IN', {
-                    dateStyle: 'medium', timeStyle: 'short'
-                });
+                document.getElementById('property-created-at').innerText = formatDateTimeISO(leadData.created_at);
             }
 
             // Admin fields

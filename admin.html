@@ -4006,6 +4006,40 @@
             }
         };
 
+        let leadsSortField = 'created_at';
+        let leadsSortDir = 'desc';
+
+        window.formatDateTimeISO = function(dateStr) {
+            if (!dateStr) return '-';
+            const d = new Date(dateStr);
+            if (isNaN(d.getTime())) return '-';
+            const year = d.getFullYear();
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            const hours = String(d.getHours()).padStart(2, '0');
+            const minutes = String(d.getMinutes()).padStart(2, '0');
+            const seconds = String(d.getSeconds()).padStart(2, '0');
+            return `${year}-${month}-${day}:${hours}:${minutes}:${seconds}`;
+        };
+
+        window.toggleLeadsSort = function(field) {
+            if (leadsSortField === field) {
+                leadsSortDir = leadsSortDir === 'desc' ? 'asc' : 'desc';
+            } else {
+                leadsSortField = field;
+                leadsSortDir = 'desc';
+            }
+            window.applyLeadsFilters();
+        };
+
+        window.updateSortIcons = function() {
+            const staffIcon = document.getElementById('sort-icon-created-staff');
+            const adminIcon = document.getElementById('sort-icon-created-admin');
+            const iconClass = leadsSortDir === 'desc' ? 'fa-solid fa-arrow-down-short-wide' : 'fa-solid fa-arrow-up-wide-short';
+            if (staffIcon) staffIcon.className = iconClass;
+            if (adminIcon) adminIcon.className = iconClass;
+        };
+
         window.applyLeadsFilters = function() {
             const source = document.getElementById('filter-lead-source') ? document.getElementById('filter-lead-source').value : '';
             const status = document.getElementById('filter-lead-status') ? document.getElementById('filter-lead-status').value : '';
@@ -4045,9 +4079,22 @@
                 return matchSource && matchStatus && matchFinalStatus && matchAssignee && matchSearch;
             });
 
+            filteredLeads.sort((a, b) => {
+                let valA = a[leadsSortField] || '';
+                let valB = b[leadsSortField] || '';
+                if (leadsSortField === 'created_at') {
+                    valA = new Date(valA).getTime() || 0;
+                    valB = new Date(valB).getTime() || 0;
+                }
+                if (valA < valB) return leadsSortDir === 'asc' ? -1 : 1;
+                if (valA > valB) return leadsSortDir === 'asc' ? 1 : -1;
+                return 0;
+            });
+
             leadsCurrentPage = 1;
             refreshActiveTabStats();
             window.renderLeadsTableOnly();
+            window.updateSortIcons();
         };
 
         window.resetLeadsFilters = function() {
@@ -4132,13 +4179,17 @@
                 if (thead.dataset.renderedRole !== targetRole) {
                     thead.dataset.renderedRole = targetRole;
                     if (targetRole === 'staff') {
-                        thead.innerHTML = `
                             <tr>
                                 <th>Name</th>
                                 <th>Phone</th>
                                 <th>Email</th>
                                 <th>Travelers</th>
-                                <th>Created Date</th>
+                                <th onclick="toggleLeadsSort('created_at')" style="cursor: pointer; user-select: none;" title="Click to sort by Created On">
+                                    <div style="display: flex; align-items: center; justify-content: center; gap: 4px;">
+                                        <span>Created On</span>
+                                        <i id="sort-icon-created-staff" class="fa-solid fa-arrow-down-short-wide" style="font-size: 11px; color: var(--color-gold);"></i>
+                                    </div>
+                                </th>
                                 <th>
                                     <div style="display: flex; flex-direction: column; gap: 4px; align-items: center;">
                                         <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Status</span>
@@ -4225,7 +4276,12 @@
                                         </select>
                                     </div>
                                 </th>
-                                <th>Created</th>
+                                <th onclick="toggleLeadsSort('created_at')" style="cursor: pointer; user-select: none;" title="Click to sort by Created On">
+                                    <div style="display: flex; align-items: center; justify-content: center; gap: 4px;">
+                                        <span>Created On</span>
+                                        <i id="sort-icon-created-admin" class="fa-solid fa-arrow-down-short-wide" style="font-size: 11px; color: var(--color-gold);"></i>
+                                    </div>
+                                </th>
                                 <th>Actions</th>
                             </tr>
                         `;
@@ -4257,7 +4313,7 @@
             let html = '';
             leadsToRender.forEach((item, index) => {
                 const globalIndex = startIndex + index;
-                const createdStr = new Date(item.created_at).toLocaleDateString();
+                const createdStr = formatDateTimeISO(item.created_at);
                 
                 // Render Status Dropdown options with Emojis
                 let statusOptions = '';
@@ -4362,7 +4418,7 @@
                             <td data-label="Phone" style="white-space: nowrap;" onclick="event.stopPropagation();">${leadPhoneHtml}</td>
                             <td data-label="Email" class="mobile-detail-field">${item.email || '-'}</td>
                             <td data-label="Travelers" class="mobile-detail-field">${item.travelers || 1}</td>
-                            <td data-label="Created Date" class="mobile-detail-field">${createdStr}</td>
+                            <td data-label="Created On" class="mobile-detail-field" style="white-space: nowrap; font-family: monospace; font-size: 11px;">${createdStr}</td>
                             <td data-label="Status" onclick="event.stopPropagation();">
                                 <select onchange="updateLeadField('${item.id}', 'status', this.value); updateSelectStyle(this)" class="status-select ${statusClass}">
                                     ${statusOptions}
@@ -4424,7 +4480,7 @@
                                     ${finalStatusOptions}
                                 </select>
                             </td>
-                            <td data-label="Created" class="mobile-detail-field">${createdStr}</td>
+                            <td data-label="Created On" class="mobile-detail-field" style="white-space: nowrap; font-family: monospace; font-size: 11px;">${createdStr}</td>
                             <td data-label="Actions" onclick="event.stopPropagation();">
                                 <div style="display: flex; gap: 8px; flex-wrap: wrap;">
                                     <button class="admin-btn-edit" onclick="event.stopPropagation(); startEditLead(${globalIndex})" style="background-color: var(--color-gold); color: #0f172a; border: none; width: 28px; height: 28px; border-radius: var(--border-radius-sm, 4px); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; margin: 0;" title="Edit Lead">
