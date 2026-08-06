@@ -511,20 +511,20 @@ app.get('/blog/:slug', async (req, res) => {
     </script>`;
 
             const ctaBanner = `
-<div style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(15, 23, 42, 0.95) 100%); border: 1.5px solid var(--color-gold); border-radius: 12px; padding: 22px 24px; margin: 24px 0 32px 0; color: #ffffff; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
+<div style="background: #0f172a; border: 2px solid #d4af37; border-radius: 12px; padding: 22px 24px; margin: 24px 0 32px 0; color: #ffffff; box-shadow: 0 10px 30px rgba(0,0,0,0.4);">
+    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
         <span style="font-size: 24px;">🏃‍♂️</span>
-        <strong style="color: var(--color-gold); font-size: 18px;">Planning to Run in the Adi Kailash Marathon 2026?</strong>
+        <strong style="color: #fbbf24; font-size: 19px; font-weight: 700;">Planning to Run in the Adi Kailash Marathon 2026?</strong>
     </div>
-    <p style="font-size: 14px; line-height: 1.6; color: #cbd5e1; margin-bottom: 16px;">
-        Secure your <strong>Inner Line Permits (ILP)</strong>, <strong>4x4 Bolero Transfers</strong>, and <strong>High-Altitude Homestay Accommodations in Gunji</strong> with direct local operator <strong>Rudraansh Yatra</strong>.
+    <p style="font-size: 15px; line-height: 1.6; color: #ffffff; margin-bottom: 18px;">
+        Secure your <strong style="color: #fbbf24;">Inner Line Permits (ILP)</strong>, <strong style="color: #fbbf24;">4x4 Scorpio Transfers</strong>, and <strong style="color: #fbbf24;">High-Altitude Homestay Accommodations in Gunji</strong> with direct local operator <strong>Rudraansh Yatra</strong>.
     </p>
     <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-        <a href="https://wa.me/917590098700?text=Hi%20Rudraansh%20Yatra,%20I%20am%20interested%20in%20Adi%20Kailash%20Parikrama%20Run%202026%20permits,%20transport%20%26%20stays" target="_blank" style="background: #25d366; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px; display: inline-flex; align-items: center; gap: 8px;">
-            <i class="fa-brands fa-whatsapp" style="font-size: 16px;"></i> Instant WhatsApp Inquiry
+        <a href="https://wa.me/917590098700?text=Hi%20Rudraansh%20Yatra,%20I%20am%20interested%20in%20Adi%20Kailash%20Parikrama%20Run%202026%20permits,%204x4%20Scorpio%20transport%20%26%20stays" target="_blank" style="background: #22c55e; color: #ffffff; padding: 11px 22px; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 14px; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);">
+            <i class="fa-brands fa-whatsapp" style="font-size: 18px;"></i> Instant WhatsApp Inquiry
         </a>
-        <a href="/adi-kailash" style="background: var(--color-gold); color: #0f172a; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px; display: inline-flex; align-items: center; gap: 8px;">
-            <i class="fa-solid fa-mountain" style="font-size: 14px;"></i> View Adi Kailash Packages
+        <a href="/adi-kailash" style="background: #d4af37; color: #0f172a; padding: 11px 22px; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 14px; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);">
+            <i class="fa-solid fa-mountain" style="font-size: 15px;"></i> View Adi Kailash Packages
         </a>
     </div>
 </div>`;
