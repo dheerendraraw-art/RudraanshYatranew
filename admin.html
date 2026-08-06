@@ -3826,6 +3826,33 @@
                     .eq('id', leadId);
 
                 if (error) throw error;
+
+                // Log change to lead_history
+                const userDisplay = currentUsername ? (currentUsername.charAt(0).toUpperCase() + currentUsername.slice(1)) : 'User';
+                let historyAction = null;
+                const oldValue = leadObj ? leadObj[fieldName] : null;
+
+                if (fieldName === 'status' && value !== oldValue) {
+                    historyAction = `🏷️ Status updated from "${oldValue || 'None'}" to "${value || 'None'}" by ${userDisplay}`;
+                } else if (fieldName === 'final_status' && value !== oldValue) {
+                    historyAction = `🏁 Final Status updated from "${oldValue || 'None'}" to "${value || 'None'}" by ${userDisplay}`;
+                } else if (fieldName === 'name' && value !== oldValue) {
+                    historyAction = `✏️ Client name updated from "${oldValue || 'Empty'}" to "${value}" by ${userDisplay}`;
+                } else if (fieldName === 'phone' && value !== oldValue) {
+                    historyAction = `📱 Phone number updated from "${oldValue || 'Empty'}" to "${value}" by ${userDisplay}`;
+                } else if (fieldName === 'email' && value !== oldValue) {
+                    historyAction = `✉️ Email updated from "${oldValue || 'Empty'}" to "${value}" by ${userDisplay}`;
+                } else if (fieldName === 'assigned_to' && value !== oldValue) {
+                    const oldName = oldValue ? (usersMap[oldValue] || 'User (' + oldValue.slice(0, 8) + ')') : 'Unassigned';
+                    const newName = value ? (usersMap[value] || 'User (' + value.slice(0, 8) + ')') : 'Unassigned';
+                    historyAction = `🔄 Transferred from ${oldName} to ${newName} by ${userDisplay}`;
+                } else if (fieldName === 'travel_date' && value !== oldValue) {
+                    historyAction = `📅 Travel Date updated from "${oldValue || 'Not set'}" to "${value || 'Not set'}" by ${userDisplay}`;
+                }
+
+                if (historyAction) {
+                    await supabaseAdmin.from('lead_history').insert([{ lead_id: leadId, action: historyAction }]);
+                }
                 
                 // If marked as booking confirmed inline, move to bookings tab
                 if (fieldName === 'final_status') {
@@ -4634,15 +4661,49 @@
                 }
                 
                 if (id) {
+                    const originalLead = currentLeads.find(l => l.id === id);
+                    const userDisplay = currentUsername ? (currentUsername.charAt(0).toUpperCase() + currentUsername.slice(1)) : 'User';
+                    const historyEntries = [];
+
+                    if (originalLead) {
+                        if (leadData.name !== undefined && leadData.name !== (originalLead.name || '')) {
+                            historyEntries.push(`✏️ Client name updated from "${originalLead.name || 'Empty'}" to "${leadData.name}" by ${userDisplay}`);
+                        }
+                        if (leadData.phone !== undefined && leadData.phone !== (originalLead.phone || '')) {
+                            historyEntries.push(`📱 Phone number updated from "${originalLead.phone || 'Empty'}" to "${leadData.phone}" by ${userDisplay}`);
+                        }
+                        if (leadData.email !== undefined && leadData.email !== (originalLead.email || '')) {
+                            historyEntries.push(`✉️ Email updated from "${originalLead.email || 'Empty'}" to "${leadData.email}" by ${userDisplay}`);
+                        }
+                        if (leadData.status !== undefined && leadData.status !== (originalLead.status || '')) {
+                            historyEntries.push(`🏷️ Status updated from "${originalLead.status || 'None'}" to "${leadData.status}" by ${userDisplay}`);
+                        }
+                        if (leadData.final_status !== undefined && leadData.final_status !== (originalLead.final_status || null)) {
+                            historyEntries.push(`🏁 Final Status updated from "${originalLead.final_status || 'None'}" to "${leadData.final_status || 'None'}" by ${userDisplay}`);
+                        }
+                        if (leadData.assigned_to !== undefined && leadData.assigned_to !== (originalLead.assigned_to || null)) {
+                            const oldAssigneeName = originalLead.assigned_to ? (usersMap[originalLead.assigned_to] || 'User') : 'Unassigned';
+                            const newAssigneeName = leadData.assigned_to ? (usersMap[leadData.assigned_to] || 'User') : 'Unassigned';
+                            historyEntries.push(`🔄 Transferred from ${oldAssigneeName} to ${newAssigneeName} by ${userDisplay}`);
+                        }
+                        if (leadData.travel_date !== undefined && leadData.travel_date !== (originalLead.travel_date || null)) {
+                            historyEntries.push(`📅 Travel Date updated from "${originalLead.travel_date || 'Not set'}" to "${leadData.travel_date || 'Not set'}" by ${userDisplay}`);
+                        }
+                    }
+
                     const { error } = await supabaseAdmin
                         .from('leads')
                         .update(leadData)
                         .eq('id', id);
                     if (error) throw error;
+
+                    if (historyEntries.length > 0) {
+                        const rows = historyEntries.map(a => ({ lead_id: id, action: a }));
+                        await supabaseAdmin.from('lead_history').insert(rows);
+                    }
                     
                     // If marked as booking confirmed, move to bookings tab
                     if (final_status === 'Booking confirmed') {
-                        const originalLead = currentLeads.find(l => l.id === id);
                         const fullLead = { ...originalLead, ...leadData };
                         await copyLeadToBooking(fullLead);
                     }

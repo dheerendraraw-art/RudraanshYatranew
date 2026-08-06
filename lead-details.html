@@ -823,6 +823,12 @@
                     } else if (item.action.includes('Status')) {
                         iconClass = 'fa-solid fa-tags'; badgeText = 'Status';
                         color = 'var(--blue)'; iconBg = 'var(--blue-dim)'; badgeBg = 'var(--blue-dim)';
+                    } else if (item.action.includes('name updated') || item.action.includes('Phone number updated') || item.action.includes('Email updated')) {
+                        iconClass = 'fa-solid fa-user-pen'; badgeText = 'Edit';
+                        color = '#38bdf8'; iconBg = 'rgba(56, 189, 248, 0.12)'; badgeBg = 'rgba(56, 189, 248, 0.12)';
+                    } else if (item.action.includes('Travel Date') || item.action.includes('Travelers count')) {
+                        iconClass = 'fa-solid fa-calendar-day'; badgeText = 'Details';
+                        color = '#f59e0b'; iconBg = 'rgba(245, 158, 11, 0.12)'; badgeBg = 'rgba(245, 158, 11, 0.12)';
                     } else if (item.action.includes('Note by') || item.action.includes('Remarks')) {
                         iconClass = 'fa-solid fa-comment-dots'; badgeText = 'Note';
                         color = 'var(--green)'; iconBg = 'var(--green-dim)'; badgeBg = 'var(--green-dim)';
@@ -900,10 +906,10 @@
             }
 
             try {
-                const newStatus = document.getElementById('property-status').value;
-                const newAssignee = document.getElementById('property-assignee').value;
-                const newTravelDate = document.getElementById('property-travel-date').value;
-                const newFinalStatus = document.getElementById('property-final-status').value;
+                const newStatus = document.getElementById('property-status').value || '';
+                const newAssignee = document.getElementById('property-assignee').value || '';
+                const newTravelDate = document.getElementById('property-travel-date').value || '';
+                const newFinalStatus = document.getElementById('property-final-status').value || '';
                 const newTravelers = parseInt(document.getElementById('property-travelers').value) || 1;
 
                 const updateData = {
@@ -914,19 +920,76 @@
                     travelers: newTravelers
                 };
 
+                let newName = '';
+                let newPhone = '';
+                let newEmail = '';
+
                 if (currentUserRole === 'admin') {
-                    const newName = document.getElementById('property-name').value.trim();
-                    const newPhone = document.getElementById('property-phone').value.trim();
-                    const newEmail = document.getElementById('property-email').value.trim();
+                    newName = document.getElementById('property-name').value.trim();
+                    newPhone = document.getElementById('property-phone').value.trim();
+                    newEmail = document.getElementById('property-email').value.trim();
                     if (newName) updateData.name = newName;
                     if (newPhone) updateData.phone = newPhone;
                     if (newEmail) updateData.email = newEmail;
                 }
 
-                const oldStatus = leadData.status || 'New';
-                const statusChanged = (oldStatus !== newStatus);
+                // Collect timeline actions for all changed fields
+                const historyEntries = [];
+                const userDisplay = currentUsername ? (currentUsername.charAt(0).toUpperCase() + currentUsername.slice(1)) : 'User';
+
+                // Check Name change
+                const oldName = (leadData.name || '').trim();
+                if (currentUserRole === 'admin' && newName && newName !== oldName) {
+                    historyEntries.push(`✏️ Client name updated from "${oldName || 'Empty'}" to "${newName}" by ${userDisplay}`);
+                }
+
+                // Check Phone change
+                const oldPhone = (leadData.phone || '').trim();
+                if (currentUserRole === 'admin' && newPhone && newPhone !== oldPhone) {
+                    historyEntries.push(`📱 Phone number updated from "${oldPhone || 'Empty'}" to "${newPhone}" by ${userDisplay}`);
+                }
+
+                // Check Email change
+                const oldEmail = (leadData.email || '').trim();
+                if (currentUserRole === 'admin' && newEmail && newEmail !== oldEmail) {
+                    historyEntries.push(`✉️ Email updated from "${oldEmail || 'Empty'}" to "${newEmail}" by ${userDisplay}`);
+                }
+
+                // Check Status change
+                const oldStatus = leadData.status || '';
+                if (newStatus && oldStatus !== newStatus) {
+                    historyEntries.push(`🏷️ Status updated from "${oldStatus || 'None'}" to "${newStatus}" by ${userDisplay}`);
+                }
+
+                // Check Final Status change
                 const oldFinalStatus = leadData.final_status || '';
-                const finalStatusChanged = (oldFinalStatus !== newFinalStatus);
+                if (newFinalStatus !== oldFinalStatus) {
+                    if (newFinalStatus) {
+                        historyEntries.push(`🏁 Final Status updated to "${newFinalStatus}" by ${userDisplay}`);
+                    } else if (oldFinalStatus) {
+                        historyEntries.push(`🏁 Final Status cleared from "${oldFinalStatus}" by ${userDisplay}`);
+                    }
+                }
+
+                // Check Assignee change
+                const oldAssignee = leadData.assigned_to || '';
+                if (newAssignee !== oldAssignee) {
+                    const oldAssigneeName = oldAssignee ? (usersMap[oldAssignee] || 'User (' + oldAssignee.slice(0, 8) + ')') : 'Unassigned';
+                    const newAssigneeName = newAssignee ? (usersMap[newAssignee] || 'User (' + newAssignee.slice(0, 8) + ')') : 'Unassigned';
+                    historyEntries.push(`🔄 Transferred from ${oldAssigneeName} to ${newAssigneeName} by ${userDisplay}`);
+                }
+
+                // Check Travel Date change
+                const oldTravelDate = leadData.travel_date || '';
+                if (newTravelDate !== oldTravelDate) {
+                    historyEntries.push(`📅 Travel Date updated from "${oldTravelDate || 'Not set'}" to "${newTravelDate || 'Not set'}" by ${userDisplay}`);
+                }
+
+                // Check Travelers count change
+                const oldTravelers = leadData.travelers || 1;
+                if (newTravelers !== oldTravelers) {
+                    historyEntries.push(`👥 Travelers count updated from ${oldTravelers} to ${newTravelers} by ${userDisplay}`);
+                }
 
                 const { error } = await supabaseAdmin
                     .from('leads')
@@ -935,22 +998,13 @@
 
                 if (error) throw error;
 
-                if (statusChanged) {
-                    await supabaseAdmin
-                        .from('lead_history')
-                        .insert([{
-                            lead_id: leadId,
-                            action: `🏷️ Status updated from "${oldStatus}" to "${newStatus}" by ${currentUsername}`
-                        }]);
-                }
-
-                if (finalStatusChanged && newFinalStatus) {
-                    await supabaseAdmin
-                        .from('lead_history')
-                        .insert([{
-                            lead_id: leadId,
-                            action: `🏁 Final Status set to "${newFinalStatus}" by ${currentUsername}`
-                        }]);
+                // Log all history actions
+                if (historyEntries.length > 0) {
+                    const rowsToInsert = historyEntries.map(actionText => ({
+                        lead_id: leadId,
+                        action: actionText
+                    }));
+                    await supabaseAdmin.from('lead_history').insert(rowsToInsert);
                 }
 
                 if (newFinalStatus === 'Booking confirmed' && oldFinalStatus !== 'Booking confirmed') {
