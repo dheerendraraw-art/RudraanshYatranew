@@ -4200,6 +4200,7 @@
                 if (thead.dataset.renderedRole !== targetRole) {
                     thead.dataset.renderedRole = targetRole;
                     if (targetRole === 'staff') {
+                        thead.innerHTML = `
                             <tr>
                                 <th>Name</th>
                                 <th>Phone</th>
