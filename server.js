@@ -419,6 +419,119 @@ app.get('/blog/:slug', async (req, res) => {
             ? `https://rudraanshyatra.com/blog/${canonicalOverrides[slug]}`
             : `https://rudraanshyatra.com/blog/${slug}`;
 
+        // Specific schema & CTA banner enhancements for high-performing blog posts
+        let extraSchemas = '';
+        let contentHtml = paragraphsHtml;
+
+        if (slug === 'adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitude-ultra-marathon-guide') {
+            extraSchemas = `
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SportsEvent",
+      "name": "Adi Kailash Parikrama Run 2026 (Uttarakhand High-Altitude Ultra Marathon)",
+      "description": "The Adi Kailash Parikrama Run is a high-altitude ultra marathon (5km, 10km, 21km, 42km, 60km) held in Gunji, Byas Valley, Uttarakhand at 10,300 ft to 15,000 ft.",
+      "startDate": "2026-10-24T06:00:00+05:30",
+      "endDate": "2026-10-25T18:00:00+05:30",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "location": {
+        "@type": "Place",
+        "name": "Gunji Village, Byas Valley",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Dharchula",
+          "addressRegion": "Uttarakhand",
+          "postalCode": "262545",
+          "addressCountry": "IN"
+        }
+      },
+      "organizer": {
+        "@type": "Organization",
+        "name": "Rudraansh Yatra",
+        "url": "https://rudraanshyatra.com"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://rudraanshyatra.com/blog/adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitude-ultra-marathon-guide",
+        "priceCurrency": "INR",
+        "price": "0",
+        "availability": "https://schema.org/InStock",
+        "validFrom": "2026-07-28"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the date for the Adi Kailash Parikrama Run 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Adi Kailash Parikrama Run 2026 takes place on October 24–25, 2026 in Gunji village, Byas Valley, Pithoragarh district, Uttarakhand."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What distance categories are available in the Adi Kailash Marathon?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "There are 5 categories: 5 km Run, 10 km Run, 21 km Half Marathon, 42 km Full Marathon, and the 60 km Ultra Marathon."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the altitude of the Adi Kailash Parikrama Run route?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The route starts at Gunji (10,300 ft) and reaches peak altitudes of up to 15,000 ft near Jolingkong and Parvati Kund."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is an Inner Line Permit (ILP) required for marathon runners?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, all participants and spectators must obtain an Inner Line Permit issued by the SDM Office in Dharchula."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can I reach Gunji for the marathon?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can travel from Kathgodam/Tanakpur/Pithoragarh to Dharchula by road, and then take a 4x4 mountain vehicle to Gunji via Nabi and Kuti villages. Rudraansh Yatra offers customized transport and permit packages for runners."
+          }
+        }
+      ]
+    }
+    </script>`;
+
+            const ctaBanner = `
+<div style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(15, 23, 42, 0.95) 100%); border: 1.5px solid var(--color-gold); border-radius: 12px; padding: 22px 24px; margin: 24px 0 32px 0; color: #ffffff; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
+        <span style="font-size: 24px;">🏃‍♂️</span>
+        <strong style="color: var(--color-gold); font-size: 18px;">Planning to Run in the Adi Kailash Marathon 2026?</strong>
+    </div>
+    <p style="font-size: 14px; line-height: 1.6; color: #cbd5e1; margin-bottom: 16px;">
+        Secure your <strong>Inner Line Permits (ILP)</strong>, <strong>4x4 Bolero Transfers</strong>, and <strong>High-Altitude Homestay Accommodations in Gunji</strong> with direct local operator <strong>Rudraansh Yatra</strong>.
+    </p>
+    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <a href="https://wa.me/917590098700?text=Hi%20Rudraansh%20Yatra,%20I%20am%20interested%20in%20Adi%20Kailash%20Parikrama%20Run%202026%20permits,%20transport%20%26%20stays" target="_blank" style="background: #25d366; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px; display: inline-flex; align-items: center; gap: 8px;">
+            <i class="fa-brands fa-whatsapp" style="font-size: 16px;"></i> Instant WhatsApp Inquiry
+        </a>
+        <a href="/adi-kailash" style="background: var(--color-gold); color: #0f172a; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px; display: inline-flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-mountain" style="font-size: 14px;"></i> View Adi Kailash Packages
+        </a>
+    </div>
+</div>`;
+
+            contentHtml = ctaBanner + paragraphsHtml;
+        }
+
         blogHtml = blogHtml
             .replace(/{{META_TITLE}}/g, `${blog.title} - Rudraansh Yatra Diaries`)
             .replace(/{{META_DESC}}/g, metaDescriptionVal.replace(/"/g, '&quot;'))
@@ -429,7 +542,7 @@ app.get('/blog/:slug', async (req, res) => {
             .replace(/{{DATE}}/g, dateStr)
             .replace(/{{IMAGE}}/g, resolvedMainImg)
             .replace(/{{IMAGE_ALT}}/g, imageAlt)
-            .replace(/{{CONTENT}}/g, paragraphsHtml)
+            .replace(/{{CONTENT}}/g, contentHtml + extraSchemas)
             .replace(/{{ADJACENT_BLOGS}}/g, adjacentBlogsHtml)
             .replace(/{{SLUG}}/g, `/blog/${blog.slug}`)
             .replace(/{{CREATED_AT}}/g, blog.created_at)
