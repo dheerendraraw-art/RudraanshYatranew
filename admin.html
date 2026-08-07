@@ -1822,10 +1822,10 @@
     <script>
         // Global error reporting for debugging
         window.addEventListener('error', function(e) {
-            alert('Rudraansh Yatra Admin Portal Error:\n' + e.message + '\nIn: ' + e.filename + '\nLine: ' + e.lineno);
+            console.error('Admin Portal Error:', e.message, 'In:', e.filename, 'Line:', e.lineno);
         });
         window.addEventListener('unhandledrejection', function(e) {
-            alert('Rudraansh Yatra Admin Unhandled Rejection:\n' + e.reason);
+            console.error('Admin Unhandled Rejection:', e.reason);
         });
 
         async function fetchWithAuth(url, options = {}) {
@@ -2221,6 +2221,8 @@
             applyRolePermissions();
             if (currentUserRole === 'staff') {
                 switchTab(null, 'pane-leads');
+            } else {
+                switchTab(null, 'pane-bookings');
             }
 
             // Init client data
