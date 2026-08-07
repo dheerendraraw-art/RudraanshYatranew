@@ -3045,6 +3045,26 @@
                     </div>
                 ` : '—';
 
+                const existingBill = (billingRecords || []).find(b => 
+                    (b.booking_id && (b.booking_id === bookingId || b.booking_id === item.id)) ||
+                    (b.booking_uuid && b.booking_uuid === item.id)
+                );
+
+                let billButtonHtml = '';
+                if (currentUserRole !== 'staff') {
+                    if (existingBill) {
+                        billButtonHtml = `
+                            <button class="btn btn-outline" onclick="switchTab(null, 'pane-billing'); filterBillingByBookingId('${bookingId}')" style="padding: 4px 8px; font-size: 11px; background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); font-weight: 700; cursor: pointer; border-radius: 3px; display: inline-flex; align-items: center; gap: 4px;" title="Bill Generated. Click to view in Billing">
+                                <i class="fa-solid fa-file-circle-check"></i> Bill Generated
+                            </button>`;
+                    } else {
+                        billButtonHtml = `
+                            <button class="btn btn-primary" onclick="openCreateBillForBooking('${item.id}')" style="padding: 4px 8px; font-size: 11px; background-color: var(--color-gold); color: #111827; border: none; font-weight: bold; cursor: pointer; border-radius: 3px;" title="Create Bill">
+                                <i class="fa-solid fa-file-invoice-dollar"></i> Create Bill
+                            </button>`;
+                    }
+                }
+
                 html += `
                     <tr>
                         <td data-label="Booking ID"><strong style="color: #0f172a; background: rgba(212, 175, 55, 0.18); border: 1px solid rgba(212, 175, 55, 0.4); padding: 4px 8px; border-radius: 6px; font-family: monospace; font-size: 12px; font-weight: 800; display: inline-block;">${bookingId}</strong></td>
@@ -3063,10 +3083,7 @@
                         <td data-label="Created" class="mobile-detail-field">${createdStr}</td>
                         <td data-label="Actions">
                             <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
-                                ${currentUserRole !== 'staff' ? `
-                                <button class="btn btn-primary" onclick="openCreateBillForBooking('${item.id}')" style="padding: 4px 8px; font-size: 11px; background-color: var(--color-gold); color: #111827; border: none; font-weight: bold; cursor: pointer; border-radius: 3px;" title="Create Bill">
-                                    <i class="fa-solid fa-file-invoice-dollar"></i> Create Bill
-                                </button>` : ''}
+                                ${billButtonHtml}
                                 <button class="btn btn-primary" onclick="startEditBooking(${globalIndex})" style="width: 28px; height: 28px; font-size: 12px; padding: 0; background-color: var(--color-gold); color: #111827; border: none; font-weight: bold; cursor: pointer; border-radius: 3px; display: inline-flex; align-items: center; justify-content: center;" title="Edit Booking">
                                     <i class="fa-solid fa-pen"></i>
                                 </button>
@@ -6279,9 +6296,20 @@
                 billingRecords = result;
                 renderBillingTable();
                 updateDynamicStats('pane-billing');
+                if (bookingsData && bookingsData.length > 0) {
+                    window.applyBookingsFilters();
+                }
             } catch (err) {
                 console.error('Fetch Billing Error:', err);
                 showAdminToast('Error fetching bills: ' + err.message, 'error');
+            }
+        };
+
+        window.filterBillingByBookingId = function(bId) {
+            const searchInput = document.getElementById('billing-search');
+            if (searchInput) {
+                searchInput.value = bId;
+                fetchBillingRecords();
             }
         };
 
@@ -6560,6 +6588,17 @@
 
             // Reuse exact synchronized booking ID
             const bookingNo = booking.booking_id || generateAutoBookingId(booking.name);
+
+            const existingBill = (billingRecords || []).find(b => 
+                (b.booking_id && (b.booking_id === bookingNo || b.booking_id === booking.id)) ||
+                (b.booking_uuid && b.booking_uuid === booking.id)
+            );
+            if (existingBill) {
+                showAdminToast('Bill already generated for ' + bookingNo + '!', 'info');
+                switchTab(null, 'pane-billing');
+                window.filterBillingByBookingId(bookingNo);
+                return;
+            }
             
             // Open modal and reset
             document.getElementById('create-bill-form').reset();
