@@ -1075,12 +1075,26 @@
             <!-- PANE 11: LEAD HISTORY -->
             <div id="pane-lead-history" class="admin-tab-content-pane" style="display: none;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
-                    <h3 class="admin-form-title" style="margin-bottom: 0; border-bottom: none;">
-                        <i class="fa-solid fa-clock-rotate-left" style="color: var(--color-gold); margin-right: 8px;"></i> Lead Activity Log
-                    </h3>
-                    <button type="button" onclick="fetchGlobalLeadHistory()" class="btn btn-primary" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;">
-                        <i class="fa-solid fa-rotate"></i> Refresh Log
-                    </button>
+                    <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap; flex-grow: 1;">
+                        <h3 class="admin-form-title" style="margin-bottom: 0; border-bottom: none;">
+                            <i class="fa-solid fa-clock-rotate-left" style="color: var(--color-gold); margin-right: 8px;"></i> Lead Activity Log
+                        </h3>
+                        <div style="position: relative; width: 280px; max-width: 100%;">
+                            <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: rgba(212, 175, 55, 0.6); font-size: 13px;"></i>
+                            <input type="text" id="search-lead-history-input" placeholder="Search lead name, activity, staff..." oninput="applyLeadHistoryFilters()" style="background: #1e293b; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: var(--border-radius-sm, 4px); padding: 8px 12px 8px 32px; font-size: 13px; outline: none; width: 100%; font-weight: 500; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); transition: border-color 0.2s ease;">
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <select id="lead-history-limit" onchange="applyLeadHistoryFilters()" style="background: #1e293b; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 4px; padding: 8px 12px; font-size: 13px; font-weight: 500;">
+                            <option value="50">Show 50</option>
+                            <option value="100">Show 100</option>
+                            <option value="250">Show 250</option>
+                            <option value="all">Show All</option>
+                        </select>
+                        <button type="button" onclick="fetchGlobalLeadHistory()" class="btn btn-primary" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;">
+                            <i class="fa-solid fa-rotate"></i> Refresh Log
+                        </button>
+                    </div>
                 </div>
                 
                 <div class="admin-table-container">
@@ -4011,11 +4025,26 @@
             }
         };
 
-        window.fetchGlobalLeadHistory = async function() {
-            try {
-                const tbody = document.getElementById('lead-history-table-body');
-                if (!tbody) return;
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
 
+        let globalLeadHistoryList = [];
+        let leadsMapForHistory = {};
+
+        window.fetchGlobalLeadHistory = async function() {
+            const tbody = document.getElementById('lead-history-table-body');
+            if (tbody) {
+                tbody.innerHTML = `<tr><td colspan="3" style="text-align: center; color: var(--color-slate); font-weight: 500; padding: 24px;"><i class="fa-solid fa-spinner fa-spin" style="margin-right: 8px; color: var(--color-gold);"></i> Loading activity log...</td></tr>`;
+            }
+
+            try {
                 // 1. Fetch lead history
                 const { data: historyData, error: historyErr } = await supabaseAdmin
                     .from('lead_history')
@@ -4029,9 +4058,9 @@
                     .select('id, name, assigned_to');
                 if (leadsErr) throw leadsErr;
 
-                const leadsMap = {};
+                leadsMapForHistory = {};
                 (leadsData || []).forEach(l => {
-                    leadsMap[l.id] = l;
+                    leadsMapForHistory[l.id] = l;
                 });
 
                 let filteredHistory = historyData || [];
@@ -4039,7 +4068,7 @@
                     const agentUuid = currentUserUuidMapping || AGENT_UUIDS[(currentUsername || '').toLowerCase()];
                     if (agentUuid) {
                         filteredHistory = filteredHistory.filter(item => {
-                            const lead = leadsMap[item.lead_id];
+                            const lead = leadsMapForHistory[item.lead_id];
                             return lead && lead.assigned_to === agentUuid;
                         });
                     }
@@ -4047,37 +4076,74 @@
 
                 globalLeadHistoryList = filteredHistory;
                 refreshActiveTabStats();
+                applyLeadHistoryFilters();
 
-                if (filteredHistory.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="3" style="text-align: center; color: var(--color-slate);">No history records registered yet.</td></tr>`;
-                    return;
-                }
-
-                let html = '';
-                filteredHistory.forEach(item => {
-                    const dateStr = new Date(item.created_at).toLocaleString('en-IN', {
-                        day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
-                    });
-                    const leadObj = leadsMap[item.lead_id];
-                    const leadName = leadObj ? leadObj.name : 'Deleted Lead';
-                    const leadLink = leadObj ? `<a href="lead-details.html?id=${item.lead_id}" style="color: var(--color-gold); font-weight: 700; text-decoration: none;">${leadName}</a>` : leadName;
-                    
-                    html += `
-                        <tr>
-                            <td data-label="Date & Time" style="white-space: nowrap;">${dateStr}</td>
-                            <td data-label="Lead Name">${leadLink}</td>
-                            <td data-label="Activity Details" style="white-space: pre-line;"><small>${item.action || '—'}</small></td>
-                        </tr>
-                    `;
-                });
-                tbody.innerHTML = html;
             } catch (err) {
                 console.error('Error fetching global lead history:', err);
-                const tbody = document.getElementById('lead-history-table-body');
                 if (tbody) {
-                    tbody.innerHTML = `<tr><td colspan="3" style="text-align: center; color: red;">Failed to load history. Error: ${err.message}</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="3" style="text-align: center; color: #ef4444; padding: 24px;">Failed to load history. Error: ${escapeHtml(err.message)}</td></tr>`;
                 }
             }
+        };
+
+        window.applyLeadHistoryFilters = function() {
+            const tbody = document.getElementById('lead-history-table-body');
+            if (!tbody) return;
+
+            const searchInput = document.getElementById('search-lead-history-input');
+            const searchVal = searchInput ? searchInput.value.trim().toLowerCase() : '';
+            const limitSelect = document.getElementById('lead-history-limit');
+            const limitVal = limitSelect ? limitSelect.value : '50';
+
+            let filtered = globalLeadHistoryList || [];
+
+            if (searchVal) {
+                filtered = filtered.filter(item => {
+                    const leadObj = leadsMapForHistory[item.lead_id];
+                    const leadName = leadObj ? (leadObj.name || '') : 'Deleted Lead';
+                    const actionText = item.action || '';
+                    const dateStr = item.created_at ? new Date(item.created_at).toLocaleString('en-IN') : '';
+
+                    return leadName.toLowerCase().includes(searchVal) ||
+                           actionText.toLowerCase().includes(searchVal) ||
+                           dateStr.toLowerCase().includes(searchVal);
+                });
+            }
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" style="text-align: center; color: var(--color-slate); font-weight: 500; padding: 24px;">No matching activity log records found.</td></tr>`;
+                return;
+            }
+
+            let displayRows = filtered;
+            if (limitVal !== 'all') {
+                const maxRows = parseInt(limitVal) || 50;
+                displayRows = filtered.slice(0, maxRows);
+            }
+
+            let html = '';
+            displayRows.forEach(item => {
+                const dateStr = item.created_at ? new Date(item.created_at).toLocaleString('en-IN', {
+                    day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+                }) : '—';
+
+                const leadObj = leadsMapForHistory[item.lead_id];
+                const rawName = leadObj ? (leadObj.name || 'Unnamed Lead') : 'Deleted Lead';
+                const safeName = escapeHtml(rawName);
+
+                const leadLink = leadObj ? `<a href="lead-details.html?id=${item.lead_id}" style="color: var(--color-gold); font-weight: 700; text-decoration: none;">${safeName}</a>` : safeName;
+                const safeAction = escapeHtml(item.action || '—');
+
+                html += `
+                    <tr>
+                        <td data-label="Date & Time" style="white-space: nowrap;">${dateStr}</td>
+                        <td data-label="Lead Name">${leadLink}</td>
+                        <td data-label="Activity Details" style="white-space: pre-line;"><small>${safeAction}</small></td>
+                    </tr>
+                `;
+            });
+
+            tbody.innerHTML = html;
         };
 
         let leadsSortField = 'created_at';
