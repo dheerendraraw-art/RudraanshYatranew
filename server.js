@@ -1183,7 +1183,8 @@ app.post('/api/admin/reminders', authenticateToken, async (req, res) => {
 
         if (supabase) {
             try {
-                await supabase.from('reminders').insert([newItem]);
+                const { error: insErr } = await supabase.from('reminders').insert([newItem]);
+                if (insErr) console.warn('Supabase reminders insert failed, saving locally:', insErr.message);
             } catch (e) {
                 console.warn('Supabase reminders insert failed, saving locally:', e.message);
             }
@@ -1196,10 +1197,11 @@ app.post('/api/admin/reminders', authenticateToken, async (req, res) => {
         // Also log history entry for lead if lead_id exists
         if (newItem.lead_id && supabase) {
             try {
-                await supabase.from('lead_history').insert([{
+                const { error: hErr } = await supabase.from('lead_history').insert([{
                     lead_id: newItem.lead_id,
                     action: `⏰ Follow-up Reminder set for ${newItem.due_date} ${newItem.due_time}: "${newItem.note}" by ${req.user.username}`
                 }]);
+                if (hErr) console.warn('History log for reminder failed:', hErr.message);
             } catch (e) {
                 console.warn('History log for reminder failed:', e.message);
             }
@@ -1219,7 +1221,8 @@ app.put('/api/admin/reminders/:id', authenticateToken, async (req, res) => {
 
         if (supabase) {
             try {
-                await supabase.from('reminders').update(updates).eq('id', id);
+                const { error: updErr } = await supabase.from('reminders').update(updates).eq('id', id);
+                if (updErr) console.warn('Supabase reminders update failed:', updErr.message);
             } catch (e) {}
         }
 
@@ -1231,10 +1234,11 @@ app.put('/api/admin/reminders/:id', authenticateToken, async (req, res) => {
 
             if (updates.status === 'Completed' && list[index].lead_id && supabase) {
                 try {
-                    await supabase.from('lead_history').insert([{
+                    const { error: hErr } = await supabase.from('lead_history').insert([{
                         lead_id: list[index].lead_id,
                         action: `✅ Follow-up Reminder completed: "${list[index].note}" by ${req.user.username}`
                     }]);
+                    if (hErr) console.warn('History log for reminder completion failed:', hErr.message);
                 } catch (e) {}
             }
         }
@@ -1251,7 +1255,8 @@ app.delete('/api/admin/reminders/:id', authenticateToken, async (req, res) => {
         const id = req.params.id;
         if (supabase) {
             try {
-                await supabase.from('reminders').delete().eq('id', id);
+                const { error: delErr } = await supabase.from('reminders').delete().eq('id', id);
+                if (delErr) console.warn('Supabase reminders delete failed:', delErr.message);
             } catch (e) {}
         }
 

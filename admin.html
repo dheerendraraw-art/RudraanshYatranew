@@ -2418,11 +2418,11 @@
         }
 
         function applyRolePermissions() {
-            const role = (localStorage.getItem('admin_role') || currentUserRole || '').toString().toLowerCase().trim();
-            const uname = (localStorage.getItem('admin_username') || currentUsername || '').toString().toLowerCase().trim();
+            const role = (localStorage.getItem('admin_role') || currentUserRole || 'admin').toString().toLowerCase().trim();
+            const uname = (localStorage.getItem('admin_username') || currentUsername || 'admin').toString().toLowerCase().trim();
             
-            // Any logged in user whose username is NOT 'admin' OR whose role is 'staff' is STAFF
-            const isStaff = (uname !== 'admin' || role === 'staff');
+            // Only users whose role is explicitly 'staff' OR whose role is not admin are STAFF
+            const isStaff = (role === 'staff' || (role !== 'admin' && uname !== 'admin'));
 
             if (isStaff) {
                 document.body.classList.add('user-role-staff');
@@ -2469,8 +2469,47 @@
             ];
             adminOnlyButtonIds.forEach(id => {
                 const el = document.getElementById(id);
-                if (el) el.style.display = isStaff ? 'none' : 'inline-block';
+                if (el) el.style.display = isStaff ? 'none' : 'inline-flex';
             });
+        }
+
+        // Load statistics & tables
+        async function loadAllDashboardData() {
+            if (!supabaseAdmin) return;
+
+            // Apply collapsed state from localStorage
+            if (localStorage.getItem('stats_collapsed') === 'true') {
+                const grid = document.getElementById('dashboard-stats-grid');
+                const text = document.getElementById('stats-collapse-text');
+                const icon = document.getElementById('stats-collapse-icon');
+                if (grid) grid.style.display = 'none';
+                if (text) text.innerText = 'Expand Stats';
+                if (icon) icon.className = 'fa-solid fa-chevron-down';
+            }
+
+            // Always fetch users first to ensure assignee lists and maps are fully loaded
+            await fetchUsers();
+
+            if (currentUserRole === 'admin') {
+                fetchBookings();
+                fetchCustomRequests();
+                fetchDiscountRegistrations();
+                fetchBlogs();
+                fetchGallery();
+                fetchLeads();
+                fetchCredentials();
+                fetchBillingRecords();
+                fetchGlobalLeadHistory();
+                if (window.fetchRemindersData) fetchRemindersData();
+                if (window.renderAttendanceHistory) renderAttendanceHistory();
+            } else {
+                fetchBookings();
+                fetchLeads();
+                fetchBlogs();
+                fetchBillingRecords();
+                fetchGlobalLeadHistory();
+                if (window.fetchRemindersData) fetchRemindersData();
+            }
         }
 
         // Tab Switch logic
@@ -2532,6 +2571,9 @@
             }
             if (paneId === 'pane-blogs') {
                 if (window.fetchBlogs) window.fetchBlogs();
+            }
+            if (paneId === 'pane-attendance') {
+                if (window.renderAttendanceHistory) window.renderAttendanceHistory();
             }
 
             // Update dynamic stats
