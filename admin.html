@@ -199,6 +199,7 @@
                             <tr>
                                 <th>Booking ID</th>
                                 <th>Package Name</th>
+                                <th>Travel Destination</th>
                                 <th>Client Name</th>
                                 <th>Phone</th>
                                 <th>Travel Date</th>
@@ -211,7 +212,7 @@
                         </thead>
                         <tbody id="bookings-table-body">
                             <tr>
-                                <td colspan="10" style="text-align: center; color: var(--color-slate);">Loading bookings
+                                <td colspan="11" style="text-align: center; color: var(--color-slate);">Loading bookings
                                     data...</td>
                             </tr>
                         </tbody>
@@ -1246,6 +1247,12 @@
                     </div>
                 </div>
 
+                <!-- Travel Destination (Always Visible) -->
+                <div class="admin-form-group" style="margin-bottom: 12px;">
+                    <label for="lead-destination" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Travel Destination</label>
+                    <input type="text" id="lead-destination" class="admin-input" placeholder="E.g. Adi Kailash, Om Parvat" style="width: 100%; background: rgba(255,255,255,0.05); border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
+                </div>
+
                 <!-- Group 3: Status & Travel Date (Always Visible) -->
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
                     <div class="admin-form-group">
@@ -1432,9 +1439,15 @@
             <h3 id="booking-modal-title" style="font-family: var(--font-serif); color: white; margin-bottom: 16px; font-size: 20px; display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-calendar-plus" style="color: var(--color-gold)"></i> Add Single Booking Inquiry</h3>
             <form id="add-booking-form" onsubmit="submitAddBooking(event)">
                 <input type="hidden" id="edit-booking-id">
-                <div class="admin-form-group" style="margin-bottom: 12px;">
-                    <label for="new-booking-package">Package Name *</label>
-                    <input type="text" id="new-booking-package" class="admin-input" required placeholder="e.g. Adi Kailash & Om Parvat Yatra">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                    <div class="admin-form-group">
+                        <label for="new-booking-package">Package Name *</label>
+                        <input type="text" id="new-booking-package" class="admin-input" required placeholder="e.g. Adi Kailash & Om Parvat Yatra">
+                    </div>
+                    <div class="admin-form-group">
+                        <label for="new-booking-destination">Travel Destination</label>
+                        <input type="text" id="new-booking-destination" class="admin-input" placeholder="e.g. Adi Kailash / Om Parvat">
+                    </div>
                 </div>
                 <div class="admin-form-group" style="margin-bottom: 12px;">
                     <label for="new-booking-name">Client Name *</label>
@@ -2944,7 +2957,7 @@
             if (!tbody) return;
 
             if (filteredBookings.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="10" style="text-align: center; color: var(--color-slate);">No bookings match your search.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="11" style="text-align: center; color: var(--color-slate);">No bookings match your search.</td></tr>`;
                 return;
             }
 
@@ -2957,6 +2970,7 @@
                     supabaseAdmin.from('bookings').update({ booking_id: bookingId }).eq('id', item.id).then();
                 }
 
+                const destVal = item.destination || item.package_name || 'General';
                 const dateStr = item.travel_date ? new Date(item.travel_date).toLocaleDateString() : 'N/A';
                 const createdStr = new Date(item.created_at).toLocaleDateString();
 
@@ -2994,7 +3008,8 @@
                 html += `
                     <tr>
                         <td data-label="Booking ID"><strong style="color: #0f172a; background: rgba(212, 175, 55, 0.18); border: 1px solid rgba(212, 175, 55, 0.4); padding: 4px 8px; border-radius: 6px; font-family: monospace; font-size: 12px; font-weight: 800; display: inline-block;">${bookingId}</strong></td>
-                        <td data-label="Package Name" class="mobile-detail-field"><strong>${item.package_name}</strong></td>
+                        <td data-label="Package Name" class="mobile-detail-field"><strong>${item.package_name || '—'}</strong></td>
+                        <td data-label="Travel Destination" class="mobile-detail-field"><span class="badge" style="background: rgba(212, 175, 55, 0.15); color: #d97706; padding: 4px 8px; border-radius: 4px; font-weight: 700; border: 1px solid rgba(212, 175, 55, 0.3);">${destVal}</span></td>
                         <td data-label="Client Name">${item.name}</td>
                         <td data-label="Phone/Email">${phoneHtml} ${item.email ? '<br><small>' + item.email + '</small>' : ''}</td>
                         <td data-label="Travel Date">${dateStr}</td>
@@ -3709,10 +3724,11 @@
                     return;
                 }
 
-                let csvContent = 'Package Name,Client Name,Phone,Email,Travel Date,Travelers,Message,Created At\n';
+                let csvContent = 'Package Name,Travel Destination,Client Name,Phone,Email,Travel Date,Travelers,Message,Created At\n';
                 
                 data.forEach(row => {
                     const packageName = `"${(row.package_name || '').replace(/"/g, '""')}"`;
+                    const destination = `"${(row.destination || row.package_name || '').replace(/"/g, '""')}"`;
                     const name = `"${(row.name || '').replace(/"/g, '""')}"`;
                     const phone = `"${(row.phone || '').replace(/"/g, '""')}"`;
                     const email = `"${(row.email || '').replace(/"/g, '""')}"`;
@@ -3720,7 +3736,7 @@
                     const travelers = row.travelers || 1;
                     const message = `"${(row.message || '').replace(/"/g, '""')}"`;
                     const createdAt = `"${row.created_at || ''}"`;
-                    csvContent += `${packageName},${name},${phone},${email},${travelDate},${travelers},${message},${createdAt}\n`;
+                    csvContent += `${packageName},${destination},${name},${phone},${email},${travelDate},${travelers},${message},${createdAt}\n`;
                 });
 
                 const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -3782,6 +3798,7 @@
                     };
 
                     const pkgIdx = getIndex('package', 0);
+                    const destIdx = getIndex('destination', -1);
                     const nameIdx = getIndex('client', 1);
                     const phoneIdx = getIndex('phone', 2);
                     const emailIdx = getIndex('email', 3);
@@ -3801,6 +3818,8 @@
                         const columns = parseCSVLine(line);
                         if (columns.length < 3) continue;
 
+                        const pkgName = columns[pkgIdx] ? columns[pkgIdx].replace(/^"|"$/g, '') : 'Unknown Package';
+                        const destName = (destIdx !== -1 && columns[destIdx]) ? columns[destIdx].replace(/^"|"$/g, '') : pkgName;
                         const nameVal = columns[nameIdx] ? columns[nameIdx].replace(/^"|"$/g, '') : 'Unknown Client';
                         const rawAssign = hasAssignHeader ? columns[actualAssignIdx] : (columns.length >= 9 ? columns[6] : '');
                         let assignedUuid = null;
@@ -3822,7 +3841,8 @@
                         }
 
                         bookingsToInsert.push({
-                            package_name: columns[pkgIdx] ? columns[pkgIdx].replace(/^"|"$/g, '') : 'Unknown Package',
+                            package_name: pkgName,
+                            destination: destName,
                             name: nameVal,
                             phone: columns[phoneIdx] ? columns[phoneIdx].replace(/^"|"$/g, '') : '',
                             email: columns[emailIdx] ? columns[emailIdx].replace(/^"|"$/g, '') : '',
@@ -4381,6 +4401,7 @@
                                 <th>Name</th>
                                 <th>Phone</th>
                                 <th>Email</th>
+                                <th>Travel Destination</th>
                                 <th>Travelers</th>
                                 <th onclick="toggleLeadsSort('created_at')" style="cursor: pointer; user-select: none;" title="Click to sort by Created On">
                                     <div style="display: flex; align-items: center; justify-content: center; gap: 4px;">
@@ -4417,6 +4438,7 @@
                                 <th>Name</th>
                                 <th>Phone</th>
                                 <th>Email</th>
+                                <th>Travel Destination</th>
                                 <th>
                                     <div style="display: flex; flex-direction: column; gap: 4px; align-items: center;">
                                         <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Assigned To</span>
@@ -4503,7 +4525,7 @@
             }
 
             if (leadsToRender.length === 0) {
-                const colCount = currentUserRole === 'staff' ? 10 : 15;
+                const colCount = currentUserRole === 'staff' ? 11 : 16;
                 tbody.innerHTML = `<tr><td colspan="${colCount}" style="text-align: center; color: var(--color-slate);">No leads registered yet.</td></tr>`;
                 return;
             }
@@ -4512,6 +4534,7 @@
             leadsToRender.forEach((item, index) => {
                 const globalIndex = startIndex + index;
                 const createdStr = formatDateTimeISO(item.created_at);
+                const destVal = item.destination || (item.remarks && item.remarks.match(/Destination:\s*([^|\n]+)/i) ? item.remarks.match(/Destination:\s*([^|\n]+)/i)[1].trim() : '') || (item.notes && item.notes.match(/Destination:\s*([^|\n]+)/i) ? item.notes.match(/Destination:\s*([^|\n]+)/i)[1].trim() : '') || '—';
                 
                 // Render Status Dropdown options with Emojis
                 let statusOptions = '';
@@ -4615,6 +4638,7 @@
                             </td>
                             <td data-label="Phone" style="white-space: nowrap;" onclick="event.stopPropagation();">${leadPhoneHtml}</td>
                             <td data-label="Email" class="mobile-detail-field">${item.email || '-'}</td>
+                            <td data-label="Travel Destination" class="mobile-detail-field"><strong style="color: var(--color-gold); font-size: 12px;">${destVal}</strong></td>
                             <td data-label="Travelers" class="mobile-detail-field">${item.travelers || 1}</td>
                             <td data-label="Created On" class="mobile-detail-field" style="white-space: nowrap; font-family: monospace; font-size: 11px;">${createdStr}</td>
                             <td data-label="Status" onclick="event.stopPropagation();">
@@ -4657,6 +4681,7 @@
                             </td>
                             <td data-label="Phone" style="white-space: nowrap;" onclick="event.stopPropagation();">${leadPhoneHtml}</td>
                             <td data-label="Email" class="mobile-detail-field">${item.email || '-'}</td>
+                            <td data-label="Travel Destination" class="mobile-detail-field"><strong style="color: var(--color-gold); font-size: 12px;">${destVal}</strong></td>
                             <td data-label="Assigned To" class="mobile-detail-field" onclick="event.stopPropagation();">
                                 <select ${currentUserRole === "staff" ? "disabled" : ""} onchange="updateLeadField('${item.id}', 'assigned_to', this.value)" style="background: #1f2937; color: white; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 4px; font-size: 12px; width: 150px; cursor: pointer;">
                                     ${assigneeOptions}
@@ -4730,6 +4755,7 @@
             document.getElementById('lead-modal-title').innerText = 'Add New Lead';
             document.getElementById('lead-id').value = '';
             document.getElementById('lead-form').reset();
+            if (document.getElementById('lead-destination')) document.getElementById('lead-destination').value = '';
             
             // Hide edit-only fields when adding a new lead
             document.querySelectorAll('.edit-only-field').forEach(el => el.style.display = 'none');
@@ -4789,6 +4815,7 @@
 
                 const staffUuid = currentUserUuidMapping || AGENT_UUIDS[(currentUsername || '').toLowerCase()] || lead.assigned_to || null;
                 const autoBookingId = await fetchNextBookingId();
+                const leadDestination = lead.destination || (lead.remarks && lead.remarks.match(/Destination:\s*([^|\n]+)/i) ? lead.remarks.match(/Destination:\s*([^|\n]+)/i)[1].trim() : '') || 'Confirmed Lead Booking';
 
                 // Insert into bookings table
                 const { error: insertErr } = await supabaseAdmin
@@ -4798,7 +4825,8 @@
                         name: lead.name,
                         phone: lead.phone,
                         email: lead.email || '',
-                        package_name: 'Confirmed Lead Booking',
+                        package_name: leadDestination,
+                        destination: leadDestination,
                         travel_date: lead.travel_date || new Date().toISOString().split('T')[0],
                         travelers: '1',
                         message: combinedNotes,
@@ -4863,6 +4891,7 @@
                 const nameIdx = getIndex('name', 0);
                 const phoneIdx = getIndex('phone', 1);
                 const emailIdx = getIndex('email', 2);
+                const destIdx = getIndex('destination', -1);
                 const sourceIdx = getIndex('source', 3);
                 const statusIdx = getIndex('status', 4);
                 
@@ -4907,6 +4936,7 @@
                             name: nameVal,
                             phone: cols[phoneIdx] || '',
                             email: cols[emailIdx] || '',
+                            destination: destIdx !== -1 && cols[destIdx] ? cols[destIdx] : '',
                             source: cols[sourceIdx] || 'CSV Import',
                             status: cols[statusIdx] || 'New',
                             assigned_to: assignedUuid,
@@ -4942,6 +4972,7 @@
             const name = document.getElementById('lead-name').value.trim();
             const phone = document.getElementById('lead-phone').value.trim();
             const email = document.getElementById('lead-email').value.trim();
+            const destination = document.getElementById('lead-destination') ? document.getElementById('lead-destination').value.trim() : '';
             const source = document.getElementById('lead-source').value.trim();
             const status = document.getElementById('lead-status').value;
             const assigned_to = document.getElementById('lead-assignee').value || null;
@@ -4954,11 +4985,11 @@
             try {
                 let leadData = {};
                 if (currentUserRole === 'staff') {
-                    // Staff can only update status, remarks, follow-ups, final status, and travel date
-                    leadData = { status, remarks, follow_up_1, follow_up_2, final_status, travel_date };
+                    // Staff can only update status, remarks, follow-ups, final status, travel date, and destination
+                    leadData = { status, remarks, follow_up_1, follow_up_2, final_status, travel_date, destination };
                 } else {
                     // Admin updates everything
-                    leadData = { name, phone, email, source, status, assigned_to, remarks, follow_up_1, follow_up_2, final_status, travel_date };
+                    leadData = { name, phone, email, source, status, assigned_to, remarks, follow_up_1, follow_up_2, final_status, travel_date, destination };
                 }
                 
                 if (id) {
@@ -6133,15 +6164,15 @@
                     return;
                 }
 
-                let csv = 'Name,Phone,Email,Source,Status,Remarks,FollowUp1,FollowUp2,FinalStatus,Created\n';
+                let csv = 'Name,Phone,Email,Travel Destination,Source,Status,Remarks,FollowUp1,FollowUp2,FinalStatus,Created\n';
                 
                 data.forEach(item => {
                     const q = (str) => {
                         if (!str) return '""';
                         return `"${str.toString().replace(/"/g, '""')}"`;
                     };
-                    
-                    csv += `${q(item.name)},${q(item.phone)},${q(item.email)},${q(item.source)},${q(item.status)},${q(item.remarks)},${q(item.follow_up_1)},${q(item.follow_up_2)},${q(item.final_status)},${q(item.created_at)}\n`;
+                    const destVal = item.destination || (item.remarks && item.remarks.match(/Destination:\s*([^|\n]+)/i) ? item.remarks.match(/Destination:\s*([^|\n]+)/i)[1].trim() : '') || (item.notes && item.notes.match(/Destination:\s*([^|\n]+)/i) ? item.notes.match(/Destination:\s*([^|\n]+)/i)[1].trim() : '');
+                    csv += `${q(item.name)},${q(item.phone)},${q(item.email)},${q(destVal)},${q(item.source)},${q(item.status)},${q(item.remarks)},${q(item.follow_up_1)},${q(item.follow_up_2)},${q(item.final_status)},${q(item.created_at)}\n`;
                 });
 
                 const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
@@ -6313,6 +6344,7 @@
         window.openAddBookingModal = function() {
             document.getElementById('add-booking-form').reset();
             document.getElementById('edit-booking-id').value = '';
+            if (document.getElementById('new-booking-destination')) document.getElementById('new-booking-destination').value = '';
             document.getElementById('booking-modal-title').innerHTML = '<i class="fa-solid fa-calendar-plus" style="color: var(--color-gold)"></i> Add Single Booking Inquiry';
             const modal = document.getElementById('add-booking-modal');
             if (modal) {
@@ -6342,6 +6374,7 @@
             document.getElementById('booking-modal-title').innerHTML = '<i class="fa-solid fa-calendar-plus" style="color: var(--color-gold)"></i> Edit Booking Inquiry';
             document.getElementById('edit-booking-id').value = item.id;
             document.getElementById('new-booking-package').value = item.package_name || '';
+            if (document.getElementById('new-booking-destination')) document.getElementById('new-booking-destination').value = item.destination || item.package_name || '';
             document.getElementById('new-booking-name').value = item.name || '';
             document.getElementById('new-booking-phone').value = item.phone || '';
             document.getElementById('new-booking-email').value = item.email || '';
@@ -6380,6 +6413,7 @@
             event.preventDefault();
             const id = document.getElementById('edit-booking-id').value;
             const packageName = document.getElementById('new-booking-package').value.trim();
+            const destination = document.getElementById('new-booking-destination') ? document.getElementById('new-booking-destination').value.trim() : '';
             const name = document.getElementById('new-booking-name').value.trim();
             const phone = document.getElementById('new-booking-phone').value.trim();
             const email = document.getElementById('new-booking-email').value.trim();
@@ -6391,6 +6425,7 @@
             try {
                 const bookingData = {
                     package_name: packageName,
+                    destination: destination || packageName,
                     name: name,
                     phone: phone,
                     email: email,
@@ -6428,8 +6463,8 @@
 
         // CSV Import Template Generators
         window.downloadBookingsTemplate = function() {
-            const headers = ['Package Name', 'Client Name', 'Phone', 'Email', 'Travel Date (YYYY-MM-DD)', 'Travelers', 'Assigned To', 'Special Notes', 'Created At (YYYY-MM-DD)'];
-            const sampleRow = ['"Adi Kailash & Om Parvat Yatra"', '"John Doe"', '"9876543210"', '"john@example.com"', '"2026-08-15"', '2', '"Mansi"', '"Vegetarian food preferred"', '"2026-07-07"'];
+            const headers = ['Package Name', 'Travel Destination', 'Client Name', 'Phone', 'Email', 'Travel Date (YYYY-MM-DD)', 'Travelers', 'Assigned To', 'Special Notes', 'Created At (YYYY-MM-DD)'];
+            const sampleRow = ['"Adi Kailash & Om Parvat Yatra"', '"Adi Kailash"', '"John Doe"', '"9876543210"', '"john@example.com"', '"2026-08-15"', '2', '"Mansi"', '"Vegetarian food preferred"', '"2026-07-07"'];
             const csvContent = headers.join(',') + '\n' + sampleRow.join(',');
             
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -6439,12 +6474,12 @@
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            showAdminToast('Bookings CSV template with Assignee column downloaded!', 'success');
+            showAdminToast('Bookings CSV template with Destination column downloaded!', 'success');
         };
 
         window.downloadLeadsTemplate = function() {
-            const headers = ['Name', 'Phone', 'Email', 'Source', 'Status', 'Assigned To', 'Remarks', 'Follow up 1', 'Follow up 2', 'Final Status'];
-            const sampleRow = ['"Jane Doe"', '"9988776655"', '"jane@example.com"', '"Website Inquiry"', '"New"', '"Mansi"', '"Interested in Panchachuli Trek"', '"Called, left voicemail"', '""', '""'];
+            const headers = ['Name', 'Phone', 'Email', 'Travel Destination', 'Source', 'Status', 'Assigned To', 'Remarks', 'Follow up 1', 'Follow up 2', 'Final Status'];
+            const sampleRow = ['"Jane Doe"', '"9988776655"', '"jane@example.com"', '"Adi Kailash"', '"Website Inquiry"', '"New"', '"Mansi"', '"Interested in Panchachuli Trek"', '"Called, left voicemail"', '""', '""'];
             const csvContent = headers.join(',') + '\n' + sampleRow.join(',');
             
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -6454,7 +6489,7 @@
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            showAdminToast('Leads CSV template with Assignee column downloaded!', 'success');
+            showAdminToast('Leads CSV template with Destination column downloaded!', 'success');
         };
 
         window.openCreateBillModal = function() {

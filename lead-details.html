@@ -346,6 +346,10 @@
                             <input type="date" id="property-travel-date" class="form-control">
                         </div>
                         <div class="form-group">
+                            <label class="form-label">Travel Destination</label>
+                            <input type="text" id="property-destination" class="form-control" placeholder="e.g. Adi Kailash, Om Parvat">
+                        </div>
+                        <div class="form-group">
                             <label class="form-label">Final Status</label>
                             <select id="property-final-status" class="form-control">
                                 <option value="">🔘 None</option>
@@ -751,6 +755,10 @@
                 document.getElementById('property-assignee').value = leadData.assigned_to;
             }
             document.getElementById('property-travel-date').value = leadData.travel_date || '';
+            const destVal = leadData.destination || (leadData.remarks && leadData.remarks.match(/Destination:\s*([^|\n]+)/i) ? leadData.remarks.match(/Destination:\s*([^|\n]+)/i)[1].trim() : '') || (leadData.notes && leadData.notes.match(/Destination:\s*([^|\n]+)/i) ? leadData.notes.match(/Destination:\s*([^|\n]+)/i)[1].trim() : '');
+            if (document.getElementById('property-destination')) {
+                document.getElementById('property-destination').value = destVal;
+            }
             document.getElementById('property-final-status').value = leadData.final_status || '';
             document.getElementById('property-travelers').value = leadData.travelers || 1;
 
@@ -919,6 +927,7 @@
                 const newStatus = document.getElementById('property-status').value || '';
                 const newAssignee = document.getElementById('property-assignee').value || '';
                 const newTravelDate = document.getElementById('property-travel-date').value || '';
+                const newDestination = document.getElementById('property-destination') ? document.getElementById('property-destination').value.trim() : '';
                 const newFinalStatus = document.getElementById('property-final-status').value || '';
                 const newTravelers = parseInt(document.getElementById('property-travelers').value) || 1;
 
@@ -926,6 +935,7 @@
                     status: newStatus || 'New',
                     assigned_to: newAssignee || null,
                     travel_date: newTravelDate || null,
+                    destination: newDestination,
                     final_status: newFinalStatus || null,
                     travelers: newTravelers
                 };
@@ -993,6 +1003,12 @@
                 const oldTravelDate = leadData.travel_date || '';
                 if (newTravelDate !== oldTravelDate) {
                     historyEntries.push(`📅 Travel Date updated from "${oldTravelDate || 'Not set'}" to "${newTravelDate || 'Not set'}" by ${userDisplay}`);
+                }
+
+                // Check Destination change
+                const oldDestination = leadData.destination || '';
+                if (newDestination !== oldDestination) {
+                    historyEntries.push(`🏔️ Travel Destination updated from "${oldDestination || 'Not set'}" to "${newDestination || 'Not set'}" by ${userDisplay}`);
                 }
 
                 // Check Travelers count change
