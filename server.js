@@ -1367,8 +1367,8 @@ app.delete('/api/admin/blogs/:id', authenticateToken, requireAdmin, async (req, 
     }
 });
 
-// Gallery CRUD (Admin Only)
-app.get('/api/admin/gallery', authenticateToken, requireAdmin, async (req, res) => {
+// Gallery CRUD
+app.get('/api/admin/gallery', authenticateToken, async (req, res) => {
     try {
         const { data, error } = await supabase.from('gallery').select('*').order('created_at', { ascending: false });
         if (error) throw error;
@@ -1442,7 +1442,7 @@ app.get('/api/admin/staff-mapping', authenticateToken, async (req, res) => {
 });
 
 // Credentials CRUD
-app.get('/api/admin/credentials', authenticateToken, requireAdmin, async (req, res) => {
+app.get('/api/admin/credentials', authenticateToken, async (req, res) => {
     try {
         const { data, error } = await supabase.from('staff_credentials').select('*').order('username', { ascending: true });
         if (error) throw error;

@@ -2432,19 +2432,28 @@
                 document.body.classList.remove('user-role-staff');
             }
 
-            // Hide tabs for Staff (Keep Leads, Bookings & Blogs accessible for staff)
+            // Hide tabs for Staff (Keep Leads, Bookings, Blogs, Gallery, Staff, Attendance, Reminders & History accessible for staff)
             const adminOnlyTabIds = [
                 'tab-billing-btn',
                 'tab-requests-btn',
-                'tab-discounts-btn',
-                'tab-gallery-btn',
-                'tab-passwords-btn',
-                'tab-attendance-btn',
-                'tab-lead-history-btn'
+                'tab-discounts-btn'
             ];
             adminOnlyTabIds.forEach(id => {
                 const el = document.getElementById(id);
                 if (el) el.style.display = isStaff ? 'none' : 'inline-flex';
+            });
+
+            // Ensure non-admin-only tabs are visible for staff
+            const staffAccessibleTabIds = [
+                'tab-gallery-btn',
+                'tab-passwords-btn',
+                'tab-attendance-btn',
+                'tab-lead-history-btn',
+                'tab-reminders-btn'
+            ];
+            staffAccessibleTabIds.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.style.display = 'inline-flex';
             });
 
             // Hide Stats summary grid & header for staff
@@ -2506,9 +2515,12 @@
                 fetchBookings();
                 fetchLeads();
                 fetchBlogs();
+                fetchGallery();
+                fetchCredentials();
                 fetchBillingRecords();
                 fetchGlobalLeadHistory();
                 if (window.fetchRemindersData) fetchRemindersData();
+                if (window.renderAttendanceHistory) renderAttendanceHistory();
             }
         }
 
@@ -5015,8 +5027,6 @@
         let staffCredentialsList = [];
 
         window.fetchCredentials = async function() {
-            const roleClean = (currentUserRole || localStorage.getItem('admin_role') || '').toString().toLowerCase().trim();
-            if (roleClean !== 'admin') return;
             try {
                 const { data, error } = await supabaseAdmin
                     .from('staff_credentials')
