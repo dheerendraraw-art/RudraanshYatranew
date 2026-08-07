@@ -205,7 +205,15 @@
                                 <th>Travel Date</th>
                                 <th>Travelers</th>
                                 <th>Special Notes</th>
-                                <th>Booked By</th>
+                                <th>
+                                    <div style="display: flex; flex-direction: column; gap: 4px; align-items: center;">
+                                        <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Booked By</span>
+                                        <select id="filter-booking-assignee" onchange="applyBookingsFilters()" style="background: #0f172a; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 4px; padding: 2px 4px; font-size: 11px; cursor: pointer; outline: none; min-width: 100px; font-weight: 500;">
+                                            <option value="">All</option>
+                                            <option value="unassigned">Unassigned</option>
+                                        </select>
+                                    </div>
+                                </th>
                                 <th>Created</th>
                                 <th>Actions</th>
                             </tr>
@@ -2964,13 +2972,25 @@
 
         window.applyBookingsFilters = function() {
             const searchVal = document.getElementById('search-bookings-input') ? document.getElementById('search-bookings-input').value.trim().toLowerCase() : '';
+            const filterAssignee = document.getElementById('filter-booking-assignee') ? document.getElementById('filter-booking-assignee').value : '';
             
             const filteredBookings = bookingsData.filter(item => {
                 const matchSearch = !searchVal ||
                     (item.name || '').toLowerCase().includes(searchVal) ||
                     (item.phone || '').toLowerCase().includes(searchVal) ||
-                    (item.email || '').toLowerCase().includes(searchVal);
-                return matchSearch;
+                    (item.email || '').toLowerCase().includes(searchVal) ||
+                    (item.package_name || '').toLowerCase().includes(searchVal) ||
+                    (item.destination || '').toLowerCase().includes(searchVal) ||
+                    (item.booking_id || '').toLowerCase().includes(searchVal);
+
+                let matchAssignee = true;
+                if (filterAssignee === 'unassigned') {
+                    matchAssignee = !item.assigned_to && !item.user_id;
+                } else if (filterAssignee) {
+                    matchAssignee = (item.assigned_to === filterAssignee || item.user_id === filterAssignee);
+                }
+
+                return matchSearch && matchAssignee;
             });
 
             const tbody = document.getElementById('bookings-table-body');
@@ -4351,17 +4371,27 @@
         };
 
         window.populateAssigneeFilter = function() {
-            let filterAssigneeSelect = document.getElementById('filter-lead-assignee');
-            if (filterAssigneeSelect) {
-                let filterOptions = '<option value="">All</option><option value="unassigned">Unassigned</option>';
-                (usersList || []).forEach(user => {
-                    const displayName = usersMap[user.id] || user.email;
-                    const isMapped = mappedUserIds.has(user.id.toLowerCase());
-                    if (isMapped) {
-                        filterOptions += `<option value="${user.id}">${displayName}</option>`;
-                    }
-                });
-                filterAssigneeSelect.innerHTML = filterOptions;
+            let filterOptions = '<option value="">All</option><option value="unassigned">Unassigned</option>';
+            (usersList || []).forEach(user => {
+                const displayName = usersMap[user.id] || user.email;
+                const isMapped = mappedUserIds.has(user.id.toLowerCase());
+                if (isMapped) {
+                    filterOptions += `<option value="${user.id}">${displayName}</option>`;
+                }
+            });
+
+            let filterLeadSelect = document.getElementById('filter-lead-assignee');
+            if (filterLeadSelect) {
+                const curVal = filterLeadSelect.value;
+                filterLeadSelect.innerHTML = filterOptions;
+                if (curVal) filterLeadSelect.value = curVal;
+            }
+
+            let filterBookingSelect = document.getElementById('filter-booking-assignee');
+            if (filterBookingSelect) {
+                const curVal = filterBookingSelect.value;
+                filterBookingSelect.innerHTML = filterOptions;
+                if (curVal) filterBookingSelect.value = curVal;
             }
         };
 
