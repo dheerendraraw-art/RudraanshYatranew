@@ -829,17 +829,35 @@ app.post('/api/bookings', async (req, res) => {
     try {
         if (!supabase) return res.status(500).json({ error: 'Supabase client not initialized' });
 
+        const cleanName = name.trim();
+        const cleanPhone = phone.trim();
+
+        // 30-second deduplication window: suppress duplicate clicks/submits
+        const thirtySecondsAgo = new Date(Date.now() - 30000).toISOString();
+        const { data: recent } = await supabase
+            .from('bookings')
+            .select('id, booking_id')
+            .eq('name', cleanName)
+            .eq('phone', cleanPhone)
+            .gte('created_at', thirtySecondsAgo)
+            .limit(1);
+
+        if (recent && recent.length > 0) {
+            console.log('Duplicate booking submission suppressed within 30s window:', recent[0].booking_id);
+            return res.status(200).json({ success: true, booking_id: recent[0].booking_id, duplicate: true });
+        }
+
         const autoBookingId = await getNextBookingId();
 
         const bookingData = {
             booking_id: autoBookingId,
             package_name: packageName || 'General Inquiry',
-            name,
-            phone,
-            email: req.body.email || '',
+            name: cleanName,
+            phone: cleanPhone,
+            email: (req.body.email || '').trim(),
             travel_date: date || null,
             travelers: travelers ? travelers.toString() : '1',
-            message: message || '',
+            message: (message || '').trim(),
             created_at: new Date().toISOString()
         };
 

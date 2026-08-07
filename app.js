@@ -166,51 +166,64 @@ document.addEventListener('DOMContentLoaded', () => {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const packageNameBase = form.getAttribute('data-package') || 'General Inquiry';
-            const pickupElement = form.querySelector('[name="pickup"]');
-            const packageName = pickupElement ? `${packageNameBase} (${pickupElement.value})` : packageNameBase;
-            
-            const nameInput = form.querySelector('[name="name"]');
-            const phoneInput = form.querySelector('[name="phone"]');
-            const dateInput = form.querySelector('[name="date"]');
-            const travelersInput = form.querySelector('[name="travelers"]');
-            const messageInput = form.querySelector('[name="message"]');
+            if (form.dataset.submitting === 'true') return;
+            form.dataset.submitting = 'true';
 
-            const name = nameInput ? nameInput.value.trim() : '';
-            const phone = phoneInput ? phoneInput.value.trim() : '';
-            const date = dateInput ? dateInput.value : '';
-            const travelers = travelersInput ? travelersInput.value : '1';
-            const message = messageInput ? messageInput.value.trim() : '';
+            const submitBtn = form.querySelector('button[type="submit"]');
+            if (submitBtn) submitBtn.disabled = true;
 
-            const data = {
-                packageName,
-                name,
-                phone,
-                date,
-                travelers,
-                message
-            };
+            try {
+                const packageNameBase = form.getAttribute('data-package') || 'General Inquiry';
+                const pickupElement = form.querySelector('[name="pickup"]');
+                const packageName = pickupElement ? `${packageNameBase} (${pickupElement.value})` : packageNameBase;
+                
+                const nameInput = form.querySelector('[name="name"]');
+                const phoneInput = form.querySelector('[name="phone"]');
+                const dateInput = form.querySelector('[name="date"]');
+                const travelersInput = form.querySelector('[name="travelers"]');
+                const messageInput = form.querySelector('[name="message"]');
 
-            showToast('Saving booking details...', 'info');
-            await saveBookingInquiry(data);
+                const name = nameInput ? nameInput.value.trim() : '';
+                const phone = phoneInput ? phoneInput.value.trim() : '';
+                const date = dateInput ? dateInput.value : '';
+                const travelers = travelersInput ? travelersInput.value : '1';
+                const message = messageInput ? messageInput.value.trim() : '';
 
-            // Build text template for WhatsApp
-            let text = `*Rudraansh Yatra - Booking Inquiry*\n\n`;
-            text += `*Package:* ${packageName}\n`;
-            text += `*Name:* ${name}\n`;
-            text += `*Phone:* ${phone}\n`;
-            if (date) text += `*Preferred Date:* ${date}\n`;
-            if (travelers) text += `*No. of Travelers:* ${travelers}\n`;
-            if (message) {
-                text += `*Special Notes:* ${message}\n`;
+                const data = {
+                    packageName,
+                    name,
+                    phone,
+                    date,
+                    travelers,
+                    message
+                };
+
+                showToast('Saving booking details...', 'info');
+                await saveBookingInquiry(data);
+
+                // Build text template for WhatsApp
+                let text = `*Rudraansh Yatra - Booking Inquiry*\n\n`;
+                text += `*Package:* ${packageName}\n`;
+                text += `*Name:* ${name}\n`;
+                text += `*Phone:* ${phone}\n`;
+                if (date) text += `*Preferred Date:* ${date}\n`;
+                if (travelers) text += `*No. of Travelers:* ${travelers}\n`;
+                if (message) {
+                    text += `*Special Notes:* ${message}\n`;
+                }
+                text += `\n_Please guide me regarding biometrics, permits, and payment schedules. Thank you!_`;
+
+                const encodedText = encodeURIComponent(text);
+                const whatsappUrl = `https://wa.me/917617617651?text=${encodedText}`;
+                window.open(whatsappUrl, '_blank');
+                showToast('Opening WhatsApp to send booking details!', 'success');
+                form.reset();
+            } finally {
+                setTimeout(() => {
+                    delete form.dataset.submitting;
+                    if (submitBtn) submitBtn.disabled = false;
+                }, 2000);
             }
-            text += `\n_Please guide me regarding biometrics, permits, and payment schedules. Thank you!_`;
-
-            const encodedText = encodeURIComponent(text);
-            const whatsappUrl = `https://wa.me/917617617651?text=${encodedText}`;
-            window.open(whatsappUrl, '_blank');
-            showToast('Opening WhatsApp to send booking details!', 'success');
-            form.reset();
         });
     });
 
