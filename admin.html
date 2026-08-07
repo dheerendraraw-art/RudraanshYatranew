@@ -2666,10 +2666,22 @@
             }
             else if (paneId === 'pane-leads') {
                 const total = currentLeads.length;
-                const newLeads = currentLeads.filter(l => l.status === 'New').length;
-                const contacted = currentLeads.filter(l => l.status === 'Contacted' || l.status === 'In Progress').length;
-                const converted = currentLeads.filter(l => l.status === 'Won' || l.status === 'Converted' || l.final_status === 'Won' || l.final_status === 'Booked').length;
-                const lost = currentLeads.filter(l => l.status === 'Lost' || l.final_status === 'Lost' || l.final_status === 'Cancelled' || l.final_status === 'Not Interested' || l.final_status === 'Lost lead').length;
+                const newLeads = currentLeads.filter(l => (l.status || '').toLowerCase() === 'new').length;
+                const contacted = currentLeads.filter(l => {
+                    const s = (l.status || '').toLowerCase();
+                    return s === 'contacted' || s === 'in progress' || s === 'following up';
+                }).length;
+                const converted = currentLeads.filter(l => {
+                    const s = (l.status || '').toLowerCase();
+                    const fs = (l.final_status || '').toLowerCase();
+                    return s === 'won' || s === 'converted' || s === 'booking confirmed' || s === 'booked' ||
+                           fs === 'won' || fs === 'converted' || fs === 'booking confirmed' || fs === 'booked';
+                }).length;
+                const lost = currentLeads.filter(l => {
+                    const s = (l.status || '').toLowerCase();
+                    const fs = (l.final_status || '').toLowerCase();
+                    return s === 'lost' || fs === 'lost' || fs === 'cancelled' || fs === 'not interested' || fs === 'lost lead' || fs === 'booked elsewhere';
+                }).length;
 
                 setCard(0, true, '<i class="fa-solid fa-people-group"></i>', total, 'Total Leads');
                 setCard(1, true, '<i class="fa-solid fa-sparkles" style="color: #eab308;"></i>', newLeads, 'New Leads');
