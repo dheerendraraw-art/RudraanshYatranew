@@ -2921,9 +2921,29 @@
                     .order('created_at', { ascending: false });
 
                 if (currentUserRole === 'staff') {
-                    const agentUuid = currentUserUuidMapping || AGENT_UUIDS[(currentUsername || '').toLowerCase()];
-                    if (agentUuid) {
-                        query = query.or(`assigned_to.eq.${agentUuid},user_id.eq.${agentUuid}`);
+                    const uname = (currentUsername || '').toLowerCase().trim();
+                    const uuidSet = new Set();
+                    if (currentUserUuidMapping) uuidSet.add(currentUserUuidMapping);
+                    if (AGENT_UUIDS[uname]) uuidSet.add(AGENT_UUIDS[uname]);
+                    
+                    for (const [id, name] of Object.entries(usersMap)) {
+                        if ((name || '').toLowerCase() === uname) {
+                            uuidSet.add(id);
+                        }
+                    }
+
+                    const conditions = [];
+                    uuidSet.forEach(uuid => {
+                        conditions.push(`assigned_to.eq.${uuid}`);
+                        conditions.push(`user_id.eq.${uuid}`);
+                    });
+                    if (uname) {
+                        conditions.push(`assigned_to.eq.${uname}`);
+                        conditions.push(`user_id.eq.${uname}`);
+                    }
+
+                    if (conditions.length > 0) {
+                        query = query.or(conditions.join(','));
                     }
                 }
 
@@ -4813,7 +4833,7 @@
                     combinedNotes = 'Transferred from Leads Manager';
                 }
 
-                const staffUuid = currentUserUuidMapping || AGENT_UUIDS[(currentUsername || '').toLowerCase()] || lead.assigned_to || null;
+                const staffUuid = lead.assigned_to || currentUserUuidMapping || AGENT_UUIDS[(currentUsername || '').toLowerCase()] || null;
                 const autoBookingId = await fetchNextBookingId();
                 const leadDestination = lead.destination || (lead.remarks && lead.remarks.match(/Destination:\s*([^|\n]+)/i) ? lead.remarks.match(/Destination:\s*([^|\n]+)/i)[1].trim() : '') || 'Confirmed Lead Booking';
 

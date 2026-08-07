@@ -1089,7 +1089,7 @@
                 const namePrefix = (lead.name || 'CUST').replace(/[^a-zA-Z]/g, '').slice(0, 3).toUpperCase() || 'RY';
                 const randomNum = Math.floor(100 + Math.random() * 899);
                 const autoBookingId = `RY-2026-${namePrefix}-${randomNum}`;
-                const staffUuid = currentUserUuidMapping || lead.assigned_to || null;
+                const staffUuid = lead.assigned_to || currentUserUuidMapping || null;
 
                 const { error: insertErr } = await supabaseAdmin
                     .from('bookings')
