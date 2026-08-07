@@ -820,7 +820,7 @@ app.get('/api/bookings/next-id', authenticateToken, async (req, res) => {
     }
 });
 
-// Create Booking Inquiry from Public page
+// Create Website Inquiry Lead from Public page (saves directly to LEADS table)
 app.post('/api/bookings', async (req, res) => {
     const { packageName, name, phone, date, travelers, message } = req.body;
     if (!name || !phone) {
@@ -831,39 +831,50 @@ app.post('/api/bookings', async (req, res) => {
 
         const cleanName = name.trim();
         const cleanPhone = phone.trim();
+        const cleanEmail = (req.body.email || '').trim();
+        const cleanDate = date || null;
+        const cleanTravelers = travelers ? (parseInt(travelers) || 1) : 1;
 
-        // 30-second deduplication window: suppress duplicate clicks/submits
+        let remarksContent = '';
+        if (packageName) {
+            remarksContent += `Package: ${packageName}`;
+        }
+        if (message && message.trim()) {
+            if (remarksContent) remarksContent += ' | ';
+            remarksContent += `Special Notes: ${message.trim()}`;
+        }
+
+        // 30-second deduplication window: suppress duplicate clicks/submits in LEADS table
         const thirtySecondsAgo = new Date(Date.now() - 30000).toISOString();
         const { data: recent } = await supabase
-            .from('bookings')
-            .select('id, booking_id')
+            .from('leads')
+            .select('id')
             .eq('name', cleanName)
             .eq('phone', cleanPhone)
             .gte('created_at', thirtySecondsAgo)
             .limit(1);
 
         if (recent && recent.length > 0) {
-            console.log('Duplicate booking submission suppressed within 30s window:', recent[0].booking_id);
-            return res.status(200).json({ success: true, booking_id: recent[0].booking_id, duplicate: true });
+            console.log('Duplicate website lead submission suppressed within 30s window:', recent[0].id);
+            return res.status(200).json({ success: true, lead_id: recent[0].id, duplicate: true });
         }
 
-        const autoBookingId = await getNextBookingId();
-
-        const bookingData = {
-            booking_id: autoBookingId,
-            package_name: packageName || 'General Inquiry',
+        const leadData = {
             name: cleanName,
             phone: cleanPhone,
-            email: (req.body.email || '').trim(),
-            travel_date: date || null,
-            travelers: travelers ? travelers.toString() : '1',
-            message: (message || '').trim(),
+            email: cleanEmail,
+            source: 'Website Inquiry',
+            status: 'NEW',
+            assigned_to: null,
+            remarks: remarksContent,
+            travel_date: cleanDate,
+            travelers: cleanTravelers,
             created_at: new Date().toISOString()
         };
 
-        const { error } = await supabase.from('bookings').insert([bookingData]);
+        const { data: newLead, error } = await supabase.from('leads').insert([leadData]).select('id').single();
         if (error) throw error;
-        res.status(201).json({ success: true, booking_id: autoBookingId });
+        res.status(201).json({ success: true, lead_id: newLead ? newLead.id : null });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -873,10 +884,28 @@ app.post('/api/bookings', async (req, res) => {
 app.post('/api/custom-requests', async (req, res) => {
     try {
         if (!supabase) return res.status(500).json({ error: 'Supabase client not initialized' });
+        const requestData = Array.isArray(req.body) ? req.body : [req.body];
         const { error } = await supabase
             .from('custom_requests')
-            .insert(Array.isArray(req.body) ? req.body : [req.body]);
+            .insert(requestData);
         if (error) throw error;
+
+        // Also insert into leads table so it appears in Leads Manager
+        for (const item of requestData) {
+            if (item.name || item.phone) {
+                const remarksStr = `Destination: ${item.destination || 'Custom'} | Duration: ${item.days || 6} days | Notes: ${item.requests || ''}`;
+                await supabase.from('leads').insert([{
+                    name: (item.name || 'Website Visitor').trim(),
+                    phone: (item.phone || '').trim(),
+                    email: (item.email || '').trim(),
+                    source: 'Website Custom Trip Wizard',
+                    status: 'NEW',
+                    remarks: remarksStr,
+                    created_at: new Date().toISOString()
+                }]);
+            }
+        }
+
         res.status(201).json({ success: true });
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -887,10 +916,27 @@ app.post('/api/custom-requests', async (req, res) => {
 app.post('/api/discount-registrations', async (req, res) => {
     try {
         if (!supabase) return res.status(500).json({ error: 'Supabase client not initialized' });
+        const regData = Array.isArray(req.body) ? req.body : [req.body];
         const { error } = await supabase
             .from('discount_registrations')
-            .insert(Array.isArray(req.body) ? req.body : [req.body]);
+            .insert(regData);
         if (error) throw error;
+
+        // Also insert into leads table so it appears in Leads Manager
+        for (const item of regData) {
+            if (item.name || item.phone) {
+                await supabase.from('leads').insert([{
+                    name: (item.name || 'Website Visitor').trim(),
+                    phone: (item.phone || '').trim(),
+                    email: (item.email || '').trim(),
+                    source: 'Website Discount Popup',
+                    status: 'NEW',
+                    remarks: `Discount Code: ${item.discount_code || ''}`,
+                    created_at: new Date().toISOString()
+                }]);
+            }
+        }
+
         res.status(201).json({ success: true });
     } catch (err) {
         res.status(500).json({ error: err.message });
