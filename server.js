@@ -431,6 +431,9 @@ app.get('/blog/:slug', async (req, res) => {
       "@type": "SportsEvent",
       "name": "Adi Kailash Parikrama Run 2026 (Uttarakhand High-Altitude Ultra Marathon)",
       "description": "The Adi Kailash Parikrama Run is a high-altitude ultra marathon (5km, 10km, 21km, 42km, 60km) held in Gunji, Byas Valley, Uttarakhand at 10,300 ft to 15,000 ft.",
+      "image": [
+        "${ogImageUrl}"
+      ],
       "startDate": "2026-10-24T06:00:00+05:30",
       "endDate": "2026-10-25T18:00:00+05:30",
       "eventStatus": "https://schema.org/EventScheduled",
@@ -450,6 +453,11 @@ app.get('/blog/:slug', async (req, res) => {
         "@type": "Organization",
         "name": "Rudraansh Yatra",
         "url": "https://rudraanshyatra.com"
+      },
+      "performer": {
+        "@type": "PerformingGroup",
+        "name": "High-Altitude Ultra Marathon Athletes",
+        "url": "https://rudraanshyatra.com/blog/adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitude-ultra-marathon-guide"
       },
       "offers": {
         "@type": "Offer",
