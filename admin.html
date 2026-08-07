@@ -205,7 +205,7 @@
                                 <th>Travel Date</th>
                                 <th>Travelers</th>
                                 <th>Special Notes</th>
-                                <th>Assigned To</th>
+                                <th>Booked By</th>
                                 <th>Created</th>
                                 <th>Actions</th>
                             </tr>
@@ -1474,7 +1474,7 @@
                     </div>
                 </div>
                 <div class="admin-form-group" style="margin-bottom: 12px;">
-                    <label for="new-booking-assignee">Assign To User</label>
+                    <label for="new-booking-assignee">Booked By (Staff / User)</label>
                     <select id="new-booking-assignee" class="admin-input" style="width: 100%; background: #1f2937; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
                         <option value="">Unassigned</option>
                     </select>
@@ -3015,7 +3015,7 @@
                         <td data-label="Travel Date">${dateStr}</td>
                         <td data-label="Travelers" class="mobile-detail-field">${item.travelers}</td>
                         <td data-label="Special Notes"><small>${item.message || '—'}</small></td>
-                        <td data-label="Assigned To">
+                        <td data-label="Booked By">
                             <select ${currentUserRole === "staff" ? "disabled" : ""} onchange="updateBookingField('${item.id}', 'assigned_to', this.value)" style="background: #1f2937; color: white; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 4px; font-size: 12px; width: 150px; cursor: pointer;">
                                 ${bookingAssigneeOptions}
                             </select>
@@ -6463,7 +6463,7 @@
 
         // CSV Import Template Generators
         window.downloadBookingsTemplate = function() {
-            const headers = ['Package Name', 'Travel Destination', 'Client Name', 'Phone', 'Email', 'Travel Date (YYYY-MM-DD)', 'Travelers', 'Assigned To', 'Special Notes', 'Created At (YYYY-MM-DD)'];
+            const headers = ['Package Name', 'Travel Destination', 'Client Name', 'Phone', 'Email', 'Travel Date (YYYY-MM-DD)', 'Travelers', 'Booked By', 'Special Notes', 'Created At (YYYY-MM-DD)'];
             const sampleRow = ['"Adi Kailash & Om Parvat Yatra"', '"Adi Kailash"', '"John Doe"', '"9876543210"', '"john@example.com"', '"2026-08-15"', '2', '"Mansi"', '"Vegetarian food preferred"', '"2026-07-07"'];
             const csvContent = headers.join(',') + '\n' + sampleRow.join(',');
             
