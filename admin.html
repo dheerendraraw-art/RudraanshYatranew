@@ -4670,12 +4670,7 @@
                     return;
                 }
 
-                const newLeads = [];
-                for (let i = 1; i < lines.length; i++) {
-                    const line = lines[i].trim();
-                    if (!line) continue;
-
-                    // Simple CSV parser supporting quotes
+                const parseLine = (line) => {
                     const cols = [];
                     let insideQuotes = false;
                     let current = '';
@@ -4684,25 +4679,77 @@
                         if (char === '"') {
                             insideQuotes = !insideQuotes;
                         } else if (char === ',' && !insideQuotes) {
-                            cols.push(current.trim());
+                            cols.push(current.trim().replace(/^"|"$/g, ''));
                             current = '';
                         } else {
                             current += char;
                         }
                     }
-                    cols.push(current.trim());
+                    cols.push(current.trim().replace(/^"|"$/g, ''));
+                    return cols;
+                };
 
-                    if (cols[0]) { // Name is required
+                const headers = parseLine(lines[0]).map(h => h.toLowerCase());
+                
+                const getIndex = (name, defaultIdx) => {
+                    const idx = headers.findIndex(h => h.includes(name.toLowerCase()));
+                    return idx !== -1 ? idx : defaultIdx;
+                };
+
+                const nameIdx = getIndex('name', 0);
+                const phoneIdx = getIndex('phone', 1);
+                const emailIdx = getIndex('email', 2);
+                const sourceIdx = getIndex('source', 3);
+                const statusIdx = getIndex('status', 4);
+                
+                const assignIdx = headers.findIndex(h => h.includes('assignee') || h.includes('assigned') || h.includes('agent') || h.includes('staff'));
+                const hasAssignHeader = assignIdx !== -1;
+                const actualAssignIdx = hasAssignHeader ? assignIdx : 5;
+
+                const remarksIdx = getIndex('remark', hasAssignHeader ? 6 : 5);
+                const fu1Idx = getIndex('follow up 1', hasAssignHeader ? 7 : 6);
+                const fu2Idx = getIndex('follow up 2', hasAssignHeader ? 8 : 7);
+                const finalIdx = getIndex('final', hasAssignHeader ? 9 : 8);
+
+                const newLeads = [];
+                for (let i = 1; i < lines.length; i++) {
+                    const line = lines[i].trim();
+                    if (!line) continue;
+
+                    const cols = parseLine(line);
+                    const nameVal = cols[nameIdx];
+
+                    if (nameVal) {
+                        const rawAssign = hasAssignHeader ? cols[actualAssignIdx] : (cols.length >= 10 ? cols[5] : '');
+                        let assignedUuid = null;
+                        
+                        if (rawAssign) {
+                            const cleanAssign = rawAssign.trim().toLowerCase();
+                            if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(cleanAssign)) {
+                                assignedUuid = cleanAssign;
+                            } else if (AGENT_UUIDS[cleanAssign]) {
+                                assignedUuid = AGENT_UUIDS[cleanAssign];
+                            } else {
+                                for (const [uuid, uName] of Object.entries(usersMap)) {
+                                    if (uName.toLowerCase() === cleanAssign || uName.toLowerCase().includes(cleanAssign)) {
+                                        assignedUuid = uuid;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
                         newLeads.push({
-                            name: cols[0],
-                            phone: cols[1] || '',
-                            email: cols[2] || '',
-                            source: cols[3] || 'CSV Import',
-                            status: cols[4] || 'New',
-                            remarks: cols[5] || '',
-                            follow_up_1: cols[6] || '',
-                            follow_up_2: cols[7] || '',
-                            final_status: cols[8] || null
+                            name: nameVal,
+                            phone: cols[phoneIdx] || '',
+                            email: cols[emailIdx] || '',
+                            source: cols[sourceIdx] || 'CSV Import',
+                            status: cols[statusIdx] || 'New',
+                            assigned_to: assignedUuid,
+                            remarks: cols[remarksIdx] || '',
+                            follow_up_1: cols[fu1Idx] || '',
+                            follow_up_2: cols[fu2Idx] || '',
+                            final_status: cols[finalIdx] || null
                         });
                     }
                 }
@@ -6234,8 +6281,8 @@
         };
 
         window.downloadLeadsTemplate = function() {
-            const headers = ['Name', 'Phone', 'Email', 'Source', 'Status', 'Remarks', 'Follow up 1', 'Follow up 2', 'Final Status'];
-            const sampleRow = ['"Jane Doe"', '"9988776655"', '"jane@example.com"', '"Website Inquiry"', '"New"', '"Interested in Panchachuli Trek"', '"Called, left voicemail"', '""', '""'];
+            const headers = ['Name', 'Phone', 'Email', 'Source', 'Status', 'Assigned To', 'Remarks', 'Follow up 1', 'Follow up 2', 'Final Status'];
+            const sampleRow = ['"Jane Doe"', '"9988776655"', '"jane@example.com"', '"Website Inquiry"', '"New"', '"Mansi"', '"Interested in Panchachuli Trek"', '"Called, left voicemail"', '""', '""'];
             const csvContent = headers.join(',') + '\n' + sampleRow.join(',');
             
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -6245,7 +6292,7 @@
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            showAdminToast('Leads CSV template downloaded!', 'success');
+            showAdminToast('Leads CSV template with Assignee column downloaded!', 'success');
         };
 
         window.openCreateBillModal = function() {
