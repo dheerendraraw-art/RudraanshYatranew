@@ -3703,6 +3703,25 @@
                         return result;
                     };
 
+                    const headers = parseCSVLine(lines[0]).map(h => h.toLowerCase());
+                    const getIndex = (name, defaultIdx) => {
+                        const idx = headers.findIndex(h => h.includes(name.toLowerCase()));
+                        return idx !== -1 ? idx : defaultIdx;
+                    };
+
+                    const pkgIdx = getIndex('package', 0);
+                    const nameIdx = getIndex('client', 1);
+                    const phoneIdx = getIndex('phone', 2);
+                    const emailIdx = getIndex('email', 3);
+                    const dateIdx = getIndex('travel date', 4);
+                    const travelersIdx = getIndex('travelers', 5);
+                    const assignIdx = headers.findIndex(h => h.includes('assignee') || h.includes('assigned') || h.includes('agent') || h.includes('staff'));
+                    const hasAssignHeader = assignIdx !== -1;
+                    const actualAssignIdx = hasAssignHeader ? assignIdx : 6;
+
+                    const msgIdx = getIndex('note', hasAssignHeader ? 7 : 6);
+                    const createdIdx = getIndex('created', hasAssignHeader ? 8 : 7);
+
                     const bookingsToInsert = [];
                     for (let i = 1; i < lines.length; i++) {
                         const line = lines[i].trim();
@@ -3710,15 +3729,37 @@
                         const columns = parseCSVLine(line);
                         if (columns.length < 3) continue;
 
+                        const nameVal = columns[nameIdx] ? columns[nameIdx].replace(/^"|"$/g, '') : 'Unknown Client';
+                        const rawAssign = hasAssignHeader ? columns[actualAssignIdx] : (columns.length >= 9 ? columns[6] : '');
+                        let assignedUuid = null;
+                        
+                        if (rawAssign) {
+                            const cleanAssign = rawAssign.trim().toLowerCase();
+                            if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(cleanAssign)) {
+                                assignedUuid = cleanAssign;
+                            } else if (AGENT_UUIDS[cleanAssign]) {
+                                assignedUuid = AGENT_UUIDS[cleanAssign];
+                            } else {
+                                for (const [uuid, uName] of Object.entries(usersMap)) {
+                                    if (uName.toLowerCase() === cleanAssign || uName.toLowerCase().includes(cleanAssign)) {
+                                        assignedUuid = uuid;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
                         bookingsToInsert.push({
-                            package_name: columns[0] ? columns[0].replace(/^"|"$/g, '') : 'Unknown Package',
-                            name: columns[1] ? columns[1].replace(/^"|"$/g, '') : 'Unknown Client',
-                            phone: columns[2] ? columns[2].replace(/^"|"$/g, '') : '',
-                            email: columns[3] ? columns[3].replace(/^"|"$/g, '') : '',
-                            travel_date: columns[4] && columns[4].replace(/^"|"$/g, '') ? columns[4].replace(/^"|"$/g, '') : null,
-                            travelers: parseInt(columns[5] ? columns[5].replace(/^"|"$/g, '') : 1) || 1,
-                            message: columns[6] ? columns[6].replace(/^"|"$/g, '') : '',
-                            created_at: columns[7] && columns[7].replace(/^"|"$/g, '') ? columns[7].replace(/^"|"$/g, '') : new Date().toISOString()
+                            package_name: columns[pkgIdx] ? columns[pkgIdx].replace(/^"|"$/g, '') : 'Unknown Package',
+                            name: nameVal,
+                            phone: columns[phoneIdx] ? columns[phoneIdx].replace(/^"|"$/g, '') : '',
+                            email: columns[emailIdx] ? columns[emailIdx].replace(/^"|"$/g, '') : '',
+                            travel_date: columns[dateIdx] && columns[dateIdx].replace(/^"|"$/g, '') ? columns[dateIdx].replace(/^"|"$/g, '') : null,
+                            travelers: parseInt(columns[travelersIdx] ? columns[travelersIdx].replace(/^"|"$/g, '') : 1) || 1,
+                            assigned_to: assignedUuid,
+                            user_id: assignedUuid,
+                            message: columns[msgIdx] ? columns[msgIdx].replace(/^"|"$/g, '') : '',
+                            created_at: columns[createdIdx] && columns[createdIdx].replace(/^"|"$/g, '') ? columns[createdIdx].replace(/^"|"$/g, '') : new Date().toISOString()
                         });
                     }
 
@@ -6266,8 +6307,8 @@
 
         // CSV Import Template Generators
         window.downloadBookingsTemplate = function() {
-            const headers = ['Package Name', 'Client Name', 'Phone', 'Email', 'Travel Date (YYYY-MM-DD)', 'Travelers', 'Special Notes', 'Created At (YYYY-MM-DD)'];
-            const sampleRow = ['"Adi Kailash & Om Parvat Yatra"', '"John Doe"', '"9876543210"', '"john@example.com"', '"2026-08-15"', '2', '"Vegetarian food preferred"', '"2026-07-07"'];
+            const headers = ['Package Name', 'Client Name', 'Phone', 'Email', 'Travel Date (YYYY-MM-DD)', 'Travelers', 'Assigned To', 'Special Notes', 'Created At (YYYY-MM-DD)'];
+            const sampleRow = ['"Adi Kailash & Om Parvat Yatra"', '"John Doe"', '"9876543210"', '"john@example.com"', '"2026-08-15"', '2', '"Mansi"', '"Vegetarian food preferred"', '"2026-07-07"'];
             const csvContent = headers.join(',') + '\n' + sampleRow.join(',');
             
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -6277,7 +6318,7 @@
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            showAdminToast('Bookings CSV template downloaded!', 'success');
+            showAdminToast('Bookings CSV template with Assignee column downloaded!', 'success');
         };
 
         window.downloadLeadsTemplate = function() {
