@@ -2751,6 +2751,33 @@
             }
         };
 
+        window.computeIncentiveForStaff = function(staffId, staffUname) {
+            let totalBilledNet = 0;
+            const staffIdLower = (staffId || '').toLowerCase().trim();
+            const unameLower = (staffUname || '').toLowerCase().trim();
+
+            const staffBookings = (bookingsData || []).filter(b => {
+                const assign = (b.assigned_to || b.user_id || '').toLowerCase().trim();
+                return assign === staffIdLower || assign === unameLower || (usersMap[assign] && usersMap[assign].toLowerCase() === unameLower);
+            });
+
+            staffBookings.forEach(b => {
+                const bill = (billingRecords || []).find(br => 
+                    (br.booking_id && (br.booking_id === b.booking_id || br.booking_id === b.id)) ||
+                    (br.booking_uuid && br.booking_uuid === b.id)
+                );
+                if (bill) {
+                    const gross = parseFloat(bill.total_package_amount || 0);
+                    const disc = parseFloat(bill.discount || 0);
+                    totalBilledNet += Math.max(0, gross - disc);
+                } else {
+                    totalBilledNet += parseFloat(b.total_package_amount || b.amount || 0);
+                }
+            });
+
+            return Math.round(totalBilledNet * 0.03);
+        };
+
         window.updateDynamicStats = function(paneId) {
             const grid = document.getElementById('dashboard-stats-grid');
             if (!grid) return;
@@ -2910,21 +2937,34 @@
                 const contactRate = total > 0 ? ((answered / total) * 100).toFixed(1) + '%' : '0%';
 
                 if (currentUserRole === 'staff') {
-                    const conversionRate = total > 0 ? ((converted / total) * 100).toFixed(1) + '%' : '0%';
+                    const myIncentive = computeIncentiveForStaff(currentUserUuidMapping, currentUsername);
                     setCard(0, true, '<i class="fa-solid fa-users" style="color: #3b82f6;"></i>', total, 'My Assigned Leads');
                     setCard(1, true, '<i class="fa-solid fa-phone-volume" style="color: #22c55e;"></i>', answered, 'My Connected Calls');
                     setCard(2, true, '<i class="fa-solid fa-hourglass-half" style="color: #eab308;"></i>', pending, 'My Pending Outreach');
                     setCard(3, true, '<i class="fa-solid fa-trophy" style="color: #ec4899;"></i>', converted, 'My Converted Bookings');
                     setCard(4, true, '<i class="fa-solid fa-chart-line" style="color: var(--color-gold);"></i>', contactRate, 'My Contact Rate');
-                    setCard(5, true, '<i class="fa-solid fa-bullseye" style="color: #8b5cf6;"></i>', conversionRate, 'My Conversion Rate');
+                    setCard(5, true, '<i class="fa-solid fa-hand-holding-dollar" style="color: #22c55e;"></i>', '₹' + myIncentive.toLocaleString('en-IN'), 'My Incentive Earned (3%)');
                 } else {
-                    const activeStaffCount = (usersList || []).length;
+                    let totalTeamIncentive = 0;
+                    (bookingsData || []).forEach(b => {
+                        const bill = (billingRecords || []).find(br => 
+                            (br.booking_id && (br.booking_id === b.booking_id || br.booking_id === b.id)) ||
+                            (br.booking_uuid && br.booking_uuid === b.id)
+                        );
+                        if (bill) {
+                            const gross = parseFloat(bill.total_package_amount || 0);
+                            const disc = parseFloat(bill.discount || 0);
+                            totalTeamIncentive += Math.max(0, gross - disc);
+                        }
+                    });
+                    totalTeamIncentive = Math.round(totalTeamIncentive * 0.03);
+
                     setCard(0, true, '<i class="fa-solid fa-users" style="color: #3b82f6;"></i>', total, 'Total Leads');
                     setCard(1, true, '<i class="fa-solid fa-phone-volume" style="color: #22c55e;"></i>', answered, 'Connected Calls');
                     setCard(2, true, '<i class="fa-solid fa-hourglass-half" style="color: #eab308;"></i>', pending, 'Pending Outreach');
                     setCard(3, true, '<i class="fa-solid fa-trophy" style="color: #ec4899;"></i>', converted, 'Converted Bookings');
                     setCard(4, true, '<i class="fa-solid fa-chart-line" style="color: var(--color-gold);"></i>', contactRate, 'Overall Contact Rate');
-                    setCard(5, true, '<i class="fa-solid fa-user-gear" style="color: #8b5cf6;"></i>', activeStaffCount, 'Active Staff Users');
+                    setCard(5, true, '<i class="fa-solid fa-hand-holding-dollar" style="color: #22c55e;"></i>', '₹' + totalTeamIncentive.toLocaleString('en-IN'), 'Total Staff Incentive (3%)');
                 }
             }
             else if (paneId === 'pane-lead-history') {
@@ -4188,6 +4228,8 @@
                 const tbody = document.getElementById('analytics-staff-table-body');
 
                 if (currentUserRole === 'staff') {
+                    const myIncentive = computeIncentiveForStaff(currentUserUuidMapping, currentUsername);
+
                     if (thead) {
                         thead.innerHTML = `
                             <tr>
@@ -4195,6 +4237,7 @@
                                 <th>Lead Count</th>
                                 <th>% of My Leads</th>
                                 <th>Category Status</th>
+                                <th>Earned Incentive (3%)</th>
                                 <th>Recommended Action</th>
                                 <th>Actions</th>
                             </tr>
@@ -4226,6 +4269,8 @@
                         categories.forEach(cat => {
                             const cnt = statusCounts[cat.name] || 0;
                             const pct = totalLeadsCount > 0 ? ((cnt / totalLeadsCount) * 100).toFixed(1) : 0;
+                            const incValHtml = cat.name === 'Booking Confirmed' && myIncentive > 0 ? `<strong style="color: #22c55e; font-size: 14px; font-weight: 800;">₹${myIncentive.toLocaleString('en-IN')}</strong>` : '<span style="color: #94a3b8;">—</span>';
+
                             tableHtml += `
                                 <tr>
                                     <td data-label="Status Category"><strong style="color: #0f172a; font-size: 14px;">${cat.name}</strong></td>
@@ -4241,6 +4286,7 @@
                                     <td data-label="Category Status">
                                         <span class="badge" style="background: ${cat.bg}; color: ${cat.color}; border: 1px solid ${cat.border}; padding: 4px 8px; border-radius: 4px; font-weight: 700; white-space: nowrap;">${cat.label}</span>
                                     </td>
+                                    <td data-label="Earned Incentive (3%)">${incValHtml}</td>
                                     <td data-label="Recommended Action"><small style="color: #475569; font-weight: 600;">${cat.action}</small></td>
                                     <td data-label="Actions">
                                         <button class="btn btn-secondary" onclick="switchTab(null, 'pane-leads')" style="padding: 4px 10px; font-size: 11px; font-weight: 700;">
@@ -4261,6 +4307,7 @@
                                 <th>Connected (Answered)</th>
                                 <th>Pending (Uncalled/No Ans)</th>
                                 <th>Converted Bookings</th>
+                                <th>Earned Incentive (3%)</th>
                                 <th>Contact Rate</th>
                                 <th>Conversion Rate</th>
                                 <th>Workload Indicator</th>
@@ -4307,6 +4354,7 @@
 
                             const contactRate = st.total > 0 ? ((st.connected / st.total) * 100).toFixed(1) : 0;
                             const conversionRate = st.total > 0 ? ((st.converted / st.total) * 100).toFixed(1) : 0;
+                            const incVal = computeIncentiveForStaff(st.id, st.name);
 
                             let badgeHtml = '';
                             if (st.converted > 0) {
@@ -4329,6 +4377,7 @@
                                     <td data-label="Connected"><span style="color: #16a34a; font-weight: 700; font-size: 14px;">${st.connected}</span></td>
                                     <td data-label="Pending"><span style="color: #d97706; font-weight: 700; font-size: 14px;">${st.pending}</span></td>
                                     <td data-label="Converted"><span style="color: #db2777; font-weight: 700; font-size: 14px;">${st.converted}</span></td>
+                                    <td data-label="Earned Incentive (3%)"><strong style="color: #22c55e; font-size: 14px; font-weight: 800;">₹${incVal.toLocaleString('en-IN')}</strong></td>
                                     <td data-label="Contact Rate">
                                         <div style="display: flex; align-items: center; gap: 8px;">
                                             <div style="flex-grow: 1; height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden; min-width: 60px;">
@@ -4358,35 +4407,50 @@
                                 </tr>
                             `;
                         });
-                        tbody.innerHTML = html || `<tr><td colspan="9" style="text-align: center; color: var(--color-slate); padding: 30px;">No lead activity found for this timeframe.</td></tr>`;
+                        tbody.innerHTML = html || `<tr><td colspan="10" style="text-align: center; color: var(--color-slate); padding: 30px;">No lead activity found for this timeframe.</td></tr>`;
                     }
                 }
 
                 const insightsBox = document.getElementById('analytics-insights-container');
                 if (insightsBox) {
                     if (currentUserRole === 'staff') {
+                        const myIncentive = computeIncentiveForStaff(currentUserUuidMapping, currentUsername);
                         insightsBox.innerHTML = `
                             <div style="background: #ffffff; border: 1.5px solid rgba(212, 175, 55, 0.35); box-shadow: 0 4px 15px rgba(0,0,0,0.04); border-radius: 12px; padding: 20px;">
                                 <h4 style="margin: 0 0 12px 0; color: #b45309; font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px;">
-                                    <i class="fa-solid fa-lightbulb"></i> My Performance Checklist & Next Steps
+                                    <i class="fa-solid fa-lightbulb"></i> My Performance Checklist & Incentive Summary
                                 </h4>
                                 <ul style="margin: 0; padding-left: 20px; color: #334155; font-size: 14px; line-height: 1.7;">
+                                    <li><strong>🎉 Earned Incentive (3%):</strong> You have earned <strong style="color: #22c55e;">₹${myIncentive.toLocaleString('en-IN')}</strong> on your converted booking payments!</li>
                                     <li><strong>Uncalled Queue (${pendingCount} Leads):</strong> Priority outreach is recommended for uncontacted leads in your queue.</li>
-                                    <li><strong>Deal Closing:</strong> When a client agrees to travel, open their lead card and set <code>Final Status = Booking Confirmed</code>.</li>
-                                    <li><strong>Follow-Ups:</strong> Use the WhatsApp button in Leads Manager to send quick itinerary details.</li>
+                                    <li><strong>Deal Closing:</strong> When a client agrees to travel, open their lead card and set <code>Final Status = Booking Confirmed</code> to trigger your 3% incentive.</li>
                                 </ul>
                             </div>
                         `;
                     } else {
+                        let totalTeamIncentive = 0;
+                        (bookingsData || []).forEach(b => {
+                            const bill = (billingRecords || []).find(br => 
+                                (br.booking_id && (br.booking_id === b.booking_id || br.booking_id === b.id)) ||
+                                (br.booking_uuid && br.booking_uuid === b.id)
+                            );
+                            if (bill) {
+                                const gross = parseFloat(bill.total_package_amount || 0);
+                                const disc = parseFloat(bill.discount || 0);
+                                totalTeamIncentive += Math.max(0, gross - disc);
+                            }
+                        });
+                        totalTeamIncentive = Math.round(totalTeamIncentive * 0.03);
+
                         insightsBox.innerHTML = `
                             <div style="background: #ffffff; border: 1.5px solid rgba(212, 175, 55, 0.35); box-shadow: 0 4px 15px rgba(0,0,0,0.04); border-radius: 12px; padding: 20px;">
                                 <h4 style="margin: 0 0 12px 0; color: #b45309; font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px;">
-                                    <i class="fa-solid fa-lightbulb"></i> Strategic Insights & Action Plan
+                                    <i class="fa-solid fa-lightbulb"></i> Strategic Insights & Incentive Summary
                                 </h4>
                                 <ul style="margin: 0; padding-left: 20px; color: #334155; font-size: 14px; line-height: 1.7;">
+                                    <li><strong>💰 Total Staff Incentive Pool:</strong> Total 3% incentive earned across staff is <strong style="color: #22c55e;">₹${totalTeamIncentive.toLocaleString('en-IN')}</strong>.</li>
                                     <li><strong>Uncalled Backlog (${pendingCount} Leads):</strong> High priority outreach is recommended for uncontacted leads.</li>
                                     <li><strong>Follow-Up Directives:</strong> Instruct staff to update <code>Final Status = Booking Confirmed</code> when deals close verbally.</li>
-                                    <li><strong>Lead Balancing:</strong> Reallocate new uncalled leads to staff members with high contact rates.</li>
                                 </ul>
                             </div>
                         `;
