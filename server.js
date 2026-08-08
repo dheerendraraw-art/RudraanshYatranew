@@ -485,53 +485,98 @@ app.get('/blog/:slug', async (req, res) => {
     </script>`;
 
             const seniorCTABanner = `
-<div style="background: linear-gradient(135deg, #0c1a0c 0%, #1a2e1a 100%); border: 2px solid #22c55e; border-radius: 14px; padding: 22px 24px; margin: 0 0 24px 0; color: #ffffff; box-shadow: 0 10px 30px rgba(0,0,0,0.4);">
-    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
+<style>
+.ry-snr-banner { background: linear-gradient(135deg, #0c1a0c 0%, #1a2e1a 100%); border: 2px solid #22c55e; border-radius: 14px; padding: 22px 24px; margin: 0 0 24px 0; color: #ffffff; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+.ry-snr-banner-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+.ry-snr-banner-title { color: #86efac; font-size: 18px; font-weight: 700; line-height: 1.3; }
+.ry-snr-banner-desc { font-size: 14.5px; line-height: 1.65; color: #dcfce7; margin-bottom: 14px; }
+.ry-snr-badge { background: rgba(34,197,94,0.1); border-left: 3px solid #22c55e; padding: 10px 14px; border-radius: 4px; margin-bottom: 16px; font-size: 13.5px; color: #bbf7d0; }
+.ry-snr-btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.ry-snr-btn { padding: 11px 20px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 13.5px; display: inline-flex; align-items: center; gap: 8px; }
+.ry-snr-btn.wa { background: #22c55e; color: #fff; box-shadow: 0 4px 14px rgba(34,197,94,0.35); }
+.ry-snr-btn.pk { background: #d4af37; color: #0f172a; box-shadow: 0 4px 14px rgba(212,175,55,0.35); }
+.ry-snr-nav { background: rgba(15,23,42,0.5); border: 1px solid rgba(212,175,55,0.25); border-radius: 10px; padding: 14px 16px; margin-bottom: 28px; font-size: 13.5px; color: #cbd5e1; }
+.ry-snr-nav strong { color: #fbbf24; display: block; margin-bottom: 8px; }
+.ry-snr-nav-pills { display: flex; flex-wrap: wrap; gap: 7px; }
+.ry-snr-nav-pill { color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2); white-space: nowrap; }
+.ry-snr-bottom { background: #0f172a; border: 2px dashed rgba(212,175,55,0.5); border-radius: 12px; padding: 20px 22px; margin: 32px 0 8px 0; color: #ffffff; }
+.ry-snr-bottom-title { font-size: 15px; font-weight: 700; color: #fbbf24; margin-bottom: 8px; }
+.ry-snr-bottom-desc { font-size: 14px; color: #e2e8f0; line-height: 1.6; margin-bottom: 14px; }
+.ry-snr-bottom-btn-row { display: flex; gap: 10px; flex-wrap: wrap; font-size: 13.5px; }
+.ry-snr-bottom-btn { padding: 9px 18px; border-radius: 6px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 7px; }
+.ry-snr-bottom-btn.wa { background: #22c55e; color: #fff; }
+.ry-snr-bottom-btn.call { background: transparent; border: 1.5px solid #d4af37; color: #d4af37; }
+.ry-snr-also { margin-top: 14px; font-size: 13px; color: #94a3b8; }
+.ry-snr-also a { color: #93c5fd; }
+@media (max-width: 680px) {
+  .ry-snr-banner { padding: 16px 14px; border-radius: 10px; margin-bottom: 20px; }
+  .ry-snr-banner-title { font-size: 15px; }
+  .ry-snr-banner-desc { font-size: 13.5px; margin-bottom: 12px; }
+  .ry-snr-badge { padding: 8px 10px; font-size: 12px; margin-bottom: 12px; }
+  .ry-snr-btn { font-size: 13px; padding: 10px 14px; width: 100%; justify-content: center; box-sizing: border-box; }
+  .ry-snr-btn-row { flex-direction: column; gap: 8px; }
+  .ry-snr-nav { padding: 12px 12px; }
+  .ry-snr-nav-pill { font-size: 12px; padding: 3px 8px; }
+  .ry-snr-bottom { padding: 16px 14px; border-radius: 10px; }
+  .ry-snr-bottom-title { font-size: 14px; }
+  .ry-snr-bottom-desc { font-size: 13px; margin-bottom: 10px; }
+  .ry-snr-bottom-btn { font-size: 13px; padding: 10px 14px; width: 100%; justify-content: center; box-sizing: border-box; }
+  .ry-snr-bottom-btn-row { flex-direction: column; gap: 8px; }
+}
+@media (max-width: 380px) {
+  .ry-snr-banner { padding: 12px 10px; }
+  .ry-snr-banner-title { font-size: 14px; }
+  .ry-snr-btn { font-size: 12px; padding: 9px 10px; }
+  .ry-snr-bottom-btn { font-size: 12px; padding: 9px 10px; }
+}
+</style>
+<div class="ry-snr-banner">
+    <div class="ry-snr-banner-head">
         <span style="font-size: 26px;">🙏</span>
-        <strong style="color: #86efac; font-size: 18px; font-weight: 700; line-height: 1.3;">Planning Adi Kailash Yatra for an Elderly Family Member?</strong>
+        <strong class="ry-snr-banner-title">Planning Adi Kailash Yatra for an Elderly Family Member?</strong>
     </div>
-    <p style="font-size: 14.5px; line-height: 1.65; color: #dcfce7; margin-bottom: 14px;">
+    <p class="ry-snr-banner-desc">
         Rudraansh Yatra is a <strong>NIDHI-certified ground operator from Pithoragarh</strong> that has safely guided senior citizens aged 70+ to Jyolingkong at 4,750m. We carry <strong>portable oxygen cylinders</strong>, arrange pony support, and handle the <strong>Inner Line Permit & medical fitness certificate</strong> process for all yatris.
     </p>
-    <div style="background: rgba(34,197,94,0.1); border-left: 3px solid #22c55e; padding: 10px 14px; border-radius: 4px; margin-bottom: 16px; font-size: 13.5px; color: #bbf7d0;">
+    <div class="ry-snr-badge">
         🗓️ <strong>Best months for senior citizens:</strong> September 15 – October 31, 2026 (post-monsoon, stable roads, clear skies)
     </div>
-    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-        <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20plan%20the%20Adi%20Kailash%20Yatra%20for%20a%20senior%20citizen%20in%20my%20family.%20Please%20share%20details%20on%20safety%2C%20departure%20dates%20and%20ILP%20process." target="_blank" rel="noopener" style="background: #22c55e; color: #fff; padding: 11px 20px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 13.5px; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(34,197,94,0.35);">
+    <div class="ry-snr-btn-row">
+        <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20plan%20the%20Adi%20Kailash%20Yatra%20for%20a%20senior%20citizen%20in%20my%20family.%20Please%20share%20details%20on%20safety%2C%20departure%20dates%20and%20ILP%20process." target="_blank" rel="noopener" class="ry-snr-btn wa">
             <i class="fa-brands fa-whatsapp" style="font-size: 17px;"></i> WhatsApp for Senior Citizen Yatra
         </a>
-        <a href="/adi-kailash" style="background: #d4af37; color: #0f172a; padding: 11px 20px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 13.5px; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(212,175,55,0.35);">
+        <a href="/adi-kailash" class="ry-snr-btn pk">
             <i class="fa-solid fa-mountain" style="font-size: 14px;"></i> View Full Yatra Package
         </a>
     </div>
 </div>
 
-<div style="background: rgba(15,23,42,0.5); border: 1px solid rgba(212,175,55,0.25); border-radius: 10px; padding: 16px 18px; margin-bottom: 28px; font-size: 13.5px; color: #cbd5e1;">
-    <strong style="color: #fbbf24; display: block; margin-bottom: 8px;">📚 Essential Guides Before You Book</strong>
-    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-        <a href="/blog/inner-line-permit-adi-kailash-2026-guide" style="color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2);">📋 ILP Permit Guide</a>
-        <a href="/blog/adi-kailash-packing-list-essential-guide-for-yatris" style="color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2);">🎒 Packing List</a>
-        <a href="/blog/adi-kailash-yatra-difficulty-level-can-beginners-do-it" style="color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2);">⛰️ Difficulty Level Guide</a>
-        <a href="/blog/5-things-you-need-to-do-before-planning-a-trip-to-adi-kailash" style="color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2);">✅ Pre-Trip Checklist</a>
-        <a href="/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates" style="color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2);">📅 2026 Yatra Status</a>
+<div class="ry-snr-nav">
+    <strong>📚 Essential Guides Before You Book</strong>
+    <div class="ry-snr-nav-pills">
+        <a href="/blog/inner-line-permit-adi-kailash-2026-guide" class="ry-snr-nav-pill">📋 ILP Permit Guide</a>
+        <a href="/blog/adi-kailash-packing-list-essential-guide-for-yatris" class="ry-snr-nav-pill">🎒 Packing List</a>
+        <a href="/blog/adi-kailash-yatra-difficulty-level-can-beginners-do-it" class="ry-snr-nav-pill">⛰️ Difficulty Level Guide</a>
+        <a href="/blog/5-things-you-need-to-do-before-planning-a-trip-to-adi-kailash" class="ry-snr-nav-pill">✅ Pre-Trip Checklist</a>
+        <a href="/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates" class="ry-snr-nav-pill">📅 2026 Yatra Status</a>
     </div>
 </div>`;
 
             const seniorCtaBottom = `
-<div style="background: #0f172a; border: 2px dashed rgba(212,175,55,0.5); border-radius: 12px; padding: 20px 22px; margin: 32px 0 8px 0; color: #ffffff;">
-    <p style="font-size: 15px; font-weight: 700; color: #fbbf24; margin-bottom: 8px;">💬 Have More Questions About Senior Citizen Safety?</p>
-    <p style="font-size: 14px; color: #e2e8f0; line-height: 1.6; margin-bottom: 14px;">
+<div class="ry-snr-bottom">
+    <p class="ry-snr-bottom-title">💬 Have More Questions About Senior Citizen Safety?</p>
+    <p class="ry-snr-bottom-desc">
         Our team at Rudraansh Yatra is based in <strong>Pithoragarh</strong> and has handled the complete yatra for elderly pilgrims — including medical fitness paperwork, oxygen support, and pony arrangements. Call us before you decide and we'll walk you through every step.
     </p>
-    <div style="display: flex; gap: 10px; flex-wrap: wrap; font-size: 13.5px;">
-        <a href="https://wa.me/917617617651?text=Namaste!%20I%20have%20questions%20about%20the%20Adi%20Kailash%20Yatra%20for%20a%20senior%20citizen.%20Please%20advise%20on%20safety%2C%20medical%20fitness%20and%20ILP%20process." target="_blank" rel="noopener" style="background: #22c55e; color: #fff; padding: 9px 18px; border-radius: 6px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 7px;">
+    <div class="ry-snr-bottom-btn-row">
+        <a href="https://wa.me/917617617651?text=Namaste!%20I%20have%20questions%20about%20the%20Adi%20Kailash%20Yatra%20for%20a%20senior%20citizen.%20Please%20advise%20on%20safety%2C%20medical%20fitness%20and%20ILP%20process." target="_blank" rel="noopener" class="ry-snr-bottom-btn wa">
             <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp
         </a>
-        <a href="tel:+917617617651" style="background: transparent; border: 1.5px solid #d4af37; color: #d4af37; padding: 9px 18px; border-radius: 6px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 7px;">
+        <a href="tel:+917617617651" class="ry-snr-bottom-btn call">
             <i class="fa-solid fa-phone"></i> Call +91 76176 17651
         </a>
     </div>
-    <p style="margin-top: 14px; font-size: 13px; color: #94a3b8;">Also read: <a href="/blog/adi-kailash-yatra-for-solo-female-travellers-safety-guide" style="color: #93c5fd;">Solo Female Travellers Safety Guide</a> · <a href="/blog/adi-kailash-yatra-difficulty-level-can-beginners-do-it" style="color: #93c5fd;">Difficulty Level: Can Beginners Do It?</a></p>
+    <p class="ry-snr-also">Also read: <a href="/blog/adi-kailash-yatra-for-solo-female-travellers-safety-guide">Solo Female Travellers Safety Guide</a> · <a href="/blog/adi-kailash-yatra-difficulty-level-can-beginners-do-it">Difficulty Level: Can Beginners Do It?</a></p>
 </div>`;
 
             const enrichedContent = paragraphsHtml
@@ -617,50 +662,93 @@ app.get('/blog/:slug', async (req, res) => {
     </script>`;
 
             const closedYatraCTA = `
-<div style="background: linear-gradient(135deg, #1a0505 0%, #2d0a0a 100%); border: 2px solid #ef4444; border-radius: 14px; padding: 20px 24px; margin: 0 0 24px 0; color: #ffffff;">
-    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+<style>
+.ry-cld-banner { background: linear-gradient(135deg, #1a0505 0%, #2d0a0a 100%); border: 2px solid #ef4444; border-radius: 14px; padding: 20px 24px; margin: 0 0 24px 0; color: #ffffff; }
+.ry-cld-banner-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+.ry-cld-banner-title { color: #fca5a5; font-size: 17px; font-weight: 700; }
+.ry-cld-banner-desc { font-size: 14px; color: #fecaca; line-height: 1.6; margin-bottom: 14px; }
+.ry-cld-btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.ry-cld-btn { padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 13.5px; display: inline-flex; align-items: center; gap: 8px; }
+.ry-cld-btn.wa { background: #22c55e; color: #fff; }
+.ry-cld-btn.info { background: rgba(251,191,36,0.15); border: 1.5px solid #fbbf24; color: #fbbf24; }
+.ry-cld-nav { background: rgba(15,23,42,0.5); border: 1px solid rgba(212,175,55,0.25); border-radius: 10px; padding: 14px 16px; margin-bottom: 28px; font-size: 13.5px; color: #cbd5e1; }
+.ry-cld-nav strong { color: #fbbf24; display: block; margin-bottom: 8px; }
+.ry-cld-nav-pills { display: flex; flex-wrap: wrap; gap: 7px; }
+.ry-cld-nav-pill { color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2); white-space: nowrap; }
+.ry-cld-bottom { background: #0f172a; border: 2px dashed rgba(212,175,55,0.5); border-radius: 12px; padding: 20px 22px; margin: 32px 0 8px 0; color: #ffffff; }
+.ry-cld-bottom-title { font-size: 15px; font-weight: 700; color: #fbbf24; margin-bottom: 8px; }
+.ry-cld-bottom-desc { font-size: 14px; color: #e2e8f0; line-height: 1.6; margin-bottom: 14px; }
+.ry-cld-bottom-btn-row { display: flex; gap: 10px; flex-wrap: wrap; font-size: 13.5px; }
+.ry-cld-bottom-btn { padding: 9px 18px; border-radius: 6px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 7px; }
+.ry-cld-bottom-btn.wa { background: #22c55e; color: #fff; }
+.ry-cld-bottom-btn.call { background: transparent; border: 1.5px solid #d4af37; color: #d4af37; }
+.ry-cld-also { margin-top: 14px; font-size: 13px; color: #94a3b8; }
+.ry-cld-also a { color: #93c5fd; }
+@media (max-width: 680px) {
+  .ry-cld-banner { padding: 16px 14px; border-radius: 10px; margin-bottom: 20px; }
+  .ry-cld-banner-title { font-size: 15px; }
+  .ry-cld-banner-desc { font-size: 13px; margin-bottom: 12px; }
+  .ry-cld-btn { font-size: 13px; padding: 10px 14px; width: 100%; justify-content: center; box-sizing: border-box; }
+  .ry-cld-btn-row { flex-direction: column; gap: 8px; }
+  .ry-cld-nav { padding: 12px 12px; }
+  .ry-cld-nav-pill { font-size: 12px; padding: 3px 8px; }
+  .ry-cld-bottom { padding: 16px 14px; border-radius: 10px; }
+  .ry-cld-bottom-title { font-size: 14px; }
+  .ry-cld-bottom-desc { font-size: 13px; margin-bottom: 10px; }
+  .ry-cld-bottom-btn { font-size: 13px; padding: 10px 14px; width: 100%; justify-content: center; box-sizing: border-box; }
+  .ry-cld-bottom-btn-row { flex-direction: column; gap: 8px; }
+}
+@media (max-width: 380px) {
+  .ry-cld-banner { padding: 12px 10px; }
+  .ry-cld-banner-title { font-size: 14px; }
+  .ry-cld-btn { font-size: 12px; padding: 9px 10px; }
+  .ry-cld-bottom-btn { font-size: 12px; padding: 9px 10px; }
+}
+</style>
+<div class="ry-cld-banner">
+    <div class="ry-cld-banner-head">
         <span style="font-size: 22px;">⚠️</span>
-        <strong style="color: #fca5a5; font-size: 17px; font-weight: 700;">Adi Kailash Yatra 2026 — Current Status</strong>
+        <strong class="ry-cld-banner-title">Adi Kailash Yatra 2026 — Current Status</strong>
     </div>
-    <p style="font-size: 14px; color: #fecaca; line-height: 1.6; margin-bottom: 14px;">
+    <p class="ry-cld-banner-desc">
         The route was <strong style="color: #f87171;">suspended during monsoon season</strong> and is expected to reopen around <strong style="color: #fbbf24;">September 15, 2026</strong>. ILP permits from the Dharchula SDM Office will resume from that date. Always confirm with a local operator before setting out.
     </p>
-    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-        <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20confirm%20current%20Adi%20Kailash%20Yatra%20status%20and%20ILP%20issuance.%20Please%20share%20the%20latest%20update." target="_blank" rel="noopener" style="background: #22c55e; color: #fff; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 13.5px; display: inline-flex; align-items: center; gap: 8px;">
+    <div class="ry-cld-btn-row">
+        <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20confirm%20current%20Adi%20Kailash%20Yatra%20status%20and%20ILP%20issuance.%20Please%20share%20the%20latest%20update." target="_blank" rel="noopener" class="ry-cld-btn wa">
             <i class="fa-brands fa-whatsapp"></i> Check Live Status on WhatsApp
         </a>
-        <a href="/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates" style="background: rgba(251,191,36,0.15); border: 1.5px solid #fbbf24; color: #fbbf24; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 13.5px; display: inline-flex; align-items: center; gap: 8px;">
+        <a href="/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates" class="ry-cld-btn info">
             <i class="fa-solid fa-circle-info"></i> Full 2026 Status Update
         </a>
     </div>
 </div>
 
-<div style="background: rgba(15,23,42,0.5); border: 1px solid rgba(212,175,55,0.25); border-radius: 10px; padding: 16px 18px; margin-bottom: 28px; font-size: 13.5px; color: #cbd5e1;">
-    <strong style="color: #fbbf24; display: block; margin-bottom: 8px;">📚 Related Guides</strong>
-    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-        <a href="/blog/inner-line-permit-adi-kailash-2026-guide" style="color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2);">📋 ILP Permit Step-by-Step Guide</a>
-        <a href="/blog/5-things-you-need-to-do-before-planning-a-trip-to-adi-kailash" style="color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2);">✅ Pre-Trip Checklist</a>
-        <a href="/blog/adi-kailash-packing-list-essential-guide-for-yatris" style="color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2);">🎒 Packing List Guide</a>
-        <a href="/blog/adi-kailash-yatra-difficulty-level-can-beginners-do-it" style="color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2);">⛰️ Difficulty Level</a>
-        <a href="/adi-kailash" style="color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2);">🏔️ View Tour Packages</a>
+<div class="ry-cld-nav">
+    <strong>📚 Related Guides</strong>
+    <div class="ry-cld-nav-pills">
+        <a href="/blog/inner-line-permit-adi-kailash-2026-guide" class="ry-cld-nav-pill">📋 ILP Permit Step-by-Step Guide</a>
+        <a href="/blog/5-things-you-need-to-do-before-planning-a-trip-to-adi-kailash" class="ry-cld-nav-pill">✅ Pre-Trip Checklist</a>
+        <a href="/blog/adi-kailash-packing-list-essential-guide-for-yatris" class="ry-cld-nav-pill">🎒 Packing List Guide</a>
+        <a href="/blog/adi-kailash-yatra-difficulty-level-can-beginners-do-it" class="ry-cld-nav-pill">⛰️ Difficulty Level</a>
+        <a href="/adi-kailash" class="ry-cld-nav-pill">🏔️ View Tour Packages</a>
     </div>
 </div>`;
 
             const closedYatraCtaBottom = `
-<div style="background: #0f172a; border: 2px dashed rgba(212,175,55,0.5); border-radius: 12px; padding: 20px 22px; margin: 32px 0 8px 0; color: #ffffff;">
-    <p style="font-size: 15px; font-weight: 700; color: #fbbf24; margin-bottom: 8px;">📞 Confirm Yatra Status Before You Travel</p>
-    <p style="font-size: 14px; color: #e2e8f0; line-height: 1.6; margin-bottom: 14px;">
+<div class="ry-cld-bottom">
+    <p class="ry-cld-bottom-title">📞 Confirm Yatra Status Before You Travel</p>
+    <p class="ry-cld-bottom-desc">
         Rudraansh Yatra is based in <strong>Pithoragarh</strong> — we track Adi Kailash route status, SDM office ILP issuance dates, and Byas Valley road conditions daily. Call or WhatsApp before booking transport or taking leave — we'll tell you the ground reality, not what you want to hear.
     </p>
-    <div style="display: flex; gap: 10px; flex-wrap: wrap; font-size: 13.5px;">
-        <a href="https://wa.me/917617617651?text=Namaste!%20Is%20the%20Adi%20Kailash%20Yatra%20open%20right%20now%3F%20Can%20I%20get%20an%20ILP%20from%20Dharchula%20SDM%20Office%20today%3F" target="_blank" rel="noopener" style="background: #22c55e; color: #fff; padding: 9px 18px; border-radius: 6px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 7px;">
+    <div class="ry-cld-bottom-btn-row">
+        <a href="https://wa.me/917617617651?text=Namaste!%20Is%20the%20Adi%20Kailash%20Yatra%20open%20right%20now%3F%20Can%20I%20get%20an%20ILP%20from%20Dharchula%20SDM%20Office%20today%3F" target="_blank" rel="noopener" class="ry-cld-bottom-btn wa">
             <i class="fa-brands fa-whatsapp"></i> WhatsApp for Live Status
         </a>
-        <a href="tel:+917617617651" style="background: transparent; border: 1.5px solid #d4af37; color: #d4af37; padding: 9px 18px; border-radius: 6px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 7px;">
+        <a href="tel:+917617617651" class="ry-cld-bottom-btn call">
             <i class="fa-solid fa-phone"></i> Call +91 76176 17651
         </a>
     </div>
-    <p style="margin-top: 14px; font-size: 13px; color: #94a3b8;">Also read: <a href="/blog/adi-kailash-yatra-2026-suspended-due-to-weather-official-reopening-date" style="color: #93c5fd;">Official Suspension & Sep 15 Reopening Notice</a> · <a href="/blog/adi-kailash-yatra-for-solo-female-travellers-safety-guide" style="color: #93c5fd;">Solo Female Travellers Safety Guide</a></p>
+    <p class="ry-cld-also">Also read: <a href="/blog/adi-kailash-yatra-2026-suspended-due-to-weather-official-reopening-date">Official Suspension & Sep 15 Reopening Notice</a> · <a href="/blog/adi-kailash-yatra-for-solo-female-travellers-safety-guide">Solo Female Travellers Safety Guide</a></p>
 </div>`;
 
             const cleanedContent = paragraphsHtml
@@ -754,35 +842,80 @@ app.get('/blog/:slug', async (req, res) => {
     </script>`;
 
             const soloCTABanner = `
-<div style="background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 100%); border: 2px solid #d4af37; border-radius: 14px; padding: 22px 24px; margin: 0 0 32px 0; color: #ffffff; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
+<style>
+.ry-slo-banner { background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 100%); border: 2px solid #d4af37; border-radius: 14px; padding: 22px 24px; margin: 0 0 32px 0; color: #ffffff; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+.ry-slo-banner-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+.ry-slo-banner-title { color: #fbbf24; font-size: 18px; font-weight: 700; line-height: 1.3; }
+.ry-slo-banner-desc { font-size: 14.5px; line-height: 1.65; color: #e2e8f0; margin-bottom: 14px; }
+.ry-slo-badge { background: rgba(212,175,55,0.1); border-left: 3px solid #d4af37; padding: 10px 14px; border-radius: 4px; margin-bottom: 16px; font-size: 13.5px; color: #fde68a; }
+.ry-slo-btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.ry-slo-btn { padding: 11px 20px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 13.5px; display: inline-flex; align-items: center; gap: 8px; }
+.ry-slo-btn.wa { background: #22c55e; color: #ffffff; box-shadow: 0 4px 14px rgba(34,197,94,0.35); }
+.ry-slo-btn.pk { background: #d4af37; color: #0f172a; box-shadow: 0 4px 14px rgba(212,175,55,0.35); }
+.ry-slo-nav { background: rgba(15,23,42,0.5); border: 1px solid rgba(212,175,55,0.25); border-radius: 10px; padding: 14px 16px; margin-bottom: 28px; font-size: 13.5px; color: #cbd5e1; }
+.ry-slo-nav strong { color: #fbbf24; display: block; margin-bottom: 8px; }
+.ry-slo-nav-pills { display: flex; flex-wrap: wrap; gap: 7px; }
+.ry-slo-nav-pill { color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2); white-space: nowrap; }
+.ry-slo-bottom { background: #0f172a; border: 2px dashed rgba(212,175,55,0.5); border-radius: 12px; padding: 20px 22px; margin: 32px 0 8px 0; color: #ffffff; }
+.ry-slo-bottom-title { font-size: 15px; font-weight: 700; color: #fbbf24; margin-bottom: 8px; }
+.ry-slo-bottom-desc { font-size: 14px; color: #e2e8f0; line-height: 1.6; margin-bottom: 14px; }
+.ry-slo-bottom-btn-row { display: flex; gap: 10px; flex-wrap: wrap; font-size: 13.5px; }
+.ry-slo-bottom-btn { padding: 9px 18px; border-radius: 6px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 7px; }
+.ry-slo-bottom-btn.wa { background: #22c55e; color: #fff; }
+.ry-slo-bottom-btn.call { background: transparent; border: 1.5px solid #d4af37; color: #d4af37; }
+.ry-slo-also { margin-top: 14px; font-size: 13px; color: #94a3b8; }
+.ry-slo-also a { color: #93c5fd; }
+@media (max-width: 680px) {
+  .ry-slo-banner { padding: 16px 14px; border-radius: 10px; margin-bottom: 20px; }
+  .ry-slo-banner-title { font-size: 15px; }
+  .ry-slo-banner-desc { font-size: 13.5px; margin-bottom: 12px; }
+  .ry-slo-badge { padding: 8px 10px; font-size: 12px; margin-bottom: 12px; }
+  .ry-slo-btn { font-size: 13px; padding: 10px 14px; width: 100%; justify-content: center; box-sizing: border-box; }
+  .ry-slo-btn-row { flex-direction: column; gap: 8px; }
+  .ry-slo-nav { padding: 12px 12px; }
+  .ry-slo-nav-pill { font-size: 12px; padding: 3px 8px; }
+  .ry-slo-bottom { padding: 16px 14px; border-radius: 10px; }
+  .ry-slo-bottom-title { font-size: 14px; }
+  .ry-slo-bottom-desc { font-size: 13px; margin-bottom: 10px; }
+  .ry-slo-bottom-btn { font-size: 13px; padding: 10px 14px; width: 100%; justify-content: center; box-sizing: border-box; }
+  .ry-slo-bottom-btn-row { flex-direction: column; gap: 8px; }
+}
+@media (max-width: 380px) {
+  .ry-slo-banner { padding: 12px 10px; }
+  .ry-slo-banner-title { font-size: 14px; }
+  .ry-slo-btn { font-size: 12px; padding: 9px 10px; }
+  .ry-slo-bottom-btn { font-size: 12px; padding: 9px 10px; }
+}
+</style>
+<div class="ry-slo-banner">
+    <div class="ry-slo-banner-head">
         <span style="font-size: 26px;">🏔️</span>
-        <strong style="color: #fbbf24; font-size: 18px; font-weight: 700; line-height: 1.3;">Planning the Adi Kailash Yatra as a Solo Woman?</strong>
+        <strong class="ry-slo-banner-title">Planning the Adi Kailash Yatra as a Solo Woman?</strong>
     </div>
-    <p style="font-size: 14.5px; line-height: 1.65; color: #e2e8f0; margin-bottom: 14px;">
+    <p class="ry-slo-banner-desc">
         Rudraansh Yatra is a <strong>NIDHI-certified, Pithoragarh-based ground operator</strong> that has personally guided <strong>solo women travellers</strong> through the Adi Kailash route. We handle <strong>ILP permits</strong>, group departures with women-friendly facilities, and <strong>4×4 transfers from Dharchula to Gunji</strong>.
     </p>
-    <div style="background: rgba(212,175,55,0.1); border-left: 3px solid #d4af37; padding: 10px 14px; border-radius: 4px; margin-bottom: 16px; font-size: 13.5px; color: #fde68a;">
+    <div class="ry-slo-badge">
         🗓️ <strong>Female-friendly group departures with separate bathing facilities:</strong> 30 Sep · 12 Oct · 15 Oct 2026
     </div>
-    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-        <a href="https://wa.me/917617617651?text=Namaste!%20I%20am%20a%20solo%20female%20traveller%20interested%20in%20the%20Adi%20Kailash%20Yatra.%20Can%20you%20share%20group%20departure%20dates%20and%20details%3F" target="_blank" rel="noopener" style="background: #22c55e; color: #ffffff; padding: 11px 20px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 13.5px; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(34, 197, 94, 0.35);">
+    <div class="ry-slo-btn-row">
+        <a href="https://wa.me/917617617651?text=Namaste!%20I%20am%20a%20solo%20female%20traveller%20interested%20in%20the%20Adi%20Kailash%20Yatra.%20Can%20you%20share%20group%20departure%20dates%20and%20details%3F" target="_blank" rel="noopener" class="ry-slo-btn wa">
             <i class="fa-brands fa-whatsapp" style="font-size: 17px;"></i> WhatsApp for Group Dates
         </a>
-        <a href="/adi-kailash" style="background: #d4af37; color: #0f172a; padding: 11px 20px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 13.5px; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(212, 175, 55, 0.35);">
+        <a href="/adi-kailash" class="ry-slo-btn pk">
             <i class="fa-solid fa-mountain" style="font-size: 14px;"></i> View Full Yatra Package
         </a>
     </div>
 </div>
 
-<div style="background: rgba(15,23,42,0.5); border: 1px solid rgba(212,175,55,0.25); border-radius: 10px; padding: 16px 18px; margin-bottom: 28px; font-size: 13.5px; color: #cbd5e1;">
-    <strong style="color: #fbbf24; display: block; margin-bottom: 8px;">📚 Quick Navigation</strong>
-    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-        <a href="/blog/inner-line-permit-adi-kailash-2026-guide" style="color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2);">📋 ILP Permit Guide</a>
-        <a href="/blog/adi-kailash-packing-list-essential-guide-for-yatris" style="color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2);">🎒 Packing List</a>
-        <a href="/blog/adi-kailash-yatra-difficulty-level-can-beginners-do-it" style="color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2);">⛰️ Difficulty Level</a>
-        <a href="/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates" style="color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2);">📅 2026 Yatra Status</a>
-        <a href="/blog/5-things-you-need-to-do-before-planning-a-trip-to-adi-kailash" style="color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2);">✅ Pre-Trip Checklist</a>
+<div class="ry-slo-nav">
+    <strong>📚 Quick Navigation</strong>
+    <div class="ry-slo-nav-pills">
+        <a href="/blog/inner-line-permit-adi-kailash-2026-guide" class="ry-slo-nav-pill">📋 ILP Permit Guide</a>
+        <a href="/blog/adi-kailash-packing-list-essential-guide-for-yatris" class="ry-slo-nav-pill">🎒 Packing List</a>
+        <a href="/blog/adi-kailash-yatra-difficulty-level-can-beginners-do-it" class="ry-slo-nav-pill">⛰️ Difficulty Level</a>
+        <a href="/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates" class="ry-slo-nav-pill">📅 2026 Yatra Status</a>
+        <a href="/blog/5-things-you-need-to-do-before-planning-a-trip-to-adi-kailash" class="ry-slo-nav-pill">✅ Pre-Trip Checklist</a>
     </div>
 </div>`;
 
@@ -812,20 +945,20 @@ app.get('/blog/:slug', async (req, res) => {
                 );
 
             const soloCtaBottom = `
-<div style="background: #0f172a; border: 2px dashed rgba(212,175,55,0.5); border-radius: 12px; padding: 20px 22px; margin: 32px 0 8px 0; color: #ffffff;">
-    <p style="font-size: 15px; font-weight: 700; color: #fbbf24; margin-bottom: 8px;">💬 Still Have Questions?</p>
-    <p style="font-size: 14px; color: #e2e8f0; line-height: 1.6; margin-bottom: 14px;">
+<div class="ry-slo-bottom">
+    <p class="ry-slo-bottom-title">💬 Still Have Questions?</p>
+    <p class="ry-slo-bottom-desc">
         Call or WhatsApp <strong>Dheerendra Rautela</strong> at Rudraansh Yatra directly — we're based in Pithoragarh and answer every question honestly, including the ones you might feel awkward asking a city-based agent.
     </p>
-    <div style="display: flex; gap: 10px; flex-wrap: wrap; font-size: 13.5px;">
-        <a href="https://wa.me/917617617651?text=Namaste!%20I%20am%20a%20solo%20female%20traveller%20planning%20Adi%20Kailash%20Yatra.%20Please%20guide%20me%20on%20group%20departures%20and%20ILP%20process." target="_blank" rel="noopener" style="background: #22c55e; color: #fff; padding: 9px 18px; border-radius: 6px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 7px;">
+    <div class="ry-slo-bottom-btn-row">
+        <a href="https://wa.me/917617617651?text=Namaste!%20I%20am%20a%20solo%20female%20traveller%20planning%20Adi%20Kailash%20Yatra.%20Please%20guide%20me%20on%20group%20departures%20and%20ILP%20process." target="_blank" rel="noopener" class="ry-slo-bottom-btn wa">
             <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp
         </a>
-        <a href="tel:+917617617651" style="background: transparent; border: 1.5px solid #d4af37; color: #d4af37; padding: 9px 18px; border-radius: 6px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 7px;">
+        <a href="tel:+917617617651" class="ry-slo-bottom-btn call">
             <i class="fa-solid fa-phone"></i> Call +91 76176 17651
         </a>
     </div>
-    <p style="margin-top: 14px; font-size: 13px; color: #94a3b8;">Also read: <a href="/blog/is-adi-kailash-yatra-safe-for-senior-citizens-guide" style="color: #93c5fd;">Is Adi Kailash Yatra Safe for Senior Citizens?</a> · <a href="/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates" style="color: #93c5fd;">2026 Yatra Status & Reopening</a></p>
+    <p class="ry-slo-also">Also read: <a href="/blog/is-adi-kailash-yatra-safe-for-senior-citizens-guide">Is Adi Kailash Yatra Safe for Senior Citizens?</a> · <a href="/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates">2026 Yatra Status & Reopening</a></p>
 </div>`;
 
             contentHtml = soloCTABanner + interlinkedContent + soloCtaBottom;
