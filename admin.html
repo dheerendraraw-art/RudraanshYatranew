@@ -2886,6 +2886,22 @@
                 setCard(4, true, '<i class="fa-solid fa-thumbs-down" style="color: #ef4444;"></i>', lost, 'Lost Leads');
                 setCard(5, false);
             }
+            else if (paneId === 'pane-analytics') {
+                const leads = currentLeads || [];
+                const total = leads.length;
+                const answered = leads.filter(l => ['answered', 'follow up required', 'won'].includes((l.status || '').toLowerCase())).length;
+                const pending = total - answered;
+                const converted = leads.filter(l => (l.final_status || '').toLowerCase() === 'booking confirmed' || (l.status || '').toLowerCase() === 'won').length;
+                const activeStaffCount = (usersList || []).length;
+                const contactRate = total > 0 ? ((answered / total) * 100).toFixed(1) + '%' : '0%';
+
+                setCard(0, true, '<i class="fa-solid fa-users" style="color: #3b82f6;"></i>', total, 'Total Leads');
+                setCard(1, true, '<i class="fa-solid fa-phone-volume" style="color: #22c55e;"></i>', answered, 'Connected Calls');
+                setCard(2, true, '<i class="fa-solid fa-hourglass-half" style="color: #eab308;"></i>', pending, 'Pending Outreach');
+                setCard(3, true, '<i class="fa-solid fa-trophy" style="color: #ec4899;"></i>', converted, 'Converted Bookings');
+                setCard(4, true, '<i class="fa-solid fa-chart-line" style="color: var(--color-gold);"></i>', contactRate, 'Overall Contact Rate');
+                setCard(5, true, '<i class="fa-solid fa-user-gear" style="color: #8b5cf6;"></i>', activeStaffCount, 'Active Staff Users');
+            }
             else if (paneId === 'pane-lead-history') {
                 const total = globalLeadHistoryList ? globalLeadHistoryList.length : 0;
                 setCard(0, true, '<i class="fa-solid fa-clock-rotate-left"></i>', total, 'Logged Actions');
