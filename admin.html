@@ -4408,7 +4408,11 @@
                     const staffStats = {};
                     const allStaffList = [
                         { id: 'unassigned', name: 'Unassigned' },
-                        ...(usersList || []).map(u => ({ id: u.id, name: usersMap[u.id] || u.email }))
+                        ...(usersList || []).filter(u => {
+                            const uId = (u.id || '').toLowerCase();
+                            const uName = (usersMap[u.id] || u.email || '').toLowerCase();
+                            return mappedUserIds.has(uId) || !!AGENT_UUIDS[uId] || !!AGENT_UUIDS[uName];
+                        }).map(u => ({ id: u.id, name: usersMap[u.id] || u.email }))
                     ];
 
                     allStaffList.forEach(s => {
@@ -4439,7 +4443,11 @@
                         const sortedStaff = Object.values(staffStats).sort((a, b) => b.total - a.total);
                         let html = '';
                         sortedStaff.forEach(st => {
-                            if (st.total === 0 && st.id === 'unassigned') return;
+                            const stIdLower = (st.id || '').toLowerCase();
+                            const stNameLower = (st.name || '').toLowerCase();
+                            const isStaffUser = mappedUserIds.has(stIdLower) || !!AGENT_UUIDS[stIdLower] || !!AGENT_UUIDS[stNameLower];
+
+                            if (st.total === 0 && !isStaffUser) return;
 
                             const contactRate = st.total > 0 ? ((st.connected / st.total) * 100).toFixed(1) : 0;
                             const conversionRate = st.total > 0 ? ((st.converted / st.total) * 100).toFixed(1) : 0;
