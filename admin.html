@@ -305,7 +305,7 @@
 
                 <!-- Top Analytics Metric Cards -->
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 24px;">
-                    <div style="background: #ffffff; border: 1.5px solid rgba(212, 175, 55, 0.35); box-shadow: 0 4px 15px rgba(0,0,0,0.04); border-radius: 12px; padding: 18px 20px; display: flex; align-items: center; gap: 16px;">
+                    <div id="analytics-filter-card-all" onclick="setAnalyticsMetricFilter('all')" class="analytics-clickable-card" style="background: #ffffff; border: 2.5px solid var(--color-gold); box-shadow: 0 6px 20px rgba(212,175,55,0.25); border-radius: 12px; padding: 18px 20px; display: flex; align-items: center; gap: 16px; cursor: pointer; transition: all 0.2s;">
                         <div style="width: 48px; height: 48px; border-radius: 10px; background: rgba(37, 99, 235, 0.1); color: #2563eb; display: flex; align-items: center; justify-content: center; font-size: 22px;">
                             <i class="fa-solid fa-users"></i>
                         </div>
@@ -315,7 +315,7 @@
                         </div>
                     </div>
 
-                    <div style="background: #ffffff; border: 1.5px solid rgba(212, 175, 55, 0.35); box-shadow: 0 4px 15px rgba(0,0,0,0.04); border-radius: 12px; padding: 18px 20px; display: flex; align-items: center; gap: 16px;">
+                    <div id="analytics-filter-card-connected" onclick="setAnalyticsMetricFilter('connected')" class="analytics-clickable-card" style="background: #ffffff; border: 1.5px solid rgba(212, 175, 55, 0.35); box-shadow: 0 4px 15px rgba(0,0,0,0.04); border-radius: 12px; padding: 18px 20px; display: flex; align-items: center; gap: 16px; cursor: pointer; transition: all 0.2s;">
                         <div style="width: 48px; height: 48px; border-radius: 10px; background: rgba(22, 163, 74, 0.1); color: #16a34a; display: flex; align-items: center; justify-content: center; font-size: 22px;">
                             <i class="fa-solid fa-circle-check"></i>
                         </div>
@@ -325,7 +325,7 @@
                         </div>
                     </div>
 
-                    <div style="background: #ffffff; border: 1.5px solid rgba(212, 175, 55, 0.35); box-shadow: 0 4px 15px rgba(0,0,0,0.04); border-radius: 12px; padding: 18px 20px; display: flex; align-items: center; gap: 16px;">
+                    <div id="analytics-filter-card-pending" onclick="setAnalyticsMetricFilter('pending')" class="analytics-clickable-card" style="background: #ffffff; border: 1.5px solid rgba(212, 175, 55, 0.35); box-shadow: 0 4px 15px rgba(0,0,0,0.04); border-radius: 12px; padding: 18px 20px; display: flex; align-items: center; gap: 16px; cursor: pointer; transition: all 0.2s;">
                         <div style="width: 48px; height: 48px; border-radius: 10px; background: rgba(217, 119, 6, 0.1); color: #d97706; display: flex; align-items: center; justify-content: center; font-size: 22px;">
                             <i class="fa-solid fa-clock"></i>
                         </div>
@@ -335,7 +335,7 @@
                         </div>
                     </div>
 
-                    <div style="background: #ffffff; border: 1.5px solid rgba(212, 175, 55, 0.35); box-shadow: 0 4px 15px rgba(0,0,0,0.04); border-radius: 12px; padding: 18px 20px; display: flex; align-items: center; gap: 16px;">
+                    <div id="analytics-filter-card-converted" onclick="setAnalyticsMetricFilter('converted')" class="analytics-clickable-card" style="background: #ffffff; border: 1.5px solid rgba(212, 175, 55, 0.35); box-shadow: 0 4px 15px rgba(0,0,0,0.04); border-radius: 12px; padding: 18px 20px; display: flex; align-items: center; gap: 16px; cursor: pointer; transition: all 0.2s;">
                         <div style="width: 48px; height: 48px; border-radius: 10px; background: rgba(219, 39, 119, 0.1); color: #db2777; display: flex; align-items: center; justify-content: center; font-size: 22px;">
                             <i class="fa-solid fa-trophy"></i>
                         </div>
@@ -356,6 +356,7 @@
                                 <th>Connected (Answered)</th>
                                 <th>Pending (Uncalled/No Ans)</th>
                                 <th>Converted Bookings</th>
+                                <th>Earned Incentive (3%)</th>
                                 <th>Contact Rate</th>
                                 <th>Conversion Rate</th>
                                 <th>Workload Indicator</th>
@@ -364,10 +365,43 @@
                         </thead>
                         <tbody id="analytics-staff-table-body">
                             <tr>
-                                <td colspan="9" style="text-align: center; color: var(--color-slate); padding: 30px;">Loading staff performance data...</td>
+                                <td colspan="10" style="text-align: center; color: var(--color-slate); padding: 30px;">Loading staff performance data...</td>
                             </tr>
                         </tbody>
                     </table>
+                </div>
+
+                <!-- Filtered Leads Drill-Down List Section -->
+                <div id="analytics-filtered-leads-container" style="margin-bottom: 24px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+                        <h4 style="margin: 0; font-size: 15px; color: #0f172a; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                            <i class="fa-solid fa-filter" style="color: var(--color-gold);"></i> 
+                            <span id="analytics-filtered-leads-title">Leads Detail List</span>
+                        </h4>
+                        <button class="btn btn-secondary" onclick="setAnalyticsMetricFilter('all')" style="padding: 4px 10px; font-size: 11px; font-weight: 700;" title="Reset Card Filter">
+                            <i class="fa-solid fa-xmark"></i> Show All Leads
+                        </button>
+                    </div>
+
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Client Name</th>
+                                    <th>Phone / WhatsApp</th>
+                                    <th>Destination</th>
+                                    <th>Assigned Staff</th>
+                                    <th>Lead Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="analytics-filtered-leads-tbody">
+                                <tr>
+                                    <td colspan="6" style="text-align: center; color: var(--color-slate); padding: 20px;">Click any metric card above to filter leads.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <!-- Performance Highlights / Insights Cards -->
@@ -4126,6 +4160,36 @@
         });
 
         // --- 2.5 STAFF ANALYTICS DASHBOARD LOGIC ---
+        window.currentAnalyticsMetricFilter = 'all';
+
+        window.setAnalyticsMetricFilter = function(filterType) {
+            window.currentAnalyticsMetricFilter = filterType;
+
+            const cards = {
+                'all': document.getElementById('analytics-filter-card-all'),
+                'connected': document.getElementById('analytics-filter-card-connected'),
+                'pending': document.getElementById('analytics-filter-card-pending'),
+                'converted': document.getElementById('analytics-filter-card-converted')
+            };
+
+            Object.entries(cards).forEach(([key, cardEl]) => {
+                if (!cardEl) return;
+                if (key === filterType) {
+                    cardEl.style.border = '2.5px solid var(--color-gold)';
+                    cardEl.style.boxShadow = '0 6px 20px rgba(212,175,55,0.25)';
+                    cardEl.style.transform = 'translateY(-2px)';
+                } else {
+                    cardEl.style.border = '1.5px solid rgba(212, 175, 55, 0.35)';
+                    cardEl.style.boxShadow = '0 4px 15px rgba(0,0,0,0.04)';
+                    cardEl.style.transform = 'translateY(0)';
+                }
+            });
+
+            if (typeof renderAnalyticsDashboard === 'function') {
+                renderAnalyticsDashboard();
+            }
+        };
+
         window.renderAnalyticsDashboard = async function() {
             try {
                 if (!supabaseAdmin) return;
@@ -4223,6 +4287,27 @@
                 if (document.getElementById('analytics-card-connected')) document.getElementById('analytics-card-connected').innerText = connectedCount;
                 if (document.getElementById('analytics-card-pending')) document.getElementById('analytics-card-pending').innerText = pendingCount;
                 if (document.getElementById('analytics-card-converted')) document.getElementById('analytics-card-converted').innerText = convertedCount;
+
+                // Sync card highlight border according to active filter
+                const cardsMap = {
+                    'all': document.getElementById('analytics-filter-card-all'),
+                    'connected': document.getElementById('analytics-filter-card-connected'),
+                    'pending': document.getElementById('analytics-filter-card-pending'),
+                    'converted': document.getElementById('analytics-filter-card-converted')
+                };
+
+                Object.entries(cardsMap).forEach(([key, cardEl]) => {
+                    if (!cardEl) return;
+                    if (key === currentAnalyticsMetricFilter) {
+                        cardEl.style.border = '2.5px solid var(--color-gold)';
+                        cardEl.style.boxShadow = '0 6px 20px rgba(212,175,55,0.25)';
+                        cardEl.style.transform = 'translateY(-2px)';
+                    } else {
+                        cardEl.style.border = '1.5px solid rgba(212, 175, 55, 0.35)';
+                        cardEl.style.boxShadow = '0 4px 15px rgba(0,0,0,0.04)';
+                        cardEl.style.transform = 'translateY(0)';
+                    }
+                });
 
                 const thead = document.querySelector('#pane-analytics .admin-table thead');
                 const tbody = document.getElementById('analytics-staff-table-body');
@@ -4408,6 +4493,83 @@
                             `;
                         });
                         tbody.innerHTML = html || `<tr><td colspan="10" style="text-align: center; color: var(--color-slate); padding: 30px;">No lead activity found for this timeframe.</td></tr>`;
+                    }
+                }
+
+                // Render Filtered Leads Drill-Down List
+                const drillDownTbody = document.getElementById('analytics-filtered-leads-tbody');
+                const drillDownTitle = document.getElementById('analytics-filtered-leads-title');
+
+                if (drillDownTbody) {
+                    let drillDownLeads = filteredLeads;
+                    let metricTitleLabel = 'All Assigned Leads';
+
+                    if (currentAnalyticsMetricFilter === 'connected') {
+                        drillDownLeads = filteredLeads.filter(l => connectedList.includes((l.status || '').toLowerCase().trim()));
+                        metricTitleLabel = 'Connected (Answered) Leads';
+                    } else if (currentAnalyticsMetricFilter === 'pending') {
+                        drillDownLeads = filteredLeads.filter(l => pendingList.includes((l.status || '').toLowerCase().trim()));
+                        metricTitleLabel = 'Pending / Uncalled Leads';
+                    } else if (currentAnalyticsMetricFilter === 'converted') {
+                        drillDownLeads = filteredLeads.filter(l => {
+                            const st = (l.status || 'New').trim().toLowerCase();
+                            const fs = (l.final_status || '').trim().toLowerCase();
+                            return fs === 'booking confirmed' || st === 'won';
+                        });
+                        metricTitleLabel = 'Converted Booking Leads';
+                    }
+
+                    if (drillDownTitle) {
+                        drillDownTitle.innerText = `${metricTitleLabel} (${drillDownLeads.length})`;
+                    }
+
+                    if (drillDownLeads.length === 0) {
+                        drillDownTbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--color-slate); padding: 25px;">No leads found for status filter: <strong>${metricTitleLabel}</strong>.</td></tr>`;
+                    } else {
+                        let listHtml = '';
+                        drillDownLeads.slice(0, 100).forEach(lead => {
+                            const name = lead.name || 'Unnamed Client';
+                            const phone = lead.phone || '—';
+                            const dest = lead.destination || 'Not Specified';
+                            const assign = usersMap[lead.assigned_to] || lead.assigned_to || 'Unassigned';
+                            const st = lead.status || 'New';
+                            const fs = lead.final_status || '';
+
+                            let badgeBg = '#f1f5f9';
+                            let badgeColor = '#475569';
+                            let badgeLabel = st;
+
+                            if (fs.toLowerCase() === 'booking confirmed' || st.toLowerCase() === 'won') {
+                                badgeBg = 'rgba(219, 39, 119, 0.1)'; badgeColor = '#db2777'; badgeLabel = '🏆 Booking Confirmed';
+                            } else if (st.toLowerCase() === 'answered') {
+                                badgeBg = 'rgba(22, 163, 74, 0.1)'; badgeColor = '#16a34a'; badgeLabel = '📞 Answered';
+                            } else if (st.toLowerCase() === 'follow up required') {
+                                badgeBg = 'rgba(59, 130, 246, 0.1)'; badgeColor = '#2563eb'; badgeLabel = '⏳ Follow Up';
+                            } else if (st.toLowerCase() === 'not answered') {
+                                badgeBg = 'rgba(220, 38, 38, 0.1)'; badgeColor = '#dc2626'; badgeLabel = '❌ Not Answered';
+                            } else if (['new', 'uncalled'].includes(st.toLowerCase())) {
+                                badgeBg = 'rgba(217, 119, 6, 0.1)'; badgeColor = '#d97706'; badgeLabel = '🔔 New';
+                            }
+
+                            const cleanPhone = phone.replace(/[^0-9]/g, '');
+                            const waBtn = cleanPhone ? `<a href="https://wa.me/91${cleanPhone}?text=${encodeURIComponent('Hello ' + name + ', greetings from Rudraansh Yatra!')}" target="_blank" style="color: #25d366; font-size: 13px; font-weight: 700; text-decoration: none; margin-left: 6px;"><i class="fa-brands fa-whatsapp"></i> Chat</a>` : '';
+
+                            listHtml += `
+                                <tr>
+                                    <td data-label="Client Name"><strong style="color: #0f172a; font-size: 13.5px;"><a href="lead-details.html?id=${lead.id}" target="_blank" style="color: var(--color-gold); text-decoration: none;">${name}</a></strong></td>
+                                    <td data-label="Phone / WhatsApp"><span>${phone}</span> ${waBtn}</td>
+                                    <td data-label="Destination"><span class="badge" style="background: rgba(212, 175, 55, 0.15); color: #d97706; border: 1px solid rgba(212, 175, 55, 0.3); padding: 3px 8px; font-weight: 700; border-radius: 4px; font-size: 11px;">${dest}</span></td>
+                                    <td data-label="Assigned Staff"><small style="color: #334155; font-weight: 600;">${assign}</small></td>
+                                    <td data-label="Lead Status"><span class="badge" style="background: ${badgeBg}; color: ${badgeColor}; padding: 3px 8px; border-radius: 4px; font-weight: 700; font-size: 11px;">${badgeLabel}</span></td>
+                                    <td data-label="Actions">
+                                        <a href="lead-details.html?id=${lead.id}" target="_blank" class="btn btn-secondary" style="padding: 3px 8px; font-size: 11px; font-weight: 700; text-decoration: none;">
+                                            <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Card
+                                        </a>
+                                    </td>
+                                </tr>
+                            `;
+                        });
+                        drillDownTbody.innerHTML = listHtml;
                     }
                 }
 
