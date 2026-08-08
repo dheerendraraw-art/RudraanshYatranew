@@ -426,6 +426,138 @@ app.get('/blog/:slug', async (req, res) => {
         // ── SEO meta overrides for parikrama run (applied after generic replacements below) ──
         let parikramaMetaOverride = null;
 
+        // ── SEO for senior citizens blog ──
+        if (slug === 'is-adi-kailash-yatra-safe-for-senior-citizens-guide') {
+            parikramaMetaOverride = {
+                title: 'Is Adi Kailash Yatra Safe for Senior Citizens? | 2026 Guide',
+                desc: 'Can senior citizens do the Adi Kailash Yatra? Age limit, medical fitness certificate, AMS risks, best months (Sep–Oct), pony support & how we\'ve guided 70+ year olds to Jyolingkong at 4,750m.',
+                dateModified: '2026-08-09T00:00:00+05:30'
+            };
+
+            extraSchemas = `
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the age limit for the Adi Kailash Yatra for senior citizens?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The general recommended age range is 10 to 65 years. However, senior citizens up to 70–75 years can safely join the Adi Kailash Yatra if they are in good health, have normal medical test reports (BP, ECG, blood sugar), and receive a high-altitude fitness clearance certificate from a government doctor. A medical fitness certificate is mandatory for the Inner Line Permit."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is there walking or trekking required for senior citizens on the Adi Kailash Yatra?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No strenuous trekking is required. BRO roads now reach directly to the viewpoints, so senior citizens travel in 4x4 vehicles (Mahindra Boleros) all the way to Jyolingkong for Adi Kailash and Nabhidhang for Om Parvat. Only short walks of 100–300 metres on flat terrain are needed to reach the temples. Local ponies are also available at both viewpoints for additional support."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can senior citizens with diabetes or high blood pressure do the Adi Kailash Yatra?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, senior citizens with well-managed diabetes or high blood pressure can successfully complete the Adi Kailash Yatra. They must carry regular medicines, monitor blood pressure throughout the journey, stay well-hydrated, and avoid sudden physical exertion. A medical fitness certificate is required from a government doctor before the Inner Line Permit is issued."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which is the best month for senior citizens to do the Adi Kailash Yatra?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "May to June and September to October are the best months for senior citizens. The weather is pleasant during the day, skies are clear, and road conditions in the Byas Valley are stable. July and August must be completely avoided due to monsoon rains, which cause landslides and road blockages along the Dharchula-Gunji route."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens if an elderly pilgrim suffers breathing difficulties or AMS on the Adi Kailash route?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In case of low oxygen or AMS (Acute Mountain Sickness), Rudraansh Yatra immediately administers portable oxygen, checks oxygen saturation with an oximeter, and evacuates the pilgrim to the nearest ITBP military medical camp or to a lower altitude like Dharchula. All our 4x4 vehicles carry portable oxygen cylinders and first aid kits. Our guides are native Vyas Valley residents trained in altitude emergency management."
+          }
+        }
+      ]
+    }
+    </script>`;
+
+            const seniorCTABanner = `
+<div style="background: linear-gradient(135deg, #0c1a0c 0%, #1a2e1a 100%); border: 2px solid #22c55e; border-radius: 14px; padding: 22px 24px; margin: 0 0 24px 0; color: #ffffff; box-shadow: 0 10px 30px rgba(0,0,0,0.4);">
+    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
+        <span style="font-size: 26px;">🙏</span>
+        <strong style="color: #86efac; font-size: 18px; font-weight: 700; line-height: 1.3;">Planning Adi Kailash Yatra for an Elderly Family Member?</strong>
+    </div>
+    <p style="font-size: 14.5px; line-height: 1.65; color: #dcfce7; margin-bottom: 14px;">
+        Rudraansh Yatra is a <strong>NIDHI-certified ground operator from Pithoragarh</strong> that has safely guided senior citizens aged 70+ to Jyolingkong at 4,750m. We carry <strong>portable oxygen cylinders</strong>, arrange pony support, and handle the <strong>Inner Line Permit & medical fitness certificate</strong> process for all yatris.
+    </p>
+    <div style="background: rgba(34,197,94,0.1); border-left: 3px solid #22c55e; padding: 10px 14px; border-radius: 4px; margin-bottom: 16px; font-size: 13.5px; color: #bbf7d0;">
+        🗓️ <strong>Best months for senior citizens:</strong> September 15 – October 31, 2026 (post-monsoon, stable roads, clear skies)
+    </div>
+    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20plan%20the%20Adi%20Kailash%20Yatra%20for%20a%20senior%20citizen%20in%20my%20family.%20Please%20share%20details%20on%20safety%2C%20departure%20dates%20and%20ILP%20process." target="_blank" rel="noopener" style="background: #22c55e; color: #fff; padding: 11px 20px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 13.5px; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(34,197,94,0.35);">
+            <i class="fa-brands fa-whatsapp" style="font-size: 17px;"></i> WhatsApp for Senior Citizen Yatra
+        </a>
+        <a href="/adi-kailash" style="background: #d4af37; color: #0f172a; padding: 11px 20px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 13.5px; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(212,175,55,0.35);">
+            <i class="fa-solid fa-mountain" style="font-size: 14px;"></i> View Full Yatra Package
+        </a>
+    </div>
+</div>
+
+<div style="background: rgba(15,23,42,0.5); border: 1px solid rgba(212,175,55,0.25); border-radius: 10px; padding: 16px 18px; margin-bottom: 28px; font-size: 13.5px; color: #cbd5e1;">
+    <strong style="color: #fbbf24; display: block; margin-bottom: 8px;">📚 Essential Guides Before You Book</strong>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+        <a href="/blog/inner-line-permit-adi-kailash-2026-guide" style="color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2);">📋 ILP Permit Guide</a>
+        <a href="/blog/adi-kailash-packing-list-essential-guide-for-yatris" style="color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2);">🎒 Packing List</a>
+        <a href="/blog/adi-kailash-yatra-difficulty-level-can-beginners-do-it" style="color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2);">⛰️ Difficulty Level Guide</a>
+        <a href="/blog/5-things-you-need-to-do-before-planning-a-trip-to-adi-kailash" style="color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2);">✅ Pre-Trip Checklist</a>
+        <a href="/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates" style="color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2);">📅 2026 Yatra Status</a>
+    </div>
+</div>`;
+
+            const seniorCtaBottom = `
+<div style="background: #0f172a; border: 2px dashed rgba(212,175,55,0.5); border-radius: 12px; padding: 20px 22px; margin: 32px 0 8px 0; color: #ffffff;">
+    <p style="font-size: 15px; font-weight: 700; color: #fbbf24; margin-bottom: 8px;">💬 Have More Questions About Senior Citizen Safety?</p>
+    <p style="font-size: 14px; color: #e2e8f0; line-height: 1.6; margin-bottom: 14px;">
+        Our team at Rudraansh Yatra is based in <strong>Pithoragarh</strong> and has handled the complete yatra for elderly pilgrims — including medical fitness paperwork, oxygen support, and pony arrangements. Call us before you decide and we'll walk you through every step.
+    </p>
+    <div style="display: flex; gap: 10px; flex-wrap: wrap; font-size: 13.5px;">
+        <a href="https://wa.me/917617617651?text=Namaste!%20I%20have%20questions%20about%20the%20Adi%20Kailash%20Yatra%20for%20a%20senior%20citizen.%20Please%20advise%20on%20safety%2C%20medical%20fitness%20and%20ILP%20process." target="_blank" rel="noopener" style="background: #22c55e; color: #fff; padding: 9px 18px; border-radius: 6px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 7px;">
+            <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp
+        </a>
+        <a href="tel:+917617617651" style="background: transparent; border: 1.5px solid #d4af37; color: #d4af37; padding: 9px 18px; border-radius: 6px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 7px;">
+            <i class="fa-solid fa-phone"></i> Call +91 76176 17651
+        </a>
+    </div>
+    <p style="margin-top: 14px; font-size: 13px; color: #94a3b8;">Also read: <a href="/blog/adi-kailash-yatra-for-solo-female-travellers-safety-guide" style="color: #93c5fd;">Solo Female Travellers Safety Guide</a> · <a href="/blog/adi-kailash-yatra-difficulty-level-can-beginners-do-it" style="color: #93c5fd;">Difficulty Level: Can Beginners Do It?</a></p>
+</div>`;
+
+            const enrichedContent = paragraphsHtml
+                .replace(/<!--EndFragment-->/g, '')
+                .replace(/ class="font-claude-response-body[^"]*"/g, '')
+                .replace(/ class="text-text-100[^"]*"/g, '')
+                .replace(/ dir="ltr"/g, '')
+                // Inline interlink: packing list (mention of medicines/packing)
+                .replace(
+                    /carry their regular medicines/,
+                    'carry their regular medicines (see our <a href="/blog/adi-kailash-packing-list-essential-guide-for-yatris" style="color: #7c3aed; text-decoration: underline;">complete Adi Kailash packing list</a>)'
+                )
+                // Inline interlink: best months (Jul/Aug monsoon mention)
+                .replace(
+                    /July and August should be completely avoided/,
+                    'July and August should be completely avoided (see <a href="/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates" style="color: #7c3aed; text-decoration: underline;">2026 monsoon closure & reopening update</a>)'
+                )
+                // Inline interlink: inner line permit (where NOT already linked)
+                .replace(
+                    /Inner Line Permit \(ILP\)\s*\(ILP\)/,
+                    '<a href="/blog/inner-line-permit-adi-kailash-2026-guide" style="color: #7c3aed; text-decoration: underline;">Inner Line Permit (ILP)</a>'
+                );
+
+            contentHtml = seniorCTABanner + enrichedContent + seniorCtaBottom;
+        }
+
         // ── SEO for "Is Adi Kailash Yatra Closed" blog ──
         if (slug === 'is-adi-kailash-yatra-closed-right-now-reopening-date-why-travellers-get-stuck-at-dharchula') {
             parikramaMetaOverride = {
