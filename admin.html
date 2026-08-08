@@ -4163,7 +4163,11 @@
         window.currentAnalyticsMetricFilter = 'all';
 
         window.setAnalyticsMetricFilter = function(filterType) {
-            window.currentAnalyticsMetricFilter = filterType;
+            if (window.currentAnalyticsMetricFilter === filterType && filterType !== 'all') {
+                window.currentAnalyticsMetricFilter = 'all';
+            } else {
+                window.currentAnalyticsMetricFilter = filterType;
+            }
 
             const cards = {
                 'all': document.getElementById('analytics-filter-card-all'),
@@ -4174,7 +4178,7 @@
 
             Object.entries(cards).forEach(([key, cardEl]) => {
                 if (!cardEl) return;
-                if (key === filterType) {
+                if (key === window.currentAnalyticsMetricFilter) {
                     cardEl.style.border = '2.5px solid var(--color-gold)';
                     cardEl.style.boxShadow = '0 6px 20px rgba(212,175,55,0.25)';
                     cardEl.style.transform = 'translateY(-2px)';
@@ -4531,7 +4535,18 @@
                             const name = lead.name || 'Unnamed Client';
                             const phone = lead.phone || '—';
                             const dest = lead.destination || 'Not Specified';
-                            const assign = usersMap[lead.assigned_to] || lead.assigned_to || 'Unassigned';
+                            const rawAssign = (lead.assigned_to || '').trim();
+                            let assign = 'Unassigned';
+                            if (rawAssign) {
+                                assign = usersMap[rawAssign] || rawAssign;
+                                const lower = rawAssign.toLowerCase();
+                                for (const [uId, uName] of Object.entries(usersMap)) {
+                                    if ((uName || '').toLowerCase() === lower || uId.toLowerCase() === lower) {
+                                        assign = uName;
+                                        break;
+                                    }
+                                }
+                            }
                             const st = lead.status || 'New';
                             const fs = lead.final_status || '';
 
