@@ -426,6 +426,135 @@ app.get('/blog/:slug', async (req, res) => {
         // ── SEO meta overrides for parikrama run (applied after generic replacements below) ──
         let parikramaMetaOverride = null;
 
+        // ── SEO for "Is Adi Kailash Yatra Closed" blog ──
+        if (slug === 'is-adi-kailash-yatra-closed-right-now-reopening-date-why-travellers-get-stuck-at-dharchula') {
+            parikramaMetaOverride = {
+                title: 'Is Adi Kailash Yatra Closed Right Now? Reopening Date 2026 & ILP Status',
+                desc: 'Is the Adi Kailash Yatra open in 2026? Route reopened September 15 after monsoon closure. ILP permits from Dharchula SDM now being issued. Check current yatra status & avoid getting stuck at Dharchula.',
+                dateModified: '2026-08-09T00:00:00+05:30'
+            };
+
+            extraSchemas = `
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is the Adi Kailash Yatra open right now in 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Adi Kailash Yatra 2026 was suspended during the monsoon season and officially reopened around September 15, 2026. Always confirm current route status with a local ground operator or the SDM Office in Dharchula before travelling, as exact dates can shift year to year based on weather and road conditions."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does the Adi Kailash Yatra close temporarily every year?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Adi Kailash route passes through high-altitude border terrain in the Byas Valley near the Indo-Tibet border. Annual closures are related to monsoon conditions (typically June to mid-September), road maintenance along the Dharchula-Gunji route, and administrative review of the restricted border area by authorities."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I get an Inner Line Permit (ILP) when the Adi Kailash Yatra is closed?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. The SDM Office in Dharchula does not issue Inner Line Permits (ILP) for the Adi Kailash route during the closed season. This is why many travellers arrive at the SDM office and are turned away — always confirm yatra status before travelling to Dharchula."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the Adi Kailash Yatra reopening date for 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Adi Kailash Yatra 2026 is expected to reopen around September 15, 2026. However, this date can shift based on ground conditions in the Byas Valley. Rudraansh Yatra tracks reopening announcements in real time from Pithoragarh and will confirm the exact date before finalising any bookings."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What should I do if I have already booked travel and the Adi Kailash Yatra is still closed?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Contact a local ground operator in Pithoragarh immediately. They can help you adjust your itinerary, advise on the confirmed reopening date, or reschedule your permits and transport. A locally-based operator like Rudraansh Yatra tracks daily ground updates and can often find solutions that Delhi-based agents cannot."
+          }
+        }
+      ]
+    }
+    </script>`;
+
+            const closedYatraCTA = `
+<div style="background: linear-gradient(135deg, #1a0505 0%, #2d0a0a 100%); border: 2px solid #ef4444; border-radius: 14px; padding: 20px 24px; margin: 0 0 24px 0; color: #ffffff;">
+    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+        <span style="font-size: 22px;">⚠️</span>
+        <strong style="color: #fca5a5; font-size: 17px; font-weight: 700;">Adi Kailash Yatra 2026 — Current Status</strong>
+    </div>
+    <p style="font-size: 14px; color: #fecaca; line-height: 1.6; margin-bottom: 14px;">
+        The route was <strong style="color: #f87171;">suspended during monsoon season</strong> and is expected to reopen around <strong style="color: #fbbf24;">September 15, 2026</strong>. ILP permits from the Dharchula SDM Office will resume from that date. Always confirm with a local operator before setting out.
+    </p>
+    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20confirm%20current%20Adi%20Kailash%20Yatra%20status%20and%20ILP%20issuance.%20Please%20share%20the%20latest%20update." target="_blank" rel="noopener" style="background: #22c55e; color: #fff; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 13.5px; display: inline-flex; align-items: center; gap: 8px;">
+            <i class="fa-brands fa-whatsapp"></i> Check Live Status on WhatsApp
+        </a>
+        <a href="/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates" style="background: rgba(251,191,36,0.15); border: 1.5px solid #fbbf24; color: #fbbf24; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 13.5px; display: inline-flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-circle-info"></i> Full 2026 Status Update
+        </a>
+    </div>
+</div>
+
+<div style="background: rgba(15,23,42,0.5); border: 1px solid rgba(212,175,55,0.25); border-radius: 10px; padding: 16px 18px; margin-bottom: 28px; font-size: 13.5px; color: #cbd5e1;">
+    <strong style="color: #fbbf24; display: block; margin-bottom: 8px;">📚 Related Guides</strong>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+        <a href="/blog/inner-line-permit-adi-kailash-2026-guide" style="color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2);">📋 ILP Permit Step-by-Step Guide</a>
+        <a href="/blog/5-things-you-need-to-do-before-planning-a-trip-to-adi-kailash" style="color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2);">✅ Pre-Trip Checklist</a>
+        <a href="/blog/adi-kailash-packing-list-essential-guide-for-yatris" style="color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2);">🎒 Packing List Guide</a>
+        <a href="/blog/adi-kailash-yatra-difficulty-level-can-beginners-do-it" style="color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2);">⛰️ Difficulty Level</a>
+        <a href="/adi-kailash" style="color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2);">🏔️ View Tour Packages</a>
+    </div>
+</div>`;
+
+            const closedYatraCtaBottom = `
+<div style="background: #0f172a; border: 2px dashed rgba(212,175,55,0.5); border-radius: 12px; padding: 20px 22px; margin: 32px 0 8px 0; color: #ffffff;">
+    <p style="font-size: 15px; font-weight: 700; color: #fbbf24; margin-bottom: 8px;">📞 Confirm Yatra Status Before You Travel</p>
+    <p style="font-size: 14px; color: #e2e8f0; line-height: 1.6; margin-bottom: 14px;">
+        Rudraansh Yatra is based in <strong>Pithoragarh</strong> — we track Adi Kailash route status, SDM office ILP issuance dates, and Byas Valley road conditions daily. Call or WhatsApp before booking transport or taking leave — we'll tell you the ground reality, not what you want to hear.
+    </p>
+    <div style="display: flex; gap: 10px; flex-wrap: wrap; font-size: 13.5px;">
+        <a href="https://wa.me/917617617651?text=Namaste!%20Is%20the%20Adi%20Kailash%20Yatra%20open%20right%20now%3F%20Can%20I%20get%20an%20ILP%20from%20Dharchula%20SDM%20Office%20today%3F" target="_blank" rel="noopener" style="background: #22c55e; color: #fff; padding: 9px 18px; border-radius: 6px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 7px;">
+            <i class="fa-brands fa-whatsapp"></i> WhatsApp for Live Status
+        </a>
+        <a href="tel:+917617617651" style="background: transparent; border: 1.5px solid #d4af37; color: #d4af37; padding: 9px 18px; border-radius: 6px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 7px;">
+            <i class="fa-solid fa-phone"></i> Call +91 76176 17651
+        </a>
+    </div>
+    <p style="margin-top: 14px; font-size: 13px; color: #94a3b8;">Also read: <a href="/blog/adi-kailash-yatra-2026-suspended-due-to-weather-official-reopening-date" style="color: #93c5fd;">Official Suspension & Sep 15 Reopening Notice</a> · <a href="/blog/adi-kailash-yatra-for-solo-female-travellers-safety-guide" style="color: #93c5fd;">Solo Female Travellers Safety Guide</a></p>
+</div>`;
+
+            const cleanedContent = paragraphsHtml
+                .replace(/<p class="blog-text"><!--StartFragment--><h1[^>]*>.*?<\/h1><\/p>/gs, '')
+                .replace(/<!--EndFragment-->/g, '')
+                .replace(/ class="font-claude-response-body[^"]*"/g, '')
+                .replace(/ class="text-text-100[^"]*"/g, '')
+                .replace(/ dir="ltr"/g, '')
+                .replace(/<h1[^>]*>.*?<\/h1>/gs, '')
+                // Inline interlinks
+                .replace(
+                    /Inner Line Permit(?! \(ILP\) is mandatory)/,
+                    '<a href="/blog/inner-line-permit-adi-kailash-2026-guide" style="color: #7c3aed; text-decoration: underline;">Inner Line Permit</a>'
+                )
+                .replace(
+                    /permits and packing lists/,
+                    '<a href="/blog/5-things-you-need-to-do-before-planning-a-trip-to-adi-kailash" style="color: #7c3aed; text-decoration: underline;">permits</a> and <a href="/blog/adi-kailash-packing-list-essential-guide-for-yatris" style="color: #7c3aed; text-decoration: underline;">packing lists</a>'
+                )
+                .replace(
+                    /reach out to Rudraansh Yatra to confirm current route status/,
+                    'reach out to Rudraansh Yatra to confirm current route status (see also: <a href="/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates" style="color: #7c3aed; text-decoration: underline;">full 2026 status update</a>)'
+                );
+
+            contentHtml = closedYatraCTA + cleanedContent + closedYatraCtaBottom;
+        }
+
         // ── SEO for solo female travellers blog ──
         if (slug === 'adi-kailash-yatra-for-solo-female-travellers-safety-guide') {
             parikramaMetaOverride = {
