@@ -616,10 +616,11 @@ app.get('/blog/:slug', async (req, res) => {
             .replace(/{{CREATED_AT}}/g, blog.created_at)
             .replace(/{{UPDATED_AT}}/g, blog.updated_at || blog.created_at);
 
-        // ── Apply parikrama-specific meta overrides AFTER generic replacements ──
+        // ── Apply parikrama-specific meta & H1 overrides AFTER generic replacements ──
         if (parikramaMetaOverride) {
             blogHtml = blogHtml
                 .replace(/<title>[^<]*<\/title>/, `<title>${parikramaMetaOverride.title}</title>`)
+                .replace(/(<h1 class="blog-detail-title">)[^<]*(<\/h1>)/, `$1${parikramaMetaOverride.title}$2`)
                 .replace(/(<meta name="description" content=")[^"]*(")/, `$1${parikramaMetaOverride.desc.replace(/"/g, '&quot;')}$2`)
                 .replace(/(<meta property="og:title" content=")[^"]*(")/, `$1${parikramaMetaOverride.title.replace(/"/g, '&quot;')}$2`)
                 .replace(/(<meta name="twitter:title" content=")[^"]*(")/, `$1${parikramaMetaOverride.title.replace(/"/g, '&quot;')}$2`)
