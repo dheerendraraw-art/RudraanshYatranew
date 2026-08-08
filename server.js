@@ -423,14 +423,23 @@ app.get('/blog/:slug', async (req, res) => {
         let extraSchemas = '';
         let contentHtml = paragraphsHtml;
 
+        // ── SEO meta overrides for parikrama run (applied after generic replacements below) ──
+        let parikramaMetaOverride = null;
         if (slug === 'adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitude-ultra-marathon-guide') {
+            parikramaMetaOverride = {
+                title: 'Adi Kailash Parikrama Run 2026 | Ultra Marathon Guide, Dates & Registration',
+                desc: 'Adi Kailash Parikrama Run 2026 (Oct 24–25): ultra marathon categories (60km/42km/21km/10km/5km), route, registration, ILP permits & travel guide. India\'s highest mountain run from Gunji, Uttarakhand.',
+                dateModified: '2026-08-08T00:00:00+05:30'
+            };
+
             extraSchemas = `
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "SportsEvent",
-      "name": "Adi Kailash Parikrama Run 2026 (Uttarakhand High-Altitude Ultra Marathon)",
-      "description": "The Adi Kailash Parikrama Run is a high-altitude ultra marathon (5km, 10km, 21km, 42km, 60km) held in Gunji, Byas Valley, Uttarakhand at 10,300 ft to 15,000 ft.",
+      "name": "Adi Kailash Parikrama Run 2026 — Uttarakhand High-Altitude Ultra Marathon",
+      "alternateName": ["Adi Kailash Ultra Run 2026", "Kailash Parikrama Run", "Adi Kailash Marathon 2026"],
+      "description": "The Adi Kailash Parikrama Run is India's highest official ultra marathon (5km, 10km, 21km, 42km, 60km) held in Gunji, Byas Valley, Uttarakhand at altitudes from 10,300 ft to 15,000 ft. Scheduled October 24–25, 2026.",
       "image": [
         "${ogImageUrl}"
       ],
@@ -447,17 +456,17 @@ app.get('/blog/:slug', async (req, res) => {
           "addressRegion": "Uttarakhand",
           "postalCode": "262545",
           "addressCountry": "IN"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": "30.4800",
+          "longitude": "80.8700"
         }
       },
       "organizer": {
         "@type": "Organization",
-        "name": "Rudraansh Yatra",
-        "url": "https://rudraanshyatra.com"
-      },
-      "performer": {
-        "@type": "PerformingGroup",
-        "name": "High-Altitude Ultra Marathon Athletes",
-        "url": "https://rudraanshyatra.com/blog/adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitude-ultra-marathon-guide"
+        "name": "Uttarakhand Tourism Development Board",
+        "url": "https://uttarakhandtourism.gov.in"
       },
       "offers": {
         "@type": "Offer",
@@ -476,18 +485,26 @@ app.get('/blog/:slug', async (req, res) => {
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "What is the date for the Adi Kailash Parikrama Run 2026?",
+          "name": "What is the Adi Kailash Parikrama Run 2026 date?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The Adi Kailash Parikrama Run 2026 takes place on October 24–25, 2026 in Gunji village, Byas Valley, Pithoragarh district, Uttarakhand."
+            "text": "The Adi Kailash Parikrama Run 2026 is scheduled for October 24–25, 2026 in Gunji village, Byas Valley, Pithoragarh district, Uttarakhand."
           }
         },
         {
           "@type": "Question",
-          "name": "What distance categories are available in the Adi Kailash Marathon?",
+          "name": "What are the distance categories in the Adi Kailash ultra marathon?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "There are 5 categories: 5 km Run, 10 km Run, 21 km Half Marathon, 42 km Full Marathon, and the 60 km Ultra Marathon."
+            "text": "There are 5 race categories: 5 km Fun Run, 10 km Run, 21 km Half Marathon, 42 km Full Marathon, and the flagship 60 km Ultra Marathon. All categories start from Gunji Village (10,300 ft)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I register for the Adi Kailash Parikrama Run 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Registration for the Adi Kailash Parikrama Run 2026 is handled by the Uttarakhand Tourism Department. Participants also need an Inner Line Permit (ILP). Contact Rudraansh Yatra (WhatsApp: +91 75900 98700) to book complete packages including ILP, transport from Pithoragarh/Dharchula, and Gunji homestay accommodations."
           }
         },
         {
@@ -495,51 +512,94 @@ app.get('/blog/:slug', async (req, res) => {
           "name": "What is the altitude of the Adi Kailash Parikrama Run route?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The route starts at Gunji (10,300 ft) and reaches peak altitudes of up to 15,000 ft near Jolingkong and Parvati Kund."
+            "text": "The Adi Kailash Parikrama Run starts at Gunji (10,300 ft) and climbs to peak altitudes of up to 15,000 ft near Jolingkong and Parvati Kund — making it India's highest high-altitude ultra marathon."
           }
         },
         {
           "@type": "Question",
-          "name": "Is an Inner Line Permit (ILP) required for marathon runners?",
+          "name": "Is an Inner Line Permit (ILP) required for the Adi Kailash marathon runners?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes, all participants and spectators must obtain an Inner Line Permit issued by the SDM Office in Dharchula."
+            "text": "Yes. All participants and spectators travelling to Gunji must obtain an Inner Line Permit (ILP) from the SDM Office in Dharchula. Required documents: valid government photo ID (Aadhaar/Passport), medical fitness certificate, and police verification."
           }
         },
         {
           "@type": "Question",
-          "name": "How can I reach Gunji for the marathon?",
+          "name": "How to reach Gunji for the Adi Kailash Parikrama Run?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "You can travel from Kathgodam/Tanakpur/Pithoragarh to Dharchula by road, and then take a 4x4 mountain vehicle to Gunji via Nabi and Kuti villages. Rudraansh Yatra offers customized transport and permit packages for runners."
+            "text": "Travel from Kathgodam/Tanakpur/Pithoragarh to Dharchula by road (12–14 hrs), then take a 4x4 Scorpio mountain vehicle via Nabi and Kuti villages to Gunji (4–5 hrs). Rudraansh Yatra offers customised transport and full logistics packages for runners from all departure points."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What was the experience of the Adi Kailash Parikrama Run in previous years?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Past editions of the Adi Kailash Parikrama Run have drawn runners from across India and internationally. Participants describe it as a life-changing experience combining the spiritual energy of sacred Himalayan landscapes with the physical challenge of high-altitude ultra running above 10,000 ft. The route passes Jolingkong, Parvati Kund, Nabidhang, and Kalapani."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the parikrama routine or training required for this ultra marathon?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For the 60km and 42km categories, runners should have a 4–6 month high-altitude training routine including weekly long runs above 30 km, hill repeats, and altitude simulation workouts. Arrive in Gunji 48–72 hours early for acclimatization. Medical fitness clearance for cardiac and respiratory health is mandatory for all runners above the 10 km category."
           }
         }
       ]
     }
     </script>`;
 
-            const ctaBanner = `
-<div style="background: #0f172a; border: 2px solid #d4af37; border-radius: 12px; padding: 22px 24px; margin: 24px 0 32px 0; color: #ffffff; box-shadow: 0 10px 30px rgba(0,0,0,0.4);">
-    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
-        <span style="font-size: 24px;">🏃‍♂️</span>
-        <strong style="color: #fbbf24; font-size: 19px; font-weight: 700;">Planning to Run in the Adi Kailash Marathon 2026?</strong>
+            const ctaBannerTop = `
+<div style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border: 2px solid #d4af37; border-radius: 14px; padding: 22px 24px; margin: 0 0 32px 0; color: #ffffff; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
+        <span style="font-size: 26px;">🏃‍♂️</span>
+        <strong style="color: #fbbf24; font-size: 18px; font-weight: 700; line-height: 1.3;">Running the Adi Kailash Parikrama Run 2026?</strong>
     </div>
-    <p style="font-size: 15px; line-height: 1.6; color: #ffffff; margin-bottom: 18px;">
-        Secure your <strong style="color: #fbbf24;">Inner Line Permits (ILP)</strong>, <strong style="color: #fbbf24;">4x4 Scorpio Transfers</strong>, and <strong style="color: #fbbf24;">High-Altitude Homestay Accommodations in Gunji</strong> with direct local operator <strong>Rudraansh Yatra</strong>.
+    <p style="font-size: 14.5px; line-height: 1.65; color: #e2e8f0; margin-bottom: 16px;">
+        Secure your <strong style="color: #fbbf24;">Inner Line Permits (ILP)</strong>, <strong style="color: #fbbf24;">4×4 Scorpio Transfers to Gunji</strong>, and <strong style="color: #fbbf24;">High-Altitude Homestay Accommodation</strong> — all with <strong>Rudraansh Yatra</strong>, a direct local ground operator based in Pithoragarh.
     </p>
-    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-        <a href="https://wa.me/917590098700?text=Hi%20Rudraansh%20Yatra,%20I%20am%20interested%20in%20Adi%20Kailash%20Parikrama%20Run%202026%20permits,%204x4%20Scorpio%20transport%20%26%20stays" target="_blank" style="background: #22c55e; color: #ffffff; padding: 11px 22px; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 14px; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);">
-            <i class="fa-brands fa-whatsapp" style="font-size: 18px;"></i> Instant WhatsApp Inquiry
+    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <a href="https://wa.me/917590098700?text=Hi%20Rudraansh%20Yatra,%20I%20want%20to%20register%20for%20Adi%20Kailash%20Parikrama%20Run%202026.%20Please%20share%20details%20for%20ILP%20permits,%204x4%20transport%20%26%20Gunji%20homestay." target="_blank" rel="noopener" style="background: #22c55e; color: #ffffff; padding: 11px 20px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 13.5px; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(34, 197, 94, 0.35);">
+            <i class="fa-brands fa-whatsapp" style="font-size: 17px;"></i> WhatsApp Inquiry
         </a>
-        <a href="/adi-kailash" style="background: #d4af37; color: #0f172a; padding: 11px 22px; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 14px; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);">
-            <i class="fa-solid fa-mountain" style="font-size: 15px;"></i> View Adi Kailash Packages
+        <a href="/adi-kailash" style="background: #d4af37; color: #0f172a; padding: 11px 20px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 13.5px; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(212, 175, 55, 0.35);">
+            <i class="fa-solid fa-mountain" style="font-size: 14px;"></i> Adi Kailash Tour Packages
         </a>
     </div>
 </div>`;
 
-            contentHtml = ctaBanner + paragraphsHtml;
+            const ctaBannerBottom = `
+<div style="background: #0f172a; border: 2px dashed rgba(212,175,55,0.5); border-radius: 12px; padding: 20px 22px; margin: 32px 0 8px 0; color: #ffffff;">
+    <p style="font-size: 15px; font-weight: 700; color: #fbbf24; margin-bottom: 8px;">📋 Need Help With Registration & Permits?</p>
+    <p style="font-size: 14px; color: #e2e8f0; line-height: 1.6; margin-bottom: 14px;">
+        Rudraansh Yatra handles end-to-end logistics for the <strong>Adi Kailash Parikrama Run 2026</strong> — from ILP documentation at Dharchula SDM Office, to 4×4 mountain vehicle transfers and confirmed homestay bookings in Gunji. We are the only <strong>direct local operator physically based in Pithoragarh</strong>.
+    </p>
+    <div style="display: flex; gap: 10px; flex-wrap: wrap; font-size: 13.5px;">
+        <a href="https://wa.me/917590098700?text=Hi%20Rudraansh%20Yatra,%20please%20help%20me%20register%20for%20Adi%20Kailash%20Parikrama%20Run%202026%20and%20book%20ILP%20%2B%20Gunji%20stays." target="_blank" rel="noopener" style="background: #22c55e; color: #fff; padding: 9px 18px; border-radius: 6px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 7px;">
+            <i class="fa-brands fa-whatsapp"></i> Book Now on WhatsApp
+        </a>
+        <a href="tel:+917590098700" style="background: transparent; border: 1.5px solid #d4af37; color: #d4af37; padding: 9px 18px; border-radius: 6px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 7px;">
+            <i class="fa-solid fa-phone"></i> Call +91 75900 98700
+        </a>
+    </div>
+</div>`;
+
+            // Clean raw Claude class names from content & strip duplicate H1 from body
+            const cleanedContent = paragraphsHtml
+                .replace(/ class="font-claude-response-body[^"]*"/g, '')
+                .replace(/ class="text-text-100[^"]*"/g, '')
+                .replace(/ dir="ltr"/g, '')
+                .replace(/<h1[^>]*>.*?<\/h1>/gs, '')  // Remove duplicate H1 from body
+                .replace(/class="list-disc[^"]*"/g, 'style="padding-left:20px;margin-bottom:16px;"')
+                .replace(/class="[^"]*pl-2[^"]*"/g, '');
+
+            contentHtml = ctaBannerTop + cleanedContent + ctaBannerBottom;
         }
 
+
+        // Generic template variable replacements
         blogHtml = blogHtml
             .replace(/{{META_TITLE}}/g, `${blog.title} - Rudraansh Yatra Diaries`)
             .replace(/{{META_DESC}}/g, metaDescriptionVal.replace(/"/g, '&quot;'))
@@ -555,6 +615,18 @@ app.get('/blog/:slug', async (req, res) => {
             .replace(/{{SLUG}}/g, `/blog/${blog.slug}`)
             .replace(/{{CREATED_AT}}/g, blog.created_at)
             .replace(/{{UPDATED_AT}}/g, blog.updated_at || blog.created_at);
+
+        // ── Apply parikrama-specific meta overrides AFTER generic replacements ──
+        if (parikramaMetaOverride) {
+            blogHtml = blogHtml
+                .replace(/<title>[^<]*<\/title>/, `<title>${parikramaMetaOverride.title}</title>`)
+                .replace(/(<meta name="description" content=")[^"]*(")/, `$1${parikramaMetaOverride.desc.replace(/"/g, '&quot;')}$2`)
+                .replace(/(<meta property="og:title" content=")[^"]*(")/, `$1${parikramaMetaOverride.title.replace(/"/g, '&quot;')}$2`)
+                .replace(/(<meta name="twitter:title" content=")[^"]*(")/, `$1${parikramaMetaOverride.title.replace(/"/g, '&quot;')}$2`)
+                .replace(/(<meta property="og:description" content=")[^"]*(")/, `$1${parikramaMetaOverride.desc.replace(/"/g, '&quot;')}$2`)
+                .replace(/(<meta name="twitter:description" content=")[^"]*(")/, `$1${parikramaMetaOverride.desc.replace(/"/g, '&quot;')}$2`)
+                .replace(/(<meta property="article:modified_time" content=")[^"]*(")/, `$1${parikramaMetaOverride.dateModified}$2`);
+        }
 
         // Enable HTTP Edge Cache Control for fast TTFB & instant response
         res.setHeader('Cache-Control', 'public, max-age=300, s-maxage=3600, stale-while-revalidate=86400');
