@@ -504,7 +504,7 @@ app.get('/blog/:slug', async (req, res) => {
           "name": "How do I register for the Adi Kailash Parikrama Run 2026?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Registration for the Adi Kailash Parikrama Run 2026 is handled by the Uttarakhand Tourism Department. Participants also need an Inner Line Permit (ILP). Contact Rudraansh Yatra (WhatsApp: +91 75900 98700) to book complete packages including ILP, transport from Pithoragarh/Dharchula, and Gunji homestay accommodations."
+            "text": "Registration for the Adi Kailash Parikrama Run 2026 is handled by the Uttarakhand Tourism Department. Participants also need an Inner Line Permit (ILP). Contact Rudraansh Yatra (WhatsApp: +91 76176 17651) to book complete packages including ILP, transport from Pithoragarh/Dharchula, and Gunji homestay accommodations."
           }
         },
         {
@@ -561,7 +561,7 @@ app.get('/blog/:slug', async (req, res) => {
         Secure your <strong style="color: #fbbf24;">Inner Line Permits (ILP)</strong>, <strong style="color: #fbbf24;">4×4 Scorpio Transfers to Gunji</strong>, and <strong style="color: #fbbf24;">High-Altitude Homestay Accommodation</strong> — all with <strong>Rudraansh Yatra</strong>, a direct local ground operator based in Pithoragarh.
     </p>
     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-        <a href="https://wa.me/917590098700?text=Hi%20Rudraansh%20Yatra,%20I%20want%20to%20register%20for%20Adi%20Kailash%20Parikrama%20Run%202026.%20Please%20share%20details%20for%20ILP%20permits,%204x4%20transport%20%26%20Gunji%20homestay." target="_blank" rel="noopener" style="background: #22c55e; color: #ffffff; padding: 11px 20px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 13.5px; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(34, 197, 94, 0.35);">
+        <a href="https://wa.me/917617617651?text=Hi%20Rudraansh%20Yatra,%20I%20want%20to%20register%20for%20Adi%20Kailash%20Parikrama%20Run%202026.%20Please%20share%20details%20for%20ILP%20permits,%204x4%20transport%20%26%20Gunji%20homestay." target="_blank" rel="noopener" style="background: #22c55e; color: #ffffff; padding: 11px 20px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 13.5px; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(34, 197, 94, 0.35);">
             <i class="fa-brands fa-whatsapp" style="font-size: 17px;"></i> WhatsApp Inquiry
         </a>
         <a href="/adi-kailash" style="background: #d4af37; color: #0f172a; padding: 11px 20px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 13.5px; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(212, 175, 55, 0.35);">
@@ -577,11 +577,11 @@ app.get('/blog/:slug', async (req, res) => {
         Rudraansh Yatra handles end-to-end logistics for the <strong>Adi Kailash Parikrama Run 2026</strong> — from ILP documentation at Dharchula SDM Office, to 4×4 mountain vehicle transfers and confirmed homestay bookings in Gunji. We are the only <strong>direct local operator physically based in Pithoragarh</strong>.
     </p>
     <div style="display: flex; gap: 10px; flex-wrap: wrap; font-size: 13.5px;">
-        <a href="https://wa.me/917590098700?text=Hi%20Rudraansh%20Yatra,%20please%20help%20me%20register%20for%20Adi%20Kailash%20Parikrama%20Run%202026%20and%20book%20ILP%20%2B%20Gunji%20stays." target="_blank" rel="noopener" style="background: #22c55e; color: #fff; padding: 9px 18px; border-radius: 6px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 7px;">
+        <a href="https://wa.me/917617617651?text=Hi%20Rudraansh%20Yatra,%20please%20help%20me%20register%20for%20Adi%20Kailash%20Parikrama%20Run%202026%20and%20book%20ILP%20%2B%20Gunji%20stays." target="_blank" rel="noopener" style="background: #22c55e; color: #fff; padding: 9px 18px; border-radius: 6px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 7px;">
             <i class="fa-brands fa-whatsapp"></i> Book Now on WhatsApp
         </a>
-        <a href="tel:+917590098700" style="background: transparent; border: 1.5px solid #d4af37; color: #d4af37; padding: 9px 18px; border-radius: 6px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 7px;">
-            <i class="fa-solid fa-phone"></i> Call +91 75900 98700
+        <a href="tel:+917617617651" style="background: transparent; border: 1.5px solid #d4af37; color: #d4af37; padding: 9px 18px; border-radius: 6px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 7px;">
+            <i class="fa-solid fa-phone"></i> Call +91 76176 17651
         </a>
     </div>
 </div>`;
