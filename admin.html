@@ -3919,7 +3919,16 @@
 
                     showAdminToast(`Importing ${bookingsToInsert.length} bookings...`, 'info');
                     const { error } = await supabaseAdmin.from('bookings').insert(bookingsToInsert);
-                    if (error) throw error;
+                    if (error) {
+                        if (error.message && error.message.includes('destination')) {
+                            console.warn('Retrying bookings insert without destination property in payload...');
+                            const fallbackBookings = bookingsToInsert.map(({ destination, ...rest }) => rest);
+                            const { error: err2 } = await supabaseAdmin.from('bookings').insert(fallbackBookings);
+                            if (err2) throw err2;
+                        } else {
+                            throw error;
+                        }
+                    }
 
                     showAdminToast(`Successfully imported ${bookingsToInsert.length} bookings!`, 'success');
                     fetchBookings();
@@ -4999,15 +5008,21 @@
                             }
                         }
 
+                        const destVal = destIdx !== -1 && cols[destIdx] ? cols[destIdx].trim() : '';
+                        let remarksVal = cols[remarksIdx] || '';
+                        if (destVal && !remarksVal.toLowerCase().includes('destination:')) {
+                            remarksVal = remarksVal ? `${remarksVal} | Destination: ${destVal}` : `Destination: ${destVal}`;
+                        }
+
                         newLeads.push({
                             name: nameVal,
                             phone: cols[phoneIdx] || '',
                             email: cols[emailIdx] || '',
-                            destination: destIdx !== -1 && cols[destIdx] ? cols[destIdx] : '',
+                            destination: destVal,
                             source: cols[sourceIdx] || 'CSV Import',
                             status: cols[statusIdx] || 'New',
                             assigned_to: assignedUuid,
-                            remarks: cols[remarksIdx] || '',
+                            remarks: remarksVal,
                             follow_up_1: cols[fu1Idx] || '',
                             follow_up_2: cols[fu2Idx] || '',
                             final_status: cols[finalIdx] || null
@@ -5022,9 +5037,19 @@
 
                 try {
                     const { error } = await supabaseAdmin.from('leads').insert(newLeads);
-                    if (error) throw error;
+                    if (error) {
+                        if (error.message && error.message.includes('destination')) {
+                            console.warn('Retrying leads insert without destination property in payload...');
+                            const fallbackLeads = newLeads.map(({ destination, ...rest }) => rest);
+                            const { error: err2 } = await supabaseAdmin.from('leads').insert(fallbackLeads);
+                            if (err2) throw err2;
+                        } else {
+                            throw error;
+                        }
+                    }
                     showAdminToast(`Successfully imported ${newLeads.length} leads!`, 'success');
                     fetchLeads();
+                    if (document.getElementById('leads-csv-file')) document.getElementById('leads-csv-file').value = '';
                 } catch (err) {
                     console.error(err);
                     showAdminToast('Failed to import leads: ' + err.message, 'error');
