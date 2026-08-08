@@ -2567,6 +2567,7 @@
 
             // Ensure non-admin-only tabs are visible for staff
             const staffAccessibleTabIds = [
+                'tab-analytics-btn',
                 'tab-gallery-btn',
                 'tab-passwords-btn',
                 'tab-attendance-btn',
@@ -2887,20 +2888,44 @@
                 setCard(5, false);
             }
             else if (paneId === 'pane-analytics') {
-                const leads = currentLeads || [];
+                let leads = currentLeads || [];
+                if (currentUserRole === 'staff') {
+                    const uname = (currentUsername || '').toLowerCase().trim();
+                    const uuidSet = new Set();
+                    if (currentUserUuidMapping) uuidSet.add(currentUserUuidMapping);
+                    if (AGENT_UUIDS[uname]) uuidSet.add(AGENT_UUIDS[uname]);
+                    for (const [id, name] of Object.entries(usersMap)) {
+                        if ((name || '').toLowerCase() === uname) uuidSet.add(id);
+                    }
+                    leads = leads.filter(l => {
+                        const assign = (l.assigned_to || '').toLowerCase();
+                        return uuidSet.has(assign) || assign === uname;
+                    });
+                }
+
                 const total = leads.length;
                 const answered = leads.filter(l => ['answered', 'follow up required', 'won'].includes((l.status || '').toLowerCase())).length;
                 const pending = total - answered;
                 const converted = leads.filter(l => (l.final_status || '').toLowerCase() === 'booking confirmed' || (l.status || '').toLowerCase() === 'won').length;
-                const activeStaffCount = (usersList || []).length;
                 const contactRate = total > 0 ? ((answered / total) * 100).toFixed(1) + '%' : '0%';
 
-                setCard(0, true, '<i class="fa-solid fa-users" style="color: #3b82f6;"></i>', total, 'Total Leads');
-                setCard(1, true, '<i class="fa-solid fa-phone-volume" style="color: #22c55e;"></i>', answered, 'Connected Calls');
-                setCard(2, true, '<i class="fa-solid fa-hourglass-half" style="color: #eab308;"></i>', pending, 'Pending Outreach');
-                setCard(3, true, '<i class="fa-solid fa-trophy" style="color: #ec4899;"></i>', converted, 'Converted Bookings');
-                setCard(4, true, '<i class="fa-solid fa-chart-line" style="color: var(--color-gold);"></i>', contactRate, 'Overall Contact Rate');
-                setCard(5, true, '<i class="fa-solid fa-user-gear" style="color: #8b5cf6;"></i>', activeStaffCount, 'Active Staff Users');
+                if (currentUserRole === 'staff') {
+                    const conversionRate = total > 0 ? ((converted / total) * 100).toFixed(1) + '%' : '0%';
+                    setCard(0, true, '<i class="fa-solid fa-users" style="color: #3b82f6;"></i>', total, 'My Assigned Leads');
+                    setCard(1, true, '<i class="fa-solid fa-phone-volume" style="color: #22c55e;"></i>', answered, 'My Connected Calls');
+                    setCard(2, true, '<i class="fa-solid fa-hourglass-half" style="color: #eab308;"></i>', pending, 'My Pending Outreach');
+                    setCard(3, true, '<i class="fa-solid fa-trophy" style="color: #ec4899;"></i>', converted, 'My Converted Bookings');
+                    setCard(4, true, '<i class="fa-solid fa-chart-line" style="color: var(--color-gold);"></i>', contactRate, 'My Contact Rate');
+                    setCard(5, true, '<i class="fa-solid fa-bullseye" style="color: #8b5cf6;"></i>', conversionRate, 'My Conversion Rate');
+                } else {
+                    const activeStaffCount = (usersList || []).length;
+                    setCard(0, true, '<i class="fa-solid fa-users" style="color: #3b82f6;"></i>', total, 'Total Leads');
+                    setCard(1, true, '<i class="fa-solid fa-phone-volume" style="color: #22c55e;"></i>', answered, 'Connected Calls');
+                    setCard(2, true, '<i class="fa-solid fa-hourglass-half" style="color: #eab308;"></i>', pending, 'Pending Outreach');
+                    setCard(3, true, '<i class="fa-solid fa-trophy" style="color: #ec4899;"></i>', converted, 'Converted Bookings');
+                    setCard(4, true, '<i class="fa-solid fa-chart-line" style="color: var(--color-gold);"></i>', contactRate, 'Overall Contact Rate');
+                    setCard(5, true, '<i class="fa-solid fa-user-gear" style="color: #8b5cf6;"></i>', activeStaffCount, 'Active Staff Users');
+                }
             }
             else if (paneId === 'pane-lead-history') {
                 const total = globalLeadHistoryList ? globalLeadHistoryList.length : 0;
@@ -4098,86 +4123,184 @@
                     return true;
                 });
 
+                if (currentUserRole === 'staff') {
+                    const uname = (currentUsername || '').toLowerCase().trim();
+                    const uuidSet = new Set();
+                    if (currentUserUuidMapping) uuidSet.add(currentUserUuidMapping);
+                    if (AGENT_UUIDS[uname]) uuidSet.add(AGENT_UUIDS[uname]);
+                    for (const [id, name] of Object.entries(usersMap)) {
+                        if ((name || '').toLowerCase() === uname) uuidSet.add(id);
+                    }
+                    filteredLeads = filteredLeads.filter(l => {
+                        const assign = (l.assigned_to || '').toLowerCase();
+                        return uuidSet.has(assign) || assign === uname;
+                    });
+                }
+
                 let totalLeadsCount = filteredLeads.length;
                 let connectedCount = 0;
                 let pendingCount = 0;
                 let convertedCount = 0;
 
-                const staffStats = {};
-
-                const allStaffList = [
-                    { id: 'unassigned', name: 'Unassigned' },
-                    ...(usersList || []).map(u => ({ id: u.id, name: usersMap[u.id] || u.email }))
-                ];
-
-                allStaffList.forEach(s => {
-                    staffStats[s.id] = {
-                        id: s.id,
-                        name: s.name,
-                        total: 0,
-                        connected: 0,
-                        pending: 0,
-                        converted: 0,
-                        statusCounts: {}
-                    };
-                });
+                const connectedList = ['answered', 'follow up required', 'won'];
+                const pendingList = ['new', 'not answered', 'no. not reachable', 'busy', 'incorrect number'];
 
                 filteredLeads.forEach(lead => {
-                    let staffKey = lead.assigned_to || 'unassigned';
-                    if (!staffStats[staffKey]) {
-                        const staffDisplayName = usersMap[staffKey] || staffKey;
-                        staffStats[staffKey] = {
-                            id: staffKey,
-                            name: staffDisplayName,
-                            total: 0,
-                            connected: 0,
-                            pending: 0,
-                            converted: 0,
-                            statusCounts: {}
-                        };
-                    }
-
-                    const st = staffStats[staffKey];
-                    st.total++;
-
                     const status = (lead.status || 'New').trim();
                     const finalStatus = (lead.final_status || '').trim();
 
-                    st.statusCounts[status] = (st.statusCounts[status] || 0) + 1;
-
                     const isConverted = (finalStatus.toLowerCase() === 'booking confirmed' || status.toLowerCase() === 'won');
                     if (isConverted) {
-                        st.converted++;
                         convertedCount++;
                     }
 
-                    const connectedList = ['answered', 'follow up required', 'won'];
-                    const pendingList = ['new', 'not answered', 'no. not reachable', 'busy', 'incorrect number'];
-
                     if (connectedList.includes(status.toLowerCase())) {
-                        st.connected++;
                         connectedCount++;
                     } else if (pendingList.includes(status.toLowerCase())) {
-                        st.pending++;
                         pendingCount++;
                     } else {
-                        st.pending++;
                         pendingCount++;
                     }
                 });
+
+                // Update Card Labels & Numbers
+                const totalLabel = currentUserRole === 'staff' ? 'My Assigned Leads' : 'Total Leads';
+                const connectedLabel = currentUserRole === 'staff' ? 'My Connected Calls' : 'Connected (Answered)';
+                const pendingLabel = currentUserRole === 'staff' ? 'My Pending Outreach' : 'Pending / Uncalled';
+                const convertedLabel = currentUserRole === 'staff' ? 'My Converted Bookings' : 'Converted Bookings';
+
+                const totalCardLabelEl = document.querySelector('#analytics-card-total-leads')?.previousElementSibling;
+                const connectedCardLabelEl = document.querySelector('#analytics-card-connected')?.previousElementSibling;
+                const pendingCardLabelEl = document.querySelector('#analytics-card-pending')?.previousElementSibling;
+                const convertedCardLabelEl = document.querySelector('#analytics-card-converted')?.previousElementSibling;
+
+                if (totalCardLabelEl) totalCardLabelEl.innerText = totalLabel;
+                if (connectedCardLabelEl) connectedCardLabelEl.innerText = connectedLabel;
+                if (pendingCardLabelEl) pendingCardLabelEl.innerText = pendingLabel;
+                if (convertedCardLabelEl) convertedCardLabelEl.innerText = convertedLabel;
 
                 if (document.getElementById('analytics-card-total-leads')) document.getElementById('analytics-card-total-leads').innerText = totalLeadsCount;
                 if (document.getElementById('analytics-card-connected')) document.getElementById('analytics-card-connected').innerText = connectedCount;
                 if (document.getElementById('analytics-card-pending')) document.getElementById('analytics-card-pending').innerText = pendingCount;
                 if (document.getElementById('analytics-card-converted')) document.getElementById('analytics-card-converted').innerText = convertedCount;
 
+                const thead = document.querySelector('#pane-analytics .admin-table thead');
                 const tbody = document.getElementById('analytics-staff-table-body');
-                if (tbody) {
-                    const sortedStaff = Object.values(staffStats).sort((a, b) => b.total - a.total);
-                    
-                    if (sortedStaff.length === 0 || totalLeadsCount === 0) {
-                        tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: var(--color-slate); padding: 30px;">No lead activity found for this timeframe.</td></tr>`;
-                    } else {
+
+                if (currentUserRole === 'staff') {
+                    if (thead) {
+                        thead.innerHTML = `
+                            <tr>
+                                <th>Status Category</th>
+                                <th>Lead Count</th>
+                                <th>% of My Leads</th>
+                                <th>Category Status</th>
+                                <th>Recommended Action</th>
+                                <th>Actions</th>
+                            </tr>
+                        `;
+                    }
+
+                    if (tbody) {
+                        const statusCounts = {};
+                        filteredLeads.forEach(l => {
+                            const st = (l.status || 'New').trim();
+                            const fs = (l.final_status || '').trim();
+                            if (fs.toLowerCase() === 'booking confirmed' || st.toLowerCase() === 'won') {
+                                statusCounts['Booking Confirmed'] = (statusCounts['Booking Confirmed'] || 0) + 1;
+                            } else {
+                                statusCounts[st] = (statusCounts[st] || 0) + 1;
+                            }
+                        });
+
+                        let tableHtml = '';
+                        const categories = [
+                            { name: 'Answered', label: '📞 Answered & Connected', color: '#16a34a', bg: 'rgba(22, 163, 74, 0.1)', border: 'rgba(22, 163, 74, 0.3)', action: 'Follow up & close booking' },
+                            { name: 'Follow up required', label: '⏳ Follow-Up Required', color: '#3b82f6', bg: 'rgba(59, 130, 246, 0.1)', border: 'rgba(59, 130, 246, 0.3)', action: 'Active lead: call back on due date' },
+                            { name: 'New', label: '🔔 New / Uncalled', color: '#d97706', bg: 'rgba(217, 119, 6, 0.1)', border: 'rgba(217, 119, 6, 0.3)', action: 'High Priority: Make initial call' },
+                            { name: 'Not Answered', label: '❌ Not Answered', color: '#dc2626', bg: 'rgba(220, 38, 38, 0.1)', border: 'rgba(220, 38, 38, 0.3)', action: 'Send WhatsApp message & retry call' },
+                            { name: 'Busy', label: '📵 Phone Busy / Reachable', color: '#854d0e', bg: 'rgba(234, 179, 8, 0.1)', border: 'rgba(234, 179, 8, 0.3)', action: 'Retry call in afternoon/evening' },
+                            { name: 'Booking Confirmed', label: '🏆 Booking Confirmed', color: '#db2777', bg: 'rgba(219, 39, 119, 0.1)', border: 'rgba(219, 39, 119, 0.3)', action: 'Booking created successfully' }
+                        ];
+
+                        categories.forEach(cat => {
+                            const cnt = statusCounts[cat.name] || 0;
+                            const pct = totalLeadsCount > 0 ? ((cnt / totalLeadsCount) * 100).toFixed(1) : 0;
+                            tableHtml += `
+                                <tr>
+                                    <td data-label="Status Category"><strong style="color: #0f172a; font-size: 14px;">${cat.name}</strong></td>
+                                    <td data-label="Lead Count"><span style="font-weight: 800; font-size: 14px; color: ${cat.color};">${cnt}</span></td>
+                                    <td data-label="% of My Leads">
+                                        <div style="display: flex; align-items: center; gap: 8px;">
+                                            <div style="flex-grow: 1; height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden; min-width: 60px;">
+                                                <div style="width: ${pct}%; height: 100%; background: ${cat.color};"></div>
+                                            </div>
+                                            <span style="font-size: 12px; font-weight: 700; color: #0f172a;">${pct}%</span>
+                                        </div>
+                                    </td>
+                                    <td data-label="Category Status">
+                                        <span class="badge" style="background: ${cat.bg}; color: ${cat.color}; border: 1px solid ${cat.border}; padding: 4px 8px; border-radius: 4px; font-weight: 700; white-space: nowrap;">${cat.label}</span>
+                                    </td>
+                                    <td data-label="Recommended Action"><small style="color: #475569; font-weight: 600;">${cat.action}</small></td>
+                                    <td data-label="Actions">
+                                        <button class="btn btn-secondary" onclick="switchTab(null, 'pane-leads')" style="padding: 4px 10px; font-size: 11px; font-weight: 700;">
+                                            <i class="fa-solid fa-list-check"></i> View My Leads
+                                        </button>
+                                    </td>
+                                </tr>
+                            `;
+                        });
+                        tbody.innerHTML = tableHtml;
+                    }
+                } else {
+                    if (thead) {
+                        thead.innerHTML = `
+                            <tr>
+                                <th>Staff Name</th>
+                                <th>Assigned Leads</th>
+                                <th>Connected (Answered)</th>
+                                <th>Pending (Uncalled/No Ans)</th>
+                                <th>Converted Bookings</th>
+                                <th>Contact Rate</th>
+                                <th>Conversion Rate</th>
+                                <th>Workload Indicator</th>
+                                <th>Actions</th>
+                            </tr>
+                        `;
+                    }
+
+                    const staffStats = {};
+                    const allStaffList = [
+                        { id: 'unassigned', name: 'Unassigned' },
+                        ...(usersList || []).map(u => ({ id: u.id, name: usersMap[u.id] || u.email }))
+                    ];
+
+                    allStaffList.forEach(s => {
+                        staffStats[s.id] = { id: s.id, name: s.name, total: 0, connected: 0, pending: 0, converted: 0 };
+                    });
+
+                    filteredLeads.forEach(lead => {
+                        let staffKey = lead.assigned_to || 'unassigned';
+                        if (!staffStats[staffKey]) {
+                            const staffDisplayName = usersMap[staffKey] || staffKey;
+                            staffStats[staffKey] = { id: staffKey, name: staffDisplayName, total: 0, connected: 0, pending: 0, converted: 0 };
+                        }
+
+                        const st = staffStats[staffKey];
+                        st.total++;
+
+                        const status = (lead.status || 'New').trim();
+                        const finalStatus = (lead.final_status || '').trim();
+
+                        const isConverted = (finalStatus.toLowerCase() === 'booking confirmed' || status.toLowerCase() === 'won');
+                        if (isConverted) st.converted++;
+
+                        if (connectedList.includes(status.toLowerCase())) st.connected++;
+                        else st.pending++;
+                    });
+
+                    if (tbody) {
+                        const sortedStaff = Object.values(staffStats).sort((a, b) => b.total - a.total);
                         let html = '';
                         sortedStaff.forEach(st => {
                             if (st.total === 0 && st.id === 'unassigned') return;
@@ -4235,24 +4358,39 @@
                                 </tr>
                             `;
                         });
-                        tbody.innerHTML = html;
+                        tbody.innerHTML = html || `<tr><td colspan="9" style="text-align: center; color: var(--color-slate); padding: 30px;">No lead activity found for this timeframe.</td></tr>`;
                     }
                 }
 
                 const insightsBox = document.getElementById('analytics-insights-container');
                 if (insightsBox) {
-                    insightsBox.innerHTML = `
-                        <div style="background: #ffffff; border: 1.5px solid rgba(212, 175, 55, 0.35); box-shadow: 0 4px 15px rgba(0,0,0,0.04); border-radius: 12px; padding: 20px;">
-                            <h4 style="margin: 0 0 12px 0; color: #b45309; font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px;">
-                                <i class="fa-solid fa-lightbulb"></i> Strategic Insights & Action Plan
-                            </h4>
-                            <ul style="margin: 0; padding-left: 20px; color: #334155; font-size: 14px; line-height: 1.7;">
-                                <li><strong>Uncalled Backlog (${pendingCount} Leads):</strong> High priority outreach is recommended for uncontacted leads.</li>
-                                <li><strong>Follow-Up Directives:</strong> Instruct staff to update <code>Final Status = Booking Confirmed</code> when deals close verbally.</li>
-                                <li><strong>Lead Balancing:</strong> Reallocate new uncalled leads to staff members with high contact rates.</li>
-                            </ul>
-                        </div>
-                    `;
+                    if (currentUserRole === 'staff') {
+                        insightsBox.innerHTML = `
+                            <div style="background: #ffffff; border: 1.5px solid rgba(212, 175, 55, 0.35); box-shadow: 0 4px 15px rgba(0,0,0,0.04); border-radius: 12px; padding: 20px;">
+                                <h4 style="margin: 0 0 12px 0; color: #b45309; font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                                    <i class="fa-solid fa-lightbulb"></i> My Performance Checklist & Next Steps
+                                </h4>
+                                <ul style="margin: 0; padding-left: 20px; color: #334155; font-size: 14px; line-height: 1.7;">
+                                    <li><strong>Uncalled Queue (${pendingCount} Leads):</strong> Priority outreach is recommended for uncontacted leads in your queue.</li>
+                                    <li><strong>Deal Closing:</strong> When a client agrees to travel, open their lead card and set <code>Final Status = Booking Confirmed</code>.</li>
+                                    <li><strong>Follow-Ups:</strong> Use the WhatsApp button in Leads Manager to send quick itinerary details.</li>
+                                </ul>
+                            </div>
+                        `;
+                    } else {
+                        insightsBox.innerHTML = `
+                            <div style="background: #ffffff; border: 1.5px solid rgba(212, 175, 55, 0.35); box-shadow: 0 4px 15px rgba(0,0,0,0.04); border-radius: 12px; padding: 20px;">
+                                <h4 style="margin: 0 0 12px 0; color: #b45309; font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                                    <i class="fa-solid fa-lightbulb"></i> Strategic Insights & Action Plan
+                                </h4>
+                                <ul style="margin: 0; padding-left: 20px; color: #334155; font-size: 14px; line-height: 1.7;">
+                                    <li><strong>Uncalled Backlog (${pendingCount} Leads):</strong> High priority outreach is recommended for uncontacted leads.</li>
+                                    <li><strong>Follow-Up Directives:</strong> Instruct staff to update <code>Final Status = Booking Confirmed</code> when deals close verbally.</li>
+                                    <li><strong>Lead Balancing:</strong> Reallocate new uncalled leads to staff members with high contact rates.</li>
+                                </ul>
+                            </div>
+                        `;
+                    }
                 }
             } catch (err) {
                 console.error('Analytics error:', err);
