@@ -148,6 +148,9 @@
                 <button class="admin-tab-btn" onclick="switchTab(event, 'pane-billing')" id="tab-billing-btn">
                     <i class="fa-solid fa-file-invoice-dollar"></i> Billing & Payments
                 </button>
+                <button class="admin-tab-btn" onclick="switchTab(event, 'pane-analytics')" id="tab-analytics-btn">
+                    <i class="fa-solid fa-chart-line"></i> Staff Analytics
+                </button>
                 <button class="admin-tab-btn" onclick="switchTab(event, 'pane-blogs')" id="tab-blogs-btn">
                     <i class="fa-solid fa-newspaper"></i> Manage Blogs
                 </button>
@@ -274,6 +277,102 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+
+            <!-- PANE: STAFF ANALYTICS -->
+            <div id="pane-analytics" class="admin-tab-content-pane" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+                    <div>
+                        <h3 class="admin-form-title" style="margin-bottom: 4px; border-bottom: none;">
+                            <i class="fa-solid fa-chart-line" style="color: var(--color-gold);"></i> Staff Analytics & Performance
+                        </h3>
+                        <p style="color: var(--color-slate); font-size: 13px; margin: 0;">Real-time breakdown of leads per staff member, outreach response, conversion rates, and backlog status.</p>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <label for="analytics-timeframe" style="font-size: 12px; color: var(--color-gold); font-weight: 700;">Timeframe:</label>
+                        <select id="analytics-timeframe" onchange="renderAnalyticsDashboard()" style="background: #1f2937; color: white; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 6px 12px; font-size: 12px; font-weight: 600; cursor: pointer;">
+                            <option value="all">All Time</option>
+                            <option value="today">Today</option>
+                            <option value="this_week">This Week</option>
+                            <option value="this_month">This Month</option>
+                        </select>
+                        <button class="btn btn-secondary" onclick="renderAnalyticsDashboard()" style="padding: 6px 12px; font-size: 12px;" title="Refresh Analytics">
+                            <i class="fa-solid fa-rotate-right"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Top Analytics Metric Cards -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 24px;">
+                    <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 8px; padding: 16px; display: flex; align-items: center; gap: 16px;">
+                        <div style="width: 46px; height: 46px; border-radius: 8px; background: rgba(59, 130, 246, 0.15); color: #60a5fa; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                        <div>
+                            <div style="font-size: 12px; color: var(--color-slate); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Total Leads</div>
+                            <div id="analytics-card-total-leads" style="font-size: 24px; font-weight: 800; color: white;">0</div>
+                        </div>
+                    </div>
+
+                    <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 8px; padding: 16px; display: flex; align-items: center; gap: 16px;">
+                        <div style="width: 46px; height: 46px; border-radius: 8px; background: rgba(34, 197, 94, 0.15); color: #4ade80; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <div>
+                            <div style="font-size: 12px; color: var(--color-slate); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Connected (Answered)</div>
+                            <div id="analytics-card-connected" style="font-size: 24px; font-weight: 800; color: #4ade80;">0</div>
+                        </div>
+                    </div>
+
+                    <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 8px; padding: 16px; display: flex; align-items: center; gap: 16px;">
+                        <div style="width: 46px; height: 46px; border-radius: 8px; background: rgba(245, 158, 11, 0.15); color: #fbbf24; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+                        <div>
+                            <div style="font-size: 12px; color: var(--color-slate); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Pending / Uncalled</div>
+                            <div id="analytics-card-pending" style="font-size: 24px; font-weight: 800; color: #fbbf24;">0</div>
+                        </div>
+                    </div>
+
+                    <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 8px; padding: 16px; display: flex; align-items: center; gap: 16px;">
+                        <div style="width: 46px; height: 46px; border-radius: 8px; background: rgba(236, 72, 153, 0.15); color: #f472b6; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+                            <i class="fa-solid fa-trophy"></i>
+                        </div>
+                        <div>
+                            <div style="font-size: 12px; color: var(--color-slate); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Converted Bookings</div>
+                            <div id="analytics-card-converted" style="font-size: 24px; font-weight: 800; color: #f472b6;">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Staff Performance Table -->
+                <div class="admin-table-container" style="margin-bottom: 24px;">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Staff Name</th>
+                                <th>Assigned Leads</th>
+                                <th>Connected (Answered)</th>
+                                <th>Pending (Uncalled/No Ans)</th>
+                                <th>Converted Bookings</th>
+                                <th>Contact Rate</th>
+                                <th>Conversion Rate</th>
+                                <th>Workload Indicator</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="analytics-staff-table-body">
+                            <tr>
+                                <td colspan="9" style="text-align: center; color: var(--color-slate); padding: 30px;">Loading staff performance data...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Performance Highlights / Insights Cards -->
+                <div id="analytics-insights-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px;">
+                    <!-- Dynamically rendered insights -->
                 </div>
             </div>
 
@@ -2577,6 +2676,7 @@
                     'pane-blogs': 'Blogs & News Summary',
                     'pane-gallery': 'Gallery Summary',
                     'pane-leads': 'Leads Pipeline Summary',
+                    'pane-analytics': 'Staff Performance Analytics',
                     'pane-reminders': 'Follow-up Reminders Overview',
                     'pane-lead-history': 'Lead History Summary',
                     'pane-passwords': 'Staff Accounts Summary',
@@ -2586,6 +2686,9 @@
                 headerTitle.innerText = labelMap[paneId] || 'Dashboard Overview';
             }
 
+            if (paneId === 'pane-analytics') {
+                if (window.renderAnalyticsDashboard) window.renderAnalyticsDashboard();
+            }
             if (paneId === 'pane-reminders') {
                 if (window.fetchRemindersData) window.fetchRemindersData();
             }
@@ -3940,6 +4043,210 @@
             };
             reader.readAsText(file);
         });
+
+        // --- 2.5 STAFF ANALYTICS DASHBOARD LOGIC ---
+        window.renderAnalyticsDashboard = async function() {
+            try {
+                if (!supabaseAdmin) return;
+                
+                let leads = currentLeads || [];
+                if (leads.length === 0) {
+                    const { data: lData } = await supabaseAdmin.from('leads').select('*').order('created_at', { ascending: false });
+                    leads = lData || [];
+                    currentLeads = leads;
+                }
+
+                let bookings = bookingsData || [];
+                if (bookings.length === 0) {
+                    const { data: bData } = await supabaseAdmin.from('bookings').select('*').order('created_at', { ascending: false });
+                    bookings = bData || [];
+                    bookingsData = bookings;
+                }
+
+                const timeframe = document.getElementById('analytics-timeframe') ? document.getElementById('analytics-timeframe').value : 'all';
+                const now = new Date();
+
+                let filteredLeads = leads.filter(item => {
+                    if (!item.created_at) return true;
+                    const itemDate = new Date(item.created_at);
+                    if (timeframe === 'today') {
+                        return itemDate.toDateString() === now.toDateString();
+                    } else if (timeframe === 'this_week') {
+                        const startOfWeek = new Date(now);
+                        startOfWeek.setDate(now.getDate() - now.getDay());
+                        startOfWeek.setHours(0,0,0,0);
+                        return itemDate >= startOfWeek;
+                    } else if (timeframe === 'this_month') {
+                        return itemDate.getMonth() === now.getMonth() && itemDate.getFullYear() === now.getFullYear();
+                    }
+                    return true;
+                });
+
+                let totalLeadsCount = filteredLeads.length;
+                let connectedCount = 0;
+                let pendingCount = 0;
+                let convertedCount = 0;
+
+                const staffStats = {};
+
+                const allStaffList = [
+                    { id: 'unassigned', name: 'Unassigned' },
+                    ...(usersList || []).map(u => ({ id: u.id, name: usersMap[u.id] || u.email }))
+                ];
+
+                allStaffList.forEach(s => {
+                    staffStats[s.id] = {
+                        id: s.id,
+                        name: s.name,
+                        total: 0,
+                        connected: 0,
+                        pending: 0,
+                        converted: 0,
+                        statusCounts: {}
+                    };
+                });
+
+                filteredLeads.forEach(lead => {
+                    let staffKey = lead.assigned_to || 'unassigned';
+                    if (!staffStats[staffKey]) {
+                        const staffDisplayName = usersMap[staffKey] || staffKey;
+                        staffStats[staffKey] = {
+                            id: staffKey,
+                            name: staffDisplayName,
+                            total: 0,
+                            connected: 0,
+                            pending: 0,
+                            converted: 0,
+                            statusCounts: {}
+                        };
+                    }
+
+                    const st = staffStats[staffKey];
+                    st.total++;
+
+                    const status = (lead.status || 'New').trim();
+                    const finalStatus = (lead.final_status || '').trim();
+
+                    st.statusCounts[status] = (st.statusCounts[status] || 0) + 1;
+
+                    const isConverted = (finalStatus.toLowerCase() === 'booking confirmed' || status.toLowerCase() === 'won');
+                    if (isConverted) {
+                        st.converted++;
+                        convertedCount++;
+                    }
+
+                    const connectedList = ['answered', 'follow up required', 'won'];
+                    const pendingList = ['new', 'not answered', 'no. not reachable', 'busy', 'incorrect number'];
+
+                    if (connectedList.includes(status.toLowerCase())) {
+                        st.connected++;
+                        connectedCount++;
+                    } else if (pendingList.includes(status.toLowerCase())) {
+                        st.pending++;
+                        pendingCount++;
+                    } else {
+                        st.pending++;
+                        pendingCount++;
+                    }
+                });
+
+                if (document.getElementById('analytics-card-total-leads')) document.getElementById('analytics-card-total-leads').innerText = totalLeadsCount;
+                if (document.getElementById('analytics-card-connected')) document.getElementById('analytics-card-connected').innerText = connectedCount;
+                if (document.getElementById('analytics-card-pending')) document.getElementById('analytics-card-pending').innerText = pendingCount;
+                if (document.getElementById('analytics-card-converted')) document.getElementById('analytics-card-converted').innerText = convertedCount;
+
+                const tbody = document.getElementById('analytics-staff-table-body');
+                if (tbody) {
+                    const sortedStaff = Object.values(staffStats).sort((a, b) => b.total - a.total);
+                    
+                    if (sortedStaff.length === 0 || totalLeadsCount === 0) {
+                        tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: var(--color-slate); padding: 30px;">No lead activity found for this timeframe.</td></tr>`;
+                    } else {
+                        let html = '';
+                        sortedStaff.forEach(st => {
+                            if (st.total === 0 && st.id === 'unassigned') return;
+
+                            const contactRate = st.total > 0 ? ((st.connected / st.total) * 100).toFixed(1) : 0;
+                            const conversionRate = st.total > 0 ? ((st.converted / st.total) * 100).toFixed(1) : 0;
+
+                            let badgeHtml = '';
+                            if (st.converted > 0) {
+                                badgeHtml += `<span class="badge" style="background: rgba(236, 72, 153, 0.15); color: #f472b6; border: 1px solid rgba(236, 72, 153, 0.3); padding: 3px 8px; border-radius: 4px; font-weight: 700; font-size: 11px; margin-right: 4px;"><i class="fa-solid fa-star"></i> Top Performer</span>`;
+                            }
+                            if (st.connected >= 20) {
+                                badgeHtml += `<span class="badge" style="background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); padding: 3px 8px; border-radius: 4px; font-weight: 700; font-size: 11px; margin-right: 4px;"><i class="fa-solid fa-bolt"></i> High Contact Rate</span>`;
+                            }
+                            if (st.pending >= 20) {
+                                badgeHtml += `<span class="badge" style="background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); padding: 3px 8px; border-radius: 4px; font-weight: 700; font-size: 11px;"><i class="fa-solid fa-triangle-exclamation"></i> High Backlog</span>`;
+                            }
+                            if (!badgeHtml) {
+                                badgeHtml = `<span class="badge" style="background: rgba(255,255,255,0.05); color: #94a3b8; border: 1px solid rgba(255,255,255,0.1); padding: 3px 8px; border-radius: 4px; font-weight: 600; font-size: 11px;">Active</span>`;
+                            }
+
+                            html += `
+                                <tr>
+                                    <td data-label="Staff Name"><strong style="color: white; font-size: 14px;">${st.name}</strong></td>
+                                    <td data-label="Assigned Leads"><span style="font-weight: 800; font-size: 14px; color: var(--color-gold);">${st.total}</span></td>
+                                    <td data-label="Connected"><span style="color: #4ade80; font-weight: 700;">${st.connected}</span></td>
+                                    <td data-label="Pending"><span style="color: #fbbf24; font-weight: 700;">${st.pending}</span></td>
+                                    <td data-label="Converted"><span style="color: #f472b6; font-weight: 700;">${st.converted}</span></td>
+                                    <td data-label="Contact Rate">
+                                        <div style="display: flex; align-items: center; gap: 8px;">
+                                            <div style="flex-grow: 1; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; min-width: 60px;">
+                                                <div style="width: ${contactRate}%; height: 100%; background: #4ade80;"></div>
+                                            </div>
+                                            <span style="font-size: 12px; font-weight: 700; color: white;">${contactRate}%</span>
+                                        </div>
+                                    </td>
+                                    <td data-label="Conversion Rate">
+                                        <div style="display: flex; align-items: center; gap: 8px;">
+                                            <div style="flex-grow: 1; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; min-width: 60px;">
+                                                <div style="width: ${conversionRate}%; height: 100%; background: #f472b6;"></div>
+                                            </div>
+                                            <span style="font-size: 12px; font-weight: 700; color: white;">${conversionRate}%</span>
+                                        </div>
+                                    </td>
+                                    <td data-label="Workload Indicator">${badgeHtml}</td>
+                                    <td data-label="Actions">
+                                        <button class="btn btn-secondary" onclick="filterStaffLeadsFromAnalytics('${st.id}')" style="padding: 4px 10px; font-size: 11px;" title="View Leads for ${st.name}">
+                                            <i class="fa-solid fa-eye"></i> View Leads
+                                        </button>
+                                    </td>
+                                </tr>
+                            `;
+                        });
+                        tbody.innerHTML = html;
+                    }
+                }
+
+                const insightsBox = document.getElementById('analytics-insights-container');
+                if (insightsBox) {
+                    insightsBox.innerHTML = `
+                        <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 8px; padding: 20px;">
+                            <h4 style="margin: 0 0 12px 0; color: var(--color-gold); font-size: 15px; display: flex; align-items: center; gap: 8px;">
+                                <i class="fa-solid fa-lightbulb"></i> Strategic Insights & Action Plan
+                            </h4>
+                            <ul style="margin: 0; padding-left: 20px; color: #cbd5e1; font-size: 13px; line-height: 1.6;">
+                                <li><strong>Uncalled Backlog (${pendingCount} Leads):</strong> High priority outreach is recommended for uncontacted leads.</li>
+                                <li><strong>Follow-Up Directives:</strong> Instruct staff to update <code>Final Status = Booking Confirmed</code> when deals close verbally.</li>
+                                <li><strong>Lead Balancing:</strong> Reallocate new uncalled leads to staff members with high contact rates.</li>
+                            </ul>
+                        </div>
+                    `;
+                }
+            } catch (err) {
+                console.error('Analytics error:', err);
+            }
+        };
+
+        window.filterStaffLeadsFromAnalytics = function(staffId) {
+            switchTab(null, 'pane-leads');
+            const select = document.getElementById('filter-lead-assignee');
+            if (select) {
+                select.value = staffId === 'unassigned' ? 'unassigned' : staffId;
+                applyLeadsFilters();
+            }
+        };
 
         // --- 3. LEADS MANAGER LOGIC ---
         let usersMap = {};
