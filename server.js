@@ -425,6 +425,151 @@ app.get('/blog/:slug', async (req, res) => {
 
         // ── SEO meta overrides for parikrama run (applied after generic replacements below) ──
         let parikramaMetaOverride = null;
+
+        // ── SEO for solo female travellers blog ──
+        if (slug === 'adi-kailash-yatra-for-solo-female-travellers-safety-guide') {
+            parikramaMetaOverride = {
+                title: 'Adi Kailash Yatra for Solo Female Travellers | Safety Guide 2026',
+                desc: 'Is Adi Kailash Yatra safe for women travelling alone? Honest safety guide: ITBP checkpoints, solo-friendly group departures, ILP permits, packing tips & accommodation for solo female travellers in Uttarakhand.',
+                dateModified: '2026-08-08T00:00:00+05:30'
+            };
+
+            extraSchemas = `
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is the Adi Kailash Yatra safe for women travelling alone?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, generally. The route runs through a monitored border security zone with ITBP checkpoints at multiple points between Dharchula and Gunji, which adds accountability. Every traveller's permit is checked and movement is logged. The main challenges are logistical — limited mobile network coverage beyond Dharchula and basic shared accommodation — rather than personal safety in the conventional sense."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should solo female travellers join a group departure for Adi Kailash Yatra?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It is strongly recommended. Group departures give solo travellers companionship and shared logistics (transport, meals, guide support) while still allowing them to travel independently of family or friends. Rudraansh Yatra offers group departures from Pithoragarh throughout the season."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is mobile network available for solo women on the Adi Kailash route?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Network becomes patchy or unavailable beyond Dharchula in several stretches of the Adi Kailash route. It is important to share your day-by-day itinerary and guide's contact number with a family member or friend before losing signal at Dharchula."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What kind of accommodation should solo women expect on the Adi Kailash Yatra?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Basic guesthouses with shared bathroom facilities in Gunji and Jyolingkong, most days. Comfort levels drop as you move deeper into Byas Valley. Rudraansh Yatra arranges female-only bathing facilities on select group departures — currently 30 September, 12 October, and 15 October 2026."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the Adi Kailash Yatra require an Inner Line Permit (ILP) for solo female travellers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, an Inner Line Permit (ILP) is mandatory for all travellers — male or female — heading to Gunji and beyond. It is issued by the SDM Office in Dharchula. Documents required include a valid government photo ID (Aadhaar/Passport) and a medical fitness certificate. Rudraansh Yatra assists with ILP documentation for all their bookings."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I choose a trustworthy operator for a solo Adi Kailash trip as a woman?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Look for a locally based, registered operator — MSME or NIDHI certification is a good indicator. Ask specific questions about guide experience with solo female travellers, confirm sleeping arrangements before booking, and ask whether there will be other women on your departure. A Pithoragarh-based operator who knows the guesthouse owners personally is far more reliable than a Delhi-based reseller."
+          }
+        }
+      ]
+    }
+    </script>`;
+
+            const soloCTABanner = `
+<div style="background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 100%); border: 2px solid #d4af37; border-radius: 14px; padding: 22px 24px; margin: 0 0 32px 0; color: #ffffff; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
+        <span style="font-size: 26px;">🏔️</span>
+        <strong style="color: #fbbf24; font-size: 18px; font-weight: 700; line-height: 1.3;">Planning the Adi Kailash Yatra as a Solo Woman?</strong>
+    </div>
+    <p style="font-size: 14.5px; line-height: 1.65; color: #e2e8f0; margin-bottom: 14px;">
+        Rudraansh Yatra is a <strong>NIDHI-certified, Pithoragarh-based ground operator</strong> that has personally guided <strong>solo women travellers</strong> through the Adi Kailash route. We handle <strong>ILP permits</strong>, group departures with women-friendly facilities, and <strong>4×4 transfers from Dharchula to Gunji</strong>.
+    </p>
+    <div style="background: rgba(212,175,55,0.1); border-left: 3px solid #d4af37; padding: 10px 14px; border-radius: 4px; margin-bottom: 16px; font-size: 13.5px; color: #fde68a;">
+        🗓️ <strong>Female-friendly group departures with separate bathing facilities:</strong> 30 Sep · 12 Oct · 15 Oct 2026
+    </div>
+    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <a href="https://wa.me/917617617651?text=Namaste!%20I%20am%20a%20solo%20female%20traveller%20interested%20in%20the%20Adi%20Kailash%20Yatra.%20Can%20you%20share%20group%20departure%20dates%20and%20details%3F" target="_blank" rel="noopener" style="background: #22c55e; color: #ffffff; padding: 11px 20px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 13.5px; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(34, 197, 94, 0.35);">
+            <i class="fa-brands fa-whatsapp" style="font-size: 17px;"></i> WhatsApp for Group Dates
+        </a>
+        <a href="/adi-kailash" style="background: #d4af37; color: #0f172a; padding: 11px 20px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 13.5px; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(212, 175, 55, 0.35);">
+            <i class="fa-solid fa-mountain" style="font-size: 14px;"></i> View Full Yatra Package
+        </a>
+    </div>
+</div>
+
+<div style="background: rgba(15,23,42,0.5); border: 1px solid rgba(212,175,55,0.25); border-radius: 10px; padding: 16px 18px; margin-bottom: 28px; font-size: 13.5px; color: #cbd5e1;">
+    <strong style="color: #fbbf24; display: block; margin-bottom: 8px;">📚 Quick Navigation</strong>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+        <a href="/blog/inner-line-permit-adi-kailash-2026-guide" style="color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2);">📋 ILP Permit Guide</a>
+        <a href="/blog/adi-kailash-packing-list-essential-guide-for-yatris" style="color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2);">🎒 Packing List</a>
+        <a href="/blog/adi-kailash-yatra-difficulty-level-can-beginners-do-it" style="color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2);">⛰️ Difficulty Level</a>
+        <a href="/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates" style="color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2);">📅 2026 Yatra Status</a>
+        <a href="/blog/5-things-you-need-to-do-before-planning-a-trip-to-adi-kailash" style="color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2);">✅ Pre-Trip Checklist</a>
+    </div>
+</div>`;
+
+            // Build enriched content with interlinking inside the article body
+            const interlinkedContent = paragraphsHtml
+                // Clean raw editor artifacts
+                .replace(/<p class="blog-text"><!--StartFragment--><h1[^>]*>.*?<\/h1><\/p>/gs, '')
+                .replace(/<!--EndFragment-->/g, '')
+                .replace(/ class="font-claude-response-body[^"]*"/g, '')
+                .replace(/ class="text-text-100[^"]*"/g, '')
+                .replace(/ dir="ltr"/g, '')
+                .replace(/<h1[^>]*>.*?<\/h1>/gs, '')
+                // Inline interlinking: ILP
+                .replace(
+                    /Inner Line Permit(?!.*<a )/,
+                    '<a href="/blog/inner-line-permit-adi-kailash-2026-guide" style="color: #7c3aed; text-decoration: underline;">Inner Line Permit</a>'
+                )
+                // Inline interlinking: packing
+                .replace(
+                    /carry a small door latch/,
+                    'carry a small door latch (see our <a href="/blog/adi-kailash-packing-list-essential-guide-for-yatris" style="color: #7c3aed; text-decoration: underline;">complete Adi Kailash packing list</a>)'
+                )
+                // Inline interlinking: difficulty / beginners
+                .replace(
+                    /altitude symptoms just to keep pace/,
+                    'altitude symptoms just to keep pace (read our <a href="/blog/adi-kailash-yatra-difficulty-level-can-beginners-do-it" style="color: #7c3aed; text-decoration: underline;">difficulty level guide</a>)'
+                );
+
+            const soloCtaBottom = `
+<div style="background: #0f172a; border: 2px dashed rgba(212,175,55,0.5); border-radius: 12px; padding: 20px 22px; margin: 32px 0 8px 0; color: #ffffff;">
+    <p style="font-size: 15px; font-weight: 700; color: #fbbf24; margin-bottom: 8px;">💬 Still Have Questions?</p>
+    <p style="font-size: 14px; color: #e2e8f0; line-height: 1.6; margin-bottom: 14px;">
+        Call or WhatsApp <strong>Dheerendra Rautela</strong> at Rudraansh Yatra directly — we're based in Pithoragarh and answer every question honestly, including the ones you might feel awkward asking a city-based agent.
+    </p>
+    <div style="display: flex; gap: 10px; flex-wrap: wrap; font-size: 13.5px;">
+        <a href="https://wa.me/917617617651?text=Namaste!%20I%20am%20a%20solo%20female%20traveller%20planning%20Adi%20Kailash%20Yatra.%20Please%20guide%20me%20on%20group%20departures%20and%20ILP%20process." target="_blank" rel="noopener" style="background: #22c55e; color: #fff; padding: 9px 18px; border-radius: 6px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 7px;">
+            <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp
+        </a>
+        <a href="tel:+917617617651" style="background: transparent; border: 1.5px solid #d4af37; color: #d4af37; padding: 9px 18px; border-radius: 6px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 7px;">
+            <i class="fa-solid fa-phone"></i> Call +91 76176 17651
+        </a>
+    </div>
+    <p style="margin-top: 14px; font-size: 13px; color: #94a3b8;">Also read: <a href="/blog/is-adi-kailash-yatra-safe-for-senior-citizens-guide" style="color: #93c5fd;">Is Adi Kailash Yatra Safe for Senior Citizens?</a> · <a href="/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates" style="color: #93c5fd;">2026 Yatra Status & Reopening</a></p>
+</div>`;
+
+            contentHtml = soloCTABanner + interlinkedContent + soloCtaBottom;
+        }
+
         if (slug === 'adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitude-ultra-marathon-guide') {
             parikramaMetaOverride = {
                 title: 'Adi Kailash Parikrama Run 2026 | Ultra Marathon Guide, Dates & Registration',
