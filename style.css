@@ -45,7 +45,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    scroll-behavior: smooth;
+    /* scroll-behavior is set via JS to avoid blocking rendering on mobile */
 }
 
 html, body {
@@ -156,6 +156,42 @@ img {
     }
     .section-padding {
         padding: 60px 0;
+    }
+}
+
+/* ── Mobile Performance: Skip rendering for off-screen sections ──────────────
+   content-visibility: auto tells the browser it can skip paint/layout for
+   sections not yet in view. This is one of the biggest mobile FCP wins.      */
+.section-padding,
+.quick-inquiry-bar,
+#homepage-blogs,
+.testimonial-section,
+.cta-section,
+.gallery-section,
+.faq-section {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 600px; /* placeholder height to avoid CLS */
+}
+
+/* Smooth scroll via JS on capable devices only */
+@media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+}
+
+/* ── Mobile Image Rendering ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+    img {
+        /* Promote images to GPU layer only once visible (not all upfront) */
+        will-change: auto;
+        /* Ensure images don't trigger layout shift */
+        height: auto;
+    }
+    /* Reduce animation overhead on mobile */
+    .hero-badge,
+    .hero-title,
+    .hero-desc,
+    .btn-container {
+        animation-duration: 0.4s !important;
     }
 }
 

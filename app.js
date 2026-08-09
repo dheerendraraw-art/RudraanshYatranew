@@ -1,5 +1,10 @@
 // Rudraansh Yatra Global Scripts - app.js
 
+// Enable smooth scrolling via JS (safer than CSS scroll-behavior which can block rendering)
+if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+    document.documentElement.style.scrollBehavior = 'smooth';
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 
     // Global Image Protection (Disables right-click and drag-to-save on all images)
@@ -15,18 +20,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 0. Deferred Hero Background Video Loading (Core Web Vitals LCP Optimization)
+    // Works with both data-src lazy pattern and direct src pattern
     const initHeroVideo = () => {
         if (window.innerWidth <= 768) return; // Skip background video on mobile for fast LCP & data saving
         const video = document.querySelector('.hero-video-bg video');
         if (!video) return;
+        // Handle data-src lazy pattern
         const source = video.querySelector('source[data-src]');
-        if (source) {
+        if (source && !source.src) {
             source.src = source.getAttribute('data-src');
             video.load();
             const playPromise = video.play();
             if (playPromise !== undefined) {
                 playPromise.catch(() => {});
             }
+        }
+        // If already initialized (direct src via inline script), just ensure it plays
+        if (!source && video.paused && video.src) {
+            video.play().catch(() => {});
         }
     };
 

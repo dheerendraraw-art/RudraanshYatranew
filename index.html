@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -231,17 +231,51 @@
     }
     </script>
 
-    <!-- Google Fonts Preconnect & Fonts -->
+    <!-- Google Fonts: Preconnect + Async Non-blocking Load -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"></noscript>
+    <!-- Font Awesome: Async Non-blocking Load -->
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></noscript>
-    
-    <!-- Preload LCP Hero Banner -->
+
+    <!-- Preload LCP Hero Image (mobile + desktop) -->
     <link rel="preload" as="image" href="assets/images/adi-kailash-hero.webp" type="image/webp" fetchpriority="high">
-    <link rel="stylesheet" href="style.css?v=7.0">
+
+    <!-- CRITICAL CSS: Inline above-the-fold styles for instant first paint -->
+    <style>
+      :root{--color-primary:#0A192F;--color-primary-light:#172A45;--color-bg-base:#F4F1EA;--color-bg-card:#FAF9F6;--color-gold:#D4AF37;--color-gold-dark:#AA841B;--color-text-primary:#111827;--color-text-secondary:#475569;--color-text-light:#F4F1EA;--font-serif:'Cormorant Garamond',Georgia,serif;--font-sans:'Plus Jakarta Sans',system-ui,sans-serif;--max-width:1240px;--border-radius-sm:6px;--border-radius-md:14px;--glass-bg:rgba(250,249,246,0.85);--glass-border:rgba(10,25,47,0.08);--shadow-subtle:0 4px 20px rgba(10,25,47,0.03);--shadow-md:0 10px 30px rgba(10,25,47,0.06);}
+      *{margin:0;padding:0;box-sizing:border-box}
+      html,body{max-width:100%;overflow-x:hidden}
+      body{background-color:var(--color-bg-base);color:var(--color-text-primary);font-family:var(--font-sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+      .container{max-width:var(--max-width);margin:0 auto;padding:0 24px}
+      .top-bar{background-color:var(--color-primary);color:var(--color-text-light);font-size:13px;font-weight:500;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.1)}
+      .top-bar .container{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+      .top-info{display:flex;gap:24px;align-items:center}
+      .top-info a{color:inherit;text-decoration:none}
+      .top-socials{display:flex;gap:18px}
+      header{background-color:var(--glass-bg);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--glass-border);position:sticky;top:0;z-index:1000;box-shadow:var(--shadow-subtle)}
+      .navbar-shell{display:flex;justify-content:space-between;align-items:center;padding:16px 0}
+      .logo{display:flex;align-items:center;gap:12px;color:inherit;text-decoration:none}
+      .logo-icon-img-wrap{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--color-gold);overflow:hidden;display:flex;align-items:center;justify-content:center}
+      .logo-icon-img{width:100%;height:100%;object-fit:cover;object-position:50% 37.5%;transform:scale(1.65);display:block}
+      .logo-text{font-family:var(--font-serif);font-size:24px;font-weight:600;color:var(--color-primary)}
+      .logo-text span{color:var(--color-gold-dark)}
+      .nav-menu{display:flex;list-style:none;gap:32px;align-items:center}
+      .menu-toggle{display:none;flex-direction:column;gap:6px;background:none;border:none;cursor:pointer;z-index:1100}
+      .menu-toggle span{display:block;width:26px;height:2px;background-color:var(--color-primary);border-radius:2px}
+      .hero{position:relative;height:85vh;min-height:600px;background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;color:var(--color-text-light);text-align:center}
+      .hero::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(180deg,rgba(10,25,47,0.45) 0%,rgba(10,25,47,0.8) 100%);z-index:1}
+      .hero-content{position:relative;z-index:2;max-width:900px;padding:0 24px}
+      .hero-video-bg{position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;z-index:0}
+      .hero-video-bg video{width:100%;height:100%;object-fit:cover}
+      @media(max-width:991px){.menu-toggle{display:flex}.nav-menu{position:fixed;top:0;right:-320px;width:300px;height:100vh;background-color:var(--color-bg-card);border-left:1px solid var(--glass-border);flex-direction:column;justify-content:flex-start;align-items:flex-start;padding:100px 40px;gap:24px;box-shadow:var(--shadow-md);transition:all 0.4s cubic-bezier(0.16,1,0.3,1);z-index:999;visibility:hidden}.nav-menu.active{right:0;visibility:visible}}
+      @media(max-width:768px){.top-info span:last-child{display:none}.hero{height:100svh;min-height:500px}}
+    </style>
+
+    <!-- Full Stylesheet: Load non-blocking via print trick -->
+    <link rel="preload" href="style.css?v=7.1" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="style.css?v=7.1"></noscript>
 </head>
 
 <body>
@@ -268,7 +302,10 @@
         <div class="container navbar-shell">
             <a href="/" class="logo">
                 <div class="logo-icon-img-wrap">
-                    <img src="assets/images/logo.png" alt="Rudraansh Yatra Logo" class="logo-icon-img" width="44" height="44" decoding="async">
+                    <picture>
+                        <source srcset="assets/images/logo.webp" type="image/webp">
+                        <img src="assets/images/logo.png" alt="Rudraansh Yatra Logo" class="logo-icon-img" width="44" height="44" decoding="async">
+                    </picture>
                 </div>
                 <div class="logo-text">Rudraansh <span>Yatra</span></div>
             </a>
@@ -303,11 +340,24 @@
 
     <!-- Hero Section -->
     <section class="hero" style="background-image: url('assets/images/adi-kailash-hero.webp');">
-        <div class="hero-video-bg">
-            <video autoplay loop muted playsinline preload="auto" poster="assets/images/adi-kailash-hero.webp">
+        <div class="hero-video-bg" id="hero-video-wrap">
+            <!-- Video is only loaded on desktop (>= 768px) to save mobile data -->
+            <video id="hero-video" muted playsinline preload="none" loop poster="assets/images/adi-kailash-hero.webp" style="display:none">
                 <source src="assets/videos/homepage-banner.mp4" type="video/mp4">
             </video>
         </div>
+        <script>
+          // Load and play video only on non-mobile screens
+          (function(){
+            if(window.innerWidth >= 768){
+              var v = document.getElementById('hero-video');
+              v.style.display = '';
+              v.setAttribute('autoplay','');
+              v.load();
+              v.play().catch(function(){});
+            }
+          })();
+        </script>
         <div class="hero-content">
             <div class="hero-badge">
                 <span></span> Direct Ground Operator in Pithoragarh
@@ -797,7 +847,7 @@
                 <!-- MSME Card -->
                 <div class="feature-box text-center" style="padding: 40px 30px; border: 1px solid var(--color-gold); background: var(--color-bg-card); border-radius: var(--border-radius-md); display: flex; flex-direction: column; justify-content: space-between; min-height: 380px;">
                     <div>
-                        <div style="margin-bottom: 20px; display: flex; justify-content: center; height: 80px; align-items: center;"><img src="/assets/images/msme-logo.png" alt="MSME Logo" style="height: 100%; object-fit: contain;" width="99" height="80" loading="lazy"></div>
+                        <div style="margin-bottom: 20px; display: flex; justify-content: center; height: 80px; align-items: center;"><img src="/assets/images/msme-logo.png" alt="MSME Registration Certificate - Rudraansh Yatra registered under Ministry of Micro Small Medium Enterprises Government of India" style="height: 100%; object-fit: contain;" width="99" height="80" loading="lazy"></div>
                         <h3 class="feature-title" style="color: var(--color-primary); margin-bottom: 12px; font-family: var(--font-serif); font-size: 20px;">MSME Registered</h3>
                         <p class="feature-desc" style="font-size: 14px; color: var(--color-text-primary); line-height: 1.6;">Registered under the <strong>Ministry of Micro, Small & Medium Enterprises (MSME)</strong>, Government of India. Promoting reliable, local tourism entrepreneurship in the borderlands.</p>
                     </div>
@@ -807,7 +857,7 @@
                 <!-- NIDHI Card -->
                 <div class="feature-box text-center" style="padding: 40px 30px; border: 1px solid var(--color-gold); background: var(--color-bg-card); border-radius: var(--border-radius-md); display: flex; flex-direction: column; justify-content: space-between; min-height: 380px;">
                     <div>
-                        <div style="margin-bottom: 20px; display: flex; justify-content: center; height: 80px; align-items: center;"><img src="/assets/images/nidhi-logo.png" alt="NIDHI Logo" style="height: 100%; object-fit: contain;" width="80" height="80" loading="lazy"></div>
+                        <div style="margin-bottom: 20px; display: flex; justify-content: center; height: 80px; align-items: center;"><img src="/assets/images/nidhi-logo.png" alt="NIDHI Certification Badge - Rudraansh Yatra accredited under National Integrated Database of Hospitality Industry Ministry of Tourism India" style="height: 100%; object-fit: contain;" width="80" height="80" loading="lazy"></div>
                         <h3 class="feature-title" style="color: var(--color-primary); margin-bottom: 12px; font-family: var(--font-serif); font-size: 20px;">NIDHI Certified</h3>
                         <p class="feature-desc" style="font-size: 14px; color: var(--color-text-primary); line-height: 1.6;">Accredited under <strong>NIDHI (National Integrated Database of Hospitality Industry)</strong>, Ministry of Tourism, Government of India. Compliant with standard safety and accommodation protocols.</p>
                     </div>
@@ -985,11 +1035,11 @@
                         </div>
                     </div>
                     <div class="review-avatars">
-                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&auto=format&fit=crop&q=60" alt="User 1">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&auto=format&fit=crop&q=60" alt="User 2">
-                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&auto=format&fit=crop&q=60" alt="User 3">
-                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&auto=format&fit=crop&q=60" alt="User 4">
-                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&auto=format&fit=crop&q=60" alt="User 5">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&auto=format&fit=crop&q=60" alt="Happy Rudraansh Yatra traveller - verified Adi Kailash pilgrim review">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&auto=format&fit=crop&q=60" alt="Verified Rudraansh Yatra customer - Khaliya Top trek traveller review">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&auto=format&fit=crop&q=60" alt="Satisfied Rudraansh Yatra guest - Om Parvat yatra participant review">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&auto=format&fit=crop&q=60" alt="Rudraansh Yatra pilgrim - Darma Valley expedition traveller review">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&auto=format&fit=crop&q=60" alt="Rudraansh Yatra trekker - Mt. Kailash Lipulekh parikrama pilgrim review">
                     </div>
                 </div>
 
@@ -1278,22 +1328,22 @@
             <div class="payment-title"><i class="fa-solid fa-lock" style="color: var(--color-gold); margin-right: 6px;"></i> UPI, Credit/Debit Cards & NetBanking Accepted</div>
             <div class="payment-badges-wrap">
                 <div class="payment-card" title="BHIM UPI">
-                    <img src="assets/images/upi.svg" alt="BHIM UPI Payment">
+                    <img src="assets/images/upi.svg" alt="BHIM UPI Payment - Pay for Rudraansh Yatra bookings via UPI">
                 </div>
                 <div class="payment-card" title="Google Pay">
-                    <img src="assets/images/gpay.svg" alt="Google Pay">
+                    <img src="assets/images/gpay.svg" alt="Google Pay - Accepted payment method for Rudraansh Yatra bookings">
                 </div>
                 <div class="payment-card" title="PhonePe">
-                    <img src="assets/images/phonepe.svg" alt="PhonePe">
+                    <img src="assets/images/phonepe.svg" alt="PhonePe - Accepted payment method for Rudraansh Yatra bookings">
                 </div>
                 <div class="payment-card" title="Visa">
-                    <img src="assets/images/visa.svg" alt="Visa">
+                    <img src="assets/images/visa.svg" alt="Visa Card - Accepted payment method for Rudraansh Yatra online bookings">
                 </div>
                 <div class="payment-card" title="Mastercard">
-                    <img src="assets/images/mastercard.svg" alt="Mastercard">
+                    <img src="assets/images/mastercard.svg" alt="Mastercard - Accepted payment method for Rudraansh Yatra online bookings">
                 </div>
                 <div class="payment-card" title="Razorpay Secure">
-                    <img src="assets/images/razorpay.svg" alt="Razorpay Secure Payment">
+                    <img src="assets/images/razorpay.svg" alt="Razorpay Secure Payment Gateway - All transactions for Rudraansh Yatra are SSL encrypted">
                 </div>
             </div>
         </div>

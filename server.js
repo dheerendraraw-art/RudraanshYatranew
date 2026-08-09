@@ -3327,15 +3327,46 @@ async function processMetaLead(leadgenId, formId, adId) {
 }
 
 
-// Global Cache-Busting Middleware: Disable caching for all static assets, HTML pages, and routes
+// ── Static Asset Caching ─────────────────────────────────────────────────────
+// Serve images, videos, fonts and versioned CSS/JS with 1-year immutable cache.
+// These files use cache-busting query strings (e.g. style.css?v=7.1) so it is
+// safe to cache them for a very long time.
+app.use('/assets', (req, res, next) => {
+    res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    res.setHeader('Vary', 'Accept-Encoding');
+    next();
+}, express.static(path.join(__dirname, 'assets')));
+
+// Serve versioned CSS and JS with long-lived caching
 app.use((req, res, next) => {
-    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
-    res.setHeader('Pragma', 'no-cache');
-    res.setHeader('Expires', '0');
+    const url = req.url.split('?')[0];
+    if (/\.(css|js|webp|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot|mp4|webm)$/.test(url)) {
+        res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+        res.setHeader('Vary', 'Accept-Encoding');
+    }
     next();
 });
 
-// Serve static files from the root directory with clean URL support (lower priority than our SSR routes)
+// Global Cache-Busting Middleware: Disable caching ONLY for HTML pages and API routes
+app.use((req, res, next) => {
+    const url = req.url.split('?')[0];
+    // Skip caching headers for static file types already handled above
+    if (/\.(css|js|webp|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot|mp4|webm)$/.test(url)) {
+        return next();
+    }
+    // HTML pages: allow short CDN caching with stale-while-revalidate
+    if (!url.startsWith('/api/') && !url.startsWith('/admin')) {
+        res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=3600, stale-while-revalidate=86400');
+    } else {
+        // API and admin routes: no caching
+        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
+        res.setHeader('Pragma', 'no-cache');
+        res.setHeader('Expires', '0');
+    }
+    next();
+});
+
+// Serve remaining static files from the root directory with clean URL support
 app.use(express.static(__dirname, { extensions: ['html'] }));
 
 // Global Error Handling Middleware

@@ -8,10 +8,65 @@
   ],
   "routes": [
     {
-      "src": "/(.*)",
-      "dest": "server.js",
+      "src": "/assets/images/(.*)",
+      "dest": "/server.js",
       "headers": {
-        "Cache-Control": "public, max-age=0, s-maxage=60, stale-while-revalidate=59"
+        "Cache-Control": "public, max-age=31536000, immutable",
+        "Vary": "Accept-Encoding"
+      }
+    },
+    {
+      "src": "/assets/videos/(.*)",
+      "dest": "/server.js",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable",
+        "Vary": "Accept-Encoding"
+      }
+    },
+    {
+      "src": "/assets/fonts/(.*)",
+      "dest": "/server.js",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "src": "/(.*\\.css(\\?.*)?)",
+      "dest": "/server.js",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable",
+        "Vary": "Accept-Encoding"
+      }
+    },
+    {
+      "src": "/(.*\\.js(\\?.*)?)",
+      "dest": "/server.js",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable",
+        "Vary": "Accept-Encoding"
+      }
+    },
+    {
+      "src": "/(.*\\.webp)",
+      "dest": "/server.js",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable",
+        "Vary": "Accept-Encoding"
+      }
+    },
+    {
+      "src": "/(.*\\.png|.*\\.jpg|.*\\.jpeg|.*\\.gif|.*\\.svg|.*\\.ico)",
+      "dest": "/server.js",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable",
+        "Vary": "Accept-Encoding"
+      }
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/server.js",
+      "headers": {
+        "Cache-Control": "public, max-age=0, s-maxage=3600, stale-while-revalidate=86400"
       }
     }
   ]
