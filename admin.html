@@ -4738,7 +4738,7 @@
             else if (val === 'Lost lead') el.classList.add('final-lost');
         };
 
-        // Inline field updates helper
+        // Inline field updates helper with optimistic UI updates
         window.updateLeadField = async function(leadId, fieldName, value) {
             if ((fieldName === 'name' || fieldName === 'phone' || fieldName === 'email') && currentUserRole !== 'admin') {
                 showAdminToast('Error: Only Admins can edit Client details.', 'error');
@@ -4750,16 +4750,48 @@
                 fetchLeads();
                 return;
             }
+
             const leadObj = currentLeads.find(l => l.id === leadId);
+            const filteredObj = filteredLeads.find(l => l.id === leadId);
+            const oldValue = leadObj ? leadObj[fieldName] : null;
+            const newValue = value === "" ? null : value;
             const wasConfirmed = leadObj && leadObj.final_status === 'Booking confirmed';
+
+            // Optimistic update in local objects immediately
+            if (leadObj) leadObj[fieldName] = newValue;
+            if (filteredObj) filteredObj[fieldName] = newValue;
+
+            // Optimistic UI updates for mobile chat-card status tags
+            if (fieldName === 'status') {
+                const trElements = document.querySelectorAll('#leads-table-body tr');
+                trElements.forEach(tr => {
+                    const sel = tr.querySelector('.status-select');
+                    if (sel && sel.getAttribute('onchange') && sel.getAttribute('onchange').includes(leadId)) {
+                        const tag = tr.querySelector('.lead-chat-status-tag');
+                        if (tag) {
+                            tag.innerText = value || 'New';
+                            const tagClass = 'lead-chat-status-tag ' + (
+                                value === 'Answered' ? 'status-answered' :
+                                value === 'Busy' ? 'status-busy' :
+                                value === 'Incorrect Number' ? 'status-incorrect' :
+                                value === 'Follow up required' ? 'status-followup' :
+                                value === 'Not Answered' ? 'status-notanswered' :
+                                value === 'No. not reachable' ? 'status-notreachable' : 'status-new'
+                            );
+                            tag.className = tagClass;
+                        }
+                    }
+                });
+            }
+
             try {
                 const updateData = {};
-                updateData[fieldName] = value === "" ? null : value;
+                updateData[fieldName] = newValue;
                 
                 if (fieldName === 'assigned_to') {
                     const lead = leadObj;
-                    const oldAssigneeUuid = lead ? lead.assigned_to : null;
-                    const newAssigneeUuid = value === "" ? null : value;
+                    const oldAssigneeUuid = oldValue;
+                    const newAssigneeUuid = newValue;
                     
                     const oldName = oldAssigneeUuid ? (usersMap[oldAssigneeUuid] || 'User (' + oldAssigneeUuid.slice(0, 8) + ')') : 'Unassigned';
                     const newName = newAssigneeUuid ? (usersMap[newAssigneeUuid] || 'User (' + newAssigneeUuid.slice(0, 8) + ')') : 'Unassigned';
@@ -4770,6 +4802,8 @@
                         updatedRemarks = lead.remarks.trim() + "\n" + transferNote;
                     }
                     updateData['remarks'] = updatedRemarks;
+                    if (leadObj) leadObj.remarks = updatedRemarks;
+                    if (filteredObj) filteredObj.remarks = updatedRemarks;
                 }
 
                 const { error } = await supabaseAdmin
@@ -4782,7 +4816,6 @@
                 // Log change to lead_history
                 const userDisplay = currentUsername ? (currentUsername.charAt(0).toUpperCase() + currentUsername.slice(1)) : 'User';
                 let historyAction = null;
-                const oldValue = leadObj ? leadObj[fieldName] : null;
 
                 if (fieldName === 'status' && value !== oldValue) {
                     historyAction = `🏷️ Status updated from "${oldValue || 'None'}" to "${value || 'None'}" by ${userDisplay}`;
@@ -4809,7 +4842,7 @@
                 // If marked as booking confirmed inline, move to bookings tab
                 if (fieldName === 'final_status') {
                     if (value === 'Booking confirmed') {
-                        const lead = currentLeads.find(l => l.id === leadId);
+                        const lead = leadObj || currentLeads.find(l => l.id === leadId);
                         if (lead) {
                             await copyLeadToBooking(lead);
                         }
@@ -4829,10 +4862,13 @@
                 }
 
                 showAdminToast('Lead updated successfully!', 'success');
-                fetchLeads();
+                refreshActiveTabStats();
             } catch (err) {
                 console.error(err);
+                if (leadObj) leadObj[fieldName] = oldValue;
+                if (filteredObj) filteredObj[fieldName] = oldValue;
                 showAdminToast('Failed to update lead: ' + err.message, 'error');
+                fetchLeads();
             }
         };
 
@@ -4847,8 +4883,12 @@
 
         window.toggleMobileLeadRow = function(rowEl, evt) {
             if (window.innerWidth <= 768) {
-                if (evt && evt.target && (evt.target.closest('a') || evt.target.closest('button') || evt.target.closest('select') || evt.target.closest('input'))) {
-                    return;
+                if (evt && evt.target) {
+                    const tag = (evt.target.tagName || '').toUpperCase();
+                    if (tag === 'SELECT' || tag === 'OPTION' || tag === 'A' || tag === 'BUTTON' || tag === 'INPUT' ||
+                        evt.target.closest('a') || evt.target.closest('button') || evt.target.closest('select') || evt.target.closest('input')) {
+                        return;
+                    }
                 }
                 rowEl.classList.toggle('expanded');
             }
@@ -5487,7 +5527,7 @@
                             <td data-label="Travelers" class="mobile-detail-field">${item.travelers || 1}</td>
                             <td data-label="Created On" class="mobile-detail-field" style="white-space: nowrap; font-family: monospace; font-size: 11px;">${createdStr}</td>
                             <td data-label="Status" onclick="event.stopPropagation();">
-                                <select onchange="updateLeadField('${item.id}', 'status', this.value); updateSelectStyle(this)" class="status-select ${statusClass}">
+                                <select onclick="event.stopPropagation();" onpointerdown="event.stopPropagation();" ontouchstart="event.stopPropagation();" onchange="updateLeadField('${item.id}', 'status', this.value); updateSelectStyle(this)" class="status-select ${statusClass}">
                                     ${statusOptions}
                                 </select>
                             </td>
@@ -5528,14 +5568,14 @@
                             <td data-label="Email" class="mobile-detail-field">${item.email || '-'}</td>
                             <td data-label="Travel Destination" class="mobile-detail-field"><strong style="color: var(--color-gold); font-size: 12px;">${destVal}</strong></td>
                             <td data-label="Assigned To" class="mobile-detail-field" onclick="event.stopPropagation();">
-                                <select ${currentUserRole === "staff" ? "disabled" : ""} onchange="updateLeadField('${item.id}', 'assigned_to', this.value)" style="background: #1f2937; color: white; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 4px; font-size: 12px; width: 150px; cursor: pointer;">
+                                <select ${currentUserRole === "staff" ? "disabled" : ""} onclick="event.stopPropagation();" onpointerdown="event.stopPropagation();" ontouchstart="event.stopPropagation();" onchange="updateLeadField('${item.id}', 'assigned_to', this.value)" style="background: #1f2937; color: white; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 4px; font-size: 12px; width: 150px; cursor: pointer;">
                                     ${assigneeOptions}
                                 </select>
                             </td>
                             <td data-label="Travelers" class="mobile-detail-field">${item.travelers || 1}</td>
                             <td data-label="Travel Date" class="mobile-detail-field" style="white-space: nowrap;">${item.travel_date ? new Date(item.travel_date).toLocaleDateString() : '-'}</td>
                             <td data-label="Status" onclick="event.stopPropagation();">
-                                <select onchange="updateLeadField('${item.id}', 'status', this.value); updateSelectStyle(this)" class="status-select ${statusClass}">
+                                <select onclick="event.stopPropagation();" onpointerdown="event.stopPropagation();" ontouchstart="event.stopPropagation();" onchange="updateLeadField('${item.id}', 'status', this.value); updateSelectStyle(this)" class="status-select ${statusClass}">
                                     ${statusOptions}
                                 </select>
                             </td>
@@ -5544,7 +5584,7 @@
                             <td data-label="Follow up 1" class="mobile-detail-field"><small>${item.follow_up_1 || '-'}</small></td>
                             <td data-label="Follow up 2" class="mobile-detail-field"><small>${item.follow_up_2 || '-'}</small></td>
                             <td data-label="Final Status" class="mobile-detail-field" onclick="event.stopPropagation();">
-                                <select onchange="updateLeadField('${item.id}', 'final_status', this.value); updateFinalStyle(this)" class="final-select ${finalClass}">
+                                <select onclick="event.stopPropagation();" onpointerdown="event.stopPropagation();" ontouchstart="event.stopPropagation();" onchange="updateLeadField('${item.id}', 'final_status', this.value); updateFinalStyle(this)" class="final-select ${finalClass}">
                                     ${finalStatusOptions}
                                 </select>
                             </td>
