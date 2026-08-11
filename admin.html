@@ -2375,7 +2375,10 @@
             }
             
             applyRolePermissions();
-            if (currentUserRole === 'staff') {
+            const savedPaneId = sessionStorage.getItem('admin_active_pane');
+            if (savedPaneId && document.getElementById(savedPaneId)) {
+                switchTab(null, savedPaneId);
+            } else if (currentUserRole === 'staff') {
                 switchTab(null, 'pane-leads');
             } else {
                 switchTab(null, 'pane-bookings');
@@ -2684,6 +2687,9 @@
         // Tab Switch logic
         function switchTab(evt, paneId) {
             applyRolePermissions();
+            if (paneId) {
+                try { sessionStorage.setItem('admin_active_pane', paneId); } catch(e) {}
+            }
             const tabs = document.querySelectorAll('.admin-tab-btn');
             const contents = document.querySelectorAll('.admin-tab-content-pane');
 
@@ -4873,7 +4879,8 @@
                 if (error) throw error;
 
                 currentLeads = data || [];
-                window.applyLeadsFilters();
+                const restoredLeadsState = window.restoreLeadsFiltersState();
+                window.applyLeadsFilters(restoredLeadsState);
             } catch (err) {
                 console.error(err);
                 const tbody = document.getElementById('leads-table-body');
@@ -5037,12 +5044,41 @@
             if (adminIcon) adminIcon.className = iconClass;
         };
 
-        window.applyLeadsFilters = function() {
+        window.restoreLeadsFiltersState = function() {
+            const rawState = sessionStorage.getItem('admin_leads_state');
+            if (!rawState) return false;
+            try {
+                const state = JSON.parse(rawState);
+                const sourceSelect = document.getElementById('filter-lead-source');
+                const statusSelect = document.getElementById('filter-lead-status');
+                const finalStatusSelect = document.getElementById('filter-lead-finalstatus');
+                const assigneeSelect = document.getElementById('filter-lead-assignee');
+                const searchInput = document.getElementById('search-leads-input');
+
+                if (sourceSelect && state.source !== undefined) sourceSelect.value = state.source;
+                if (statusSelect && state.status !== undefined) statusSelect.value = state.status;
+                if (finalStatusSelect && state.finalStatus !== undefined) finalStatusSelect.value = state.finalStatus;
+                if (assigneeSelect && state.assignee !== undefined) assigneeSelect.value = state.assignee;
+                if (searchInput && state.searchVal !== undefined) searchInput.value = state.searchVal;
+                if (state.currentPage) leadsCurrentPage = state.currentPage;
+                if (state.pageSize) leadsPageSize = state.pageSize;
+                if (state.sortField) leadsSortField = state.sortField;
+                if (state.sortDir) leadsSortDir = state.sortDir;
+
+                return true;
+            } catch (e) {
+                console.error('Error restoring leads state:', e);
+                return false;
+            }
+        };
+
+        window.applyLeadsFilters = function(keepPage = false) {
             const source = document.getElementById('filter-lead-source') ? document.getElementById('filter-lead-source').value : '';
             const status = document.getElementById('filter-lead-status') ? document.getElementById('filter-lead-status').value : '';
             const finalStatus = document.getElementById('filter-lead-finalstatus') ? document.getElementById('filter-lead-finalstatus').value : '';
             const assignee = document.getElementById('filter-lead-assignee') ? document.getElementById('filter-lead-assignee').value : '';
-            const searchVal = document.getElementById('search-leads-input') ? document.getElementById('search-leads-input').value.trim().toLowerCase() : '';
+            const rawSearch = document.getElementById('search-leads-input') ? document.getElementById('search-leads-input').value.trim() : '';
+            const searchVal = rawSearch.toLowerCase();
 
             filteredLeads = currentLeads.filter(lead => {
                 const leadSource = (lead.source || '').trim().toLowerCase();
@@ -5088,7 +5124,25 @@
                 return 0;
             });
 
-            leadsCurrentPage = 1;
+            if (!keepPage) {
+                leadsCurrentPage = 1;
+            }
+
+            try {
+                const leadsState = {
+                    source,
+                    status,
+                    finalStatus,
+                    assignee,
+                    searchVal: rawSearch,
+                    currentPage: leadsCurrentPage,
+                    pageSize: leadsPageSize,
+                    sortField: leadsSortField,
+                    sortDir: leadsSortDir
+                };
+                sessionStorage.setItem('admin_leads_state', JSON.stringify(leadsState));
+            } catch (e) {}
+
             refreshActiveTabStats();
             window.renderLeadsTableOnly();
             window.updateSortIcons();
@@ -5107,6 +5161,7 @@
             if (assigneeSelect) assigneeSelect.value = '';
             if (searchInput) searchInput.value = '';
 
+            try { sessionStorage.removeItem('admin_leads_state'); } catch(e) {}
             window.applyLeadsFilters();
         };
 
@@ -5514,13 +5569,13 @@
         window.changeLeadsPageSize = function(val) {
             leadsPageSize = parseInt(val) || 20;
             leadsCurrentPage = 1;
-            window.renderLeadsTableOnly();
+            window.applyLeadsFilters(true);
         };
 
         window.prevLeadsPage = function() {
             if (leadsCurrentPage > 1) {
                 leadsCurrentPage--;
-                window.renderLeadsTableOnly();
+                window.applyLeadsFilters(true);
             }
         };
 
@@ -5528,7 +5583,7 @@
             const totalPages = Math.ceil(filteredLeads.length / leadsPageSize) || 1;
             if (leadsCurrentPage < totalPages) {
                 leadsCurrentPage++;
-                window.renderLeadsTableOnly();
+                window.applyLeadsFilters(true);
             }
         };
 

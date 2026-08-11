@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -262,7 +262,7 @@
         <!-- Top Navigation Bar -->
         <div class="top-nav">
             <div class="nav-left">
-                <a href="admin.html" class="back-link">
+                <a href="admin.html" class="back-link" onclick="handleBackToDashboard(event)">
                     <i class="fa-solid fa-arrow-left"></i> Dashboard
                 </a>
                 <h1 class="nav-title" id="lead-page-title">Lead Details</h1>
@@ -671,9 +671,18 @@
         const urlParams = new URLSearchParams(window.location.search);
         const leadId = urlParams.get('id');
 
+        function handleBackToDashboard(evt) {
+            if (evt) evt.preventDefault();
+            if (window.history.length > 1 && document.referrer && document.referrer.includes('admin')) {
+                window.history.back();
+            } else {
+                window.location.href = 'admin.html';
+            }
+        }
+
         if (!leadId) {
             alert('No lead ID specified!');
-            window.location.href = 'admin.html';
+            handleBackToDashboard();
         }
 
         let leadData = null;
