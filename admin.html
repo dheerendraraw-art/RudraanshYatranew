@@ -4764,26 +4764,17 @@
             if (leadObj) leadObj[fieldName] = newValue;
             if (filteredObj) filteredObj[fieldName] = newValue;
 
-            // Optimistic UI updates for mobile chat-card status tags
+            // Optimistic UI updates for mobile chat-card status tags & table dropdowns
             if (fieldName === 'status') {
                 const trElements = document.querySelectorAll('#leads-table-body tr');
                 trElements.forEach(tr => {
-                    const sel = tr.querySelector('.status-select');
-                    if (sel && sel.getAttribute('onchange') && sel.getAttribute('onchange').includes(leadId)) {
-                        const tag = tr.querySelector('.lead-chat-status-tag');
-                        if (tag) {
-                            tag.innerText = value || 'New';
-                            const tagClass = 'lead-chat-status-tag ' + (
-                                value === 'Answered' ? 'status-answered' :
-                                value === 'Busy' ? 'status-busy' :
-                                value === 'Incorrect Number' ? 'status-incorrect' :
-                                value === 'Follow up required' ? 'status-followup' :
-                                value === 'Not Answered' ? 'status-notanswered' :
-                                value === 'No. not reachable' ? 'status-notreachable' : 'status-new'
-                            );
-                            tag.className = tagClass;
+                    const statusSelects = tr.querySelectorAll('.status-select');
+                    statusSelects.forEach(sel => {
+                        if (sel && sel.getAttribute('onchange') && sel.getAttribute('onchange').includes(leadId)) {
+                            sel.value = value || 'New';
+                            window.updateSelectStyle(sel);
                         }
-                    }
+                    });
                 });
             }
 
@@ -5520,7 +5511,9 @@
                                         </div>
                                         <div class="lead-chat-sub-row">
                                             <span class="lead-chat-phone">${leadPhoneVal || 'No Phone'}</span>
-                                            <span class="lead-chat-status-tag ${statusClass}">${item.status || 'New'}</span>
+                                            <select onclick="event.stopPropagation();" onpointerdown="event.stopPropagation();" ontouchstart="event.stopPropagation();" onchange="updateLeadField('${item.id}', 'status', this.value); updateSelectStyle(this)" class="lead-chat-status-tag status-select ${statusClass}">
+                                                ${statusOptions}
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="lead-chat-expand-chevron">
@@ -5563,7 +5556,9 @@
                                         </div>
                                         <div class="lead-chat-sub-row">
                                             <span class="lead-chat-phone">${leadPhoneVal || 'No Phone'}</span>
-                                            <span class="lead-chat-status-tag ${statusClass}">${item.status || 'New'}</span>
+                                            <select onclick="event.stopPropagation();" onpointerdown="event.stopPropagation();" ontouchstart="event.stopPropagation();" onchange="updateLeadField('${item.id}', 'status', this.value); updateSelectStyle(this)" class="lead-chat-status-tag status-select ${statusClass}">
+                                                ${statusOptions}
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="lead-chat-expand-chevron">

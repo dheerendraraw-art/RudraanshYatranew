@@ -6539,6 +6539,15 @@ html, body {
         white-space: nowrap !important;
     }
 
+    select.lead-chat-status-tag {
+        cursor: pointer !important;
+        outline: none !important;
+        appearance: none !important;
+        -webkit-appearance: none !important;
+        display: inline-block !important;
+        margin: 0 !important;
+    }
+
     .lead-chat-expand-chevron {
         color: var(--color-gold) !important;
         font-size: 13px !important;
