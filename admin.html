@@ -2835,16 +2835,27 @@
                 });
             }
 
-            const setCard = (index, show, iconHtml, num, label) => {
+            const setCard = (index, show, iconHtml, num, label, filterType = null) => {
                 const card = cards[index];
                 if (!card) return;
                 if (show) {
                     card.el.style.display = 'flex';
+                    card.el.style.cursor = filterType ? 'pointer' : 'default';
+                    card.el.title = filterType ? `Click to filter by ${label}` : '';
                     if (card.icon) card.icon.innerHTML = iconHtml;
                     if (card.num) card.num.innerText = num;
                     if (card.label) card.label.innerText = label;
+
+                    if (filterType) {
+                        card.el.onclick = function() {
+                            onStatCardClick(paneId, filterType, index);
+                        };
+                    } else {
+                        card.el.onclick = null;
+                    }
                 } else {
                     card.el.style.display = 'none';
+                    card.el.onclick = null;
                 }
             };
 
@@ -2936,7 +2947,7 @@
                 const newLeads = currentLeads.filter(l => (l.status || '').toLowerCase() === 'new').length;
                 const contacted = currentLeads.filter(l => {
                     const s = (l.status || '').toLowerCase();
-                    return s === 'contacted' || s === 'in progress' || s === 'following up';
+                    return ['answered', 'busy', 'follow up required', 'not answered', 'no. not reachable', 'contacted', 'in progress'].includes(s);
                 }).length;
                 const converted = currentLeads.filter(l => {
                     const s = (l.status || '').toLowerCase();
@@ -2947,14 +2958,14 @@
                 const lost = currentLeads.filter(l => {
                     const s = (l.status || '').toLowerCase();
                     const fs = (l.final_status || '').toLowerCase();
-                    return s === 'lost' || fs === 'lost' || fs === 'cancelled' || fs === 'not interested' || fs === 'lost lead' || fs === 'booked elsewhere';
+                    return s === 'lost' || fs === 'lost' || fs === 'cancelled' || fs === 'not interested' || fs === 'lost lead' || fs === 'booked elsewhere' || fs === 'postpone';
                 }).length;
 
-                setCard(0, true, '<i class="fa-solid fa-people-group"></i>', total, 'Total Leads');
-                setCard(1, true, '<i class="fa-solid fa-sparkles" style="color: #eab308;"></i>', newLeads, 'New Leads');
-                setCard(2, true, '<i class="fa-solid fa-phone-volume"></i>', contacted, 'Contacted/In Progress');
-                setCard(3, true, '<i class="fa-solid fa-thumbs-up" style="color: #22c55e;"></i>', converted, 'Converted Leads');
-                setCard(4, true, '<i class="fa-solid fa-thumbs-down" style="color: #ef4444;"></i>', lost, 'Lost Leads');
+                setCard(0, true, '<i class="fa-solid fa-people-group"></i>', total, 'Total Leads', 'all');
+                setCard(1, true, '<i class="fa-solid fa-sparkles" style="color: #eab308;"></i>', newLeads, 'New Leads', 'new');
+                setCard(2, true, '<i class="fa-solid fa-phone-volume"></i>', contacted, 'Contacted/In Progress', 'contacted');
+                setCard(3, true, '<i class="fa-solid fa-thumbs-up" style="color: #22c55e;"></i>', converted, 'Converted Leads', 'converted');
+                setCard(4, true, '<i class="fa-solid fa-thumbs-down" style="color: #ef4444;"></i>', lost, 'Lost Leads', 'lost');
                 setCard(5, false);
             }
             else if (paneId === 'pane-analytics') {
@@ -3061,6 +3072,45 @@
                 setCard(3, false);
                 setCard(4, false);
                 setCard(5, false);
+            }
+        };
+
+        window.onStatCardClick = function(paneId, filterType, cardIndex) {
+            for (let i = 0; i < 6; i++) {
+                const c = document.getElementById(`stat-card-${i}`);
+                if (c) {
+                    if (i === cardIndex) {
+                        c.classList.add('active-stat-card');
+                    } else {
+                        c.classList.remove('active-stat-card');
+                    }
+                }
+            }
+
+            if (paneId === 'pane-leads') {
+                const statusSelect = document.getElementById('filter-lead-status');
+                const finalStatusSelect = document.getElementById('filter-lead-finalstatus');
+                const searchInput = document.getElementById('search-leads-input');
+
+                if (filterType === 'all') {
+                    if (statusSelect) statusSelect.value = '';
+                    if (finalStatusSelect) finalStatusSelect.value = '';
+                    if (searchInput) searchInput.value = '';
+                } else if (filterType === 'new') {
+                    if (statusSelect) statusSelect.value = 'New';
+                    if (finalStatusSelect) finalStatusSelect.value = '';
+                } else if (filterType === 'contacted') {
+                    if (statusSelect) statusSelect.value = '__contacted__';
+                    if (finalStatusSelect) finalStatusSelect.value = '';
+                } else if (filterType === 'converted') {
+                    if (statusSelect) statusSelect.value = '';
+                    if (finalStatusSelect) finalStatusSelect.value = 'Booking confirmed';
+                } else if (filterType === 'lost') {
+                    if (statusSelect) statusSelect.value = '';
+                    if (finalStatusSelect) finalStatusSelect.value = '__lost__';
+                }
+
+                window.applyLeadsFilters();
             }
         };
 
@@ -5121,11 +5171,25 @@
 
                 const leadStatus = (lead.status || '').trim().toLowerCase();
                 const filterStatus = (status || '').trim().toLowerCase();
-                const matchStatus = !filterStatus || leadStatus === filterStatus;
+                let matchStatus = false;
+                if (!filterStatus) {
+                    matchStatus = true;
+                } else if (filterStatus === '__contacted__') {
+                    matchStatus = ['answered', 'busy', 'follow up required', 'not answered', 'no. not reachable', 'contacted', 'in progress'].includes(leadStatus);
+                } else {
+                    matchStatus = (leadStatus === filterStatus);
+                }
 
                 const leadFinalStatus = (lead.final_status || '').trim().toLowerCase();
                 const filterFinalStatus = (finalStatus || '').trim().toLowerCase();
-                const matchFinalStatus = !filterFinalStatus || leadFinalStatus === filterFinalStatus;
+                let matchFinalStatus = false;
+                if (!filterFinalStatus) {
+                    matchFinalStatus = true;
+                } else if (filterFinalStatus === '__lost__') {
+                    matchFinalStatus = ['lost', 'lost lead', 'cancelled', 'not interested', 'booked elsewhere', 'postpone'].includes(leadFinalStatus) || leadStatus === 'lost';
+                } else {
+                    matchFinalStatus = (leadFinalStatus === filterFinalStatus);
+                }
 
                 const leadAssignee = (lead.assigned_to || '').trim().toLowerCase();
                 const filterAssignee = (assignee || '').trim().toLowerCase();
@@ -5298,6 +5362,7 @@
                                         <select id="filter-lead-status" onchange="applyLeadsFilters()" style="background: #0f172a; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 4px; padding: 2px 4px; font-size: 11px; cursor: pointer; outline: none; min-width: 90px; font-weight: 500;">
                                             <option value="">All</option>
                                             <option value="New">New</option>
+                                            <option value="__contacted__">📞 Contacted / In Progress</option>
                                             <option value="Answered">Answered</option>
                                             <option value="Busy">Busy</option>
                                             <option value="Incorrect Number">Incorrect Number</option>
@@ -5340,6 +5405,7 @@
                                         <select id="filter-lead-status" onchange="applyLeadsFilters()" style="background: #0f172a; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 4px; padding: 2px 4px; font-size: 11px; cursor: pointer; outline: none; min-width: 100px; font-weight: 500;">
                                             <option value="">All</option>
                                             <option value="New">New</option>
+                                            <option value="__contacted__">📞 Contacted / In Progress</option>
                                             <option value="Answered">Answered</option>
                                             <option value="Busy">Busy</option>
                                             <option value="Incorrect Number">Incorrect Number</option>
@@ -5372,6 +5438,7 @@
                                         <select id="filter-lead-finalstatus" onchange="applyLeadsFilters()" style="background: #0f172a; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 4px; padding: 2px 4px; font-size: 11px; cursor: pointer; outline: none; min-width: 100px; font-weight: 500;">
                                             <option value="">All</option>
                                             <option value="Booking confirmed">Booking confirmed</option>
+                                            <option value="__lost__">❌ All Lost Leads</option>
                                             <option value="Booked elsewhere">Booked elsewhere</option>
                                             <option value="Postpone">Postpone</option>
                                             <option value="Not Interested">Not Interested</option>

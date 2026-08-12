@@ -2616,6 +2616,19 @@ footer h3::after, footer h4::after {
     display: flex;
     align-items: center;
     gap: 20px;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.admin-stat-card[style*="cursor: pointer"]:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-gold) !important;
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.25) !important;
+}
+
+.admin-stat-card.active-stat-card {
+    border: 2px solid var(--color-gold) !important;
+    background: rgba(212, 175, 55, 0.12) !important;
+    box-shadow: 0 0 16px rgba(212, 175, 55, 0.35) !important;
 }
 
 .admin-stat-icon {
