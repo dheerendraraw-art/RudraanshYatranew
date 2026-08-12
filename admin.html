@@ -701,12 +701,27 @@
             <!-- PANE 6: LEADS MANAGER -->
             <div id="pane-leads" class="admin-tab-content-pane" style="display: none;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
-                    <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap; flex-grow: 1;">
+                    <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; flex-grow: 1;">
                         <h3 class="admin-form-title" style="margin-bottom: 0; border-bottom: none;"><i
                                 class="fa-solid fa-people-group" style="color: var(--color-gold);"></i> Leads Manager</h3>
-                        <div style="position: relative; width: 260px; max-width: 100%;">
+                        <div style="position: relative; width: 240px; max-width: 100%;">
                             <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: rgba(212, 175, 55, 0.6); font-size: 13px;"></i>
                             <input type="text" id="search-leads-input" placeholder="Search name, phone, email..." oninput="applyLeadsFilters()" style="background: #1e293b; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: var(--border-radius-sm, 4px); padding: 8px 12px 8px 32px; font-size: 13px; outline: none; width: 100%; font-weight: 500; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); transition: border-color 0.2s ease;">
+                        </div>
+                        <div style="position: relative; min-width: 170px; max-width: 100%;">
+                            <select id="top-filter-lead-status" onchange="onTopStatusFilterChange(this.value)" style="background: #1e293b; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: var(--border-radius-sm, 4px); padding: 8px 12px; font-size: 13px; outline: none; width: 100%; font-weight: 600; cursor: pointer; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);">
+                                <option value="">📋 All Statuses</option>
+                                <option value="New">✨ New</option>
+                                <option value="__contacted__">📞 Contacted / In Progress</option>
+                                <option value="Answered">📞 Answered</option>
+                                <option value="Busy">⏳ Busy</option>
+                                <option value="Incorrect Number">🚫 Incorrect Number</option>
+                                <option value="Follow up required">🔁 Follow up required</option>
+                                <option value="Not Answered">🔇 Not Answered</option>
+                                <option value="No. not reachable">📴 No. not reachable</option>
+                                <option value="Won">🏆 Won</option>
+                                <option value="Lost">❌ Lost</option>
+                            </select>
                         </div>
                     </div>
                     <div id="leads-action-buttons-wrap" class="admin-only-action" style="display: flex; gap: 8px;">
@@ -3075,6 +3090,12 @@
             }
         };
 
+        window.onTopStatusFilterChange = function(val) {
+            const statusSelect = document.getElementById('filter-lead-status');
+            if (statusSelect) statusSelect.value = val;
+            window.applyLeadsFilters();
+        };
+
         window.onStatCardClick = function(paneId, filterType, cardIndex) {
             for (let i = 0; i < 6; i++) {
                 const c = document.getElementById(`stat-card-${i}`);
@@ -3088,27 +3109,32 @@
             }
 
             if (paneId === 'pane-leads') {
+                const topStatusSelect = document.getElementById('top-filter-lead-status');
                 const statusSelect = document.getElementById('filter-lead-status');
                 const finalStatusSelect = document.getElementById('filter-lead-finalstatus');
                 const searchInput = document.getElementById('search-leads-input');
 
+                let targetStatus = '';
                 if (filterType === 'all') {
-                    if (statusSelect) statusSelect.value = '';
+                    targetStatus = '';
                     if (finalStatusSelect) finalStatusSelect.value = '';
                     if (searchInput) searchInput.value = '';
                 } else if (filterType === 'new') {
-                    if (statusSelect) statusSelect.value = 'New';
+                    targetStatus = 'New';
                     if (finalStatusSelect) finalStatusSelect.value = '';
                 } else if (filterType === 'contacted') {
-                    if (statusSelect) statusSelect.value = '__contacted__';
+                    targetStatus = '__contacted__';
                     if (finalStatusSelect) finalStatusSelect.value = '';
                 } else if (filterType === 'converted') {
-                    if (statusSelect) statusSelect.value = '';
+                    targetStatus = '';
                     if (finalStatusSelect) finalStatusSelect.value = 'Booking confirmed';
                 } else if (filterType === 'lost') {
-                    if (statusSelect) statusSelect.value = '';
+                    targetStatus = '';
                     if (finalStatusSelect) finalStatusSelect.value = '__lost__';
                 }
+
+                if (topStatusSelect) topStatusSelect.value = targetStatus;
+                if (statusSelect) statusSelect.value = targetStatus;
 
                 window.applyLeadsFilters();
             }
@@ -5135,12 +5161,14 @@
                 const state = JSON.parse(rawState);
                 const sourceSelect = document.getElementById('filter-lead-source');
                 const statusSelect = document.getElementById('filter-lead-status');
+                const topStatusSelect = document.getElementById('top-filter-lead-status');
                 const finalStatusSelect = document.getElementById('filter-lead-finalstatus');
                 const assigneeSelect = document.getElementById('filter-lead-assignee');
                 const searchInput = document.getElementById('search-leads-input');
 
                 if (sourceSelect && state.source !== undefined) sourceSelect.value = state.source;
                 if (statusSelect && state.status !== undefined) statusSelect.value = state.status;
+                if (topStatusSelect && state.status !== undefined) topStatusSelect.value = state.status;
                 if (finalStatusSelect && state.finalStatus !== undefined) finalStatusSelect.value = state.finalStatus;
                 if (assigneeSelect && state.assignee !== undefined) assigneeSelect.value = state.assignee;
                 if (searchInput && state.searchVal !== undefined) searchInput.value = state.searchVal;
@@ -5158,7 +5186,16 @@
 
         window.applyLeadsFilters = function(keepPage = false) {
             const source = document.getElementById('filter-lead-source') ? document.getElementById('filter-lead-source').value : '';
-            const status = document.getElementById('filter-lead-status') ? document.getElementById('filter-lead-status').value : '';
+            const topStatusSelect = document.getElementById('top-filter-lead-status');
+            const tableStatusSelect = document.getElementById('filter-lead-status');
+            const status = (topStatusSelect && topStatusSelect.value !== undefined && topStatusSelect.value !== '')
+                ? topStatusSelect.value
+                : (tableStatusSelect ? tableStatusSelect.value : '');
+
+            // Ensure both dropdowns remain in sync
+            if (topStatusSelect && topStatusSelect.value !== status) topStatusSelect.value = status;
+            if (tableStatusSelect && tableStatusSelect.value !== status) tableStatusSelect.value = status;
+
             const finalStatus = document.getElementById('filter-lead-finalstatus') ? document.getElementById('filter-lead-finalstatus').value : '';
             const assignee = document.getElementById('filter-lead-assignee') ? document.getElementById('filter-lead-assignee').value : '';
             const rawSearch = document.getElementById('search-leads-input') ? document.getElementById('search-leads-input').value.trim() : '';
@@ -5250,12 +5287,14 @@
         window.resetLeadsFilters = function() {
             const sourceSelect = document.getElementById('filter-lead-source');
             const statusSelect = document.getElementById('filter-lead-status');
+            const topStatusSelect = document.getElementById('top-filter-lead-status');
             const finalStatusSelect = document.getElementById('filter-lead-finalstatus');
             const assigneeSelect = document.getElementById('filter-lead-assignee');
             const searchInput = document.getElementById('search-leads-input');
 
             if (sourceSelect) sourceSelect.value = '';
             if (statusSelect) statusSelect.value = '';
+            if (topStatusSelect) topStatusSelect.value = '';
             if (finalStatusSelect) finalStatusSelect.value = '';
             if (assigneeSelect) assigneeSelect.value = '';
             if (searchInput) searchInput.value = '';
