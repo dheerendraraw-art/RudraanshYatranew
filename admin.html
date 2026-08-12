@@ -2375,7 +2375,7 @@
             }
             
             applyRolePermissions();
-            const savedPaneId = sessionStorage.getItem('admin_active_pane');
+            const savedPaneId = sessionStorage.getItem('admin_active_pane') || localStorage.getItem('admin_active_pane');
             if (savedPaneId && document.getElementById(savedPaneId)) {
                 switchTab(null, savedPaneId);
             } else if (currentUserRole === 'staff') {
@@ -2688,7 +2688,10 @@
         function switchTab(evt, paneId) {
             applyRolePermissions();
             if (paneId) {
-                try { sessionStorage.setItem('admin_active_pane', paneId); } catch(e) {}
+                try {
+                    sessionStorage.setItem('admin_active_pane', paneId);
+                    localStorage.setItem('admin_active_pane', paneId);
+                } catch(e) {}
             }
             const tabs = document.querySelectorAll('.admin-tab-btn');
             const contents = document.querySelectorAll('.admin-tab-content-pane');
@@ -5085,7 +5088,7 @@
         };
 
         window.restoreLeadsFiltersState = function() {
-            const rawState = sessionStorage.getItem('admin_leads_state');
+            const rawState = sessionStorage.getItem('admin_leads_state') || localStorage.getItem('admin_leads_state');
             if (!rawState) return false;
             try {
                 const state = JSON.parse(rawState);
@@ -5181,6 +5184,7 @@
                     sortDir: leadsSortDir
                 };
                 sessionStorage.setItem('admin_leads_state', JSON.stringify(leadsState));
+                localStorage.setItem('admin_leads_state', JSON.stringify(leadsState));
             } catch (e) {}
 
             refreshActiveTabStats();
@@ -5201,7 +5205,10 @@
             if (assigneeSelect) assigneeSelect.value = '';
             if (searchInput) searchInput.value = '';
 
-            try { sessionStorage.removeItem('admin_leads_state'); } catch(e) {}
+            try {
+                sessionStorage.removeItem('admin_leads_state');
+                localStorage.removeItem('admin_leads_state');
+            } catch(e) {}
             window.applyLeadsFilters();
         };
 
@@ -5681,9 +5688,32 @@
             }
 
             if (leadId) {
+                const activeTab = document.querySelector('.admin-tab-btn.active');
+                if (activeTab) {
+                    const match = activeTab.getAttribute('onclick')?.match(/'([^']+)'/);
+                    if (match && match[1]) {
+                        try {
+                            sessionStorage.setItem('admin_active_pane', match[1]);
+                            localStorage.setItem('admin_active_pane', match[1]);
+                        } catch(e) {}
+                    }
+                }
                 window.location.href = `lead-details.html?id=${leadId}`;
             }
         };
+
+        window.addEventListener('pageshow', function(event) {
+            if (event.persisted) {
+                const savedPaneId = sessionStorage.getItem('admin_active_pane') || localStorage.getItem('admin_active_pane');
+                if (savedPaneId && document.getElementById(savedPaneId)) {
+                    switchTab(null, savedPaneId);
+                }
+                const restored = window.restoreLeadsFiltersState();
+                if (restored) {
+                    window.applyLeadsFilters(true);
+                }
+            }
+        });
 
         // Helper to copy a confirmed lead to bookings table
         window.copyLeadToBooking = async function(lead) {

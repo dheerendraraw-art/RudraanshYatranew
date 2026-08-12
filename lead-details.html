@@ -329,7 +329,7 @@
                         </div>
                         <div class="form-group">
                             <label class="form-label">Lead Status</label>
-                            <select id="property-status" class="form-control">
+                            <select id="property-status" class="form-control" onchange="saveAllLeadProperties()">
                                 <option value="New">✨ New</option>
                                 <option value="Answered">📞 Answered</option>
                                 <option value="Busy">⏳ Busy</option>
@@ -341,7 +341,7 @@
                         </div>
                         <div class="form-group" id="prop-assignee-row">
                             <label class="form-label">Assigned To Staff</label>
-                            <select id="property-assignee" class="form-control">
+                            <select id="property-assignee" class="form-control" onchange="saveAllLeadProperties()">
                                 <option value="">Loading...</option>
                             </select>
                         </div>
@@ -355,7 +355,7 @@
                         </div>
                         <div class="form-group">
                             <label class="form-label">Final Status</label>
-                            <select id="property-final-status" class="form-control">
+                            <select id="property-final-status" class="form-control" onchange="saveAllLeadProperties()">
                                 <option value="">🔘 None</option>
                                 <option value="Booking confirmed">🎉 Booking confirmed</option>
                                 <option value="Booked elsewhere">🏢 Booked elsewhere</option>
