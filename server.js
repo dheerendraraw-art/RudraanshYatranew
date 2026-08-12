@@ -2605,8 +2605,8 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
         doc.fillColor(slate)
            .font('Helvetica')
            .fontSize(8)
-           .text(`📞  ${bill.customer_phone || 'N/A'}`, gutter + 14, afterNameY, { width: halfW - 20 });
-        doc.text(`✉  ${bill.customer_email || 'N/A'}`, gutter + 14, doc.y + 2, { width: halfW - 20 });
+           .text(`Phone: ${bill.customer_phone || 'N/A'}`, gutter + 14, afterNameY, { width: halfW - 20 });
+        doc.text(`Email: ${bill.customer_email || 'N/A'}`, gutter + 14, doc.y + 2, { width: halfW - 20 });
 
         // Right card – Tour Details
         const rightCardX = gutter + halfW + 14;
