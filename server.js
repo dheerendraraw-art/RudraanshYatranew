@@ -407,9 +407,9 @@ app.get('/blog/:slug', async (req, res) => {
         // ── SEO for Kailash Mansarovar final batch blog ──
         if (slug === 'kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanakpur') {
             parikramaMetaOverride = {
-                title: 'कैलास मानसरोवर यात्रा 2026: लिपुलेख दर्रे से अंतिम दल | Rudraansh Yatra',
-                desc: 'कैलास मानसरोवर यात्रा 2026 का अंतिम (10वाँ) दल लिपुलेख दर्रे (Lipulekh Pass) से रवाना। तनकपुर में 44 यात्रियों का कुमाऊंनी परंपरा से तिलक लगाकर भव्य स्वागत।',
-                dateModified: '2026-08-13T11:30:00+05:30'
+                title: 'Kailash Mansarovar Yatra 2026: Final Batch via Lipulekh Pass Welcomed at Tanakpur',
+                desc: 'The 10th and final batch of 44 pilgrims for the Kailash Mansarovar Yatra 2026 via Lipulekh Pass received a traditional Kumaoni welcome at Tanakpur TRC.',
+                dateModified: '2026-08-13T12:00:00+05:30'
             };
 
             extraSchemas = `
@@ -420,34 +420,34 @@ app.get('/blog/:slug', async (req, res) => {
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "2026 में लिपुलेख दर्रे से कैलास मानसरोवर यात्रा का अंतिम दल कौन सा था?",
+          "name": "Which was the final batch for Kailash Mansarovar Yatra 2026 via Lipulekh Pass?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "2026 की कैलास मानसरोवर यात्रा का अंतिम दल 10वाँ दल था, जिसमें देश के 12 राज्यों से आए 44 तीर्थयात्री (28 पुरुष और 16 महिलाएं) शामिल थे।"
+            "text": "The 10th batch comprising 44 pilgrims (28 male, 16 female) from 12 Indian states was the final batch of the 2026 season via Lipulekh Pass."
           }
         },
         {
           "@type": "Question",
-          "name": "इस वर्ष तनकपुर-लिपुलेख मार्ग से कुल कितने यात्रियों ने मानसरोवर यात्रा की?",
+          "name": "How many total pilgrims completed the Kailash Mansarovar Yatra via Lipulekh in 2026?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "इस वर्ष कुल 10 दलों में 468 तीर्थयात्रियों ने तनकपुर-पिथौरागढ़-लिपुलेख दर्रा मार्ग से कैलास मानसरोवर की यात्रा पूरी की।"
+            "text": "A total of 468 pilgrims across 10 batches completed the pilgrimage via Tanakpur-Pithoragarh-Lipulekh Pass in 2026, doubling from 237 pilgrims in 2025."
           }
         },
         {
           "@type": "Question",
-          "name": "लिपुलेख दर्रा (Lipulekh Pass) की ऊंचाई कितनी है और यह कहाँ स्थित है?",
+          "name": "What is the altitude and location of Lipulekh Pass?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "लिपुलेख दर्रा लगभग 17,060 फीट की ऊंचाई पर पिथौरागढ़ जिला (उत्तराखंड) और तिब्बत (चीन) सीमा पर स्थित भारत का प्रमुख ऐतिहासिक हिमालयी दर्रा है।"
+            "text": "Lipulekh Pass is a high-altitude Himalayan mountain pass situated at an elevation of approximately 17,060 feet (5,200m) in Pithoragarh district, Uttarakhand, connecting India with Tibet Autonomous Region (China)."
           }
         },
         {
           "@type": "Question",
-          "name": "कैलास मानसरोवर यात्रा या आदि कैलास के लिए Inner Line Permit (ILP) कैसे मिलता है?",
+          "name": "How do I get an Inner Line Permit (ILP) for Adi Kailash and border yatras?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Inner Line Permit (ILP) धारचूला/पिथौरागढ़ SDM कार्यालय द्वारा जारी किया जाता है। स्थानीय पंजीकृत टूर ऑपरेटर जैसे Rudraansh Yatra यात्रियों के दस्तावेज जमा करवाकर परमिट प्रक्रिया पूरी करवाते हैं।"
+            "text": "Inner Line Permits (ILP) are issued by the SDM Office in Dharchula/Pithoragarh. Registered local ground operators like Rudraansh Yatra facilitate all documentation, medical clearance, and police verification required for permit issuance."
           }
         }
       ]
