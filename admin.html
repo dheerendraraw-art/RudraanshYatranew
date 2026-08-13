@@ -3369,31 +3369,31 @@
 
                 html += `
                     <tr>
-                        <td data-label="Booking ID"><strong style="color: #0f172a; background: rgba(212, 175, 55, 0.18); border: 1px solid rgba(212, 175, 55, 0.4); padding: 4px 8px; border-radius: 6px; font-family: monospace; font-size: 12px; font-weight: 800; display: inline-block;">${bookingId}</strong></td>
-                        <td data-label="Package Name" class="mobile-detail-field"><strong>${item.package_name || '—'}</strong></td>
-                        <td data-label="Travel Destination" class="mobile-detail-field"><span class="badge" style="background: rgba(212, 175, 55, 0.15); color: #d97706; padding: 4px 8px; border-radius: 4px; font-weight: 700; border: 1px solid rgba(212, 175, 55, 0.3);">${destVal}</span></td>
-                        <td data-label="Client Name">${item.name}</td>
-                        <td data-label="Phone/Email">${phoneHtml} ${item.email ? '<br><small>' + item.email + '</small>' : ''}</td>
-                        <td data-label="Travel Date">${dateStr}</td>
-                        <td data-label="Travelers" class="mobile-detail-field">${item.travelers}</td>
-                        <td data-label="Special Notes"><small>${item.message || '—'}</small></td>
+                        <td data-label="Booking ID"><strong style="color: #f5c842; background: rgba(212, 175, 55, 0.2); border: 1px solid rgba(212, 175, 55, 0.5); padding: 4px 8px; border-radius: 6px; font-family: monospace; font-size: 12px; font-weight: 800; display: inline-block;">${bookingId}</strong></td>
+                        <td data-label="Package Name" class="mobile-detail-field"><strong style="color: #f8fafc;">${item.package_name || '—'}</strong></td>
+                        <td data-label="Travel Destination" class="mobile-detail-field"><span class="badge" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; padding: 4px 8px; border-radius: 4px; font-weight: 700; border: 1px solid rgba(245, 158, 11, 0.4);">${destVal}</span></td>
+                        <td data-label="Client Name"><strong style="color: #ffffff; font-size: 14px;">${item.name}</strong></td>
+                        <td data-label="Phone/Email"><div style="color: #cbd5e1;">${phoneHtml} ${item.email ? '<br><small style="color: #94a3b8;">' + item.email + '</small>' : ''}</div></td>
+                        <td data-label="Travel Date"><span style="color: #f8fafc; font-weight: 600;">${dateStr}</span></td>
+                        <td data-label="Travelers" class="mobile-detail-field"><span style="color: #f5c842; font-weight: 800; background: rgba(212,175,55,0.15); padding: 2px 8px; border-radius: 4px; border: 1px solid rgba(212,175,55,0.3);">👥 ${item.travelers}</span></td>
+                        <td data-label="Special Notes"><div style="color: #e2e8f0; font-size: 12px; max-width: 280px; line-height: 1.4;">${item.message || '—'}</div></td>
                         <td data-label="Booked By">
-                            <select ${currentUserRole === "staff" ? "disabled" : ""} onchange="updateBookingField('${item.id}', 'assigned_to', this.value)" style="background: #1f2937; color: white; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 4px; font-size: 12px; width: 150px; cursor: pointer;">
+                            <select ${currentUserRole === "staff" ? "disabled" : ""} onchange="updateBookingField('${item.id}', 'assigned_to', this.value)" style="background: #0f172a; color: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 6px 8px; font-size: 12px; width: 100%; max-width: 160px; font-weight: 600; cursor: pointer;">
                                 ${bookingAssigneeOptions}
                             </select>
                         </td>
-                        <td data-label="Created" class="mobile-detail-field">${createdStr}</td>
+                        <td data-label="Created" class="mobile-detail-field"><span style="color: #94a3b8; font-size: 12px;">${createdStr}</span></td>
                         <td data-label="Actions">
                             <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
                                 ${billButtonHtml}
-                                <button class="btn btn-primary" onclick="startEditBooking('${item.id}')" style="width: 28px; height: 28px; font-size: 12px; padding: 0; background-color: var(--color-gold); color: #111827; border: none; font-weight: bold; cursor: pointer; border-radius: 3px; display: inline-flex; align-items: center; justify-content: center;" title="Edit Booking">
+                                <button class="btn btn-primary" onclick="startEditBooking('${item.id}')" style="min-height: 32px; width: 32px; font-size: 12px; padding: 0; background-color: var(--color-gold); color: #111827; border: none; font-weight: bold; cursor: pointer; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center;" title="Edit Booking">
                                     <i class="fa-solid fa-pen"></i>
                                 </button>
-                                <button class="admin-btn-delete" onclick="deleteRecord('bookings', '${item.id}', fetchBookings)" style="width: 28px; height: 28px; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; margin: 0;">
+                                <button class="admin-btn-delete" onclick="deleteRecord('bookings', '${item.id}', fetchBookings)" style="min-height: 32px; width: 32px; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; margin: 0; border-radius: 4px;">
                                     <i class="fa-solid fa-trash"></i>
                                 </button>
                             </div>
-                            <div class="booking-toggle-details-btn" onclick="toggleMobileBookingDetails(this)" style="display: none; color: var(--color-gold); font-size: 11px; font-weight: 700; cursor: pointer; padding: 6px 0; border-top: 1px dashed rgba(255,255,255,0.05); margin-top: 8px; text-align: center; text-transform: uppercase; width: 100%;">
+                            <div class="booking-toggle-details-btn" onclick="toggleMobileBookingDetails(this)" style="display: none; color: var(--color-gold); font-size: 11px; font-weight: 700; cursor: pointer; padding: 8px 0; border-top: 1px dashed rgba(255,255,255,0.1); margin-top: 8px; text-align: center; text-transform: uppercase; width: 100%;">
                                 <i class="fa-solid fa-chevron-down"></i> Show Details
                             </div>
                         </td>
@@ -8129,35 +8129,35 @@
                 }
 
                 // Lead Link
-                const leadLink = r.lead_id ? `<a href="lead-details.html?id=${r.lead_id}" style="color: var(--color-gold); font-weight: 700; text-decoration: none;">${leadName}</a>` : `<strong>${leadName}</strong>`;
+                const leadLink = r.lead_id ? `<a href="lead-details.html?id=${r.lead_id}" style="color: #f5c842; font-weight: 800; font-size: 14px; text-decoration: none;"><i class="fa-solid fa-user" style="margin-right: 4px; font-size: 11px;"></i>${leadName}</a>` : `<strong style="color: #ffffff; font-size: 14px;">${leadName}</strong>`;
 
                 const formattedDate = new Date(r.due_date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
 
                 html += `
-                    <tr style="${isCompleted ? 'opacity: 0.6;' : ''}">
+                    <tr style="${isCompleted ? 'opacity: 0.65;' : ''}">
                         <td data-label="Lead Name">${leadLink}</td>
-                        <td data-label="Phone & Call">${phoneHtml}</td>
-                        <td data-label="Action / Note"><div style="max-width: 260px; font-weight: 600; color: #f8fafc;">${r.note}</div></td>
+                        <td data-label="Phone & Call"><span style="color: #cbd5e1; font-weight: 600;">${phoneHtml}</span></td>
+                        <td data-label="Action / Note"><div style="max-width: 100%; font-size: 13.5px; font-weight: 600; color: #ffffff; line-height: 1.4;">${r.note}</div></td>
                         <td data-label="Due Date">
-                            <div style="display: flex; flex-direction: column; gap: 2px;">
-                                <span>${formattedDate} at ${r.due_time || '10:00'}</span>
+                            <div style="display: flex; flex-direction: column; gap: 4px; align-items: flex-end;">
+                                <span style="color: #f8fafc; font-weight: 700; font-size: 12.5px;"><i class="fa-solid fa-clock" style="margin-right: 4px; color: #f5c842;"></i>${formattedDate} at ${r.due_time || '10:00'}</span>
                                 <div>${dueBadge}</div>
                             </div>
                         </td>
                         <td data-label="Priority">${priorityBadge}</td>
-                        <td data-label="Assigned To"><span style="font-size: 12px; color: #cbd5e1;">${staffName}</span></td>
+                        <td data-label="Assigned To"><span style="font-size: 12px; color: #f5c842; font-weight: 700; background: rgba(212,175,55,0.12); padding: 2px 8px; border-radius: 4px; border: 1px solid rgba(212,175,55,0.3);">👤 ${staffName}</span></td>
                         <td data-label="Status">
-                            <span class="status-badge" style="${isCompleted ? 'background: rgba(34,197,94,0.15); color: #4ade80; border-color: rgba(34,197,94,0.3);' : 'background: rgba(245,158,11,0.15); color: #fbbf24; border-color: rgba(245,158,11,0.3);'}">
+                            <span class="status-badge" style="${isCompleted ? 'background: rgba(34,197,94,0.2); color: #4ade80; border-color: rgba(34,197,94,0.4); font-weight: 800;' : 'background: rgba(245,158,11,0.2); color: #fbbf24; border-color: rgba(245,158,11,0.4); font-weight: 800;'}">
                                 ${r.status || 'Pending'}
                             </span>
                         </td>
                         <td data-label="Actions">
-                            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-                                <button type="button" onclick="toggleReminderStatus('${r.id}', '${r.status}')" class="btn" style="background: ${isCompleted ? 'rgba(245,158,11,0.2)' : 'rgba(34,197,94,0.2)'}; color: ${isCompleted ? '#fbbf24' : '#4ade80'}; border: 1px solid ${isCompleted ? 'rgba(245,158,11,0.4)' : 'rgba(34,197,94,0.4)'}; padding: 4px 8px; font-size: 11px; cursor: pointer; border-radius: 4px; font-weight: 700;" title="${isCompleted ? 'Reopen' : 'Mark Completed'}">
+                            <div style="display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; width: 100%;">
+                                <button type="button" onclick="toggleReminderStatus('${r.id}', '${r.status}')" class="btn" style="min-height: 32px; background: ${isCompleted ? 'rgba(245,158,11,0.25)' : 'rgba(34,197,94,0.25)'}; color: ${isCompleted ? '#fbbf24' : '#4ade80'}; border: 1px solid ${isCompleted ? 'rgba(245,158,11,0.5)' : 'rgba(34,197,94,0.5)'}; padding: 6px 12px; font-size: 12px; cursor: pointer; border-radius: 4px; font-weight: 800;" title="${isCompleted ? 'Reopen' : 'Mark Completed'}">
                                     <i class="${isCompleted ? 'fa-solid fa-rotate-left' : 'fa-solid fa-check'}"></i> ${isCompleted ? 'Reopen' : 'Done'}
                                 </button>
-                                ${!isCompleted ? `<button type="button" onclick="snoozeReminder('${r.id}', 1)" class="btn" style="background: rgba(59,130,246,0.15); color: #60a5fa; border: 1px solid rgba(59,130,246,0.3); padding: 4px 8px; font-size: 11px; cursor: pointer; border-radius: 4px;" title="Snooze +1 Day"><i class="fa-solid fa-clock-rotate-left"></i> +1D</button>` : ''}
-                                <button type="button" onclick="deleteReminder('${r.id}')" class="btn" style="background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.3); padding: 4px 8px; font-size: 11px; cursor: pointer; border-radius: 4px;" title="Delete Reminder"><i class="fa-solid fa-trash"></i></button>
+                                ${!isCompleted ? `<button type="button" onclick="snoozeReminder('${r.id}', 1)" class="btn" style="min-height: 32px; background: rgba(59,130,246,0.2); color: #60a5fa; border: 1px solid rgba(59,130,246,0.4); padding: 6px 10px; font-size: 12px; cursor: pointer; border-radius: 4px; font-weight: 700;" title="Snooze +1 Day"><i class="fa-solid fa-clock-rotate-left"></i> +1D</button>` : ''}
+                                <button type="button" onclick="deleteReminder('${r.id}')" class="btn" style="min-height: 32px; background: rgba(239,68,68,0.2); color: #f87171; border: 1px solid rgba(239,68,68,0.4); padding: 6px 10px; font-size: 12px; cursor: pointer; border-radius: 4px; font-weight: 700;" title="Delete Reminder"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </td>
                     </tr>
