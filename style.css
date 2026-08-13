@@ -6791,23 +6791,87 @@ body.user-role-staff .admin-only-action {
     }
 }
 
-/* Mobile view adjustments for Bookings Table inside Staff Panel */
+/* Mobile View Table Card Adjustments for Staff & Admin Panel */
 @media (max-width: 768px) {
-    /* Ensure Booking ID and Client Name are fully visible with light text */
-    .admin-table tbody tr td[data-label="Booking ID"],
-    .admin-table tbody tr td[data-label="Client Name"] {
+    /* Base Mobile Table Card Container */
+    .admin-table tbody tr {
+        background: #1e293b !important;
+        border: 1px solid rgba(212, 175, 55, 0.35) !important;
+        border-left: 4px solid var(--color-gold) !important;
+        border-radius: 12px !important;
+        padding: 14px 16px !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+        margin-bottom: 14px !important;
         display: flex !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        color: var(--color-text-primary, #1e293b) !important;
+        flex-direction: column !important;
     }
 
-    /* Fix the font color of Booking ID badge on mobile light background */
+    /* Table cells inside mobile dark cards: force crisp light text */
+    .admin-table tbody tr td {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 8px 0 !important;
+        border-bottom: 1px dashed rgba(255, 255, 255, 0.08) !important;
+        font-size: 13.5px !important;
+        color: #f8fafc !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        text-align: right !important;
+        min-height: 34px !important;
+    }
+
+    /* Labels on the left side of mobile cards */
+    .admin-table tbody tr td::before {
+        content: attr(data-label);
+        font-weight: 800;
+        color: #94a3b8 !important;
+        font-size: 11px !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.6px !important;
+        margin-right: 12px !important;
+        text-align: left !important;
+        flex-shrink: 0 !important;
+    }
+
+    /* Ensure links (Lead Name, Phone, Customer links) are bright gold/white */
+    .admin-table tbody tr td a {
+        color: #f5c842 !important;
+        font-weight: 700 !important;
+        text-decoration: none !important;
+    }
+    .admin-table tbody tr td a:hover {
+        color: #ffd700 !important;
+        text-decoration: underline !important;
+    }
+
+    /* Ensure text inside spans, divs, strong, small elements are high contrast white */
+    .admin-table tbody tr td span,
+    .admin-table tbody tr td div,
+    .admin-table tbody tr td strong,
+    .admin-table tbody tr td small,
+    .admin-table tbody tr td p {
+        color: #f8fafc !important;
+    }
+
+    /* Booking ID Badge */
     .admin-table tbody tr td[data-label="Booking ID"] strong {
-        color: var(--color-text-primary, #1e293b) !important;
-        background-color: rgba(212, 175, 55, 0.18) !important;
+        color: #f5c842 !important;
+        background-color: rgba(212, 175, 55, 0.15) !important;
         border: 1px solid rgba(212, 175, 55, 0.4) !important;
+        padding: 3px 8px !important;
+        border-radius: 6px !important;
         display: inline-block !important;
+    }
+
+    /* Action buttons row at the bottom of card */
+    .admin-table tbody tr td:last-child {
+        border-bottom: none !important;
+        margin-top: 6px !important;
+        padding-top: 8px !important;
+        justify-content: flex-end !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
     }
 }
 
