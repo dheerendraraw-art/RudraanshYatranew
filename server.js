@@ -317,51 +317,39 @@ app.get('/blog/:slug', async (req, res) => {
 
         // Render Paragraphs
         // Task 1.2: Detect FAQ JSON blocks & wrap as valid <script> JSON-LD (fixes broken schema)
-        // Task 1.3: Use <h2> (not <h3>) for numbered section headings
         const paragraphsHtml = (function renderContent(rawContent) {
             const lines = rawContent.split('\n');
             const output = [];
-            let jsonBuffer = [];
-            let inJsonBlock = false;
-            let braceDepth = 0;
+            let inScriptBlock = false;
+            let scriptBuffer = [];
 
             for (let i = 0; i < lines.length; i++) {
                 const trimmed = lines[i].trim();
                 if (!trimmed) continue;
 
-                // --- Task 1.2: Detect start of embedded FAQ/schema JSON block ---
-                if (!inJsonBlock && trimmed.startsWith('{') &&
-                    (trimmed.includes('@type') || trimmed.includes('mainEntity') || trimmed.includes('FAQPage') || trimmed.includes('faqpage'))) {
-                    inJsonBlock = true;
-                    jsonBuffer = [];
-                    braceDepth = 0;
-                }
-
-                if (inJsonBlock) {
-                    // Count brace depth to detect end of JSON object
-                    for (const ch of trimmed) {
-                        if (ch === '{') braceDepth++;
-                        else if (ch === '}') braceDepth--;
-                    }
-                    // Unescape any double-escaped quotes from DB storage
-                    jsonBuffer.push(trimmed.replace(/\\"/g, '"').replace(/\\n/g, '\n'));
-                    if (braceDepth <= 0) {
-                        // JSON block complete — emit as valid <script> JSON-LD
-                        const schemaJson = jsonBuffer.join('\n');
-                        try {
-                            JSON.parse(schemaJson); // validate before emitting
-                            output.push(`<script type="application/ld+json">\n${schemaJson}\n</script>`);
-                        } catch(e) {
-                            // If invalid JSON, skip silently (don't show raw text to user)
-                            console.warn('Blog FAQ schema JSON parse error, skipping:', e.message);
-                        }
-                        inJsonBlock = false;
-                        jsonBuffer = [];
+                // Handle <script> blocks (like JSON-LD schemas) cleanly
+                if (!inScriptBlock && trimmed.includes('<script')) {
+                    inScriptBlock = true;
+                    scriptBuffer = [trimmed];
+                    if (trimmed.includes('</script>')) {
+                        output.push(scriptBuffer.join('\n'));
+                        inScriptBlock = false;
+                        scriptBuffer = [];
                     }
                     continue;
                 }
 
-                // --- Task 1.3: Numbered headings → <h2> (not <h3>) ---
+                if (inScriptBlock) {
+                    scriptBuffer.push(trimmed);
+                    if (trimmed.includes('</script>')) {
+                        output.push(scriptBuffer.join('\n'));
+                        inScriptBlock = false;
+                        scriptBuffer = [];
+                    }
+                    continue;
+                }
+
+                // --- Numbered headings → <h2> ---
                 if (/^\d+\.\s/.test(trimmed)) {
                     output.push(`<h2 class="blog-heading">${trimmed}</h2>`);
                     continue;
@@ -374,15 +362,8 @@ app.get('/blog/:slug', async (req, res) => {
                 }
 
                 // Pass-through raw HTML tags
-                if (/^<[a-zA-Z0-9/]+/.test(trimmed) || trimmed.endsWith('</script>')) {
+                if (/^<[a-zA-Z0-9/]+/.test(trimmed) || trimmed.endsWith('/>')) {
                     output.push(trimmed);
-                    continue;
-                }
-
-                // Skip stray JSON fragment lines (escaped quotes, lone braces, brackets)
-                if (trimmed.startsWith('}') || trimmed.startsWith(']') ||
-                    (trimmed.startsWith('"') && trimmed.endsWith(',')) ||
-                    (trimmed.startsWith('"') && trimmed.includes('@'))) {
                     continue;
                 }
 
