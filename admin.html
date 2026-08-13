@@ -3243,15 +3243,14 @@
                         }
                     }
 
+                    const isUuid = str => /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(str);
                     const conditions = [];
                     uuidSet.forEach(uuid => {
-                        conditions.push(`assigned_to.eq.${uuid}`);
-                        conditions.push(`user_id.eq.${uuid}`);
+                        if (isUuid(uuid)) {
+                            conditions.push(`assigned_to.eq.${uuid}`);
+                            conditions.push(`user_id.eq.${uuid}`);
+                        }
                     });
-                    if (uname) {
-                        conditions.push(`assigned_to.eq.${uname}`);
-                        conditions.push(`user_id.eq.${uname}`);
-                    }
 
                     if (conditions.length > 0) {
                         query = query.or(conditions.join(','));
