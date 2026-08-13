@@ -5860,7 +5860,7 @@
                         package_name: leadDestination,
                         destination: leadDestination,
                         travel_date: lead.travel_date || new Date().toISOString().split('T')[0],
-                        travelers: '1',
+                        travelers: String(lead.travelers || lead.group_size || 1),
                         message: combinedNotes,
                         assigned_to: staffUuid,
                         user_id: staffUuid,

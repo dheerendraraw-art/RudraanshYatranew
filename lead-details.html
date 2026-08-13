@@ -1113,7 +1113,7 @@
                         email: lead.email || '',
                         package_name: 'Confirmed Lead Booking',
                         travel_date: lead.travel_date || new Date().toISOString().split('T')[0],
-                        travelers: '1',
+                        travelers: String(lead.travelers || lead.group_size || 1),
                         message: combinedNotes || 'Transferred from Leads Manager',
                         assigned_to: staffUuid,
                         user_id: staffUuid,
