@@ -404,8 +404,56 @@ app.get('/blog/:slug', async (req, res) => {
         let extraSchemas = '';
         let contentHtml = paragraphsHtml;
 
-        // ── SEO meta overrides for parikrama run (applied after generic replacements below) ──
-        let parikramaMetaOverride = null;
+        // ── SEO for Kailash Mansarovar final batch blog ──
+        if (slug === 'kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanakpur') {
+            parikramaMetaOverride = {
+                title: 'कैलास मानसरोवर यात्रा 2026: लिपुलेख दर्रे से अंतिम दल | Rudraansh Yatra',
+                desc: 'कैलास मानसरोवर यात्रा 2026 का अंतिम (10वाँ) दल लिपुलेख दर्रे (Lipulekh Pass) से रवाना। तनकपुर में 44 यात्रियों का कुमाऊंनी परंपरा से तिलक लगाकर भव्य स्वागत।',
+                dateModified: '2026-08-13T11:30:00+05:30'
+            };
+
+            extraSchemas = `
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "2026 में लिपुलेख दर्रे से कैलास मानसरोवर यात्रा का अंतिम दल कौन सा था?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "2026 की कैलास मानसरोवर यात्रा का अंतिम दल 10वाँ दल था, जिसमें देश के 12 राज्यों से आए 44 तीर्थयात्री (28 पुरुष और 16 महिलाएं) शामिल थे।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "इस वर्ष तनकपुर-लिपुलेख मार्ग से कुल कितने यात्रियों ने मानसरोवर यात्रा की?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "इस वर्ष कुल 10 दलों में 468 तीर्थयात्रियों ने तनकपुर-पिथौरागढ़-लिपुलेख दर्रा मार्ग से कैलास मानसरोवर की यात्रा पूरी की।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "लिपुलेख दर्रा (Lipulekh Pass) की ऊंचाई कितनी है और यह कहाँ स्थित है?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "लिपुलेख दर्रा लगभग 17,060 फीट की ऊंचाई पर पिथौरागढ़ जिला (उत्तराखंड) और तिब्बत (चीन) सीमा पर स्थित भारत का प्रमुख ऐतिहासिक हिमालयी दर्रा है।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "कैलास मानसरोवर यात्रा या आदि कैलास के लिए Inner Line Permit (ILP) कैसे मिलता है?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Inner Line Permit (ILP) धारचूला/पिथौरागढ़ SDM कार्यालय द्वारा जारी किया जाता है। स्थानीय पंजीकृत टूर ऑपरेटर जैसे Rudraansh Yatra यात्रियों के दस्तावेज जमा करवाकर परमिट प्रक्रिया पूरी करवाते हैं।"
+          }
+        }
+      ]
+    }
+    </script>`;
+        }
 
         // ── SEO for senior citizens blog ──
         if (slug === 'is-adi-kailash-yatra-safe-for-senior-citizens-guide') {
