@@ -7965,10 +7965,23 @@
             }
 
             try {
-                const { data, error } = await supabaseAdmin
+                let query = supabaseAdmin
                     .from('reminders')
                     .select('*')
                     .order('due_date', { ascending: true });
+
+                if (currentUserRole === 'staff') {
+                    const agentUuid = currentUserUuidMapping || AGENT_UUIDS[(currentUsername || '').toLowerCase()];
+                    if (agentUuid && currentUsername) {
+                        query = query.or(`assigned_to.eq.${agentUuid},created_by.eq.${currentUsername}`);
+                    } else if (agentUuid) {
+                        query = query.eq('assigned_to', agentUuid);
+                    } else if (currentUsername) {
+                        query = query.eq('created_by', currentUsername);
+                    }
+                }
+
+                const { data, error } = await query;
 
                 if (error) throw error;
                 allReminders = data || [];
