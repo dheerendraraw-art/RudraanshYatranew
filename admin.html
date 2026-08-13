@@ -4818,8 +4818,8 @@
 
         // Inline field updates helper with optimistic UI updates
         window.updateLeadField = async function(leadId, fieldName, value) {
-            if ((fieldName === 'name' || fieldName === 'phone' || fieldName === 'email') && currentUserRole !== 'admin') {
-                showAdminToast('Error: Only Admins can edit Client details.', 'error');
+            if ((fieldName === 'phone' || fieldName === 'email') && currentUserRole !== 'admin') {
+                showAdminToast('Error: Only Admins can edit Phone or Email.', 'error');
                 fetchLeads();
                 return;
             }

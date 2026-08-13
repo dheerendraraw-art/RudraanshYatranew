@@ -307,7 +307,7 @@
                         <i class="fa-solid fa-sliders"></i>
                     </div>
                     <div class="card-body">
-                        <div class="form-group admin-only-field" style="display:none;">
+                        <div class="form-group">
                             <label class="form-label">Client Name</label>
                             <input type="text" id="property-name" class="form-control" placeholder="Full name">
                         </div>
@@ -779,10 +779,12 @@
                 document.getElementById('property-created-at').innerText = formatDateTimeISO(leadData.created_at);
             }
 
-            // Admin fields
+            // Client name editable by all staff & admin users
+            document.getElementById('property-name').value = leadData.name || '';
+
+            // Admin-only fields (phone, email)
             if (currentUserRole === 'admin') {
                 document.querySelectorAll('.admin-only-field').forEach(el => el.style.display = 'block');
-                document.getElementById('property-name').value = leadData.name || '';
                 document.getElementById('property-phone').value = leadData.phone || '';
                 document.getElementById('property-email').value = leadData.email || '';
             } else {
@@ -953,15 +955,15 @@
                     travelers: newTravelers
                 };
 
-                let newName = '';
+                let newName = document.getElementById('property-name') ? document.getElementById('property-name').value.trim() : '';
                 let newPhone = '';
                 let newEmail = '';
 
+                if (newName) updateData.name = newName;
+
                 if (currentUserRole === 'admin') {
-                    newName = document.getElementById('property-name').value.trim();
                     newPhone = document.getElementById('property-phone').value.trim();
                     newEmail = document.getElementById('property-email').value.trim();
-                    if (newName) updateData.name = newName;
                     if (newPhone) updateData.phone = newPhone;
                     if (newEmail) updateData.email = newEmail;
                 }
@@ -970,9 +972,9 @@
                 const historyEntries = [];
                 const userDisplay = currentUsername ? (currentUsername.charAt(0).toUpperCase() + currentUsername.slice(1)) : 'User';
 
-                // Check Name change
+                // Check Name change (editable by all staff & admin users)
                 const oldName = (leadData.name || '').trim();
-                if (currentUserRole === 'admin' && newName && newName !== oldName) {
+                if (newName && newName !== oldName) {
                     historyEntries.push(`✏️ Client name updated from "${oldName || 'Empty'}" to "${newName}" by ${userDisplay}`);
                 }
 
