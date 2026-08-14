@@ -7578,9 +7578,9 @@
                                 <button onclick="openAddPaymentModal('${bill.id}', '${bill.booking_id}', '${bill.customer_name}', ${remaining})" class="btn btn-secondary" style="border: 1.5px solid #d97706; background: transparent; color: #b45309; padding: 6px 12px; font-size: 11px; cursor: pointer; border-radius: 4px; font-weight: bold; display: inline-flex; align-items: center; gap: 4px;" title="Add Payment">
                                     <i class="fa-solid fa-plus-minus"></i> + ADD PAY
                                 </button>
-                                <a href="/api/billing/${bill.id}/pdf" class="btn btn-secondary" style="border: 1.5px solid #2563eb; background: transparent; color: #1d4ed8; padding: 6px 12px; font-size: 11px; cursor: pointer; border-radius: 4px; font-weight: bold; display: inline-flex; align-items: center; gap: 4px;" title="Download PDF Bill">
+                                <button onclick="downloadBillPdf('${bill.id}')" class="btn btn-secondary" style="border: 1.5px solid #2563eb; background: transparent; color: #1d4ed8; padding: 6px 12px; font-size: 11px; cursor: pointer; border-radius: 4px; font-weight: bold; display: inline-flex; align-items: center; gap: 4px;" title="Download PDF Bill">
                                     <i class="fa-solid fa-file-pdf"></i> PDF
-                                </a>
+                                </button>
                             </div>
                         </td>
                     </tr>
@@ -7588,6 +7588,191 @@
             });
             tbody.innerHTML = html;
         }
+
+        window.downloadBillPdf = async function(billId) {
+            showAdminToast('Preparing Invoice PDF...', 'info');
+            try {
+                const token = localStorage.getItem('admin_token');
+                const headers = {};
+                if (token) headers['Authorization'] = `Bearer ${token}`;
+
+                const response = await fetch(`/api/billing/${billId}/pdf`, { headers });
+                const contentType = response.headers.get('content-type') || '';
+
+                if (response.ok && contentType.includes('application/pdf')) {
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `Invoice_${billId.slice(0,8)}.pdf`;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    a.remove();
+                    showAdminToast('Invoice PDF downloaded successfully!', 'success');
+                    return;
+                }
+            } catch (err) {
+                console.warn('Backend PDF route unavailable, using printable invoice fallback:', err);
+            }
+
+            // Client-side Fallback: Open a clean, printable invoice document in a popup window
+            try {
+                const bill = (billingRecords || []).find(b => b.id === billId) ||
+                    (await supabaseAdmin.from('booking_bills').select('*').eq('id', billId).single()).data;
+
+                if (!bill) {
+                    showAdminToast('Invoice data not found', 'error');
+                    return;
+                }
+
+                const totalBilled = parseFloat(bill.total_package_amount || 0);
+                const discount = parseFloat(bill.discount || 0);
+                const netAmount = totalBilled - discount;
+                const payments = bill.payments_received || [];
+                const totalPaid = payments.reduce((sum, p) => sum + p.amountPaid, 0);
+                const balanceDue = netAmount - totalPaid;
+                const tourDate = bill.tour_start_date ? new Date(bill.tour_start_date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : 'N/A';
+                const billDate = bill.created_at ? new Date(bill.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : new Date().toLocaleDateString('en-IN');
+
+                let paymentRowsHtml = '';
+                payments.forEach((p, idx) => {
+                    paymentRowsHtml += `
+                        <tr style="border-bottom: 1px solid #e2e8f0; font-size: 13px;">
+                            <td style="padding: 10px 12px; color: #475569;">#${idx + 1} (${p.method || 'Online / UPI'})</td>
+                            <td style="padding: 10px 12px; color: #64748b; font-family: monospace;">${p.refNo || p.transactionId || 'Verified'}</td>
+                            <td style="padding: 10px 12px; color: #64748b;">${new Date(p.datePaid).toLocaleDateString('en-IN')}</td>
+                            <td style="padding: 10px 12px; text-align: right; color: #16a34a; font-weight: 700;">₹${parseFloat(p.amountPaid).toLocaleString('en-IN')}</td>
+                        </tr>
+                    `;
+                });
+
+                if (payments.length === 0) {
+                    paymentRowsHtml = `<tr><td colspan="4" style="padding: 12px; text-align: center; color: #94a3b8; font-style: italic;">No payments recorded yet.</td></tr>`;
+                }
+
+                const invoiceWindow = window.open('', '_blank', 'width=850,height=1000');
+                if (!invoiceWindow) {
+                    showAdminToast('Please allow popup to view Invoice', 'warning');
+                    return;
+                }
+
+                invoiceWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <title>Invoice - ${bill.booking_id} - Rudraansh Yatra</title>
+                        <meta charset="utf-8">
+                        <style>
+                            body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8fafc; color: #0f172a; margin: 0; padding: 30px; }
+                            .invoice-card { max-width: 800px; margin: 0 auto; background: #ffffff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); padding: 40px; border: 1px solid #e2e8f0; }
+                            .header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #d4af37; padding-bottom: 24px; margin-bottom: 24px; }
+                            .logo-text { font-size: 26px; font-weight: 800; color: #0b1f3a; letter-spacing: 0.5px; }
+                            .logo-text span { color: #d4af37; }
+                            .inv-badge { background: #0b1f3a; color: #d4af37; padding: 6px 14px; border-radius: 20px; font-weight: 700; font-size: 13px; display: inline-block; }
+                            .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 28px; }
+                            .info-box { background: #f8fafc; padding: 16px; border-radius: 8px; border-left: 4px solid #d4af37; }
+                            table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+                            th { background: #0b1f3a; color: #ffffff; text-align: left; padding: 10px 12px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+                            .totals-box { margin-left: auto; width: 320px; background: #f8fafc; border-radius: 8px; padding: 16px; border: 1px solid #e2e8f0; }
+                            .totals-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 14px; }
+                            .totals-row.grand { font-size: 17px; font-weight: 800; color: #0b1f3a; border-top: 2px solid #d4af37; margin-top: 6px; padding-top: 10px; }
+                            .totals-row.balance { font-size: 16px; font-weight: 800; color: ${balanceDue > 0 ? '#dc2626' : '#16a34a'}; border-top: 1px dashed #cbd5e1; margin-top: 6px; padding-top: 8px; }
+                            .print-bar { text-align: center; margin-bottom: 20px; }
+                            .btn-print { background: #d4af37; color: #0b1f3a; border: none; padding: 12px 28px; font-size: 14px; font-weight: 800; border-radius: 6px; cursor: pointer; box-shadow: 0 4px 12px rgba(212,175,55,0.4); }
+                            @media print { .print-bar { display: none; } body { padding: 0; background: #fff; } .invoice-card { border: none; box-shadow: none; padding: 0; } }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="print-bar">
+                            <button class="btn-print" onclick="window.print()">🖨️ Print / Save as PDF</button>
+                        </div>
+                        <div class="invoice-card">
+                            <div class="header">
+                                <div>
+                                    <div class="logo-text">RUDRAANSH <span>YATRA</span></div>
+                                    <div style="font-size: 12px; color: #64748b; margin-top: 4px;">Simalgair Bazaar, Pithoragarh, Uttarakhand 262501</div>
+                                    <div style="font-size: 12px; color: #64748b;">Phone: +91 7617617651 | Email: info@rudraanshyatra.com</div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <span class="inv-badge">BILL OF SUPPLY</span>
+                                    <div style="font-size: 15px; font-weight: 800; color: #0b1f3a; margin-top: 8px;">Booking ID: ${bill.booking_id}</div>
+                                    <div style="font-size: 12px; color: #64748b; margin-top: 2px;">Date: ${billDate}</div>
+                                </div>
+                            </div>
+                            <div class="grid-2">
+                                <div class="info-box">
+                                    <strong style="color: #0b1f3a; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 6px;">Billed To (Customer):</strong>
+                                    <div style="font-size: 15px; font-weight: 700; color: #0f172a;">${bill.customer_name}</div>
+                                    <div style="font-size: 13px; color: #475569; margin-top: 2px;">Phone: ${bill.customer_phone}</div>
+                                    ${bill.customer_email ? `<div style="font-size: 13px; color: #475569;">Email: ${bill.customer_email}</div>` : ''}
+                                    ${bill.pickup_point ? `<div style="font-size: 13px; color: #475569;">Pickup: ${bill.pickup_point}</div>` : ''}
+                                </div>
+                                <div class="info-box">
+                                    <strong style="color: #0b1f3a; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 6px;">Tour Package Details:</strong>
+                                    <div style="font-size: 15px; font-weight: 700; color: #0f172a;">${bill.package_name}</div>
+                                    <div style="font-size: 13px; color: #475569; margin-top: 2px;">Tour Start Date: ${tourDate}</div>
+                                    <div style="font-size: 13px; color: #475569;">Group Size: ${bill.group_size || 1} Person(s)</div>
+                                    <div style="font-size: 13px; color: #475569;">Status: <strong style="color: #16a34a;">${bill.payment_status}</strong></div>
+                                </div>
+                            </div>
+                            <table style="margin-top: 10px;">
+                                <thead>
+                                    <tr>
+                                        <th>Description</th>
+                                        <th>Rate / Person</th>
+                                        <th>Pax</th>
+                                        <th style="text-align: right;">Total (INR)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid #e2e8f0; font-size: 14px;">
+                                        <td style="padding: 14px 12px; font-weight: 600;">${bill.package_name} (Ground Tour Execution, Permits & Homestays)</td>
+                                        <td style="padding: 14px 12px; color: #64748b;">₹${(totalBilled / (bill.group_size || 1)).toLocaleString('en-IN', { maximumFractionDigits: 0 })}</td>
+                                        <td style="padding: 14px 12px; color: #64748b;">${bill.group_size || 1}</td>
+                                        <td style="padding: 14px 12px; text-align: right; font-weight: 700;">₹${totalBilled.toLocaleString('en-IN')}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-top: 20px;">
+                                <div style="max-width: 400px;">
+                                    <div style="font-size: 12px; font-weight: 700; color: #0b1f3a; text-transform: uppercase; margin-bottom: 6px;">Payment History:</div>
+                                    <table style="font-size: 12px; margin-bottom: 0;">
+                                        <thead>
+                                            <tr>
+                                                <th>Method</th>
+                                                <th>Ref / Trx ID</th>
+                                                <th>Date</th>
+                                                <th style="text-align: right;">Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            ${paymentRowsHtml}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="totals-box">
+                                    <div class="totals-row"><span>Total Package Amount:</span> <span>₹${totalBilled.toLocaleString('en-IN')}</span></div>
+                                    ${discount > 0 ? `<div class="totals-row" style="color: #dc2626;"><span>Discount Applied:</span> <span>-₹${discount.toLocaleString('en-IN')}</span></div>` : ''}
+                                    <div class="totals-row grand"><span>Net Payable:</span> <span>₹${netAmount.toLocaleString('en-IN')}</span></div>
+                                    <div class="totals-row" style="color: #16a34a; font-weight: 700;"><span>Total Paid:</span> <span>₹${totalPaid.toLocaleString('en-IN')}</span></div>
+                                    <div class="totals-row balance"><span>Balance Due:</span> <span>₹${balanceDue.toLocaleString('en-IN')}</span></div>
+                                </div>
+                            </div>
+                            <div style="margin-top: 40px; border-top: 1px solid #e2e8f0; padding-top: 20px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #94a3b8;">
+                                <div>Thank you for choosing Rudraansh Yatra! Wishing you a divine pilgrimage.</div>
+                                <div style="text-align: right; font-weight: 700; color: #0b1f3a;">Authorised Signatory</div>
+                            </div>
+                        </div>
+                    </body>
+                    </html>
+                `);
+                invoiceWindow.document.close();
+            } catch (fallbackErr) {
+                console.error('Invoice generation failed:', fallbackErr);
+                showAdminToast('Failed to generate invoice: ' + fallbackErr.message, 'error');
+            }
+        };
 
         // Manual Booking Creation / Edit Modal Handlers
         window.openAddBookingModal = function() {

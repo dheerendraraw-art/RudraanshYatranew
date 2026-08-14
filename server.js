@@ -62,13 +62,34 @@ const razorpay = new Razorpay({
 
 
 // Initialize Supabase Client
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_KEY;
+const DEFAULT_SUPABASE_URL = 'https://ysnzxvvsegmkmkepclti.supabase.co';
+const DEFAULT_SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlzbnp4dnZzZWdta21rZXBjbHRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NDY3NjMsImV4cCI6MjA5NjMyMjc2M30.V6q3OpJCf6PEu6JTM__6E7PJDrY5lY--FZfjyy_toLM';
+
+const supabaseUrl = process.env.SUPABASE_URL || DEFAULT_SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_KEY || DEFAULT_SUPABASE_KEY;
 let supabase = null;
 
-if (supabaseUrl && supabaseKey) {
-    supabase = createClient(supabaseUrl, supabaseKey);
+try {
+    if (supabaseUrl && supabaseKey) {
+        supabase = createClient(supabaseUrl, supabaseKey);
+    }
+} catch (err) {
+    console.error('Error initializing Supabase client:', err);
 }
+
+function getSupabase() {
+    if (!supabase) {
+        try {
+            const url = process.env.SUPABASE_URL || DEFAULT_SUPABASE_URL;
+            const key = process.env.SUPABASE_KEY || DEFAULT_SUPABASE_KEY;
+            supabase = createClient(url, key);
+        } catch (e) {
+            console.error('Failed to get Supabase client:', e);
+        }
+    }
+    return supabase;
+}
+
 
 // Helper to pre-render blogs HTML
 // Helper to convert titles to URL-safe slugs
@@ -2436,12 +2457,13 @@ app.post('/api/billing/:id/payment', authenticateToken, async (req, res) => {
 // 4. Generate non-GST Bill of Supply PDF using PDFKit
 app.get('/api/billing/:id/pdf', async (req, res) => {
     try {
-        if (!supabase) {
+        const db = getSupabase();
+        if (!db) {
             return res.status(500).send('Supabase client not initialized');
         }
 
         const billId = req.params.id;
-        const { data: bill, error } = await supabase
+        const { data: bill, error } = await db
             .from('booking_bills')
             .select('*')
             .eq('id', billId)
