@@ -1,4 +1,36 @@
+# Robots.txt for Rudraansh Yatra (https://rudraanshyatra.com)
+
 User-agent: *
 Allow: /
+Disallow: /admin.html
+Disallow: /lead-details.html
+Disallow: /api/
 
+# AI Search Engine & Generative Engine Crawlers
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+# Canonical Sitemaps & LLM Context
 Sitemap: https://rudraanshyatra.com/sitemap.xml
+# LLM Summary: https://rudraanshyatra.com/llms.txt
