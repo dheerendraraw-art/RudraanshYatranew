@@ -2154,6 +2154,20 @@
                                             if (itemVal === null || filter.value === null) return itemVal === filter.value;
                                             return itemVal.toString() === filter.value.toString();
                                         });
+                                    } else if (filter.type === 'or') {
+                                        const orConditions = (filter.value || '').split(',').map(c => c.trim());
+                                        resultData = resultData.filter(item => {
+                                            return orConditions.some(cond => {
+                                                const match = cond.match(/^([^.]+)\.eq\.(.*)$/);
+                                                if (match) {
+                                                    const field = match[1];
+                                                    const val = match[2];
+                                                    const itemVal = item[field];
+                                                    return itemVal && itemVal.toString().toLowerCase() === val.toLowerCase();
+                                                }
+                                                return false;
+                                            });
+                                        });
                                     }
                                 });
                             }
@@ -2181,6 +2195,7 @@
                         restUrl += '?select=*';
                         this.filters.forEach(f => {
                             if (f.type === 'eq') restUrl += `&${f.field}=eq.${encodeURIComponent(f.value)}`;
+                            else if (f.type === 'or') restUrl += `&or=(${encodeURIComponent(f.value)})`;
                         });
                         if (this.orderBy && this.orderBy.field) {
                             restUrl += `&order=${this.orderBy.field}.${this.orderBy.ascending ? 'asc' : 'desc'}`;
@@ -2774,6 +2789,11 @@
                 const el = document.getElementById(id);
                 if (el) el.style.display = isStaff ? 'none' : 'inline-flex';
             });
+
+            const filterBookingAssignee = document.getElementById('filter-booking-assignee');
+            if (filterBookingAssignee) {
+                filterBookingAssignee.style.display = isStaff ? 'none' : 'inline-block';
+            }
         }
 
         // Load statistics & tables
@@ -3350,27 +3370,23 @@
                     .select('*')
                     .order('created_at', { ascending: false });
 
-                if (currentUserRole === 'staff') {
-                    const uname = (currentUsername || '').toLowerCase().trim();
-                    const uuidSet = new Set();
-                    if (currentUserUuidMapping) uuidSet.add(currentUserUuidMapping);
-                    if (AGENT_UUIDS[uname]) uuidSet.add(AGENT_UUIDS[uname]);
-                    
-                    for (const [id, name] of Object.entries(usersMap)) {
-                        if ((name || '').toLowerCase() === uname) {
-                            uuidSet.add(id);
-                        }
+                const isStaff = (currentUserRole === 'staff');
+                const uname = (currentUsername || '').toLowerCase().trim();
+                const staffUuids = new Set();
+                if (currentUserUuidMapping) staffUuids.add(currentUserUuidMapping.toLowerCase());
+                if (AGENT_UUIDS[uname]) staffUuids.add(AGENT_UUIDS[uname].toLowerCase());
+                for (const [id, name] of Object.entries(usersMap)) {
+                    if ((name || '').toLowerCase() === uname) {
+                        staffUuids.add(id.toLowerCase());
                     }
+                }
 
-                    const isUuid = str => /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(str);
+                if (isStaff) {
                     const conditions = [];
-                    uuidSet.forEach(uuid => {
-                        if (isUuid(uuid)) {
-                            conditions.push(`assigned_to.eq.${uuid}`);
-                            conditions.push(`user_id.eq.${uuid}`);
-                        }
+                    staffUuids.forEach(uuid => {
+                        conditions.push(`assigned_to.eq.${uuid}`);
+                        conditions.push(`user_id.eq.${uuid}`);
                     });
-
                     if (conditions.length > 0) {
                         query = query.or(conditions.join(','));
                     }
@@ -3379,7 +3395,16 @@
                 const { data, error } = await query;
                 if (error) throw error;
 
-                bookingsData = data || [];
+                let bData = data || [];
+                if (isStaff) {
+                    bData = bData.filter(item => {
+                        const a = (item.assigned_to || '').toLowerCase();
+                        const u = (item.user_id || '').toLowerCase();
+                        return staffUuids.has(a) || staffUuids.has(u);
+                    });
+                }
+
+                bookingsData = bData;
                 refreshActiveTabStats();
                 window.applyBookingsFilters();
             } catch (err) {
@@ -3395,7 +3420,26 @@
             const searchVal = document.getElementById('search-bookings-input') ? document.getElementById('search-bookings-input').value.trim().toLowerCase() : '';
             const filterAssignee = document.getElementById('filter-booking-assignee') ? document.getElementById('filter-booking-assignee').value : '';
             
+            const isStaff = (currentUserRole === 'staff');
+            const uname = (currentUsername || '').toLowerCase().trim();
+            const staffUuids = new Set();
+            if (currentUserUuidMapping) staffUuids.add(currentUserUuidMapping.toLowerCase());
+            if (AGENT_UUIDS[uname]) staffUuids.add(AGENT_UUIDS[uname].toLowerCase());
+            for (const [id, name] of Object.entries(usersMap)) {
+                if ((name || '').toLowerCase() === uname) {
+                    staffUuids.add(id.toLowerCase());
+                }
+            }
+
             const filteredBookings = bookingsData.filter(item => {
+                if (isStaff) {
+                    const a = (item.assigned_to || '').toLowerCase();
+                    const u = (item.user_id || '').toLowerCase();
+                    if (!staffUuids.has(a) && !staffUuids.has(u)) {
+                        return false;
+                    }
+                }
+
                 const matchSearch = !searchVal ||
                     (item.name || '').toLowerCase().includes(searchVal) ||
                     (item.phone || '').toLowerCase().includes(searchVal) ||
@@ -3405,10 +3449,12 @@
                     (item.booking_id || '').toLowerCase().includes(searchVal);
 
                 let matchAssignee = true;
-                if (filterAssignee === 'unassigned') {
-                    matchAssignee = !item.assigned_to && !item.user_id;
-                } else if (filterAssignee) {
-                    matchAssignee = (item.assigned_to === filterAssignee || item.user_id === filterAssignee);
+                if (!isStaff) {
+                    if (filterAssignee === 'unassigned') {
+                        matchAssignee = !item.assigned_to && !item.user_id;
+                    } else if (filterAssignee) {
+                        matchAssignee = (item.assigned_to === filterAssignee || item.user_id === filterAssignee);
+                    }
                 }
 
                 return matchSearch && matchAssignee;
