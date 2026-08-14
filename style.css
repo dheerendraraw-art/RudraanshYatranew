@@ -7109,6 +7109,138 @@ body.user-role-staff .admin-only-action {
         flex-wrap: wrap !important;
         gap: 8px !important;
     }
+
+    /* ======================================
+       MOBILE CARD VALUE TEXT VISIBILITY FIX
+       All td content (right side of label:value rows) must be legible
+       ====================================== */
+
+    /* Base: all td content on mobile cards */
+    .admin-table tbody tr td {
+        color: #f8fafc !important;
+        word-break: break-word !important;
+    }
+
+    /* All text nodes, spans, divs inside td */
+    .admin-table tbody tr td > span,
+    .admin-table tbody tr td > div,
+    .admin-table tbody tr td > strong,
+    .admin-table tbody tr td > small,
+    .admin-table tbody tr td > a {
+        color: #f8fafc !important;
+        flex-shrink: 1 !important;
+        text-align: right !important;
+        word-break: break-word !important;
+        max-width: 60% !important;
+    }
+
+    /* Lead card rows: override dark card bg and ensure value visibility */
+    .admin-table tbody tr.lead-card-row td {
+        color: #f8fafc !important;
+        padding: 8px 12px !important;
+    }
+
+    /* Reminder rows: td values */
+    .admin-table tbody tr.reminder-row td {
+        color: #f8fafc !important;
+        padding: 8px 12px !important;
+    }
+    .admin-table tbody tr.reminder-row td > * {
+        color: #f8fafc !important;
+    }
+
+    /* Reminder: lead name link */
+    .admin-table tbody tr.reminder-row td a.reminder-name-link {
+        color: #f5c842 !important;
+        font-weight: 800 !important;
+        font-size: 14px !important;
+        text-decoration: none !important;
+    }
+
+    /* Reminder: phone text */
+    .admin-table tbody tr.reminder-row td .reminder-phone-text,
+    .admin-table tbody tr.reminder-row td .reminder-phone-text span {
+        color: #ffffff !important;
+        font-weight: 700 !important;
+    }
+
+    /* Reminder: note text */
+    .admin-table tbody tr.reminder-row td .reminder-note-text {
+        color: #f8fafc !important;
+        font-weight: 600 !important;
+        max-width: 60% !important;
+        text-align: right !important;
+        white-space: pre-line !important;
+    }
+
+    /* Reminder: date text */
+    .admin-table tbody tr.reminder-row td .reminder-date-text {
+        color: #f5c842 !important;
+        font-weight: 700 !important;
+    }
+
+    /* Reminder: staff badge */
+    .admin-table tbody tr.reminder-row td .reminder-staff-badge {
+        color: #f5c842 !important;
+        background: rgba(212, 175, 55, 0.2) !important;
+        border: 1px solid rgba(212, 175, 55, 0.4) !important;
+        padding: 3px 8px !important;
+        border-radius: 12px !important;
+        font-weight: 700 !important;
+        font-size: 12px !important;
+    }
+
+    /* Reminder: status badge */
+    .admin-table tbody tr.reminder-row td .status-badge {
+        font-weight: 800 !important;
+        font-size: 12px !important;
+        padding: 3px 10px !important;
+        border-radius: 12px !important;
+    }
+
+    /* Leads card: assigned staff select box */
+    .admin-table tbody tr.lead-card-row td select {
+        color: #ffffff !important;
+        background: #1f2937 !important;
+        border: 1.5px solid rgba(212, 175, 55, 0.6) !important;
+        border-radius: 6px !important;
+        padding: 4px 8px !important;
+        font-size: 12px !important;
+        max-width: 55% !important;
+    }
+
+    /* Leads card: mobile-detail-field value text (right side) */
+    #pane-leads tr.lead-card-row.expanded .mobile-detail-field {
+        color: #f8fafc !important;
+    }
+    #pane-leads tr.lead-card-row.expanded td {
+        color: #f8fafc !important;
+    }
+    #pane-leads tr.lead-card-row.expanded td > * {
+        color: #f8fafc !important;
+    }
+    #pane-leads tr.lead-card-row.expanded td strong {
+        color: #f5c842 !important;
+    }
+    #pane-leads tr.lead-card-row.expanded td a {
+        color: #60a5fa !important;
+    }
+    #pane-leads tr.lead-card-row.expanded td small {
+        color: #cbd5e1 !important;
+        font-size: 12px !important;
+    }
+
+    /* Leads card: OPEN CARD / Open Lead button */
+    #pane-leads tr.lead-card-row td[data-label="Actions"] button {
+        min-height: 36px !important;
+        padding: 6px 16px !important;
+        font-size: 13px !important;
+        font-weight: 700 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+        border-radius: 8px !important;
+    }
 }
 
 /* Google Reviews Section Styling */
