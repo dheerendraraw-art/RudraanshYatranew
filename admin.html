@@ -2403,42 +2403,47 @@
             let userData = null;
             let tokenStr = '';
 
-            try {
-                // 1. Try Backend API first
-                const response = await fetch('/api/admin/login', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username: usernameVal, passcode: enteredPass })
-                });
-
-                if (response.ok) {
-                    const resData = await response.json();
-                    if (resData && resData.user) {
-                        userData = resData.user;
-                        tokenStr = resData.token;
-                        loginSuccess = true;
-                    }
+            // ALWAYS try static credentials first as the primary login method
+            // This works on both static hosting AND when backend is available
+            const staticUser = STATIC_CREDENTIALS[usernameVal];
+            if (staticUser) {
+                // Use raw unmodified password — preserve case and all characters
+                const rawPass = passcodeInput.value || '';
+                const trimmedPass = rawPass.trim();
+                const passMatch = (rawPass === staticUser.passcode) || (trimmedPass === staticUser.passcode);
+                if (passMatch) {
+                    userData = {
+                        username: usernameVal,
+                        role: staticUser.role,
+                        uuid_mapping: staticUser.uuid_mapping
+                    };
+                    tokenStr = 'static-token-' + Date.now();
+                    loginSuccess = true;
                 }
-            } catch (apiErr) {
-                console.warn('Backend API login endpoint unreachable, attempting static fallback verification:', apiErr);
             }
 
-            // 2. Static Fallback Check if API failed or returned non-200
+            // If static fallback didn't match, also try backend API (for custom passwords set via profile)
             if (!loginSuccess) {
-                const staticUser = STATIC_CREDENTIALS[usernameVal];
-                if (staticUser) {
-                    const passMatch = (enteredPass === staticUser.passcode) ||
-                                      (enteredPass.trim() === staticUser.passcode) ||
-                                      (enteredPass.toLowerCase() === staticUser.passcode.toLowerCase());
-                    if (passMatch) {
-                        userData = {
-                            username: usernameVal,
-                            role: staticUser.role,
-                            uuid_mapping: staticUser.uuid_mapping
-                        };
-                        tokenStr = 'static-token-' + Date.now();
-                        loginSuccess = true;
+                try {
+                    const response = await fetch('/api/admin/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ username: usernameVal, passcode: passcodeInput.value || '' })
+                    });
+
+                    if (response.ok) {
+                        const contentType = response.headers.get('content-type') || '';
+                        if (contentType.includes('application/json')) {
+                            const resData = await response.json();
+                            if (resData && resData.user) {
+                                userData = resData.user;
+                                tokenStr = resData.token;
+                                loginSuccess = true;
+                            }
+                        }
                     }
+                } catch (apiErr) {
+                    console.warn('Backend API unreachable (expected on static hosting):', apiErr.message);
                 }
             }
 
