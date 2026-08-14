@@ -729,7 +729,23 @@
         }
 
         let leadData = null;
-        let uuidToUsernameMap = {};
+        const AGENT_UUIDS = {
+            'seema': '00000000-0000-0000-0000-000000000001',
+            'geetika': '00000000-0000-0000-0000-000000000002',
+            'sneha': '00000000-0000-0000-0000-000000000003',
+            'simran': '00000000-0000-0000-0000-000000000004',
+            'mansi': '00000000-0000-0000-0000-000000000005',
+            'admin': 'c380f706-58c2-4f0d-a74e-cd3691b62dd5'
+        };
+        let usersMap = {
+            '00000000-0000-0000-0000-000000000001': 'Seema',
+            '00000000-0000-0000-0000-000000000002': 'Geetika',
+            '00000000-0000-0000-0000-000000000003': 'Sneha',
+            '00000000-0000-0000-0000-000000000004': 'Simran',
+            '00000000-0000-0000-0000-000000000005': 'Mansi',
+            'c380f706-58c2-4f0d-a74e-cd3691b62dd5': 'Admin'
+        };
+        let uuidToUsernameMap = usersMap;
 
         // Toast Notification Helper
         function showToast(message, type = 'default') {
@@ -1175,30 +1191,45 @@
         // Fetch Staff
         async function fetchAssignees() {
             try {
-                const response = await fetchWithAuth('/api/admin/staff-mapping');
-                const staffData = await response.json();
-                
-                if (staffData && Array.isArray(staffData)) {
-                    staffData.forEach(s => {
-                        if (s.uuid_mapping) {
-                            const name = s.username.charAt(0).toUpperCase() + s.username.slice(1);
-                            uuidToUsernameMap[s.uuid_mapping.toLowerCase()] = name;
-                        }
-                    });
-                }
-
-                const { data: usersData } = await supabaseAdmin.from('users_view').select('*');
                 const selectEl = document.getElementById('property-assignee');
                 let optionsHtml = '<option value="">Unassigned</option>';
-                
-                if (usersData && Array.isArray(usersData)) {
-                    usersData.forEach(user => {
-                        const mappedName = uuidToUsernameMap[user.id.toLowerCase()];
-                        const displayName = mappedName ? mappedName : user.email;
-                        optionsHtml += `<option value="${user.id}">${displayName}</option>`;
-                    });
-                }
+                Object.entries(usersMap).forEach(([id, name]) => {
+                    optionsHtml += `<option value="${id}">${name}</option>`;
+                });
                 if (selectEl) selectEl.innerHTML = optionsHtml;
+
+                try {
+                    const response = await fetchWithAuth('/api/admin/staff-mapping');
+                    if (response && response.ok) {
+                        const staffData = await response.json();
+                        if (staffData && Array.isArray(staffData)) {
+                            staffData.forEach(s => {
+                                if (s.uuid_mapping) {
+                                    const name = s.username.charAt(0).toUpperCase() + s.username.slice(1);
+                                    usersMap[s.uuid_mapping.toLowerCase()] = name;
+                                    usersMap[s.uuid_mapping] = name;
+                                }
+                            });
+                        }
+                    }
+                } catch(e) {}
+
+                try {
+                    const { data: usersData } = await supabaseAdmin.from('users_view').select('*');
+                    if (usersData && Array.isArray(usersData) && usersData.length > 0) {
+                        optionsHtml = '<option value="">Unassigned</option>';
+                        usersData.forEach(user => {
+                            const mappedName = usersMap[user.id.toLowerCase()] || usersMap[user.id] || user.email;
+                            usersMap[user.id] = mappedName;
+                            optionsHtml += `<option value="${user.id}">${mappedName}</option>`;
+                        });
+                        if (selectEl) selectEl.innerHTML = optionsHtml;
+                    }
+                } catch(e) {}
+
+                if (leadData && leadData.assigned_to && selectEl) {
+                    selectEl.value = leadData.assigned_to;
+                }
             } catch (err) {
                 console.error('Failed to load assignees:', err);
             }
