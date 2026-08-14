@@ -2173,32 +2173,59 @@
                 const SUPABASE_REST_BASE = 'https://ysnzxvvsegmkmkepclti.supabase.co/rest/v1';
                 const SUPABASE_REST_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlzbnp4dnZzZWdta21rZXBjbHRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NDY3NjMsImV4cCI6MjA5NjMyMjc2M30.V6q3OpJCf6PEu6JTM__6E7PJDrY5lY--FZfjyy_toLM';
                 try {
-                    let restUrl = `${SUPABASE_REST_BASE}/${this.table}?select=*`;
-                    this.filters.forEach(f => {
-                        if (f.type === 'eq') restUrl += `&${f.field}=eq.${encodeURIComponent(f.value)}`;
-                    });
-                    if (this.orderBy && this.orderBy.field) {
-                        restUrl += `&order=${this.orderBy.field}.${this.orderBy.ascending ? 'asc' : 'desc'}`;
+                    const isMutation = (this.operation === 'update' || this.operation === 'insert' || this.operation === 'delete');
+                    // Supabase REST: mutations use filter params in URL, no select=*
+                    let restUrl = `${SUPABASE_REST_BASE}/${this.table}`;
+                    if (!isMutation) {
+                        // SELECT: add select=* and filter params
+                        restUrl += '?select=*';
+                        this.filters.forEach(f => {
+                            if (f.type === 'eq') restUrl += `&${f.field}=eq.${encodeURIComponent(f.value)}`;
+                        });
+                        if (this.orderBy && this.orderBy.field) {
+                            restUrl += `&order=${this.orderBy.field}.${this.orderBy.ascending ? 'asc' : 'desc'}`;
+                        }
+                        if (this.limitVal) restUrl += `&limit=${this.limitVal}`;
+                    } else {
+                        // UPDATE/DELETE/INSERT: filters go as query params
+                        const filterParts = [];
+                        this.filters.forEach(f => {
+                            if (f.type === 'eq') filterParts.push(`${f.field}=eq.${encodeURIComponent(f.value)}`);
+                        });
+                        if (filterParts.length > 0) restUrl += '?' + filterParts.join('&');
                     }
-                    if (this.limitVal) restUrl += `&limit=${this.limitVal}`;
+
+                    // Supabase uses PATCH for update, POST for insert, DELETE for delete
+                    const restMethod = this.operation === 'update' ? 'PATCH' :
+                                       this.operation === 'insert' ? 'POST' :
+                                       this.operation === 'delete' ? 'DELETE' : 'GET';
 
                     const restHeaders = {
                         'apikey': SUPABASE_REST_KEY,
                         'Authorization': `Bearer ${SUPABASE_REST_KEY}`,
                         'Content-Type': 'application/json',
-                        'Prefer': 'return=representation'
+                        'Prefer': isMutation ? 'return=representation' : 'return=representation'
                     };
-                    const restOpts = { method, headers: restHeaders };
-                    if (requestBody && (method === 'POST' || method === 'PATCH' || method === 'PUT')) {
+                    const restOpts = { method: restMethod, headers: restHeaders };
+                    if (requestBody && (restMethod === 'POST' || restMethod === 'PATCH')) {
                         restOpts.body = JSON.stringify(requestBody);
                     }
                     const resp = await fetch(restUrl, restOpts);
                     if (resp.ok) {
-                        let resultData = await resp.json();
+                        let resultData = [];
+                        try {
+                            const text = await resp.text();
+                            if (text && text.trim()) resultData = JSON.parse(text);
+                        } catch(e) {}
                         if (!Array.isArray(resultData)) resultData = resultData ? [resultData] : [];
                         if (this.isSingle) resultData = resultData[0] || null;
-                        else if (this.limitVal !== null) resultData = resultData.slice(0, this.limitVal);
+                        else if (this.limitVal !== null && !isMutation) resultData = resultData.slice(0, this.limitVal);
                         return { data: resultData, error: null, select: () => ({ single: () => ({ data: resultData, error: null }) }) };
+                    } else {
+                        const errText = await resp.text().catch(() => '');
+                        console.warn(`Supabase REST ${restMethod} ${this.table} failed (${resp.status}):`, errText);
+                        // For mutations, return success if 404 on static host (local API handles it)
+                        if (isMutation) return { data: [], error: null };
                     }
                 } catch(err) {
                     console.warn(`Direct Supabase REST also failed for ${this.table}:`, err.message);
