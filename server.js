@@ -1445,6 +1445,8 @@ app.post('/api/admin/login', async (req, res) => {
         } else {
             isMatch = (cleanPasscode === storedPass) ||
                       (cleanPasscode === storedPass.trim()) ||
+                      (cleanPasscode.toLowerCase() === storedPass.toLowerCase()) ||
+                      (cleanPasscode.toLowerCase() === storedPass.trim().toLowerCase()) ||
                       (rawPasscode === storedPass) ||
                       (rawPasscode === storedPass.trim());
         }

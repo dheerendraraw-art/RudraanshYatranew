@@ -2679,30 +2679,133 @@ footer h3::after, footer h4::after {
     border-collapse: collapse;
     text-align: left;
     min-width: 800px;
-}
-
-.admin-table th,
-.admin-table td {
-    padding: 16px 20px;
-    border-bottom: 1px solid var(--glass-border);
-    font-size: 14px;
+    background-color: #ffffff;
 }
 
 .admin-table th {
-    background-color: rgba(10, 25, 47, 0.02);
-    color: var(--color-primary);
-    font-weight: 600;
+    background-color: #f1f5f9;
+    color: #0f172a;
+    font-weight: 800;
     text-transform: uppercase;
     font-size: 12px;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.6px;
+    padding: 14px 16px;
+    border-bottom: 2px solid #cbd5e1;
+}
+
+.admin-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 13.5px;
+    color: #0f172a;
+    vertical-align: middle;
 }
 
 .admin-table tbody tr {
-    transition: var(--transition-smooth);
+    background-color: #ffffff;
+    transition: background-color 0.15s ease;
+}
+
+.admin-table tbody tr:nth-child(even) {
+    background-color: #f8fafc;
 }
 
 .admin-table tbody tr:hover {
-    background-color: rgba(10, 25, 47, 0.01);
+    background-color: #f1f5f9;
+}
+
+/* Drill-down Analytics Table Styling */
+.drilldown-name-link {
+    color: #b45309;
+    text-decoration: none;
+    font-weight: 800;
+}
+
+.drilldown-phone {
+    color: #1e293b;
+    font-weight: 600;
+}
+
+.drilldown-dest-badge {
+    background: rgba(217, 119, 6, 0.12);
+    color: #b45309;
+    border: 1px solid rgba(217, 119, 6, 0.3);
+    padding: 3px 8px;
+    font-weight: 700;
+    border-radius: 4px;
+    font-size: 11px;
+    white-space: nowrap;
+    display: inline-block;
+}
+
+.drilldown-staff-badge {
+    font-size: 12px;
+    color: #854d0e;
+    font-weight: 700;
+    background: rgba(234, 179, 8, 0.15);
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(202, 138, 4, 0.3);
+    white-space: nowrap;
+    display: inline-block;
+}
+
+.drilldown-action-btn {
+    background-color: var(--color-gold);
+    color: #0f172a;
+    border: none;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Reminders Table Desktop Styling */
+.reminder-name-link {
+    color: #b45309;
+    font-weight: 800;
+    font-size: 14px;
+    text-decoration: none;
+}
+.reminder-name-text {
+    color: #0a192f;
+    font-weight: 700;
+    font-size: 14px;
+}
+.reminder-phone-text {
+    color: #1e293b;
+    font-weight: 600;
+}
+.reminder-note-text {
+    max-width: 100%;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #1e293b;
+    line-height: 1.4;
+    white-space: pre-line;
+}
+.reminder-date-text {
+    color: #1e293b;
+    font-weight: 700;
+    font-size: 12.5px;
+}
+.reminder-date-text i {
+    color: #d97706;
+}
+.reminder-staff-badge {
+    font-size: 12px;
+    color: #854d0e;
+    font-weight: 700;
+    background: rgba(234, 179, 8, 0.15);
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(202, 138, 4, 0.3);
+    white-space: nowrap;
+    display: inline-block;
 }
 
 .admin-btn-delete {
@@ -3450,6 +3553,24 @@ footer h3::after, footer h4::after {
     background-size: 12px !important;
 }
 
+.final-followup {
+    background: rgba(59, 130, 246, 0.15) !important;
+    color: #60a5fa !important;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2360a5fa' stroke-width='3'%3e%3cpath d='M6 9l6 6 6-6'/%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 10px center !important;
+    background-size: 12px !important;
+}
+
+.final-kailash {
+    background: rgba(14, 165, 233, 0.15) !important;
+    color: #38bdf8 !important;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2338bdf8' stroke-width='3'%3e%3cpath d='M6 9l6 6 6-6'/%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 10px center !important;
+    background-size: 12px !important;
+}
+
 .final-lost {
     background: rgba(148, 163, 184, 0.15) !important;
     color: #94a3b8 !important;
@@ -3720,17 +3841,17 @@ img {
         width: 100%;
     }
 
-    .admin-table tbody tr {
+    .admin-table tbody tr:not(.lead-card-row) {
         display: block;
         margin-bottom: 20px;
         border: 1.5px solid rgba(212, 175, 55, 0.22) !important;
         border-radius: var(--border-radius-md);
-        background: var(--color-bg-card, #1e293b) !important; /* premium cards matching admin look */
+        background: #1e293b !important; /* premium dark cards matching admin look */
         padding: 16px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     }
 
-    .admin-table tbody tr:hover {
+    .admin-table tbody tr:not(.lead-card-row):hover {
         background-color: #243347 !important;
     }
 
@@ -6451,23 +6572,36 @@ html, body {
     }
 
     /* Transform each tr into a Chat-List Card */
-    #pane-leads tr.lead-card-row {
+    #pane-leads tr.lead-card-row,
+    .admin-table tbody tr.lead-card-row {
         display: block !important;
-        background-color: var(--color-bg-card, #1e293b) !important;
-        border: 1.5px solid rgba(212, 175, 55, 0.22) !important;
+        background: #0f172a !important;
+        border: 1.5px solid rgba(212, 175, 55, 0.4) !important;
+        border-left: 4px solid var(--color-gold) !important;
         border-radius: 14px !important;
         padding: 12px 14px !important;
-        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25) !important;
-        margin-bottom: 0 !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+        margin-bottom: 12px !important;
         position: relative !important;
         cursor: pointer !important;
         transition: all 0.2s ease !important;
     }
 
     #pane-leads tr.lead-card-row:active,
-    #pane-leads tr.lead-card-row:hover {
+    #pane-leads tr.lead-card-row:hover,
+    .admin-table tbody tr.lead-card-row:active,
+    .admin-table tbody tr.lead-card-row:hover {
         border-color: var(--color-gold) !important;
-        background-color: #243347 !important;
+        background: #1e293b !important;
+    }
+
+    #pane-leads tr.lead-card-row td,
+    .admin-table tbody tr.lead-card-row td,
+    #pane-leads tr.lead-card-row td.lead-card-name-td,
+    .admin-table tbody tr.lead-card-row td.lead-card-name-td {
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;
     }
 
     /* Chat List Header Block (Outside Collapsed View) */
@@ -6492,7 +6626,7 @@ html, body {
         justify-content: center !important;
         flex-shrink: 0 !important;
         letter-spacing: 0.5px !important;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
     }
 
     /* Main Info Area */
@@ -6514,16 +6648,18 @@ html, body {
     .lead-chat-name {
         display: inline-block !important;
         font-size: 15px !important;
-        font-weight: 700 !important;
-        color: var(--color-text-primary, #1e293b) !important;
+        font-weight: 800 !important;
+        color: #f5c842 !important;
         white-space: nowrap !important;
         overflow: hidden !important;
         text-overflow: ellipsis !important;
+        max-width: 180px !important;
     }
 
     .lead-chat-time {
+        display: inline-block !important;
         font-size: 11px !important;
-        color: #94a3b8 !important;
+        color: #cbd5e1 !important;
         font-weight: 600 !important;
         flex-shrink: 0 !important;
         margin-left: 6px !important;
@@ -6537,9 +6673,11 @@ html, body {
     }
 
     .lead-chat-phone {
-        color: #cbd5e1 !important;
-        font-weight: 500 !important;
+        display: inline-block !important;
+        color: #ffffff !important;
+        font-weight: 600 !important;
         white-space: nowrap !important;
+        font-size: 12.5px !important;
     }
 
     .lead-chat-status-tag {
@@ -6563,10 +6701,14 @@ html, body {
     }
 
     .lead-chat-expand-chevron {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
         color: var(--color-gold) !important;
         font-size: 13px !important;
         transition: transform 0.3s ease !important;
         padding: 4px !important;
+        flex-shrink: 0 !important;
     }
 
     /* Rotate chevron when card is expanded */
@@ -6574,20 +6716,17 @@ html, body {
         transform: rotate(180deg) !important;
     }
 
-    /* Hide standard table cell layouts on mobile */
-    #pane-leads tr.lead-card-row td {
-        display: block !important;
-        border: none !important;
-        padding: 0 !important;
-        width: 100% !important;
-        box-sizing: border-box !important;
+    /* Hide standard table cell layouts on mobile when NOT expanded */
+    #pane-leads tr.lead-card-row:not(.expanded) td[data-label="Phone"],
+    #pane-leads tr.lead-card-row:not(.expanded) td[data-label="Status"],
+    #pane-leads tr.lead-card-row:not(.expanded) td[data-label="Actions"],
+    #pane-leads tr.lead-card-row:not(.expanded) .mobile-detail-field {
+        display: none !important;
     }
 
-    #pane-leads tr.lead-card-row td[data-label="Phone"],
-    #pane-leads tr.lead-card-row td[data-label="Status"],
-    #pane-leads tr.lead-card-row td[data-label="Actions"],
-    #pane-leads tr.lead-card-row .mobile-detail-field {
-        display: none !important;
+    #pane-leads tr.lead-card-row td.lead-card-name-td {
+        border-bottom: none !important;
+        padding: 0 !important;
     }
 
     /* Reveal details when row is tapped / expanded */
@@ -6595,22 +6734,39 @@ html, body {
     #pane-leads tr.lead-card-row.expanded td[data-label="Status"],
     #pane-leads tr.lead-card-row.expanded td[data-label="Actions"],
     #pane-leads tr.lead-card-row.expanded .mobile-detail-field {
-        display: block !important;
-        padding-top: 8px !important;
-        border-top: 1px dashed rgba(255, 255, 255, 0.08) !important;
-        margin-top: 8px !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 8px 0 !important;
+        border-top: 1px dashed rgba(255, 255, 255, 0.12) !important;
+        border-bottom: none !important;
+        margin-top: 6px !important;
+        color: #f8fafc !important;
+        font-size: 12.5px !important;
     }
 
     /* Field labels inside expanded view */
     #pane-leads tr.lead-card-row.expanded .mobile-detail-field::before {
         content: attr(data-label) ": ";
         font-weight: 700;
-        color: var(--color-gold);
+        color: var(--color-gold) !important;
         display: inline-block;
         margin-right: 6px;
         font-size: 11px;
         text-transform: uppercase;
         letter-spacing: 0.5px;
+    }
+
+    #pane-leads tr.lead-card-row.expanded td span,
+    #pane-leads tr.lead-card-row.expanded td div,
+    #pane-leads tr.lead-card-row.expanded td strong,
+    #pane-leads tr.lead-card-row.expanded td small,
+    #pane-leads tr.lead-card-row.expanded td p {
+        color: #f8fafc !important;
+    }
+
+    #pane-leads tr.lead-card-row.expanded td strong {
+        color: #f5c842 !important;
     }
 
     #pane-leads .booking-toggle-details-btn {
@@ -6794,7 +6950,7 @@ body.user-role-staff .admin-only-action {
 /* Mobile View Table Card Adjustments for Staff & Admin Panel */
 @media (max-width: 768px) {
     /* Base Mobile Table Card Container */
-    .admin-table tbody tr {
+    .admin-table tbody tr:not(.lead-card-row) {
         background: #1e293b !important;
         border: 1px solid rgba(212, 175, 55, 0.35) !important;
         border-left: 4px solid var(--color-gold) !important;
@@ -6807,7 +6963,7 @@ body.user-role-staff .admin-only-action {
     }
 
     /* Table cells inside mobile dark cards: force crisp light text */
-    .admin-table tbody tr td {
+    .admin-table tbody tr:not(.lead-card-row) td {
         display: flex !important;
         justify-content: space-between !important;
         align-items: center !important;
@@ -6822,7 +6978,7 @@ body.user-role-staff .admin-only-action {
     }
 
     /* Labels on the left side of mobile cards */
-    .admin-table tbody tr td::before {
+    .admin-table tbody tr:not(.lead-card-row) td::before {
         content: attr(data-label);
         font-weight: 800;
         color: #94a3b8 !important;
@@ -6835,22 +6991,22 @@ body.user-role-staff .admin-only-action {
     }
 
     /* Ensure links (Lead Name, Phone, Customer links) are bright gold/white */
-    .admin-table tbody tr td a {
+    .admin-table tbody tr:not(.lead-card-row) td a {
         color: #f5c842 !important;
         font-weight: 700 !important;
         text-decoration: none !important;
     }
-    .admin-table tbody tr td a:hover {
+    .admin-table tbody tr:not(.lead-card-row) td a:hover {
         color: #ffd700 !important;
         text-decoration: underline !important;
     }
 
     /* Ensure text inside spans, divs, strong, small elements are high contrast white */
-    .admin-table tbody tr td span,
-    .admin-table tbody tr td div,
-    .admin-table tbody tr td strong,
-    .admin-table tbody tr td small,
-    .admin-table tbody tr td p {
+    .admin-table tbody tr:not(.lead-card-row) td span,
+    .admin-table tbody tr:not(.lead-card-row) td div,
+    .admin-table tbody tr:not(.lead-card-row) td strong,
+    .admin-table tbody tr:not(.lead-card-row) td small,
+    .admin-table tbody tr:not(.lead-card-row) td p {
         color: #f8fafc !important;
     }
 
@@ -6862,6 +7018,86 @@ body.user-role-staff .admin-only-action {
         padding: 3px 8px !important;
         border-radius: 6px !important;
         display: inline-block !important;
+    }
+
+    /* Drill-down Mobile Card Values High-Contrast Override (#1e293b dark card) */
+    .admin-table tbody tr td .drilldown-name-link {
+        color: #f5c842 !important;
+        font-size: 14.5px !important;
+        font-weight: 800 !important;
+    }
+
+    .admin-table tbody tr td .drilldown-phone {
+        color: #ffffff !important;
+        font-weight: 700 !important;
+        font-size: 13px !important;
+        word-break: break-word !important;
+    }
+
+    .admin-table tbody tr td .drilldown-dest-badge {
+        background: rgba(245, 158, 11, 0.2) !important;
+        color: #fbbf24 !important;
+        border: 1px solid rgba(245, 158, 11, 0.4) !important;
+        font-weight: 700 !important;
+    }
+
+    .admin-table tbody tr td .drilldown-staff-badge {
+        background: rgba(212, 175, 55, 0.2) !important;
+        color: #f5c842 !important;
+        border: 1px solid rgba(212, 175, 55, 0.4) !important;
+        font-weight: 700 !important;
+    }
+
+    .admin-table tbody tr td .drilldown-action-btn {
+        background-color: var(--color-gold) !important;
+        color: #0f172a !important;
+        font-weight: 800 !important;
+        padding: 8px 16px !important;
+        border-radius: 6px !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
+    }
+
+    /* Reminders Mobile Card Values High-Contrast Override (#1e293b dark card) */
+    .admin-table tbody tr td .reminder-name-link {
+        color: #f5c842 !important;
+        font-size: 14.5px !important;
+        font-weight: 800 !important;
+    }
+
+    .admin-table tbody tr td .reminder-name-text {
+        color: #f5c842 !important;
+        font-size: 14.5px !important;
+        font-weight: 800 !important;
+    }
+
+    .admin-table tbody tr td .reminder-phone-text {
+        color: #ffffff !important;
+        font-weight: 700 !important;
+        font-size: 13px !important;
+    }
+
+    .admin-table tbody tr td .reminder-note-text {
+        color: #f8fafc !important;
+        font-weight: 600 !important;
+        font-size: 13px !important;
+        text-align: right !important;
+    }
+
+    .admin-table tbody tr td .reminder-date-text {
+        color: #f5c842 !important;
+        font-weight: 700 !important;
+        font-size: 12.5px !important;
+    }
+
+    .admin-table tbody tr td .reminder-date-text i {
+        color: #f5c842 !important;
+    }
+
+    .admin-table tbody tr td .reminder-staff-badge {
+        background: rgba(212, 175, 55, 0.2) !important;
+        color: #f5c842 !important;
+        border: 1px solid rgba(212, 175, 55, 0.4) !important;
+        font-weight: 700 !important;
     }
 
     /* Action buttons row at the bottom of card */
