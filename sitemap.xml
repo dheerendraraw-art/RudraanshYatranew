@@ -15,8 +15,29 @@
   <!-- Core Tour Pages -->
   <url>
     <loc>https://rudraanshyatra.com/adi-kailash</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/adi-kailash-from-pithoragarh</loc>
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/adi-kailash-from-kathgodam</loc>
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/adi-kailash-from-delhi</loc>
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
 
@@ -58,9 +79,30 @@
 
   <url>
     <loc>https://rudraanshyatra.com/about</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-08-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/privacy-policy</loc>
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.50</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/terms-and-conditions</loc>
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.50</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/refund-policy</loc>
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.50</priority>
   </url>
 
   <url>

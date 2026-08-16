@@ -2936,6 +2936,14 @@ app.get('/api/payment/lookup/:bookingId', async (req, res) => {
             return res.status(404).json({ error: 'Booking ID not found' });
         }
 
+        const discount = parseFloat(bill.discount || 0);
+        const gross = parseFloat(bill.total_package_amount || 0);
+        const netAmount = Math.max(0, gross - discount);
+        const payments = bill.payments_received || [];
+        const totalPaid = payments.length > 0 
+            ? payments.reduce((sum, p) => sum + (parseFloat(p.amountPaid) || 0), 0)
+            : Math.max(0, netAmount - parseFloat(bill.balance_remaining || 0));
+
         res.json({
             id: bill.id,
             booking_id: bill.booking_id,
@@ -2945,10 +2953,12 @@ app.get('/api/payment/lookup/:bookingId', async (req, res) => {
             group_size: bill.group_size,
             tour_start_date: bill.tour_start_date,
             package_name: bill.package_name,
-            total_package_amount: parseFloat(bill.total_package_amount),
+            total_package_amount: gross,
+            discount: discount,
+            net_package_amount: netAmount,
             balance_remaining: parseFloat(bill.balance_remaining),
             payment_status: bill.payment_status,
-            total_paid: parseFloat(bill.total_package_amount) - parseFloat(bill.balance_remaining)
+            total_paid: totalPaid
         });
     } catch (err) {
         console.error('API Payment Lookup Error:', err);
@@ -3109,11 +3119,13 @@ app.post('/api/verify-payment', async (req, res) => {
 
         const updatedPayments = [...(bill.payments_received || []), newPayment];
         const totalPaid = updatedPayments.reduce((sum, p) => sum + p.amountPaid, 0);
-        const newBalance = Math.max(0, parseFloat(bill.total_package_amount) - totalPaid);
+        const discount = parseFloat(bill.discount || 0);
+        const netAmount = Math.max(0, parseFloat(bill.total_package_amount || 0) - discount);
+        const newBalance = Math.max(0, netAmount - totalPaid);
 
         let newStatus = 'Pending';
         if (totalPaid > 0) {
-            newStatus = totalPaid >= parseFloat(bill.total_package_amount) ? 'Fully Paid' : 'Partially Paid';
+            newStatus = totalPaid >= netAmount ? 'Fully Paid' : 'Partially Paid';
         }
 
         const { data: updatedBill, error: updateErr } = await supabase
@@ -3465,6 +3477,12 @@ function syncStaticFiles() {
         'panchachuli.html',
         'payment.html',
         'whats-included.html',
+        'privacy-policy.html',
+        'terms-and-conditions.html',
+        'refund-policy.html',
+        'adi-kailash-from-pithoragarh.html',
+        'adi-kailash-from-kathgodam.html',
+        'adi-kailash-from-delhi.html',
         'sitemap.xml',
         'robots.txt',
         '.htaccess'

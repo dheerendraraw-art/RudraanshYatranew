@@ -8196,11 +8196,13 @@
 
                 const updatedPayments = [...(bill.payments_received || []), newPayment];
                 const totalPaid = updatedPayments.reduce((sum, p) => sum + p.amountPaid, 0);
-                const newBalance = Math.max(0, parseFloat(bill.total_package_amount) - totalPaid);
+                const discount = parseFloat(bill.discount || 0);
+                const netAmount = Math.max(0, parseFloat(bill.total_package_amount || 0) - discount);
+                const newBalance = Math.max(0, netAmount - totalPaid);
 
                 let newStatus = 'Pending';
                 if (totalPaid > 0) {
-                    newStatus = totalPaid >= parseFloat(bill.total_package_amount) ? 'Fully Paid' : 'Partially Paid';
+                    newStatus = totalPaid >= netAmount ? 'Fully Paid' : 'Partially Paid';
                 }
 
                 const { data, error } = await supabaseAdmin

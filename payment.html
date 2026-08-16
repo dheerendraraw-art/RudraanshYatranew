@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -991,6 +991,13 @@
             document.getElementById('lbl-total-amount').innerText = '₹' + currentBill.total_package_amount.toLocaleString('en-IN', { minimumFractionDigits: 2 });
             document.getElementById('lbl-total-paid').innerText = '₹' + currentBill.total_paid.toLocaleString('en-IN', { minimumFractionDigits: 2 });
             
+            if (currentBill.discount && currentBill.discount > 0) {
+                document.getElementById('row-discount').style.display = 'flex';
+                document.getElementById('lbl-discount-amount').innerText = '-₹' + currentBill.discount.toLocaleString('en-IN', { minimumFractionDigits: 2 });
+            } else {
+                document.getElementById('row-discount').style.display = 'none';
+            }
+
             const balance = currentBill.balance_remaining;
             document.getElementById('lbl-balance-remaining').innerText = '₹' + balance.toLocaleString('en-IN', { minimumFractionDigits: 2 });
             document.getElementById('opt-full-val').innerText = '₹' + balance.toLocaleString('en-IN', { minimumFractionDigits: 2 });

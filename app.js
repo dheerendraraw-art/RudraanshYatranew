@@ -103,14 +103,30 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    if (dropdownTrigger && dropdownParent) {
-        dropdownTrigger.addEventListener('click', (e) => {
+    // Mobile: all top-level dropdowns toggle
+    document.querySelectorAll('.nav-menu .dropdown > a').forEach(trigger => {
+        trigger.addEventListener('click', (e) => {
             if (window.innerWidth <= 992) {
                 e.preventDefault();
-                dropdownParent.classList.toggle('active');
+                const parent = trigger.closest('.dropdown');
+                const isActive = parent.classList.contains('active');
+                // Close others
+                document.querySelectorAll('.nav-menu .dropdown').forEach(d => d.classList.remove('active'));
+                if (!isActive) parent.classList.add('active');
             }
         });
-    }
+    });
+
+    // Mobile: has-submenu accordion toggle
+    document.querySelectorAll('.nav-menu .has-submenu > a').forEach(trigger => {
+        trigger.addEventListener('click', (e) => {
+            if (window.innerWidth <= 992) {
+                e.preventDefault();
+                const parent = trigger.closest('.has-submenu');
+                parent.classList.toggle('active');
+            }
+        });
+    });
 
     // 3. Tab Navigation (Overview, Itinerary, Permits, etc.)
     const tabButtons = document.querySelectorAll('.tab-btn');

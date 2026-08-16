@@ -378,17 +378,33 @@
             <ul class="nav-menu">
                 <li><a href="/" class="nav-link active">Home</a></li>
                 <li class="dropdown">
-                    <a href="javascript:void(0);" class="nav-link">Destinations <i class="fa-solid fa-chevron-down"
-                            style="font-size: 10px; margin-left: 2px;"></i></a>
+                    <a href="javascript:void(0);" class="nav-link">Destinations <i class="fa-solid fa-chevron-down" style="font-size:10px;margin-left:2px;"></i></a>
                     <ul class="dropdown-menu">
-                        <li><a href="adi-kailash">Adi Kailash & Om Parvat</a></li>
+                        <li class="has-submenu">
+                            <a href="adi-kailash">Adi Kailash &amp; Om Parvat <i class="fa-solid fa-chevron-right submenu-arrow"></i></a>
+                            <ul class="submenu">
+                                <li><a href="adi-kailash">Overview <span class="sub-pkg-price">All Routes</span></a></li>
+                                <li class="sub-divider"></li>
+                                <li><a href="adi-kailash-from-pithoragarh">From Pithoragarh <span class="sub-pkg-price">₹18K · 3D</span></a></li>
+                                <li><a href="adi-kailash-from-kathgodam">From Kathgodam <span class="sub-pkg-price">₹30K · 6D</span></a></li>
+                                <li><a href="adi-kailash-from-delhi">From Delhi <span class="sub-pkg-price">₹35K · 6D</span></a></li>
+                            </ul>
+                        </li>
                         <li><a href="khaliya-top">Khaliya Top Trek</a></li>
                         <li><a href="mt-kailash">Mt. Kailash Yatra</a></li>
                         <li><a href="darma-valley">Darma Valley Exploration</a></li>
                     </ul>
                 </li>
                 <li><a href="whats-included" class="nav-link">What's Included</a></li>
-                <li><a href="about" class="nav-link">About Us</a></li>
+                <li class="dropdown">
+                    <a href="about" class="nav-link">About Us <i class="fa-solid fa-chevron-down" style="font-size:10px;margin-left:2px;"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="about">About Us</a></li>
+                        <li><a href="privacy-policy">Privacy Policy</a></li>
+                        <li><a href="terms-and-conditions">Terms &amp; Conditions</a></li>
+                        <li><a href="refund-policy">Refund &amp; Cancellation Policy</a></li>
+                    </ul>
+                </li>
                 <li><a href="gallery" class="nav-link">Gallery</a></li>
                 <li><a href="blogs" class="nav-link">Blogs</a></li>
                 <li><button class="nav-btn" id="custom-trip-btn">Custom Trip <i
@@ -1445,6 +1461,12 @@
                 <ul class="footer-links">
                     <li><a href="darma-valley">Darma Valley Exploration</a></li>
                 </ul>
+                <h3 style="margin-top:24px;">Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="privacy-policy">Privacy Policy</a></li>
+                    <li><a href="terms-and-conditions">Terms & Conditions</a></li>
+                    <li><a href="refund-policy">Refund Policy</a></li>
+                </ul>
             </div>
             <div>
                 <h3>Contact Office</h3>
@@ -1469,7 +1491,12 @@
 
         <div class="footer-bottom">
             <div class="container">
-                <p>&copy; 2026 Rudraansh Yatra. All Rights Reserved. Managed Directly by Local Ground Experts in Pithoragarh. | <a href="/admin" style="text-decoration: underline; color: var(--color-gold);">Admin Panel</a></p>
+                <p>&copy; 2026 Rudraansh Yatra. All Rights Reserved. Managed Directly by Local Ground Experts in Pithoragarh. |
+                    <a href="privacy-policy" style="text-decoration: underline; color: var(--color-gold);">Privacy Policy</a> |
+                    <a href="terms-and-conditions" style="text-decoration: underline; color: var(--color-gold);">Terms</a> |
+                    <a href="refund-policy" style="text-decoration: underline; color: var(--color-gold);">Refund Policy</a> |
+                    <a href="/admin" style="text-decoration: underline; color: var(--color-gold);">Admin Panel</a>
+                </p>
             </div>
         </div>
     </footer>
