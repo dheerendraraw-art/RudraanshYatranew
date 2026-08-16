@@ -46,6 +46,9 @@ AddType font/woff2 .woff2
     # Security Headers
     Header set X-Content-Type-Options "nosniff"
     Header set X-XSS-Protection "1; mode=block"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    Header set Permissions-Policy "camera=(), microphone=(), geolocation=(self), payment=(self)"
 </IfModule>
 
 # Gzip / Deflate Compression

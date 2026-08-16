@@ -7,7 +7,7 @@
   <!-- Homepage -->
   <url>
     <loc>https://rudraanshyatra.com/</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-08-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -43,21 +43,21 @@
 
   <url>
     <loc>https://rudraanshyatra.com/mt-kailash</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-08-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.95</priority>
   </url>
 
   <url>
     <loc>https://rudraanshyatra.com/darma-valley</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-08-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.90</priority>
   </url>
 
   <url>
     <loc>https://rudraanshyatra.com/khaliya-top</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-08-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.90</priority>
   </url>
@@ -72,7 +72,7 @@
   <!-- Supporting Pages -->
   <url>
     <loc>https://rudraanshyatra.com/whats-included</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-08-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
@@ -107,7 +107,7 @@
 
   <url>
     <loc>https://rudraanshyatra.com/gallery</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-08-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.70</priority>
   </url>
@@ -123,6 +123,28 @@
     <loc>https://rudraanshyatra.com/blog/adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitude-ultra-marathon-guide</loc>
     <lastmod>2026-07-31</lastmod>
     <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- SEO Blog Posts -->
+  <url>
+    <loc>https://rudraanshyatra.com/blog/adi-kailash-yatra-complete-guide-2026</loc>
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/blog/om-parvat-darshan-complete-guide-2026</loc>
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/blog/inner-line-permit-adi-kailash-2026-step-by-step</loc>
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
 
