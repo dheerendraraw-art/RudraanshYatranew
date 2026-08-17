@@ -6762,16 +6762,13 @@ html, body {
 
     .lead-chat-name {
         display: inline-block !important;
-        font-size: 15.5px !important;
+        font-size: 15px !important;
         font-weight: 800 !important;
         color: #f5c842 !important;
-        white-space: normal !important;
-        word-break: break-word !important;
-        overflow: visible !important;
-        text-overflow: clip !important;
-        max-width: 100% !important;
-        line-height: 1.35 !important;
-        flex: 1 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        max-width: 180px !important;
     }
 
     .lead-chat-time {
@@ -7042,17 +7039,9 @@ body.user-role-staff .admin-only-action {
     }
 
     .lead-chat-name {
+        font-size: 14px !important;
+        max-width: 180px !important;
         display: inline-block !important;
-        font-size: 15.5px !important;
-        font-weight: 800 !important;
-        color: #f5c842 !important;
-        white-space: normal !important;
-        word-break: break-word !important;
-        overflow: visible !important;
-        text-overflow: clip !important;
-        max-width: 100% !important;
-        line-height: 1.35 !important;
-        flex: 1 !important;
     }
 
     #pane-leads tr.lead-card-row td.lead-card-name-td::before {
@@ -8830,42 +8819,5 @@ input[type="date"].form-control::-webkit-calendar-picker-indicator {
     .dmo-coupon-code {
         font-size: 26px !important;
         letter-spacing: 2px !important;
-    }
-}
-
-
-/* ================================================================
-   Mobile Full Name Display Safeguards (No Truncation / Ellipsis)
-   ================================================================ */
-@media (max-width: 768px) {
-    .lead-chat-name,
-    .lead-name,
-    .customer-name,
-    .client-name,
-    .user-name,
-    .profile-name,
-    [data-label="Name"],
-    [data-label="Client Name"],
-    [data-label="Customer Name"] {
-        white-space: normal !important;
-        word-break: break-word !important;
-        overflow: visible !important;
-        text-overflow: clip !important;
-        max-width: 100% !important;
-        display: block !important;
-    }
-
-    .lead-chat-title-row {
-        display: flex !important;
-        justify-content: space-between !important;
-        align-items: flex-start !important;
-        width: 100% !important;
-        gap: 8px !important;
-    }
-
-    .lead-chat-time {
-        white-space: nowrap !important;
-        flex-shrink: 0 !important;
-        margin-top: 2px !important;
     }
 }
