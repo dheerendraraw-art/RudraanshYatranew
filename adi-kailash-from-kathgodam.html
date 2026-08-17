@@ -975,34 +975,34 @@
             }, 'google_translate_element');
         }
 
-        // Custom language switcher logic
-        function rudraSetLanguage(langCode) {
-            var selectEl = document.querySelector('.goog-te-combo');
-            if (!selectEl) {
-                // Translate API not ready yet — retry
-                setTimeout(function(){ rudraSetLanguage(langCode); }, 300);
-                return;
-            }
-            if (langCode === 'en') {
-                // Restore English
-                var iframe = document.querySelector('.goog-te-banner-frame');
-                if (iframe) {
-                    var innerDoc = iframe.contentWindow.document;
-                    var restoreBtn = innerDoc.querySelector('[id^="restore"]');
-                    if (restoreBtn) restoreBtn.click();
-                }
-                selectEl.value = '';
-                selectEl.dispatchEvent(new Event('change'));
-            } else {
-                selectEl.value = langCode;
-                selectEl.dispatchEvent(new Event('change'));
-            }
+        function setGoogleTranslateCookie(lang) {
+            var domain = window.location.hostname;
+            var hostParts = domain.split('.');
+            var rootDomain = hostParts.length > 2 ? hostParts.slice(-2).join('.') : domain;
 
-            // Update active state in UI
+            if (lang === 'en') {
+                // Clear translate cookies
+                document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+                document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.' + domain + ';';
+                document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + domain + ';';
+                document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.' + rootDomain + ';';
+            } else {
+                var cookieVal = '/en/' + lang;
+                document.cookie = 'googtrans=' + cookieVal + '; path=/;';
+                document.cookie = 'googtrans=' + cookieVal + '; path=/; domain=.' + domain + ';';
+                document.cookie = 'googtrans=' + cookieVal + '; path=/; domain=' + domain + ';';
+                document.cookie = 'googtrans=' + cookieVal + '; path=/; domain=.' + rootDomain + ';';
+            }
+        }
+
+        function rudraSetLanguage(langCode) {
+            setGoogleTranslateCookie(langCode);
+            try { localStorage.setItem('ry_lang', langCode); } catch(e){}
+
+            // Update UI button and active state immediately
             document.querySelectorAll('.lang-option').forEach(function(el) {
                 el.classList.toggle('active', el.dataset.lang === langCode);
             });
-            // Update button label
             var chosen = document.querySelector('.lang-option[data-lang="' + langCode + '"]');
             var btnLabel = document.querySelector('.lang-selector-btn .lang-label');
             if (chosen && btnLabel) {
@@ -1010,13 +1010,19 @@
             } else if (btnLabel) {
                 btnLabel.textContent = 'Language';
             }
-            // Save preference
-            try { localStorage.setItem('ry_lang', langCode); } catch(e){}
-            // Close dropdown
             document.querySelector('.lang-selector-wrap')?.classList.remove('open');
+
+            // Trigger Google Translate dropdown
+            var selectEl = document.querySelector('.goog-te-combo');
+            if (selectEl) {
+                selectEl.value = (langCode === 'en' ? '' : langCode);
+                selectEl.dispatchEvent(new Event('change'));
+            } else {
+                // If translate widget not ready yet, reload so the cookie applies natively
+                window.location.reload();
+            }
         }
 
-        // Toggle dropdown
         document.addEventListener('DOMContentLoaded', function() {
             var btn = document.querySelector('.lang-selector-btn');
             var wrap = document.querySelector('.lang-selector-wrap');
@@ -1033,16 +1039,23 @@
                 });
             }
 
-            // Restore saved language on page load
+            // Sync UI with saved preference
             try {
                 var saved = localStorage.getItem('ry_lang');
                 if (saved && saved !== 'en') {
-                    setTimeout(function(){ rudraSetLanguage(saved); }, 1200);
+                    var chosen = document.querySelector('.lang-option[data-lang="' + saved + '"]');
+                    var btnLabel = document.querySelector('.lang-selector-btn .lang-label');
+                    if (chosen && btnLabel) {
+                        btnLabel.textContent = chosen.dataset.name || 'Language';
+                    }
+                    document.querySelectorAll('.lang-option').forEach(function(el) {
+                        el.classList.toggle('active', el.dataset.lang === saved);
+                    });
                 }
             } catch(e){}
         });
     </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async defer></script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async defer></script>
     <!-- ===== End Google Translate Init ===== -->
 </body>
 </html>
