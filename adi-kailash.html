@@ -1120,7 +1120,32 @@
             }
         }
 
-        .place-photo-card {
+        
+    .place-photo-card-link {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      border-radius: var(--border-radius-sm, 10px);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .place-photo-card-link:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+    }
+    .place-photo-card-link:hover .place-photo-card {
+      border-color: var(--color-gold);
+    }
+    .place-photo-title::after {
+      content: ' →';
+      opacity: 0;
+      transition: opacity 0.2s;
+      font-size: 0.9em;
+      color: var(--color-gold);
+    }
+    .place-photo-card-link:hover .place-photo-title::after {
+      opacity: 1;
+    }
+    .place-photo-card {
             background: #0f1c2d;
             border: 1px solid rgba(212, 175, 55, 0.2);
             border-radius: 12px;
@@ -1438,7 +1463,7 @@
                         </div>
                         <div class="route-places-grid">
                             <!-- 1. Manokamna Temple -->
-                            <div class="place-photo-card">
+                            <a href="manokamna-temple" class="place-photo-card-link" aria-label="Learn more about Manokamna Temple"><a href="adi-kailash-peak" class="place-photo-card-link" aria-label="Learn more about Adi Kailash"><a href="om-parvat" class="place-photo-card-link" aria-label="Learn more about Om Parvat"><a href="chitai-golu-devta" class="place-photo-card-link" aria-label="Learn more about Chitai Golu Devta"><div class="place-photo-card">
                                 <div class="place-photo-img-wrap">
                                     <span class="place-photo-badge">Both Packages</span>
                                     <img src="assets/images/manokamna-temple.webp" alt="Manokamna Temple Kumaon Himalayas enroute to Adi Kailash" loading="lazy" width="400" height="225">
@@ -1447,7 +1472,7 @@
                                     <h4 class="place-photo-title"><span class="place-icon">🛕</span> MANOKAMNA TEMPLE</h4>
                                     <p class="place-photo-desc">Sacred wish-fulfilling Himalayan shrine nestled amidst mountain cedar groves enroute to Vyas Valley.</p>
                                 </div>
-                            </div>
+                            </div></a></a></a></a>
 
                             <!-- 2. Adi Kailash -->
                             <div class="place-photo-card">
@@ -1474,7 +1499,7 @@
                             </div>
 
                             <!-- 4. Kaali Mata Temple -->
-                            <div class="place-photo-card">
+                            <a href="kali-mata-temple-kalapani" class="place-photo-card-link"><div class="place-photo-card">
                                 <div class="place-photo-img-wrap">
                                     <span class="place-photo-badge">Both Packages</span>
                                     <img src="assets/images/kali-mata-temple.webp" alt="Kaali Mata Temple at Kalapani origin of Kali river Vyas Valley" loading="lazy" width="400" height="225">
@@ -1484,7 +1509,7 @@
                                     <p class="place-photo-desc">Sacred ancient temple at Kalapani, marking the holy origin spring of the Kali River along the border.</p>
                                 </div>
                             </div>
-                        </div>
+                        </div></a>
 
                         <!-- Group B: In Pithoragarh -->
                         <div class="places-group-title">
@@ -1493,7 +1518,7 @@
                         </div>
                         <div class="route-places-grid">
                             <!-- 1. Mostamanu Temple -->
-                            <div class="place-photo-card">
+                            <a href="mostamanu-temple-pithoragarh" class="place-photo-card-link" aria-label="Learn more about Mostamanu Temple"><div class="place-photo-card">
                                 <div class="place-photo-img-wrap">
                                     <span class="place-photo-badge">Pithoragarh Base</span>
                                     <img src="assets/images/mostamanu-temple.webp" alt="Mostamanu Temple Chandak Pithoragarh Uttarakhand" loading="lazy" width="400" height="225">
@@ -1502,10 +1527,10 @@
                                     <h4 class="place-photo-title"><span class="place-icon">⛩️</span> MOSTAMANU TEMPLE</h4>
                                     <p class="place-photo-desc">Revered local deity shrine atop Chandak hills offering panoramic views of Soar Valley and Panchachuli peaks.</p>
                                 </div>
-                            </div>
+                            </div></a>
 
                             <!-- 2. Kamakhya Devi Temple -->
-                            <div class="place-photo-card">
+                            <a href="kamakhya-devi-temple-pithoragarh" class="place-photo-card-link"><div class="place-photo-card">
                                 <div class="place-photo-img-wrap">
                                     <span class="place-photo-badge">Pithoragarh Base</span>
                                     <img src="assets/images/kamakhya-devi-temple.webp" alt="Kamakhya Devi Temple hilltop shrine Pithoragarh" loading="lazy" width="400" height="225">
@@ -1515,7 +1540,7 @@
                                     <p class="place-photo-desc">Sacred hilltop Shakti temple in Pithoragarh surrounded by rhododendron woods and sweeping Himalayan panoramas.</p>
                                 </div>
                             </div>
-                        </div>
+                        </div></a>
 
                         <!-- Group C: Enroute to Delhi & Kathgodam -->
                         <div class="places-group-title">
@@ -1524,7 +1549,7 @@
                         </div>
                         <div class="route-places-grid">
                             <!-- 1. Jageshwar Temple -->
-                            <div class="place-photo-card">
+                            <a href="jageshwar-dham" class="place-photo-card-link" aria-label="Learn more about Jageshwar Temple"><div class="place-photo-card">
                                 <div class="place-photo-img-wrap">
                                     <span class="place-photo-badge">6D Delhi &amp; Kathgodam</span>
                                     <img src="assets/images/jageshwar-temple.webp" alt="Ancient Jageshwar Dham 124 stone temple complex Almora" loading="lazy" width="400" height="225">
@@ -1533,7 +1558,7 @@
                                     <h4 class="place-photo-title"><span class="place-icon">🏛️</span> JAGESHWAR TEMPLE (DHAM)</h4>
                                     <p class="place-photo-desc">8th-century Jyotirlinga heritage cluster of 124 ancient carved stone temples nestled inside towering deodar forests.</p>
                                 </div>
-                            </div>
+                            </div></a>
 
                             <!-- 2. Chitai Golu Devta -->
                             <div class="place-photo-card">
@@ -1548,7 +1573,7 @@
                             </div>
 
                             <!-- 3. Kainchi Dham Neem Karoli Baba -->
-                            <div class="place-photo-card">
+                            <a href="kainchi-dham" class="place-photo-card-link"><div class="place-photo-card">
                                 <div class="place-photo-img-wrap">
                                     <span class="place-photo-badge">6D Delhi &amp; Kathgodam</span>
                                     <img src="assets/images/kainchi-dham.webp" alt="Kainchi Dham Ashram Neem Karoli Baba Bhowali Nainital" loading="lazy" width="400" height="225">
@@ -1558,7 +1583,7 @@
                                     <p class="place-photo-desc">World-famous sacred ashram and temple of Maharaj-ji Neem Karoli Baba on the scenic banks of the Kshipra river.</p>
                                 </div>
                             </div>
-                        </div>
+                        </div></a>
                     </div>
 
                     <h4 style="font-family:var(--font-serif);font-size:20px;color:var(--color-primary);margin:24px 0 12px;">Key Pilgrimage Facts</h4>

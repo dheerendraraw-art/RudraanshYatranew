@@ -148,4 +148,68 @@
     <priority>0.85</priority>
   </url>
 
+  <!-- Sacred Place Detail Pages -->
+  <url>
+    <loc>https://rudraanshyatra.com/manokamna-temple</loc>
+    <lastmod>2026-08-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/adi-kailash-peak</loc>
+    <lastmod>2026-08-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/om-parvat</loc>
+    <lastmod>2026-08-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/kali-mata-temple-kalapani</loc>
+    <lastmod>2026-08-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/mostamanu-temple-pithoragarh</loc>
+    <lastmod>2026-08-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/kamakhya-devi-temple-pithoragarh</loc>
+    <lastmod>2026-08-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/jageshwar-dham</loc>
+    <lastmod>2026-08-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/chitai-golu-devta</loc>
+    <lastmod>2026-08-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/kainchi-dham</loc>
+    <lastmod>2026-08-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
 </urlset>
