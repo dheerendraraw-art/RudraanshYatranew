@@ -365,6 +365,102 @@
         src="https://www.facebook.com/tr?id=1071708388842400&ev=PageView&noscript=1"
     /></noscript>
     <!-- ===== End Meta Pixel ===== -->
+
+    <!-- ===== Language Selector CSS ===== -->
+    <style>
+        /* Hide default Google Translate bar */
+        .goog-te-banner-frame, .goog-te-balloon-frame { display: none !important; }
+        body { top: 0 !important; }
+        .skiptranslate { display: none !important; }
+
+        /* Language Selector */
+        .lang-selector-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .lang-selector-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.25);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 5px 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            letter-spacing: 0.3px;
+            transition: background 0.2s ease;
+            white-space: nowrap;
+        }
+        .lang-selector-btn:hover { background: rgba(255,255,255,0.22); }
+        .lang-selector-btn .lang-globe { font-size: 13px; }
+        .lang-selector-btn .lang-arrow {
+            font-size: 9px;
+            transition: transform 0.2s ease;
+        }
+        .lang-selector-wrap.open .lang-arrow { transform: rotate(180deg); }
+
+        /* Dropdown */
+        .lang-dropdown {
+            display: none;
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: #0f172a;
+            border: 1px solid rgba(212,175,55,0.35);
+            border-radius: 12px;
+            padding: 8px;
+            min-width: 200px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+            z-index: 99999;
+            animation: langFadeIn 0.15s ease;
+        }
+        .lang-selector-wrap.open .lang-dropdown { display: block; }
+
+        @keyframes langFadeIn {
+            from { opacity: 0; transform: translateY(-6px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .lang-dropdown-title {
+            font-size: 10px;
+            font-weight: 700;
+            color: #d4af37;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 4px 8px 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            margin-bottom: 6px;
+        }
+
+        .lang-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.15s ease;
+            color: #e2e8f0;
+            font-size: 13px;
+            text-decoration: none;
+        }
+        .lang-option:hover { background: rgba(212,175,55,0.15); color: #f5c842; }
+        .lang-option.active { background: rgba(212,175,55,0.2); color: #f5c842; font-weight: 700; }
+        .lang-option .lang-native { font-size: 12px; color: #94a3b8; margin-left: auto; }
+        .lang-option.active .lang-native { color: #d4af37; }
+
+        /* Mobile: show compact globe icon only */
+        @media (max-width: 768px) {
+            .lang-selector-btn .lang-label { display: none; }
+            .lang-selector-btn { padding: 5px 8px; }
+            .lang-dropdown { right: -8px; min-width: 180px; }
+        }
+    </style>
+    <!-- ===== End Language Selector CSS ===== -->
 </head>
 
 <body>
@@ -383,6 +479,32 @@
                     rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
                 <a href="https://www.youtube.com/@Rudra-Anshyatra" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a><a href="https://medium.com/@rudraanshyatra" target="_blank" rel="noopener noreferrer" aria-label="Medium"><i class="fa-brands fa-medium"></i></a>
             </div>
+
+            <div class="lang-selector-wrap" id="langSelectorWrap">
+                <button class="lang-selector-btn" aria-label="Select Language" aria-expanded="false">
+                    <span class="lang-globe">🌐</span>
+                    <span class="lang-label">Language</span>
+                    <span class="lang-arrow">▼</span>
+                </button>
+                <div class="lang-dropdown" role="listbox" aria-label="Available Languages">
+                    <div class="lang-dropdown-title">Select Language</div>
+                    <div class="lang-option active" data-lang="en" data-name="English" onclick="rudraSetLanguage('en')" role="option">English <span class="lang-native">English</span></div>
+                    <div class="lang-option" data-lang="hi" data-name="हिन्दी" onclick="rudraSetLanguage('hi')" role="option">Hindi <span class="lang-native">हिन्दी</span></div>
+                    <div class="lang-option" data-lang="bn" data-name="বাংলা" onclick="rudraSetLanguage('bn')" role="option">Bengali <span class="lang-native">বাংলা</span></div>
+                    <div class="lang-option" data-lang="gu" data-name="ગુજરાતી" onclick="rudraSetLanguage('gu')" role="option">Gujarati <span class="lang-native">ગુજરાતી</span></div>
+                    <div class="lang-option" data-lang="mr" data-name="मराठी" onclick="rudraSetLanguage('mr')" role="option">Marathi <span class="lang-native">मराठी</span></div>
+                    <div class="lang-option" data-lang="ta" data-name="தமிழ்" onclick="rudraSetLanguage('ta')" role="option">Tamil <span class="lang-native">தமிழ்</span></div>
+                    <div class="lang-option" data-lang="te" data-name="తెలుగు" onclick="rudraSetLanguage('te')" role="option">Telugu <span class="lang-native">తెలుగు</span></div>
+                    <div class="lang-option" data-lang="kn" data-name="ಕನ್ನಡ" onclick="rudraSetLanguage('kn')" role="option">Kannada <span class="lang-native">ಕನ್ನಡ</span></div>
+                    <div class="lang-option" data-lang="ml" data-name="മലയാളം" onclick="rudraSetLanguage('ml')" role="option">Malayalam <span class="lang-native">മലയാളം</span></div>
+                    <div class="lang-option" data-lang="pa" data-name="ਪੰਜਾਬੀ" onclick="rudraSetLanguage('pa')" role="option">Punjabi <span class="lang-native">ਪੰਜਾਬੀ</span></div>
+                    <div class="lang-option" data-lang="ne" data-name="नेपाली" onclick="rudraSetLanguage('ne')" role="option">Nepali <span class="lang-native">नेपाली</span></div>
+                    <div class="lang-option" data-lang="or" data-name="ଓଡ଼ିଆ" onclick="rudraSetLanguage('or')" role="option">Odia <span class="lang-native">ଓଡ଼ିଆ</span></div>
+                </div>
+            </div>
+            </div>
+            </div>
+
         </div>
     </div>
 
@@ -1590,6 +1712,88 @@
     </div>
 
     <script src="app.js?v=1.5" defer></script>
+
+    <!-- ===== Google Translate Init ===== -->
+    <div id="google_translate_element" style="display:none;"></div>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'hi,bn,gu,mr,ta,kn,te,ml,pa,ne,or',
+                autoDisplay: false,
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+
+        // Custom language switcher logic
+        function rudraSetLanguage(langCode) {
+            var selectEl = document.querySelector('.goog-te-combo');
+            if (!selectEl) {
+                // Translate API not ready yet — retry
+                setTimeout(function(){ rudraSetLanguage(langCode); }, 300);
+                return;
+            }
+            if (langCode === 'en') {
+                // Restore English
+                var iframe = document.querySelector('.goog-te-banner-frame');
+                if (iframe) {
+                    var innerDoc = iframe.contentWindow.document;
+                    var restoreBtn = innerDoc.querySelector('[id^="restore"]');
+                    if (restoreBtn) restoreBtn.click();
+                }
+                selectEl.value = '';
+                selectEl.dispatchEvent(new Event('change'));
+            } else {
+                selectEl.value = langCode;
+                selectEl.dispatchEvent(new Event('change'));
+            }
+
+            // Update active state in UI
+            document.querySelectorAll('.lang-option').forEach(function(el) {
+                el.classList.toggle('active', el.dataset.lang === langCode);
+            });
+            // Update button label
+            var chosen = document.querySelector('.lang-option[data-lang="' + langCode + '"]');
+            var btnLabel = document.querySelector('.lang-selector-btn .lang-label');
+            if (chosen && btnLabel) {
+                btnLabel.textContent = chosen.dataset.name || 'Language';
+            } else if (btnLabel) {
+                btnLabel.textContent = 'Language';
+            }
+            // Save preference
+            try { localStorage.setItem('ry_lang', langCode); } catch(e){}
+            // Close dropdown
+            document.querySelector('.lang-selector-wrap')?.classList.remove('open');
+        }
+
+        // Toggle dropdown
+        document.addEventListener('DOMContentLoaded', function() {
+            var btn = document.querySelector('.lang-selector-btn');
+            var wrap = document.querySelector('.lang-selector-wrap');
+            if (btn && wrap) {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    wrap.classList.toggle('open');
+                });
+                document.addEventListener('click', function() {
+                    wrap.classList.remove('open');
+                });
+                wrap.querySelector('.lang-dropdown')?.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            }
+
+            // Restore saved language on page load
+            try {
+                var saved = localStorage.getItem('ry_lang');
+                if (saved && saved !== 'en') {
+                    setTimeout(function(){ rudraSetLanguage(saved); }, 1200);
+                }
+            } catch(e){}
+        });
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async defer></script>
+    <!-- ===== End Google Translate Init ===== -->
 </body>
 
 </html>
