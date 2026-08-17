@@ -97,96 +97,175 @@
 
     <!-- ===== Language Selector CSS ===== -->
     <style>
-        /* Hide default Google Translate bar */
-        .goog-te-banner-frame, .goog-te-balloon-frame { display: none !important; }
-        body { top: 0 !important; }
-        .skiptranslate { display: none !important; }
+        /* Keep Google Translate container rendered offscreen without display:none so it initializes reliably */
+        #google_translate_element {
+            position: absolute !important;
+            top: -9999px !important;
+            left: -9999px !important;
+            width: 1px !important;
+            height: 1px !important;
+            overflow: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
 
-        /* Language Selector */
+        /* Prevent Google Translate banner from pushing page down */
+        .goog-te-banner-frame,
+        .goog-te-balloon-frame,
+        #goog-gt-tt,
+        .goog-te-banner-frame.skiptranslate {
+            display: none !important;
+            visibility: hidden !important;
+        }
+
+        body {
+            top: 0px !important;
+            position: static !important;
+        }
+
+        .goog-tooltip, .goog-tooltip:hover {
+            display: none !important;
+        }
+
+        .goog-text-highlight {
+            background-color: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+
+        /* Custom Language Selector Button & Dropdown */
         .lang-selector-wrap {
             position: relative;
-            display: flex;
+            display: inline-flex;
             align-items: center;
+            z-index: 10000;
         }
+
         .lang-selector-btn {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            background: rgba(255,255,255,0.12);
-            border: 1px solid rgba(255,255,255,0.25);
-            color: #fff;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            color: #ffffff;
             font-size: 12px;
-            font-weight: 600;
-            padding: 5px 10px;
+            font-weight: 700;
+            padding: 5px 12px;
             border-radius: 20px;
             cursor: pointer;
             letter-spacing: 0.3px;
-            transition: background 0.2s ease;
+            transition: all 0.2s ease;
             white-space: nowrap;
+            user-select: none;
         }
-        .lang-selector-btn:hover { background: rgba(255,255,255,0.22); }
-        .lang-selector-btn .lang-globe { font-size: 13px; }
+
+        .lang-selector-btn:hover {
+            background: rgba(212, 175, 55, 0.25);
+            border-color: #f5c842;
+            color: #f5c842;
+        }
+
+        .lang-selector-btn .lang-globe {
+            font-size: 13px;
+            line-height: 1;
+        }
+
         .lang-selector-btn .lang-arrow {
             font-size: 9px;
-            transition: transform 0.2s ease;
+            transition: transform 0.25s ease;
+            margin-left: 2px;
         }
-        .lang-selector-wrap.open .lang-arrow { transform: rotate(180deg); }
 
-        /* Dropdown */
+        .lang-selector-wrap.open .lang-arrow {
+            transform: rotate(180deg);
+        }
+
         .lang-dropdown {
             display: none;
             position: absolute;
             top: calc(100% + 8px);
             right: 0;
             background: #0f172a;
-            border: 1px solid rgba(212,175,55,0.35);
+            border: 1.5px solid rgba(212, 175, 55, 0.45);
             border-radius: 12px;
             padding: 8px;
-            min-width: 200px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-            z-index: 99999;
-            animation: langFadeIn 0.15s ease;
+            min-width: 210px;
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.7);
+            z-index: 9999999 !important;
+            animation: langFadeIn 0.2s ease;
+            max-height: 380px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #d4af37 #0f172a;
         }
-        .lang-selector-wrap.open .lang-dropdown { display: block; }
+
+        .lang-selector-wrap.open .lang-dropdown {
+            display: block;
+        }
 
         @keyframes langFadeIn {
-            from { opacity: 0; transform: translateY(-6px); }
+            from { opacity: 0; transform: translateY(-8px); }
             to   { opacity: 1; transform: translateY(0); }
         }
 
         .lang-dropdown-title {
-            font-size: 10px;
-            font-weight: 700;
+            font-size: 10.5px;
+            font-weight: 800;
             color: #d4af37;
             letter-spacing: 1px;
             text-transform: uppercase;
-            padding: 4px 8px 8px;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding: 6px 10px 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             margin-bottom: 6px;
         }
 
         .lang-option {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 8px 10px;
+            justify-content: space-between;
+            padding: 8px 12px;
             border-radius: 8px;
             cursor: pointer;
-            transition: background 0.15s ease;
+            transition: all 0.15s ease;
             color: #e2e8f0;
             font-size: 13px;
-            text-decoration: none;
+            font-weight: 500;
+            user-select: none;
         }
-        .lang-option:hover { background: rgba(212,175,55,0.15); color: #f5c842; }
-        .lang-option.active { background: rgba(212,175,55,0.2); color: #f5c842; font-weight: 700; }
-        .lang-option .lang-native { font-size: 12px; color: #94a3b8; margin-left: auto; }
-        .lang-option.active .lang-native { color: #d4af37; }
 
-        /* Mobile: show compact globe icon only */
+        .lang-option:hover {
+            background: rgba(212, 175, 55, 0.18);
+            color: #f5c842;
+        }
+
+        .lang-option.active {
+            background: rgba(212, 175, 55, 0.25);
+            color: #f5c842;
+            font-weight: 700;
+        }
+
+        .lang-option .lang-native {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-left: 8px;
+        }
+
+        .lang-option.active .lang-native {
+            color: #d4af37;
+            font-weight: 700;
+        }
+
         @media (max-width: 768px) {
-            .lang-selector-btn .lang-label { display: none; }
-            .lang-selector-btn { padding: 5px 8px; }
-            .lang-dropdown { right: -8px; min-width: 180px; }
+            .lang-selector-btn .lang-label {
+                display: none;
+            }
+            .lang-selector-btn {
+                padding: 5px 8px;
+            }
+            .lang-dropdown {
+                right: -10px;
+                min-width: 190px;
+            }
         }
     </style>
     <!-- ===== End Language Selector CSS ===== -->
@@ -569,7 +648,7 @@
     <script src="app.js?v=1.5" defer></script>
 
     <!-- ===== Google Translate Init ===== -->
-    <div id="google_translate_element" style="display:none;"></div>
+    <div id="google_translate_element"></div>
     <script type="text/javascript">
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
@@ -582,21 +661,16 @@
 
         function setGoogleTranslateCookie(lang) {
             var domain = window.location.hostname;
-            var hostParts = domain.split('.');
-            var rootDomain = hostParts.length > 2 ? hostParts.slice(-2).join('.') : domain;
+            var cookieVal = (lang === 'en' ? '' : '/en/' + lang);
 
             if (lang === 'en') {
-                // Clear translate cookies
-                document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-                document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.' + domain + ';';
-                document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + domain + ';';
-                document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.' + rootDomain + ';';
+                document.cookie = 'googtrans=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+                document.cookie = 'googtrans=; Path=/; Domain=' + domain + '; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+                document.cookie = 'googtrans=; Path=/; Domain=.' + domain + '; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
             } else {
-                var cookieVal = '/en/' + lang;
-                document.cookie = 'googtrans=' + cookieVal + '; path=/;';
-                document.cookie = 'googtrans=' + cookieVal + '; path=/; domain=.' + domain + ';';
-                document.cookie = 'googtrans=' + cookieVal + '; path=/; domain=' + domain + ';';
-                document.cookie = 'googtrans=' + cookieVal + '; path=/; domain=.' + rootDomain + ';';
+                document.cookie = 'googtrans=' + cookieVal + '; Path=/;';
+                document.cookie = 'googtrans=' + cookieVal + '; Path=/; Domain=' + domain + ';';
+                document.cookie = 'googtrans=' + cookieVal + '; Path=/; Domain=.' + domain + ';';
             }
         }
 
@@ -604,7 +678,7 @@
             setGoogleTranslateCookie(langCode);
             try { localStorage.setItem('ry_lang', langCode); } catch(e){}
 
-            // Update UI button and active state immediately
+            // Update UI state
             document.querySelectorAll('.lang-option').forEach(function(el) {
                 el.classList.toggle('active', el.dataset.lang === langCode);
             });
@@ -612,39 +686,41 @@
             var btnLabel = document.querySelector('.lang-selector-btn .lang-label');
             if (chosen && btnLabel) {
                 btnLabel.textContent = chosen.dataset.name || 'Language';
-            } else if (btnLabel) {
-                btnLabel.textContent = 'Language';
             }
-            document.querySelector('.lang-selector-wrap')?.classList.remove('open');
+            document.getElementById('langSelectorWrap')?.classList.remove('open');
 
-            // Trigger Google Translate dropdown
-            var selectEl = document.querySelector('.goog-te-combo');
+            // Dispatch translation to Google Translate widget
+            var selectEl = document.querySelector('.goog-te-combo') || document.querySelector('#google_translate_element select');
             if (selectEl) {
                 selectEl.value = (langCode === 'en' ? '' : langCode);
-                selectEl.dispatchEvent(new Event('change'));
+                selectEl.dispatchEvent(new Event('change', { bubbles: true }));
+                selectEl.dispatchEvent(new Event('input', { bubbles: true }));
             } else {
-                // If translate widget not ready yet, reload so the cookie applies natively
+                // If translate widget not initialized yet, reload to let the cookie auto-translate
                 window.location.reload();
             }
         }
 
         document.addEventListener('DOMContentLoaded', function() {
+            var wrap = document.getElementById('langSelectorWrap');
             var btn = document.querySelector('.lang-selector-btn');
-            var wrap = document.querySelector('.lang-selector-wrap');
-            if (btn && wrap) {
+            if (wrap && btn) {
                 btn.addEventListener('click', function(e) {
+                    e.preventDefault();
                     e.stopPropagation();
                     wrap.classList.toggle('open');
                 });
-                document.addEventListener('click', function() {
-                    wrap.classList.remove('open');
+                document.addEventListener('click', function(e) {
+                    if (!wrap.contains(e.target)) {
+                        wrap.classList.remove('open');
+                    }
                 });
                 wrap.querySelector('.lang-dropdown')?.addEventListener('click', function(e) {
                     e.stopPropagation();
                 });
             }
 
-            // Sync UI with saved preference
+            // Restore saved language on load
             try {
                 var saved = localStorage.getItem('ry_lang');
                 if (saved && saved !== 'en') {
@@ -660,7 +736,7 @@
             } catch(e){}
         });
     </script>
-    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async defer></script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <!-- ===== End Google Translate Init ===== -->
 </body>
 </html>
