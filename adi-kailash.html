@@ -1068,10 +1068,144 @@
             justify-content: space-between;
         }
 
-        .review-quote-author span {
-            font-size: 11.5px;
-            color: var(--color-text-secondary);
-            font-weight: 500;
+        /* Places Viewed Enroute Photo Cards */
+        .places-view-section {
+            margin: 28px 0;
+        }
+
+        .places-group-title {
+            font-family: var(--font-serif);
+            font-size: 19px;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin: 26px 0 14px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 8px;
+        }
+
+        .places-group-title .group-name {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .places-group-title .group-tag {
+            font-family: var(--font-sans);
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            background: rgba(212, 175, 55, 0.12);
+            color: var(--color-gold-dark);
+            padding: 3px 10px;
+            border-radius: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .route-places-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 640px) {
+            .route-places-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .place-photo-card {
+            background: #0f1c2d;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .place-photo-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--color-gold);
+            box-shadow: 0 14px 32px rgba(0, 0, 0, 0.28), 0 0 18px rgba(212, 175, 55, 0.2);
+        }
+
+        .place-photo-img-wrap {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #08111e;
+            overflow: hidden;
+        }
+
+        .place-photo-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .place-photo-card:hover .place-photo-img-wrap img {
+            transform: scale(1.06);
+        }
+
+        .place-photo-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(10, 25, 47, 0.85);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            color: #e6c670;
+            border: 1px solid rgba(212, 175, 55, 0.35);
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            padding: 3px 9px;
+            border-radius: 4px;
+            z-index: 2;
+        }
+
+        .place-photo-content {
+            padding: 14px 16px 16px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            background: #0f1c2d;
+        }
+
+        .place-photo-title {
+            font-size: 14px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: #ffffff;
+            margin: 0 0 6px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            line-height: 1.3;
+        }
+
+        .place-photo-title .place-icon {
+            font-size: 15px;
+            flex-shrink: 0;
+        }
+
+        .place-photo-desc {
+            font-size: 12.5px;
+            color: rgba(255, 255, 255, 0.75);
+            line-height: 1.5;
+            margin: 0;
         }
     </style>
 </head>
@@ -1289,23 +1423,141 @@
                         As a <strong>direct ground operator headquartered in Pithoragarh</strong>, Rudraansh Yatra manages every detail locally: official Inner Line Permits (ILP) with SDM and ITBP clearances, robust 4x4 Mahindra Boleros driven by native valley drivers, warm Bhotiya tribal homestays, and portable medical oxygen backup for senior and family pilgrims.
                     </p>
 
-                    <h4 style="font-family:var(--font-serif);font-size:20px;color:var(--color-primary);margin:24px 0 12px;">Sacred Highlights of the Yatra</h4>
-                    <div class="sacred-highlights-grid">
-                        <div class="sacred-card">
-                            <h4><i class="fa-solid fa-mountain" style="color:var(--color-gold);"></i> Adi Kailash (Chhota Kailash)</h4>
-                            <p>Standing at 4,570m at Jyolingkong base, Adi Kailash mirrors the divine form and spiritual presence of Mt. Kailash in Tibet — revered as Lord Shiva's meditative abode.</p>
+                    <!-- Places Viewed Enroute Photo Cards Section -->
+                    <div class="places-view-section">
+                        <div style="margin-bottom: 20px;">
+                            <span style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.2px; color: var(--color-gold); display: block; margin-bottom: 4px;">Sacred Sightseeing &amp; Holy Temples</span>
+                            <h4 style="font-family: var(--font-serif); font-size: 22px; color: var(--color-primary); margin: 0;">Places You Will Visit Enroute</h4>
+                            <p style="color: var(--color-text-secondary); font-size: 14.5px; margin-top: 6px;">Discover all the revered temples, divine Himalayan viewpoints, and heritage shrines included during your pilgrimage.</p>
                         </div>
-                        <div class="sacred-card">
-                            <h4><i class="fa-solid fa-om" style="color:var(--color-gold);"></i> Om Parvat Miraculous "ॐ"</h4>
-                            <p>Viewed from Nabidhang (4,246m), the sacred Sanskrit syllable "ॐ" is formed permanently in pure white snow on the dark mountain rock face — an unmatched Himalayan wonder.</p>
+
+                        <!-- Group A: Enroute to Adi Kailash (Vyas Valley Circuit) -->
+                        <div class="places-group-title">
+                            <span class="group-name"><i class="fa-solid fa-mountain-sun" style="color:var(--color-gold);"></i> A. Enroute to Adi Kailash (Vyas Valley Circuit)</span>
+                            <span class="group-tag">All Packages (3D &amp; 6D)</span>
                         </div>
-                        <div class="sacred-card">
-                            <h4><i class="fa-solid fa-water" style="color:var(--color-gold);"></i> Parvati Sarovar &amp; Gauri Kund</h4>
-                            <p>Holy glacial lakes situated right at the base of Adi Kailash where pilgrims perform sacred puja rituals, holy snan/achaman, and seek divine blessings.</p>
+                        <div class="route-places-grid">
+                            <!-- 1. Manokamna Temple -->
+                            <div class="place-photo-card">
+                                <div class="place-photo-img-wrap">
+                                    <span class="place-photo-badge">Both Packages</span>
+                                    <img src="assets/images/manokamna-temple.webp" alt="Manokamna Temple Kumaon Himalayas enroute to Adi Kailash" loading="lazy" width="400" height="225">
+                                </div>
+                                <div class="place-photo-content">
+                                    <h4 class="place-photo-title"><span class="place-icon">🛕</span> MANOKAMNA TEMPLE</h4>
+                                    <p class="place-photo-desc">Sacred wish-fulfilling Himalayan shrine nestled amidst mountain cedar groves enroute to Vyas Valley.</p>
+                                </div>
+                            </div>
+
+                            <!-- 2. Adi Kailash -->
+                            <div class="place-photo-card">
+                                <div class="place-photo-img-wrap">
+                                    <span class="place-photo-badge">Both Packages</span>
+                                    <img src="assets/images/adi-kailash-parvat.webp" alt="Sacred Adi Kailash peak and Parvati Sarovar Vyas Valley" loading="lazy" width="400" height="225">
+                                </div>
+                                <div class="place-photo-content">
+                                    <h4 class="place-photo-title"><span class="place-icon">🏔️</span> ADI KAILASH</h4>
+                                    <p class="place-photo-desc">Revered Himalayan massif rising over the Vyas Valley at 4,570m, holy meditation abode of Lord Shiva.</p>
+                                </div>
+                            </div>
+
+                            <!-- 3. Om Parvat -->
+                            <div class="place-photo-card">
+                                <div class="place-photo-img-wrap">
+                                    <span class="place-photo-badge">Both Packages</span>
+                                    <img src="assets/images/om-parvat-group.webp" alt="Sacred Om Parvat peak with naturally formed snow OM symbol Nabidhang" loading="lazy" width="400" height="225">
+                                </div>
+                                <div class="place-photo-content">
+                                    <h4 class="place-photo-title"><span class="place-icon">🕉️</span> OM PARVAT</h4>
+                                    <p class="place-photo-desc">Miraculous 6,191m peak viewed from Nabidhang where natural snow accumulation forms the sacred syllable ॐ.</p>
+                                </div>
+                            </div>
+
+                            <!-- 4. Kaali Mata Temple -->
+                            <div class="place-photo-card">
+                                <div class="place-photo-img-wrap">
+                                    <span class="place-photo-badge">Both Packages</span>
+                                    <img src="assets/images/kali-mata-temple.webp" alt="Kaali Mata Temple at Kalapani origin of Kali river Vyas Valley" loading="lazy" width="400" height="225">
+                                </div>
+                                <div class="place-photo-content">
+                                    <h4 class="place-photo-title"><span class="place-icon">🌺</span> KAALI MATA TEMPLE (KALAPANI)</h4>
+                                    <p class="place-photo-desc">Sacred ancient temple at Kalapani, marking the holy origin spring of the Kali River along the border.</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="sacred-card">
-                            <h4><i class="fa-solid fa-gopuram" style="color:var(--color-gold);"></i> Jageshwar &amp; Kainchi Dham</h4>
-                            <p>Our 6-day routes include visits to the 124 ancient stone temples of Jageshwar Dham, the sacred bell temple of Chitai Golu Devta, and Neem Karoli Baba's Kainchi Dham.</p>
+
+                        <!-- Group B: In Pithoragarh -->
+                        <div class="places-group-title">
+                            <span class="group-name"><i class="fa-solid fa-location-dot" style="color:var(--color-gold);"></i> B. In Pithoragarh (Base Town Sights)</span>
+                            <span class="group-tag">Local Sightseeing</span>
+                        </div>
+                        <div class="route-places-grid">
+                            <!-- 1. Mostamanu Temple -->
+                            <div class="place-photo-card">
+                                <div class="place-photo-img-wrap">
+                                    <span class="place-photo-badge">Pithoragarh Base</span>
+                                    <img src="assets/images/mostamanu-temple.webp" alt="Mostamanu Temple Chandak Pithoragarh Uttarakhand" loading="lazy" width="400" height="225">
+                                </div>
+                                <div class="place-photo-content">
+                                    <h4 class="place-photo-title"><span class="place-icon">⛩️</span> MOSTAMANU TEMPLE</h4>
+                                    <p class="place-photo-desc">Revered local deity shrine atop Chandak hills offering panoramic views of Soar Valley and Panchachuli peaks.</p>
+                                </div>
+                            </div>
+
+                            <!-- 2. Kamakhya Devi Temple -->
+                            <div class="place-photo-card">
+                                <div class="place-photo-img-wrap">
+                                    <span class="place-photo-badge">Pithoragarh Base</span>
+                                    <img src="assets/images/kamakhya-devi-temple.webp" alt="Kamakhya Devi Temple hilltop shrine Pithoragarh" loading="lazy" width="400" height="225">
+                                </div>
+                                <div class="place-photo-content">
+                                    <h4 class="place-photo-title"><span class="place-icon">🪔</span> KAMAKHYA DEVI TEMPLE</h4>
+                                    <p class="place-photo-desc">Sacred hilltop Shakti temple in Pithoragarh surrounded by rhododendron woods and sweeping Himalayan panoramas.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Group C: Enroute to Delhi & Kathgodam -->
+                        <div class="places-group-title">
+                            <span class="group-name"><i class="fa-solid fa-gopuram" style="color:var(--color-gold);"></i> C. Enroute to Delhi &amp; Kathgodam (Kumaon Heritage)</span>
+                            <span class="group-tag">6-Day Full Packages</span>
+                        </div>
+                        <div class="route-places-grid">
+                            <!-- 1. Jageshwar Temple -->
+                            <div class="place-photo-card">
+                                <div class="place-photo-img-wrap">
+                                    <span class="place-photo-badge">6D Delhi &amp; Kathgodam</span>
+                                    <img src="assets/images/jageshwar-temple.webp" alt="Ancient Jageshwar Dham 124 stone temple complex Almora" loading="lazy" width="400" height="225">
+                                </div>
+                                <div class="place-photo-content">
+                                    <h4 class="place-photo-title"><span class="place-icon">🏛️</span> JAGESHWAR TEMPLE (DHAM)</h4>
+                                    <p class="place-photo-desc">8th-century Jyotirlinga heritage cluster of 124 ancient carved stone temples nestled inside towering deodar forests.</p>
+                                </div>
+                            </div>
+
+                            <!-- 2. Chitai Golu Devta -->
+                            <div class="place-photo-card">
+                                <div class="place-photo-img-wrap">
+                                    <span class="place-photo-badge">6D Delhi &amp; Kathgodam</span>
+                                    <img src="assets/images/chitai-golu-devta.webp" alt="Chitai Golu Devta Temple of Bells Almora" loading="lazy" width="400" height="225">
+                                </div>
+                                <div class="place-photo-content">
+                                    <h4 class="place-photo-title"><span class="place-icon">🔔</span> CHITAI GOLU DEVTA</h4>
+                                    <p class="place-photo-desc">Renowned Temple of Bells dedicated to Golu Devta (God of Justice), decorated with thousands of ringing brass bells.</p>
+                                </div>
+                            </div>
+
+                            <!-- 3. Kainchi Dham Neem Karoli Baba -->
+                            <div class="place-photo-card">
+                                <div class="place-photo-img-wrap">
+                                    <span class="place-photo-badge">6D Delhi &amp; Kathgodam</span>
+                                    <img src="assets/images/kainchi-dham.webp" alt="Kainchi Dham Ashram Neem Karoli Baba Bhowali Nainital" loading="lazy" width="400" height="225">
+                                </div>
+                                <div class="place-photo-content">
+                                    <h4 class="place-photo-title"><span class="place-icon">🙏</span> KAINCHI DHAM (NEEM KAROLI BABA)</h4>
+                                    <p class="place-photo-desc">World-famous sacred ashram and temple of Maharaj-ji Neem Karoli Baba on the scenic banks of the Kshipra river.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
