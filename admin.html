@@ -719,8 +719,9 @@
                                 <option value="Follow up required">🔁 Follow up required</option>
                                 <option value="Not Answered">🔇 Not Answered</option>
                                 <option value="No. not reachable">📴 No. not reachable</option>
-                                <option value="Won">🏆 Won</option>
                                 <option value="Lost">❌ Lost</option>
+                                <option value="Kailash Mansarovar Yatra">🏔️ Kailash Mansarovar Yatra</option>
+                                <option value="Won">🏆 Won</option>
                             </select>
                         </div>
                     </div>
@@ -1423,6 +1424,8 @@
                             <option value="Follow up required">🔁 Follow up required</option>
                             <option value="Not Answered">🔇 Not Answered</option>
                             <option value="No. not reachable">📴 No. not reachable</option>
+                            <option value="Lost">❌ Lost</option>
+                            <option value="Kailash Mansarovar Yatra">🏔️ Kailash Mansarovar Yatra</option>
                         </select>
                     </div>
                     <div class="admin-form-group">
@@ -5041,6 +5044,8 @@
             else if (val === 'Follow up required') el.classList.add('status-followup');
             else if (val === 'Not Answered') el.classList.add('status-notanswered');
             else if (val === 'No. not reachable') el.classList.add('status-notreachable');
+            else if (val === 'Lost') el.classList.add('status-lost');
+            else if (val === 'Kailash Mansarovar Yatra') el.classList.add('status-kailash');
         };
 
         window.updateFinalStyle = function(el) {
@@ -5647,8 +5652,9 @@
                                             <option value="Follow up required">Follow up required</option>
                                             <option value="Not Answered">Not Answered</option>
                                             <option value="No. not reachable">No. not reachable</option>
-                                            <option value="Won">Won</option>
                                             <option value="Lost">Lost</option>
+                                            <option value="Kailash Mansarovar Yatra">Kailash Mansarovar Yatra</option>
+                                            <option value="Won">Won</option>
                                         </select>
                                     </div>
                                 </th>
@@ -5690,8 +5696,9 @@
                                             <option value="Follow up required">Follow up required</option>
                                             <option value="Not Answered">Not Answered</option>
                                             <option value="No. not reachable">No. not reachable</option>
-                                            <option value="Won">Won</option>
                                             <option value="Lost">Lost</option>
+                                            <option value="Kailash Mansarovar Yatra">Kailash Mansarovar Yatra</option>
+                                            <option value="Won">Won</option>
                                         </select>
                                     </div>
                                 </th>
@@ -5775,7 +5782,9 @@
                     { val: "Incorrect Number", text: "🚫 Incorrect Number" },
                     { val: "Follow up required", text: "🔁 Follow up required" },
                     { val: "Not Answered", text: "🔇 Not Answered" },
-                    { val: "No. not reachable", text: "📴 No. not reachable" }
+                    { val: "No. not reachable", text: "📴 No. not reachable" },
+                    { val: "Lost", text: "❌ Lost" },
+                    { val: "Kailash Mansarovar Yatra", text: "🏔️ Kailash Mansarovar Yatra" }
                 ];
                 statuses.forEach(s => {
                     const selected = item.status === s.val ? 'selected' : '';
@@ -5817,6 +5826,8 @@
                 else if (item.status === 'Follow up required') statusClass = 'status-followup';
                 else if (item.status === 'Not Answered') statusClass = 'status-notanswered';
                 else if (item.status === 'No. not reachable') statusClass = 'status-notreachable';
+                else if (item.status === 'Lost') statusClass = 'status-lost';
+                else if (item.status === 'Kailash Mansarovar Yatra') statusClass = 'status-kailash';
 
                 let finalClass = 'final-none';
                 if (item.final_status === 'Booking confirmed') finalClass = 'final-confirmed';

@@ -3616,6 +3616,24 @@ footer h3::after, footer h4::after {
     background-size: 12px !important;
 }
 
+.status-lost {
+    background: rgba(239, 68, 68, 0.15) !important;
+    color: #f87171 !important;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f87171' stroke-width='3'%3e%3cpath d='M6 9l6 6 6-6'/%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 10px center !important;
+    background-size: 12px !important;
+}
+
+.status-kailash {
+    background: rgba(14, 165, 233, 0.15) !important;
+    color: #38bdf8 !important;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2338bdf8' stroke-width='3'%3e%3cpath d='M6 9l6 6 6-6'/%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 10px center !important;
+    background-size: 12px !important;
+}
+
 .final-select {
     appearance: none;
     -webkit-appearance: none;
