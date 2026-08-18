@@ -6104,7 +6104,7 @@
 
                 const staffUuid = lead.assigned_to || currentUserUuidMapping || AGENT_UUIDS[(currentUsername || '').toLowerCase()] || null;
                 const autoBookingId = await fetchNextBookingId();
-                const leadDestination = lead.destination || (lead.remarks && lead.remarks.match(/Destination:\s*([^|\n]+)/i) ? lead.remarks.match(/Destination:\s*([^|\n]+)/i)[1].trim() : '') || 'Confirmed Lead Booking';
+                const leadDestination = lead.destination || (lead.remarks && lead.remarks.match(/Destination:\s*([^|\n]+)/i) ? lead.remarks.match(/Destination:\s*([^|\n]+)/i)[1].trim() : '') || 'Adi Kailash';
 
                 // Insert into bookings table
                 const { error: insertErr } = await supabaseAdmin
