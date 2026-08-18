@@ -378,7 +378,24 @@
                 min-width: 190px;
             }
         }
-    </style>
+    
+@media(max-width:768px){
+    .place-hero{height:55vh;min-height:300px;}
+    .place-hero .hero-title{font-size:clamp(18px,7vw,32px)!important;}
+    .place-hero .hero-desc{font-size:13px!important;}
+    .place-content-grid{grid-template-columns:1fr!important;gap:20px;}
+    .place-sidebar{order:-1;}
+    .breadcrumbs-list{font-size:10.5px;flex-wrap:wrap;gap:3px;}
+    .place-section h2{font-size:18px!important;}
+    .place-section p,.place-section li{font-size:13.5px!important;line-height:1.7!important;}
+    .how-to-reach-steps{padding-left:14px;}
+    .how-to-reach-steps li{font-size:13px!important;margin-bottom:8px;}
+}
+@media(max-width:480px){
+    .place-hero{min-height:240px;}
+    .place-hero .hero-title{font-size:clamp(16px,8vw,26px)!important;}
+}
+</style>
     <!-- ===== End Language Selector CSS ===== -->
 </head>
 
