@@ -1654,7 +1654,7 @@
     <!-- Create Bill Modal -->
     <style>
         #create-bill-modal .cbm-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.82); backdrop-filter: blur(6px); z-index: 10000; display: flex; align-items: center; justify-content: center; overflow-y: auto; padding: 20px; }
-        #create-bill-modal .cbm-card { background: linear-gradient(145deg, #0f1f38 0%, #0d1526 100%); border: 1px solid rgba(212,175,55,0.4); border-radius: 20px; width: 100%; max-width: 620px; box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04) inset; overflow: hidden; position: relative; }
+        #create-bill-modal .cbm-card { background: linear-gradient(145deg, #0f1f38 0%, #0d1526 100%); border: 1px solid rgba(212,175,55,0.4); border-radius: 20px; width: 100%; max-width: 660px; box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04) inset; overflow: hidden; position: relative; }
         #create-bill-modal .cbm-header { padding: 24px 28px 20px; border-bottom: 1px solid rgba(255,255,255,0.07); display: flex; align-items: center; justify-content: space-between; background: linear-gradient(90deg, rgba(212,175,55,0.08) 0%, transparent 60%); }
         #create-bill-modal .cbm-header-left { display: flex; align-items: center; gap: 14px; }
         #create-bill-modal .cbm-icon-wrap { width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #d4af37, #f5c842); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(212,175,55,0.35); flex-shrink: 0; }
@@ -1669,7 +1669,7 @@
         #create-bill-modal .cbm-section-badge { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #d4af37; background: rgba(212,175,55,0.12); border: 1px solid rgba(212,175,55,0.25); border-radius: 20px; padding: 3px 10px; }
         #create-bill-modal .cbm-section-line { flex: 1; height: 1px; background: rgba(255,255,255,0.06); }
         #create-bill-modal .cbm-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-        #create-bill-modal .cbm-grid-3 { display: grid; grid-template-columns: 1.5fr 1fr 1.1fr; gap: 14px; }
+        #create-bill-modal .cbm-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
         #create-bill-modal .cbm-field { display: flex; flex-direction: column; gap: 6px; }
         #create-bill-modal .cbm-field label { font-size: 11px; font-weight: 600; letter-spacing: 0.6px; text-transform: uppercase; color: rgba(255,255,255,0.45); }
         #create-bill-modal .cbm-field label span.req { color: #d4af37; margin-left: 2px; }
@@ -1681,17 +1681,34 @@
         #create-bill-modal .cbm-select option { background: #1a2a44; color: #fff; }
         #create-bill-modal .cbm-amount-wrap { position: relative; }
         #create-bill-modal .cbm-amount-prefix { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #d4af37; font-weight: 700; font-size: 15px; pointer-events: none; }
-        #create-bill-modal .cbm-amount-input { padding-left: 30px !important; font-size: 16px !important; font-weight: 600 !important; color: #f5c842 !important; }
+        #create-bill-modal .cbm-amount-input { padding-left: 30px !important; font-size: 14px !important; font-weight: 600 !important; color: #f5c842 !important; }
         #create-bill-modal .cbm-payment-box { background: rgba(212,175,55,0.04); border: 1px solid rgba(212,175,55,0.18); border-radius: 14px; padding: 18px; }
-        #create-bill-modal .cbm-payment-toggle { display: flex; align-items: center; gap: 10px; margin-bottom: 0; cursor: pointer; }
+        #create-bill-modal .cbm-payment-toggle { display: flex; align-items: center; gap: 10px; margin-bottom: 0; }
         #create-bill-modal .cbm-payment-toggle-label { font-size: 12px; font-weight: 600; color: #d4af37; letter-spacing: 0.5px; text-transform: uppercase; }
         #create-bill-modal .cbm-payment-optional { font-size: 11px; color: rgba(255,255,255,0.3); margin-left: auto; }
         #create-bill-modal .cbm-payment-fields { margin-top: 16px; }
+        
+        /* Calculation Breakdown Box */
+        #create-bill-modal .cbm-calc-box { background: linear-gradient(135deg, rgba(212,175,55,0.07) 0%, rgba(15,23,42,0.7) 100%); border: 1.5px solid rgba(212,175,55,0.35); border-radius: 14px; padding: 16px 18px; margin-top: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.35); }
+        #create-bill-modal .cbm-calc-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px solid rgba(212,175,55,0.2); padding-bottom: 8px; flex-wrap: wrap; gap: 8px; }
+        #create-bill-modal .cbm-calc-badge { font-size: 10.5px; font-weight: 800; letter-spacing: 0.8px; text-transform: uppercase; color: #fbbf24; display: flex; align-items: center; gap: 6px; }
+        #create-bill-modal .cbm-calc-formula { font-size: 11.5px; color: #38bdf8; font-family: 'Consolas', monospace; font-weight: 600; }
+        #create-bill-modal .cbm-calc-grid { display: grid; grid-template-columns: 1fr 1fr 1.3fr; gap: 10px; margin-bottom: 12px; }
+        #create-bill-modal .cbm-calc-item { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 10px 12px; text-align: center; }
+        #create-bill-modal .cbm-calc-item.highlight { background: rgba(212,175,55,0.12); border-color: rgba(212,175,55,0.4); box-shadow: 0 4px 14px rgba(212,175,55,0.15); }
+        #create-bill-modal .cbm-calc-item .c-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; margin-bottom: 4px; font-weight: 600; }
+        #create-bill-modal .cbm-calc-item .c-val { font-size: 16px; font-weight: 800; color: #fff; }
+        #create-bill-modal .cbm-calc-item .c-val.green { color: #34d399; }
+        #create-bill-modal .cbm-calc-item .c-val.red { color: #f87171; }
+        #create-bill-modal .cbm-calc-item .c-val.gold { color: #fbbf24; font-size: 17px; }
+        #create-bill-modal .cbm-calc-footer { display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.35); border-radius: 8px; padding: 10px 14px; font-size: 12px; border: 1px solid rgba(255,255,255,0.05); }
+
         #create-bill-modal .cbm-submit { width: 100%; padding: 14px; border: none; border-radius: 12px; background: linear-gradient(135deg, #d4af37, #f0c040); color: #0d1526; font-size: 14px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: all 0.25s; box-shadow: 0 4px 20px rgba(212,175,55,0.3); display: flex; align-items: center; justify-content: center; gap: 10px; }
         #create-bill-modal .cbm-submit:hover { transform: translateY(-1px); box-shadow: 0 8px 28px rgba(212,175,55,0.45); }
         #create-bill-modal .cbm-submit:active { transform: translateY(0); }
-        @media (max-width: 520px) {
-            #create-bill-modal .cbm-grid-2, #create-bill-modal .cbm-grid-3 { grid-template-columns: 1fr; }
+        @media (max-width: 580px) {
+            #create-bill-modal .cbm-grid-2, #create-bill-modal .cbm-grid-3, #create-bill-modal .cbm-calc-grid { grid-template-columns: 1fr; }
+            #create-bill-modal .cbm-calc-footer { flex-direction: column; align-items: flex-start; gap: 6px; }
         }
     </style>
     <div id="create-bill-modal" style="display:none; position:fixed; inset:0; z-index:10000; align-items:center; justify-content:center; overflow-y:auto; padding:20px; background:rgba(0,0,0,0.82); backdrop-filter:blur(6px);">
@@ -1702,7 +1719,7 @@
                     <div class="cbm-icon-wrap"><i class="fa-solid fa-file-invoice-dollar"></i></div>
                     <div>
                         <p class="cbm-title">Create Booking Bill</p>
-                        <p class="cbm-subtitle">Fill in the details below to generate a new bill</p>
+                        <p class="cbm-subtitle">Calculate per-person rate, group size &amp; discounts automatically</p>
                     </div>
                 </div>
                 <button type="button" class="cbm-close" onclick="closeCreateBillModal()"><i class="fa-solid fa-xmark"></i></button>
@@ -1732,7 +1749,7 @@
                                 <label for="bill-package-name">Tour Package <span class="req">*</span></label>
                                 <select id="bill-package-name" class="cbm-select" required>
                                     <option value="" disabled selected>Select Package</option>
-                                    <option value="Adi Kailash & Om Parvat">Adi Kailash & Om Parvat</option>
+                                    <option value="Adi Kailash & Om Parvat">Adi Kailash &amp; Om Parvat</option>
                                     <option value="Khaliya Top Trek">Khaliya Top Trek</option>
                                     <option value="Mt. Kailash Yatra">Mt. Kailash Yatra</option>
                                     <option value="Darma Valley Exploration">Darma Valley Exploration</option>
@@ -1763,8 +1780,8 @@
                                 <input type="email" id="bill-cust-email" class="cbm-input" placeholder="email@example.com">
                             </div>
                             <div class="cbm-field">
-                                <label for="bill-group-size">Group Size <span class="req">*</span></label>
-                                <input type="number" id="bill-group-size" class="cbm-input" required min="1" value="1">
+                                <label for="bill-group-size">Group Size (Pax) <span class="req">*</span></label>
+                                <input type="number" id="bill-group-size" class="cbm-input" required min="1" value="1" oninput="recalculateBillAmounts()">
                             </div>
                             <div class="cbm-field">
                                 <label for="bill-start-date">Tour Start Date <span class="req">*</span></label>
@@ -1776,22 +1793,22 @@
                     <!-- Section 3: Charges & Pickup -->
                     <div class="cbm-section">
                         <div class="cbm-section-header">
-                            <span class="cbm-section-badge"><i class="fa-solid fa-indian-rupee-sign" style="margin-right:4px;font-size:9px"></i>Charges &amp; Pickup</span>
+                            <span class="cbm-section-badge"><i class="fa-solid fa-indian-rupee-sign" style="margin-right:4px;font-size:9px"></i>Charges &amp; Pickup (Per Person Rates)</span>
                             <div class="cbm-section-line"></div>
                         </div>
                         <div class="cbm-grid-3">
                             <div class="cbm-field">
-                                <label for="bill-total-amount">Total Package Cost <span class="req">*</span></label>
+                                <label for="bill-rate-per-person">Package Cost / Person <span class="req">*</span></label>
                                 <div class="cbm-amount-wrap">
                                     <span class="cbm-amount-prefix">₹</span>
-                                    <input type="number" id="bill-total-amount" class="cbm-input cbm-amount-input" required min="0" placeholder="0" style="font-size:14px!important;">
+                                    <input type="number" id="bill-rate-per-person" class="cbm-input cbm-amount-input" required min="0" placeholder="0" oninput="recalculateBillAmounts()">
                                 </div>
                             </div>
                             <div class="cbm-field">
-                                <label for="bill-discount">Discount (₹)</label>
+                                <label for="bill-discount-per-person">Discount / Person (₹)</label>
                                 <div class="cbm-amount-wrap">
                                     <span class="cbm-amount-prefix">₹</span>
-                                    <input type="number" id="bill-discount" class="cbm-input cbm-amount-input" min="0" value="0" style="font-size:14px!important; color:#ef4444!important;">
+                                    <input type="number" id="bill-discount-per-person" class="cbm-input cbm-amount-input" min="0" value="0" style="color:#ef4444!important;" oninput="recalculateBillAmounts()">
                                 </div>
                             </div>
                             <div class="cbm-field">
@@ -1804,6 +1821,42 @@
                                     <option value="Kathgodam to Kathgodam">Kathgodam to Kathgodam</option>
                                     <option value="Pithoragarh to Pithoragarh">Pithoragarh to Pithoragarh</option>
                                 </select>
+                            </div>
+                        </div>
+
+                        <!-- Hidden fields for backward compatibility with database schema & server logic -->
+                        <input type="hidden" id="bill-total-amount" value="0">
+                        <input type="hidden" id="bill-discount" value="0">
+
+                        <!-- Live Calculation Breakdown Card -->
+                        <div class="cbm-calc-box">
+                            <div class="cbm-calc-header">
+                                <span class="cbm-calc-badge"><i class="fa-solid fa-calculator"></i> Live Group Calculation Breakdown</span>
+                                <span class="cbm-calc-formula" id="calc-lbl-formula">(₹0 − ₹0) × 1 Person</span>
+                            </div>
+                            <div class="cbm-calc-grid">
+                                <div class="cbm-calc-item">
+                                    <div class="c-label">Total Gross Cost</div>
+                                    <div class="c-val" id="calc-lbl-gross">₹0</div>
+                                </div>
+                                <div class="cbm-calc-item">
+                                    <div class="c-label">Total Group Discount</div>
+                                    <div class="c-val red" id="calc-lbl-discount">-₹0</div>
+                                </div>
+                                <div class="cbm-calc-item highlight">
+                                    <div class="c-label" style="color:#d4af37;">Net Payable Total</div>
+                                    <div class="c-val gold" id="calc-lbl-net">₹0</div>
+                                </div>
+                            </div>
+                            <div class="cbm-calc-footer">
+                                <div>
+                                    <span style="color:rgba(255,255,255,0.45);text-transform:uppercase;font-size:10.5px;font-weight:600;">Advance Logged:</span>
+                                    <strong id="calc-lbl-advance" style="color:#38bdf8;font-size:13px;margin-left:4px;">₹0</strong>
+                                </div>
+                                <div>
+                                    <span style="color:rgba(255,255,255,0.45);text-transform:uppercase;font-size:10.5px;font-weight:600;">Balance Due:</span>
+                                    <strong id="calc-lbl-balance" style="color:#4ade80;font-size:14px;margin-left:4px;">₹0</strong>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1822,7 +1875,7 @@
                                         <label for="bill-init-paid">Amount Paid (₹)</label>
                                         <div class="cbm-amount-wrap">
                                             <span class="cbm-amount-prefix">₹</span>
-                                            <input type="number" id="bill-init-paid" class="cbm-input cbm-amount-input" min="0" value="0" style="font-size:13px!important;">
+                                            <input type="number" id="bill-init-paid" class="cbm-input cbm-amount-input" min="0" value="0" style="font-size:13px!important;" oninput="recalculateBillAmounts()">
                                         </div>
                                     </div>
                                     <div class="cbm-field">
@@ -7934,11 +7987,52 @@
             showAdminToast('Leads CSV template with Destination column downloaded!', 'success');
         };
 
+        window.recalculateBillAmounts = function() {
+            const groupSize = Math.max(1, parseInt(document.getElementById('bill-group-size')?.value) || 1);
+            const ratePerPerson = Math.max(0, parseFloat(document.getElementById('bill-rate-per-person')?.value) || 0);
+            const discountPerPerson = Math.max(0, parseFloat(document.getElementById('bill-discount-per-person')?.value) || 0);
+            const initialPaid = Math.max(0, parseFloat(document.getElementById('bill-init-paid')?.value) || 0);
+
+            const grossTotal = ratePerPerson * groupSize;
+            const totalDiscount = discountPerPerson * groupSize;
+            const netTotal = Math.max(0, grossTotal - totalDiscount);
+            const balanceRemaining = Math.max(0, netTotal - initialPaid);
+
+            // Sync hidden inputs for database insert and backward compatibility
+            const totalInput = document.getElementById('bill-total-amount');
+            const discountInput = document.getElementById('bill-discount');
+            if (totalInput) totalInput.value = grossTotal;
+            if (discountInput) discountInput.value = totalDiscount;
+
+            // Update live UI calculation card
+            const lblGross = document.getElementById('calc-lbl-gross');
+            const lblDiscount = document.getElementById('calc-lbl-discount');
+            const lblNet = document.getElementById('calc-lbl-net');
+            const lblAdvance = document.getElementById('calc-lbl-advance');
+            const lblBalance = document.getElementById('calc-lbl-balance');
+            const lblFormula = document.getElementById('calc-lbl-formula');
+
+            if (lblGross) lblGross.innerText = '₹' + grossTotal.toLocaleString('en-IN');
+            if (lblDiscount) lblDiscount.innerText = '-₹' + totalDiscount.toLocaleString('en-IN');
+            if (lblNet) lblNet.innerText = '₹' + netTotal.toLocaleString('en-IN');
+            if (lblAdvance) lblAdvance.innerText = '₹' + initialPaid.toLocaleString('en-IN');
+            if (lblBalance) lblBalance.innerText = '₹' + balanceRemaining.toLocaleString('en-IN');
+            if (lblFormula) {
+                lblFormula.innerHTML = `(₹${ratePerPerson.toLocaleString('en-IN')} − ₹${discountPerPerson.toLocaleString('en-IN')}) × ${groupSize} ${groupSize > 1 ? 'Persons' : 'Person'}`;
+            }
+        };
+
         window.openCreateBillModal = function() {
             document.getElementById('create-bill-form').reset();
             const defaultDate = new Date();
             defaultDate.setDate(defaultDate.getDate() + 30);
             document.getElementById('bill-start-date').value = defaultDate.toISOString().split('T')[0];
+            document.getElementById('bill-group-size').value = 1;
+            document.getElementById('bill-rate-per-person').value = '';
+            document.getElementById('bill-discount-per-person').value = 0;
+            document.getElementById('bill-init-paid').value = 0;
+            recalculateBillAmounts();
+
             const modal = document.getElementById('create-bill-modal');
             if (modal) {
                 modal.classList.add('active');
@@ -7994,8 +8088,18 @@
             document.getElementById('bill-cust-name').value = booking.name || '';
             document.getElementById('bill-cust-phone').value = booking.phone || '';
             document.getElementById('bill-cust-email').value = booking.email || '';
-            document.getElementById('bill-group-size').value = booking.travelers || 1;
+            const groupSize = booking.travelers || 1;
+            document.getElementById('bill-group-size').value = groupSize;
             
+            // Calculate starting rate per person from lead amount if available
+            let initialRate = booking.package_price || 0;
+            if (!initialRate && booking.amount && booking.amount > 0) {
+                initialRate = Math.round(booking.amount / groupSize);
+            }
+            document.getElementById('bill-rate-per-person').value = initialRate > 0 ? initialRate : '';
+            document.getElementById('bill-discount-per-person').value = 0;
+            document.getElementById('bill-init-paid').value = booking.advance_amount || 0;
+
             if (booking.travel_date) {
                 try {
                     const formattedDate = new Date(booking.travel_date).toISOString().split('T')[0];
@@ -8009,6 +8113,8 @@
                 document.getElementById('bill-start-date').value = defaultDate.toISOString().split('T')[0];
             }
             
+            recalculateBillAmounts();
+
             const modal = document.getElementById('create-bill-modal');
             if (modal) {
                 modal.classList.add('active');
@@ -8037,27 +8143,28 @@
             const name = document.getElementById('bill-cust-name').value.trim();
             const phone = document.getElementById('bill-cust-phone').value.trim();
             const email = document.getElementById('bill-cust-email').value.trim();
-            const groupSize = parseInt(document.getElementById('bill-group-size').value) || 1;
+            const groupSize = Math.max(1, parseInt(document.getElementById('bill-group-size').value) || 1);
             const tourStartDate = document.getElementById('bill-start-date').value;
-            const totalPackageAmount = parseFloat(document.getElementById('bill-total-amount').value);
-            const discount = parseFloat(document.getElementById('bill-discount').value) || 0;
+            
+            const ratePerPerson = parseFloat(document.getElementById('bill-rate-per-person').value);
+            const discountPerPerson = parseFloat(document.getElementById('bill-discount-per-person').value) || 0;
             const pickupPoint = document.getElementById('bill-pickup-point').value;
 
             const initialPaid = parseFloat(document.getElementById('bill-init-paid').value) || 0;
             const initialMode = document.getElementById('bill-init-mode').value;
             const initialType = document.getElementById('bill-init-type').value;
 
-            if (isNaN(totalPackageAmount) || totalPackageAmount <= 0) {
-                showAdminToast('Please enter a valid total package cost', 'error');
+            if (isNaN(ratePerPerson) || ratePerPerson <= 0) {
+                showAdminToast('Please enter a valid package cost per person', 'error');
                 return;
             }
 
-            if (discount < 0) {
-                showAdminToast('Discount cannot be negative', 'error');
+            if (discountPerPerson < 0) {
+                showAdminToast('Discount per person cannot be negative', 'error');
                 return;
             }
-            if (discount > totalPackageAmount) {
-                showAdminToast('Discount cannot exceed the total package cost', 'error');
+            if (discountPerPerson > ratePerPerson) {
+                showAdminToast('Discount per person cannot exceed the package cost per person', 'error');
                 return;
             }
 
@@ -8065,6 +8172,11 @@
                 showAdminToast('Please select a pickup point', 'error');
                 return;
             }
+
+            // Auto-calculated group totals
+            const totalPackageAmount = ratePerPerson * groupSize;
+            const discount = discountPerPerson * groupSize;
+            const netPackageAmount = totalPackageAmount - discount;
 
             let payments = [];
             if (initialPaid > 0) {
@@ -8079,8 +8191,7 @@
             }
 
             const totalPaid = payments.reduce((sum, p) => sum + p.amountPaid, 0);
-            const netPackageAmount = totalPackageAmount - discount;
-            const balanceRemaining = netPackageAmount - totalPaid;
+            const balanceRemaining = Math.max(0, netPackageAmount - totalPaid);
 
             let paymentStatus = 'Pending';
             if (totalPaid > 0) {
