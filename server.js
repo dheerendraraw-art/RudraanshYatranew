@@ -424,6 +424,7 @@ app.get('/blog/:slug', async (req, res) => {
         // Specific schema & CTA banner enhancements for high-performing blog posts
         let extraSchemas = '';
         let contentHtml = paragraphsHtml;
+        let parikramaMetaOverride = null;
 
         // ── SEO for Kailash Mansarovar final batch blog ──
         if (slug === 'kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanakpur') {
