@@ -9,6 +9,7 @@ const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const multer = require('multer');
+const { getBlogEnhancement } = require('./blog-enhancers');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'rudraansh_yatra_secure_jwt_secret_key_2026_xyz';
 const storage = multer.memoryStorage();
@@ -425,6 +426,14 @@ app.get('/blog/:slug', async (req, res) => {
         let extraSchemas = '';
         let contentHtml = paragraphsHtml;
         let parikramaMetaOverride = null;
+
+        // Apply modular SEO/AEO/GEO enhancement if configured for this slug
+        const modularEnhancement = getBlogEnhancement(slug, paragraphsHtml);
+        if (modularEnhancement) {
+            parikramaMetaOverride = modularEnhancement.meta;
+            extraSchemas = modularEnhancement.schemas;
+            contentHtml = modularEnhancement.contentHtml;
+        }
 
         // ── SEO for Kailash Mansarovar final batch blog ──
         if (slug === 'kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanakpur') {
