@@ -3212,7 +3212,7 @@ app.get('/api/google-reviews', async (req, res) => {
                 text: "I have gone to Kailash Mansarovar Yatra with other three female family members in a conducted tour by Rudraansh Yatra from 22 Aug to 1st September. It was really an amazing trip, Lord shiv...",
                 relative_time_description: "Meerut",
                 photos: [
-                    "assets/images/om-parvat-group.webp",
+                    "assets/images/om-parvat-group.webp?v=2",
                     "assets/images/adi-kailash-senior-citizens.webp"
                 ]
             },
