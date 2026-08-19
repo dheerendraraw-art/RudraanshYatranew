@@ -189,6 +189,7 @@
                         </div>
                     </div>
                     <div id="bookings-action-buttons-wrap" class="admin-only-action" style="display: flex; gap: 8px;">
+                        <button type="button" onclick="resetBookingsFilters()" class="btn btn-secondary" style="border: 1px solid var(--color-gold); background: #1e293b; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: var(--color-gold); font-weight: 600;"><i class="fa-solid fa-arrow-rotate-left"></i> Clear Filters</button>
                         <button type="button" id="export-bookings-btn" class="btn btn-primary admin-only-action" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-file-export"></i> Export CSV</button>
                         <button type="button" onclick="downloadBookingsTemplate()" id="bookings-template-btn" class="btn btn-secondary admin-only-action" style="border: 1px solid var(--color-gold); background: #1e293b; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: var(--color-gold); font-weight: 600;"><i class="fa-solid fa-download"></i> Template</button>
                         <button type="button" id="import-bookings-btn" class="btn btn-secondary admin-only-action" style="border: 1px solid var(--color-gold); background: #1e293b; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: var(--color-gold); font-weight: 600;"><i class="fa-solid fa-file-import"></i> Import CSV</button>
@@ -201,11 +202,16 @@
                         <thead>
                             <tr>
                                 <th>Booking ID</th>
-                                <th>Package Name</th>
+                                <th>Pickup Point</th>
                                 <th>Travel Destination</th>
                                 <th>Client Name</th>
                                 <th>Phone</th>
-                                <th>Travel Date</th>
+                                <th>
+                                    <div style="display: flex; flex-direction: column; gap: 4px; align-items: center;">
+                                        <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Travel Date</span>
+                                        <input type="date" id="filter-booking-travel-date" onchange="applyBookingsFilters()" style="background: #0f172a; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 4px; padding: 2px 4px; font-size: 11px; cursor: pointer; outline: none; min-width: 115px; font-weight: 500; color-scheme: dark;">
+                                    </div>
+                                </th>
                                 <th>Travelers</th>
                                 <th>Special Notes</th>
                                 <th>
@@ -720,6 +726,7 @@
                                 <option value="Not Answered">🔇 Not Answered</option>
                                 <option value="No. not reachable">📴 No. not reachable</option>
                                 <option value="Lost">❌ Lost</option>
+                                <option value="Switch Off">🔴 Switch Off</option>
                                 <option value="Kailash Mansarovar Yatra">🏔️ Kailash Mansarovar Yatra</option>
                                 <option value="Won">🏆 Won</option>
                             </select>
@@ -1425,6 +1432,7 @@
                             <option value="Not Answered">🔇 Not Answered</option>
                             <option value="No. not reachable">📴 No. not reachable</option>
                             <option value="Lost">❌ Lost</option>
+                            <option value="Switch Off">🔴 Switch Off</option>
                             <option value="Kailash Mansarovar Yatra">🏔️ Kailash Mansarovar Yatra</option>
                         </select>
                     </div>
@@ -1743,7 +1751,7 @@
                             <span class="cbm-section-badge"><i class="fa-solid fa-hashtag" style="margin-right:4px;font-size:9px"></i>Booking Info</span>
                             <div class="cbm-section-line"></div>
                         </div>
-                        <div class="cbm-grid-2">
+                        <div class="cbm-grid-3">
                             <div class="cbm-field">
                                 <label for="bill-booking-id">Booking ID <span class="req">*</span></label>
                                 <input type="text" id="bill-booking-id" class="cbm-input" required placeholder="e.g. RY-2026-001">
@@ -1756,6 +1764,17 @@
                                     <option value="Khaliya Top Trek">Khaliya Top Trek</option>
                                     <option value="Mt. Kailash Yatra">Mt. Kailash Yatra</option>
                                     <option value="Darma Valley Exploration">Darma Valley Exploration</option>
+                                </select>
+                            </div>
+                            <div class="cbm-field">
+                                <label for="bill-pickup-point">Pickup Point <span class="req">*</span></label>
+                                <select id="bill-pickup-point" class="cbm-select" required>
+                                    <option value="" disabled selected>Select Pickup</option>
+                                    <option value="Delhi to Delhi">Delhi to Delhi</option>
+                                    <option value="Delhi to Delhi (5 Days / 4 Nights)">Delhi to Delhi (5 Days / 4 Nights)</option>
+                                    <option value="Delhi to Delhi (6 Days / 5 Nights)">Delhi to Delhi (6 Days / 5 Nights)</option>
+                                    <option value="Kathgodam to Kathgodam">Kathgodam to Kathgodam</option>
+                                    <option value="Pithoragarh to Pithoragarh">Pithoragarh to Pithoragarh</option>
                                 </select>
                             </div>
                         </div>
@@ -1799,7 +1818,7 @@
                             <span class="cbm-section-badge"><i class="fa-solid fa-indian-rupee-sign" style="margin-right:4px;font-size:9px"></i>Charges &amp; Pickup (Per Person Rates)</span>
                             <div class="cbm-section-line"></div>
                         </div>
-                        <div class="cbm-grid-3">
+                        <div class="cbm-grid-2">
                             <div class="cbm-field">
                                 <label for="bill-rate-per-person">Package Cost / Person <span class="req">*</span></label>
                                 <div class="cbm-amount-wrap">
@@ -1813,17 +1832,6 @@
                                     <span class="cbm-amount-prefix">₹</span>
                                     <input type="number" id="bill-discount-per-person" class="cbm-input cbm-amount-input" min="0" value="0" style="color:#ef4444!important;" oninput="recalculateBillAmounts()">
                                 </div>
-                            </div>
-                            <div class="cbm-field">
-                                <label for="bill-pickup-point">Pickup Point <span class="req">*</span></label>
-                                <select id="bill-pickup-point" class="cbm-select" required>
-                                    <option value="" disabled selected>Select Pickup</option>
-                                    <option value="Delhi to Delhi">Delhi to Delhi</option>
-                                    <option value="Delhi to Delhi (5 Days / 4 Nights)">Delhi to Delhi (5 Days / 4 Nights)</option>
-                                    <option value="Delhi to Delhi (6 Days / 5 Nights)">Delhi to Delhi (6 Days / 5 Nights)</option>
-                                    <option value="Kathgodam to Kathgodam">Kathgodam to Kathgodam</option>
-                                    <option value="Pithoragarh to Pithoragarh">Pithoragarh to Pithoragarh</option>
-                                </select>
                             </div>
                         </div>
 
@@ -3472,9 +3480,17 @@
             }
         }
 
+        window.resetBookingsFilters = function() {
+            if (document.getElementById('search-bookings-input')) document.getElementById('search-bookings-input').value = '';
+            if (document.getElementById('filter-booking-travel-date')) document.getElementById('filter-booking-travel-date').value = '';
+            if (document.getElementById('filter-booking-assignee')) document.getElementById('filter-booking-assignee').value = '';
+            applyBookingsFilters();
+        };
+
         window.applyBookingsFilters = function() {
             const searchVal = document.getElementById('search-bookings-input') ? document.getElementById('search-bookings-input').value.trim().toLowerCase() : '';
             const filterAssignee = document.getElementById('filter-booking-assignee') ? document.getElementById('filter-booking-assignee').value : '';
+            const filterTravelDate = document.getElementById('filter-booking-travel-date') ? document.getElementById('filter-booking-travel-date').value : '';
             
             const isStaff = (currentUserRole === 'staff');
             const uname = (currentUsername || '').toLowerCase().trim();
@@ -3501,6 +3517,7 @@
                     (item.phone || '').toLowerCase().includes(searchVal) ||
                     (item.email || '').toLowerCase().includes(searchVal) ||
                     (item.package_name || '').toLowerCase().includes(searchVal) ||
+                    (item.pickup_point || '').toLowerCase().includes(searchVal) ||
                     (item.destination || '').toLowerCase().includes(searchVal) ||
                     (item.booking_id || '').toLowerCase().includes(searchVal);
 
@@ -3513,7 +3530,13 @@
                     }
                 }
 
-                return matchSearch && matchAssignee;
+                let matchTravelDate = true;
+                if (filterTravelDate) {
+                    const itemDate = (item.travel_date || '').split('T')[0];
+                    matchTravelDate = (itemDate === filterTravelDate);
+                }
+
+                return matchSearch && matchAssignee && matchTravelDate;
             });
 
             const tbody = document.getElementById('bookings-table-body');
@@ -3591,7 +3614,7 @@
                 html += `
                     <tr>
                         <td data-label="Booking ID"><strong class="booking-id-tag" style="color: #78350f !important; background: #fef3c7 !important; border: 1.5px solid #f59e0b !important; padding: 4px 8px; border-radius: 6px; font-family: monospace; font-size: 12px; font-weight: 800; display: inline-block; white-space: nowrap;">${bookingId}</strong></td>
-                        <td data-label="Package Name" class="mobile-detail-field"><strong style="color: #0f172a !important; font-weight: 700; font-size: 13.5px;">${item.package_name || '—'}</strong></td>
+                        <td data-label="Package Name" class="mobile-detail-field"><strong style="color: #0f172a !important; font-weight: 700; font-size: 13.5px;">${item.pickup_point || '—'}</strong></td>
                         <td data-label="Travel Destination" class="mobile-detail-field"><span class="badge" style="background: #ffedd5 !important; color: #92400e !important; padding: 4px 8px; border-radius: 6px; font-weight: 700; border: 1.5px solid #f97316 !important; font-size: 12px; white-space: nowrap; display: inline-block; max-width: 100%; overflow: hidden; text-overflow: ellipsis;">${destVal}</span></td>
                         <td data-label="Client Name"><strong style="color: #0f172a !important; font-size: 14px; font-weight: 800;">${item.name}</strong></td>
                         <td data-label="Phone/Email"><div style="color: #1e293b !important; font-weight: 600;">${phoneHtml} ${item.email ? '<br><small style="color: #475569 !important; font-weight: 600;">' + item.email + '</small>' : ''}</div></td>
@@ -4556,7 +4579,7 @@
                 let convertedCount = 0;
 
                 const connectedList = ['answered', 'follow up required', 'won'];
-                const pendingList = ['new', 'not answered', 'no. not reachable', 'busy', 'incorrect number'];
+                const pendingList = ['new', 'not answered', 'no. not reachable', 'busy', 'incorrect number', 'switch off'];
 
                 filteredLeads.forEach(lead => {
                     const status = (lead.status || 'New').trim();
@@ -5045,6 +5068,7 @@
             else if (val === 'Not Answered') el.classList.add('status-notanswered');
             else if (val === 'No. not reachable') el.classList.add('status-notreachable');
             else if (val === 'Lost') el.classList.add('status-lost');
+            else if (val === 'Switch Off') el.classList.add('status-switchoff');
             else if (val === 'Kailash Mansarovar Yatra') el.classList.add('status-kailash');
         };
 
@@ -5653,6 +5677,7 @@
                                             <option value="Not Answered">Not Answered</option>
                                             <option value="No. not reachable">No. not reachable</option>
                                             <option value="Lost">Lost</option>
+                                            <option value="Switch Off">Switch Off</option>
                                             <option value="Kailash Mansarovar Yatra">Kailash Mansarovar Yatra</option>
                                             <option value="Won">Won</option>
                                         </select>
@@ -5697,6 +5722,7 @@
                                             <option value="Not Answered">Not Answered</option>
                                             <option value="No. not reachable">No. not reachable</option>
                                             <option value="Lost">Lost</option>
+                                            <option value="Switch Off">Switch Off</option>
                                             <option value="Kailash Mansarovar Yatra">Kailash Mansarovar Yatra</option>
                                             <option value="Won">Won</option>
                                         </select>
@@ -5784,6 +5810,7 @@
                     { val: "Not Answered", text: "🔇 Not Answered" },
                     { val: "No. not reachable", text: "📴 No. not reachable" },
                     { val: "Lost", text: "❌ Lost" },
+                    { val: "Switch Off", text: "🔴 Switch Off" },
                     { val: "Kailash Mansarovar Yatra", text: "🏔️ Kailash Mansarovar Yatra" }
                 ];
                 statuses.forEach(s => {
@@ -5827,6 +5854,7 @@
                 else if (item.status === 'Not Answered') statusClass = 'status-notanswered';
                 else if (item.status === 'No. not reachable') statusClass = 'status-notreachable';
                 else if (item.status === 'Lost') statusClass = 'status-lost';
+                else if (item.status === 'Switch Off') statusClass = 'status-switchoff';
                 else if (item.status === 'Kailash Mansarovar Yatra') statusClass = 'status-kailash';
 
                 let finalClass = 'final-none';
