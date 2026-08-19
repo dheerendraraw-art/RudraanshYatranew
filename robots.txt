@@ -31,6 +31,28 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
+# Additional AI & LLM Crawlers (2026)
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: AI2Bot
+Allow: /
+
+User-agent: Diffbot
+Allow: /
+
+User-agent: Timpibot
+Allow: /
+
 # Canonical Sitemaps & LLM Context
 Sitemap: https://rudraanshyatra.com/sitemap.xml
-# LLM Summary: https://rudraanshyatra.com/llms.txt
+Sitemap: https://rudraanshyatra.com/llms.txt
