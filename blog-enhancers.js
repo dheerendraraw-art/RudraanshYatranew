@@ -403,6 +403,7 @@ const BLOG_ENHANCERS = {
         render: function(paragraphsHtml) {
             const topBanner = `
 <style>
+.ry-route-summary h3 { color: #fbbf24 !important; font-family: sans-serif !important; margin: 0 !important; }
 .ry-route-summary { background: linear-gradient(135deg, #091e3a 0%, #172554 100%); border: 2px solid #60a5fa; border-radius: 14px; padding: 22px; margin-bottom: 30px; color: #fff; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
 .ry-route-steps { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
 .ry-route-step { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 10px 14px; font-size: 13px; font-weight: 700; color: #93c5fd; text-align: center; flex: 1; min-width: 110px; }
@@ -416,7 +417,7 @@ const BLOG_ENHANCERS = {
 </style>
 <div class="ry-route-summary">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
-        <h3 style="margin:0;color:#fbbf24;font-size:18px;font-weight:700;">🗺️ Delhi to Adi Kailash Complete Route At-a-Glance</h3>
+        <h3 style="margin:0 !important;color:#fbbf24 !important;font-size:18px !important;font-weight:700 !important;font-family:var(--font-sans), sans-serif !important;">🗺️ Delhi to Adi Kailash Complete Route At-a-Glance</h3>
         <span style="background:#22c55e;color:#fff;font-size:12px;font-weight:700;padding:4px 10px;border-radius:12px;">Total Distance: ~680 km</span>
     </div>
     <div class="ry-route-steps">
@@ -636,7 +637,7 @@ const BLOG_ENHANCERS = {
 </style>
 <div class="ry-vs-card">
     <div style="text-align:center;">
-        <h3 style="margin:0 0 6px 0;color:#fbbf24;font-size:20px;font-weight:800;">⚖️ Quick Decision Matrix: Adi Kailash vs Mount Kailash</h3>
+        <h3 style="margin:0 0 6px 0 !important;color:#fbbf24 !important;font-size:20px !important;font-weight:800 !important;font-family:var(--font-sans), sans-serif !important;">⚖️ Quick Decision Matrix: Adi Kailash vs Mount Kailash</h3>
         <p style="margin:0;font-size:13.5px;color:#cbd5e1;">Which sacred pilgrimage is right for you in 2026?</p>
     </div>
     <div class="ry-vs-grid">
@@ -878,7 +879,7 @@ const BLOG_ENHANCERS = {
 </style>
 <div class="ry-season-banner">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
-        <h3 style="margin:0;color:#fbbf24;font-size:19px;font-weight:800;">☀️ 2026 Yatra Season &amp; Weather Windows</h3>
+        <h3 style="margin:0 !important;color:#fbbf24 !important;font-size:19px !important;font-weight:800 !important;font-family:var(--font-sans), sans-serif !important;">☀️ 2026 Yatra Season &amp; Weather Windows</h3>
         <span style="background:#22c55e;color:#fff;font-size:12px;font-weight:700;padding:4px 10px;border-radius:12px;">Official BRO &amp; SDM Calendar</span>
     </div>
     <div class="ry-season-grid">

@@ -9208,3 +9208,35 @@ html, body { overflow-x: hidden; max-width: 100%; }
 }
 
 /* END GLOBAL MOBILE OPTIMISATION PASS */
+
+
+/* ==========================================================================
+   Blog Custom Dark Widgets - Heading & Text Readability Fixes
+   ========================================================================== */
+.ry-route-summary h1, .ry-route-summary h2, .ry-route-summary h3, .ry-route-summary h4,
+.ry-cost-box h1, .ry-cost-box h2, .ry-cost-box h3, .ry-cost-box h4,
+.ry-vs-card h1, .ry-vs-card h2, .ry-vs-card h3, .ry-vs-card h4,
+.ry-season-banner h1, .ry-season-banner h2, .ry-season-banner h3, .ry-season-banner h4,
+.ry-highlight-box h1, .ry-highlight-box h2, .ry-highlight-box h3, .ry-highlight-box h4,
+.ry-cost-title, .ry-highlight-title, .ry-vs-name {
+    color: #fbbf24 !important;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    line-height: 1.3 !important;
+}
+
+.ry-route-summary .name,
+.ry-vs-col.adi .ry-vs-name,
+.ry-vs-col.mt .ry-vs-name,
+.ry-season-months {
+    color: #ffffff !important;
+}
+
+.ry-route-summary p,
+.ry-cost-box p,
+.ry-vs-card p,
+.ry-season-banner p,
+.ry-highlight-box p {
+    color: #e2e8f0 !important;
+}
