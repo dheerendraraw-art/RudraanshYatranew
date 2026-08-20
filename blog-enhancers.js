@@ -130,6 +130,129 @@ const BLOG_ENHANCERS = {
         render: function(paragraphsHtml) {
             const topBanner = `
 <style>
+
+/* ==========================================================================
+   Comprehensive Readability & Contrast Rules for Blog Custom Dark Widgets
+   ========================================================================== */
+.ry-route-summary,
+.ry-cost-box,
+.ry-vs-card,
+.ry-season-banner,
+.ry-highlight-box {
+    color: #ffffff !important;
+}
+
+/* Headings inside all dark widgets */
+.ry-route-summary h1, .ry-route-summary h2, .ry-route-summary h3, .ry-route-summary h4,
+.ry-cost-box h1, .ry-cost-box h2, .ry-cost-box h3, .ry-cost-box h4,
+.ry-vs-card h1, .ry-vs-card h2, .ry-vs-card h3, .ry-vs-card h4,
+.ry-season-banner h1, .ry-season-banner h2, .ry-season-banner h3, .ry-season-banner h4,
+.ry-highlight-box h1, .ry-highlight-box h2, .ry-highlight-box h3, .ry-highlight-box h4,
+.ry-cost-title, .ry-highlight-title {
+    color: #fbbf24 !important;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+    margin-top: 0 !important;
+    margin-bottom: 4px !important;
+    line-height: 1.3 !important;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+/* Subheadings & Paragraphs inside dark widgets */
+.ry-route-summary p,
+.ry-cost-box p,
+.ry-vs-card p,
+.ry-season-banner p,
+.ry-highlight-box p {
+    color: #cbd5e1 !important;
+    margin-bottom: 0 !important;
+}
+
+/* Lists & List Items inside dark widgets (Disable forced black bullets & black text) */
+.ry-route-summary ul, .ry-cost-box ul, .ry-vs-card ul, .ry-season-banner ul, .ry-highlight-box ul,
+.ry-vs-points {
+    list-style: none !important;
+    list-style-type: none !important;
+    margin: 10px 0 0 0 !important;
+    padding: 0 !important;
+}
+
+.ry-route-summary li, .ry-cost-box li, .ry-vs-card li, .ry-season-banner li, .ry-highlight-box li,
+.ry-vs-points li {
+    list-style: none !important;
+    list-style-type: none !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+    color: #e2e8f0 !important;
+    font-size: 13.5px !important;
+    line-height: 1.6 !important;
+    margin-bottom: 8px !important;
+    padding-left: 0 !important;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+}
+
+.ry-route-summary li strong, .ry-cost-box li strong, .ry-vs-card li strong, 
+.ry-season-banner li strong, .ry-highlight-box li strong, .ry-vs-points li strong {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+}
+
+/* VS Card Specifics */
+.ry-vs-name {
+    font-size: 18px !important;
+    font-weight: 800 !important;
+    margin-bottom: 4px !important;
+}
+.ry-vs-col.adi .ry-vs-name {
+    color: #34d399 !important;
+}
+.ry-vs-col.mt .ry-vs-name {
+    color: #f1f5f9 !important;
+}
+.ry-vs-col.adi {
+    background: rgba(52, 211, 153, 0.08) !important;
+    border-color: #34d399 !important;
+}
+.ry-vs-col.mt {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-color: #64748b !important;
+}
+
+/* Cost Box Cards */
+.ry-cost-card {
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    color: #ffffff !important;
+}
+.ry-cost-card .label {
+    color: #93c5fd !important;
+}
+.ry-cost-card .price {
+    color: #fbbf24 !important;
+}
+.ry-cost-card .sub {
+    color: #94a3b8 !important;
+}
+
+/* Season Banner */
+.ry-season-col.prime {
+    background: rgba(34, 197, 94, 0.1) !important;
+    border-color: #22c55e !important;
+}
+.ry-season-col.closed {
+    background: rgba(239, 68, 68, 0.1) !important;
+    border-color: #ef4444 !important;
+}
+.ry-season-tag {
+    color: #fbbf24 !important;
+}
+.ry-season-months {
+    color: #ffffff !important;
+}
+.ry-season-status {
+    color: #86efac !important;
+}
+
 .ry-cost-box { background: linear-gradient(135deg, #0b1329 0%, #1e293b 100%); border: 2px solid #d4af37; border-radius: 14px; padding: 22px; margin-bottom: 30px; color: #fff; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
 .ry-cost-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 14px; border-bottom: 1px solid rgba(212,175,55,0.3); padding-bottom: 12px; }
 .ry-cost-title { font-size: 19px; font-weight: 700; color: #fbbf24; margin: 0; }
