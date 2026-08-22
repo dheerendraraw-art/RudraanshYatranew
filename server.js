@@ -37,7 +37,7 @@ function authenticateToken(req, res, next) {
     if (!token) return res.status(401).json({ error: 'Access token required' });
 
     jwt.verify(token, JWT_SECRET, (err, user) => {
-        if (err) return res.status(403).json({ error: 'Invalid or expired token' });
+        if (err) return res.status(401).json({ error: 'Invalid or expired token' });
         req.user = user;
         next();
     });
@@ -2055,6 +2055,7 @@ app.delete('/api/admin/discount-registrations/:id', authenticateToken, requireAd
 // Blogs CRUD
 app.get('/api/admin/blogs', authenticateToken, async (req, res) => {
     try {
+        if (!supabase) return res.status(500).json({ error: 'Supabase client not initialized' });
         const { data, error } = await supabase.from('blogs').select('*').order('created_at', { ascending: false });
         if (error) throw error;
         res.json(data || []);
@@ -2065,11 +2066,11 @@ app.get('/api/admin/blogs', authenticateToken, async (req, res) => {
 
 app.post('/api/admin/blogs', authenticateToken, async (req, res) => {
     try {
-        const { error } = await supabase
-            .from('blogs')
-            .insert(Array.isArray(req.body) ? req.body : [req.body]);
+        if (!supabase) return res.status(500).json({ error: 'Supabase client not initialized' });
+        const blogsToInsert = Array.isArray(req.body) ? req.body : [req.body];
+        const { data, error } = await supabase.from('blogs').insert(blogsToInsert).select();
         if (error) throw error;
-        res.status(201).json({ success: true });
+        res.status(201).json(data || { success: true });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -2077,16 +2078,18 @@ app.post('/api/admin/blogs', authenticateToken, async (req, res) => {
 
 app.put('/api/admin/blogs/:id', authenticateToken, async (req, res) => {
     try {
-        const { error } = await supabase.from('blogs').update(req.body).eq('id', req.params.id);
+        if (!supabase) return res.status(500).json({ error: 'Supabase client not initialized' });
+        const { data, error } = await supabase.from('blogs').update(req.body).eq('id', req.params.id).select();
         if (error) throw error;
-        res.json({ success: true });
+        res.json(data || { success: true });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 });
 
-app.delete('/api/admin/blogs/:id', authenticateToken, requireAdmin, async (req, res) => {
+app.delete('/api/admin/blogs/:id', authenticateToken, async (req, res) => {
     try {
+        if (!supabase) return res.status(500).json({ error: 'Supabase client not initialized' });
         const { error } = await supabase.from('blogs').delete().eq('id', req.params.id);
         if (error) throw error;
         res.json({ success: true });
@@ -2098,6 +2101,7 @@ app.delete('/api/admin/blogs/:id', authenticateToken, requireAdmin, async (req, 
 // Gallery CRUD
 app.get('/api/admin/gallery', authenticateToken, async (req, res) => {
     try {
+        if (!supabase) return res.status(500).json({ error: 'Supabase client not initialized' });
         const { data, error } = await supabase.from('gallery').select('*').order('created_at', { ascending: false });
         if (error) throw error;
         res.json(data || []);
@@ -2106,20 +2110,32 @@ app.get('/api/admin/gallery', authenticateToken, async (req, res) => {
     }
 });
 
-app.post('/api/admin/gallery', authenticateToken, requireAdmin, async (req, res) => {
+app.post('/api/admin/gallery', authenticateToken, async (req, res) => {
     try {
-        const { error } = await supabase
-            .from('gallery')
-            .insert(Array.isArray(req.body) ? req.body : [req.body]);
+        if (!supabase) return res.status(500).json({ error: 'Supabase client not initialized' });
+        const itemsToInsert = Array.isArray(req.body) ? req.body : [req.body];
+        const { data, error } = await supabase.from('gallery').insert(itemsToInsert).select();
         if (error) throw error;
-        res.status(201).json({ success: true });
+        res.status(201).json(data || { success: true });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 });
 
-app.delete('/api/admin/gallery/:id', authenticateToken, requireAdmin, async (req, res) => {
+app.put('/api/admin/gallery/:id', authenticateToken, async (req, res) => {
     try {
+        if (!supabase) return res.status(500).json({ error: 'Supabase client not initialized' });
+        const { data, error } = await supabase.from('gallery').update(req.body).eq('id', req.params.id).select();
+        if (error) throw error;
+        res.json(data || { success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.delete('/api/admin/gallery/:id', authenticateToken, async (req, res) => {
+    try {
+        if (!supabase) return res.status(500).json({ error: 'Supabase client not initialized' });
         const { error } = await supabase.from('gallery').delete().eq('id', req.params.id);
         if (error) throw error;
         res.json({ success: true });

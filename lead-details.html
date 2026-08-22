@@ -517,7 +517,16 @@
                 throw new Error('Session expired. Please log in again.');
             }
             if (response.status === 403) {
-                throw new Error('Permission denied.');
+                let errText = 'Permission denied.';
+                try {
+                    const errData = await response.clone().json();
+                    if (errData && errData.error) errText = errData.error;
+                    if (errText.includes('token') || errText.includes('expired')) {
+                        window.location.href = 'admin.html';
+                        throw new Error('Session expired. Please log in again.');
+                    }
+                } catch(e) {}
+                throw new Error(errText);
             }
             return response;
         }

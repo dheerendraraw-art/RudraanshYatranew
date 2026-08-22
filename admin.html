@@ -2057,6 +2057,31 @@
         </div>
     </div>
 
+    <!-- Seamless Re-Authentication Modal -->
+    <div id="reauth-modal" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(6px); z-index: 99999; align-items: center; justify-content: center; padding: 20px;">
+        <div style="background: #1e293b; border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 12px; max-width: 420px; width: 100%; padding: 28px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); text-align: center;">
+            <div style="width: 52px; height: 52px; border-radius: 50%; background: rgba(212, 175, 55, 0.15); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: var(--color-gold); font-size: 22px;">
+                <i class="fa-solid fa-key"></i>
+            </div>
+            <h3 style="color: white; font-size: 18px; font-weight: 700; margin-bottom: 8px;">Session Renewal Required</h3>
+            <p id="reauth-modal-message" style="color: #94a3b8; font-size: 13px; margin-bottom: 20px; line-height: 1.5;">Your security session has expired. Please enter your passcode to save without losing your work.</p>
+            <form id="reauth-form" onsubmit="submitReauth(event)" style="display: flex; flex-direction: column; gap: 14px; text-align: left;">
+                <div>
+                    <label style="color: #cbd5e1; font-size: 12px; font-weight: 600; margin-bottom: 6px; display: block;">Username</label>
+                    <input type="text" id="reauth-username" class="admin-input" style="width: 100%;" required readonly>
+                </div>
+                <div>
+                    <label style="color: #cbd5e1; font-size: 12px; font-weight: 600; margin-bottom: 6px; display: block;">Passcode</label>
+                    <input type="password" id="reauth-passcode" class="admin-input" placeholder="Enter your passcode" style="width: 100%;" required autocomplete="current-password" autofocus>
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                    <button type="button" onclick="closeReauthModal()" class="btn btn-secondary" style="flex: 1; border: 1px solid #475569; background: transparent; color: #cbd5e1; padding: 10px; cursor: pointer; border-radius: 6px; font-weight: 600;">Cancel</button>
+                    <button type="submit" id="btn-submit-reauth" class="btn btn-primary" style="flex: 2; background-color: var(--color-gold); border: none; color: #0f172a; padding: 10px; font-weight: 800; cursor: pointer; border-radius: 6px;">Unlock & Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Admin Portal Script -->
     <script>
         // Global error reporting for debugging
@@ -2082,11 +2107,28 @@
             }
             const response = await fetch(url, { ...options, headers });
             if (response.status === 401) {
-                logoutAdmin();
-                throw new Error('Session expired. Please log in again.');
+                let errText = 'Session expired. Please log in again.';
+                try {
+                    const errData = await response.clone().json();
+                    if (errData && errData.error) errText = errData.error;
+                } catch(e) {}
+                if (typeof promptReauth === 'function') {
+                    promptReauth('Your security session has expired. Please enter your passcode to continue.');
+                }
+                throw new Error(errText);
             }
             if (response.status === 403) {
-                throw new Error('Permission denied.');
+                let errText = 'Permission denied.';
+                try {
+                    const errData = await response.clone().json();
+                    if (errData && errData.error) errText = errData.error;
+                    if (errText.includes('token') || errText.includes('expired')) {
+                        if (typeof promptReauth === 'function') {
+                            promptReauth('Your security token is invalid or expired. Please enter your passcode.');
+                        }
+                    }
+                } catch(e) {}
+                throw new Error(errText);
             }
             return response;
         }
@@ -2352,6 +2394,13 @@
                                     }
                                 }
 
+                                if (response.status === 401 || (response.status === 403 && responseData.error && responseData.error.includes('token'))) {
+                                    if (typeof promptReauth === 'function') {
+                                        promptReauth('Your security session expired. Please enter your passcode to upload image.');
+                                    }
+                                    return { data: null, error: { message: 'Invalid or expired token. Please verify passcode to continue.' } };
+                                }
+
                                 if (!response.ok) {
                                     return { data: null, error: { message: responseData.error || 'Upload failed' } };
                                 }
@@ -2361,7 +2410,7 @@
                             }
                         },
                         getPublicUrl: (path) => {
-                            const publicUrl = `https://wmtplfckllatgkgllvhg.supabase.co/storage/v1/object/public/${bucket}/${path}`;
+                            const publicUrl = `https://ysnzxvvsegmkmkepclti.supabase.co/storage/v1/object/public/${bucket}/${path}`;
                             return { data: { publicUrl } };
                         }
                     };
@@ -2377,12 +2426,23 @@
         let galleryData = [];
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Check session security status
-            if (localStorage.getItem('admin_verified') === 'true') {
+            const token = localStorage.getItem('admin_token');
+            const isVerified = localStorage.getItem('admin_verified') === 'true';
+
+            // Purge legacy non-JWT/static tokens so a fresh valid JWT is always acquired
+            if (isVerified && (!token || token.startsWith('static-token-') || token.split('.').length !== 3)) {
+                console.warn('Clearing legacy or non-JWT admin session to ensure clean re-authentication.');
+                localStorage.removeItem('admin_verified');
+                localStorage.removeItem('admin_token');
+                showAdminToast('Please enter your passcode to log in securely.', 'info');
+            } else if (isVerified && token) {
                 currentUserRole = localStorage.getItem('admin_role') || 'admin';
                 currentUsername = localStorage.getItem('admin_username') || 'admin';
                 currentUserUuidMapping = localStorage.getItem('admin_uuid_mapping') || '';
                 showDashboard();
+            }
+            if (typeof initBlogDraftAutoSave === 'function') {
+                initBlogDraftAutoSave();
             }
         });
 
@@ -2426,10 +2486,6 @@
             'mansi': '00000000-0000-0000-0000-000000000005'
         };
 
-
-
-
-
         const STATIC_CREDENTIALS = {
             'admin': { passcode: 'VandanaDheerendra@2023', role: 'admin', uuid_mapping: 'c380f706-58c2-4f0d-a74e-cd3691b62dd5' },
             'geetika': { passcode: 'Geetika@Rudra26', role: 'staff', uuid_mapping: '00000000-0000-0000-0000-000000000002' },
@@ -2468,48 +2524,52 @@
             let loginSuccess = false;
             let userData = null;
             let tokenStr = '';
+            let backendReachable = false;
 
-            // ALWAYS try static credentials first as the primary login method
-            // This works on both static hosting AND when backend is available
-            const staticUser = STATIC_CREDENTIALS[usernameVal];
-            if (staticUser) {
-                // Use raw unmodified password — preserve case and all characters
-                const rawPass = passcodeInput.value || '';
-                const trimmedPass = rawPass.trim();
-                const passMatch = (rawPass === staticUser.passcode) || (trimmedPass === staticUser.passcode);
-                if (passMatch) {
-                    userData = {
-                        username: usernameVal,
-                        role: staticUser.role,
-                        uuid_mapping: staticUser.uuid_mapping
-                    };
-                    tokenStr = 'static-token-' + Date.now();
-                    loginSuccess = true;
-                }
-            }
+            // 1. ALWAYS try Backend API first to get a secure signed JWT
+            try {
+                const response = await fetch('/api/admin/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: usernameVal, passcode: enteredPass })
+                });
 
-            // If static fallback didn't match, also try backend API (for custom passwords set via profile)
-            if (!loginSuccess) {
-                try {
-                    const response = await fetch('/api/admin/login', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ username: usernameVal, passcode: passcodeInput.value || '' })
-                    });
+                backendReachable = true;
 
-                    if (response.ok) {
-                        const contentType = response.headers.get('content-type') || '';
-                        if (contentType.includes('application/json')) {
-                            const resData = await response.json();
-                            if (resData && resData.user) {
-                                userData = resData.user;
-                                tokenStr = resData.token;
-                                loginSuccess = true;
-                            }
+                if (response.ok) {
+                    const contentType = response.headers.get('content-type') || '';
+                    if (contentType.includes('application/json')) {
+                        const resData = await response.json();
+                        if (resData && resData.user && resData.token) {
+                            userData = resData.user;
+                            tokenStr = resData.token;
+                            loginSuccess = true;
                         }
                     }
-                } catch (apiErr) {
-                    console.warn('Backend API unreachable (expected on static hosting):', apiErr.message);
+                } else {
+                    const errData = await response.json().catch(() => ({}));
+                    console.warn('Backend login rejected:', errData.error || response.status);
+                }
+            } catch (apiErr) {
+                console.warn('Backend API unreachable (falling back to static offline mode):', apiErr.message);
+            }
+
+            // 2. Fallback to static credentials ONLY IF backend server is offline / unreachable
+            if (!loginSuccess && !backendReachable) {
+                const staticUser = STATIC_CREDENTIALS[usernameVal];
+                if (staticUser) {
+                    const rawPass = passcodeInput.value || '';
+                    const trimmedPass = rawPass.trim();
+                    const passMatch = (rawPass === staticUser.passcode) || (trimmedPass === staticUser.passcode);
+                    if (passMatch) {
+                        userData = {
+                            username: usernameVal,
+                            role: staticUser.role,
+                            uuid_mapping: staticUser.uuid_mapping
+                        };
+                        tokenStr = 'static-token-' + Date.now();
+                        loginSuccess = true;
+                    }
                 }
             }
 
@@ -2787,6 +2847,187 @@
             localStorage.removeItem('admin_username');
             localStorage.removeItem('admin_uuid_mapping');
             window.location.reload();
+        }
+
+        let reauthCallback = null;
+
+        function promptReauth(message, callback) {
+            const modal = document.getElementById('reauth-modal');
+            const msgEl = document.getElementById('reauth-modal-message');
+            const userEl = document.getElementById('reauth-username');
+            const passEl = document.getElementById('reauth-passcode');
+            if (!modal) return;
+            if (message && msgEl) msgEl.innerText = message;
+            if (userEl) userEl.value = localStorage.getItem('admin_username') || currentUsername || 'admin';
+            if (passEl) {
+                passEl.value = '';
+                setTimeout(() => passEl.focus(), 100);
+            }
+            reauthCallback = callback || null;
+            modal.style.display = 'flex';
+        }
+
+        function closeReauthModal() {
+            const modal = document.getElementById('reauth-modal');
+            if (modal) modal.style.display = 'none';
+            reauthCallback = null;
+        }
+
+        async function submitReauth(event) {
+            event.preventDefault();
+            const userEl = document.getElementById('reauth-username');
+            const passEl = document.getElementById('reauth-passcode');
+            const btn = document.getElementById('btn-submit-reauth');
+            if (!userEl || !passEl) return;
+
+            const username = userEl.value.trim().toLowerCase();
+            const passcode = passEl.value;
+            if (!passcode) return;
+
+            const origHtml = btn ? btn.innerHTML : '';
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying...';
+            }
+
+            try {
+                let tokenStr = '';
+                let userData = null;
+                let loginSuccess = false;
+
+                try {
+                    const response = await fetch('/api/admin/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ username, passcode })
+                    });
+
+                    if (response.ok) {
+                        const resData = await response.json();
+                        if (resData && resData.token) {
+                            tokenStr = resData.token;
+                            userData = resData.user;
+                            loginSuccess = true;
+                        }
+                    }
+                } catch(apiErr) {
+                    console.warn('Backend login attempt during re-auth failed:', apiErr);
+                }
+
+                if (!loginSuccess) {
+                    const staticUser = STATIC_CREDENTIALS[username];
+                    if (staticUser && (passcode.trim() === staticUser.passcode || passcode === staticUser.passcode)) {
+                        tokenStr = 'static-token-' + Date.now();
+                        userData = {
+                            username: username,
+                            role: staticUser.role,
+                            uuid_mapping: staticUser.uuid_mapping
+                        };
+                        loginSuccess = true;
+                    }
+                }
+
+                if (!loginSuccess) {
+                    showAdminToast('Incorrect passcode. Please check and try again.', 'error');
+                    passEl.value = '';
+                    passEl.focus();
+                    if (btn) {
+                        btn.disabled = false;
+                        btn.innerHTML = origHtml;
+                    }
+                    return;
+                }
+
+                localStorage.setItem('admin_token', tokenStr);
+                localStorage.setItem('admin_verified', 'true');
+                if (userData) {
+                    currentUserRole = userData.role || currentUserRole;
+                    currentUsername = userData.username || currentUsername;
+                    currentUserUuidMapping = userData.uuid_mapping || currentUserUuidMapping;
+                    localStorage.setItem('admin_role', currentUserRole);
+                    localStorage.setItem('admin_username', currentUsername);
+                    localStorage.setItem('admin_uuid_mapping', currentUserUuidMapping);
+                }
+
+                showAdminToast('Security session renewed successfully!', 'success');
+                closeReauthModal();
+
+                if (typeof reauthCallback === 'function') {
+                    const cb = reauthCallback;
+                    reauthCallback = null;
+                    cb();
+                }
+            } catch (err) {
+                console.error('Re-auth error:', err);
+                showAdminToast('Failed to renew session: ' + err.message, 'error');
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = origHtml;
+                }
+            }
+        }
+
+        function initBlogDraftAutoSave() {
+            const titleEl = document.getElementById('blog-title');
+            const authorEl = document.getElementById('blog-author');
+            const richEditor = document.getElementById('blog-editor-rich');
+            const slugEl = document.getElementById('blog-slug');
+            const metaDescEl = document.getElementById('blog-meta-desc');
+
+            const saveDraft = () => {
+                if (editingBlogId) return;
+                const draft = {
+                    title: titleEl ? titleEl.value : '',
+                    author: authorEl ? authorEl.value : '',
+                    content: richEditor ? richEditor.innerHTML : '',
+                    slug: slugEl ? slugEl.value : '',
+                    meta_description: metaDescEl ? metaDescEl.value : '',
+                    timestamp: Date.now()
+                };
+                if (draft.title || (draft.content && draft.content !== '<br>' && draft.content !== '<p><br></p>') || draft.slug || draft.meta_description) {
+                    localStorage.setItem('ry_blog_form_draft', JSON.stringify(draft));
+                }
+            };
+
+            if (titleEl) titleEl.addEventListener('input', saveDraft);
+            if (authorEl) authorEl.addEventListener('input', saveDraft);
+            if (richEditor) richEditor.addEventListener('input', saveDraft);
+            if (slugEl) slugEl.addEventListener('input', saveDraft);
+            if (metaDescEl) metaDescEl.addEventListener('input', saveDraft);
+
+            restoreBlogDraft();
+        }
+
+        function restoreBlogDraft() {
+            if (editingBlogId) return;
+            try {
+                const saved = localStorage.getItem('ry_blog_form_draft');
+                if (!saved) return;
+                const draft = JSON.parse(saved);
+                if (!draft) return;
+
+                const titleEl = document.getElementById('blog-title');
+                const authorEl = document.getElementById('blog-author');
+                const richEditor = document.getElementById('blog-editor-rich');
+                const slugEl = document.getElementById('blog-slug');
+                const metaDescEl = document.getElementById('blog-meta-desc');
+
+                if (titleEl && !titleEl.value && draft.title) titleEl.value = draft.title;
+                if (authorEl && !authorEl.value && draft.author) authorEl.value = draft.author;
+                if (richEditor && (!richEditor.innerHTML || richEditor.innerHTML === '<br>' || richEditor.innerHTML === '<p><br></p>') && draft.content) {
+                    richEditor.innerHTML = draft.content;
+                    if (typeof updateWordCount === 'function') updateWordCount();
+                }
+                if (slugEl && !slugEl.value && draft.slug) slugEl.value = draft.slug;
+                if (metaDescEl && !metaDescEl.value && draft.meta_description) metaDescEl.value = draft.meta_description;
+            } catch(e) {
+                console.warn('Failed to restore blog draft:', e);
+            }
+        }
+
+        function clearBlogDraft() {
+            localStorage.removeItem('ry_blog_form_draft');
         }
 
         function applyRolePermissions() {
@@ -3984,7 +4225,9 @@
 
         // Upload Logic: Blog Submit Form (Upload Cover + Save Row)
         async function submitBlogForm(event) {
-            event.preventDefault();
+            if (event && typeof event.preventDefault === 'function') {
+                event.preventDefault();
+            }
             const btn = document.getElementById('btn-submit-blog');
             const title = document.getElementById('blog-title').value.trim();
             const author = document.getElementById('blog-author').value.trim();
@@ -3996,7 +4239,7 @@
             const customSlug = document.getElementById('blog-slug').value.trim();
             const metaDesc = document.getElementById('blog-meta-desc').value.trim();
             const fileInput = document.getElementById('blog-image');
-            const file = fileInput.files[0];
+            const file = fileInput && fileInput.files ? fileInput.files[0] : null;
 
             if (!file && !editingBlogId) {
                 showAdminToast('Please select a cover image first.', 'error');
@@ -4019,7 +4262,15 @@
                         .from('blog-images')
                         .upload(fileName, file, { cacheControl: '3600', upsert: false });
 
-                    if (uploadErr) throw uploadErr;
+                    if (uploadErr) {
+                        if (uploadErr.message && (uploadErr.message.includes('token') || uploadErr.message.includes('expired') || uploadErr.message.includes('unauthorized') || uploadErr.message.includes('Session expired'))) {
+                            promptReauth('Your security session expired. Please enter your passcode to publish your article.', () => {
+                                submitBlogForm();
+                            });
+                            return;
+                        }
+                        throw uploadErr;
+                    }
 
                     // 2. Fetch Public URL
                     imageUrl = (uploadData && uploadData.publicUrl) ? uploadData.publicUrl : supabaseAdmin.storage.from('blog-images').getPublicUrl(fileName).data.publicUrl;
@@ -4028,7 +4279,7 @@
                 if (!content || content.trim() === '' || content === '<br>' || content === '<p><br></p>') {
                     showAdminToast('Please write some content for the article.', 'error');
                     btn.disabled = false;
-                    btn.innerHTML = `Publish Article <i class="fa-solid fa-paper-plane" style="margin-left: 6px;"></i>`;
+                    btn.innerHTML = editingBlogId ? `Update Article <i class="fa-solid fa-check-double" style="margin-left: 6px;"></i>` : `Publish Article <i class="fa-solid fa-paper-plane" style="margin-left: 6px;"></i>`;
                     return;
                 }
 
@@ -4046,7 +4297,15 @@
                         .update({ title, author, content, image_url: imageUrl, slug, meta_description: dbMetaDesc })
                         .eq('id', editingBlogId);
 
-                    if (dbErr) throw dbErr;
+                    if (dbErr) {
+                        if (dbErr.message && (dbErr.message.includes('token') || dbErr.message.includes('expired') || dbErr.message.includes('Permission denied') || dbErr.message.includes('Session expired'))) {
+                            promptReauth('Your security session expired. Please enter your passcode to update your article.', () => {
+                                submitBlogForm();
+                            });
+                            return;
+                        }
+                        throw dbErr;
+                    }
 
                     showAdminToast('Article successfully updated!', 'success');
                     cancelBlogEdit();
@@ -4065,9 +4324,18 @@
                             meta_description: dbMetaDesc 
                         }]);
 
-                    if (dbErr) throw dbErr;
+                    if (dbErr) {
+                        if (dbErr.message && (dbErr.message.includes('token') || dbErr.message.includes('expired') || dbErr.message.includes('Permission denied') || dbErr.message.includes('Session expired'))) {
+                            promptReauth('Your security session expired. Please enter your passcode to publish your article.', () => {
+                                submitBlogForm();
+                            });
+                            return;
+                        }
+                        throw dbErr;
+                    }
 
                     showAdminToast('Article successfully published!', 'success');
+                    if (typeof clearBlogDraft === 'function') clearBlogDraft();
                     document.getElementById('blog-form').reset();
                     const richEditor = document.getElementById('blog-editor-rich');
                     if (richEditor) {
@@ -4079,7 +4347,9 @@
                 fetchBlogs();
             } catch (err) {
                 console.error(err);
-                showAdminToast('Failed to save article: ' + err.message, 'error');
+                if (!err.message || (!err.message.includes('token') && !err.message.includes('expired') && !err.message.includes('Session expired'))) {
+                    showAdminToast('Failed to save article: ' + err.message, 'error');
+                }
             } finally {
                 btn.disabled = false;
                 if (!editingBlogId) {
@@ -4090,12 +4360,14 @@
 
         // Upload Logic: Gallery Submit Form (Upload Photo + Save Row)
         async function submitGalleryForm(event) {
-            event.preventDefault();
+            if (event && typeof event.preventDefault === 'function') {
+                event.preventDefault();
+            }
             const btn = document.getElementById('btn-submit-gallery');
             const caption = document.getElementById('gallery-caption').value.trim();
             const category = document.getElementById('gallery-category').value;
             const fileInput = document.getElementById('gallery-image');
-            const file = fileInput.files[0];
+            const file = fileInput && fileInput.files ? fileInput.files[0] : null;
 
             if (!file) {
                 showAdminToast('Please select an image file first.', 'error');
@@ -4114,7 +4386,15 @@
                     .from('gallery-images')
                     .upload(fileName, file, { cacheControl: '3600', upsert: false });
 
-                if (uploadErr) throw uploadErr;
+                if (uploadErr) {
+                    if (uploadErr.message && (uploadErr.message.includes('token') || uploadErr.message.includes('expired') || uploadErr.message.includes('unauthorized') || uploadErr.message.includes('Session expired'))) {
+                        promptReauth('Your security session expired. Please enter your passcode to upload photo.', () => {
+                            submitGalleryForm();
+                        });
+                        return;
+                    }
+                    throw uploadErr;
+                }
 
                 // 2. Fetch Public URL
                 const imageUrl = (uploadData && uploadData.publicUrl) ? uploadData.publicUrl : supabaseAdmin.storage.from('gallery-images').getPublicUrl(fileName).data.publicUrl;
@@ -4138,7 +4418,9 @@
                 fetchGallery();
             } catch (err) {
                 console.error(err);
-                showAdminToast('Failed to upload photograph: ' + err.message, 'error');
+                if (!err.message || (!err.message.includes('token') && !err.message.includes('expired') && !err.message.includes('Session expired'))) {
+                    showAdminToast('Failed to upload photograph: ' + err.message, 'error');
+                }
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = `Upload Photograph <i class="fa-solid fa-cloud-arrow-up" style="margin-left: 6px;"></i>`;
