@@ -1124,6 +1124,695 @@ const BLOG_ENHANCERS = {
 
             return topBanner + enriched + bottomCta;
         }
+    },
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // PITHORAGARH FLIGHTS 2026 BLOG — SEO / AEO / GEO / AIO
+    // ─────────────────────────────────────────────────────────────────────────
+    'how-to-reach-pithoragarh-from-delhi-dehradun-2026-flight-update': {
+        meta: {
+            title: 'How to Reach Pithoragarh by Flight from Delhi & Dehradun (Sept 2026 Schedule)',
+            desc: 'Naini Saini Airport Pithoragarh now has near-daily flights from Delhi (6 days/week) & Dehradun (5 days/week) from Sept 1, 2026. Complete schedule, booking tips & Adi Kailash Yatra planning guide.',
+            dateModified: '2026-08-23T12:00:00+05:30'
+        },
+        schemas: `
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "When do the new Pithoragarh flights from Delhi and Dehradun start in 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The expanded flight schedule to Naini Saini Airport, Pithoragarh begins on September 1, 2026. Delhi–Pithoragarh flights will operate 6 days a week and Dehradun–Pithoragarh flights 5 days a week, up from the earlier 3-days-a-week schedule (Tuesday, Thursday, Saturday only)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many days a week will there be flights to Pithoragarh from Delhi after September 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "From September 1, 2026, Delhi–Pithoragarh flights at Naini Saini Airport will operate 6 days per week (Monday through Saturday). Sunday is the only day without service. Previously, only 3 flights per week operated on Tuesday, Thursday, and Saturday."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the flight schedule from Delhi to Pithoragarh per day of the week in 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "From September 1, 2026: Monday — Delhi to Pithoragarh only (no Dehradun leg). Tuesday, Thursday, Friday, Saturday — Delhi → Pithoragarh → Dehradun → Pithoragarh → Delhi loop. Wednesday — Delhi → Dehradun → Pithoragarh → Dehradun → Delhi (reversed routing). Sunday — no flights. The aircraft is a 42-seater, so early booking is strongly recommended."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which airport serves Pithoragarh and what is its name?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Naini Saini Airport (IATA: PGH) is the airport serving Pithoragarh in Uttarakhand. It is a UDAN scheme regional airport located approximately 5–7 km from Pithoragarh town at an elevation of about 1,645 metres. It connects Pithoragarh with Delhi and Dehradun and is the closest airport to the Adi Kailash Yatra route."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I fly into Pithoragarh for the Adi Kailash Yatra instead of travelling by road?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Flying into Naini Saini Airport Pithoragarh for the Adi Kailash Yatra saves a full day of travel compared to the road route from Kathgodam or Tanakpur. From Pithoragarh airport, Rudraansh Yatra arranges direct 4x4 Bolero transfers to Dharchula (95 km, 3–4 hours) and onward to Gunji and Jyolingkong."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are flights to Pithoragarh reliable or do they get cancelled due to weather?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Like most hill airports in Uttarakhand, flights to Naini Saini Airport Pithoragarh can be weather-affected, especially during monsoon season (July–August). Visibility-related cancellations are possible. It is advisable to always keep the Kathgodam or Tanakpur road route as a contingency plan, particularly during July and August."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much time does flying to Pithoragarh save compared to travelling by road from Delhi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Flying from Delhi to Naini Saini Airport Pithoragarh saves approximately 18–24 hours of total travel time compared to the road route (Delhi → Kathgodam → Almora → Pithoragarh), which typically takes 2 full days including an overnight stop. The flight from Delhi to Pithoragarh takes approximately 1.5–2 hours of actual flight time."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I get from Pithoragarh airport to Dharchula for the Adi Kailash Yatra?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "From Naini Saini Airport Pithoragarh, Dharchula is approximately 95 km away by road (NH9 along the Kali River), taking 3–4 hours by 4x4 vehicle. Rudraansh Yatra provides airport pickup and direct transfer to Dharchula as part of their Adi Kailash Yatra packages starting from Pithoragarh."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the seat capacity on Pithoragarh flights and how do I book them?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Pithoragarh's Naini Saini Airport is served by a 42-seater regional aircraft under the UDAN scheme. Seats are limited and fill quickly, especially during pilgrim season (May–June, Sept–Oct). Confirm the official detailed schedule and book directly through the airline (Alliance Air / Fly91) or authorized travel portals once the September 2026 booking window opens."
+          }
+        }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "How to Plan Your Journey to Pithoragarh by Flight for the Adi Kailash Yatra (2026)",
+      "description": "Step-by-step guide to reaching Pithoragarh via Naini Saini Airport using the new expanded September 2026 flight schedule from Delhi and Dehradun.",
+      "totalTime": "PT2H",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Check the Official Pithoragarh Flight Schedule",
+          "text": "Confirm the latest day-by-day flight timings directly with the airline or Naini Saini Airport management before booking, as detailed slot timings were still being finalised at the time of the September 2026 announcement."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Book Your Flight Early",
+          "text": "With only 42 seats per aircraft and high pilgrim season demand in September–October 2026, book your Delhi or Dehradun to Pithoragarh flight as early as possible once booking opens on official portals."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Arrange Pithoragarh Airport Pickup and Onward Transfer",
+          "text": "Contact Rudraansh Yatra (based in Pithoragarh) to arrange a 4x4 Bolero pickup from Naini Saini Airport directly to Dharchula (95 km, 3–4 hours) to connect with the Adi Kailash Yatra route."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "Keep a Road-Route Backup Plan",
+          "text": "Hill airports like Naini Saini are weather-sensitive. Always have the Kathgodam or Tanakpur bus/train route as a backup, especially if travelling during July–August monsoon season."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 5,
+          "name": "Pre-arrange Inner Line Permit (ILP) with Your Ground Operator",
+          "text": "Before flying in, coordinate your Inner Line Permit (ILP) processing with Rudraansh Yatra. Your operator needs your Aadhaar details and medical fitness certificate 10–15 days in advance to complete government paperwork at the SDM Office in Dharchula."
+        }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Airport",
+          "@id": "https://rudraanshyatra.com/blog/how-to-reach-pithoragarh-from-delhi-dehradun-2026-flight-update#naini-saini-airport",
+          "name": "Naini Saini Airport",
+          "iataCode": "PGH",
+          "icaoCode": "VIPK",
+          "description": "Naini Saini Airport is a regional civil aviation airport located in Pithoragarh district, Uttarakhand, operating under India's UDAN regional connectivity scheme. It connects Pithoragarh with Delhi and Dehradun and is the closest airport to the Adi Kailash and Om Parvat Yatra route.",
+          "url": "https://rudraanshyatra.com/blog/how-to-reach-pithoragarh-from-delhi-dehradun-2026-flight-update",
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "29.6336",
+            "longitude": "80.2181"
+          },
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Pithoragarh",
+            "addressRegion": "Uttarakhand",
+            "postalCode": "262501",
+            "addressCountry": "IN"
+          },
+          "containedInPlace": {
+            "@type": "City",
+            "name": "Pithoragarh",
+            "sameAs": "https://en.wikipedia.org/wiki/Pithoragarh"
+          }
+        },
+        {
+          "@type": "SpecialAnnouncement",
+          "@id": "https://rudraanshyatra.com/blog/how-to-reach-pithoragarh-from-delhi-dehradun-2026-flight-update#flight-announcement",
+          "name": "Expanded Pithoragarh Flight Schedule from September 1, 2026",
+          "text": "Naini Saini Airport Pithoragarh will operate near-daily flights from September 1, 2026. Delhi–Pithoragarh route increases from 3 to 6 days per week. Dehradun–Pithoragarh route increases to 5 days per week. This significantly improves access for the Adi Kailash Yatra.",
+          "datePosted": "2026-08-23",
+          "expires": "2027-01-01",
+          "spatialCoverage": {
+            "@type": "Place",
+            "name": "Pithoragarh",
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": "29.5829",
+              "longitude": "80.2182"
+            }
+          },
+          "about": {
+            "@type": "Airport",
+            "name": "Naini Saini Airport",
+            "iataCode": "PGH"
+          },
+          "announcementLocation": {
+            "@type": "Place",
+            "name": "Naini Saini Airport, Pithoragarh"
+          }
+        },
+        {
+          "@type": "TripRoute",
+          "@id": "https://rudraanshyatra.com/blog/how-to-reach-pithoragarh-from-delhi-dehradun-2026-flight-update#delhi-pithoragarh-route",
+          "name": "Delhi to Pithoragarh Flight Route via Naini Saini Airport",
+          "description": "Direct flight route from Indira Gandhi International Airport Delhi to Naini Saini Airport Pithoragarh under the UDAN regional connectivity scheme, covering approximately 350 km as the crow flies."
+        }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": "https://rudraanshyatra.com/blog/how-to-reach-pithoragarh-from-delhi-dehradun-2026-flight-update",
+      "url": "https://rudraanshyatra.com/blog/how-to-reach-pithoragarh-from-delhi-dehradun-2026-flight-update",
+      "name": "How to Reach Pithoragarh by Flight from Delhi & Dehradun (2026 Schedule)",
+      "description": "Naini Saini Airport Pithoragarh expanded flight schedule from September 1, 2026 — Delhi route 6 days/week, Dehradun route 5 days/week. Planning guide for the Adi Kailash Yatra via Pithoragarh.",
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [".ry-flight-summary", ".ry-flight-summary h3", ".ry-schedule-table", ".faq-answer", ".blog-detail-body h2:first-of-type", ".blog-detail-body p:first-of-type"]
+      },
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "Naini Saini Airport",
+          "sameAs": "https://en.wikipedia.org/wiki/Naini_Saini_Airport"
+        },
+        {
+          "@type": "Thing",
+          "name": "Pithoragarh",
+          "sameAs": "https://en.wikipedia.org/wiki/Pithoragarh"
+        },
+        {
+          "@type": "Thing",
+          "name": "Adi Kailash",
+          "sameAs": "https://en.wikipedia.org/wiki/Adi_Kailash"
+        },
+        {
+          "@type": "Thing",
+          "name": "UDAN Regional Connectivity Scheme",
+          "sameAs": "https://en.wikipedia.org/wiki/UDAN"
+        }
+      ],
+      "mentions": [
+        {
+          "@type": "Place",
+          "name": "Pithoragarh",
+          "sameAs": "https://en.wikipedia.org/wiki/Pithoragarh"
+        },
+        {
+          "@type": "Place",
+          "name": "Dehradun",
+          "sameAs": "https://en.wikipedia.org/wiki/Dehradun"
+        },
+        {
+          "@type": "Place",
+          "name": "Delhi",
+          "sameAs": "https://en.wikipedia.org/wiki/Delhi"
+        },
+        {
+          "@type": "Place",
+          "name": "Dharchula",
+          "sameAs": "https://en.wikipedia.org/wiki/Dharchula"
+        },
+        {
+          "@type": "Place",
+          "name": "Gunji, Uttarakhand",
+          "sameAs": "https://en.wikipedia.org/wiki/Gunji,_Uttarakhand"
+        }
+      ]
+    }
+    </script>`,
+
+        render: function(paragraphsHtml) {
+
+            const flightSummaryBanner = `
+<style>
+/* ── Pithoragarh Flight Schedule Styles ─────────────────────────────── */
+.ry-flight-summary {
+    background: linear-gradient(135deg, #0c1445 0%, #1a237e 60%, #283593 100%);
+    border: 2px solid #42a5f5;
+    border-radius: 14px;
+    padding: 22px 24px;
+    margin-bottom: 30px;
+    color: #fff;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+}
+.ry-flight-summary h3 {
+    color: #ffd54f !important;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    margin: 0 0 6px 0 !important;
+    font-family: var(--font-sans), sans-serif !important;
+}
+.ry-flight-tag {
+    display: inline-block;
+    background: #e53935;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 12px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+.ry-flight-kpi-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 16px 0;
+}
+.ry-flight-kpi {
+    flex: 1;
+    min-width: 130px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px;
+    padding: 12px 14px;
+    text-align: center;
+}
+.ry-flight-kpi .kpi-val {
+    font-size: 26px;
+    font-weight: 800;
+    color: #ffd54f;
+    line-height: 1;
+    margin-bottom: 4px;
+}
+.ry-flight-kpi .kpi-label {
+    font-size: 11.5px;
+    color: #b3e5fc;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.ry-flight-route-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #e3f2fd;
+    margin: 4px 4px 0 0;
+}
+/* Schedule Table */
+.ry-schedule-table-wrap {
+    overflow-x: auto;
+    margin: 24px 0;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    background: #fff;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+}
+.ry-schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    text-align: left;
+}
+.ry-schedule-table th {
+    background: #1a237e;
+    color: #ffd54f;
+    padding: 12px 14px;
+    font-weight: 700;
+    border-bottom: 2px solid #ffd54f;
+    white-space: nowrap;
+}
+.ry-schedule-table td {
+    padding: 11px 14px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    vertical-align: top;
+}
+.ry-schedule-table tr:nth-child(even) td { background: #f8fafc; }
+.ry-schedule-table tr:hover td { background: #e8eaf6; }
+.ry-day-active { color: #1565c0; font-weight: 700; }
+.ry-day-none { color: #94a3b8; font-style: italic; }
+.ry-route-badge {
+    display: inline-block;
+    background: #e3f2fd;
+    color: #0d47a1;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 8px;
+    margin: 1px 2px 1px 0;
+    white-space: nowrap;
+}
+.ry-route-badge.deh { background: #e8f5e9; color: #1b5e20; }
+/* Comparison Table */
+.ry-compare-box {
+    background: #fff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 24px 0;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+}
+.ry-compare-head {
+    background: #0f172a;
+    color: #ffd54f;
+    padding: 12px 18px;
+    font-weight: 700;
+    font-size: 15px;
+    font-family: var(--font-sans), sans-serif;
+}
+.ry-compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+.ry-compare-table th {
+    background: #1e293b;
+    color: #94a3b8;
+    padding: 10px 14px;
+    font-weight: 700;
+    text-align: left;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.ry-compare-table td {
+    padding: 11px 14px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+}
+.ry-compare-table tr:last-child td { border-bottom: none; }
+.ry-compare-table tr:nth-child(even) td { background: #f8fafc; }
+.ry-check { color: #16a34a; font-weight: 700; }
+.ry-cross { color: #dc2626; }
+.ry-warn { color: #d97706; }
+/* Planning Tips Box */
+.ry-tips-box {
+    background: #fffbeb;
+    border: 1.5px solid #f59e0b;
+    border-radius: 12px;
+    padding: 20px 22px;
+    margin: 24px 0;
+}
+.ry-tips-box h3 {
+    color: #92400e !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    margin: 0 0 12px 0 !important;
+    font-family: var(--font-sans), sans-serif !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.ry-tips-list {
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.ry-tips-list li {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+    color: #78350f !important;
+    font-size: 14px !important;
+    line-height: 1.65 !important;
+    margin-bottom: 10px !important;
+    padding-left: 0 !important;
+    list-style: none !important;
+}
+.ry-tips-list li i { color: #d97706; margin-top: 3px; flex-shrink: 0; }
+@media (max-width: 680px) {
+    .ry-flight-kpi-row { gap: 8px; }
+    .ry-flight-kpi { min-width: 100px; padding: 10px 10px; }
+    .ry-flight-kpi .kpi-val { font-size: 22px; }
+    .ry-flight-summary { padding: 16px 14px; border-radius: 10px; }
+    .ry-schedule-table th, .ry-schedule-table td { padding: 9px 10px; font-size: 13px; }
+    .ry-compare-table th, .ry-compare-table td { padding: 9px 10px; font-size: 13px; }
+}
+</style>
+<div class="ry-flight-summary" itemscope itemtype="https://schema.org/Event">
+    <span class="ry-flight-tag">🆕 Live Update — September 2026</span>
+    <h3 itemprop="name">✈️ Pithoragarh Now Has Near-Daily Flights — Key Numbers at a Glance</h3>
+    <div class="ry-flight-kpi-row">
+        <div class="ry-flight-kpi">
+            <div class="kpi-val">6x</div>
+            <div class="kpi-label">Delhi ↔ Pithoragarh<br>Days per Week</div>
+        </div>
+        <div class="ry-flight-kpi">
+            <div class="kpi-val">5x</div>
+            <div class="kpi-label">Dehradun ↔ Pithoragarh<br>Days per Week</div>
+        </div>
+        <div class="ry-flight-kpi">
+            <div class="kpi-val">42</div>
+            <div class="kpi-label">Seats per Flight<br>(Book Early!)</div>
+        </div>
+        <div class="ry-flight-kpi">
+            <div class="kpi-val">Sept 1</div>
+            <div class="kpi-label">Schedule<br>Start Date 2026</div>
+        </div>
+    </div>
+    <div style="margin-top:12px;">
+        <span class="ry-flight-route-chip">✈ Naini Saini Airport (PGH)</span>
+        <span class="ry-flight-route-chip">🛫 Delhi (DEL)</span>
+        <span class="ry-flight-route-chip">🛫 Dehradun (DED)</span>
+        <span class="ry-flight-route-chip">🏔️ Adi Kailash Yatra Gateway</span>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;">
+        <a href="https://wa.me/917617617651?text=Namaste!%20I%20am%20flying%20into%20Pithoragarh%20airport%20for%20the%20Adi%20Kailash%20Yatra.%20Please%20arrange%20airport%20pickup%20and%20share%20the%20package%20details." target="_blank" rel="noopener" class="ry-cost-btn wa" style="flex:1;min-width:200px;">
+            <i class="fa-brands fa-whatsapp"></i> Book Pithoragarh Airport Pickup
+        </a>
+        <a href="tel:+917617617651" class="ry-cost-btn call" style="flex:1;min-width:200px;">
+            <i class="fa-solid fa-phone"></i> Call Local Operator (+91 76176 17651)
+        </a>
+    </div>
+</div>`;
+
+            const scheduleTableHtml = `
+<div class="ry-schedule-table-wrap">
+    <table class="ry-schedule-table" aria-label="Pithoragarh Flight Day-by-Day Schedule from September 2026">
+        <thead>
+            <tr>
+                <th>Day of Week</th>
+                <th>Delhi ↔ Pithoragarh</th>
+                <th>Dehradun ↔ Pithoragarh</th>
+                <th>Route Pattern</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="ry-day-active"><strong>Monday</strong></td>
+                <td><span class="ry-check">✔ Operates</span></td>
+                <td><span class="ry-cross">✘ No Service</span></td>
+                <td>Delhi → Pithoragarh only</td>
+            </tr>
+            <tr>
+                <td class="ry-day-active"><strong>Tuesday</strong></td>
+                <td><span class="ry-check">✔ Operates</span></td>
+                <td><span class="ry-check">✔ Operates</span></td>
+                <td><span class="ry-route-badge">DEL</span>→<span class="ry-route-badge">PGH</span>→<span class="ry-route-badge deh">DED</span>→<span class="ry-route-badge">PGH</span>→<span class="ry-route-badge">DEL</span> (Loop)</td>
+            </tr>
+            <tr>
+                <td class="ry-day-active"><strong>Wednesday</strong></td>
+                <td><span class="ry-check">✔ Operates</span></td>
+                <td><span class="ry-check">✔ Operates</span></td>
+                <td><span class="ry-route-badge">DEL</span>→<span class="ry-route-badge deh">DED</span>→<span class="ry-route-badge">PGH</span>→<span class="ry-route-badge deh">DED</span>→<span class="ry-route-badge">DEL</span> (Reversed)</td>
+            </tr>
+            <tr>
+                <td class="ry-day-active"><strong>Thursday</strong></td>
+                <td><span class="ry-check">✔ Operates</span></td>
+                <td><span class="ry-check">✔ Operates</span></td>
+                <td><span class="ry-route-badge">DEL</span>→<span class="ry-route-badge">PGH</span>→<span class="ry-route-badge deh">DED</span>→<span class="ry-route-badge">PGH</span>→<span class="ry-route-badge">DEL</span> (Loop)</td>
+            </tr>
+            <tr>
+                <td class="ry-day-active"><strong>Friday</strong></td>
+                <td><span class="ry-check">✔ Operates</span></td>
+                <td><span class="ry-check">✔ Operates</span></td>
+                <td><span class="ry-route-badge">DEL</span>→<span class="ry-route-badge">PGH</span>→<span class="ry-route-badge deh">DED</span>→<span class="ry-route-badge">PGH</span>→<span class="ry-route-badge">DEL</span> (Loop)</td>
+            </tr>
+            <tr>
+                <td class="ry-day-active"><strong>Saturday</strong></td>
+                <td><span class="ry-check">✔ Operates</span></td>
+                <td><span class="ry-check">✔ Operates</span></td>
+                <td><span class="ry-route-badge">DEL</span>→<span class="ry-route-badge">PGH</span>→<span class="ry-route-badge deh">DED</span>→<span class="ry-route-badge">PGH</span>→<span class="ry-route-badge">DEL</span> (Loop)</td>
+            </tr>
+            <tr>
+                <td class="ry-day-none">Sunday</td>
+                <td class="ry-day-none">No Service</td>
+                <td class="ry-day-none">No Service</td>
+                <td class="ry-day-none">No flights operate</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<p style="font-size:13px;color:#64748b;margin-top:-14px;margin-bottom:24px;"><i class="fa-solid fa-circle-info" style="color:#3b82f6;"></i> <strong>Note:</strong> Detailed departure/arrival timings were not finalised at the time of the September 2026 announcement. Confirm exact timings directly with the airline or Naini Saini Airport before booking.</p>`;
+
+            const compareTableHtml = `
+<div class="ry-compare-box">
+    <div class="ry-compare-head">✈ Flying vs. Road to Pithoragarh — Quick Comparison</div>
+    <table class="ry-compare-table" aria-label="Flight vs Road journey comparison to Pithoragarh">
+        <thead>
+            <tr>
+                <th>Factor</th>
+                <th>✈ By Flight (Naini Saini)</th>
+                <th>🚗 By Road (via Kathgodam)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Total Travel Time from Delhi</strong></td>
+                <td class="ry-check">~2–3 hours total</td>
+                <td class="ry-warn">2 full days (overnight halt)</td>
+            </tr>
+            <tr>
+                <td><strong>Physical Fatigue</strong></td>
+                <td class="ry-check">Minimal — no long mountain drive</td>
+                <td class="ry-warn">High — winding hill roads for 14–16 hrs</td>
+            </tr>
+            <tr>
+                <td><strong>Suitable for Senior Citizens</strong></td>
+                <td class="ry-check">Highly recommended</td>
+                <td class="ry-warn">Exhausting; extra acclimatisation day needed</td>
+            </tr>
+            <tr>
+                <td><strong>Flexibility of Departure Days</strong></td>
+                <td class="ry-check">6 days/week (from Sept 2026)</td>
+                <td class="ry-check">Daily (road always available)</td>
+            </tr>
+            <tr>
+                <td><strong>Weather Reliability</strong></td>
+                <td class="ry-warn">May cancel in monsoon/fog</td>
+                <td class="ry-warn">Landslides in monsoon season</td>
+            </tr>
+            <tr>
+                <td><strong>Cost</strong></td>
+                <td class="ry-warn">Flight ticket + airport transfer</td>
+                <td class="ry-check">Lower direct cost</td>
+            </tr>
+            <tr>
+                <td><strong>Scenic Experience</strong></td>
+                <td style="color:#475569;">Aerial views of Himalayas</td>
+                <td class="ry-check">Kumaon hills, rivers, temples en route</td>
+            </tr>
+            <tr>
+                <td><strong>Onward to Dharchula</strong></td>
+                <td style="color:#475569;">+95 km 4x4 drive (3–4 hrs)</td>
+                <td style="color:#475569;">Seamless extension of road journey</td>
+            </tr>
+        </tbody>
+    </table>
+</div>`;
+
+            const planningTipsHtml = `
+<div class="ry-tips-box">
+    <h3><i class="fa-solid fa-lightbulb"></i> Practical Planning Tips for Flying to Pithoragarh</h3>
+    <ul class="ry-tips-list">
+        <li><i class="fa-solid fa-calendar-check"></i><span><strong>Book your flight immediately once the September 2026 booking window opens.</strong> The 42-seat aircraft fills fast during the October pilgrim season — don't wait.</span></li>
+        <li><i class="fa-solid fa-phone"></i><span><strong>Confirm exact timings before booking travel connections.</strong> Day-by-day slot times were not publicly announced with the schedule — verify with the airline or Naini Saini Airport directly.</span></li>
+        <li><i class="fa-solid fa-car"></i><span><strong>Arrange your Pithoragarh airport pickup in advance.</strong> Rudraansh Yatra provides direct 4x4 airport-to-Dharchula transfers, saving you the hassle of finding shared taxis on arrival.</span></li>
+        <li><i class="fa-solid fa-cloud-rain"></i><span><strong>Always have a road-route backup.</strong> Hill airports like Naini Saini are weather-sensitive. If flying during July–August monsoon, keep the Kathgodam–Tanakpur road route as a contingency.</span></li>
+        <li><i class="fa-solid fa-id-card"></i><span><strong>Pre-process your Inner Line Permit (ILP) before flying in.</strong> Share your Aadhaar and medical fitness certificate with your Pithoragarh ground operator at least 10–15 days before travel.</span></li>
+    </ul>
+</div>`;
+
+            const bottomCtaHtml = `
+<div class="ry-cost-box" style="margin-top:35px;background:linear-gradient(135deg,#0c1445 0%,#1a237e 100%);border-color:#42a5f5;">
+    <div class="ry-cost-head">
+        <h4 class="ry-cost-title" style="color:#ffd54f;">✈️ Flying into Pithoragarh for the Adi Kailash Yatra?</h4>
+        <span class="ry-cost-badge" style="background:#1565c0;">Airport Pickup Available</span>
+    </div>
+    <p style="font-size:14px;color:#cbd5e1;line-height:1.6;margin-bottom:16px;">
+        Rudraansh Yatra is a <strong>NIDHI-certified ground operator based in Pithoragarh</strong> — just 5 km from Naini Saini Airport. We can arrange a seamless <strong>4x4 Bolero pickup directly from the airport</strong>, process your Inner Line Permit, and transfer you to Dharchula on the same day. This is the fastest way to begin your Adi Kailash Yatra after landing.
+    </p>
+    <div class="ry-cost-actions">
+        <a href="https://wa.me/917617617651?text=Namaste!%20I%20am%20planning%20to%20fly%20into%20Pithoragarh%20airport%20for%20the%20Adi%20Kailash%20Yatra.%20Please%20arrange%20airport%20pickup%20from%20Naini%20Saini%20and%20share%20the%20package%20details." target="_blank" rel="noopener" class="ry-cost-btn wa">
+            <i class="fa-brands fa-whatsapp"></i> Book Airport Pickup on WhatsApp
+        </a>
+        <a href="/adi-kailash" class="ry-cost-btn call">
+            <i class="fa-solid fa-route"></i> View Adi Kailash Packages
+        </a>
+    </div>
+</div>`;
+
+            // Inject the schedule table after the first h2 heading about "What's Changing"
+            let enriched = paragraphsHtml;
+
+            // Insert schedule table after the section about daily routing
+            if (enriched.includes('The daily routing will also vary')) {
+                enriched = enriched.replace(
+                    'The daily routing will also vary',
+                    scheduleTableHtml + '\n<p class="blog-text">The daily routing will also vary'
+                );
+                // close the modified paragraph
+                const closeIdx = enriched.indexOf('The daily routing will also vary');
+                // Actually just put the table before that block — already done above
+            } else {
+                // Fallback: inject table before FAQ section
+                const faqMarker = '<h2 class="blog-heading">Frequently Asked Questions';
+                if (enriched.includes(faqMarker)) {
+                    enriched = enriched.replace(faqMarker, scheduleTableHtml + '\n' + faqMarker);
+                } else {
+                    enriched = scheduleTableHtml + '\n' + enriched;
+                }
+            }
+
+            // Add compare table and tips before the conclusion/FAQ
+            const conclusionMarker = '<h2 class="blog-heading">Conclusion';
+            if (enriched.includes(conclusionMarker)) {
+                enriched = enriched.replace(conclusionMarker, compareTableHtml + '\n' + planningTipsHtml + '\n' + conclusionMarker);
+            } else {
+                // Add before FAQ
+                const faqMarker2 = '<h2 class="blog-heading">Frequently Asked Questions';
+                if (enriched.includes(faqMarker2)) {
+                    enriched = enriched.replace(faqMarker2, compareTableHtml + '\n' + planningTipsHtml + '\n' + faqMarker2);
+                } else {
+                    enriched = enriched + '\n' + compareTableHtml + '\n' + planningTipsHtml;
+                }
+            }
+
+            return flightSummaryBanner + enriched + bottomCtaHtml;
+        }
     }
 };
 
