@@ -630,6 +630,11 @@
                     url = base;
                     if (this.isSingle && this.table === 'leads' && idVal) {
                         url = `${base}/${idVal}`;
+                    } else if (this.table === 'lead_history') {
+                        const leadIdFilter = this.filters.find(f => f.field === 'lead_id' && f.type === 'eq');
+                        if (leadIdFilter && leadIdFilter.value) {
+                            url = `${base}?lead_id=${encodeURIComponent(leadIdFilter.value)}`;
+                        }
                     }
                 } else if (this.operation === 'insert') {
                     method = 'POST';
@@ -928,22 +933,37 @@
                     .eq('lead_id', leadId)
                     .order('created_at', { ascending: false });
 
-                if (error) throw error;
-
                 const timeline = document.getElementById('lead-timeline');
                 const badge = document.getElementById('history-count-badge');
-                if (badge) badge.innerText = `${data ? data.length : 0} logs`;
 
-                if (!data || data.length === 0) {
-                    timeline.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-muted); font-size:13px;">No history records found for this lead.</div>';
+                let historyList = (data && Array.isArray(data)) ? [...data] : [];
+                if (badge) badge.innerText = `${historyList.length} logs`;
+
+                if (historyList.length === 0) {
+                    if (leadData && leadData.remarks) {
+                        timeline.innerHTML = `
+                            <div class="timeline-item">
+                                <div class="timeline-icon" style="background:var(--gold-dim); color:var(--gold);">
+                                    <i class="fa-solid fa-comment-dots"></i>
+                                </div>
+                                <div class="timeline-body">
+                                    <div class="timeline-text" style="color:#f1f5f9; font-weight:600; white-space: pre-wrap;">${leadData.remarks}</div>
+                                    <div class="timeline-time" style="color:#94a3b8; font-size:11px;">${leadData.created_at ? new Date(leadData.created_at).toLocaleString('en-IN') : 'Initial Note'}</div>
+                                </div>
+                                <span class="timeline-badge" style="background:var(--gold-dim); color:var(--gold);">Remarks</span>
+                            </div>
+                        `;
+                    } else {
+                        timeline.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-muted); font-size:13px;">No history records found for this lead.</div>';
+                    }
                     return;
                 }
 
                 let html = '';
-                data.forEach(item => {
-                    const timeStr = new Date(item.created_at).toLocaleString('en-IN', {
+                historyList.forEach(item => {
+                    const timeStr = item.created_at ? new Date(item.created_at).toLocaleString('en-IN', {
                         dateStyle: 'medium', timeStyle: 'short'
-                    });
+                    }) : '';
 
                     let iconClass = 'fa-solid fa-clock-rotate-left';
                     let badgeText = 'System';
@@ -951,25 +971,27 @@
                     let iconBg = 'rgba(156,163,175,0.12)';
                     let badgeBg = 'rgba(156,163,175,0.12)';
 
-                    if (item.action.includes('Transferred')) {
+                    const act = item.action || '';
+
+                    if (act.includes('Transferred')) {
                         iconClass = 'fa-solid fa-share-nodes'; badgeText = 'Transfer';
                         color = 'var(--gold)'; iconBg = 'var(--gold-dim)'; badgeBg = 'var(--gold-dim)';
-                    } else if (item.action.includes('Status')) {
+                    } else if (act.includes('Status')) {
                         iconClass = 'fa-solid fa-tags'; badgeText = 'Status';
                         color = 'var(--blue)'; iconBg = 'var(--blue-dim)'; badgeBg = 'var(--blue-dim)';
-                    } else if (item.action.includes('name updated') || item.action.includes('Phone number updated') || item.action.includes('Email updated')) {
+                    } else if (act.includes('name updated') || act.includes('Phone number updated') || act.includes('Email updated')) {
                         iconClass = 'fa-solid fa-user-pen'; badgeText = 'Edit';
                         color = '#38bdf8'; iconBg = 'rgba(56, 189, 248, 0.12)'; badgeBg = 'rgba(56, 189, 248, 0.12)';
-                    } else if (item.action.includes('Travel Date') || item.action.includes('Travelers count')) {
+                    } else if (act.includes('Travel Date') || act.includes('Travelers count')) {
                         iconClass = 'fa-solid fa-calendar-day'; badgeText = 'Details';
                         color = '#f59e0b'; iconBg = 'rgba(245, 158, 11, 0.12)'; badgeBg = 'rgba(245, 158, 11, 0.12)';
-                    } else if (item.action.includes('Note by') || item.action.includes('Remarks')) {
+                    } else if (act.includes('Note') || act.includes('Remarks') || act.includes('note') || act.includes('din')) {
                         iconClass = 'fa-solid fa-comment-dots'; badgeText = 'Note';
                         color = 'var(--green)'; iconBg = 'var(--green-dim)'; badgeBg = 'var(--green-dim)';
-                    } else if (item.action.includes('reminder') || item.action.includes('Reminder')) {
+                    } else if (act.includes('reminder') || act.includes('Reminder')) {
                         iconClass = 'fa-solid fa-bell'; badgeText = 'Reminder';
                         color = 'var(--amber)'; iconBg = 'var(--amber-dim)'; badgeBg = 'var(--amber-dim)';
-                    } else if (item.action.includes('call') || item.action.includes('Call')) {
+                    } else if (act.includes('call') || act.includes('Call')) {
                         iconClass = 'fa-solid fa-phone'; badgeText = 'Call';
                         color = 'var(--green)'; iconBg = 'var(--green-dim)'; badgeBg = 'var(--green-dim)';
                     }
@@ -980,8 +1002,8 @@
                                 <i class="${iconClass}"></i>
                             </div>
                             <div class="timeline-body">
-                                <div class="timeline-text">${item.action}</div>
-                                <div class="timeline-time">${timeStr}</div>
+                                <div class="timeline-text" style="color: #f1f5f9; font-weight: 600; white-space: pre-wrap;">${act}</div>
+                                <div class="timeline-time" style="color: #94a3b8; font-size: 11px;">${timeStr}</div>
                             </div>
                             <span class="timeline-badge" style="background:${badgeBg}; color:${color};">${badgeText}</span>
                         </div>
@@ -990,8 +1012,8 @@
 
                 timeline.innerHTML = html;
             } catch (err) {
-                console.error(err);
-                document.getElementById('lead-timeline').innerHTML = '<div style="color:var(--red); padding:12px; font-size:13px;">Failed to load activity logs.</div>';
+                console.error('Timeline error:', err);
+                document.getElementById('lead-timeline').innerHTML = '<div style="color:var(--red); padding:12px; font-size:13px;">Failed to load activity logs: ' + err.message + '</div>';
             }
         }
 

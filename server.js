@@ -1748,10 +1748,16 @@ app.delete('/api/admin/bookings/:id', authenticateToken, async (req, res) => {
 // Lead History Log Endpoints
 app.get('/api/admin/leads-history', authenticateToken, async (req, res) => {
     try {
-        const { data, error } = await supabase
+        let query = supabase
             .from('lead_history')
             .select('*')
             .order('created_at', { ascending: false });
+
+        if (req.query.lead_id) {
+            query = query.eq('lead_id', req.query.lead_id);
+        }
+
+        const { data, error } = await query;
         if (error) throw error;
         res.json(data || []);
     } catch (err) {
