@@ -2142,6 +2142,400 @@ const BLOG_ENHANCERS = {
 
             return ilpSummaryBanner + enriched + bottomCtaHtml;
         }
+    },
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // 15. SENIOR CITIZENS SAFETY GUIDE (SEO / AEO / GEO / AIO)
+    // ─────────────────────────────────────────────────────────────────────────
+    'is-adi-kailash-yatra-safe-for-senior-citizens-guide': {
+        meta: {
+            title: 'Adi Kailash Yatra for Senior Citizens 2026: Age Limit, Safety, Medical Cert & Best Months',
+            desc: 'Can senior citizens do the Adi Kailash Yatra? Age limit 65–75 yrs, no trekking, 4x4 Bolero to 4,750m, oxygen support, pony availability & best months (Sep–Oct). Ground operator guide from Pithoragarh.',
+            dateModified: '2026-08-24T20:23:00+05:30'
+        },
+        schemas: `
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is Adi Kailash Yatra safe for senior citizens in 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, the Adi Kailash Yatra is safe for healthy senior citizens in 2026. The Border Roads Organisation (BRO) has constructed roads all the way to Jyolingkong (4,750m) and Nabhidhang, so senior pilgrims travel in 4x4 Bolero vehicles and only walk 100–300 metres on flat terrain. With proper medical clearance, acclimatization at Gunji (3,200m), portable oxygen support, and a native ground operator like Rudraansh Yatra, senior citizens aged up to 70–75 years can safely complete the pilgrimage."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the age limit for Adi Kailash Yatra?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The general recommended age range for Adi Kailash Yatra is 10 to 65 years. However, senior citizens up to 70–75 years can participate if they are in good health, have normal BP/ECG/blood sugar reports, and obtain a high-altitude medical fitness certificate from a government MBBS doctor. Children under 7 and persons above 75 require special administrative clearance."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is trekking required for senior citizens on the Adi Kailash Yatra?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No strenuous trekking is required. BRO roads now reach the Jyolingkong viewpoint (Adi Kailash, 4,750m) and Nabhidhang (Om Parvat, 3,850m). Senior citizens ride in 4x4 Mahindra Bolero vehicles throughout the yatra and only walk 100–300 metres on flat ground near the temples. Local ponies are available at both viewpoints for additional mobility support."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which is the best month for senior citizens to do the Adi Kailash Yatra?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "September 15 to October 31 is the best window for senior citizens — post-monsoon skies are crystal clear, daytime temperatures are mild (5°C to 18°C), roads are stable, and crowds are lighter than peak summer. May to June is the second-best option. July and August must be completely avoided due to monsoon rains causing landslides and road closures on the Dharchula–Gunji route."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can senior citizens with diabetes or high blood pressure do the Adi Kailash Yatra?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, senior citizens with well-managed diabetes or controlled high blood pressure can complete the Adi Kailash Yatra. They must carry all regular medications, monitor blood pressure daily, stay well-hydrated, eat light meals, and avoid sudden physical exertion. A medical fitness certificate from a government MBBS doctor confirming fitness for altitudes up to 5,000m is mandatory for the Inner Line Permit."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is AMS and how does it affect elderly pilgrims on the Adi Kailash route?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Acute Mountain Sickness (AMS) is caused by reduced oxygen levels at high altitudes. Symptoms include headache, dizziness, nausea, fatigue, and shortness of breath. Elderly pilgrims are more susceptible. Rudraansh Yatra mitigates AMS risk through: mandatory acclimatization rest day at Gunji (3,200m), portable oxygen cylinders in all vehicles, pulse oximeters for continuous SpO₂ monitoring, and strict no-rush ascent schedules."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens if an elderly pilgrim has breathing difficulties on the Adi Kailash route?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In case of breathing difficulty or low oxygen saturation, Rudraansh Yatra immediately administers portable oxygen, checks SpO₂ with an oximeter, and if needed transports the pilgrim to the nearest ITBP military medical camp or descends to Dharchula (915m). All vehicles carry emergency oxygen cylinders and first aid kits. Local guides are trained in altitude emergency response."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are ponies or palanquins available for senior citizens on the Adi Kailash Yatra?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, local ponies (ghoda) are available for hire at Jyolingkong (Adi Kailash viewpoint) and Nabhidhang (Om Parvat viewpoint) for senior pilgrims who need additional mobility support for the short walk to the temple or Parvati Sarovar. Palanquins (doli) may be available on request at certain points during peak season."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What medical certificate is required for senior citizens doing the Adi Kailash Yatra?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Senior citizens must obtain a high-altitude medical fitness certificate from a government-registered MBBS or MD doctor. The certificate must confirm: normal blood pressure (not exceeding 140/90), normal ECG (no severe arrhythmia or heart block), blood sugar within manageable range, no severe respiratory conditions, and general fitness to travel at altitudes up to 5,000 metres. This certificate is mandatory for the Inner Line Permit (ILP) application."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What road conditions should senior citizens expect on the Adi Kailash route?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Dharchula to Gunji route (75 km, 6–8 hours) passes through Tawaghat and Chialekh. While BRO has significantly improved the road, certain sections remain unpaved, narrow, and involve steep mountain switchbacks. Senior citizens with acute back pain, spinal issues, or severe osteoporosis should use lumbar support cushions, request front or middle seats in the Bolero, and inform the driver to maintain a slow, comfortable pace."
+          }
+        }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "How to Safely Plan the Adi Kailash Yatra for a Senior Citizen",
+      "description": "A comprehensive step-by-step guide for families and elderly pilgrims planning the Adi Kailash and Om Parvat Yatra safely in 2026.",
+      "totalTime": "P8D",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "Medical Evaluation & Fitness Certificate",
+          "text": "Visit a government-registered MBBS doctor at least 30 days before travel. Get BP, ECG, blood sugar, and SpO₂ tests done. Obtain the high-altitude fitness certificate — this is mandatory for the Inner Line Permit.",
+          "position": 1
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Choose Best Travel Month (Sep–Oct Recommended for Seniors)",
+          "text": "Book for September 15 – October 31 for the most stable road conditions, clear skies, mild daytime temperatures, and lower AMS risk for elderly pilgrims.",
+          "position": 2
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Book with a Native Pithoragarh Ground Operator",
+          "text": "Book with a local certified operator like Rudraansh Yatra who handles all ILP documentation, pre-books front vehicle seats, carries oxygen cylinders, and has ITBP and local medical post contacts.",
+          "position": 3
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Acclimatize at Gunji (3,200m) for 1 Full Day",
+          "text": "Spend a mandatory rest day at Gunji without any physical exertion. Monitor SpO₂ with an oximeter. Hydrate well. Eat light local meals. This prevents AMS during the final ascent to Jyolingkong (4,750m).",
+          "position": 4
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Travel in 4x4 with Lumbar Support, Visit Temple on Foot or Pony",
+          "text": "Travel all the way to Jyolingkong and Nabhidhang by 4x4 Bolero. Use a lumbar cushion for the long mountain drives. For the short walk to the temples, hire a pony if needed. Do not rush.",
+          "position": 5
+        }
+      ]
+    }
+    </script>`,
+        render: function(paragraphsHtml) {
+            const topBanner = `
+<style>
+.ry-snr-summary { background: linear-gradient(135deg, #0c1a0c 0%, #1a2e1a 100%); border: 2px solid #22c55e; border-radius: 14px; padding: 24px; margin-bottom: 28px; color: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+.ry-snr-badge-top { display: inline-flex; align-items: center; gap: 6px; background: rgba(34,197,94,0.15); color: #86efac; border: 1px solid rgba(34,197,94,0.35); padding: 4px 12px; border-radius: 50px; font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
+.ry-snr-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 12px; margin: 18px 0; }
+.ry-snr-item { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 12px 14px; }
+.ry-snr-item .slbl { font-size: 10.5px; color: #6ee7b7; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 4px; }
+.ry-snr-item .sval { font-size: 14px; font-weight: 700; color: #f0fdf4; line-height: 1.3; }
+.ry-snr-item .ssub { font-size: 11px; color: #86efac; margin-top: 2px; }
+.ry-snr-btns { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+.ry-snr-btn2 { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 20px; border-radius: 8px; font-size: 13.5px; font-weight: 700; text-decoration: none; transition: all 0.2s; cursor: pointer; flex: 1; min-width: 200px; }
+.ry-snr-btn2.wa { background: #22c55e; color: #fff; }
+.ry-snr-btn2.wa:hover { background: #16a34a; transform: translateY(-1px); }
+.ry-snr-btn2.pk { background: #d4af37; color: #0f172a; }
+.ry-snr-btn2.pk:hover { background: #b8962e; transform: translateY(-1px); }
+/* Altitude safety grid */
+.ry-alt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin: 22px 0; }
+.ry-alt-card { border-radius: 10px; padding: 16px; border: 1px solid; }
+.ry-alt-card.safe { background: rgba(34,197,94,0.08); border-color: rgba(34,197,94,0.3); }
+.ry-alt-card.caution { background: rgba(251,191,36,0.08); border-color: rgba(251,191,36,0.3); }
+.ry-alt-card.risk { background: rgba(239,68,68,0.08); border-color: rgba(239,68,68,0.3); }
+.ry-alt-card .alt-loc { font-size: 14.5px; font-weight: 700; color: #f8fafc; margin-bottom: 4px; }
+.ry-alt-card .alt-m { font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+.ry-alt-card.safe .alt-m { color: #4ade80; }
+.ry-alt-card.caution .alt-m { color: #fbbf24; }
+.ry-alt-card.risk .alt-m { color: #f87171; }
+.ry-alt-card .alt-note { font-size: 12px; color: #94a3b8; line-height: 1.4; }
+.ry-alt-card .alt-badge { display: inline-block; font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-bottom: 6px; }
+.ry-alt-card.safe .alt-badge { background: rgba(34,197,94,0.2); color: #4ade80; }
+.ry-alt-card.caution .alt-badge { background: rgba(251,191,36,0.2); color: #fbbf24; }
+.ry-alt-card.risk .alt-badge { background: rgba(239,68,68,0.2); color: #f87171; }
+/* Month table */
+.ry-month-table-wrap { overflow-x: auto; margin: 22px 0; border-radius: 10px; border: 1px solid rgba(255,255,255,0.08); }
+.ry-month-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.ry-month-table th { background: #0f2010; color: #86efac; padding: 12px 14px; font-weight: 700; border-bottom: 1px solid rgba(34,197,94,0.2); text-align: left; }
+.ry-month-table td { padding: 11px 14px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #cbd5e1; }
+.ry-month-table tr:hover { background: rgba(34,197,94,0.04); }
+.ry-tag-best { background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.3); padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+.ry-tag-ok { background: rgba(251,191,36,0.15); color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+.ry-tag-avoid { background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.3); padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+/* Medical checklist */
+.ry-med-box { background: #0b1322; border: 1px solid #1e40af; border-radius: 12px; padding: 20px 22px; margin: 22px 0; }
+.ry-med-title { color: #93c5fd; font-size: 16px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.ry-med-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+.ry-med-item { display: flex; align-items: flex-start; gap: 8px; background: rgba(255,255,255,0.03); border-radius: 7px; padding: 10px 12px; font-size: 13px; color: #e2e8f0; }
+.ry-med-check { color: #4ade80; font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+/* CTA bottom */
+.ry-snr-cta-bottom { background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%); border: 2px solid #818cf8; border-radius: 14px; padding: 26px; margin: 36px 0 20px 0; text-align: center; color: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+.ry-snr-cta-title { font-size: 20px; font-weight: 800; color: #facc15; margin-bottom: 8px; font-family: var(--font-sans), sans-serif; }
+.ry-snr-cta-text { font-size: 14px; color: #cbd5e1; max-width: 680px; margin: 0 auto 20px; line-height: 1.6; }
+.ry-snr-cta-btns { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+@media (max-width: 640px) {
+  .ry-snr-btn2 { min-width: 100%; }
+  .ry-snr-cta-btns { flex-direction: column; align-items: stretch; }
+}
+</style>
+<div class="ry-snr-summary">
+    <div class="ry-snr-badge-top"><i class="fa-solid fa-person-cane"></i> Senior Citizen Safety — 2026 Official Guide</div>
+    <h3 style="margin:0 !important;color:#86efac !important;font-size:20px !important;font-weight:800 !important;font-family:var(--font-sans),sans-serif !important;line-height:1.3 !important;">
+        🙏 Adi Kailash Yatra for Senior Citizens — Quick Safety Facts
+    </h3>
+    <p style="color:#dcfce7;font-size:13.5px;margin:10px 0 0;line-height:1.55;">
+        In October 2025, our Pithoragarh team guided a <strong>72-year-old retired schoolteacher</strong> to the Adi Kailash temple at Jyolingkong (4,750m). She rode a 4x4 Bolero all the way and walked just 200 metres on flat ground. The key facts every family should know before deciding:
+    </p>
+    <div class="ry-snr-grid">
+        <div class="ry-snr-item">
+            <div class="slbl">Age Limit</div>
+            <div class="sval">Up to 70–75 Years</div>
+            <div class="ssub">With medical clearance</div>
+        </div>
+        <div class="ry-snr-item">
+            <div class="slbl">Trekking Required?</div>
+            <div class="sval">No — 4x4 to Viewpoints</div>
+            <div class="ssub">100–300m walk only</div>
+        </div>
+        <div class="ry-snr-item">
+            <div class="slbl">Max Altitude</div>
+            <div class="sval">4,750m (Jyolingkong)</div>
+            <div class="ssub">Acclimatization at 3,200m</div>
+        </div>
+        <div class="ry-snr-item">
+            <div class="slbl">Best Months</div>
+            <div class="sval">Sep 15 – Oct 31</div>
+            <div class="ssub">Post-monsoon, stable roads</div>
+        </div>
+        <div class="ry-snr-item">
+            <div class="slbl">Pony Support</div>
+            <div class="sval">Available at Both Points</div>
+            <div class="ssub">Jyolingkong & Nabhidhang</div>
+        </div>
+        <div class="ry-snr-item">
+            <div class="slbl">Oxygen Support</div>
+            <div class="sval">Cylinders in All Vehicles</div>
+            <div class="ssub">+ Pulse Oximeters</div>
+        </div>
+    </div>
+    <div class="ry-snr-btns">
+        <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20plan%20the%20Adi%20Kailash%20Yatra%20for%20a%20senior%20citizen%20in%20my%20family.%20Please%20share%20safety%20details%20and%202026%20dates." target="_blank" rel="noopener" class="ry-snr-btn2 wa">
+            <i class="fa-brands fa-whatsapp"></i> WhatsApp for Senior Citizen Yatra
+        </a>
+        <a href="/adi-kailash" class="ry-snr-btn2 pk">
+            <i class="fa-solid fa-mountain"></i> View Full Yatra Package
+        </a>
+    </div>
+</div>`;
+
+            const altitudeSafetyHtml = `
+<div style="margin: 26px 0;">
+    <h3 style="color: #86efac; font-size: 16.5px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; font-family: var(--font-sans), sans-serif;">
+        <i class="fa-solid fa-gauge-high"></i> Altitude Safety Profile for Senior Citizens — Key Stops
+    </h3>
+    <div class="ry-alt-grid">
+        <div class="ry-alt-card safe">
+            <div class="alt-badge">✅ SAFE</div>
+            <div class="alt-loc">Dharchula</div>
+            <div class="alt-m">915m / 3,002 ft</div>
+            <div class="alt-note">Starting point. Normal oxygen levels. Full acclimatization base. ILP collection & vehicle boarding.</div>
+        </div>
+        <div class="ry-alt-card safe">
+            <div class="alt-badge">✅ ACCLIMATIZE</div>
+            <div class="alt-loc">Gunji Base Camp</div>
+            <div class="alt-m">3,200m / 10,500 ft</div>
+            <div class="alt-note">Mandatory rest day for seniors. SpO₂ monitoring. Light meals. No physical exertion.</div>
+        </div>
+        <div class="ry-alt-card caution">
+            <div class="alt-badge">⚠️ CAUTION</div>
+            <div class="alt-loc">Nabhidhang (Om Parvat)</div>
+            <div class="alt-m">3,850m / 12,630 ft</div>
+            <div class="alt-note">Oxygen dips noticeable. Short stop for darshan. Carry oxygen mask. No overnight stay for seniors.</div>
+        </div>
+        <div class="ry-alt-card risk">
+            <div class="alt-badge">🏔️ HIGHEST POINT</div>
+            <div class="alt-loc">Jyolingkong (Adi Kailash)</div>
+            <div class="alt-m">4,750m / 15,584 ft</div>
+            <div class="alt-note">Maximum altitude. SpO₂ drops to 80–85% for some. Oxygen on standby. 4x4 direct access. Short temple walk.</div>
+        </div>
+    </div>
+</div>`;
+
+            const monthTableHtml = `
+<div class="ry-month-table-wrap">
+    <table class="ry-month-table">
+        <thead>
+            <tr>
+                <th>Month / Season</th>
+                <th>Suitability for Seniors</th>
+                <th>Road Conditions</th>
+                <th>Temperature (Day)</th>
+                <th>Reason</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>May – June</strong></td>
+                <td><span class="ry-tag-ok">Good</span></td>
+                <td>Stable, dry</td>
+                <td>10°C – 22°C</td>
+                <td>Pre-monsoon clear weather, moderate crowds</td>
+            </tr>
+            <tr>
+                <td><strong>July – August</strong></td>
+                <td><span class="ry-tag-avoid">Avoid</span></td>
+                <td>Landslides, closures</td>
+                <td>8°C – 16°C</td>
+                <td>Heavy monsoon rains cause route blockages</td>
+            </tr>
+            <tr style="background: rgba(34,197,94,0.06);">
+                <td><strong>Sep 15 – Oct 31 ⭐</strong></td>
+                <td><span class="ry-tag-best">Best for Seniors</span></td>
+                <td>Excellent, post-monsoon</td>
+                <td>5°C – 18°C</td>
+                <td>Crystal clear skies, stable roads, calm winds</td>
+            </tr>
+            <tr>
+                <td><strong>November+</strong></td>
+                <td><span class="ry-tag-avoid">Closed</span></td>
+                <td>Snow, frozen roads</td>
+                <td>-5°C – 5°C</td>
+                <td>Route shuts for winter snow season</td>
+            </tr>
+        </tbody>
+    </table>
+</div>`;
+
+            const medChecklistHtml = `
+<div class="ry-med-box">
+    <div class="ry-med-title"><i class="fa-solid fa-stethoscope"></i> Medical Checklist for Senior Citizens (Pre-Departure)</div>
+    <div class="ry-med-grid">
+        <div class="ry-med-item"><span class="ry-med-check">✓</span> High-altitude fitness certificate from MBBS/MD doctor (mandatory for ILP)</div>
+        <div class="ry-med-item"><span class="ry-med-check">✓</span> BP, ECG, Blood Sugar & SpO₂ test results (within 30 days of travel)</div>
+        <div class="ry-med-item"><span class="ry-med-check">✓</span> All regular medicines for BP, diabetes, heart, thyroid (minimum 15-day supply)</div>
+        <div class="ry-med-item"><span class="ry-med-check">✓</span> Diamox (Acetazolamide) — AMS prevention tablet — on doctor's advice</div>
+        <div class="ry-med-item"><span class="ry-med-check">✓</span> Personal pulse oximeter (SpO₂ meter) for daily monitoring</div>
+        <div class="ry-med-item"><span class="ry-med-check">✓</span> Paracetamol, Ibuprofen, antacid, rehydration sachets (ORS)</div>
+        <div class="ry-med-item"><span class="ry-med-check">✓</span> Warm inner thermals, fleece jacket, waterproof layer (even in Oct)</div>
+        <div class="ry-med-item"><span class="ry-med-check">✓</span> Walking stick / trekking pole for short walks near temples</div>
+        <div class="ry-med-item"><span class="ry-med-check">✓</span> Lumbar support cushion for 6–8 hour 4x4 mountain drives</div>
+        <div class="ry-med-item"><span class="ry-med-check">✓</span> Emergency contact card + family WhatsApp number with guide</div>
+    </div>
+</div>`;
+
+            const bottomCtaHtml = `
+<div class="ry-snr-cta-bottom">
+    <div class="ry-snr-cta-title">🙏 Plan the Yatra Safely — Talk to Our Pithoragarh Team</div>
+    <div class="ry-snr-cta-text">
+        Rudraansh Yatra is a native ground operator from Pithoragarh that has safely guided 70+ year old senior citizens to Adi Kailash. We carry portable oxygen, handle all ILP & medical certificate paperwork, arrange ponies, and offer flexible departure schedules to match the health needs of elderly pilgrims.
+    </div>
+    <div class="ry-snr-cta-btns">
+        <a href="https://wa.me/917617617651?text=Namaste!%20I%20have%20questions%20about%20the%20Adi%20Kailash%20Yatra%20for%20a%20senior%20citizen.%20Please%20advise%20on%20safety%20and%20medical%20fitness." target="_blank" rel="noopener" class="ry-snr-btn2 wa" style="max-width:300px;">
+            <i class="fa-brands fa-whatsapp"></i> Chat with Senior Yatra Specialist
+        </a>
+        <a href="tel:+917617617651" class="ry-snr-btn2 pk" style="max-width:300px;">
+            <i class="fa-solid fa-phone"></i> Call +91 76176 17651
+        </a>
+    </div>
+</div>`;
+
+            let enriched = paragraphsHtml
+                .replace(
+                    /carry their regular medicines/,
+                    'carry their regular medicines (see our <a href="/blog/adi-kailash-packing-list-essential-guide-for-yatris" style="color: #7c3aed; text-decoration: underline;">complete Adi Kailash packing list</a>)'
+                )
+                .replace(
+                    /July and August should be completely avoided/,
+                    'July and August should be completely avoided (see <a href="/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates" style="color: #7c3aed; text-decoration: underline;">2026 monsoon closure & reopening update</a>)'
+                )
+                .replace(
+                    /Inner Line Permit \(ILP\)\s*\(ILP\)/,
+                    '<a href="/blog/inner-line-permit-adi-kailash-2026-guide" style="color: #7c3aed; text-decoration: underline;">Inner Line Permit (ILP)</a>'
+                );
+
+            // Inject altitude safety grid after section 2 (AMS section)
+            const amsMarker = '<h2 class="blog-heading">2. Understanding the High Altitude and AMS';
+            if (enriched.includes(amsMarker)) {
+                const nextH2 = '<h2 class="blog-heading">3.';
+                enriched = enriched.replace(nextH2, altitudeSafetyHtml + '\n' + nextH2);
+            }
+
+            // Inject month table after section about best months (in FAQ)
+            const monthMarker = '<h2 class="blog-heading">4. Mandatory Medical Fitness Certificate';
+            if (enriched.includes(monthMarker)) {
+                enriched = enriched.replace(monthMarker, medChecklistHtml + '\n' + monthMarker);
+            } else {
+                // Inject before FAQ
+                const faqMarker = '<strong>Q1:';
+                if (enriched.includes(faqMarker)) {
+                    enriched = enriched.replace(faqMarker, medChecklistHtml + '\n' + monthTableHtml + '\n' + faqMarker);
+                }
+            }
+
+            return topBanner + enriched + bottomCtaHtml;
+        }
     }
 };
 

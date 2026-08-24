@@ -486,8 +486,8 @@ app.get('/blog/:slug', async (req, res) => {
     </script>`;
         }
 
-        // ── SEO for senior citizens blog ──
-        if (slug === 'is-adi-kailash-yatra-safe-for-senior-citizens-guide') {
+        // ── SEO for senior citizens blog is now handled by blog-enhancers.js ──
+        if (false && slug === 'is-adi-kailash-yatra-safe-for-senior-citizens-guide') {
             parikramaMetaOverride = {
                 title: 'Is Adi Kailash Yatra Safe for Senior Citizens? | 2026 Guide',
                 desc: 'Can senior citizens do the Adi Kailash Yatra? Age limit, medical fitness certificate, AMS risks, best months (Sep–Oct), pony support & how we\'ve guided 70+ year olds to Jyolingkong at 4,750m.',
