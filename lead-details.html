@@ -374,6 +374,10 @@
                             <input type="number" id="property-travelers" class="form-control" min="1" placeholder="1">
                         </div>
                         <div class="form-group">
+                            <label class="form-label">Client Notes / Remarks</label>
+                            <textarea id="property-remarks" class="form-control" rows="3" placeholder="Client planning notes, requirements, or remarks..." style="resize: vertical; font-size: 13px; line-height: 1.4;"></textarea>
+                        </div>
+                        <div class="form-group">
                             <label class="form-label">Created At</label>
                             <div class="form-static" id="property-created-at">&mdash;</div>
                         </div>
@@ -399,10 +403,23 @@
             <!-- Right Column: Add Note & Activity History -->
             <div>
 
+                <!-- Client Inquiry Details & Requirements Card -->
+                <div class="card" id="client-notes-card" style="border-left: 4px solid var(--gold); margin-bottom: 20px; background: linear-gradient(145deg, #131d31 0%, #0d1526 100%);">
+                    <div class="card-header" style="color: var(--gold); display: flex; align-items: center; justify-content: space-between;">
+                        <span><i class="fa-solid fa-clipboard-list" style="margin-right: 6px;"></i> Client Inquiry Details &amp; Requirements</span>
+                        <span id="client-notes-source-badge" style="font-size: 10.5px; background: rgba(212,175,55,0.15); color: var(--gold); border: 1px solid rgba(212,175,55,0.3); padding: 2px 8px; border-radius: 4px; font-weight: 700;">Meta Lead Notes</span>
+                    </div>
+                    <div class="card-body">
+                        <div id="client-notes-content" style="color: #f1f5f9; font-size: 13.5px; line-height: 1.6; white-space: pre-wrap; background: rgba(255,255,255,0.04); padding: 14px 16px; border-radius: 8px; border: 1px solid rgba(212,175,55,0.2); font-weight: 500;">
+                            No inquiry notes recorded.
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Add Note Card -->
                 <div class="card">
                     <div class="card-header">
-                        <span>Add Note / Remark</span>
+                        <span>Add Follow-up Note / Remark</span>
                         <i class="fa-solid fa-pen"></i>
                     </div>
                     <div class="card-body">
@@ -845,6 +862,16 @@
             }
             document.getElementById('property-final-status').value = leadData.final_status || '';
             document.getElementById('property-travelers').value = leadData.travelers || 1;
+            const remarksVal = (leadData.remarks || leadData.notes || '').trim();
+            if (document.getElementById('property-remarks')) {
+                document.getElementById('property-remarks').value = remarksVal;
+            }
+            if (document.getElementById('client-notes-content')) {
+                document.getElementById('client-notes-content').innerText = remarksVal || 'No inquiry notes recorded.';
+            }
+            if (document.getElementById('client-notes-source-badge')) {
+                document.getElementById('client-notes-source-badge').innerText = leadData.source ? `${leadData.source} Details` : 'Inquiry Details';
+            }
 
             if (leadData.created_at) {
                 document.getElementById('property-created-at').innerText = formatDateTimeISO(leadData.created_at);
@@ -1016,6 +1043,7 @@
                 const newDestination = document.getElementById('property-destination') ? document.getElementById('property-destination').value.trim() : '';
                 const newFinalStatus = document.getElementById('property-final-status').value || '';
                 const newTravelers = parseInt(document.getElementById('property-travelers').value) || 1;
+                const newRemarks = document.getElementById('property-remarks') ? document.getElementById('property-remarks').value.trim() : '';
 
                 const updateData = {
                     status: newStatus || 'New',
@@ -1023,7 +1051,8 @@
                     travel_date: newTravelDate || null,
                     destination: newDestination,
                     final_status: newFinalStatus || null,
-                    travelers: newTravelers
+                    travelers: newTravelers,
+                    remarks: newRemarks
                 };
 
                 let newName = document.getElementById('property-name') ? document.getElementById('property-name').value.trim() : '';
