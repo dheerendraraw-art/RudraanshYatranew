@@ -732,11 +732,12 @@
                             </select>
                         </div>
                     </div>
-                    <div id="leads-action-buttons-wrap" class="admin-only-action" style="display: flex; gap: 8px;">
+                    <div id="leads-action-buttons-wrap" style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
                         <button type="button" onclick="resetLeadsFilters()" class="btn btn-secondary" style="border: 1px solid var(--color-gold); background: #1e293b; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: var(--color-gold); font-weight: 600;"><i class="fa-solid fa-arrow-rotate-left"></i> Clear Filters</button>
                         <button type="button" onclick="exportLeads()" class="btn btn-primary admin-only-action" id="export-leads-btn" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-file-export"></i> Export Leads</button>
                         <button type="button" onclick="downloadLeadsTemplate()" class="btn btn-secondary admin-only-action" id="leads-template-btn" style="border: 1px solid var(--color-gold); background: #1e293b; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: var(--color-gold); font-weight: 600;"><i class="fa-solid fa-download"></i> Template</button>
                         <button type="button" onclick="triggerImportLeads()" class="btn btn-primary admin-only-action" id="import-leads-btn" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-file-import"></i> Import Leads</button>
+                        <button type="button" onclick="syncGoogleSheetLeads()" class="btn btn-primary admin-only-action" id="sync-sheet-leads-btn" style="background-color: #0284c7; border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #ffffff; font-weight: 700; gap: 6px; box-shadow: 0 2px 8px rgba(2,132,199,0.4);"><i class="fa-solid fa-arrows-rotate"></i> Sync Google Sheet</button>
                         <input type="file" id="leads-csv-file" accept=".csv" style="display: none;" onchange="handleLeadsCSVImport(event)">
                         <button type="button" onclick="openLeadModal()" class="btn btn-primary admin-only-action" id="add-lead-btn" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-plus"></i> Add New Lead</button>
                     </div>
@@ -1664,6 +1665,18 @@
 
     <!-- Create Bill Modal -->
     <style>
+        .lead-card-row td,
+        .lead-card-row td *,
+        td[data-label="Created On"] {
+            color: #cbd5e1 !important;
+        }
+        .lead-card-row td small {
+            color: #cbd5e1 !important;
+        }
+        td[data-label="Created On"] {
+            color: #94a3b8 !important;
+            font-weight: 600 !important;
+        }
         #create-bill-modal .cbm-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.82); backdrop-filter: blur(6px); z-index: 10000; display: flex; align-items: center; justify-content: center; overflow-y: auto; padding: 20px; }
         #create-bill-modal .cbm-card { background: linear-gradient(145deg, #0f1f38 0%, #0d1526 100%); border: 1px solid rgba(212,175,55,0.4); border-radius: 20px; width: 100%; max-width: 660px; box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04) inset; overflow: hidden; position: relative; }
         #create-bill-modal .cbm-header { padding: 24px 28px 20px; border-bottom: 1px solid rgba(255,255,255,0.07); display: flex; align-items: center; justify-content: space-between; background: linear-gradient(90deg, rgba(212,175,55,0.08) 0%, transparent 60%); }
@@ -3083,12 +3096,11 @@
                 'bookings-template-btn',
                 'import-bookings-btn',
                 'add-booking-btn',
-                'bookings-action-buttons-wrap',
                 'export-leads-btn',
                 'leads-template-btn',
                 'import-leads-btn',
-                'add-lead-btn',
-                'leads-action-buttons-wrap'
+                'sync-sheet-leads-btn',
+                'add-lead-btn'
             ];
             adminOnlyButtonIds.forEach(id => {
                 const el = document.getElementById(id);
@@ -6018,6 +6030,7 @@
                                             <option value="Website">Website</option>
                                             <option value="Facebook">Facebook</option>
                                             <option value="Instagram">Instagram</option>
+                                            <option value="Meta Sheet Sync">Meta Sheet Sync</option>
                                             <option value="Manual">Manual</option>
                                         </select>
                                     </div>
@@ -6194,18 +6207,19 @@
                                 </div>
                             </td>
                             <td data-label="Phone" style="white-space: nowrap;" onclick="event.stopPropagation();">${leadPhoneHtml}</td>
-                            <td data-label="Email" class="mobile-detail-field">${item.email || '-'}</td>
+                            <td data-label="Email" class="mobile-detail-field" style="color: #cbd5e1 !important;">${item.email || '-'}</td>
                             <td data-label="Travel Destination" class="mobile-detail-field"><strong style="color: var(--color-gold); font-size: 12px;">${destVal}</strong></td>
-                            <td data-label="Travelers" class="mobile-detail-field">${item.travelers || 1}</td>
-                            <td data-label="Created On" class="mobile-detail-field" style="white-space: nowrap; font-family: monospace; font-size: 11px;">${createdStr}</td>
+                            <td data-label="Travelers" class="mobile-detail-field" style="color: #cbd5e1 !important;">${item.travelers || 1}</td>
+                            <td data-label="Created On" class="mobile-detail-field" style="white-space: nowrap; font-family: monospace; font-size: 11.5px; color: #94a3b8 !important; font-weight: 600;">${createdStr}</td>
                             <td data-label="Status" onclick="event.stopPropagation();">
                                 <select onclick="event.stopPropagation();" onpointerdown="event.stopPropagation();" ontouchstart="event.stopPropagation();" onchange="updateLeadField('${item.id}', 'status', this.value); updateSelectStyle(this)" class="status-select ${statusClass}">
                                     ${statusOptions}
                                 </select>
                             </td>
-                            <td data-label="Remarks" class="mobile-detail-field" style="white-space: pre-line;"><small>${item.remarks || '-'}</small></td>
-                            <td data-label="Follow up 1" class="mobile-detail-field"><small>${item.follow_up_1 || '-'}</small></td>
-                            <td data-label="Follow up 2" class="mobile-detail-field"><small>${item.follow_up_2 || '-'}</small></td>
+                            <td data-label="Source" class="mobile-detail-field"><span style="font-size: 11px; font-weight: 800; color: #ffffff !important; background: #0284c7 !important; padding: 4px 10px; border-radius: 6px; display: inline-block; white-space: nowrap; box-shadow: 0 2px 6px rgba(2, 132, 199, 0.4);">${item.source || 'Website'}</span></td>
+                            <td data-label="Remarks" class="mobile-detail-field" style="white-space: pre-line; color: #cbd5e1 !important;"><small>${item.remarks || '-'}</small></td>
+                            <td data-label="Follow up 1" class="mobile-detail-field" style="color: #cbd5e1 !important;"><small>${item.follow_up_1 || '-'}</small></td>
+                            <td data-label="Follow up 2" class="mobile-detail-field" style="color: #cbd5e1 !important;"><small>${item.follow_up_2 || '-'}</small></td>
                             <td data-label="Actions" onclick="event.stopPropagation();">
                                 <div style="display: flex; gap: 8px; flex-wrap: wrap;">
                                     <button class="admin-btn-edit" onclick="event.stopPropagation(); startEditLead('${item.id}')" style="background-color: var(--color-gold); color: #0f172a; border: none; padding: 6px 12px; border-radius: var(--border-radius-sm, 4px); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; gap: 4px;" title="Open Lead">
@@ -6239,30 +6253,30 @@
                                 </div>
                             </td>
                             <td data-label="Phone" style="white-space: nowrap;" onclick="event.stopPropagation();">${leadPhoneHtml}</td>
-                            <td data-label="Email" class="mobile-detail-field">${item.email || '-'}</td>
+                            <td data-label="Email" class="mobile-detail-field" style="color: #cbd5e1 !important;">${item.email || '-'}</td>
                             <td data-label="Travel Destination" class="mobile-detail-field"><strong style="color: var(--color-gold); font-size: 12px;">${destVal}</strong></td>
                             <td data-label="Assigned To" class="mobile-detail-field" onclick="event.stopPropagation();">
                                 <select ${currentUserRole === "staff" ? "disabled" : ""} onclick="event.stopPropagation();" onpointerdown="event.stopPropagation();" ontouchstart="event.stopPropagation();" onchange="updateLeadField('${item.id}', 'assigned_to', this.value)" style="background: #1f2937; color: white; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 4px; font-size: 12px; width: 150px; cursor: pointer;">
                                     ${assigneeOptions}
                                 </select>
                             </td>
-                            <td data-label="Travelers" class="mobile-detail-field">${item.travelers || 1}</td>
-                            <td data-label="Travel Date" class="mobile-detail-field" style="white-space: nowrap;">${item.travel_date ? new Date(item.travel_date).toLocaleDateString() : '-'}</td>
+                            <td data-label="Travelers" class="mobile-detail-field" style="color: #cbd5e1 !important;">${item.travelers || 1}</td>
+                            <td data-label="Travel Date" class="mobile-detail-field" style="white-space: nowrap; color: #cbd5e1 !important;">${item.travel_date ? new Date(item.travel_date).toLocaleDateString() : '-'}</td>
                             <td data-label="Status" onclick="event.stopPropagation();">
                                 <select onclick="event.stopPropagation();" onpointerdown="event.stopPropagation();" ontouchstart="event.stopPropagation();" onchange="updateLeadField('${item.id}', 'status', this.value); updateSelectStyle(this)" class="status-select ${statusClass}">
                                     ${statusOptions}
                                 </select>
                             </td>
-                            <td data-label="Source" class="mobile-detail-field"><span style="font-size: 11px; font-weight: bold; background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px;">${item.source || 'Website'}</span></td>
-                            <td data-label="Remarks" class="mobile-detail-field" style="white-space: pre-line;"><small>${item.remarks || '-'}</small></td>
-                            <td data-label="Follow up 1" class="mobile-detail-field"><small>${item.follow_up_1 || '-'}</small></td>
-                            <td data-label="Follow up 2" class="mobile-detail-field"><small>${item.follow_up_2 || '-'}</small></td>
+                            <td data-label="Source" class="mobile-detail-field"><span style="font-size: 11px; font-weight: 800; color: #ffffff !important; background: #0284c7 !important; padding: 4px 10px; border-radius: 6px; display: inline-block; white-space: nowrap; box-shadow: 0 2px 6px rgba(2, 132, 199, 0.4);">${item.source || 'Website'}</span></td>
+                            <td data-label="Remarks" class="mobile-detail-field" style="white-space: pre-line; color: #cbd5e1 !important;"><small>${item.remarks || '-'}</small></td>
+                            <td data-label="Follow up 1" class="mobile-detail-field" style="color: #cbd5e1 !important;"><small>${item.follow_up_1 || '-'}</small></td>
+                            <td data-label="Follow up 2" class="mobile-detail-field" style="color: #cbd5e1 !important;"><small>${item.follow_up_2 || '-'}</small></td>
                             <td data-label="Final Status" class="mobile-detail-field" onclick="event.stopPropagation();">
                                 <select onclick="event.stopPropagation();" onpointerdown="event.stopPropagation();" ontouchstart="event.stopPropagation();" onchange="updateLeadField('${item.id}', 'final_status', this.value); updateFinalStyle(this)" class="final-select ${finalClass}">
                                     ${finalStatusOptions}
                                 </select>
                             </td>
-                            <td data-label="Created On" class="mobile-detail-field" style="white-space: nowrap; font-family: monospace; font-size: 11px;">${createdStr}</td>
+                            <td data-label="Created On" class="mobile-detail-field" style="white-space: nowrap; font-family: monospace; font-size: 11.5px; color: #94a3b8 !important; font-weight: 600;">${createdStr}</td>
                             <td data-label="Actions" onclick="event.stopPropagation();">
                                 <div style="display: flex; gap: 8px; flex-wrap: wrap;">
                                     <button class="admin-btn-edit" onclick="event.stopPropagation(); startEditLead('${item.id}')" style="background-color: var(--color-gold); color: #0f172a; border: none; width: 28px; height: 28px; border-radius: var(--border-radius-sm, 4px); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; margin: 0;" title="Edit Lead">
@@ -6448,6 +6462,165 @@
             document.getElementById('leads-csv-file').click();
         };
 
+        // Sync Meta Leads directly from Google Sheet
+        window.syncGoogleSheetLeads = async function() {
+            const btn = document.getElementById('sync-sheet-leads-btn');
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Syncing...';
+            }
+
+            try {
+                showAdminToast('Syncing leads from Meta Google Sheet...', 'info');
+
+                // Try local server API route first
+                try {
+                    const resp = await fetchWithAuth('/api/admin/sync-google-sheet-leads', { method: 'POST' });
+                    if (resp && resp.ok) {
+                        const resData = await resp.json();
+                        if (resData && resData.success) {
+                            if (resData.newLeadsCount > 0) {
+                                showAdminToast(`✅ Successfully synced ${resData.newLeadsCount} new leads from Google Sheet (${resData.duplicateCount} duplicates skipped)!`, 'success');
+                            } else {
+                                showAdminToast(`👍 All leads up to date! (${resData.duplicateCount} existing leads skipped)`, 'info');
+                            }
+                            if (typeof fetchLeads === 'function') fetchLeads();
+                            return;
+                        }
+                    }
+                } catch (apiErr) {
+                    console.warn('Backend API sync not available, falling back to direct browser fetch:', apiErr.message);
+                }
+
+                // Direct Browser Fallback (works on static hosting like Vercel / GitHub Pages)
+                const sheetUrl = 'https://docs.google.com/spreadsheets/d/199vP8Q-QYvbzVUTV-L_RexABWoOSWB6QzFMD8ez0iD0/export?format=csv';
+                const res = await fetch(sheetUrl);
+                if (!res.ok) throw new Error(`Could not fetch sheet (${res.status})`);
+                const text = await res.text();
+
+                const parseLine = (line) => {
+                    const cols = [];
+                    let inside = false;
+                    let cur = '';
+                    for (let i = 0; i < line.length; i++) {
+                        const c = line[i];
+                        if (c === '"') inside = !inside;
+                        else if (c === ',' && !inside) {
+                            cols.push(cur.trim().replace(/^"|"$/g, ''));
+                            cur = '';
+                        } else cur += c;
+                    }
+                    cols.push(cur.trim().replace(/^"|"$/g, ''));
+                    return cols;
+                };
+
+                const lines = text.split(/\r?\n/);
+                if (lines.length < 2) {
+                    showAdminToast('Google Sheet appears to be empty.', 'error');
+                    return;
+                }
+
+                const headers = parseLine(lines[0]).map(h => h.toLowerCase());
+                const getIdx = (name) => headers.findIndex(h => h.includes(name));
+
+                const nameIdx = getIdx('full_name') !== -1 ? getIdx('full_name') : getIdx('name');
+                const phoneIdx = getIdx('phone_number') !== -1 ? getIdx('phone_number') : getIdx('phone');
+                const emailIdx = getIdx('email');
+                const formIdx = getIdx('form_name') !== -1 ? getIdx('form_name') : getIdx('form');
+                const whenIdx = getIdx('when_are_you_planning');
+                const peopleIdx = getIdx('how_many_people');
+                const createdIdx = getIdx('created_time');
+                const campaignIdx = getIdx('campaign_name');
+
+                const rows = [];
+                for (let i = 1; i < lines.length; i++) {
+                    if (!lines[i].trim()) continue;
+                    const cols = parseLine(lines[i]);
+                    rows.push(cols);
+                }
+
+                const normalizePhone = (p) => (p || '').replace(/\D/g, '').replace(/^0+/, '').slice(-10);
+
+                // Fetch existing phones from Supabase
+                let existingPhones = new Set();
+                try {
+                    const { data: existingLeads } = await supabaseAdmin.from('leads').select('phone');
+                    if (existingLeads) {
+                        existingLeads.forEach(l => {
+                            const norm = normalizePhone(l.phone);
+                            if (norm.length >= 7) existingPhones.add(norm);
+                        });
+                    }
+                } catch (e) {}
+
+                const toInsert = [];
+                const seenInSheet = new Set();
+                let dupCount = 0;
+
+                for (const cols of rows) {
+                    const nameVal = cols[nameIdx] || '';
+                    if (!nameVal.trim()) continue;
+
+                    const rawPhone = (cols[phoneIdx] || '').replace(/^p:/i, '').trim();
+                    const norm = normalizePhone(rawPhone);
+
+                    if (norm.length >= 7 && (existingPhones.has(norm) || seenInSheet.has(norm))) {
+                        dupCount++;
+                        continue;
+                    }
+
+                    if (norm.length >= 7) seenInSheet.add(norm);
+
+                    const whenYatra = whenIdx !== -1 ? cols[whenIdx] : '';
+                    const peopleInfo = peopleIdx !== -1 ? cols[peopleIdx] : '';
+                    const formName = formIdx !== -1 ? cols[formIdx] : '';
+                    const emailVal = emailIdx !== -1 ? cols[emailIdx] : '';
+                    const createdTime = createdIdx !== -1 ? cols[createdIdx] : '';
+                    const campaignName = campaignIdx !== -1 ? cols[campaignIdx] : '';
+
+                    let travelersNum = 1;
+                    const parsedInt = parseInt(peopleInfo, 10);
+                    if (!isNaN(parsedInt) && parsedInt > 0) travelersNum = parsedInt;
+
+                    const remarksArr = [];
+                    if (whenYatra) remarksArr.push(`Planning: ${whenYatra}`);
+                    if (peopleInfo) remarksArr.push(`Travelers Info: ${peopleInfo}`);
+                    if (campaignName) remarksArr.push(`Campaign: ${campaignName}`);
+
+                    toInsert.push({
+                        name: nameVal.trim(),
+                        phone: rawPhone || 'N/A',
+                        email: emailVal.trim(),
+                        destination: formName.trim(),
+                        source: 'Meta Sheet Sync',
+                        status: 'New',
+                        travelers: travelersNum,
+                        remarks: remarksArr.join(' | '),
+                        created_at: createdTime ? new Date(createdTime).toISOString() : new Date().toISOString()
+                    });
+                }
+
+                if (toInsert.length === 0) {
+                    showAdminToast(`👍 All ${rows.length} leads in Google Sheet are already synced (${dupCount} duplicates skipped).`, 'info');
+                    return;
+                }
+
+                const { error } = await supabaseAdmin.from('leads').insert(toInsert);
+                if (error) throw error;
+
+                showAdminToast(`✅ Successfully synced ${toInsert.length} new lead(s) from Google Sheet!`, 'success');
+                if (typeof fetchLeads === 'function') fetchLeads();
+            } catch (err) {
+                console.error('Google Sheet Sync Error:', err);
+                showAdminToast('Failed to sync Google Sheet: ' + err.message, 'error');
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa-solid fa-arrows-rotate"></i> Sync Google Sheet';
+                }
+            }
+        };
+
         window.handleLeadsCSVImport = async function(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -6558,19 +6731,63 @@
                     return;
                 }
 
+                // --- Duplicate phone deduplication for CSV import ---
+                const normalizePhone = (p) => (p || '').replace(/\D/g, '').replace(/^0+/, '').slice(-10);
+
+                // Fetch all existing phone numbers from system
+                showAdminToast('Checking for duplicate leads...', 'info');
+                let existingPhones = new Set();
                 try {
-                    const { error } = await supabaseAdmin.from('leads').insert(newLeads);
+                    const { data: existingLeads } = await supabaseAdmin.from('leads').select('phone');
+                    if (existingLeads && existingLeads.length > 0) {
+                        existingLeads.forEach(l => {
+                            const norm = normalizePhone(l.phone);
+                            if (norm.length >= 7) existingPhones.add(norm);
+                        });
+                    }
+                } catch (fetchErr) {
+                    console.warn('Could not fetch existing leads for dedup check:', fetchErr);
+                }
+
+                // Also check within the CSV itself for intra-file duplicates
+                const csvPhonesSeen = new Set();
+                const toInsert = [];
+                const duplicateLeads = [];
+
+                for (const lead of newLeads) {
+                    const norm = normalizePhone(lead.phone);
+                    if (norm.length >= 7 && (existingPhones.has(norm) || csvPhonesSeen.has(norm))) {
+                        duplicateLeads.push(lead);
+                    } else {
+                        toInsert.push(lead);
+                        if (norm.length >= 7) csvPhonesSeen.add(norm);
+                    }
+                }
+                // --- End duplicate check ---
+
+                if (toInsert.length === 0) {
+                    showAdminToast(`⚠️ All ${duplicateLeads.length} leads in this CSV are duplicates — already exist in the system! No leads imported.`, 'error');
+                    if (document.getElementById('leads-csv-file')) document.getElementById('leads-csv-file').value = '';
+                    return;
+                }
+
+                try {
+                    const { error } = await supabaseAdmin.from('leads').insert(toInsert);
                     if (error) {
                         if (error.message && error.message.includes('destination')) {
                             console.warn('Retrying leads insert without destination property in payload...');
-                            const fallbackLeads = newLeads.map(({ destination, ...rest }) => rest);
+                            const fallbackLeads = toInsert.map(({ destination, ...rest }) => rest);
                             const { error: err2 } = await supabaseAdmin.from('leads').insert(fallbackLeads);
                             if (err2) throw err2;
                         } else {
                             throw error;
                         }
                     }
-                    showAdminToast(`Successfully imported ${newLeads.length} leads!`, 'success');
+                    let msg = `✅ ${toInsert.length} lead${toInsert.length !== 1 ? 's' : ''} imported successfully!`;
+                    if (duplicateLeads.length > 0) {
+                        msg += ` ⚠️ ${duplicateLeads.length} duplicate${duplicateLeads.length !== 1 ? 's' : ''} skipped (mobile already exists in system).`;
+                    }
+                    showAdminToast(msg, duplicateLeads.length > 0 ? 'warning' : 'success');
                     fetchLeads();
                     if (document.getElementById('leads-csv-file')) document.getElementById('leads-csv-file').value = '';
                 } catch (err) {
@@ -6657,6 +6874,20 @@
                     
                     showAdminToast('Lead updated successfully!', 'success');
                 } else {
+                    // --- Duplicate phone check before inserting new lead ---
+                    const normalizePhone = (p) => (p || '').replace(/\D/g, '').replace(/^0+/, '').slice(-10);
+                    const newPhoneNorm = normalizePhone(phone);
+                    if (newPhoneNorm.length >= 7) {
+                        const dupLead = currentLeads.find(l => {
+                            const existing = normalizePhone(l.phone);
+                            return existing.length >= 7 && existing === newPhoneNorm;
+                        });
+                        if (dupLead) {
+                            showAdminToast(`⚠️ Duplicate lead! A lead with mobile "${phone}" already exists (${dupLead.name || 'Unknown'}).`, 'error');
+                            return;
+                        }
+                    }
+                    // --- End duplicate check ---
                     const { error } = await supabaseAdmin
                         .from('leads')
                         .insert([leadData]);

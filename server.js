@@ -3417,6 +3417,218 @@ async function processMetaLead(leadgenId, formId, adId) {
     }
 }
 
+// ── Google Sheets Meta Leads Automated Sync ─────────────────────────────────────
+const GOOGLE_SHEET_LEADS_URL = process.env.GOOGLE_SHEET_LEADS_URL || 'https://docs.google.com/spreadsheets/d/199vP8Q-QYvbzVUTV-L_RexABWoOSWB6QzFMD8ez0iD0/export?format=csv';
+
+async function syncGoogleSheetLeads() {
+    try {
+        if (!supabase) {
+            console.error('[Google Sheet Sync] Supabase client not initialized.');
+            return { success: false, message: 'Supabase client not initialized' };
+        }
+
+        console.log('[Google Sheet Sync] Fetching Google Sheet CSV...');
+        const response = await fetch(GOOGLE_SHEET_LEADS_URL);
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        const text = await response.text();
+
+        const parseCSV = (csvText) => {
+            const lines = csvText.split(/\r?\n/);
+            if (lines.length < 2) return [];
+            
+            const parseLine = (line) => {
+                const cols = [];
+                let inside = false;
+                let cur = '';
+                for (let i = 0; i < line.length; i++) {
+                    const c = line[i];
+                    if (c === '"') inside = !inside;
+                    else if (c === ',' && !inside) {
+                        cols.push(cur.trim().replace(/^"|"$/g, ''));
+                        cur = '';
+                    } else cur += c;
+                }
+                cols.push(cur.trim().replace(/^"|"$/g, ''));
+                return cols;
+            };
+            
+            const headers = parseLine(lines[0]).map(h => h.toLowerCase());
+            const rows = [];
+            for (let i = 1; i < lines.length; i++) {
+                if (!lines[i].trim()) continue;
+                const cols = parseLine(lines[i]);
+                const obj = {};
+                headers.forEach((h, idx) => { obj[h] = cols[idx] || ''; });
+                rows.push(obj);
+            }
+            return rows;
+        };
+
+        const rows = parseCSV(text);
+        if (rows.length === 0) {
+            return { success: true, newLeadsCount: 0, totalSheetRows: 0, duplicateCount: 0 };
+        }
+
+        const normalizePhone = (p) => (p || '').replace(/\D/g, '').replace(/^0+/, '').slice(-10);
+
+        const { data: existingLeads, error: fetchErr } = await supabase.from('leads').select('phone');
+        if (fetchErr) throw fetchErr;
+
+        const existingPhones = new Set();
+        (existingLeads || []).forEach(l => {
+            const norm = normalizePhone(l.phone);
+            if (norm.length >= 7) existingPhones.add(norm);
+        });
+
+        const toInsert = [];
+        const seenInSheet = new Set();
+        let duplicateCount = 0;
+
+        for (const r of rows) {
+            const name = (r.full_name || r.name || '').trim();
+            if (!name) continue;
+
+            const rawPhone = (r.phone_number || r.phone || '').replace(/^p:/i, '').trim();
+            const norm = normalizePhone(rawPhone);
+
+            if (norm.length >= 7 && (existingPhones.has(norm) || seenInSheet.has(norm))) {
+                duplicateCount++;
+                continue;
+            }
+
+            if (norm.length >= 7) seenInSheet.add(norm);
+
+            const whenYatra = r['when_are_you_planning_your_yatra?'] || r.when_are_you_planning_your_yatra || '';
+            const peopleInfo = r['how_many_people_are_planning_to_travel?'] || r.how_many_people_are_planning_to_travel || '';
+
+            let travelersNum = 1;
+            const parsedInt = parseInt(peopleInfo, 10);
+            if (!isNaN(parsedInt) && parsedInt > 0) {
+                travelersNum = parsedInt;
+            }
+
+            const remarksArr = [];
+            if (whenYatra) remarksArr.push(`Planning: ${whenYatra}`);
+            if (peopleInfo) remarksArr.push(`Travelers Info: ${peopleInfo}`);
+            if (r.campaign_name) remarksArr.push(`Campaign: ${r.campaign_name}`);
+            const remarks = remarksArr.join(' | ');
+
+            toInsert.push({
+                name: name,
+                phone: rawPhone || 'N/A',
+                email: (r.email || '').trim(),
+                destination: (r.form_name || r.destination || '').trim(),
+                source: 'Meta Sheet Sync',
+                status: 'New',
+                travelers: travelersNum,
+                remarks: remarks,
+                created_at: r.created_time ? new Date(r.created_time).toISOString() : new Date().toISOString()
+            });
+        }
+
+        if (toInsert.length > 0) {
+            const { error: insErr } = await supabase.from('leads').insert(toInsert);
+            if (insErr) throw insErr;
+            console.log(`[Google Sheet Sync] Successfully imported ${toInsert.length} new leads (${duplicateCount} duplicates skipped).`);
+        } else {
+            console.log(`[Google Sheet Sync] Check complete. No new leads to import (${duplicateCount} duplicates skipped).`);
+        }
+
+        return {
+            success: true,
+            newLeadsCount: toInsert.length,
+            totalSheetRows: rows.length,
+            duplicateCount: duplicateCount
+        };
+    } catch (err) {
+        console.error('[Google Sheet Sync] Error syncing Google Sheet leads:', err);
+        return { success: false, error: err.message };
+    }
+}
+
+// Admin API Route to manually trigger Google Sheet Sync
+app.post('/api/admin/sync-google-sheet-leads', authenticateToken, async (req, res) => {
+    const result = await syncGoogleSheetLeads();
+    if (result.success) {
+        res.json(result);
+    } else {
+        res.status(500).json(result);
+    }
+});
+
+// Generic Webhook Endpoint for Google Apps Script or Zapier push
+app.post('/api/webhooks/google-sheets-lead', async (req, res) => {
+    try {
+        const body = req.body || {};
+        console.log('[Google Sheets Webhook] Received lead payload:', body);
+
+        const name = (body.full_name || body.name || '').trim();
+        const rawPhone = (body.phone_number || body.phone || '').replace(/^p:/i, '').trim();
+        const email = (body.email || '').trim();
+        const destination = (body.form_name || body.destination || '').trim();
+        const whenYatra = body.when_are_you_planning_your_yatra || body['when_are_you_planning_your_yatra?'] || '';
+        const peopleInfo = body.how_many_people_are_planning_to_travel || body['how_many_people_are_planning_to_travel?'] || '';
+
+        if (!name && !rawPhone) {
+            return res.status(400).json({ error: 'Name or phone is required' });
+        }
+
+        const normalizePhone = (p) => (p || '').replace(/\D/g, '').replace(/^0+/, '').slice(-10);
+        const norm = normalizePhone(rawPhone);
+
+        if (supabase && norm.length >= 7) {
+            const { data: existing } = await supabase.from('leads').select('id, phone');
+            const isDup = (existing || []).some(l => normalizePhone(l.phone) === norm);
+            if (isDup) {
+                console.log(`[Google Sheets Webhook] Suppressed duplicate lead for phone: ${rawPhone}`);
+                return res.status(200).json({ success: true, duplicate: true, message: 'Duplicate lead suppressed' });
+            }
+        }
+
+        let travelersNum = 1;
+        const parsedInt = parseInt(peopleInfo, 10);
+        if (!isNaN(parsedInt) && parsedInt > 0) travelersNum = parsedInt;
+
+        const remarksArr = [];
+        if (whenYatra) remarksArr.push(`Planning: ${whenYatra}`);
+        if (peopleInfo) remarksArr.push(`Travelers Info: ${peopleInfo}`);
+        const remarks = remarksArr.join(' | ');
+
+        if (supabase) {
+            const { data: newLead, error } = await supabase.from('leads').insert([{
+                name: name || 'Meta Sheet Lead',
+                phone: rawPhone || 'N/A',
+                email: email || '',
+                destination: destination || '',
+                source: 'Meta Sheet Webhook',
+                status: 'New',
+                travelers: travelersNum,
+                remarks: remarks,
+                created_at: new Date().toISOString()
+            }]).select('id').single();
+
+            if (error) throw error;
+            return res.status(201).json({ success: true, lead_id: newLead ? newLead.id : null });
+        }
+
+        res.status(200).json({ success: true });
+    } catch (err) {
+        console.error('[Google Sheets Webhook] Error:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Start background periodic Google Sheet sync every 5 minutes
+setTimeout(() => {
+    syncGoogleSheetLeads().catch(err => console.error('[Google Sheet Startup Sync Failed]:', err));
+}, 10000);
+setInterval(() => {
+    syncGoogleSheetLeads().catch(err => console.error('[Google Sheet Periodic Sync Failed]:', err));
+}, 5 * 60 * 1000);
+
+
 
 // ── Static Asset Caching ─────────────────────────────────────────────────────
 // Serve images, videos, fonts and versioned CSS/JS with 1-year immutable cache.
