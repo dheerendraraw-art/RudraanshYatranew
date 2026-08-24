@@ -1813,6 +1813,335 @@ const BLOG_ENHANCERS = {
 
             return flightSummaryBanner + enriched + bottomCtaHtml;
         }
+    },
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // 14. INNER LINE PERMIT (ILP) FOR ADI KAILASH 2026 GUIDE (SEO / AEO / GEO / AIO)
+    // ─────────────────────────────────────────────────────────────────────────
+    'inner-line-permit-adi-kailash-2026-guide': {
+        meta: {
+            title: 'Inner Line Permit (ILP) for Adi Kailash 2026: Online Status, Fee, Documents & Guide',
+            desc: 'Complete 2026 guide to obtaining the Inner Line Permit (ILP) for Adi Kailash & Om Parvat Yatra. Online application reality, Dharchula & Pithoragarh SDM offices, police verification, medical certificate & official fees.',
+            dateModified: '2026-08-24T20:15:00+05:30'
+        },
+        schemas: `
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Can I apply for the Adi Kailash Inner Line Permit (ILP) online in 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Currently, the Inner Line Permit for Adi Kailash and Om Parvat requires physical in-person verification and clearance through the Sub-Divisional Magistrate (SDM) offices in Dharchula or Pithoragarh. While the Uttarakhand single-window e-portal accepts document uploads, the physical hard-copy permit stamped by the SDM and verified by local police is mandatory at ITBP border checkpoints."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What documents are required for the Adi Kailash Inner Line Permit?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The mandatory documents for Adi Kailash ILP are: (1) Valid Government Photo ID (Aadhaar Card, Passport, or Voter ID; PAN Card is not accepted); (2) Police Verification Character Certificate issued by your local police station or via state police web portal (valid within 3–6 months); (3) High-altitude Medical Fitness Certificate signed by a registered MBBS/MD doctor; (4) Four recent passport-sized color photographs; and (5) Signed indemnity self-declaration bond."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where is the Inner Line Permit issued for Adi Kailash Yatra?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Inner Line Permit is officially issued by the Sub-Divisional Magistrate (SDM) Office in Dharchula (Pithoragarh District, Uttarakhand). From the 2026 season onwards, the District Magistrate / SDM office in Pithoragarh city is also fully authorized to process and grant permits for pilgrims heading to Vyas Valley."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does the Inner Line Permit cost for Adi Kailash?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The government administrative fee for the Inner Line Permit is between ₹150 to ₹300 per applicant, plus a small local red-cross/welfare fee. Medical certificate checkup typically costs ₹100–₹200. When booking an organized package with Rudraansh Yatra, all official permit fees, paperwork, and liaison charges are 100% included with zero extra cost."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are foreign nationals, NRIs, or OCI cardholders allowed to get an ILP for Adi Kailash?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Due to sensitive international border regulations (India-Tibet/China and India-Nepal tri-junction), only Indian citizens holding a valid Indian identity proof are permitted into the inner line zones of Vyas Valley (Gunji, Nabhidhang, Jyolingkong). Foreign citizens, NRI foreign passport holders, and OCI cardholders are strictly prohibited under current Ministry of Home Affairs guidelines."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long is the Adi Kailash Inner Line Permit valid for?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The permit is issued for single-entry travel and is generally valid for 7 to 15 days, matching your approved travel itinerary. Overstaying past your permit validity in the border defense zone without administrative clearance is a serious legal violation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which checkpoints verify the Inner Line Permit on the Adi Kailash route?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Your ILP and original ID proof will be physically checked and logged by security personnel at 5 major checkpoints: (1) Dharchula Police Checkpoint; (2) Tawaghat ITBP/SSB Post; (3) Chialekh High Pass Checkpost; (4) Gunji Military Security Junction; and (5) Nabhidhang / Jyolingkong forward checkposts."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does booking with Rudraansh Yatra simplify the ILP permit process?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Independent self-application requires pilgrims to spend 2–4 working days in Dharchula waiting for police verification, medical queue, and SDM endorsement. When traveling with Rudraansh Yatra, our native Pithoragarh team processes your documentation in advance, allowing you to bypass all administrative queues and proceed straight to the mountains."
+          }
+        }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "How to Obtain an Inner Line Permit (ILP) for Adi Kailash & Om Parvat",
+      "description": "Step-by-step official process for Indian pilgrims to get the mandatory Inner Line Permit (ILP) from SDM Dharchula or Pithoragarh for the Adi Kailash pilgrimage.",
+      "totalTime": "P3D",
+      "estimatedCost": {
+        "@type": "MonetaryAmount",
+        "currency": "INR",
+        "value": "250"
+      },
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "Obtain Police Character Verification Certificate",
+          "text": "Apply for a character verification certificate from your local police station or your state's online citizen police portal. Ensure the report has an official seal or verifiable QR code.",
+          "position": 1
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Get a Medical Fitness Certificate",
+          "text": "Visit a registered MBBS or MD doctor to obtain a high-altitude fitness certificate confirming normal blood pressure, ECG, and no severe respiratory or cardiovascular conditions.",
+          "position": 2
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Prepare Government Photo ID & Photos",
+          "text": "Carry original and 4 photocopies of your Aadhaar Card, Voter ID, or Passport, along with 4 recent passport-sized color photographs with white background.",
+          "position": 3
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Submit Application at SDM Office (Dharchula or Pithoragarh)",
+          "text": "Submit the completed ILP application form, doctor certificate, police clearance, and self-declaration indemnity bond at the SDM office in Dharchula or Pithoragarh.",
+          "position": 4
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Collect Permit & Present at ITBP Checkpoints",
+          "text": "Receive your stamped Inner Line Permit and carry at least 4 physical copies. Present the permit along with your original Aadhaar card at Tawaghat, Chialekh, Gunji, and Jyolingkong.",
+          "position": 5
+        }
+      ]
+    }
+    </script>`,
+        render: function(paragraphsHtml) {
+            const ilpSummaryBanner = `
+<style>
+.ry-ilp-summary { background: linear-gradient(135deg, #091e3a 0%, #172554 100%); border: 2px solid #38bdf8; border-radius: 14px; padding: 24px; margin-bottom: 30px; color: #fff; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+.ry-ilp-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4); padding: 4px 12px; border-radius: 50px; font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
+.ry-ilp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 18px 0; }
+.ry-ilp-item { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 12px 14px; text-align: left; }
+.ry-ilp-item .label { font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; margin-bottom: 4px; }
+.ry-ilp-item .val { font-size: 14px; color: #f8fafc; font-weight: 700; }
+.ry-ilp-item .sub { font-size: 11px; color: #38bdf8; margin-top: 2px; }
+.ry-ilp-btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+.ry-ilp-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 20px; border-radius: 8px; font-size: 13.5px; font-weight: 700; text-decoration: none; transition: all 0.2s ease; cursor: pointer; flex: 1; min-width: 220px; }
+.ry-ilp-btn.wa { background: #25d366; color: #000; }
+.ry-ilp-btn.wa:hover { background: #20bd5a; transform: translateY(-1px); }
+.ry-ilp-btn.call { background: #f59e0b; color: #000; }
+.ry-ilp-btn.call:hover { background: #d97706; transform: translateY(-1px); }
+</style>
+<div class="ry-ilp-summary">
+    <div class="ry-ilp-badge"><i class="fa-solid fa-shield-halved"></i> 2026 Official Government Guidelines</div>
+    <h3 style="margin:0 !important;color:#38bdf8 !important;font-size:20px !important;font-weight:800 !important;font-family:var(--font-sans), sans-serif !important;line-height:1.3 !important;">
+        📋 Adi Kailash Inner Line Permit (ILP) Key Facts at a Glance
+    </h3>
+    <p style="color:#cbd5e1;font-size:13.5px;margin:8px 0 0 0;line-height:1.5;">
+        The Vyas Valley border zone (Adi Kailash, Parvati Sarovar & Om Parvat) is strictly regulated by the <strong>Indo-Tibetan Border Police (ITBP)</strong> and <strong>SDM Dharchula</strong>. Below is the quick operational snapshot for 2026 pilgrims:
+    </p>
+    <div class="ry-ilp-grid">
+        <div class="ry-ilp-item">
+            <div class="label">Issuing Authority</div>
+            <div class="val">SDM Dharchula / Pithoragarh</div>
+            <div class="sub">District Administration</div>
+        </div>
+        <div class="ry-ilp-item">
+            <div class="label">Online Status</div>
+            <div class="val">In-Person Hard Copy</div>
+            <div class="sub">Physical Stamped Permit</div>
+        </div>
+        <div class="ry-ilp-item">
+            <div class="label">Govt. Permit Fee</div>
+            <div class="val">₹150 – ₹300 / Person</div>
+            <div class="sub">Included in Packages</div>
+        </div>
+        <div class="ry-ilp-item">
+            <div class="label">Processing Time</div>
+            <div class="val">2–4 Days (Self) | 0 Days (Operator)</div>
+            <div class="sub">Pre-cleared with Tour</div>
+        </div>
+        <div class="ry-ilp-item">
+            <div class="label">Nationality Limit</div>
+            <div class="val">Indian Nationals Only</div>
+            <div class="sub">Foreigners/OCI Restricted</div>
+        </div>
+        <div class="ry-ilp-item">
+            <div class="label">Permit Validity</div>
+            <div class="val">7 to 15 Days</div>
+            <div class="sub">Single Entry Itinerary</div>
+        </div>
+    </div>
+    <div class="ry-ilp-btn-row">
+        <a href="https://wa.me/917617617651?text=Hi%20Rudraansh%20Yatra,%20I%20want%20to%20know%20how%20you%20handle%20the%20Adi%20Kailash%20Inner%20Line%20Permit%20(ILP)%20for%20my%20yatra%20dates." target="_blank" rel="noopener" class="ry-ilp-btn wa">
+            <i class="fa-brands fa-whatsapp"></i> Get Hassle-Free Permit with Tour Package
+        </a>
+        <a href="tel:+917617617651" class="ry-ilp-btn call">
+            <i class="fa-solid fa-phone"></i> Call Pithoragarh Office (+91 76176 17651)
+        </a>
+    </div>
+</div>`;
+
+            const comparisonTableHtml = `
+<style>
+.ry-ilp-table-wrap { overflow-x: auto; margin: 26px 0; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 4px 15px rgba(0,0,0,0.25); }
+.ry-ilp-table { width: 100%; border-collapse: collapse; background: #0b1322; font-size: 13.5px; text-align: left; }
+.ry-ilp-table th { background: #162238; color: #38bdf8; padding: 14px 16px; font-weight: 700; border-bottom: 2px solid rgba(56,189,248,0.3); font-size: 13.5px; }
+.ry-ilp-table td { padding: 13px 16px; border-bottom: 1px solid rgba(255,255,255,0.06); color: #cbd5e1; }
+.ry-ilp-table tr:hover { background: rgba(56,189,248,0.04); }
+.ry-badge-diy { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+.ry-badge-pro { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+</style>
+<div class="ry-ilp-table-wrap">
+    <table class="ry-ilp-table">
+        <thead>
+            <tr>
+                <th>Permit Process Step</th>
+                <th>Option A: Self Application (DIY)</th>
+                <th>Option B: Rudraansh Yatra (Included)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>1. Time Required in Dharchula</strong></td>
+                <td><span class="ry-badge-diy">2 to 4 Days</span> (Must halt and wait)</td>
+                <td><span class="ry-badge-pro">Zero Extra Days</span> (Pre-approved)</td>
+            </tr>
+            <tr>
+                <td><strong>2. Extra Hotel &amp; Food Expenses</strong></td>
+                <td><span class="ry-badge-diy">₹3,000 – ₹5,000</span> for waiting nights</td>
+                <td><span class="ry-badge-pro">₹0</span> (Immediate forward transit)</td>
+            </tr>
+            <tr>
+                <td><strong>3. Medical &amp; Police Verification</strong></td>
+                <td>Stand in local queues in Dharchula/Pithoragarh</td>
+                <td>Verified digitally before departure</td>
+            </tr>
+            <tr>
+                <td><strong>4. SDM Office File Submission</strong></td>
+                <td>Manual filing in Balan Gali, Dharchula SDM office</td>
+                <td>Submitted directly by local ground staff</td>
+            </tr>
+            <tr>
+                <td><strong>5. Checkpost Clearance at Chialekh &amp; Gunji</strong></td>
+                <td>Individual questioning by ITBP/SSB guards</td>
+                <td>Group manifest cleared smoothly by licensed escort</td>
+            </tr>
+            <tr>
+                <td><strong>6. Risk of Rejection / Typo Delays</strong></td>
+                <td><span class="ry-badge-diy">High</span> (Single blurred ID cancels permit)</td>
+                <td><span class="ry-badge-pro">Zero</span> (100% pre-vetted by native team)</td>
+            </tr>
+        </tbody>
+    </table>
+</div>`;
+
+            const checkpointFlowHtml = `
+<style>
+.ry-flow-wrap { background: #0c1527; border: 1px solid #1e3a8a; border-radius: 12px; padding: 22px; margin: 26px 0; }
+.ry-flow-title { color: #facc15; font-size: 16.5px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.ry-check-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.ry-check-card { background: rgba(255,255,255,0.04); border-left: 3px solid #38bdf8; border-radius: 6px; padding: 12px 14px; }
+.ry-check-card .c-num { font-size: 11px; font-weight: 700; color: #38bdf8; text-transform: uppercase; }
+.ry-check-card .c-name { font-size: 14px; font-weight: 700; color: #f8fafc; margin: 2px 0; }
+.ry-check-card .c-desc { font-size: 12px; color: #94a3b8; line-height: 1.4; }
+</style>
+<div class="ry-flow-wrap">
+    <div class="ry-flow-title"><i class="fa-solid fa-map-location-dot"></i> ITBP &amp; Security Checkpoints on the Route</div>
+    <div class="ry-check-grid">
+        <div class="ry-check-card">
+            <div class="c-num">Checkpoint 1</div>
+            <div class="c-name">Tawaghat (SSB / Police)</div>
+            <div class="c-desc">Vehicle entry log, initial ID and permit verification before the Kali River gorge road.</div>
+        </div>
+        <div class="ry-check-card">
+            <div class="c-num">Checkpoint 2</div>
+            <div class="c-name">Chialekh (ITBP High Pass)</div>
+            <div class="c-desc">Strict high-altitude post (3,200m). Full baggage, biometric, and permit roll-call.</div>
+        </div>
+        <div class="ry-check-card">
+            <div class="c-num">Checkpoint 3</div>
+            <div class="c-name">Gunji (Military Junction)</div>
+            <div class="c-desc">Main hub for Vyas Valley. Security register entry for Adi Kailash & Om Parvat splits.</div>
+        </div>
+        <div class="ry-check-card">
+            <div class="c-num">Checkpoint 4</div>
+            <div class="c-name">Nabi / Jyolingkong (Final)</div>
+            <div class="c-desc">Final verification before sacred Parvati Sarovar & Om Parvat viewpoints.</div>
+        </div>
+    </div>
+</div>`;
+
+            const bottomCtaHtml = `
+<style>
+.ry-ilp-cta-box { background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%); border: 2px solid #818cf8; border-radius: 14px; padding: 26px; margin: 36px 0 20px 0; text-align: center; color: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+.ry-ilp-cta-title { font-size: 21px; font-weight: 800; color: #facc15; margin-bottom: 8px; font-family: var(--font-sans), sans-serif; }
+.ry-ilp-cta-text { font-size: 14px; color: #cbd5e1; max-width: 680px; margin: 0 auto 20px auto; line-height: 1.6; }
+.ry-cta-btn-group { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+</style>
+<div class="ry-ilp-cta-box">
+    <div class="ry-ilp-cta-title">🏔️ Don't Get Stuck in Dharchula Administrative Lines!</div>
+    <div class="ry-ilp-cta-text">
+        Let our native Pithoragarh team handle all your Inner Line Permits, medical certificates, police clearances, and 4x4 Bolero transport from Kathgodam or Dharchula. 100% permit guarantee with zero hidden fees.
+    </div>
+    <div class="ry-cta-btn-group">
+        <a href="https://wa.me/917617617651?text=Hi%20Rudraansh%20Yatra,%20please%20send%20me%20the%202026%20Adi%20Kailash%20package%20details%20including%20ILP%20permit%20processing." target="_blank" rel="noopener" class="ry-ilp-btn wa" style="max-width:320px;">
+            <i class="fa-brands fa-whatsapp"></i> Chat with Local Permit Specialist
+        </a>
+        <a href="tel:+917617617651" class="ry-ilp-btn call" style="max-width:320px;">
+            <i class="fa-solid fa-phone"></i> Call Direct: +91 76176 17651
+        </a>
+    </div>
+</div>`;
+
+            let enriched = paragraphsHtml;
+
+            // Inject comparison table after "How to Apply: Option 2"
+            const option2Marker = '<h2 class="blog-heading">5. How to Apply: Option 2';
+            if (enriched.includes(option2Marker)) {
+                enriched = enriched.replace(option2Marker, comparisonTableHtml + '\n' + option2Marker);
+            } else {
+                enriched = comparisonTableHtml + '\n' + enriched;
+            }
+
+            // Inject Checkpoints flow before Key Permit Rules
+            const rulesMarker = '<h2 class="blog-heading">6. Key Permit Rules & Validity';
+            if (enriched.includes(rulesMarker)) {
+                enriched = enriched.replace(rulesMarker, checkpointFlowHtml + '\n' + rulesMarker);
+            } else {
+                enriched = enriched + '\n' + checkpointFlowHtml;
+            }
+
+            return ilpSummaryBanner + enriched + bottomCtaHtml;
+        }
     }
 };
 
