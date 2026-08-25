@@ -2542,6 +2542,323 @@ const BLOG_ENHANCERS = {
 /**
  * Returns enhancement data for a given blog slug if available.
  */
+// ─────────────────────────────────────────────────────────────────────────────
+// SUSPENDED BLOG: adi-kailash-yatra-2026-suspended-due-to-weather-official-reopening-date
+// SEO · AEO · GEO · AIO — Full Enhancement
+// ─────────────────────────────────────────────────────────────────────────────
+BLOG_ENHANCERS['adi-kailash-yatra-2026-suspended-due-to-weather-official-reopening-date'] = {
+    meta: {
+        title: 'Adi Kailash Yatra 2026 Suspended: SDM Dharchula Closure & September 15 Reopening Date',
+        desc: 'Adi Kailash Yatra 2026 officially suspended by SDM Dharchula due to monsoon landslides. All ILPs frozen. Route reopens September 15, 2026. Post-monsoon window: Sep 18–Oct 10. Booking & rescheduling guide.',
+        dateModified: '2026-08-25T12:00:00+05:30'
+    },
+
+    // ── SCHEMAS: FAQPage + NewsArticle + Event ──────────────────────────────
+    schemas: `
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is the Adi Kailash Yatra 2026 suspended?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. On July 3, 2026, the SDM Office in Dharchula formally suspended the Adi Kailash Yatra by freezing all Inner Line Permit (ILP) issuances. The suspension was triggered by monsoon-related landslides that severely damaged the Dharchula–Gunji border highway. The official reopening date is September 15, 2026, subject to BRO safety clearance."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the official reopening date of Adi Kailash Yatra 2026?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The official target reopening date for the Adi Kailash Yatra 2026 is September 15, 2026. However, actual ILP issuance and pilgrim movement depends on the final safety clearance from the district administration and the Border Roads Organisation (BRO). The practical travel window is September 18 to October 10, 2026."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why was the Adi Kailash Yatra 2026 suspended?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The Adi Kailash Yatra 2026 was suspended by the SDM Dharchula because monsoon rains caused severe landslides on the Dharchula–Gunji border highway. The BRO-maintained road suffered debris flows and rockfalls that made it unsafe for pilgrim vehicles. The ILP framework was used as a circuit breaker to stop inbound pilgrim traffic before the worst of the July–August monsoon season."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use my existing Inner Line Permit (ILP) after September 15?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. All permits issued for dates falling within the monsoon closure window (July 3 – September 15, 2026) are voided. ILPs are date-bound and linked to medical clearances and security tracking. You must file a fresh application after the permit window reopens on September 15. Rudraansh Yatra assists with re-application for all existing bookings."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the post-monsoon Adi Kailash window (Sep 16–Oct) better than summer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, for experienced pilgrims. The post-monsoon phase (September 16 – late October) offers exceptional atmospheric clarity, the Om Parvat symbol is more distinctly visible as snow melts into rock grooves, terrain is more stable with dry trails and normalised river levels, and pilgrim crowds are significantly lower. The trade-off is colder temperatures, especially at Jolingkong base camp (4,750m) where nights drop sub-zero."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need a new medical certificate if my Adi Kailash Yatra is rescheduled past September 15?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Government medical certificates for the Adi Kailash Yatra have a strict validity window. If your trip is deferred past September 15, 2026, you must undergo a fresh cardiovascular and respiratory screening at a designated government hospital before your permit can be re-authorised by the SDM Dharchula office."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the best travel window after the Adi Kailash Yatra reopens in 2026?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The ideal post-monsoon travel window is September 18 to October 10, 2026. This provides the optimal balance between post-rain atmospheric clarity, manageable daytime temperatures, stable roads post-BRO repair, and the Om Parvat symbol clearly defined. After mid-October, early winter snowfall begins to restrict access to higher sections of the Byas Valley route."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How many pilgrims visited Adi Kailash before the 2026 monsoon suspension?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Over 52,000 pilgrims successfully crossed the checkposts on the Adi Kailash route between May and June 2026 alone, making it a record-breaking pre-monsoon season. The route was closed on July 3, 2026 after landslides damaged the Dharchula–Gunji highway."
+      }
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "headline": "Adi Kailash Yatra 2026 Officially Suspended: SDM Dharchula Freezes All ILPs, September 15 Reopening Announced",
+  "description": "The SDM Office in Dharchula officially suspended the Adi Kailash Yatra 2026 on July 3 by freezing all Inner Line Permit issuances following monsoon landslide damage to the Dharchula–Gunji border highway. Reopening expected September 15, 2026.",
+  "image": "https://rudraanshyatra.com/assets/images/adi-kailash-road-closed.webp",
+  "datePublished": "2026-07-03T04:54:45+00:00",
+  "dateModified": "2026-08-25T12:00:00+05:30",
+  "author": {
+    "@type": "Person",
+    "name": "Dheerendra Rautela",
+    "jobTitle": "Himalayan Expedition Guide & Ground Operator",
+    "worksFor": {
+      "@type": "TravelAgency",
+      "@id": "https://rudraanshyatra.com/#organization"
+    }
+  },
+  "publisher": {
+    "@id": "https://rudraanshyatra.com/#organization"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://rudraanshyatra.com/blog/adi-kailash-yatra-2026-suspended-due-to-weather-official-reopening-date"
+  },
+  "about": [
+    {
+      "@type": "Place",
+      "name": "Adi Kailash",
+      "containedInPlace": {
+        "@type": "AdministrativeArea",
+        "name": "Pithoragarh, Uttarakhand"
+      }
+    },
+    {
+      "@type": "GovernmentOrganization",
+      "name": "SDM Office Dharchula",
+      "description": "Sub-Divisional Magistrate Office responsible for issuing Inner Line Permits for Adi Kailash Yatra in Dharchula, Pithoragarh district."
+    }
+  ],
+  "keywords": "Adi Kailash Yatra 2026 suspended, Adi Kailash route closed, SDM Dharchula ILP freeze, September 15 reopening, post-monsoon Adi Kailash, Byas Valley monsoon closure",
+  "articleSection": "Travel News & Updates",
+  "inLanguage": "en-IN",
+  "isAccessibleForFree": true
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "Adi Kailash Yatra 2026 — Post-Monsoon Reopening",
+  "description": "The Adi Kailash Yatra 2026 resumes after monsoon suspension. ILP permit issuance by SDM Dharchula restarts. Recommended travel window: September 18 – October 10, 2026.",
+  "startDate": "2026-09-15",
+  "endDate": "2026-10-31",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "location": {
+    "@type": "Place",
+    "name": "Adi Kailash (Jyolingkong), Byas Valley",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Gunji",
+      "addressRegion": "Pithoragarh, Uttarakhand",
+      "addressCountry": "IN"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "30.2553",
+      "longitude": "81.0347"
+    }
+  },
+  "organizer": {
+    "@type": "TravelAgency",
+    "@id": "https://rudraanshyatra.com/#organization"
+  },
+  "offers": {
+    "@type": "Offer",
+    "name": "Adi Kailash & Om Parvat Yatra — Post-Monsoon 2026",
+    "price": "35000",
+    "priceCurrency": "INR",
+    "availability": "https://schema.org/InStock",
+    "url": "https://rudraanshyatra.com/adi-kailash"
+  }
+}
+</script>`,
+
+    // ── RENDER: CTA + enriched article body + bottom CTA ──────────────────
+    render(paragraphsHtml) {
+        const topBanner = `
+<style>
+.ry-sus-banner { background: linear-gradient(135deg, #1a0a00 0%, #2d1500 100%); border: 2px solid #f97316; border-radius: 14px; padding: 22px 24px; margin: 0 0 28px 0; color: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+.ry-sus-banner-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+.ry-sus-banner-title { color: #fb923c; font-size: 18px; font-weight: 700; line-height: 1.3; }
+.ry-sus-status-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.ry-sus-status-pill { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 700; padding: 5px 14px; border-radius: 50px; }
+.ry-sus-status-pill.closed { background: rgba(239,68,68,0.18); border: 1.5px solid #ef4444; color: #fca5a5; }
+.ry-sus-status-pill.open { background: rgba(34,197,94,0.15); border: 1.5px solid #22c55e; color: #86efac; }
+.ry-sus-banner-desc { font-size: 14.5px; color: #fed7aa; line-height: 1.65; margin-bottom: 16px; }
+.ry-sus-timeline { background: rgba(255,255,255,0.05); border-left: 3px solid #f97316; padding: 12px 16px; border-radius: 0 8px 8px 0; margin-bottom: 16px; font-size: 13.5px; color: #fed7aa; }
+.ry-sus-timeline li { list-style: none; padding: 4px 0; display: flex; gap: 10px; }
+.ry-sus-timeline li::before { content: "→"; color: #fb923c; font-weight: bold; flex-shrink: 0; }
+.ry-sus-btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.ry-sus-btn { padding: 11px 20px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 13.5px; display: inline-flex; align-items: center; gap: 8px; }
+.ry-sus-btn.wa { background: #22c55e; color: #fff; box-shadow: 0 4px 14px rgba(34,197,94,0.35); }
+.ry-sus-btn.pkg { background: #d4af37; color: #0f172a; box-shadow: 0 4px 14px rgba(212,175,55,0.3); }
+.ry-sus-nav { background: rgba(15,23,42,0.5); border: 1px solid rgba(212,175,55,0.25); border-radius: 10px; padding: 14px 16px; margin-bottom: 28px; font-size: 13.5px; color: #cbd5e1; }
+.ry-sus-nav strong { color: #fbbf24; display: block; margin-bottom: 8px; }
+.ry-sus-nav-pills { display: flex; flex-wrap: wrap; gap: 7px; }
+.ry-sus-nav-pill { color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2); white-space: nowrap; }
+.ry-sus-bottom { background: #0f172a; border: 2px dashed rgba(212,175,55,0.5); border-radius: 12px; padding: 22px 24px; margin: 32px 0 8px 0; color: #fff; }
+.ry-sus-bottom-title { font-size: 15px; font-weight: 700; color: #fbbf24; margin-bottom: 8px; }
+.ry-sus-bottom-desc { font-size: 14px; color: #e2e8f0; line-height: 1.65; margin-bottom: 16px; }
+.ry-sus-bottom-btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.ry-sus-bottom-btn { padding: 10px 18px; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 13.5px; display: inline-flex; align-items: center; gap: 7px; }
+.ry-sus-bottom-btn.wa { background: #22c55e; color: #fff; }
+.ry-sus-bottom-btn.call { background: transparent; border: 1.5px solid #d4af37; color: #d4af37; }
+.ry-sus-also { margin-top: 14px; font-size: 13px; color: #94a3b8; }
+.ry-sus-also a { color: #93c5fd; }
+@media (max-width: 680px) {
+  .ry-sus-banner { padding: 16px 14px; border-radius: 10px; margin-bottom: 20px; }
+  .ry-sus-banner-title { font-size: 15px; }
+  .ry-sus-banner-desc { font-size: 13.5px; margin-bottom: 12px; }
+  .ry-sus-btn { font-size: 13px; padding: 10px 14px; width: 100%; justify-content: center; box-sizing: border-box; }
+  .ry-sus-btn-row { flex-direction: column; gap: 8px; }
+  .ry-sus-timeline { padding: 10px 12px; font-size: 13px; }
+  .ry-sus-nav { padding: 12px 12px; }
+  .ry-sus-nav-pill { font-size: 12px; padding: 3px 8px; }
+  .ry-sus-bottom { padding: 16px 14px; border-radius: 10px; }
+  .ry-sus-bottom-btn { font-size: 13px; padding: 10px 14px; width: 100%; justify-content: center; box-sizing: border-box; }
+  .ry-sus-bottom-btn-row { flex-direction: column; gap: 8px; }
+}
+@media (max-width: 380px) {
+  .ry-sus-banner { padding: 12px 10px; }
+  .ry-sus-banner-title { font-size: 14px; }
+  .ry-sus-btn { font-size: 12px; padding: 9px 10px; }
+  .ry-sus-bottom-btn { font-size: 12px; padding: 9px 10px; }
+}
+</style>
+
+<div class="ry-sus-banner">
+  <div class="ry-sus-banner-head">
+    <span style="font-size:26px">🚧</span>
+    <strong class="ry-sus-banner-title">Adi Kailash Yatra 2026 — Official Suspension & Reopening Status</strong>
+  </div>
+  <div class="ry-sus-status-row">
+    <span class="ry-sus-status-pill closed">🔴 Jul 3 – Sep 14: Route CLOSED</span>
+    <span class="ry-sus-status-pill open">🟢 Sep 15+: Reopening Expected</span>
+  </div>
+  <p class="ry-sus-banner-desc">
+    The <strong>SDM Dharchula officially froze all Inner Line Permits</strong> on July 3, 2026 following monsoon landslide damage to the Dharchula–Gunji highway. No pilgrim movement is permitted until BRO completes road clearance. The official restart window is <strong style="color:#fbbf24">September 15, 2026</strong>.
+  </p>
+  <ul class="ry-sus-timeline" style="list-style:none; margin:0; padding:0;">
+    <li>Jul 3, 2026 — SDM Dharchula suspends all ILP issuances</li>
+    <li>Jul–Aug 2026 — BRO repairing Dharchula–Gunji highway debris</li>
+    <li>Sep 15, 2026 — Official ILP processing restarts (subject to clearance)</li>
+    <li>Sep 18–Oct 10 — Optimal post-monsoon travel window</li>
+  </ul>
+  <div class="ry-sus-btn-row">
+    <a href="https://wa.me/917617617651?text=Namaste!%20I%20have%20a%20booking%20affected%20by%20the%20Adi%20Kailash%20Yatra%202026%20suspension.%20Please%20help%20me%20reschedule%20to%20the%20September%20window." target="_blank" rel="noopener" class="ry-sus-btn wa">
+      <i class="fa-brands fa-whatsapp" style="font-size:17px"></i> Reschedule on WhatsApp
+    </a>
+    <a href="/adi-kailash" class="ry-sus-btn pkg">
+      <i class="fa-solid fa-mountain" style="font-size:14px"></i> View Sep–Oct Packages
+    </a>
+  </div>
+</div>
+
+<div class="ry-sus-nav">
+  <strong>📚 Essential Guides for Rescheduling Pilgrims</strong>
+  <div class="ry-sus-nav-pills">
+    <a href="/blog/inner-line-permit-adi-kailash-2026-guide" class="ry-sus-nav-pill">📋 ILP Permit Guide</a>
+    <a href="/blog/best-time-to-visit-adi-kailash-om-parvat-weather-season-guide" class="ry-sus-nav-pill">🗓️ Best Time to Visit</a>
+    <a href="/blog/adi-kailash-yatra-cost-package-price-breakdown-budget-guide" class="ry-sus-nav-pill">💰 Cost & Budget Guide</a>
+    <a href="/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates" class="ry-sus-nav-pill">📅 Full 2026 Status Update</a>
+    <a href="/blog/5-things-you-need-to-do-before-planning-a-trip-to-adi-kailash" class="ry-sus-nav-pill">✅ Pre-Trip Checklist</a>
+  </div>
+</div>`;
+
+        const bottomCta = `
+<div class="ry-sus-bottom">
+  <p class="ry-sus-bottom-title">📞 Your Booking is Affected? We'll Help You Reschedule — Free of Charge</p>
+  <p class="ry-sus-bottom-desc">
+    Rudraansh Yatra is a <strong>NIDHI-certified ground operator physically based in Pithoragarh</strong>. We track the Adi Kailash route status, SDM ILP issuance dates, and BRO road clearance announcements daily. If your trip is caught in the monsoon closure window, call or WhatsApp us — we'll reschedule your ILP, medical certificate, and transport slots for the <strong>September–October 2026 window</strong> at no extra charge.
+  </p>
+  <div class="ry-sus-bottom-btn-row">
+    <a href="https://wa.me/917617617651?text=Namaste!%20My%20Adi%20Kailash%20Yatra%20was%20affected%20by%20the%20monsoon%20suspension.%20Please%20help%20me%20reschedule%20for%20the%20September-October%202026%20window." target="_blank" rel="noopener" class="ry-sus-bottom-btn wa">
+      <i class="fa-brands fa-whatsapp"></i> WhatsApp for Rescheduling
+    </a>
+    <a href="tel:+917617617651" class="ry-sus-bottom-btn call">
+      <i class="fa-solid fa-phone"></i> Call +91 76176 17651
+    </a>
+  </div>
+  <p class="ry-sus-also">Also read:
+    <a href="/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates">Full 2026 Monsoon Status & Reopening Updates</a> ·
+    <a href="/blog/is-adi-kailash-yatra-safe-for-senior-citizens-guide">Senior Citizens Guide</a> ·
+    <a href="/blog/inner-line-permit-adi-kailash-2026-guide">ILP Permit Step-by-Step</a>
+  </p>
+</div>`;
+
+        // Enrich article body with inline interlinks
+        const enrichedContent = paragraphsHtml
+            .replace(/<!--EndFragment-->/g, '')
+            .replace(/ class="font-claude-response-body[^"]*"/g, '')
+            .replace(/ class="text-text-100[^"]*"/g, '')
+            .replace(/ dir="ltr"/g, '')
+            // Interlink: ILP guide (first occurrence only, not inside <a> tags)
+            .replace(
+                /Inner Line Permits?(?!\s*\(ILP\) are issued|\s*\(ILPs?\) will not)/,
+                '<a href="/blog/inner-line-permit-adi-kailash-2026-guide" style="color:#7c3aed;text-decoration:underline">Inner Line Permits</a>'
+            )
+            // Interlink: best time to visit on post-monsoon mention
+            .replace(
+                /best time to visit adi kailash/i,
+                '<a href="/blog/best-time-to-visit-adi-kailash-om-parvat-weather-season-guide" style="color:#7c3aed;text-decoration:underline">best time to visit Adi Kailash</a>'
+            )
+            // Interlink: full 2026 status update on reopening date mention
+            .replace(
+                /official reopening date is <strong>September 15, 2026<\/strong>/,
+                'official reopening date is <strong>September 15, 2026</strong> (<a href="/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates" style="color:#7c3aed;text-decoration:underline">see full 2026 status update</a>)'
+            )
+            // Interlink: cost guide on mention of booking/rescheduling
+            .replace(
+                /managing the logistics correctly now prevents long-term booking losses/,
+                'managing the logistics correctly now prevents long-term booking losses (see our <a href="/blog/adi-kailash-yatra-cost-package-price-breakdown-budget-guide" style="color:#7c3aed;text-decoration:underline">cost & rescheduling budget guide</a>)'
+            );
+
+        return topBanner + enrichedContent + bottomCta;
+    }
+};
+
 function getBlogEnhancement(slug, paragraphsHtml) {
     const enhancer = BLOG_ENHANCERS[slug];
     if (!enhancer) return null;

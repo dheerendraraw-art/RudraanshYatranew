@@ -414,13 +414,8 @@ app.get('/blog/:slug', async (req, res) => {
         
         const ogImageUrl = resolvedMainImg.startsWith('http') ? resolvedMainImg : `https://rudraanshyatra.com${resolvedMainImg.startsWith('/') ? '' : '/'}${resolvedMainImg}`;
 
-        const canonicalOverrides = {
-            'adi-kailash-yatra-2026-suspended-due-to-weather-official-reopening-date':
-                'adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates'
-        };
-        const canonicalUrl = canonicalOverrides[slug]
-            ? `https://rudraanshyatra.com/blog/${canonicalOverrides[slug]}`
-            : `https://rudraanshyatra.com/blog/${slug}`;
+        // Each blog self-canonicalizes to its own URL for independent ranking
+        const canonicalUrl = `https://rudraanshyatra.com/blog/${slug}`;
 
         // Specific schema & CTA banner enhancements for high-performing blog posts
         let extraSchemas = '';
