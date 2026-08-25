@@ -9733,6 +9733,94 @@ html, body { overflow-x: hidden; max-width: 100%; }
     #pane-bookings tr.booking-card-row.show-all-details .mobile-detail-field {
         display: flex !important;
     }
+
+    /* Custom Requests and Discount Registrations Mobile Cards */
+    #pane-requests .admin-table-container,
+    #pane-discounts .admin-table-container {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        overflow: visible !important;
+        padding: 0 !important;
+    }
+
+    #pane-requests .admin-table,
+    #pane-discounts .admin-table {
+        min-width: 100% !important;
+        width: 100% !important;
+        display: block !important;
+        border-spacing: 0 !important;
+        background: transparent !important;
+    }
+
+    #pane-requests .admin-table thead,
+    #pane-discounts .admin-table thead {
+        display: none !important;
+    }
+
+    #pane-requests .admin-table tbody,
+    #pane-discounts .admin-table tbody {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+        width: 100% !important;
+    }
+
+    #pane-requests .admin-table tbody tr.requests-card-row,
+    #pane-discounts .admin-table tbody tr.discounts-card-row {
+        background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%) !important;
+        border: 1.5px solid rgba(212, 175, 55, 0.4) !important;
+        border-left: 4px solid var(--color-gold) !important;
+        border-radius: 14px !important;
+        padding: 12px 14px !important;
+        margin-bottom: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4) !important;
+        position: relative !important;
+        gap: 0 !important;
+    }
+
+    #pane-requests .admin-table tbody tr.requests-card-row td,
+    #pane-discounts .admin-table tbody tr.discounts-card-row td {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 8px 0 !important;
+        border-bottom: 1px dashed rgba(255, 255, 255, 0.1) !important;
+        font-size: 13.5px !important;
+        color: #f8fafc !important;
+        text-align: right !important;
+        min-height: 36px !important;
+        background: transparent !important;
+    }
+
+    #pane-requests .admin-table tbody tr.requests-card-row td::before,
+    #pane-discounts .admin-table tbody tr.discounts-card-row td::before {
+        content: attr(data-label);
+        font-weight: 800;
+        color: var(--color-gold) !important;
+        font-size: 11px !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+        margin-right: 10px !important;
+        text-align: left !important;
+        flex-shrink: 0 !important;
+    }
+
+    #pane-requests .admin-table tbody tr.requests-card-row td.booking-actions-cell,
+    #pane-discounts .admin-table tbody tr.discounts-card-row td.booking-actions-cell {
+        border-bottom: none !important;
+        padding-top: 10px !important;
+        padding-bottom: 2px !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+
+    #pane-requests .admin-table tbody tr.requests-card-row td.booking-actions-cell::before,
+    #pane-discounts .admin-table tbody tr.discounts-card-row td.booking-actions-cell::before {
+        display: none !important;
+    }
 }
 
 @media (max-width: 580px) {
