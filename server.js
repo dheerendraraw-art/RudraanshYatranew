@@ -3479,14 +3479,26 @@ async function syncGoogleSheetLeads() {
 
         const normalizePhone = (p) => (p || '').replace(/\D/g, '').replace(/^0+/, '').slice(-10);
 
-        const { data: existingLeads, error: fetchErr } = await supabase.from('leads').select('phone');
-        if (fetchErr) throw fetchErr;
-
+        // ── PAGINATED fetch of ALL existing phones (Supabase default limit = 1000) ──
         const existingPhones = new Set();
-        (existingLeads || []).forEach(l => {
-            const norm = normalizePhone(l.phone);
-            if (norm.length >= 7) existingPhones.add(norm);
-        });
+        let page = 0;
+        const PAGE_SIZE = 1000;
+        while (true) {
+            const { data: phonePage, error: fetchErr } = await supabase
+                .from('leads')
+                .select('phone')
+                .range(page * PAGE_SIZE, (page + 1) * PAGE_SIZE - 1);
+            if (fetchErr) throw fetchErr;
+            if (!phonePage || phonePage.length === 0) break;
+            phonePage.forEach(l => {
+                const norm = normalizePhone(l.phone);
+                if (norm.length >= 7) existingPhones.add(norm);
+            });
+            if (phonePage.length < PAGE_SIZE) break; // last page
+            page++;
+        }
+        console.log(`[Google Sheet Sync] Loaded ${existingPhones.size} existing phones across ${page + 1} page(s).`);
+
 
         const toInsert = [];
         const seenInSheet = new Set();
