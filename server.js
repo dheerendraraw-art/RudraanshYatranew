@@ -3508,6 +3508,16 @@ async function syncGoogleSheetLeads() {
             const name = (r.full_name || r.name || '').trim();
             if (!name) continue;
 
+            // Skip Meta test / placeholder rows
+            const emailVal = (r.email || '').toLowerCase().trim();
+            if (
+                name.toLowerCase().includes('test lead') ||
+                name.toLowerCase().includes('dummy data') ||
+                name.startsWith('<test') ||
+                emailVal === 'test@meta.com' ||
+                emailVal.includes('dummy')
+            ) continue;
+
             const rawPhone = (r.phone_number || r.phone || '').replace(/^p:/i, '').trim();
             const norm = normalizePhone(rawPhone);
 
