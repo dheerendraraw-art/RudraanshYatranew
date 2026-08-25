@@ -2859,6 +2859,306 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-suspended-due-to-weather-official-reopeni
     }
 };
 
+// ─────────────────────────────────────────────────────────────────────────────
+// PRE-TRIP CHECKLIST BLOG: 5-things-you-need-to-do-before-planning-a-trip-to-adi-kailash
+// SEO · AEO · GEO · AIO — Full Enhancement
+// ─────────────────────────────────────────────────────────────────────────────
+BLOG_ENHANCERS['5-things-you-need-to-do-before-planning-a-trip-to-adi-kailash'] = {
+    meta: {
+        title: '5 Things You Must Do Before Adi Kailash Yatra 2026: ILP, Medical Cert, Gear & Booking Checklist',
+        desc: 'Avoid being turned back at ITBP checkpoint. Adi Kailash pre-trip checklist: Inner Line Permit (ILP), government medical certificate, age eligibility (10–65 yrs), gear packing list & best months. By Rudraansh Yatra, Pithoragarh.',
+        dateModified: '2026-08-25T12:00:00+05:30'
+    },
+
+    // ── SCHEMAS: FAQPage + HowTo + Article ────────────────────────────────
+    schemas: `
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What documents are required for Adi Kailash Yatra 2026?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Three documents are mandatory for the Adi Kailash Yatra 2026: (1) Inner Line Permit (ILP) issued by the SDM Office in Dharchula — requires original Aadhaar card and passport-sized photographs; (2) Government-certified high-altitude medical fitness certificate, obtained at a government hospital or at the Dharchula medical centre; (3) Proof of Indian citizenship (Aadhaar card or passport). Foreign nationals cannot obtain the ILP required for this border area."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the age limit for Adi Kailash Yatra?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The Adi Kailash Yatra is recommended for pilgrims aged 10 to 65 years. Senior citizens between 65 and 75 years can participate if they have a normal ECG, controlled blood pressure, and a government medical fitness clearance. Children below 10 years and individuals above 75 years are generally advised against the trip due to the high-altitude terrain and 4x4 vehicle travel on rough border roads above 3,000m."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is a medical certificate compulsory for Adi Kailash Yatra?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, a government-certified high-altitude medical fitness certificate is compulsory for the Adi Kailash Yatra. The certificate checks blood pressure, heart (ECG), lung capacity, and blood oxygen saturation. It is required for Inner Line Permit (ILP) processing by the SDM Dharchula Office and ITBP checkposts. You can obtain it at a government hospital before departure or at the medical facility in Dharchula on arrival."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the best month for Adi Kailash Yatra?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The two best windows for Adi Kailash Yatra are: (1) May to June — pleasant daytime temperatures (15–25°C in valleys), clear skies, rhododendron blooms in lower valleys, and stable road conditions; (2) September to October — post-monsoon clarity with crisp mountain views, Om Parvat symbol distinctly visible, and fewer crowds. July and August must be completely avoided due to heavy monsoon rains, active landslides, and frequent road blockages on the Dharchula–Gunji route."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What should I pack for the Adi Kailash Yatra?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Essential packing for Adi Kailash Yatra includes: Clothing — 3-layer system (base thermal, mid fleece, outer waterproof), warm down jacket, woollen cap, waterproof gloves, sturdy trekking shoes with ankle support; Accessories — UV-protection glacier sunglasses, high-SPF sunscreen (50+), lip balm, trekking pole; Medical — Diamox (acetazolamide for altitude sickness, take doctor advice), personal first-aid kit, oral rehydration salts, pain relievers; Documents — original Aadhaar card, 6 passport photos, completed medical form. A daypack of 20–25L is sufficient as 4x4 vehicles carry main luggage."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need an Inner Line Permit (ILP) for Adi Kailash?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, an Inner Line Permit (ILP) is mandatory for all Indian citizens travelling to Adi Kailash and the Byas Valley (Gunji, Nabhidhang, Jyolingkong). The permit is issued by the Sub-Divisional Magistrate (SDM) Office in Dharchula. It requires a valid photo ID (Aadhaar/Passport), passport-sized photographs, and a medical fitness certificate. The ILP is tied to specific travel dates and cannot be transferred. Foreign nationals are not eligible for this permit."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How many days before Adi Kailash Yatra should I start preparing?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Start preparing at least 30 days before your Adi Kailash Yatra departure. This gives you time to: book a registered local operator 30 days out; arrange the ILP application 20–25 days out (as processing takes 5–10 days); get your government medical certificate done 15 days before travel (validity window); and complete your gear procurement 7–10 days before. Last-minute preparation almost always results in missing the ILP or being turned back at the Dharchula SDM checkpoint."
+      }
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to Prepare for Adi Kailash Yatra 2026: 5-Step Pre-Trip Checklist",
+  "description": "The official pre-departure checklist from Rudraansh Yatra — a Pithoragarh-based ground operator — covering every mandatory step before your Adi Kailash Yatra. Avoid being turned back at ITBP checkpoints.",
+  "image": "https://rudraanshyatra.com/assets/images/adi-kailash-blog.webp",
+  "totalTime": "P30D",
+  "estimatedCost": {
+    "@type": "MonetaryAmount",
+    "currency": "INR",
+    "value": "35000"
+  },
+  "supply": [
+    { "@type": "HowToSupply", "name": "Original Aadhaar Card" },
+    { "@type": "HowToSupply", "name": "6 Passport-Sized Photographs" },
+    { "@type": "HowToSupply", "name": "Government Medical Fitness Certificate" },
+    { "@type": "HowToSupply", "name": "Down Jacket (600+ fill power)" },
+    { "@type": "HowToSupply", "name": "Glacier UV-Protection Sunglasses" },
+    { "@type": "HowToSupply", "name": "Diamox tablets (consult doctor)" }
+  ],
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Check Age Suitability",
+      "text": "Confirm that all travellers in your group are between 10 and 65 years. Senior citizens (65–75) need additional medical clearance with normal ECG and controlled BP. The route involves 4x4 travel on rough border roads at altitudes above 3,000m.",
+      "position": 1
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Get Medical Certificate & Inner Line Permit",
+      "text": "Visit a government hospital for a high-altitude fitness check (BP, ECG, lungs). Submit the certificate with your Aadhaar card and photographs to the SDM Office Dharchula for your Inner Line Permit (ILP). Process takes 5–10 working days. Book a local operator like Rudraansh Yatra to handle ILP filing on your behalf.",
+      "position": 2
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Prepare for Cold & High-Altitude Weather",
+      "text": "Pack a 3-layer clothing system: thermal base layer, mid-layer fleece, and outer waterproof shell. Night temperatures drop below 0°C at Gunji (3,300m) and Jyolingkong (4,750m) even in May–June. Carry a heavy down jacket, woollen cap, and waterproof gloves.",
+      "position": 3
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Choose the Best Month to Visit",
+      "text": "Book for May–June (clear skies, blooming valleys) or September–October (post-monsoon clarity, Om Parvat symbol clearly visible). Strictly avoid July–August due to monsoon landslides that block the Dharchula–Gunji highway.",
+      "position": 4
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Pack the Right Gear & Documentation",
+      "text": "Carry: trekking shoes with ankle support, UV sunglasses, SPF 50+ sunscreen, lip balm, a personal first-aid kit with Diamox, ORS, and pain relievers. Documents: original Aadhaar, 6 passport photos, medical fitness form. Use a 20–25L daypack; the operator's 4x4 carries main luggage.",
+      "position": 5
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "5 Things You Must Do Before Adi Kailash Yatra 2026: ILP, Medical Cert, Gear & Booking Checklist",
+  "description": "Avoid being turned back at ITBP checkpoints. The exact pre-departure checklist from Rudraansh Yatra: Inner Line Permit (ILP), government medical certificate, age eligibility, gear list and best month to visit.",
+  "image": "https://rudraanshyatra.com/assets/images/adi-kailash-blog.webp",
+  "datePublished": "2026-06-23T12:59:28+00:00",
+  "dateModified": "2026-08-25T12:00:00+05:30",
+  "author": {
+    "@type": "Person",
+    "name": "Dheerendra Rautela",
+    "jobTitle": "Himalayan Expedition Guide & Ground Operator",
+    "worksFor": { "@type": "TravelAgency", "@id": "https://rudraanshyatra.com/#organization" }
+  },
+  "publisher": { "@id": "https://rudraanshyatra.com/#organization" },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://rudraanshyatra.com/blog/5-things-you-need-to-do-before-planning-a-trip-to-adi-kailash"
+  },
+  "keywords": "Adi Kailash Yatra checklist, Adi Kailash ILP permit, Adi Kailash medical certificate, what to pack for Adi Kailash, Adi Kailash age limit, best month for Adi Kailash, Adi Kailash preparation",
+  "articleSection": "Travel Guides & Checklists",
+  "inLanguage": "en-IN",
+  "isAccessibleForFree": true
+}
+</script>`,
+
+    // ── RENDER: Top urgency banner + structured content + bottom CTA ───────
+    render(paragraphsHtml) {
+        const topBanner = `
+<style>
+.ry-5t-banner { background: linear-gradient(135deg, #0a1628 0%, #0f2444 100%); border: 2px solid #d4af37; border-radius: 14px; padding: 22px 24px; margin: 0 0 28px 0; color: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+.ry-5t-banner-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+.ry-5t-banner-title { color: #fbbf24; font-size: 18px; font-weight: 700; line-height: 1.3; }
+.ry-5t-banner-desc { font-size: 14.5px; color: #e2e8f0; line-height: 1.65; margin-bottom: 14px; }
+.ry-5t-warning { background: rgba(239,68,68,0.12); border-left: 3px solid #ef4444; padding: 10px 14px; border-radius: 0 6px 6px 0; margin-bottom: 16px; font-size: 13.5px; color: #fca5a5; }
+.ry-5t-checklist { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.ry-5t-check-item { display: inline-flex; align-items: center; gap: 6px; background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); border-radius: 20px; padding: 4px 12px; font-size: 12.5px; color: #fde68a; font-weight: 600; }
+.ry-5t-btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.ry-5t-btn { padding: 11px 20px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 13.5px; display: inline-flex; align-items: center; gap: 8px; }
+.ry-5t-btn.wa { background: #22c55e; color: #fff; box-shadow: 0 4px 14px rgba(34,197,94,0.35); }
+.ry-5t-btn.pkg { background: #d4af37; color: #0f172a; box-shadow: 0 4px 14px rgba(212,175,55,0.3); }
+.ry-5t-nav { background: rgba(15,23,42,0.5); border: 1px solid rgba(212,175,55,0.25); border-radius: 10px; padding: 14px 16px; margin-bottom: 28px; font-size: 13.5px; color: #cbd5e1; }
+.ry-5t-nav strong { color: #fbbf24; display: block; margin-bottom: 8px; }
+.ry-5t-nav-pills { display: flex; flex-wrap: wrap; gap: 7px; }
+.ry-5t-nav-pill { color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2); white-space: nowrap; }
+.ry-5t-bottom { background: #0f172a; border: 2px dashed rgba(212,175,55,0.5); border-radius: 12px; padding: 22px 24px; margin: 32px 0 8px 0; color: #fff; }
+.ry-5t-bottom-title { font-size: 15px; font-weight: 700; color: #fbbf24; margin-bottom: 8px; }
+.ry-5t-bottom-desc { font-size: 14px; color: #e2e8f0; line-height: 1.65; margin-bottom: 16px; }
+.ry-5t-bottom-btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.ry-5t-bottom-btn { padding: 10px 18px; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 13.5px; display: inline-flex; align-items: center; gap: 7px; }
+.ry-5t-bottom-btn.wa { background: #22c55e; color: #fff; }
+.ry-5t-bottom-btn.call { background: transparent; border: 1.5px solid #d4af37; color: #d4af37; }
+.ry-5t-also { margin-top: 14px; font-size: 13px; color: #94a3b8; }
+.ry-5t-also a { color: #93c5fd; }
+@media (max-width: 680px) {
+  .ry-5t-banner { padding: 16px 14px; border-radius: 10px; margin-bottom: 20px; }
+  .ry-5t-banner-title { font-size: 15px; }
+  .ry-5t-banner-desc { font-size: 13.5px; margin-bottom: 12px; }
+  .ry-5t-btn { font-size: 13px; padding: 10px 14px; width: 100%; justify-content: center; box-sizing: border-box; }
+  .ry-5t-btn-row { flex-direction: column; gap: 8px; }
+  .ry-5t-nav { padding: 12px 12px; }
+  .ry-5t-nav-pill { font-size: 12px; padding: 3px 8px; }
+  .ry-5t-bottom { padding: 16px 14px; border-radius: 10px; }
+  .ry-5t-bottom-btn { font-size: 13px; padding: 10px 14px; width: 100%; justify-content: center; box-sizing: border-box; }
+  .ry-5t-bottom-btn-row { flex-direction: column; gap: 8px; }
+}
+@media (max-width: 380px) {
+  .ry-5t-banner { padding: 12px 10px; }
+  .ry-5t-banner-title { font-size: 14px; }
+  .ry-5t-btn { font-size: 12px; padding: 9px 10px; }
+  .ry-5t-bottom-btn { font-size: 12px; padding: 9px 10px; }
+}
+</style>
+
+<div class="ry-5t-banner">
+  <div class="ry-5t-banner-head">
+    <span style="font-size:26px">📋</span>
+    <strong class="ry-5t-banner-title">Adi Kailash Yatra 2026 — Pre-Departure Checklist</strong>
+  </div>
+  <div class="ry-5t-warning">
+    ⚠️ <strong>Every season, pilgrims are turned back at the ITBP checkpoint</strong> for missing these 5 steps. Don't let it happen to you.
+  </div>
+  <p class="ry-5t-banner-desc">
+    This is the <strong>exact checklist we give every pilgrim</strong> before they leave home — based on 8 years of running Adi Kailash Yatras from our Pithoragarh office. Get all 5 right before you book your travel.
+  </p>
+  <div class="ry-5t-checklist">
+    <span class="ry-5t-check-item">✅ Age 10–65 years</span>
+    <span class="ry-5t-check-item">✅ Inner Line Permit (ILP)</span>
+    <span class="ry-5t-check-item">✅ Govt. Medical Certificate</span>
+    <span class="ry-5t-check-item">✅ Cold-weather gear packed</span>
+    <span class="ry-5t-check-item">✅ Right travel month chosen</span>
+  </div>
+  <div class="ry-5t-btn-row">
+    <a href="https://wa.me/917617617651?text=Namaste!%20I%20am%20planning%20the%20Adi%20Kailash%20Yatra%20and%20want%20to%20confirm%20my%20pre-trip%20checklist%20and%20ILP%20process.%20Please%20guide%20me." target="_blank" rel="noopener" class="ry-5t-btn wa">
+      <i class="fa-brands fa-whatsapp" style="font-size:17px"></i> Get Your Checklist Verified
+    </a>
+    <a href="/adi-kailash" class="ry-5t-btn pkg">
+      <i class="fa-solid fa-mountain" style="font-size:14px"></i> View 2026 Packages
+    </a>
+  </div>
+</div>
+
+<div class="ry-5t-nav">
+  <strong>📚 Deep-Dive Guides for Each Checklist Step</strong>
+  <div class="ry-5t-nav-pills">
+    <a href="/blog/inner-line-permit-adi-kailash-2026-guide" class="ry-5t-nav-pill">📋 ILP Permit Step-by-Step</a>
+    <a href="/blog/adi-kailash-packing-list-essential-guide-for-yatris" class="ry-5t-nav-pill">🎒 Complete Packing List</a>
+    <a href="/blog/best-time-to-visit-adi-kailash-om-parvat-weather-season-guide" class="ry-5t-nav-pill">🗓️ Best Month Guide</a>
+    <a href="/blog/is-adi-kailash-yatra-safe-for-senior-citizens-guide" class="ry-5t-nav-pill">👴 Senior Citizens Guide</a>
+    <a href="/blog/adi-kailash-yatra-difficulty-level-can-beginners-do-it" class="ry-5t-nav-pill">⛰️ Difficulty Level</a>
+  </div>
+</div>`;
+
+        const bottomCta = `
+<div class="ry-5t-bottom">
+  <p class="ry-5t-bottom-title">📞 Not Sure If You're Ready? Ask Us Before You Book</p>
+  <p class="ry-5t-bottom-desc">
+    Rudraansh Yatra is a <strong>NIDHI-certified ground operator physically based in Pithoragarh</strong>. We handle <strong>ILP filing, medical certificate coordination, and gear guidance</strong> for every pilgrim — free of charge when you book with us. Call or WhatsApp us and we'll walk through this checklist with you step by step.
+  </p>
+  <div class="ry-5t-bottom-btn-row">
+    <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20plan%20the%20Adi%20Kailash%20Yatra%202026.%20Please%20help%20me%20with%20the%20ILP%20process%2C%20medical%20certificate%2C%20and%20gear%20checklist." target="_blank" rel="noopener" class="ry-5t-bottom-btn wa">
+      <i class="fa-brands fa-whatsapp"></i> WhatsApp for Planning Help
+    </a>
+    <a href="tel:+917617617651" class="ry-5t-bottom-btn call">
+      <i class="fa-solid fa-phone"></i> Call +91 76176 17651
+    </a>
+  </div>
+  <p class="ry-5t-also">Also read:
+    <a href="/blog/inner-line-permit-adi-kailash-2026-guide">Inner Line Permit (ILP) — Full Step-by-Step Guide</a> ·
+    <a href="/blog/adi-kailash-packing-list-essential-guide-for-yatris">Complete Adi Kailash Packing List</a> ·
+    <a href="/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates">2026 Yatra Status & Reopening</a>
+  </p>
+</div>`;
+
+        // Enrich article body with inline interlinks
+        const enrichedContent = paragraphsHtml
+            .replace(/<!--EndFragment-->/g, '')
+            .replace(/ class="font-claude-response-body[^"]*"/g, '')
+            .replace(/ class="text-text-100[^"]*"/g, '')
+            .replace(/ dir="ltr"/g, '')
+            // Interlink: packing list guide on gear mention
+            .replace(
+                /Pack the Right Gear/,
+                '<a href="/blog/adi-kailash-packing-list-essential-guide-for-yatris" style="color:#7c3aed;text-decoration:underline">Pack the Right Gear</a>'
+            )
+            // Interlink: best time guide on month mention
+            .replace(
+                /Choose the Best Month to Visit/,
+                '<a href="/blog/best-time-to-visit-adi-kailash-om-parvat-weather-season-guide" style="color:#7c3aed;text-decoration:underline">Choose the Best Month to Visit</a>'
+            )
+            // Interlink: senior citizens guide on age mention
+            .replace(
+                /between the ages of 10 and 65 years/,
+                'between the ages of 10 and 65 years (see our <a href="/blog/is-adi-kailash-yatra-safe-for-senior-citizens-guide" style="color:#7c3aed;text-decoration:underline">senior citizens guide</a>)'
+            )
+            // Interlink: status update on monsoon avoidance mention
+            .replace(
+                /Avoid July and August due to heavy monsoons/,
+                'Avoid July and August due to heavy monsoons (see <a href="/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates" style="color:#7c3aed;text-decoration:underline">2026 monsoon closure update</a>)'
+            );
+
+        return topBanner + enrichedContent + bottomCta;
+    }
+};
+
 function getBlogEnhancement(slug, paragraphsHtml) {
     const enhancer = BLOG_ENHANCERS[slug];
     if (!enhancer) return null;
