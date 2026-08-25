@@ -2305,12 +2305,12 @@ const BLOG_ENHANCERS = {
 .ry-alt-card.safe { background: rgba(34,197,94,0.08); border-color: rgba(34,197,94,0.3); }
 .ry-alt-card.caution { background: rgba(251,191,36,0.08); border-color: rgba(251,191,36,0.3); }
 .ry-alt-card.risk { background: rgba(239,68,68,0.08); border-color: rgba(239,68,68,0.3); }
-.ry-alt-card .alt-loc { font-size: 14.5px; font-weight: 700; color: #f8fafc; margin-bottom: 4px; }
+.ry-alt-card .alt-loc { font-size: 14.5px; font-weight: 700; color: #1e293b; margin-bottom: 4px; }
 .ry-alt-card .alt-m { font-size: 12px; font-weight: 700; margin-bottom: 6px; }
-.ry-alt-card.safe .alt-m { color: #4ade80; }
-.ry-alt-card.caution .alt-m { color: #fbbf24; }
-.ry-alt-card.risk .alt-m { color: #f87171; }
-.ry-alt-card .alt-note { font-size: 12px; color: #94a3b8; line-height: 1.4; }
+.ry-alt-card.safe .alt-m { color: #16a34a; }
+.ry-alt-card.caution .alt-m { color: #b45309; }
+.ry-alt-card.risk .alt-m { color: #dc2626; }
+.ry-alt-card .alt-note { font-size: 12px; color: #475569; line-height: 1.4; }
 .ry-alt-card .alt-badge { display: inline-block; font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-bottom: 6px; }
 .ry-alt-card.safe .alt-badge { background: rgba(34,197,94,0.2); color: #4ade80; }
 .ry-alt-card.caution .alt-badge { background: rgba(251,191,36,0.2); color: #fbbf24; }
