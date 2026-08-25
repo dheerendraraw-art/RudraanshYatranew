@@ -15,7 +15,7 @@
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></noscript>
-    <link rel="stylesheet" href="style.css?v=7.4">
+    <link rel="stylesheet" href="style.css?v=7.5">
     <meta name="robots" content="noindex, nofollow">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
@@ -179,22 +179,44 @@
 
             <!-- PANE 1: BOOKINGS -->
             <div id="pane-bookings" class="admin-tab-content-pane">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
-                    <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap; flex-grow: 1;">
-                        <h3 class="admin-form-title" style="margin-bottom: 0; border-bottom: none;"><i
-                                class="fa-solid fa-calendar-check" style="color: var(--color-gold);"></i> Travel Booking Inquiries</h3>
-                        <div style="position: relative; width: 260px; max-width: 100%;">
-                            <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: rgba(212, 175, 55, 0.6); font-size: 13px;"></i>
-                            <input type="text" id="search-bookings-input" placeholder="Search name, phone, email..." oninput="applyBookingsFilters()" style="background: #1e293b; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: var(--border-radius-sm, 4px); padding: 8px 12px 8px 32px; font-size: 13px; outline: none; width: 100%; font-weight: 500; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); transition: border-color 0.2s ease;">
+                <div class="bookings-header-wrapper" style="margin-bottom: 20px;">
+                    <!-- Row 1: Title + Search + Primary Add Button -->
+                    <div class="bookings-top-row" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 12px;">
+                        <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap; flex: 1; min-width: 260px;">
+                            <h3 class="admin-form-title" style="margin-bottom: 0; border-bottom: none;"><i
+                                    class="fa-solid fa-calendar-check" style="color: var(--color-gold);"></i> Travel Booking Inquiries</h3>
+                            <div class="bookings-search-wrap" style="position: relative; width: 280px; max-width: 100%; flex-grow: 1;">
+                                <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: rgba(212, 175, 55, 0.6); font-size: 13px;"></i>
+                                <input type="text" id="search-bookings-input" placeholder="Search name, phone, email, booking ID..." oninput="applyBookingsFilters()" style="background: #1e293b; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: var(--border-radius-sm, 6px); padding: 9px 12px 9px 34px; font-size: 13px; outline: none; width: 100%; font-weight: 500; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); transition: border-color 0.2s ease;">
+                            </div>
+                        </div>
+                        <div class="bookings-primary-btn-wrap admin-only-action">
+                            <button type="button" onclick="openAddBookingModal()" id="add-booking-btn" class="btn btn-primary" style="background-color: var(--color-gold); border: none; padding: 9px 18px; font-size: 13px; cursor: pointer; border-radius: 6px; color: #0f172a; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 2px 8px rgba(212,175,55,0.3);"><i class="fa-solid fa-plus"></i> Add Booking</button>
                         </div>
                     </div>
-                    <div id="bookings-action-buttons-wrap" class="admin-only-action" style="display: flex; gap: 8px;">
-                        <button type="button" onclick="resetBookingsFilters()" class="btn btn-secondary" style="border: 1px solid var(--color-gold); background: #1e293b; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: var(--color-gold); font-weight: 600;"><i class="fa-solid fa-arrow-rotate-left"></i> Clear Filters</button>
-                        <button type="button" id="export-bookings-btn" class="btn btn-primary admin-only-action" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-file-export"></i> Export CSV</button>
-                        <button type="button" onclick="downloadBookingsTemplate()" id="bookings-template-btn" class="btn btn-secondary admin-only-action" style="border: 1px solid var(--color-gold); background: #1e293b; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: var(--color-gold); font-weight: 600;"><i class="fa-solid fa-download"></i> Template</button>
-                        <button type="button" id="import-bookings-btn" class="btn btn-secondary admin-only-action" style="border: 1px solid var(--color-gold); background: #1e293b; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: var(--color-gold); font-weight: 600;"><i class="fa-solid fa-file-import"></i> Import CSV</button>
-                        <input type="file" id="import-bookings-file" style="display: none;" accept=".csv">
-                        <button type="button" onclick="openAddBookingModal()" id="add-booking-btn" class="btn btn-primary admin-only-action" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-plus"></i> Add Booking</button>
+
+                    <!-- Row 2: Filter Toolbar (Desktop & Mobile accessible) -->
+                    <div class="bookings-filters-bar" style="display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; background: #0f172a; border: 1px solid rgba(212, 175, 55, 0.25); border-radius: 8px; padding: 10px 14px;">
+                        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; flex: 1;">
+                            <div class="booking-filter-item" style="display: flex; align-items: center; gap: 6px;">
+                                <span style="font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;"><i class="fa-solid fa-calendar" style="color: var(--color-gold);"></i> Travel Date:</span>
+                                <input type="date" id="filter-booking-travel-date" onchange="applyBookingsFilters()" style="background: #1e293b; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 6px; padding: 6px 10px; font-size: 12px; cursor: pointer; outline: none; min-width: 130px; font-weight: 600; color-scheme: dark;">
+                            </div>
+                            <div class="booking-filter-item" style="display: flex; align-items: center; gap: 6px;">
+                                <span style="font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;"><i class="fa-solid fa-user-check" style="color: var(--color-gold);"></i> Booked By:</span>
+                                <select id="filter-booking-assignee" onchange="applyBookingsFilters()" style="background: #1e293b; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 6px; padding: 6px 10px; font-size: 12px; cursor: pointer; outline: none; min-width: 130px; font-weight: 600;">
+                                    <option value="">All Staff</option>
+                                    <option value="unassigned">Unassigned</option>
+                                </select>
+                            </div>
+                            <button type="button" onclick="resetBookingsFilters()" class="btn btn-secondary" style="border: 1px solid rgba(212, 175, 55, 0.4); background: #1e293b; padding: 6px 12px; font-size: 12px; cursor: pointer; border-radius: 6px; color: var(--color-gold); font-weight: 600; display: inline-flex; align-items: center; gap: 4px;"><i class="fa-solid fa-arrow-rotate-left"></i> Reset</button>
+                        </div>
+                        <div id="bookings-action-buttons-wrap" class="admin-only-action" style="display: flex; gap: 8px; flex-wrap: wrap;">
+                            <button type="button" id="export-bookings-btn" class="btn btn-secondary" style="border: 1px solid rgba(212, 175, 55, 0.4); background: #1e293b; padding: 6px 12px; font-size: 12px; cursor: pointer; border-radius: 6px; color: #cbd5e1; font-weight: 600;"><i class="fa-solid fa-file-export"></i> Export</button>
+                            <button type="button" onclick="downloadBookingsTemplate()" id="bookings-template-btn" class="btn btn-secondary" style="border: 1px solid rgba(212, 175, 55, 0.4); background: #1e293b; padding: 6px 12px; font-size: 12px; cursor: pointer; border-radius: 6px; color: #cbd5e1; font-weight: 600;"><i class="fa-solid fa-download"></i> Template</button>
+                            <button type="button" id="import-bookings-btn" class="btn btn-secondary" style="border: 1px solid rgba(212, 175, 55, 0.4); background: #1e293b; padding: 6px 12px; font-size: 12px; cursor: pointer; border-radius: 6px; color: #cbd5e1; font-weight: 600;"><i class="fa-solid fa-file-import"></i> Import</button>
+                            <input type="file" id="import-bookings-file" style="display: none;" accept=".csv">
+                        </div>
                     </div>
                 </div>
                 <div class="admin-table-container">
@@ -205,24 +227,11 @@
                                 <th>Pickup Point</th>
                                 <th>Travel Destination</th>
                                 <th>Client Name</th>
-                                <th>Phone</th>
-                                <th>
-                                    <div style="display: flex; flex-direction: column; gap: 4px; align-items: center;">
-                                        <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Travel Date</span>
-                                        <input type="date" id="filter-booking-travel-date" onchange="applyBookingsFilters()" style="background: #0f172a; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 4px; padding: 2px 4px; font-size: 11px; cursor: pointer; outline: none; min-width: 115px; font-weight: 500; color-scheme: dark;">
-                                    </div>
-                                </th>
+                                <th>Phone / Contact</th>
+                                <th>Travel Date</th>
                                 <th>Travelers</th>
                                 <th>Special Notes</th>
-                                <th>
-                                    <div style="display: flex; flex-direction: column; gap: 4px; align-items: center;">
-                                        <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Booked By</span>
-                                        <select id="filter-booking-assignee" onchange="applyBookingsFilters()" style="background: #0f172a; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 4px; padding: 2px 4px; font-size: 11px; cursor: pointer; outline: none; min-width: 100px; font-weight: 500;">
-                                            <option value="">All</option>
-                                            <option value="unassigned">Unassigned</option>
-                                        </select>
-                                    </div>
-                                </th>
+                                <th>Booked By</th>
                                 <th>Created</th>
                                 <th>Actions</th>
                             </tr>
@@ -1605,13 +1614,13 @@
     </div>
 
     <!-- Add Booking Modal -->
-    <div class="modal-overlay" id="add-booking-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 10000; justify-content: center; align-items: center; overflow-y: auto;">
-        <div class="modal-box" style="background: #111827; border: 2px solid var(--color-gold); max-width: 500px; width: 90%; padding: 24px; border-radius: var(--border-radius-md); position: relative; margin: 40px auto;">
+    <div class="modal-overlay" id="add-booking-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 10000; justify-content: center; align-items: center; overflow-y: auto; padding: 16px; box-sizing: border-box;">
+        <div class="modal-box booking-modal-box" style="background: #111827; border: 2px solid var(--color-gold); max-width: 500px; width: 100%; padding: 24px; border-radius: var(--border-radius-md); position: relative; margin: auto; box-sizing: border-box; box-shadow: 0 20px 40px rgba(0,0,0,0.6);">
             <button type="button" class="modal-close" onclick="closeAddBookingModal()" style="position: absolute; top: 12px; right: 16px; font-size: 24px; background: none; border: none; color: var(--color-text-secondary); cursor: pointer;">&times;</button>
             <h3 id="booking-modal-title" style="font-family: var(--font-serif); color: white; margin-bottom: 16px; font-size: 20px; display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-calendar-plus" style="color: var(--color-gold)"></i> Add Single Booking Inquiry</h3>
             <form id="add-booking-form" onsubmit="submitAddBooking(event)">
                 <input type="hidden" id="edit-booking-id">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                <div class="booking-modal-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
                     <div class="admin-form-group">
                         <label for="new-booking-package">Package Name *</label>
                         <input type="text" id="new-booking-package" class="admin-input" required placeholder="e.g. Adi Kailash & Om Parvat Yatra">
@@ -1625,7 +1634,7 @@
                     <label for="new-booking-name">Client Name *</label>
                     <input type="text" id="new-booking-name" class="admin-input" required placeholder="Client's Full Name">
                 </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                <div class="booking-modal-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
                     <div class="admin-form-group">
                         <label for="new-booking-phone">Phone Number *</label>
                         <input type="tel" id="new-booking-phone" class="admin-input" required placeholder="Mobile Number">
@@ -1635,10 +1644,10 @@
                         <input type="email" id="new-booking-email" class="admin-input" placeholder="email@example.com">
                     </div>
                 </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                <div class="booking-modal-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
                     <div class="admin-form-group">
                         <label for="new-booking-date">Travel Date</label>
-                        <input type="date" id="new-booking-date" class="admin-input">
+                        <input type="date" id="new-booking-date" class="admin-input" style="color-scheme: dark;">
                     </div>
                     <div class="admin-form-group">
                         <label for="new-booking-travelers">Travelers *</label>
@@ -1656,8 +1665,8 @@
                     <textarea id="new-booking-message" class="admin-input" rows="3" placeholder="Any special requests or inquiries..."></textarea>
                 </div>
                 <div style="display: flex; justify-content: flex-end; gap: 12px;">
-                    <button type="button" class="btn btn-secondary" onclick="closeAddBookingModal()" style="border: 1px solid var(--color-gold); background: transparent; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: white;">Cancel</button>
-                    <button type="submit" class="btn btn-primary" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;">Save Booking</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeAddBookingModal()" style="border: 1px solid var(--color-gold); background: transparent; padding: 10px 18px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: white;">Cancel</button>
+                    <button type="submit" class="btn btn-primary" style="background-color: var(--color-gold); border: none; padding: 10px 20px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 700;">Save Booking</button>
                 </div>
             </form>
         </div>
@@ -3810,8 +3819,8 @@
                 }
 
                 const destVal = item.destination || item.package_name || 'General';
-                const dateStr = item.travel_date ? new Date(item.travel_date).toLocaleDateString() : 'N/A';
-                const createdStr = new Date(item.created_at).toLocaleDateString();
+                const dateStr = item.travel_date ? new Date(item.travel_date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) : 'Not Set';
+                const createdStr = new Date(item.created_at).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
 
                 // Render Booking Assignee Dropdown options
                 let bookingAssigneeOptions = '<option value="" style="background: #111827; color: white;">Unassigned</option>';
@@ -3829,20 +3838,20 @@
                 const waPhone = phoneClean.length === 10 ? '91' + phoneClean : phoneClean;
                 
                 const phoneHtml = phoneClean ? `
-                    <div style="display: flex; flex-direction: column; gap: 3px; text-align: left;">
-                        <a href="tel:${phoneClean}" style="color: var(--color-gold); font-weight: 700; text-decoration: none; font-size: 13px; display: inline-flex; align-items: center; gap: 4px;">
-                            <i class="fa-solid fa-phone" style="font-size: 10px;"></i> ${phoneVal}
+                    <div style="display: flex; flex-direction: column; gap: 4px; text-align: left;">
+                        <a href="tel:${phoneClean}" class="booking-phone-link" style="color: #f5c842; font-weight: 700; text-decoration: none; font-size: 13.5px; display: inline-flex; align-items: center; gap: 5px;">
+                            <i class="fa-solid fa-phone" style="font-size: 11px;"></i> ${phoneVal}
                         </a>
                         <div style="display: inline-flex; gap: 6px; margin-top: 2px;">
-                            <a href="tel:${phoneClean}" style="background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); padding: 2px 8px; border-radius: 12px; font-size: 11px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
-                                <i class="fa-solid fa-phone"></i> Call
+                            <a href="tel:${phoneClean}" class="booking-quick-call" style="background: rgba(34, 197, 94, 0.18); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.35); padding: 3px 9px; border-radius: 12px; font-size: 11.5px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
+                                <i class="fa-solid fa-phone" style="font-size: 10px;"></i> Call
                             </a>
-                            <a href="https://wa.me/${waPhone}?text=Namaste%20${encodeURIComponent(item.name || 'Guest')}!%20This%20is%20Rudraansh%20Yatra." target="_blank" style="background: rgba(37, 211, 102, 0.15); color: #25D366; border: 1px solid rgba(37, 211, 102, 0.3); padding: 2px 8px; border-radius: 12px; font-size: 11px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
-                                <i class="fa-brands fa-whatsapp"></i> Chat
+                            <a href="https://wa.me/${waPhone}?text=Namaste%20${encodeURIComponent(item.name || 'Guest')}!%20This%20is%20Rudraansh%20Yatra." target="_blank" class="booking-quick-wa" style="background: rgba(37, 211, 102, 0.18); color: #25D366; border: 1px solid rgba(37, 211, 102, 0.35); padding: 3px 9px; border-radius: 12px; font-size: 11.5px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
+                                <i class="fa-brands fa-whatsapp" style="font-size: 11px;"></i> WhatsApp
                             </a>
                         </div>
                     </div>
-                ` : '—';
+                ` : '<span style="color: #94a3b8;">—</span>';
 
                 const existingBill = (billingRecords || []).find(b => 
                     (b.booking_id && (b.booking_id === bookingId || b.booking_id === item.id)) ||
@@ -3853,44 +3862,62 @@
                 if (currentUserRole !== 'staff') {
                     if (existingBill) {
                         billButtonHtml = `
-                            <button class="btn btn-outline" onclick="switchTab(null, 'pane-billing'); filterBillingByBookingId('${bookingId}')" style="padding: 4px 8px; font-size: 11px; background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); font-weight: 700; cursor: pointer; border-radius: 3px; display: inline-flex; align-items: center; gap: 4px;" title="Bill Generated. Click to view in Billing">
+                            <button class="btn btn-outline booking-bill-btn" onclick="switchTab(null, 'pane-billing'); filterBillingByBookingId('${bookingId}')" style="padding: 6px 10px; font-size: 11.5px; background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); font-weight: 700; cursor: pointer; border-radius: 5px; display: inline-flex; align-items: center; gap: 4px;" title="Bill Generated. Click to view in Billing">
                                 <i class="fa-solid fa-file-circle-check"></i> Bill Generated
                             </button>`;
                     } else {
                         billButtonHtml = `
-                            <button class="btn btn-primary" onclick="openCreateBillForBooking('${item.id}')" style="padding: 4px 8px; font-size: 11px; background-color: var(--color-gold); color: #111827; border: none; font-weight: bold; cursor: pointer; border-radius: 3px;" title="Create Bill">
+                            <button class="btn btn-primary booking-bill-btn" onclick="openCreateBillForBooking('${item.id}')" style="padding: 6px 10px; font-size: 11.5px; background-color: var(--color-gold); color: #111827; border: none; font-weight: 800; cursor: pointer; border-radius: 5px; display: inline-flex; align-items: center; gap: 4px;" title="Create Bill">
                                 <i class="fa-solid fa-file-invoice-dollar"></i> Create Bill
                             </button>`;
                     }
                 }
 
                 html += `
-                    <tr>
-                        <td data-label="Booking ID"><strong class="booking-id-tag" style="color: #78350f !important; background: #fef3c7 !important; border: 1.5px solid #f59e0b !important; padding: 4px 8px; border-radius: 6px; font-family: monospace; font-size: 12px; font-weight: 800; display: inline-block; white-space: nowrap;">${bookingId}</strong></td>
-                        <td data-label="Package Name" class="mobile-detail-field"><strong style="color: #0f172a !important; font-weight: 700; font-size: 13.5px;">${item.pickup_point || '—'}</strong></td>
-                        <td data-label="Travel Destination" class="mobile-detail-field"><span class="badge" style="background: #ffedd5 !important; color: #92400e !important; padding: 4px 8px; border-radius: 6px; font-weight: 700; border: 1.5px solid #f97316 !important; font-size: 12px; white-space: nowrap; display: inline-block; max-width: 100%; overflow: hidden; text-overflow: ellipsis;">${destVal}</span></td>
-                        <td data-label="Client Name"><strong style="color: #0f172a !important; font-size: 14px; font-weight: 800;">${item.name}</strong></td>
-                        <td data-label="Phone/Email"><div style="color: #1e293b !important; font-weight: 600;">${phoneHtml} ${item.email ? '<br><small style="color: #475569 !important; font-weight: 600;">' + item.email + '</small>' : ''}</div></td>
-                        <td data-label="Travel Date"><span style="color: #0f172a !important; font-weight: 700; font-size: 13px; white-space: nowrap;">${dateStr}</span></td>
-                        <td data-label="Travelers" class="mobile-detail-field"><span style="color: #78350f !important; font-weight: 800; background: #fef3c7 !important; padding: 4px 8px; border-radius: 6px; border: 1.5px solid #f59e0b !important; font-size: 12px; white-space: nowrap; display: inline-block;">👥 ${item.travelers}</span></td>
-                        <td data-label="Special Notes"><div style="color: #334155 !important; font-size: 12px; max-width: 280px; line-height: 1.4; font-weight: 600; white-space: pre-line;">${item.message || '—'}</div></td>
+                    <tr class="booking-card-row">
+                        <td data-label="Booking ID">
+                            <strong class="booking-id-tag">${bookingId}</strong>
+                        </td>
+                        <td data-label="Pickup Point" class="mobile-detail-field">
+                            <strong class="booking-pickup-text">${item.pickup_point || '—'}</strong>
+                        </td>
+                        <td data-label="Destination">
+                            <span class="booking-dest-badge" title="${destVal}">${destVal}</span>
+                        </td>
+                        <td data-label="Client Name">
+                            <strong class="booking-client-name">${item.name}</strong>
+                        </td>
+                        <td data-label="Phone / Contact">
+                            <div class="booking-phone-wrap">${phoneHtml} ${item.email ? '<div class="booking-email-text"><i class="fa-solid fa-envelope" style="font-size: 10px; margin-right: 3px; color: var(--color-gold);"></i> ' + item.email + '</div>' : ''}</div>
+                        </td>
+                        <td data-label="Travel Date">
+                            <span class="booking-date-badge"><i class="fa-solid fa-calendar-day" style="color: var(--color-gold); font-size: 11px;"></i> ${dateStr}</span>
+                        </td>
+                        <td data-label="Travelers">
+                            <span class="booking-travelers-badge">👥 ${item.travelers} Pax</span>
+                        </td>
+                        <td data-label="Special Notes" class="mobile-detail-field">
+                            <div class="booking-notes-text">${item.message || '—'}</div>
+                        </td>
                         <td data-label="Booked By">
-                            <select ${currentUserRole === "staff" ? "disabled" : ""} onchange="updateBookingField('${item.id}', 'assigned_to', this.value)" style="background: #0f172a; color: #ffffff; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 6px 8px; font-size: 12px; width: 100%; max-width: 160px; font-weight: 600; cursor: pointer;">
+                            <select ${currentUserRole === "staff" ? "disabled" : ""} onchange="updateBookingField('${item.id}', 'assigned_to', this.value)" class="booking-assignee-select">
                                 ${bookingAssigneeOptions}
                             </select>
                         </td>
-                        <td data-label="Created" class="mobile-detail-field"><span style="color: #475569 !important; font-size: 12px; font-weight: 600; white-space: nowrap;">${createdStr}</span></td>
-                        <td data-label="Actions">
-                            <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+                        <td data-label="Created" class="mobile-detail-field">
+                            <span class="booking-created-text">${createdStr}</span>
+                        </td>
+                        <td data-label="Actions" class="booking-actions-cell">
+                            <div class="booking-action-buttons-wrap">
                                 ${billButtonHtml}
-                                <button class="btn btn-primary" onclick="startEditBooking('${item.id}')" style="min-height: 32px; width: 32px; font-size: 12px; padding: 0; background-color: var(--color-gold); color: #111827; border: none; font-weight: bold; cursor: pointer; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center;" title="Edit Booking">
-                                    <i class="fa-solid fa-pen"></i>
+                                <button class="btn btn-primary booking-edit-btn" onclick="startEditBooking('${item.id}')" title="Edit Booking">
+                                    <i class="fa-solid fa-pen"></i> Edit
                                 </button>
-                                <button class="admin-btn-delete" onclick="deleteRecord('bookings', '${item.id}', fetchBookings)" style="min-height: 32px; width: 32px; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; margin: 0; border-radius: 4px;">
+                                <button class="admin-btn-delete booking-delete-btn" onclick="deleteRecord('bookings', '${item.id}', fetchBookings)" title="Delete Booking">
                                     <i class="fa-solid fa-trash"></i>
                                 </button>
                             </div>
-                            <div class="booking-toggle-details-btn" onclick="toggleMobileBookingDetails(this)" style="display: none; color: var(--color-gold); font-size: 11px; font-weight: 700; cursor: pointer; padding: 8px 0; border-top: 1px dashed rgba(255,255,255,0.1); margin-top: 8px; text-align: center; text-transform: uppercase; width: 100%;">
+                            <div class="booking-toggle-details-btn" onclick="toggleMobileBookingDetails(this)">
                                 <i class="fa-solid fa-chevron-down"></i> Show Details
                             </div>
                         </td>
@@ -8380,10 +8407,24 @@
         };
 
         // Manual Booking Creation / Edit Modal Handlers
+        function populateNewBookingAssigneeOptions(selectedVal) {
+            const select = document.getElementById('new-booking-assignee');
+            if (!select) return;
+            let opts = '<option value="">Unassigned</option>';
+            (usersList || []).forEach(user => {
+                const isSelected = (selectedVal && (selectedVal === user.id)) ? 'selected' : '';
+                const displayName = usersMap[user.id] || user.email;
+                opts += `<option value="${user.id}" ${isSelected}>${displayName}</option>`;
+            });
+            select.innerHTML = opts;
+            if (selectedVal) select.value = selectedVal;
+        }
+
         window.openAddBookingModal = function() {
             document.getElementById('add-booking-form').reset();
             document.getElementById('edit-booking-id').value = '';
             if (document.getElementById('new-booking-destination')) document.getElementById('new-booking-destination').value = '';
+            populateNewBookingAssigneeOptions('');
             document.getElementById('booking-modal-title').innerHTML = '<i class="fa-solid fa-calendar-plus" style="color: var(--color-gold)"></i> Add Single Booking Inquiry';
             const modal = document.getElementById('add-booking-modal');
             if (modal) {
@@ -8428,7 +8469,7 @@
             document.getElementById('new-booking-date').value = item.travel_date || '';
             document.getElementById('new-booking-travelers').value = item.travelers || 1;
             document.getElementById('new-booking-message').value = item.message || '';
-            document.getElementById('new-booking-assignee').value = item.assigned_to || item.user_id || '';
+            populateNewBookingAssigneeOptions(item.assigned_to || item.user_id || '');
         };
 
         window.updateBookingField = async function(bookingId, fieldName, value) {
