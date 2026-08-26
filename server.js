@@ -1,3 +1,4 @@
+const HOSTINGER_PORT = process.env.PORT;
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
@@ -51,7 +52,7 @@ function requireAdmin(req, res, next) {
     }
 }
 
-const PORT = process.env.PORT || 3000;
+const PORT = HOSTINGER_PORT || process.env.PORT || 3000;
 
 // Initialize Razorpay Client (gracefully falls back if keys are not set in .env)
 const razorpayKeyId = process.env.RAZORPAY_KEY_ID || 'rzp_test_dummykeyid123';
