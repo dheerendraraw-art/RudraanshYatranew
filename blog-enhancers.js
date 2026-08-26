@@ -3157,12 +3157,12 @@ BLOG_ENHANCERS['5-things-you-need-to-do-before-planning-a-trip-to-adi-kailash'] 
 
         return topBanner + enrichedContent + bottomCta;
     }
-},
+};
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // 6. ADI KAILASH YATRA DIFFICULTY LEVEL — CAN BEGINNERS DO IT?
-    // ─────────────────────────────────────────────────────────────────────────
-    'adi-kailash-yatra-difficulty-level-can-beginners-do-it': {
+// ─────────────────────────────────────────────────────────────────────────────
+// 6. ADI KAILASH YATRA DIFFICULTY LEVEL — CAN BEGINNERS DO IT?
+// ─────────────────────────────────────────────────────────────────────────────
+BLOG_ENHANCERS['adi-kailash-yatra-difficulty-level-can-beginners-do-it'] = {
         meta: {
             title: 'Adi Kailash Yatra Difficulty Level 2026: Can Beginners Do It? Complete Guide',
             desc: 'Is Adi Kailash Yatra difficult for beginners? Full difficulty breakdown: altitude (14,200 ft), walking sections, fitness prep, altitude sickness tips & who should be cautious. Expert guide from Pithoragarh operators.',
@@ -3456,7 +3456,6 @@ BLOG_ENHANCERS['5-things-you-need-to-do-before-planning-a-trip-to-adi-kailash'] 
 
             return topBanner + enrichedContent + altitudeTable + navPills + bottomCta;
         }
-    }
 };
 
 function getBlogEnhancement(slug, paragraphsHtml) {
