@@ -1,3 +1,10 @@
+# Hostinger Node.js / LiteSpeed Passenger Application Configuration
+<IfModule mod_passenger.c>
+    PassengerEnabled on
+    PassengerAppType node
+    PassengerStartupFile server.js
+</IfModule>
+
 # Add MIME types for WEBP images, MP4/WEBM videos, and WOFF2 fonts
 AddType image/webp .webp
 AddType video/mp4 .mp4
