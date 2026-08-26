@@ -3752,8 +3752,7 @@ function syncStaticFiles() {
         'adi-kailash-from-kathgodam.html',
         'adi-kailash-from-delhi.html',
         'sitemap.xml',
-        'robots.txt',
-        '.htaccess'
+        'robots.txt'
     ];
     
     filesToSync.forEach(file => {
@@ -3770,8 +3769,18 @@ function syncStaticFiles() {
     });
 }
 
-// Only listen when running locally (not on Vercel serverless)
-if (!process.env.VERCEL) {
+// Support Phusion Passenger (Hostinger Node.js runner), Local Node.js, and Vercel
+if (typeof(PhusionPassenger) !== 'undefined') {
+    PhusionPassenger.configure({ autoInstall: false });
+    app.listen('passenger', () => {
+        console.log('Server is running under Phusion Passenger');
+        try {
+            syncStaticFiles();
+        } catch (e) {
+            console.error('Error during static files sync:', e);
+        }
+    });
+} else if (!process.env.VERCEL) {
     app.listen(PORT, () => {
         console.log(`Server is running on port ${PORT}`);
         try {
