@@ -3763,11 +3763,17 @@ function syncStaticFiles() {
     });
 }
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-    try {
-        syncStaticFiles();
-    } catch (e) {
-        console.error('Error during static files sync:', e);
-    }
-});
+// Only listen when running locally (not on Vercel serverless)
+if (!process.env.VERCEL) {
+    app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+        try {
+            syncStaticFiles();
+        } catch (e) {
+            console.error('Error during static files sync:', e);
+        }
+    });
+}
+
+// Required for Vercel serverless — must export the app
+module.exports = app;
