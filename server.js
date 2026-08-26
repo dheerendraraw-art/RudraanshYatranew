@@ -3265,7 +3265,10 @@ app.get('/api/google-reviews', async (req, res) => {
 
     try {
         const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=reviews,rating,user_ratings_total&key=${apiKey}`;
-        const response = await fetch(url);
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 8000); // 8s timeout
+        const response = await fetch(url, { signal: controller.signal });
+        clearTimeout(timeoutId);
         const json = await response.json();
 
         if (json.status === 'OK' && json.result) {
@@ -3429,7 +3432,10 @@ async function syncGoogleSheetLeads() {
         }
 
         console.log('[Google Sheet Sync] Fetching Google Sheet CSV...');
-        const response = await fetch(GOOGLE_SHEET_LEADS_URL);
+        const sheetController = new AbortController();
+        const sheetTimeout = setTimeout(() => sheetController.abort(), 10000); // 10s timeout
+        const response = await fetch(GOOGLE_SHEET_LEADS_URL, { signal: sheetController.signal });
+        clearTimeout(sheetTimeout);
         if (!response.ok) {
             throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
