@@ -1,5 +1,15 @@
-const HOSTINGER_PORT = process.env.PORT;
 require('dotenv').config();
+const HOSTINGER_PORT = process.env.PORT;
+
+// Catch uncaught exceptions and unhandled promise rejections to prevent process crash (503 Service Unavailable)
+process.on('uncaughtException', (err) => {
+    console.error('[CRITICAL] Uncaught Exception:', err);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('[CRITICAL] Unhandled Rejection at:', promise, 'reason:', reason);
+});
+
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
@@ -261,16 +271,20 @@ app.get('/blogs', async (req, res) => {
 
 // 3. SSR Route for individual Blog Articles (/blog/:slug)
 app.get('/blog/:slug', async (req, res) => {
-    const slug = req.params.slug;
+    let rawSlug = req.params.slug || '';
+    const cleanSlug = rawSlug.replace(/\.html$/i, '');
 
-    // Redirect legacy long slug to clean optimized slug
+    // Redirect legacy long slug or file names to clean optimized slug
     const legacySlugs = {
         'due-to-china-denying-clearance-for-the-lipulekh-crossing-28-indian-businessmen-were-forced-to-return': 'china-denies-lipulekh-clearance-indian-traders-return',
-        // Task 1.1: Fix typo slug for Lipulekh trade resumption article ('ndia-' → 'india-')
-        'ndia-tibet-border-trade-through-lipulekh-pass-finally-resumes-on-august-1-2026-after-a-seven-year-pause-heres-what-changed-since-traders-were-turned-back-in-july': 'india-tibet-border-trade-lipulekh-pass-resumes-august-2026'
+        'ndia-tibet-border-trade-through-lipulekh-pass-finally-resumes-on-august-1-2026-after-a-seven-year-pause-heres-what-changed-since-traders-were-turned-back-in-july': 'india-tibet-border-trade-lipulekh-pass-resumes-august-2026',
+        'inner-line-permit-adi-kailash-2026-step-by-step': 'inner-line-permit-adi-kailash-2026-guide'
     };
-    if (legacySlugs[slug]) {
-        return res.redirect(301, `/blog/${legacySlugs[slug]}`);
+
+    const targetSlug = legacySlugs[cleanSlug] || cleanSlug;
+    const slug = targetSlug;
+    if (legacySlugs[cleanSlug]) {
+        return res.redirect(301, `/blog/${legacySlugs[cleanSlug]}`);
     }
 
     try {
@@ -278,11 +292,11 @@ app.get('/blog/:slug', async (req, res) => {
         let adjacentBlogsHtml = '';
 
         if (supabase) {
-            // Fetch from database by slug
+            // Fetch from database by targetSlug
             const { data, error } = await supabase
                 .from('blogs')
                 .select('*')
-                .eq('slug', slug)
+                .eq('slug', targetSlug)
                 .single();
             if (data && !error) {
                 blog = data;
@@ -296,25 +310,25 @@ app.get('/blog/:slug', async (req, res) => {
                     .order('created_at', { ascending: false });
 
                 if (allBlogs && allBlogs.length > 1) {
-                    const currentIndex = allBlogs.findIndex(b => b.slug === slug);
+                    const currentIndex = allBlogs.findIndex(b => b.slug === targetSlug);
                     const N = allBlogs.length;
                     const adjacentBlogs = [];
 
                     // Get next article (wrap around if at the end)
                     const nextIndex = (currentIndex + 1) % N;
-                    if (nextIndex !== currentIndex) {
+                    if (nextIndex !== currentIndex && nextIndex >= 0) {
                         adjacentBlogs.push(allBlogs[nextIndex]);
                     }
 
                     // Get previous article (wrap around if at the beginning)
                     const prevIndex = (currentIndex - 1 + N) % N;
-                    if (prevIndex !== currentIndex && !adjacentBlogs.includes(allBlogs[prevIndex])) {
+                    if (prevIndex !== currentIndex && prevIndex >= 0 && !adjacentBlogs.includes(allBlogs[prevIndex])) {
                         adjacentBlogs.push(allBlogs[prevIndex]);
                     }
 
                     // Get next-next article if we have enough and want 3
                     const nextNextIndex = (currentIndex + 2) % N;
-                    if (nextNextIndex !== currentIndex && nextNextIndex !== prevIndex && nextNextIndex !== nextIndex && !adjacentBlogs.includes(allBlogs[nextNextIndex])) {
+                    if (nextNextIndex !== currentIndex && nextNextIndex !== prevIndex && nextNextIndex !== nextIndex && nextNextIndex >= 0 && !adjacentBlogs.includes(allBlogs[nextNextIndex])) {
                         adjacentBlogs.push(allBlogs[nextNextIndex]);
                     }
 
@@ -335,6 +349,15 @@ app.get('/blog/:slug', async (req, res) => {
         }
 
         if (!blog) {
+            // Fallback: Check if static blog HTML file exists on disk in ./blog/
+            const staticFilePath = path.join(__dirname, 'blog', `${cleanSlug}.html`);
+            if (fs.existsSync(staticFilePath)) {
+                return res.sendFile(staticFilePath);
+            }
+            const directStaticPath = path.join(__dirname, 'blog', rawSlug);
+            if (fs.existsSync(directStaticPath)) {
+                return res.sendFile(directStaticPath);
+            }
             return res.status(404).send('<h1>404 - Article Not Found</h1><p>The travel diary you are looking for does not exist.</p><a href="/blogs">Go back to Blogs</a>');
         }
 
@@ -416,7 +439,7 @@ app.get('/blog/:slug', async (req, res) => {
         const ogImageUrl = resolvedMainImg.startsWith('http') ? resolvedMainImg : `https://rudraanshyatra.com${resolvedMainImg.startsWith('/') ? '' : '/'}${resolvedMainImg}`;
 
         // Each blog self-canonicalizes to its own URL for independent ranking
-        const canonicalUrl = `https://rudraanshyatra.com/blog/${slug}`;
+        const canonicalUrl = `https://rudraanshyatra.com/blog/${targetSlug}`;
 
         // Specific schema & CTA banner enhancements for high-performing blog posts
         let extraSchemas = '';
@@ -424,7 +447,7 @@ app.get('/blog/:slug', async (req, res) => {
         let parikramaMetaOverride = null;
 
         // Apply modular SEO/AEO/GEO enhancement if configured for this slug
-        const modularEnhancement = getBlogEnhancement(slug, paragraphsHtml);
+        const modularEnhancement = getBlogEnhancement(targetSlug, paragraphsHtml);
         if (modularEnhancement) {
             parikramaMetaOverride = modularEnhancement.meta;
             extraSchemas = modularEnhancement.schemas;
@@ -1375,6 +1398,15 @@ ${urls.join('\n')}
         console.error('Sitemap Generator Error:', err);
         res.status(500).send('Error generating sitemap');
     }
+});
+
+// Health & Status check endpoints
+app.get('/api/health', (req, res) => {
+    res.status(200).json({ status: 'ok', message: 'Rudraansh Yatra API Server is live and healthy', timestamp: new Date().toISOString() });
+});
+
+app.get('/api/status', (req, res) => {
+    res.status(200).json({ status: 'ok', uptime: process.uptime(), timestamp: new Date().toISOString() });
 });
 
 // GET application version for testing
