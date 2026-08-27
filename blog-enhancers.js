@@ -278,12 +278,32 @@ const BLOG_ENHANCERS = {
 .ry-faq-q { font-weight: 700; font-size: 15.5px; color: #0f172a; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 10px; }
 .ry-faq-q i { color: #d4af37; margin-top: 4px; }
 .ry-faq-a { font-size: 14px; color: #475569; line-height: 1.65; margin: 0; padding-left: 24px; }
-@media (max-width: 640px) {
-  .ry-cost-box { padding: 16px; }
+@media (max-width: 680px) {
+  .ry-cost-box, .ry-vs-card, .ry-season-banner, .ry-highlight-box, .ry-route-summary { padding: 16px 14px; border-radius: 12px; margin: 18px 0; }
+  .ry-cost-head { flex-direction: column; align-items: flex-start; gap: 8px; }
   .ry-cost-title { font-size: 16px; }
+  .ry-cost-grid { grid-template-columns: 1fr; gap: 10px; }
+  .ry-cost-card { padding: 12px 10px; }
   .ry-cost-card .price { font-size: 19px; }
-  .ry-table th, .ry-table td { padding: 10px 12px; font-size: 13px; }
-  .ry-cost-btn { width: 100%; }
+  .ry-cost-actions { flex-direction: column; gap: 8px; width: 100%; }
+  .ry-cost-btn { width: 100% !important; min-width: 0 !important; flex: none !important; padding: 12px 14px; font-size: 13.5px; }
+  
+  .ry-vs-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+  .ry-vs-col { padding: 14px 12px !important; }
+  .ry-season-grid { grid-template-columns: 1fr !important; gap: 10px !important; }
+  
+  .ry-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; width: 100%; border-radius: 8px; }
+  .ry-table th, .ry-table td { padding: 10px 12px; font-size: 13px; white-space: normal; }
+  
+  .ry-faq-item { padding: 14px 12px; }
+  .ry-faq-q { font-size: 14.5px; }
+  .ry-faq-a { font-size: 13px; padding-left: 0; margin-top: 6px; }
+}
+@media (max-width: 380px) {
+  .ry-cost-box, .ry-vs-card, .ry-season-banner, .ry-highlight-box { padding: 12px 10px; }
+  .ry-cost-card .price { font-size: 17px; }
+  .ry-cost-btn { font-size: 12.5px; padding: 10px 12px; }
+  .ry-table th, .ry-table td { padding: 8px 10px; font-size: 12px; }
 }
 </style>
 <div class="ry-cost-box">
@@ -1386,94 +1406,178 @@ const BLOG_ENHANCERS = {
     }
     </script>`,
 
-        render: function(paragraphsHtml) {
+        render: function(paragraphsHtml = '') {
 
             const flightSummaryBanner = `
 <style>
-/* ── Pithoragarh Flight Schedule Styles ─────────────────────────────── */
+/* ── Pithoragarh Flight Schedule Styles (Mobile-Optimized) ──────────────── */
 .ry-flight-summary {
-    background: linear-gradient(135deg, #0c1445 0%, #1a237e 60%, #283593 100%);
-    border: 2px solid #42a5f5;
-    border-radius: 14px;
-    padding: 22px 24px;
-    margin-bottom: 30px;
+    background: linear-gradient(135deg, #0a1128 0%, #1a237e 60%, #283593 100%);
+    border: 1.5px solid #60a5fa;
+    border-radius: 16px;
+    padding: 24px;
+    margin: 20px 0 28px 0;
     color: #fff;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+    box-shadow: 0 12px 36px rgba(10, 17, 40, 0.35);
+    overflow: hidden;
+    position: relative;
 }
 .ry-flight-summary h3 {
     color: #ffd54f !important;
-    font-size: 18px !important;
+    font-size: clamp(17px, 4vw, 20px) !important;
     font-weight: 700 !important;
-    margin: 0 0 6px 0 !important;
-    font-family: var(--font-sans), sans-serif !important;
+    margin: 0 0 14px 0 !important;
+    font-family: var(--font-sans), system-ui, sans-serif !important;
+    line-height: 1.35 !important;
 }
 .ry-flight-tag {
-    display: inline-block;
-    background: #e53935;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #ef4444;
     color: #fff;
     font-size: 11px;
     font-weight: 800;
-    padding: 3px 10px;
-    border-radius: 12px;
-    letter-spacing: 0.8px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.6px;
     text-transform: uppercase;
     margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+}
+.ry-flight-tag .pulse-dot {
+    width: 6px;
+    height: 6px;
+    background: #fff;
+    border-radius: 50%;
+    display: inline-block;
+    animation: ry-pulse 1.5s infinite;
+}
+@keyframes ry-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.3; transform: scale(1.3); }
 }
 .ry-flight-kpi-row {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     gap: 12px;
     margin: 16px 0;
 }
 .ry-flight-kpi {
-    flex: 1;
-    min-width: 130px;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 10px;
-    padding: 12px 14px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 12px;
+    padding: 12px 10px;
     text-align: center;
+    transition: transform 0.2s ease;
+}
+.ry-flight-kpi:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255,213,79,0.5);
 }
 .ry-flight-kpi .kpi-val {
-    font-size: 26px;
+    font-size: clamp(22px, 5vw, 26px);
     font-weight: 800;
     color: #ffd54f;
-    line-height: 1;
+    line-height: 1.1;
     margin-bottom: 4px;
+    font-family: var(--font-sans), system-ui, sans-serif;
 }
 .ry-flight-kpi .kpi-label {
-    font-size: 11.5px;
-    color: #b3e5fc;
+    font-size: 11px;
+    color: #bae6fd;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.4px;
+    line-height: 1.3;
+}
+.ry-chips-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 14px;
 }
 .ry-flight-route-chip {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
     background: rgba(255,255,255,0.12);
-    border: 1px solid rgba(255,255,255,0.25);
+    border: 1px solid rgba(255,255,255,0.22);
     border-radius: 20px;
-    padding: 5px 12px;
-    font-size: 13px;
+    padding: 5px 11px;
+    font-size: 12px;
     font-weight: 600;
-    color: #e3f2fd;
-    margin: 4px 4px 0 0;
+    color: #e0f2fe;
 }
-/* Schedule Table */
+.ry-summary-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+.ry-cost-btn {
+    flex: 1;
+    min-width: 200px;
+    padding: 13px 18px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 13.5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.ry-cost-btn.wa {
+    background: #22c55e;
+    color: #fff !important;
+}
+.ry-cost-btn.wa:hover {
+    background: #16a34a;
+    transform: translateY(-1px);
+}
+.ry-cost-btn.call {
+    background: #f59e0b;
+    color: #0f172a !important;
+}
+.ry-cost-btn.call:hover {
+    background: #d97706;
+    color: #fff !important;
+    transform: translateY(-1px);
+}
+
+/* Schedule Table Container */
 .ry-schedule-table-wrap {
     overflow-x: auto;
-    margin: 24px 0;
-    border-radius: 10px;
-    border: 1px solid #e2e8f0;
+    -webkit-overflow-scrolling: touch;
+    margin: 24px 0 28px 0;
+    border-radius: 12px;
+    border: 1.5px solid #e2e8f0;
     background: #fff;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+}
+.ry-table-scroll-hint {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: #eff6ff;
+    color: #2563eb;
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-bottom: 1px solid #dbeafe;
 }
 .ry-schedule-table {
     width: 100%;
+    min-width: 520px;
     border-collapse: collapse;
-    font-size: 14px;
+    font-size: 13.5px;
     text-align: left;
 }
 .ry-schedule-table th {
@@ -1483,85 +1587,104 @@ const BLOG_ENHANCERS = {
     font-weight: 700;
     border-bottom: 2px solid #ffd54f;
     white-space: nowrap;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
 }
 .ry-schedule-table td {
     padding: 11px 14px;
     border-bottom: 1px solid #f1f5f9;
     color: #334155;
-    vertical-align: top;
+    vertical-align: middle;
 }
+.ry-schedule-table tr:last-child td { border-bottom: none; }
 .ry-schedule-table tr:nth-child(even) td { background: #f8fafc; }
-.ry-schedule-table tr:hover td { background: #e8eaf6; }
-.ry-day-active { color: #1565c0; font-weight: 700; }
+.ry-schedule-table tr:hover td { background: #eef2ff; }
+.ry-day-active { color: #1e40af; font-weight: 700; }
 .ry-day-none { color: #94a3b8; font-style: italic; }
 .ry-route-badge {
     display: inline-block;
-    background: #e3f2fd;
-    color: #0d47a1;
+    background: #e0f2fe;
+    color: #0369a1;
     font-size: 11px;
     font-weight: 700;
-    padding: 2px 8px;
-    border-radius: 8px;
+    padding: 2px 7px;
+    border-radius: 6px;
     margin: 1px 2px 1px 0;
     white-space: nowrap;
 }
-.ry-route-badge.deh { background: #e8f5e9; color: #1b5e20; }
-/* Comparison Table */
+.ry-route-badge.deh { background: #dcfce7; color: #15803d; }
+
+/* Comparison Box */
 .ry-compare-box {
     background: #fff;
     border: 1.5px solid #e2e8f0;
-    border-radius: 12px;
+    border-radius: 14px;
     overflow: hidden;
-    margin: 24px 0;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+    margin: 28px 0;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.06);
 }
 .ry-compare-head {
-    background: #0f172a;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
     color: #ffd54f;
-    padding: 12px 18px;
+    padding: 14px 18px;
     font-weight: 700;
     font-size: 15px;
-    font-family: var(--font-sans), sans-serif;
+    font-family: var(--font-sans), system-ui, sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.ry-compare-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 .ry-compare-table {
     width: 100%;
+    min-width: 500px;
     border-collapse: collapse;
-    font-size: 14px;
+    font-size: 13.5px;
 }
 .ry-compare-table th {
     background: #1e293b;
-    color: #94a3b8;
-    padding: 10px 14px;
+    color: #cbd5e1;
+    padding: 11px 14px;
     font-weight: 700;
     text-align: left;
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    border-bottom: 2px solid #334155;
+    white-space: nowrap;
 }
 .ry-compare-table td {
-    padding: 11px 14px;
+    padding: 12px 14px;
     border-bottom: 1px solid #f1f5f9;
     color: #334155;
+    vertical-align: top;
+    line-height: 1.5;
 }
 .ry-compare-table tr:last-child td { border-bottom: none; }
 .ry-compare-table tr:nth-child(even) td { background: #f8fafc; }
 .ry-check { color: #16a34a; font-weight: 700; }
-.ry-cross { color: #dc2626; }
+.ry-cross { color: #dc2626; font-weight: 700; }
 .ry-warn { color: #d97706; }
+
 /* Planning Tips Box */
 .ry-tips-box {
-    background: #fffbeb;
-    border: 1.5px solid #f59e0b;
-    border-radius: 12px;
-    padding: 20px 22px;
-    margin: 24px 0;
+    background: #fffdf5;
+    border: 1.5px solid #fbbf24;
+    border-radius: 14px;
+    padding: 22px 24px;
+    margin: 28px 0;
+    box-shadow: 0 4px 14px rgba(251, 191, 36, 0.12);
 }
 .ry-tips-box h3 {
     color: #92400e !important;
-    font-size: 16px !important;
+    font-size: 17px !important;
     font-weight: 700 !important;
-    margin: 0 0 12px 0 !important;
-    font-family: var(--font-sans), sans-serif !important;
+    margin: 0 0 16px 0 !important;
+    font-family: var(--font-sans), system-ui, sans-serif !important;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -1574,26 +1697,113 @@ const BLOG_ENHANCERS = {
 .ry-tips-list li {
     display: flex !important;
     align-items: flex-start !important;
-    gap: 10px !important;
+    gap: 12px !important;
     color: #78350f !important;
     font-size: 14px !important;
     line-height: 1.65 !important;
-    margin-bottom: 10px !important;
+    margin-bottom: 12px !important;
     padding-left: 0 !important;
     list-style: none !important;
 }
-.ry-tips-list li i { color: #d97706; margin-top: 3px; flex-shrink: 0; }
+.ry-tips-list li:last-child { margin-bottom: 0 !important; }
+.ry-tip-icon-wrap {
+    width: 24px;
+    height: 24px;
+    background: #fef3c7;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #d97706;
+    font-size: 11px;
+    margin-top: 2px;
+}
+
+/* Responsive Mobile Breakpoint (<680px) */
 @media (max-width: 680px) {
-    .ry-flight-kpi-row { gap: 8px; }
-    .ry-flight-kpi { min-width: 100px; padding: 10px 10px; }
-    .ry-flight-kpi .kpi-val { font-size: 22px; }
-    .ry-flight-summary { padding: 16px 14px; border-radius: 10px; }
-    .ry-schedule-table th, .ry-schedule-table td { padding: 9px 10px; font-size: 13px; }
-    .ry-compare-table th, .ry-compare-table td { padding: 9px 10px; font-size: 13px; }
+    .ry-flight-summary {
+        padding: 18px 14px;
+        border-radius: 12px;
+        margin: 16px 0 24px 0;
+    }
+    .ry-flight-summary h3 {
+        font-size: 16px !important;
+        line-height: 1.35 !important;
+    }
+    .ry-flight-kpi-row {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        margin: 12px 0;
+    }
+    .ry-flight-kpi {
+        padding: 10px 8px;
+        border-radius: 10px;
+    }
+    .ry-flight-kpi .kpi-val {
+        font-size: 22px;
+    }
+    .ry-flight-kpi .kpi-label {
+        font-size: 10px;
+    }
+    .ry-chips-container {
+        gap: 5px;
+        margin-top: 10px;
+    }
+    .ry-flight-route-chip {
+        font-size: 11px;
+        padding: 4px 9px;
+    }
+    .ry-summary-actions {
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 16px;
+    }
+    .ry-cost-btn {
+        width: 100% !important;
+        min-width: 0 !important;
+        flex: none !important;
+        padding: 12px 14px;
+        font-size: 13px;
+    }
+    .ry-table-scroll-hint {
+        display: flex;
+    }
+    .ry-schedule-table-wrap, .ry-compare-box {
+        margin: 18px 0 22px 0;
+        border-radius: 10px;
+    }
+    .ry-schedule-table th, .ry-schedule-table td {
+        padding: 10px 10px;
+        font-size: 12.5px;
+    }
+    .ry-compare-head {
+        padding: 12px 14px;
+        font-size: 14px;
+    }
+    .ry-compare-table th, .ry-compare-table td {
+        padding: 10px 10px;
+        font-size: 12.5px;
+    }
+    .ry-tips-box {
+        padding: 16px 14px;
+        border-radius: 10px;
+        margin: 18px 0;
+    }
+    .ry-tips-box h3 {
+        font-size: 15px !important;
+        margin-bottom: 12px !important;
+    }
+    .ry-tips-list li {
+        font-size: 13px !important;
+        line-height: 1.55 !important;
+        gap: 8px !important;
+        margin-bottom: 10px !important;
+    }
 }
 </style>
 <div class="ry-flight-summary" itemscope itemtype="https://schema.org/Event">
-    <span class="ry-flight-tag">🆕 Live Update — September 2026</span>
+    <span class="ry-flight-tag"><span class="pulse-dot"></span> 🆕 Live Update — September 2026</span>
     <h3 itemprop="name">✈️ Pithoragarh Now Has Near-Daily Flights — Key Numbers at a Glance</h3>
     <div class="ry-flight-kpi-row">
         <div class="ry-flight-kpi">
@@ -1613,17 +1823,17 @@ const BLOG_ENHANCERS = {
             <div class="kpi-label">Schedule<br>Start Date 2026</div>
         </div>
     </div>
-    <div style="margin-top:12px;">
+    <div class="ry-chips-container">
         <span class="ry-flight-route-chip">✈ Naini Saini Airport (PGH)</span>
         <span class="ry-flight-route-chip">🛫 Delhi (DEL)</span>
         <span class="ry-flight-route-chip">🛫 Dehradun (DED)</span>
         <span class="ry-flight-route-chip">🏔️ Adi Kailash Yatra Gateway</span>
     </div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;">
-        <a href="https://wa.me/917617617651?text=Namaste!%20I%20am%20flying%20into%20Pithoragarh%20airport%20for%20the%20Adi%20Kailash%20Yatra.%20Please%20arrange%20airport%20pickup%20and%20share%20the%20package%20details." target="_blank" rel="noopener" class="ry-cost-btn wa" style="flex:1;min-width:200px;">
+    <div class="ry-summary-actions">
+        <a href="https://wa.me/917617617651?text=Namaste!%20I%20am%20flying%20into%20Pithoragarh%20airport%20for%20the%20Adi%20Kailash%20Yatra.%20Please%20arrange%20airport%20pickup%20and%20share%20the%20package%20details." target="_blank" rel="noopener" class="ry-cost-btn wa">
             <i class="fa-brands fa-whatsapp"></i> Book Pithoragarh Airport Pickup
         </a>
-        <a href="tel:+917617617651" class="ry-cost-btn call" style="flex:1;min-width:200px;">
+        <a href="tel:+917617617651" class="ry-cost-btn call">
             <i class="fa-solid fa-phone"></i> Call Local Operator (+91 76176 17651)
         </a>
     </div>
@@ -1631,6 +1841,9 @@ const BLOG_ENHANCERS = {
 
             const scheduleTableHtml = `
 <div class="ry-schedule-table-wrap">
+    <div class="ry-table-scroll-hint">
+        <i class="fa-solid fa-arrows-left-right"></i> Swipe horizontally to view all routes & details
+    </div>
     <table class="ry-schedule-table" aria-label="Pithoragarh Flight Day-by-Day Schedule from September 2026">
         <thead>
             <tr>
@@ -1690,80 +1903,85 @@ const BLOG_ENHANCERS = {
 
             const compareTableHtml = `
 <div class="ry-compare-box">
-    <div class="ry-compare-head">✈ Flying vs. Road to Pithoragarh — Quick Comparison</div>
-    <table class="ry-compare-table" aria-label="Flight vs Road journey comparison to Pithoragarh">
-        <thead>
-            <tr>
-                <th>Factor</th>
-                <th>✈ By Flight (Naini Saini)</th>
-                <th>🚗 By Road (via Kathgodam)</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>Total Travel Time from Delhi</strong></td>
-                <td class="ry-check">~2–3 hours total</td>
-                <td class="ry-warn">2 full days (overnight halt)</td>
-            </tr>
-            <tr>
-                <td><strong>Physical Fatigue</strong></td>
-                <td class="ry-check">Minimal — no long mountain drive</td>
-                <td class="ry-warn">High — winding hill roads for 14–16 hrs</td>
-            </tr>
-            <tr>
-                <td><strong>Suitable for Senior Citizens</strong></td>
-                <td class="ry-check">Highly recommended</td>
-                <td class="ry-warn">Exhausting; extra acclimatisation day needed</td>
-            </tr>
-            <tr>
-                <td><strong>Flexibility of Departure Days</strong></td>
-                <td class="ry-check">6 days/week (from Sept 2026)</td>
-                <td class="ry-check">Daily (road always available)</td>
-            </tr>
-            <tr>
-                <td><strong>Weather Reliability</strong></td>
-                <td class="ry-warn">May cancel in monsoon/fog</td>
-                <td class="ry-warn">Landslides in monsoon season</td>
-            </tr>
-            <tr>
-                <td><strong>Cost</strong></td>
-                <td class="ry-warn">Flight ticket + airport transfer</td>
-                <td class="ry-check">Lower direct cost</td>
-            </tr>
-            <tr>
-                <td><strong>Scenic Experience</strong></td>
-                <td style="color:#475569;">Aerial views of Himalayas</td>
-                <td class="ry-check">Kumaon hills, rivers, temples en route</td>
-            </tr>
-            <tr>
-                <td><strong>Onward to Dharchula</strong></td>
-                <td style="color:#475569;">+95 km 4x4 drive (3–4 hrs)</td>
-                <td style="color:#475569;">Seamless extension of road journey</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="ry-compare-head"><i class="fa-solid fa-scale-balanced"></i> ✈ Flying vs. Road to Pithoragarh — Quick Comparison</div>
+    <div class="ry-compare-table-wrap">
+        <div class="ry-table-scroll-hint">
+            <i class="fa-solid fa-arrows-left-right"></i> Swipe horizontally to view full comparison
+        </div>
+        <table class="ry-compare-table" aria-label="Flight vs Road journey comparison to Pithoragarh">
+            <thead>
+                <tr>
+                    <th>Factor</th>
+                    <th>✈ By Flight (Naini Saini)</th>
+                    <th>🚗 By Road (via Kathgodam)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Total Travel Time from Delhi</strong></td>
+                    <td class="ry-check">~2–3 hours total</td>
+                    <td class="ry-warn">2 full days (overnight halt)</td>
+                </tr>
+                <tr>
+                    <td><strong>Physical Fatigue</strong></td>
+                    <td class="ry-check">Minimal — no long mountain drive</td>
+                    <td class="ry-warn">High — winding hill roads for 14–16 hrs</td>
+                </tr>
+                <tr>
+                    <td><strong>Suitable for Senior Citizens</strong></td>
+                    <td class="ry-check">Highly recommended</td>
+                    <td class="ry-warn">Exhausting; extra acclimatisation day needed</td>
+                </tr>
+                <tr>
+                    <td><strong>Flexibility of Departure Days</strong></td>
+                    <td class="ry-check">6 days/week (from Sept 2026)</td>
+                    <td class="ry-check">Daily (road always available)</td>
+                </tr>
+                <tr>
+                    <td><strong>Weather Reliability</strong></td>
+                    <td class="ry-warn">May cancel in monsoon/fog</td>
+                    <td class="ry-warn">Landslides in monsoon season</td>
+                </tr>
+                <tr>
+                    <td><strong>Cost</strong></td>
+                    <td class="ry-warn">Flight ticket + airport transfer</td>
+                    <td class="ry-check">Lower direct cost</td>
+                </tr>
+                <tr>
+                    <td><strong>Scenic Experience</strong></td>
+                    <td style="color:#475569;">Aerial views of Himalayas</td>
+                    <td class="ry-check">Kumaon hills, rivers, temples en route</td>
+                </tr>
+                <tr>
+                    <td><strong>Onward to Dharchula</strong></td>
+                    <td style="color:#475569;">+95 km 4x4 drive (3–4 hrs)</td>
+                    <td style="color:#475569;">Seamless extension of road journey</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>`;
 
             const planningTipsHtml = `
 <div class="ry-tips-box">
     <h3><i class="fa-solid fa-lightbulb"></i> Practical Planning Tips for Flying to Pithoragarh</h3>
     <ul class="ry-tips-list">
-        <li><i class="fa-solid fa-calendar-check"></i><span><strong>Book your flight immediately once the September 2026 booking window opens.</strong> The 42-seat aircraft fills fast during the October pilgrim season — don't wait.</span></li>
-        <li><i class="fa-solid fa-phone"></i><span><strong>Confirm exact timings before booking travel connections.</strong> Day-by-day slot times were not publicly announced with the schedule — verify with the airline or Naini Saini Airport directly.</span></li>
-        <li><i class="fa-solid fa-car"></i><span><strong>Arrange your Pithoragarh airport pickup in advance.</strong> Rudraansh Yatra provides direct 4x4 airport-to-Dharchula transfers, saving you the hassle of finding shared taxis on arrival.</span></li>
-        <li><i class="fa-solid fa-cloud-rain"></i><span><strong>Always have a road-route backup.</strong> Hill airports like Naini Saini are weather-sensitive. If flying during July–August monsoon, keep the Kathgodam–Tanakpur road route as a contingency.</span></li>
-        <li><i class="fa-solid fa-id-card"></i><span><strong>Pre-process your Inner Line Permit (ILP) before flying in.</strong> Share your Aadhaar and medical fitness certificate with your Pithoragarh ground operator at least 10–15 days before travel.</span></li>
+        <li><div class="ry-tip-icon-wrap"><i class="fa-solid fa-calendar-check"></i></div><span><strong>Book your flight immediately once the September 2026 booking window opens.</strong> The 42-seat aircraft fills fast during the October pilgrim season — don't wait.</span></li>
+        <li><div class="ry-tip-icon-wrap"><i class="fa-solid fa-phone"></i></div><span><strong>Confirm exact timings before booking travel connections.</strong> Day-by-day slot times were not publicly announced with the schedule — verify with the airline or Naini Saini Airport directly.</span></li>
+        <li><div class="ry-tip-icon-wrap"><i class="fa-solid fa-car"></i></div><span><strong>Arrange your Pithoragarh airport pickup in advance.</strong> Rudraansh Yatra provides direct 4x4 airport-to-Dharchula transfers, saving you the hassle of finding shared taxis on arrival.</span></li>
+        <li><div class="ry-tip-icon-wrap"><i class="fa-solid fa-cloud-rain"></i></div><span><strong>Always have a road-route backup.</strong> Hill airports like Naini Saini are weather-sensitive. If flying during July–August monsoon, keep the Kathgodam–Tanakpur road route as a contingency.</span></li>
+        <li><div class="ry-tip-icon-wrap"><i class="fa-solid fa-id-card"></i></div><span><strong>Pre-process your Inner Line Permit (ILP) before flying in.</strong> Share your Aadhaar and medical fitness certificate with your Pithoragarh ground operator at least 10–15 days before travel.</span></li>
     </ul>
 </div>`;
 
             const bottomCtaHtml = `
-<div class="ry-cost-box" style="margin-top:35px;background:linear-gradient(135deg,#0c1445 0%,#1a237e 100%);border-color:#42a5f5;">
+<div class="ry-cost-box" style="margin-top:35px;background:linear-gradient(135deg,#0c1445 0%,#1a237e 100%);border:1.5px solid #42a5f5;border-radius:14px;padding:22px;box-shadow:0 8px 24px rgba(0,0,0,0.25);">
     <div class="ry-cost-head">
         <h4 class="ry-cost-title" style="color:#ffd54f;">✈️ Flying into Pithoragarh for the Adi Kailash Yatra?</h4>
         <span class="ry-cost-badge" style="background:#1565c0;">Airport Pickup Available</span>
     </div>
-    <p style="font-size:14px;color:#cbd5e1;line-height:1.6;margin-bottom:16px;">
-        Rudraansh Yatra is a <strong>NIDHI-certified ground operator based in Pithoragarh</strong> — just 5 km from Naini Saini Airport. We can arrange a seamless <strong>4x4 Bolero pickup directly from the airport</strong>, process your Inner Line Permit, and transfer you to Dharchula on the same day. This is the fastest way to begin your Adi Kailash Yatra after landing.
+    <p style="font-size:14px;color:#cbd5e1;line-height:1.65;margin-bottom:18px;">
+        Rudraansh Yatra is a <strong>NIDHI-certified ground operator based in Pithoragarh</strong> — just 5 km from Naini Saini Airport. We arrange seamless <strong>4x4 Bolero pickups directly from the airport</strong>, process your Inner Line Permit, and transfer you to Dharchula on the same day. This is the fastest way to begin your Adi Kailash Yatra after landing.
     </p>
     <div class="ry-cost-actions">
         <a href="https://wa.me/917617617651?text=Namaste!%20I%20am%20planning%20to%20fly%20into%20Pithoragarh%20airport%20for%20the%20Adi%20Kailash%20Yatra.%20Please%20arrange%20airport%20pickup%20from%20Naini%20Saini%20and%20share%20the%20package%20details." target="_blank" rel="noopener" class="ry-cost-btn wa">

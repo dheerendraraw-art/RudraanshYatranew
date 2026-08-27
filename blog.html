@@ -542,22 +542,18 @@
             transform: translateY(-1px) !important;
         }
 
-        /* ─── Mobile Floating CTA Bar (hidden on desktop) ─────────────── */
+        /* Mobile Floating CTA Bar (hidden on desktop) */
         .mob-wa-bar { display: none; }
-
-        /* ═══════════════════════════════════════════════════════════════
-           RESPONSIVE BREAKPOINTS
-           ═══════════════════════════════════════════════════════════════ */
 
         /* Tablet (992px): collapse to single column */
         @media (max-width: 992px) {
             .blog-detail-container {
                 grid-template-columns: 1fr;
-                gap: 24px;
-                margin: 32px auto;
+                gap: 28px;
+                margin: 28px auto;
+                padding: 0 16px;
             }
             .sidebar-card { position: static; top: auto; }
-            /* Horizontal promo cards on tablet */
             .sidebar-promo-card {
                 display: grid !important;
                 grid-template-columns: 200px 1fr !important;
@@ -567,31 +563,103 @@
 
         /* Small tablet / large phone (768px) */
         @media (max-width: 768px) {
-            .blog-detail-body h1 { font-size: 22px !important; margin-top: 28px !important; }
-            .blog-detail-body h2, h2.blog-heading, .blog-heading { font-size: 20px !important; margin-top: 26px !important; }
-            .blog-detail-body h3 { font-size: 18px !important; margin-top: 24px !important; }
-            .blog-detail-body li { font-size: 15px !important; margin-bottom: 6px !important; }
-            .blog-detail-body p, .blog-text { font-size: 15px; line-height: 1.7; text-align: left; }
+            .blog-detail-container {
+                margin: 16px auto;
+                padding: 0 12px;
+                gap: 20px;
+            }
+            .blog-post-article {
+                padding: 24px 18px;
+                border-radius: 14px;
+            }
+            .blog-detail-title {
+                font-size: clamp(22px, 5vw, 32px);
+                line-height: 1.3;
+                margin-bottom: 12px;
+            }
+            .blog-detail-body h1 { font-size: 22px !important; margin-top: 28px !important; line-height: 1.35 !important; }
+            .blog-detail-body h2, h2.blog-heading, .blog-heading { font-size: 20px !important; margin-top: 26px !important; line-height: 1.35 !important; }
+            .blog-detail-body h3 { font-size: 18px !important; margin-top: 22px !important; line-height: 1.35 !important; }
+            .blog-detail-body li { font-size: 15px !important; margin-bottom: 8px !important; line-height: 1.65 !important; }
+            .blog-detail-body p, .blog-text { font-size: 15.5px; line-height: 1.75; text-align: left; margin-bottom: 16px; }
+            
+            /* Universal table responsiveness for all blog articles */
+            .blog-detail-body table,
+            .ry-table-wrap,
+            .ry-schedule-table-wrap,
+            .ry-compare-box,
+            .ry-distance-table-wrap,
+            .ry-altitude-table-wrap {
+                width: 100% !important;
+                max-width: 100% !important;
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch !important;
+                display: block !important;
+            }
+            .blog-detail-body table th,
+            .blog-detail-body table td,
+            .ry-table th,
+            .ry-table td {
+                padding: 10px 12px !important;
+                font-size: 13px !important;
+                white-space: normal;
+            }
+
+            /* Generic dark widgets across all blog posts */
+            .ry-cost-grid,
+            .ry-vs-grid,
+            .ry-season-grid,
+            .ry-checklist-grid {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
+                gap: 10px !important;
+            }
+            .ry-cost-box,
+            .ry-vs-card,
+            .ry-season-banner,
+            .ry-highlight-box,
+            .ry-route-summary,
+            .ry-tips-box {
+                padding: 18px 16px !important;
+                border-radius: 12px !important;
+                margin: 20px 0 !important;
+            }
+            .ry-cost-actions {
+                flex-direction: column !important;
+                gap: 8px !important;
+            }
+            .ry-cost-btn {
+                width: 100% !important;
+                min-width: 0 !important;
+                flex: none !important;
+                padding: 12px 14px !important;
+                font-size: 13.5px !important;
+            }
         }
 
         /* Phone (680px and below) */
         @media (max-width: 680px) {
-            .blog-detail-container { margin: 10px auto; gap: 14px; }
-
-            /* Article: less horizontal padding */
-            .blog-post-article {
-                padding: 18px 14px;
-                border-radius: 10px;
+            .blog-detail-container {
+                margin: 8px auto;
+                gap: 16px;
+                padding: 0 10px;
+                padding-bottom: 95px;
             }
 
-            /* Title: bigger clamp floor on phone */
+            /* Article Card: edge padding */
+            .blog-post-article {
+                padding: 18px 14px;
+                border-radius: 12px;
+                border: 1px solid var(--glass-border);
+            }
+
+            /* Title */
             .blog-detail-title {
-                font-size: clamp(21px, 6.5vw, 28px);
-                line-height: 1.28;
+                font-size: clamp(20px, 6vw, 26px);
+                line-height: 1.3;
                 margin-bottom: 10px;
             }
 
-            /* Meta: wrap inline items */
+            /* Meta items */
             .blog-detail-meta {
                 font-size: 12px;
                 gap: 4px 10px;
@@ -599,75 +667,100 @@
                 padding-bottom: 10px;
             }
 
-            /* Hero image: 4:3 feels better on tall phone screens */
+            /* Hero Image */
             .blog-detail-img-wrap {
-                aspect-ratio: 4 / 3;
+                aspect-ratio: 16 / 10;
                 margin-bottom: 18px;
                 border-radius: 10px;
             }
 
-            /* Body text */
-            .blog-detail-body { font-size: 15px; line-height: 1.7; }
+            /* Body Typography */
+            .blog-detail-body { font-size: 15px; line-height: 1.75; }
             .blog-detail-body p, .blog-text {
-                font-size: 15px; line-height: 1.7;
-                margin-bottom: 14px; text-align: left;
+                font-size: 15px;
+                line-height: 1.75;
+                margin-bottom: 15px;
+                text-align: left;
+            }
+            .blog-detail-body ul, .blog-detail-body ol {
+                margin: 12px 0 16px 18px !important;
+                padding-left: 0 !important;
+            }
+            .blog-detail-body li {
+                font-size: 14.5px !important;
+                margin-bottom: 8px !important;
+                line-height: 1.65 !important;
             }
 
             /* Breadcrumbs */
             .breadcrumbs-list { font-size: 11px; }
-            .breadcrumbs-list [aria-current="page"] span { max-width: 120px; }
+            .breadcrumbs-list [aria-current="page"] span { max-width: 130px; }
 
-            /* Promo cards: back to vertical stack */
+            /* Promo cards */
             .sidebar-promo-card {
                 display: block !important;
                 grid-template-columns: unset !important;
             }
-            .promo-card-img-wrap { height: 155px !important; }
+            .promo-card-img-wrap { height: 160px !important; }
             .promo-card-body { padding: 14px 14px !important; }
             .promo-card-title { font-size: 17px !important; }
             .promo-card-desc { font-size: 13px !important; }
             .promo-card-price-val { font-size: 20px !important; }
 
             /* Sidebar */
-            .sidebar-card { padding: 16px 14px; border-radius: 10px; margin-bottom: 16px; }
-            .sidebar-title { font-size: 19px; margin-bottom: 14px; }
-            .sidebar-link-img { width: 52px; height: 40px; }
-            .sidebar-link-name { font-size: 14px; }
+            .sidebar-card { padding: 16px 14px; border-radius: 12px; margin-bottom: 16px; }
+            .sidebar-title { font-size: 18px; margin-bottom: 14px; }
+            .sidebar-link-img { width: 54px; height: 42px; border-radius: 6px; }
+            .sidebar-link-name { font-size: 13.5px; line-height: 1.35; }
+            .sidebar-link-price { font-size: 11.5px; }
 
-
-
-            /* Table of Contents Mobile Optimization */
+            /* Table of Contents */
             .toc-container {
-                padding: 18px 16px !important;
-                border-radius: 12px !important;
-                margin-bottom: 24px !important;
+                padding: 16px 14px !important;
+                border-radius: 10px !important;
+                margin-bottom: 20px !important;
             }
             .toc-container h3 {
-                font-size: 17px !important;
-                margin-bottom: 12px !important;
+                font-size: 16px !important;
+                margin-bottom: 10px !important;
             }
             .toc-container ul li {
-                font-size: 13.5px !important;
+                font-size: 13px !important;
                 line-height: 1.5 !important;
             }
 
-            /* Bottom padding so floating bar doesn't cover content */
-            main.blog-detail-container { padding-bottom: 90px; }
+            /* Custom Blog Widgets Mobile Overrides */
+            .ry-cost-grid,
+            .ry-vs-grid,
+            .ry-season-grid,
+            .ry-checklist-grid {
+                grid-template-columns: 1fr !important;
+                gap: 8px !important;
+            }
+            .ry-cost-card .price { font-size: 20px !important; }
+            .ry-cost-card .label { font-size: 11.5px !important; }
+            .ry-cost-card .sub { font-size: 11.5px !important; }
+            .ry-cost-title, .ry-highlight-title { font-size: 16px !important; }
+            .ry-cost-box, .ry-vs-card, .ry-season-banner, .ry-highlight-box, .ry-route-summary, .ry-tips-box {
+                padding: 15px 12px !important;
+                border-radius: 10px !important;
+                margin: 16px 0 !important;
+            }
 
             /* Floating mobile CTA bar */
             .mob-wa-bar {
                 display: flex;
                 position: fixed;
                 bottom: 0; left: 0; right: 0;
-                z-index: 999;
-                background: rgba(255,255,255,0.97);
-                border-top: 1px solid rgba(10,25,47,0.1);
+                z-index: 99999;
+                background: rgba(255,255,255,0.98);
+                border-top: 1px solid rgba(10,25,47,0.12);
                 backdrop-filter: blur(12px);
                 -webkit-backdrop-filter: blur(12px);
                 padding: 10px 14px;
                 padding-bottom: calc(10px + env(safe-area-inset-bottom));
                 gap: 8px;
-                box-shadow: 0 -4px 20px rgba(10,25,47,0.08);
+                box-shadow: 0 -4px 20px rgba(10,25,47,0.12);
             }
             .mob-wa-btn {
                 flex: 1;
@@ -691,13 +784,17 @@
             .mob-wa-btn.call:active { background: #172A45; transform: scale(0.98); }
         }
 
-        /* Extra-small (≤380px) */
+        /* Extra-small (380px and below) */
         @media (max-width: 380px) {
-            .blog-detail-title { font-size: 19px; }
-            .blog-detail-body p, .blog-text { font-size: 14.5px; }
-            .promo-card-img-wrap { height: 130px !important; }
+            .blog-detail-container { padding: 0 6px; }
+            .blog-post-article { padding: 14px 10px; border-radius: 8px; }
+            .blog-detail-title { font-size: 18.5px; }
+            .blog-detail-body p, .blog-text { font-size: 14.5px; line-height: 1.7; }
+            .blog-detail-body li { font-size: 14px !important; }
+            .promo-card-img-wrap { height: 135px !important; }
             .mob-wa-btn { font-size: 12px; padding: 10px 6px; }
             .blog-detail-meta { font-size: 11px; }
+            .ry-cost-card .price { font-size: 18px !important; }
         }
     </style>
 
