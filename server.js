@@ -1835,16 +1835,27 @@ app.post('/api/admin/leads-history', authenticateToken, async (req, res) => {
 // Leads CRUD
 app.get('/api/admin/leads', authenticateToken, async (req, res) => {
     try {
-        let query = supabase.from('leads').select('*');
-        if (req.user.role === 'staff') {
-            const agentUuid = req.user.uuid_mapping;
-            if (agentUuid) {
-                query = query.eq('assigned_to', agentUuid);
+        let allLeads = [];
+        let page = 0;
+        const PG_SIZE = 1000;
+        while (true) {
+            let query = supabase.from('leads').select('*');
+            if (req.user.role === 'staff') {
+                const agentUuid = req.user.uuid_mapping;
+                if (agentUuid) {
+                    query = query.eq('assigned_to', agentUuid);
+                }
             }
+            const { data, error } = await query
+                .order('created_at', { ascending: false })
+                .range(page * PG_SIZE, (page + 1) * PG_SIZE - 1);
+            if (error) throw error;
+            if (!data || data.length === 0) break;
+            allLeads = allLeads.concat(data);
+            if (data.length < PG_SIZE) break;
+            page++;
         }
-        const { data, error } = await query.order('created_at', { ascending: false });
-        if (error) throw error;
-        res.json(data || []);
+        res.json(allLeads || []);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
