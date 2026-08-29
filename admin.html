@@ -5612,22 +5612,32 @@
         window.fetchLeads = async function() {
             applyRolePermissions();
             try {
-                let query = supabaseAdmin
-                    .from('leads')
-                    .select('*')
-                    .order('created_at', { ascending: false });
+                let allLeads = [];
+                let page = 0;
+                const PG_SZ = 1000;
+                while (true) {
+                    let query = supabaseAdmin
+                        .from('leads')
+                        .select('*')
+                        .order('created_at', { ascending: false })
+                        .range(page * PG_SZ, (page + 1) * PG_SZ - 1);
 
-                if (currentUserRole === 'staff') {
-                    const agentUuid = currentUserUuidMapping || AGENT_UUIDS[(currentUsername || '').toLowerCase()];
-                    if (agentUuid) {
-                        query = query.eq('assigned_to', agentUuid);
+                    if (currentUserRole === 'staff') {
+                        const agentUuid = currentUserUuidMapping || AGENT_UUIDS[(currentUsername || '').toLowerCase()];
+                        if (agentUuid) {
+                            query = query.eq('assigned_to', agentUuid);
+                        }
                     }
+
+                    const { data, error } = await query;
+                    if (error) throw error;
+                    if (!data || data.length === 0) break;
+                    allLeads = allLeads.concat(data);
+                    if (data.length < PG_SZ) break;
+                    page++;
                 }
 
-                const { data, error } = await query;
-                if (error) throw error;
-
-                currentLeads = data || [];
+                currentLeads = allLeads;
                 const restoredLeadsState = window.restoreLeadsFiltersState();
                 window.applyLeadsFilters(restoredLeadsState);
             } catch (err) {
@@ -6618,20 +6628,41 @@
 
                 const normalizePhone = (p) => (p || '').replace(/\D/g, '').replace(/^0+/, '').slice(-10);
 
-                // Fetch existing phones from Supabase
+                // Fetch existing leads (phone, email, name) for multi-factor deduplication
                 let existingPhones = new Set();
+                let existingEmails = new Set();
+                let existingNameKeys = new Set();
                 try {
-                    const { data: existingLeads } = await supabaseAdmin.from('leads').select('phone');
-                    if (existingLeads) {
-                        existingLeads.forEach(l => {
+                    let page = 0;
+                    const PG_SZ = 1000;
+                    while (true) {
+                        const { data: pageLeads } = await supabaseAdmin
+                            .from('leads')
+                            .select('name, phone, email')
+                            .order('id', { ascending: true })
+                            .range(page * PG_SZ, (page + 1) * PG_SZ - 1);
+                        if (!pageLeads || pageLeads.length === 0) break;
+                        pageLeads.forEach(l => {
                             const norm = normalizePhone(l.phone);
                             if (norm.length >= 7) existingPhones.add(norm);
+                            const em = (l.email || '').trim().toLowerCase();
+                            if (em && !em.includes('test@') && !em.includes('dummy')) existingEmails.add(em);
+                            const nm = (l.name || '').trim().toLowerCase();
+                            if (nm) {
+                                if (em) existingNameKeys.add(`${nm}:::${em}`);
+                                if (norm.length >= 7) existingNameKeys.add(`${nm}:::${norm}`);
+                                existingNameKeys.add(`name:::${nm}`);
+                            }
                         });
+                        if (pageLeads.length < PG_SZ) break;
+                        page++;
                     }
                 } catch (e) {}
 
                 const toInsert = [];
-                const seenInSheet = new Set();
+                const seenPhonesInSheet = new Set();
+                const seenEmailsInSheet = new Set();
+                const seenNameKeysInSheet = new Set();
                 let dupCount = 0;
 
                 for (const cols of rows) {
@@ -6640,18 +6671,39 @@
 
                     const rawPhone = (cols[phoneIdx] || '').replace(/^p:/i, '').trim();
                     const norm = normalizePhone(rawPhone);
+                    const emailVal = (cols[emailIdx] || '').trim().toLowerCase();
+                    const nm = nameVal.trim().toLowerCase();
+                    const nameEmailKey = emailVal ? `${nm}:::${emailVal}` : '';
+                    const namePhoneKey = norm.length >= 7 ? `${nm}:::${norm}` : '';
+                    const nameOnlyKey = `name:::${nm}`;
 
-                    if (norm.length >= 7 && (existingPhones.has(norm) || seenInSheet.has(norm))) {
+                    let isDup = false;
+                    if (norm.length >= 7 && (existingPhones.has(norm) || seenPhonesInSheet.has(norm))) {
+                        isDup = true;
+                    } else if (emailVal && !emailVal.includes('test@') && !emailVal.includes('dummy') && (existingEmails.has(emailVal) || seenEmailsInSheet.has(emailVal))) {
+                        isDup = true;
+                    } else if (nameEmailKey && (existingNameKeys.has(nameEmailKey) || seenNameKeysInSheet.has(nameEmailKey))) {
+                        isDup = true;
+                    } else if (namePhoneKey && (existingNameKeys.has(namePhoneKey) || seenNameKeysInSheet.has(namePhoneKey))) {
+                        isDup = true;
+                    } else if (norm.length < 7 && !emailVal && (existingNameKeys.has(nameOnlyKey) || seenNameKeysInSheet.has(nameOnlyKey))) {
+                        isDup = true;
+                    }
+
+                    if (isDup) {
                         dupCount++;
                         continue;
                     }
 
-                    if (norm.length >= 7) seenInSheet.add(norm);
+                    if (norm.length >= 7) seenPhonesInSheet.add(norm);
+                    if (emailVal) seenEmailsInSheet.add(emailVal);
+                    if (nameEmailKey) seenNameKeysInSheet.add(nameEmailKey);
+                    if (namePhoneKey) seenNameKeysInSheet.add(namePhoneKey);
+                    if (nameOnlyKey) seenNameKeysInSheet.add(nameOnlyKey);
 
                     const whenYatra = whenIdx !== -1 ? cols[whenIdx] : '';
                     const peopleInfo = peopleIdx !== -1 ? cols[peopleIdx] : '';
                     const formName = formIdx !== -1 ? cols[formIdx] : '';
-                    const emailVal = emailIdx !== -1 ? cols[emailIdx] : '';
                     const createdTime = createdIdx !== -1 ? cols[createdIdx] : '';
                     const campaignName = campaignIdx !== -1 ? cols[campaignIdx] : '';
 
@@ -6667,7 +6719,7 @@
                     toInsert.push({
                         name: nameVal.trim(),
                         phone: rawPhone || 'N/A',
-                        email: emailVal.trim(),
+                        email: emailVal,
                         destination: formName.trim(),
                         source: 'Meta Sheet Sync',
                         status: 'New',
@@ -6808,19 +6860,33 @@
                     return;
                 }
 
-                // --- Duplicate phone deduplication for CSV import ---
+                // --- Multi-factor deduplication for CSV import ---
                 const normalizePhone = (p) => (p || '').replace(/\D/g, '').replace(/^0+/, '').slice(-10);
 
-                // Fetch all existing phone numbers from system
                 showAdminToast('Checking for duplicate leads...', 'info');
                 let existingPhones = new Set();
+                let existingEmails = new Set();
+                let existingNameKeys = new Set();
                 try {
-                    const { data: existingLeads } = await supabaseAdmin.from('leads').select('phone');
-                    if (existingLeads && existingLeads.length > 0) {
+                    let page = 0;
+                    const PG_SZ = 1000;
+                    while (true) {
+                        const { data: existingLeads } = await supabaseAdmin.from('leads').select('name, phone, email').range(page * PG_SZ, (page + 1) * PG_SZ - 1);
+                        if (!existingLeads || existingLeads.length === 0) break;
                         existingLeads.forEach(l => {
                             const norm = normalizePhone(l.phone);
                             if (norm.length >= 7) existingPhones.add(norm);
+                            const em = (l.email || '').trim().toLowerCase();
+                            if (em && !em.includes('test@') && !em.includes('dummy')) existingEmails.add(em);
+                            const nm = (l.name || '').trim().toLowerCase();
+                            if (nm) {
+                                if (em) existingNameKeys.add(`${nm}:::${em}`);
+                                if (norm.length >= 7) existingNameKeys.add(`${nm}:::${norm}`);
+                                existingNameKeys.add(`name:::${nm}`);
+                            }
                         });
+                        if (existingLeads.length < PG_SZ) break;
+                        page++;
                     }
                 } catch (fetchErr) {
                     console.warn('Could not fetch existing leads for dedup check:', fetchErr);
@@ -6828,16 +6894,41 @@
 
                 // Also check within the CSV itself for intra-file duplicates
                 const csvPhonesSeen = new Set();
+                const csvEmailsSeen = new Set();
+                const csvNameKeysSeen = new Set();
                 const toInsert = [];
                 const duplicateLeads = [];
 
                 for (const lead of newLeads) {
                     const norm = normalizePhone(lead.phone);
+                    const em = (lead.email || '').trim().toLowerCase();
+                    const nm = (lead.name || '').trim().toLowerCase();
+                    const nameEmailKey = em ? `${nm}:::${em}` : '';
+                    const namePhoneKey = norm.length >= 7 ? `${nm}:::${norm}` : '';
+                    const nameOnlyKey = `name:::${nm}`;
+
+                    let isDup = false;
                     if (norm.length >= 7 && (existingPhones.has(norm) || csvPhonesSeen.has(norm))) {
+                        isDup = true;
+                    } else if (em && !em.includes('test@') && !em.includes('dummy') && (existingEmails.has(em) || csvEmailsSeen.has(em))) {
+                        isDup = true;
+                    } else if (nameEmailKey && (existingNameKeys.has(nameEmailKey) || csvNameKeysSeen.has(nameEmailKey))) {
+                        isDup = true;
+                    } else if (namePhoneKey && (existingNameKeys.has(namePhoneKey) || csvNameKeysSeen.has(namePhoneKey))) {
+                        isDup = true;
+                    } else if (norm.length < 7 && !em && (existingNameKeys.has(nameOnlyKey) || csvNameKeysSeen.has(nameOnlyKey))) {
+                        isDup = true;
+                    }
+
+                    if (isDup) {
                         duplicateLeads.push(lead);
                     } else {
                         toInsert.push(lead);
                         if (norm.length >= 7) csvPhonesSeen.add(norm);
+                        if (em) csvEmailsSeen.add(em);
+                        if (nameEmailKey) csvNameKeysSeen.add(nameEmailKey);
+                        if (namePhoneKey) csvNameKeysSeen.add(namePhoneKey);
+                        if (nameOnlyKey) csvNameKeysSeen.add(nameOnlyKey);
                     }
                 }
                 // --- End duplicate check ---

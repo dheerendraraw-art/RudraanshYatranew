@@ -1608,19 +1608,22 @@ app.post('/api/bookings', async (req, res) => {
             remarksContent += `Special Notes: ${message.trim()}`;
         }
 
-        // 30-second deduplication window: suppress duplicate clicks/submits in LEADS table
-        const thirtySecondsAgo = new Date(Date.now() - 30000).toISOString();
-        const { data: recent } = await supabase
-            .from('leads')
-            .select('id')
-            .eq('name', cleanName)
-            .eq('phone', cleanPhone)
-            .gte('created_at', thirtySecondsAgo)
-            .limit(1);
-
-        if (recent && recent.length > 0) {
-            console.log('Duplicate website lead submission suppressed within 30s window:', recent[0].id);
-            return res.status(200).json({ success: true, lead_id: recent[0].id, duplicate: true });
+        // Permanent deduplication: suppress if a lead with the same phone already exists
+        if (cleanPhone) {
+            const normalizePhone = (p) => (p || '').replace(/\D/g, '').replace(/^0+/, '').slice(-10);
+            const normPhone = normalizePhone(cleanPhone);
+            if (normPhone.length >= 7) {
+                const { data: existing } = await supabase
+                    .from('leads')
+                    .select('id, phone')
+                    .limit(5000);
+                const isDup = (existing || []).some(l => normalizePhone(l.phone) === normPhone);
+                if (isDup) {
+                    const match = (existing || []).find(l => normalizePhone(l.phone) === normPhone);
+                    console.log('Duplicate website lead suppressed (existing phone):', match ? match.id : '?');
+                    return res.status(200).json({ success: true, lead_id: match ? match.id : null, duplicate: true });
+                }
+            }
         }
 
         const leadData = {
@@ -1654,9 +1657,20 @@ app.post('/api/custom-requests', async (req, res) => {
             .insert(requestData);
         if (error) throw error;
 
-        // Also insert into leads table so it appears in Leads Manager
+        // Also insert into leads table so it appears in Leads Manager (with dedup)
+        const normPhoneFn = (p) => (p || '').replace(/\D/g, '').replace(/^0+/, '').slice(-10);
+        let existingPhonesForWizard = new Set();
+        try {
+            const { data: allLeads } = await supabase.from('leads').select('phone').limit(5000);
+            (allLeads || []).forEach(l => { const n = normPhoneFn(l.phone); if (n.length >= 7) existingPhonesForWizard.add(n); });
+        } catch(e) {}
         for (const item of requestData) {
             if (item.name || item.phone) {
+                const normPhone = normPhoneFn(item.phone || '');
+                if (normPhone.length >= 7 && existingPhonesForWizard.has(normPhone)) {
+                    console.log('Custom request lead deduped (existing phone):', normPhone);
+                    continue;
+                }
                 const remarksStr = `Destination: ${item.destination || 'Custom'} | Duration: ${item.days || 6} days | Notes: ${item.requests || ''}`;
                 await supabase.from('leads').insert([{
                     name: (item.name || 'Website Visitor').trim(),
@@ -1667,6 +1681,7 @@ app.post('/api/custom-requests', async (req, res) => {
                     remarks: remarksStr,
                     created_at: new Date().toISOString()
                 }]);
+                if (normPhone.length >= 7) existingPhonesForWizard.add(normPhone);
             }
         }
 
@@ -1686,9 +1701,20 @@ app.post('/api/discount-registrations', async (req, res) => {
             .insert(regData);
         if (error) throw error;
 
-        // Also insert into leads table so it appears in Leads Manager
+        // Also insert into leads table so it appears in Leads Manager (with dedup)
+        const normDiscountFn = (p) => (p || '').replace(/\D/g, '').replace(/^0+/, '').slice(-10);
+        let existingPhonesForDiscount = new Set();
+        try {
+            const { data: allLeads2 } = await supabase.from('leads').select('phone').limit(5000);
+            (allLeads2 || []).forEach(l => { const n = normDiscountFn(l.phone); if (n.length >= 7) existingPhonesForDiscount.add(n); });
+        } catch(e) {}
         for (const item of regData) {
             if (item.name || item.phone) {
+                const normPhone = normDiscountFn(item.phone || '');
+                if (normPhone.length >= 7 && existingPhonesForDiscount.has(normPhone)) {
+                    console.log('Discount reg lead deduped (existing phone):', normPhone);
+                    continue;
+                }
                 await supabase.from('leads').insert([{
                     name: (item.name || 'Website Visitor').trim(),
                     phone: (item.phone || '').trim(),
@@ -1698,6 +1724,7 @@ app.post('/api/discount-registrations', async (req, res) => {
                     remarks: `Discount Code: ${item.discount_code || ''}`,
                     created_at: new Date().toISOString()
                 }]);
+                if (normPhone.length >= 7) existingPhonesForDiscount.add(normPhone);
             }
         }
 
@@ -3513,29 +3540,44 @@ async function syncGoogleSheetLeads() {
 
         const normalizePhone = (p) => (p || '').replace(/\D/g, '').replace(/^0+/, '').slice(-10);
 
-        // ── PAGINATED fetch of ALL existing phones (Supabase default limit = 1000) ──
+        // ── PAGINATED fetch of ALL existing leads for comprehensive deduplication ──
         const existingPhones = new Set();
+        const existingEmails = new Set();
+        const existingNameKeys = new Set();
+
         let page = 0;
         const PAGE_SIZE = 1000;
         while (true) {
-            const { data: phonePage, error: fetchErr } = await supabase
+            const { data: leadPage, error: fetchErr } = await supabase
                 .from('leads')
-                .select('phone')
+                .select('name, phone, email')
+                .order('id', { ascending: true })
                 .range(page * PAGE_SIZE, (page + 1) * PAGE_SIZE - 1);
             if (fetchErr) throw fetchErr;
-            if (!phonePage || phonePage.length === 0) break;
-            phonePage.forEach(l => {
+            if (!leadPage || leadPage.length === 0) break;
+            leadPage.forEach(l => {
                 const norm = normalizePhone(l.phone);
                 if (norm.length >= 7) existingPhones.add(norm);
+                
+                const em = (l.email || '').trim().toLowerCase();
+                if (em && !em.includes('test@') && !em.includes('dummy')) existingEmails.add(em);
+
+                const nm = (l.name || '').trim().toLowerCase();
+                if (nm) {
+                    if (em) existingNameKeys.add(`${nm}:::${em}`);
+                    if (norm.length >= 7) existingNameKeys.add(`${nm}:::${norm}`);
+                    existingNameKeys.add(`name:::${nm}`);
+                }
             });
-            if (phonePage.length < PAGE_SIZE) break; // last page
+            if (leadPage.length < PAGE_SIZE) break; // last page
             page++;
         }
-        console.log(`[Google Sheet Sync] Loaded ${existingPhones.size} existing phones across ${page + 1} page(s).`);
-
+        console.log(`[Google Sheet Sync] Loaded ${existingPhones.size} phones, ${existingEmails.size} emails, and ${existingNameKeys.size} keys from existing leads.`);
 
         const toInsert = [];
-        const seenInSheet = new Set();
+        const seenPhonesInSheet = new Set();
+        const seenEmailsInSheet = new Set();
+        const seenNameKeysInSheet = new Set();
         let duplicateCount = 0;
 
         for (const r of rows) {
@@ -3554,13 +3596,49 @@ async function syncGoogleSheetLeads() {
 
             const rawPhone = (r.phone_number || r.phone || '').replace(/^p:/i, '').trim();
             const norm = normalizePhone(rawPhone);
+            const nm = name.toLowerCase();
+            const nameEmailKey = emailVal ? `${nm}:::${emailVal}` : '';
+            const namePhoneKey = norm.length >= 7 ? `${nm}:::${norm}` : '';
+            const nameOnlyKey = `name:::${nm}`;
 
-            if (norm.length >= 7 && (existingPhones.has(norm) || seenInSheet.has(norm))) {
+            let isDuplicate = false;
+
+            // 1. Check by valid phone number (>= 7 digits)
+            if (norm.length >= 7) {
+                if (existingPhones.has(norm) || seenPhonesInSheet.has(norm)) {
+                    isDuplicate = true;
+                }
+            }
+
+            // 2. Check by valid email (if not already matched)
+            if (!isDuplicate && emailVal && !emailVal.includes('test@') && !emailVal.includes('dummy')) {
+                if (existingEmails.has(emailVal) || seenEmailsInSheet.has(emailVal)) {
+                    isDuplicate = true;
+                }
+            }
+
+            // 3. Check by Name + Email or Name + Phone or Name alone (for short/invalid phones)
+            if (!isDuplicate) {
+                if (nameEmailKey && (existingNameKeys.has(nameEmailKey) || seenNameKeysInSheet.has(nameEmailKey))) {
+                    isDuplicate = true;
+                } else if (namePhoneKey && (existingNameKeys.has(namePhoneKey) || seenNameKeysInSheet.has(namePhoneKey))) {
+                    isDuplicate = true;
+                } else if (norm.length < 7 && !emailVal && (existingNameKeys.has(nameOnlyKey) || seenNameKeysInSheet.has(nameOnlyKey))) {
+                    isDuplicate = true;
+                }
+            }
+
+            if (isDuplicate) {
                 duplicateCount++;
                 continue;
             }
 
-            if (norm.length >= 7) seenInSheet.add(norm);
+            // Mark this sheet lead as seen
+            if (norm.length >= 7) seenPhonesInSheet.add(norm);
+            if (emailVal) seenEmailsInSheet.add(emailVal);
+            if (nameEmailKey) seenNameKeysInSheet.add(nameEmailKey);
+            if (namePhoneKey) seenNameKeysInSheet.add(namePhoneKey);
+            if (nameOnlyKey) seenNameKeysInSheet.add(nameOnlyKey);
 
             const whenYatra = r['when_are_you_planning_your_yatra?'] || r.when_are_you_planning_your_yatra || '';
             const peopleInfo = r['how_many_people_are_planning_to_travel?'] || r.how_many_people_are_planning_to_travel || '';
@@ -3628,7 +3706,7 @@ app.post('/api/webhooks/google-sheets-lead', async (req, res) => {
 
         const name = (body.full_name || body.name || '').trim();
         const rawPhone = (body.phone_number || body.phone || '').replace(/^p:/i, '').trim();
-        const email = (body.email || '').trim();
+        const email = (body.email || '').trim().toLowerCase();
         const destination = (body.form_name || body.destination || '').trim();
         const whenYatra = body.when_are_you_planning_your_yatra || body['when_are_you_planning_your_yatra?'] || '';
         const peopleInfo = body.how_many_people_are_planning_to_travel || body['how_many_people_are_planning_to_travel?'] || '';
@@ -3640,11 +3718,31 @@ app.post('/api/webhooks/google-sheets-lead', async (req, res) => {
         const normalizePhone = (p) => (p || '').replace(/\D/g, '').replace(/^0+/, '').slice(-10);
         const norm = normalizePhone(rawPhone);
 
-        if (supabase && norm.length >= 7) {
-            const { data: existing } = await supabase.from('leads').select('id, phone');
-            const isDup = (existing || []).some(l => normalizePhone(l.phone) === norm);
+        if (supabase) {
+            // Paginated fetch to handle all existing leads for thorough dedup
+            let allExisting = [];
+            let pgOffset = 0;
+            const PG_SIZE = 1000;
+            while (true) {
+                const { data: page } = await supabase.from('leads').select('name, phone, email').range(pgOffset, pgOffset + PG_SIZE - 1);
+                if (!page || page.length === 0) break;
+                allExisting = allExisting.concat(page);
+                if (page.length < PG_SIZE) break;
+                pgOffset += PG_SIZE;
+            }
+
+            const isDup = allExisting.some(l => {
+                const existingNorm = normalizePhone(l.phone);
+                if (norm.length >= 7 && existingNorm.length >= 7 && norm === existingNorm) return true;
+                const existingEmail = (l.email || '').trim().toLowerCase();
+                if (email && existingEmail && email === existingEmail) return true;
+                const existingName = (l.name || '').trim().toLowerCase();
+                if (name && existingName && name.toLowerCase() === existingName && (email === existingEmail || norm === existingNorm)) return true;
+                return false;
+            });
+
             if (isDup) {
-                console.log(`[Google Sheets Webhook] Suppressed duplicate lead for phone: ${rawPhone}`);
+                console.log(`[Google Sheets Webhook] Suppressed duplicate lead: ${name} (${rawPhone})`);
                 return res.status(200).json({ success: true, duplicate: true, message: 'Duplicate lead suppressed' });
             }
         }
@@ -3682,13 +3780,26 @@ app.post('/api/webhooks/google-sheets-lead', async (req, res) => {
     }
 });
 
+
 // Start background periodic Google Sheet sync every 5 minutes
-setTimeout(() => {
-    syncGoogleSheetLeads().catch(err => console.error('[Google Sheet Startup Sync Failed]:', err));
-}, 10000);
-setInterval(() => {
-    syncGoogleSheetLeads().catch(err => console.error('[Google Sheet Periodic Sync Failed]:', err));
-}, 5 * 60 * 1000);
+// A simple lock flag prevents overlapping sync runs
+let _sheetSyncRunning = false;
+async function safeSync() {
+    if (_sheetSyncRunning) {
+        console.log('[Google Sheet Sync] Skipped — previous sync still running.');
+        return;
+    }
+    _sheetSyncRunning = true;
+    try {
+        await syncGoogleSheetLeads();
+    } catch (err) {
+        console.error('[Google Sheet Sync Failed]:', err);
+    } finally {
+        _sheetSyncRunning = false;
+    }
+}
+setTimeout(safeSync, 10000);
+setInterval(safeSync, 5 * 60 * 1000);
 
 
 

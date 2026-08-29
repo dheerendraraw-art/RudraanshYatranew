@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="hi-IN">
 
 <head>
@@ -260,7 +260,7 @@
         .blog-detail-body p,
         .blog-text {
             margin-bottom: 20px;
-            text-align: justify;
+            text-align: left;
             line-height: 1.8;
             font-size: 16px;
         }
@@ -581,7 +581,7 @@
             .blog-detail-body h2, h2.blog-heading, .blog-heading { font-size: 20px !important; margin-top: 26px !important; line-height: 1.35 !important; }
             .blog-detail-body h3 { font-size: 18px !important; margin-top: 22px !important; line-height: 1.35 !important; }
             .blog-detail-body li { font-size: 15px !important; margin-bottom: 8px !important; line-height: 1.65 !important; }
-            .blog-detail-body p, .blog-text { font-size: 15.5px; line-height: 1.75; text-align: left; margin-bottom: 16px; }
+            .blog-detail-body p, .blog-text { font-size: 15.5px; line-height: 1.75; text-align: left !important; margin-bottom: 16px; }
             
             /* Universal table responsiveness for all blog articles */
             .blog-detail-body table,
@@ -680,7 +680,7 @@
                 font-size: 15px;
                 line-height: 1.75;
                 margin-bottom: 15px;
-                text-align: left;
+                text-align: left !important;
             }
             .blog-detail-body ul, .blog-detail-body ol {
                 margin: 12px 0 16px 18px !important;
@@ -692,9 +692,14 @@
                 line-height: 1.65 !important;
             }
 
-            /* Breadcrumbs */
-            .breadcrumbs-list { font-size: 11px; }
-            .breadcrumbs-list [aria-current="page"] span { max-width: 130px; }
+            /* Breadcrumbs - tighter on small screens */
+            .breadcrumbs-nav { margin-bottom: 14px !important; }
+            .breadcrumbs-list { font-size: 11px; gap: 4px; }
+            .breadcrumbs-list [aria-current="page"] span { max-width: 120px; }
+
+            /* Author bio - left-align description on mobile for readability */
+            .author-bio-desc { text-align: left !important; }
+            .author-bio-box { padding: 18px 14px !important; gap: 14px !important; margin-top: 24px !important; }
 
             /* Promo cards */
             .sidebar-promo-card {

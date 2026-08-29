@@ -1,4 +1,4 @@
-/* Rudraansh Yatra Premium Design System - style.css */
+﻿/* Rudraansh Yatra Premium Design System - style.css */
 
 :root {
     /* Color System */
@@ -157,6 +157,8 @@ img {
     .section-padding {
         padding: 60px 0;
     }
+    /* Justified text looks bad on mobile narrow columns */
+    p { text-align: left; }
 }
 
 /* ── Mobile Performance: Skip rendering for off-screen sections ──────────────
