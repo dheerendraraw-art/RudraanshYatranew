@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="hi-IN">
 
 <head>
@@ -293,7 +293,7 @@
         .blog-detail-body p,
         .blog-text {
             margin-bottom: 20px;
-            text-align: justify;
+            text-align: left;
             line-height: 1.8;
             font-size: 16px;
         }
@@ -604,10 +604,23 @@
             .blog-detail-body h2, h2.blog-heading, .blog-heading { font-size: 20px !important; margin-top: 26px !important; }
             .blog-detail-body h3 { font-size: 18px !important; margin-top: 24px !important; }
             .blog-detail-body li { font-size: 15px !important; margin-bottom: 6px !important; }
-            .blog-detail-body p, .blog-text { font-size: 15px; line-height: 1.7; text-align: left; }
+            .blog-detail-body p, .blog-text { font-size: 15.5px; line-height: 1.75; text-align: left !important; margin-bottom: 16px; }
         }
 
         /* Phone (680px and below) */
+                    /* Tables responsive */
+            .blog-detail-body table,
+            .route-table,
+            .ry-table-wrap,
+            .ry-schedule-table-wrap {
+                display: block !important;
+                width: 100% !important;
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch !important;
+                max-width: 100% !important;
+            }
+            .route-table th, .route-table td { padding: 9px 11px !important; font-size: 13px !important; white-space: normal; }
+
         @media (max-width: 680px) {
             .blog-detail-container { margin: 10px auto; gap: 14px; }
 

@@ -48,6 +48,137 @@
         .doc-card{background:var(--color-bg-card);border:1px solid var(--glass-border);border-radius:10px;padding:16px}
         .doc-card strong{display:block;color:var(--color-primary);margin-bottom:4px;font-size:14px}
         .doc-card span{font-size:13px;color:var(--color-text-secondary)}
+        /* ═══════════════════════════════════════════════════════════════
+           MOBILE RESPONSIVE BREAKPOINTS
+           ═══════════════════════════════════════════════════════════════ */
+
+        /* Mobile Floating CTA Bar (hidden on desktop) */
+        .mob-wa-bar { display: none; }
+
+        /* Tablet (992px): collapse to single column */
+        @media (max-width: 992px) {
+            .blog-detail-container {
+                grid-template-columns: 1fr;
+                gap: 24px;
+                margin: 32px auto;
+                padding: 0 16px;
+            }
+            .sidebar-card { position: static; top: auto; }
+            .sidebar-promo-card {
+                display: grid !important;
+                grid-template-columns: 200px 1fr !important;
+            }
+            .promo-card-img-wrap { height: 100% !important; min-height: 160px !important; }
+        }
+
+        /* Small tablet / large phone (768px) */
+        @media (max-width: 768px) {
+            .blog-detail-container {
+                margin: 16px auto;
+                padding: 0 12px;
+                gap: 20px;
+            }
+            .blog-post-article { padding: 22px 16px; border-radius: 14px; }
+            .blog-detail-title { font-size: clamp(22px, 5vw, 32px); line-height: 1.3; margin-bottom: 12px; }
+            .blog-detail-body h1 { font-size: 22px !important; margin-top: 28px !important; line-height: 1.35 !important; }
+            .blog-detail-body h2, h2.blog-heading, .blog-heading { font-size: 20px !important; margin-top: 26px !important; line-height: 1.35 !important; }
+            .blog-detail-body h3 { font-size: 18px !important; margin-top: 22px !important; line-height: 1.35 !important; }
+            .blog-detail-body li { font-size: 15px !important; margin-bottom: 8px !important; line-height: 1.65 !important; }
+            .blog-detail-body p, .blog-text { font-size: 15.5px; line-height: 1.75; text-align: left !important; margin-bottom: 16px; }
+            /* Tables */
+            .blog-detail-body table,
+            .route-table { display: block !important; width: 100% !important; overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; font-size: 13px !important; }
+            .blog-detail-body table th, .blog-detail-body table td,
+            .route-table th, .route-table td { padding: 9px 11px !important; font-size: 13px !important; white-space: normal; }
+        }
+
+        /* Phone (680px and below) */
+        @media (max-width: 680px) {
+            .blog-detail-container {
+                margin: 8px auto;
+                gap: 16px;
+                padding: 0 10px;
+                padding-bottom: 95px;
+            }
+            .blog-post-article { padding: 18px 13px; border-radius: 12px; border: 1px solid var(--glass-border); }
+            .blog-detail-title { font-size: clamp(20px, 6vw, 26px); line-height: 1.3; margin-bottom: 10px; }
+            .blog-detail-meta { font-size: 12px; gap: 4px 10px; margin-bottom: 16px; padding-bottom: 10px; }
+            .blog-detail-img-wrap { aspect-ratio: 16 / 10; margin-bottom: 18px; border-radius: 10px; }
+            .blog-detail-body { font-size: 15px; line-height: 1.75; }
+            .blog-detail-body p, .blog-text { font-size: 15px; line-height: 1.75; margin-bottom: 15px; text-align: left !important; }
+            .blog-detail-body ul, .blog-detail-body ol { margin: 12px 0 16px 18px !important; padding-left: 0 !important; }
+            .blog-detail-body li { font-size: 14.5px !important; margin-bottom: 8px !important; line-height: 1.65 !important; }
+            /* Tables responsive on phone */
+            .blog-detail-body table, .route-table {
+                display: block !important; width: 100% !important;
+                overflow-x: auto !important; -webkit-overflow-scrolling: touch !important;
+                font-size: 12.5px !important; border-radius: 8px !important;
+            }
+            .blog-detail-body table th, .blog-detail-body table td,
+            .route-table th, .route-table td { padding: 8px 10px !important; font-size: 12.5px !important; }
+            /* Breadcrumbs */
+            .breadcrumbs-nav { margin-bottom: 14px !important; }
+            .breadcrumbs-list { font-size: 11px; gap: 4px; }
+            .breadcrumbs-list [aria-current="page"] span { max-width: 120px; }
+            /* Author bio */
+            .author-bio-desc { text-align: left !important; }
+            .author-bio-box { padding: 18px 14px !important; gap: 14px !important; margin-top: 24px !important; }
+            /* Promo cards */
+            .sidebar-promo-card { display: block !important; grid-template-columns: unset !important; }
+            .promo-card-img-wrap { height: 160px !important; }
+            .promo-card-body { padding: 14px 14px !important; }
+            .promo-card-title { font-size: 17px !important; }
+            .promo-card-desc { font-size: 13px !important; }
+            .promo-card-price-val { font-size: 20px !important; }
+            /* Sidebar */
+            .sidebar-card { padding: 16px 14px; border-radius: 12px; margin-bottom: 16px; }
+            .sidebar-title { font-size: 18px; margin-bottom: 14px; }
+            .sidebar-link-img { width: 54px; height: 42px; border-radius: 6px; }
+            .sidebar-link-name { font-size: 13.5px; line-height: 1.35; }
+            .sidebar-link-price { font-size: 11.5px; }
+            /* TOC */
+            .toc-container { padding: 16px 14px !important; border-radius: 10px !important; margin-bottom: 20px !important; }
+            .toc-container h3 { font-size: 16px !important; margin-bottom: 10px !important; }
+            .toc-container ul li { font-size: 13px !important; line-height: 1.5 !important; }
+            /* Step cards (ILP guide etc) */
+            .step-card { flex-direction: column; gap: 10px; padding: 16px 14px; }
+            .doc-grid { grid-template-columns: 1fr !important; }
+            .pkg-row { grid-template-columns: 1fr !important; }
+            /* Info box */
+            .info-box { padding: 14px 16px; margin: 18px 0; }
+            /* Floating CTA bar */
+            .mob-wa-bar {
+                display: flex;
+                position: fixed;
+                bottom: 0; left: 0; right: 0;
+                z-index: 999;
+                background: rgba(255,255,255,0.97);
+                border-top: 1px solid rgba(10,25,47,0.1);
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                padding: 10px 14px;
+                padding-bottom: calc(10px + env(safe-area-inset-bottom));
+                gap: 8px;
+                box-shadow: 0 -4px 20px rgba(10,25,47,0.08);
+            }
+            .mob-wa-btn {
+                flex: 1; display: flex; align-items: center; justify-content: center;
+                gap: 7px; padding: 12px 10px; border-radius: 10px;
+                font-size: 13px; font-weight: 700; text-decoration: none;
+                font-family: var(--font-sans); transition: all 0.18s; border: none; cursor: pointer;
+            }
+            .mob-wa-btn.wa { background: #25d366; color: #fff; }
+            .mob-wa-btn.wa:active { background: #1da552; transform: scale(0.98); }
+            .mob-wa-btn.call { background: var(--color-primary); color: #fff; }
+            .mob-wa-btn.call:active { background: #172A45; transform: scale(0.98); }
+        }
+
+        /* Extra-small (380px) */
+        @media (max-width: 380px) {
+            .blog-detail-title { font-size: 19px !important; }
+            .blog-detail-body p, .blog-text { font-size: 14.5px !important; }
+            .blog-detail-meta { font-size: 11px; }
+        }
     </style>
 </head>
 <body>
@@ -153,5 +284,15 @@
         <div><h3>Contact</h3><ul class="footer-contact"><li><i class="fa-solid fa-location-dot" style="color:var(--color-gold);"></i><span>Simalgair Bazaar, Pithoragarh 262501</span></li><li><i class="fa-solid fa-phone"></i><span>+91 7617617651</span></li></ul></div>
     </div><div class="footer-bottom"><div class="container"><p>&copy; 2026 Rudraansh Yatra. All Rights Reserved.</p></div></div></footer>
     <script src="../app.js?v=1.5" defer></script>
+
+    <!-- Mobile sticky CTA bar -->
+    <div class="mob-wa-bar">
+        <a href="https://wa.me/917617617651?text=Namaste!%20I%20read%20your%20blog%20and%20I%20am%20interested%20in%20a%20Yatra.%20Please%20share%20details." target="_blank" class="mob-wa-btn wa">
+            <i class="fa-brands fa-whatsapp"></i> WhatsApp Us
+        </a>
+        <a href="tel:+917617617651" class="mob-wa-btn call">
+            <i class="fa-solid fa-phone"></i> Call Now
+        </a>
+    </div>
 </body>
 </html>
