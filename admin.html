@@ -9600,12 +9600,12 @@
             if (btn) btn.disabled = true;
 
             try {
-                const res = await fetch('/api/google-reviews/refresh', { method: 'POST' });
+                const res = await fetch('/api/google-reviews?refresh=1');
                 const json = await res.json();
                 if (typeof showAdminToast === 'function') {
-                    showAdminToast('✅ Google Reviews cache refreshed! Live data (5.0★ / 34 reviews) active.', 'success');
+                    showAdminToast(`✅ Google Reviews updated live: ${json.rating || 5.0}★ (${json.user_ratings_total || 34} reviews)`, 'success');
                 } else {
-                    alert('Google Reviews cache refreshed successfully!');
+                    alert(`Google Reviews updated live: ${json.rating || 5.0}★ (${json.user_ratings_total || 34} reviews)`);
                 }
             } catch (e) {
                 console.error('[Sync Reviews Error]', e);

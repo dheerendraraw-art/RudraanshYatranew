@@ -3079,7 +3079,9 @@ app.get('/api/google-reviews', async (req, res) => {
     const placeId = process.env.GOOGLE_PLACE_ID || 'ChIJUaOjOEsloTkRjOLS3RK_S_A';
     const now = Date.now();
 
-    if (googleReviewsCache.data && (now - googleReviewsCache.timestamp < CACHE_DURATION)) {
+    const forceRefresh = req.query.refresh === 'true' || req.query.refresh === '1';
+
+    if (!forceRefresh && googleReviewsCache.data && (now - googleReviewsCache.timestamp < CACHE_DURATION)) {
         return res.json(googleReviewsCache.data);
     }
 
