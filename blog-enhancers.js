@@ -4524,6 +4524,248 @@ BLOG_ENHANCERS['adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitu
 };
 
 
+// ─────────────────────────────────────────────────────────────────────────────
+// HOW TO REACH PITHORAGARH — SEO / AEO / GEO / AIO — FULL ENHANCER
+// ─────────────────────────────────────────────────────────────────────────────
+BLOG_ENHANCERS['how-to-reach-pithoragarh'] = {
+    meta: {
+        title: 'How to Reach Pithoragarh by Train, Flight & Road (2026 Guide)',
+        desc: 'Complete guide to reach Pithoragarh from Delhi in 2026: nearest railways (Tanakpur/Kathgodam), Naini Saini Airport flights (6 days/week from Sept 2026), road routes via Almora, travel times, costs & local tips.',
+        dateModified: '2026-08-31T00:00:00+05:30'
+    },
+    schemas: `
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the nearest railway station to Pithoragarh?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Pithoragarh has no railway station. The two nearest railheads are Tanakpur (approximately 150 km away, about 5-6 hours by road) and Kathgodam (approximately 200 km away, about 6-7 hours by road). Kathgodam has better train frequency and connectivity from Delhi, Agra, and Lucknow, making it the preferred railhead for most yatris."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is there an airport in Pithoragarh?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Naini Saini Airport (IATA: PGH) in Pithoragarh is a regional UDAN-scheme airport that now has near-daily flights from Delhi (6 days/week from September 2026) and Dehradun (5 days/week). However, flights are weather-dependent and the aircraft is small (42-seater), so early booking and a backup travel plan are strongly recommended."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I reach Pithoragarh from Delhi by road?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "From Delhi, there are two main road routes to Pithoragarh: Route 1 goes via NH9 through Haldwani and Almora (approximately 490 km, 12-14 hours). Route 2 goes via Bareilly and Tanakpur along the Sharda River (approximately 460 km, 11-13 hours). It is strongly recommended to break the journey with a night halt at Haldwani or Almora."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which trains run from Delhi to Kathgodam for Pithoragarh?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Key trains from Delhi to Kathgodam include: 12035/12036 Kathgodam Shatabdi Express (daytime, fastest option), 15013/15014 Ranikhet Express (overnight, popular with pilgrims), and Uttaranchal Express. From Kathgodam, shared jeeps and private taxis depart for Pithoragarh regularly. During yatra season (June-October), book train tickets 2-3 months in advance."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How far is Dharchula from Pithoragarh?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dharchula is approximately 90 km from Pithoragarh town, a 3-hour drive through the Dhauliganga valley. Dharchula is the last major town before the Adi Kailash route and is where pilgrims collect their Inner Line Permits (ILP) from the SDM Office."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I reach Pithoragarh directly from Delhi in one day?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, it is possible by road (12-14 hours non-stop) or by flying to Naini Saini Airport (about 1 hour flight + 30 minutes transfer). For Adi Kailash yatris, breaking the road journey with a night halt at Haldwani or Almora is recommended for acclimatisation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are there direct buses from Delhi to Pithoragarh?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Uttarakhand Roadways and private operators run overnight Volvo and semi-sleeper buses from Kashmere Gate ISBT in Delhi to Pithoragarh daily. Journey time is approximately 12-15 hours. Book a Volvo or semi-sleeper for comfort on this long mountain route."
+          }
+        }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "How to Reach Pithoragarh from Delhi",
+      "description": "Step-by-step guide to reach Pithoragarh in Uttarakhand from Delhi for the Adi Kailash Yatra.",
+      "totalTime": "PT14H",
+      "step": [
+        { "@type": "HowToStep", "position": 1, "name": "Choose your mode of transport", "text": "Decide between train (cheapest), flight (fastest), or road (most flexible). Most yatris pick Kathgodam by overnight train or Naini Saini Airport by flight as their Pithoragarh entry point." },
+        { "@type": "HowToStep", "position": 2, "name": "Book your ticket in advance", "text": "For trains, book 2-3 months ahead during yatra season (June-October). For Naini Saini Airport flights, book early as seats are limited to 42 per aircraft." },
+        { "@type": "HowToStep", "position": 3, "name": "Travel to Kathgodam or Tanakpur", "text": "Board the Ranikhet Express or Kathgodam Shatabdi from Delhi. From either station, hire a shared jeep or private taxi to Pithoragarh (5-7 hours)." },
+        { "@type": "HowToStep", "position": 4, "name": "Fly to Naini Saini Airport", "text": "Book a UDAN-scheme flight from Delhi Safdarjung Airport to Naini Saini Airport. The flight takes approximately 1 hour. From the airport, Pithoragarh town is a 20-30 minute drive." },
+        { "@type": "HowToStep", "position": 5, "name": "Drive via NH9 through Haldwani", "text": "Drive from Delhi via Moradabad, Haldwani, Almora, and Bageshwar to Pithoragarh (~490 km, 12-14 hours). Alternatively, take the Bareilly-Tanakpur route (~460 km, 11-13 hours)." },
+        { "@type": "HowToStep", "position": 6, "name": "Rest and acclimatise in Pithoragarh", "text": "Arrive in Pithoragarh and rest before proceeding to Dharchula. Use this stop to collect Inner Line Permits and purchase remaining supplies." }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://rudraanshyatra.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Travel Diaries", "item": "https://rudraanshyatra.com/blogs" },
+        { "@type": "ListItem", "position": 3, "name": "How to Reach Pithoragarh (2026 Guide)", "item": "https://rudraanshyatra.com/blog/how-to-reach-pithoragarh" }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "How to Reach Pithoragarh by Train, Flight and Road (2026 Guide)",
+      "description": "Complete guide on how to reach Pithoragarh from Delhi in 2026 - railway stations, airport flights, road routes, travel times and Adi Kailash Yatra tips.",
+      "author": { "@type": "Person", "name": "Dheerendra Rautela", "jobTitle": "Himalayan Ground Operator", "worksFor": { "@type": "Organization", "name": "Rudraansh Yatra" } },
+      "publisher": { "@type": "Organization", "name": "Rudraansh Yatra", "url": "https://rudraanshyatra.com", "logo": { "@type": "ImageObject", "url": "https://rudraanshyatra.com/assets/images/logo.webp" } },
+      "url": "https://rudraanshyatra.com/blog/how-to-reach-pithoragarh",
+      "datePublished": "2026-07-01T00:00:00+05:30",
+      "dateModified": "2026-08-31T00:00:00+05:30",
+      "inLanguage": "en-IN",
+      "keywords": "how to reach pithoragarh, pithoragarh from delhi, kathgodam to pithoragarh, naini saini airport, train to pithoragarh, bus from delhi to pithoragarh, adi kailash yatra route"
+    }
+    </script>`,
+    render: function(paragraphsHtml) {
+        var enriched = paragraphsHtml
+            .replace(
+                /Ranikhet Express/,
+                'Ranikhet Express (<a href="/blog/how-to-reach-pithoragarh-from-delhi-dehradun-2026-flight-update" style="color:#7c3aed;text-decoration:underline;">or fly directly from Sept 2026</a>)'
+            )
+            .replace(
+                /\bpermits\b/,
+                'permits (<a href="/blog/inner-line-permit-adi-kailash-2026-guide" style="color:#7c3aed;text-decoration:underline;">full ILP guide here</a>)'
+            );
+
+        var css = '<style>' +
+            '.ry-pth-banner{background:linear-gradient(135deg,#0d1a2e 0%,#1a2e46 100%);border:2px solid #d4af37;border-radius:14px;padding:22px 24px;margin:0 0 28px;color:#fff;box-shadow:0 10px 30px rgba(0,0,0,.4)}' +
+            '.ry-pth-banner-head{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}' +
+            '.ry-pth-banner-title{color:#fde68a;font-size:18px;font-weight:700;line-height:1.3}' +
+            '.ry-pth-banner-desc{font-size:14.5px;line-height:1.65;color:#e2e8f0;margin-bottom:14px}' +
+            '.ry-pth-badge{background:rgba(212,175,55,.12);border-left:3px solid #d4af37;padding:10px 14px;border-radius:4px;margin-bottom:16px;font-size:13.5px;color:#fde68a}' +
+            '.ry-pth-btn-row{display:flex;gap:10px;flex-wrap:wrap}' +
+            '.ry-pth-btn{padding:11px 20px;border-radius:8px;text-decoration:none;font-weight:700;font-size:13.5px;display:inline-flex;align-items:center;gap:8px}' +
+            '.ry-pth-btn.wa{background:#22c55e;color:#fff}' +
+            '.ry-pth-btn.pk{background:#d4af37;color:#0f172a}' +
+            '.ry-pth-toc{background:rgba(15,23,42,.6);border:1px solid rgba(212,175,55,.25);border-radius:10px;padding:14px 16px;margin-bottom:28px;font-size:13.5px;color:#cbd5e1}' +
+            '.ry-pth-toc strong{color:#fbbf24;display:block;margin-bottom:8px;font-size:14px}' +
+            '.ry-pth-toc-pills{display:flex;flex-wrap:wrap;gap:7px}' +
+            '.ry-pth-toc-pill{color:#93c5fd;text-decoration:none;background:rgba(147,197,253,.1);padding:5px 12px;border-radius:20px;border:1px solid rgba(147,197,253,.2);white-space:nowrap;font-size:13px}' +
+            '.ry-pth-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 0 28px;border-radius:10px;border:1px solid rgba(212,175,55,.2)}' +
+            '.ry-pth-table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:480px}' +
+            '.ry-pth-table th{background:rgba(212,175,55,.15);color:#fbbf24;font-weight:700;padding:10px 14px;text-align:left;border-bottom:1px solid rgba(212,175,55,.2);white-space:nowrap}' +
+            '.ry-pth-table td{padding:10px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,.06);vertical-align:top}' +
+            '.ry-pth-table tr:last-child td{border-bottom:none}' +
+            '.ry-pth-bottom{background:#0f172a;border:2px dashed rgba(212,175,55,.5);border-radius:12px;padding:20px 22px;margin:32px 0 8px;color:#fff}' +
+            '.ry-pth-bottom-title{font-size:15px;font-weight:700;color:#fbbf24;margin-bottom:8px}' +
+            '.ry-pth-bottom-desc{font-size:14px;color:#e2e8f0;line-height:1.6;margin-bottom:14px}' +
+            '.ry-pth-bottom-btn-row{display:flex;gap:10px;flex-wrap:wrap}' +
+            '.ry-pth-bottom-btn{padding:9px 18px;border-radius:6px;text-decoration:none;font-weight:700;display:inline-flex;align-items:center;gap:7px}' +
+            '.ry-pth-bottom-btn.wa{background:#22c55e;color:#fff}' +
+            '.ry-pth-bottom-btn.call{background:transparent;border:1.5px solid #d4af37;color:#d4af37}' +
+            '.ry-pth-also{margin-top:14px;font-size:13px;color:#94a3b8}' +
+            '.ry-pth-also a{color:#93c5fd}' +
+            '@media(max-width:680px){' +
+            '.ry-pth-banner{padding:16px 14px;border-radius:10px;margin-bottom:20px}' +
+            '.ry-pth-banner-title{font-size:15.5px}' +
+            '.ry-pth-banner-desc{font-size:13.5px;margin-bottom:12px}' +
+            '.ry-pth-badge{padding:8px 10px;font-size:12.5px;margin-bottom:12px}' +
+            '.ry-pth-btn,.ry-pth-bottom-btn{font-size:13px;padding:10px 14px;width:100%;justify-content:center;box-sizing:border-box}' +
+            '.ry-pth-btn-row,.ry-pth-bottom-btn-row{flex-direction:column;gap:8px}' +
+            '.ry-pth-toc{padding:12px}' +
+            '.ry-pth-toc-pill{font-size:12px;padding:4px 9px}' +
+            '.ry-pth-table{font-size:12.5px}' +
+            '.ry-pth-table th,.ry-pth-table td{padding:8px 10px}' +
+            '.ry-pth-bottom{padding:16px 14px;border-radius:10px}' +
+            '.ry-pth-bottom-title{font-size:14px}' +
+            '.ry-pth-bottom-desc{font-size:13px;margin-bottom:10px}' +
+            '}' +
+            '</style>';
+
+        var topBanner = css +
+            '<div class="ry-pth-banner">' +
+            '<div class="ry-pth-banner-head"><span style="font-size:26px">&#127956;&#65039;</span>' +
+            '<strong class="ry-pth-banner-title">Planning Adi Kailash Yatra? We Handle Every Connection from Pithoragarh.</strong></div>' +
+            '<p class="ry-pth-banner-desc">Rudraansh Yatra is a <strong>NIDHI-certified ground operator based in Pithoragarh</strong> &#8212; the gateway to the Adi Kailash &amp; Om Parvat pilgrimage. We include pickup from Delhi, Kathgodam, or Tanakpur in all packages.</p>' +
+            '<div class="ry-pth-badge">&#128197; <strong>2026 Yatra Season:</strong> Open Sept 15 &#8211; Oct 31, 2026 (post-monsoon, clear skies, stable roads)</div>' +
+            '<div class="ry-pth-btn-row">' +
+            '<a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20plan%20the%20Adi%20Kailash%20Yatra%20and%20need%20help%20with%20reaching%20Pithoragarh." target="_blank" rel="noopener" class="ry-pth-btn wa">WhatsApp for Pickup Options</a>' +
+            '<a href="/adi-kailash" class="ry-pth-btn pk">View Yatra Packages</a>' +
+            '</div></div>' +
+            '<div class="ry-pth-toc"><strong>&#128218; Jump to a Section</strong>' +
+            '<div class="ry-pth-toc-pills">' +
+            '<a href="#pithoragarh-location" class="ry-pth-toc-pill">&#128205; Where Is Pithoragarh?</a>' +
+            '<a href="#pithoragarh-by-train" class="ry-pth-toc-pill">&#128642; By Train</a>' +
+            '<a href="#pithoragarh-by-flight" class="ry-pth-toc-pill">&#9992;&#65039; By Flight</a>' +
+            '<a href="#pithoragarh-by-road" class="ry-pth-toc-pill">&#128663; By Road</a>' +
+            '<a href="#pithoragarh-route-comparison" class="ry-pth-toc-pill">Route Comparison</a>' +
+            '</div></div>';
+
+        var routeTable =
+            '<div id="pithoragarh-route-comparison" style="margin:0 0 28px">' +
+            '<h2 class="blog-heading" style="margin-bottom:14px">Route Comparison: Train vs. Flight vs. Road</h2>' +
+            '<div class="ry-pth-table-wrap">' +
+            '<table class="ry-pth-table" aria-label="How to reach Pithoragarh route comparison">' +
+            '<thead><tr><th>Criteria</th><th>Train + Taxi</th><th>Flight</th><th>Road (Private)</th></tr></thead>' +
+            '<tbody>' +
+            '<tr><td><strong>Total Travel Time</strong></td><td>11-13 hrs</td><td>2-3 hrs</td><td>12-14 hrs</td></tr>' +
+            '<tr><td><strong>Boarding Point</strong></td><td>Kathgodam / Tanakpur</td><td>Delhi (Safdarjung)</td><td>Delhi / Noida / NCR</td></tr>' +
+            '<tr><td><strong>Cost (per person)</strong></td><td>Rs 800-Rs 1,800</td><td>Rs 3,000-Rs 6,500</td><td>Rs 1,500-Rs 3,500</td></tr>' +
+            '<tr><td><strong>Best For</strong></td><td>Budget travellers</td><td>Time-poor pilgrims</td><td>Groups &amp; flexibility</td></tr>' +
+            '<tr><td><strong>Weather Risk</strong></td><td>Low</td><td>High (fog cancels flights)</td><td>Moderate (monsoon)</td></tr>' +
+            '<tr><td><strong>Reliability</strong></td><td>High</td><td>Weather-dependent</td><td>High</td></tr>' +
+            '</tbody></table></div>' +
+            '<p style="font-size:12.5px;color:#94a3b8;margin-top:6px">New Sept 2026: <a href="/blog/how-to-reach-pithoragarh-from-delhi-dehradun-2026-flight-update" style="color:#93c5fd;text-decoration:underline">Delhi to Pithoragarh 6 days/week</a>.</p>' +
+            '</div>';
+
+        var railheadsTable =
+            '<div style="margin:0 0 20px"><div class="ry-pth-table-wrap">' +
+            '<table class="ry-pth-table" aria-label="Nearest railway stations to Pithoragarh">' +
+            '<thead><tr><th>Station</th><th>Distance</th><th>Drive Time</th><th>Best For</th></tr></thead>' +
+            '<tbody>' +
+            '<tr><td><strong>Tanakpur</strong></td><td>~150 km</td><td>5-6 hrs</td><td>Trains from Delhi, Agra, Lucknow</td></tr>' +
+            '<tr><td><strong>Kathgodam</strong></td><td>~200 km</td><td>6-7 hrs</td><td>Trains from Delhi, Kolkata, Dehradun &mdash; <strong>recommended</strong></td></tr>' +
+            '</tbody></table></div></div>';
+
+        var bottomCta =
+            '<div class="ry-pth-bottom" id="pithoragarh-faqs" style="margin-top:32px">' +
+            '<p class="ry-pth-bottom-title">Let Us Handle Your Pithoragarh Pickup</p>' +
+            '<p class="ry-pth-bottom-desc">Our team at Rudraansh Yatra is based in Pithoragarh and has personally driven hundreds of yatris from Kathgodam, Tanakpur, and Delhi. We know every pothole and viewpoint on these roads.</p>' +
+            '<div class="ry-pth-bottom-btn-row">' +
+            '<a href="https://wa.me/917617617651?text=Namaste!%20I%20read%20your%20blog%20on%20how%20to%20reach%20Pithoragarh.%20Please%20share%20pickup%20options." target="_blank" rel="noopener" class="ry-pth-bottom-btn wa">Chat on WhatsApp</a>' +
+            '<a href="tel:+917617617651" class="ry-pth-bottom-btn call">Call +91 76176 17651</a>' +
+            '</div>' +
+            '<p class="ry-pth-also">Also read: ' +
+            '<a href="/blog/inner-line-permit-adi-kailash-2026-guide">ILP Permit Guide</a> &middot; ' +
+            '<a href="/blog/adi-kailash-yatra-cost-package-price-breakdown-budget-guide">Yatra Cost Breakdown</a> &middot; ' +
+            '<a href="/blog/how-to-reach-pithoragarh-from-delhi-dehradun-2026-flight-update">2026 Flight Update</a> &middot; ' +
+            '<a href="/blog/5-things-you-need-to-do-before-planning-a-trip-to-adi-kailash">Pre-Yatra Checklist</a>' +
+            '</p></div>';
+
+        var withTable = enriched.replace(
+            /(<[hp][^>]*>[^<]*nearest railhead[^<]*<\/[hp]>)/i,
+            '$1\n' + railheadsTable
+        );
+
+        return topBanner + routeTable + withTable + bottomCta;
+    }
+};
+
 function getBlogEnhancement(slug, paragraphsHtml) {
     const enhancer = BLOG_ENHANCERS[slug];
     if (!enhancer) return null;
