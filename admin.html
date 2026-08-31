@@ -6625,16 +6625,22 @@
 
                 const normalizePhone = (p) => (p || '').replace(/\D/g, '').replace(/^0+/, '').slice(-10);
 
-                // Fetch existing leads (phone, email, name) for multi-factor deduplication
+                // Fetch ALL existing leads with pagination (phone, email, name) for multi-factor deduplication
                 let existingPhones = new Set();
                 let existingEmails = new Set();
                 let existingNameKeys = new Set();
                 try {
-                    const { data: allExistingLeads } = await supabaseAdmin
-                        .from('leads')
-                        .select('name, phone, email');
-                    if (allExistingLeads && allExistingLeads.length > 0) {
-                        allExistingLeads.forEach(l => {
+                    let page = 0;
+                    const PAGE_SIZE = 1000;
+                    while (true) {
+                        const { data: pageLeads, error: fetchErr } = await supabaseAdmin
+                            .from('leads')
+                            .select('name, phone, email')
+                            .order('id', { ascending: true })
+                            .range(page * PAGE_SIZE, (page + 1) * PAGE_SIZE - 1);
+                        if (fetchErr) throw fetchErr;
+                        if (!pageLeads || pageLeads.length === 0) break;
+                        pageLeads.forEach(l => {
                             const norm = normalizePhone(l.phone);
                             if (norm.length >= 7) existingPhones.add(norm);
                             const em = (l.email || '').trim().toLowerCase();
@@ -6646,8 +6652,12 @@
                                 existingNameKeys.add(`name:::${nm}`);
                             }
                         });
+                        if (pageLeads.length < PAGE_SIZE) break;
+                        page++;
                     }
-                } catch (e) {}
+                } catch (e) {
+                    console.warn('[Sheet Sync] Existing leads fetch error:', e.message);
+                }
 
                 const toInsert = [];
                 const seenPhonesInSheet = new Set();

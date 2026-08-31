@@ -2143,6 +2143,13 @@ app.post('/api/admin/blogs', authenticateToken, async (req, res) => {
         const { data, error } = await supabase.from('blogs').insert(blogsToInsert).select();
         if (error) throw error;
         res.status(201).json(data || { success: true });
+        // Ping Bing/ChatGPT IndexNow for instant indexing of newly published blog(s)
+        if (data && data.length > 0) {
+            const urls = data
+                .filter(b => b.slug)
+                .map(b => `https://rudraanshyatra.com/blog/${b.slug}`);
+            if (urls.length > 0) pingIndexNow(urls).catch(() => {});
+        }
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -2154,6 +2161,10 @@ app.put('/api/admin/blogs/:id', authenticateToken, async (req, res) => {
         const { data, error } = await supabase.from('blogs').update(req.body).eq('id', req.params.id).select();
         if (error) throw error;
         res.json(data || { success: true });
+        // Ping Bing/ChatGPT IndexNow for instant re-indexing of updated blog
+        if (data && data.length > 0 && data[0].slug) {
+            pingIndexNow([`https://rudraanshyatra.com/blog/${data[0].slug}`]).catch(() => {});
+        }
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

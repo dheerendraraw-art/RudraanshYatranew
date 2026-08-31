@@ -3830,7 +3830,8 @@ img {
 }
 
 @media (max-width: 768px) {
-    .hero-video-bg {
+    /* Only hide video on mobile - static hero img must stay visible */
+    .hero-video-bg video {
         display: none !important;
     }
 }
@@ -9640,6 +9641,13 @@ html, body { overflow-x: hidden; max-width: 100%; }
         font-weight: 800 !important;
     }
 
+    @media (max-width: 768px) {
+    /* Only hide the video on mobile — the static hero img inside hero-video-bg must stay visible */
+    .hero-video-bg video {
+        display: none !important;
+    }
+}
+
     #pane-bookings .booking-pickup-text {
         color: #f8fafc !important;
         font-size: 13px !important;
@@ -9747,6 +9755,13 @@ html, body { overflow-x: hidden; max-width: 100%; }
     #pane-bookings tr.booking-card-row:not(.show-all-details) .mobile-detail-field {
         display: none !important;
     }
+
+    @media (max-width: 768px) {
+    /* Hide only the video on mobile; the static hero img stays visible */
+    .hero-video-bg video {
+        display: none !important;
+    }
+}
 
     #pane-bookings tr.booking-card-row.show-all-details .mobile-detail-field {
         display: flex !important;

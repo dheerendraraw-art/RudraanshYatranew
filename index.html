@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -681,11 +681,14 @@
     .hero-stat-num{font-size:22px!important;}
     .hero-badge{font-size:10px!important;padding:4px 10px!important;}
 }
+/* Metric-matched font fallbacks — prevent CLS while Google Fonts load */
+@font-face{font-family:'PJSans Fallback';src:local('Arial');ascent-override:96%;descent-override:20%;line-gap-override:0%;size-adjust:103%}
+@font-face{font-family:'Cormorant Fallback';src:local('Georgia');ascent-override:90%;descent-override:25%;line-gap-override:0%;size-adjust:105%}
+:root{--font-sans:'Plus Jakarta Sans','PJSans Fallback',system-ui,sans-serif;--font-serif:'Cormorant Garamond','Cormorant Fallback',Georgia,serif}
 </style>
 
-    <!-- Full Stylesheet: Load non-blocking via print trick -->
-    <link rel="preload" href="style.css?v=7.4" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="style.css?v=7.4"></noscript>
+    <!-- Full Stylesheet: synchronous load (HTTP/2 + gzip; critical CSS above handles FOUC) -->
+    <link rel="stylesheet" href="style.css?v=7.5">
 
     <!-- ===== Meta Pixel ===== -->
     <script>
@@ -934,7 +937,7 @@
                 <div class="logo-icon-img-wrap">
                     <picture>
                         <source srcset="assets/images/logo.webp" type="image/webp">
-                        <img src="assets/images/logo.png" alt="Rudraansh Yatra Logo" class="logo-icon-img" width="44" height="44" decoding="async">
+                        <img src="assets/images/logo.png" alt="Rudraansh Yatra Logo" class="logo-icon-img" width="44" height="44" decoding="async" loading="lazy">
                     </picture>
                 </div>
                 <div class="logo-text">Rudraansh <span>Yatra</span></div>
@@ -987,19 +990,28 @@
     <!-- Hero Section -->
     <section class="hero" aria-label="Adi Kailash &amp; Om Parvat Yatra — Rudraansh Yatra Home" style="background-image: url('assets/images/adi-kailash-hero.webp');">
         <div class="hero-video-bg" id="hero-video-wrap">
-            <!-- Video is only loaded on desktop (>= 768px) to save mobile data -->
-            <video id="hero-video" muted playsinline preload="none" loop poster="assets/images/adi-kailash-hero.webp" style="display:none">
-                <source src="assets/videos/homepage-banner.mp4" type="video/mp4">
-            </video>
+            <!-- Static hero image: always visible, is the LCP element -->
+            <img id="hero-static-img"
+                 src="assets/images/adi-kailash-hero.webp"
+                 alt="Adi Kailash sacred peak at Jyolingkong 4570m in Vyas Valley Kumaon Himalaya"
+                 width="1920" height="1080"
+                 fetchpriority="high"
+                 decoding="async"
+                 style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;">
         </div>
         <script>
-          // Load and play video only on non-mobile screens
+          // Inject video ONLY on desktop (>=900px) — never touch the 11MB file on mobile
           (function(){
-            if(window.innerWidth >= 768){
-              var v = document.getElementById('hero-video');
-              v.style.display = '';
-              v.setAttribute('autoplay','');
-              v.load();
+            if(window.innerWidth>=900&&!window.matchMedia('(prefers-reduced-motion:reduce)').matches){
+              var wrap=document.getElementById('hero-video-wrap');
+              var v=document.createElement('video');
+              v.muted=true;v.playsInline=true;v.loop=true;v.autoplay=true;
+              v.poster='assets/images/adi-kailash-hero.webp';
+              v.style.cssText='position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;';
+              var s=document.createElement('source');
+              s.src='assets/videos/homepage-banner.mp4';s.type='video/mp4';
+              v.appendChild(s);
+              wrap.appendChild(v);
               v.play().catch(function(){});
             }
           })();
@@ -1712,11 +1724,11 @@
                         </div>
                     </div>
                     <div class="review-avatars">
-                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&auto=format&fit=crop&q=60" alt="Happy Rudraansh Yatra traveller - verified Adi Kailash pilgrim review">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&auto=format&fit=crop&q=60" alt="Verified Rudraansh Yatra customer - Khaliya Top trek traveller review">
-                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&auto=format&fit=crop&q=60" alt="Satisfied Rudraansh Yatra guest - Om Parvat yatra participant review">
-                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&auto=format&fit=crop&q=60" alt="Rudraansh Yatra pilgrim - Darma Valley expedition traveller review">
-                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&auto=format&fit=crop&q=60" alt="Rudraansh Yatra trekker - Mt. Kailash Lipulekh parikrama pilgrim review">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&auto=format&fit=crop&q=60" alt="Happy Rudraansh Yatra traveller - verified Adi Kailash pilgrim review" width="24" height="24" loading="lazy" decoding="async">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&auto=format&fit=crop&q=60" alt="Verified Rudraansh Yatra customer - Khaliya Top trek traveller review" width="24" height="24" loading="lazy" decoding="async">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&auto=format&fit=crop&q=60" alt="Satisfied Rudraansh Yatra guest - Om Parvat yatra participant review" width="24" height="24" loading="lazy" decoding="async">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&auto=format&fit=crop&q=60" alt="Rudraansh Yatra pilgrim - Darma Valley expedition traveller review" width="24" height="24" loading="lazy" decoding="async">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&auto=format&fit=crop&q=60" alt="Rudraansh Yatra trekker - Mt. Kailash Lipulekh parikrama pilgrim review" width="24" height="24" loading="lazy" decoding="async">
                     </div>
                 </div>
 
@@ -1740,8 +1752,8 @@
                     </div>
                     <p class="review-text">I have gone to Kailash Mansarovar Yatra with other three female family members in a conducted tour by Rudraansh Yatra from 22 Aug to 1st September. It was really an amazing trip, Lord shiv...</p>
                     <div class="review-photos">
-                        <img src="assets/images/om-parvat-group.webp?v=2" alt="Om Parvat Yatra Group" class="review-photo-thumb" onclick="openReviewLightbox(this.src)">
-                        <img src="assets/images/adi-kailash-senior-citizens.webp" alt="Senior Citizens Yatra" class="review-photo-thumb" onclick="openReviewLightbox(this.src)">
+                        <img src="assets/images/om-parvat-group.webp?v=2" alt="Om Parvat Yatra Group" class="review-photo-thumb" width="120" height="90" loading="lazy" decoding="async" onclick="openReviewLightbox(this.src)">
+                        <img src="assets/images/adi-kailash-senior-citizens.webp" alt="Senior Citizens Yatra" class="review-photo-thumb" width="120" height="90" loading="lazy" decoding="async" onclick="openReviewLightbox(this.src)">
                     </div>
                     <a href="https://search.google.com/local/reviews?placeid=ChIJUaOjOEsloTkRjOLS3RK_S_A" class="read-more" target="_blank">Read more..</a>
                 </div>
@@ -1750,7 +1762,7 @@
                 <div class="review-card detail-card">
                     <div class="reviewer-meta">
                         <div class="reviewer-avatar">
-                            <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=80&auto=format&fit=crop&q=60" alt="Mr. Ankit Kedia">
+                            <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=80&auto=format&fit=crop&q=60" alt="Mr. Ankit Kedia" width="42" height="42" loading="lazy" decoding="async">
                         </div>
                         <div class="reviewer-info">
                             <h4 class="review-title">Dream Come True</h4>
@@ -1768,8 +1780,8 @@
                     </div>
                     <p class="review-text">It was a dream come true moment for me to travel such a divine and holy place kailash mansarovar yatra. Such a difficult yatra has been made so easy and simple by our travel agency Rudraansh Yatra. I heartily thanks to all...</p>
                     <div class="review-photos">
-                        <img src="assets/images/Kailash.webp" alt="Kailash Peak" class="review-photo-thumb" onclick="openReviewLightbox(this.src)">
-                        <img src="assets/images/adi-kailash-panchachuli.webp" alt="Panchachuli Trek" class="review-photo-thumb" onclick="openReviewLightbox(this.src)">
+                        <img src="assets/images/Kailash.webp" alt="Kailash Peak" class="review-photo-thumb" width="120" height="90" loading="lazy" decoding="async" onclick="openReviewLightbox(this.src)">
+                        <img src="assets/images/adi-kailash-panchachuli.webp" alt="Panchachuli Trek" class="review-photo-thumb" width="120" height="90" loading="lazy" decoding="async" onclick="openReviewLightbox(this.src)">
                     </div>
                     <a href="https://search.google.com/local/reviews?placeid=ChIJUaOjOEsloTkRjOLS3RK_S_A" class="read-more" target="_blank">Read more..</a>
                 </div>
@@ -1778,7 +1790,7 @@
                 <div class="review-card detail-card">
                     <div class="reviewer-meta">
                         <div class="reviewer-avatar">
-                            <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=80&auto=format&fit=crop&q=60" alt="Balakrishna Siddheshwar">
+                            <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=80&auto=format&fit=crop&q=60" alt="Balakrishna Siddheshwar" width="42" height="42" loading="lazy" decoding="async">
                         </div>
                         <div class="reviewer-info">
                             <h4 class="review-title">Safely And Comfortable</h4>
@@ -1796,8 +1808,8 @@
                     </div>
                     <p class="review-text">We are very much Thanks to you, & your team supported team, each one is helping nature. The yatra is very beautiful and without any trouble. we have enjoyed lot on every day, by god grace & guidance from...</p>
                     <div class="review-photos">
-                        <img src="assets/images/Panchacholi.webp" alt="Panchachuli Peak" class="review-photo-thumb" onclick="openReviewLightbox(this.src)">
-                        <img src="assets/images/khaliya-top.webp" alt="Khaliya Top Trek" class="review-photo-thumb" onclick="openReviewLightbox(this.src)">
+                        <img src="assets/images/Panchacholi.webp" alt="Panchachuli Peak" class="review-photo-thumb" width="120" height="90" loading="lazy" decoding="async" onclick="openReviewLightbox(this.src)">
+                        <img src="assets/images/khaliya-top.webp" alt="Khaliya Top Trek" class="review-photo-thumb" width="120" height="90" loading="lazy" decoding="async" onclick="openReviewLightbox(this.src)">
                     </div>
                     <a href="https://search.google.com/local/reviews?placeid=ChIJUaOjOEsloTkRjOLS3RK_S_A" class="read-more" target="_blank">Read more..</a>
                 </div>
@@ -1814,7 +1826,7 @@
         <div id="reviewLightbox" class="review-lightbox" onclick="closeReviewLightbox(event)">
             <div class="review-lightbox-content" onclick="event.stopPropagation()">
                 <button class="review-lightbox-close" onclick="closeReviewLightbox(event)">&times;</button>
-                <img id="reviewLightboxImg" src="" alt="Enlarged Review Photo">
+                <img id="reviewLightboxImg" src="" alt="Enlarged Review Photo" width="800" height="600" loading="lazy">
             </div>
         </div>
     </section>
@@ -2005,22 +2017,22 @@
             <div class="payment-title"><i class="fa-solid fa-lock" style="color: var(--color-gold); margin-right: 6px;"></i> UPI, Credit/Debit Cards & NetBanking Accepted</div>
             <div class="payment-badges-wrap">
                 <div class="payment-card" title="BHIM UPI">
-                    <img src="assets/images/upi.svg" alt="BHIM UPI Payment - Pay for Rudraansh Yatra bookings via UPI">
+                    <img src="assets/images/upi.svg" alt="BHIM UPI Payment - Pay for Rudraansh Yatra bookings via UPI" width="60" height="30" loading="lazy" decoding="async">
                 </div>
                 <div class="payment-card" title="Google Pay">
-                    <img src="assets/images/gpay.svg" alt="Google Pay - Accepted payment method for Rudraansh Yatra bookings">
+                    <img src="assets/images/gpay.svg" alt="Google Pay - Accepted payment method for Rudraansh Yatra bookings" width="60" height="30" loading="lazy" decoding="async">
                 </div>
                 <div class="payment-card" title="PhonePe">
-                    <img src="assets/images/phonepe.svg" alt="PhonePe - Accepted payment method for Rudraansh Yatra bookings">
+                    <img src="assets/images/phonepe.svg" alt="PhonePe - Accepted payment method for Rudraansh Yatra bookings" width="60" height="30" loading="lazy" decoding="async">
                 </div>
                 <div class="payment-card" title="Visa">
-                    <img src="assets/images/visa.svg" alt="Visa Card - Accepted payment method for Rudraansh Yatra online bookings">
+                    <img src="assets/images/visa.svg" alt="Visa Card - Accepted payment method for Rudraansh Yatra online bookings" width="60" height="30" loading="lazy" decoding="async">
                 </div>
                 <div class="payment-card" title="Mastercard">
-                    <img src="assets/images/mastercard.svg" alt="Mastercard - Accepted payment method for Rudraansh Yatra online bookings">
+                    <img src="assets/images/mastercard.svg" alt="Mastercard - Accepted payment method for Rudraansh Yatra online bookings" width="60" height="30" loading="lazy" decoding="async">
                 </div>
                 <div class="payment-card" title="Razorpay Secure">
-                    <img src="assets/images/razorpay.svg" alt="Razorpay Secure Payment Gateway - All transactions for Rudraansh Yatra are SSL encrypted">
+                    <img src="assets/images/razorpay.svg" alt="Razorpay Secure Payment Gateway - All transactions for Rudraansh Yatra are SSL encrypted" width="60" height="30" loading="lazy" decoding="async">
                 </div>
             </div>
         </div>
@@ -2241,7 +2253,7 @@
             } catch(e){}
         });
     </script>
-    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script defer src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <!-- ===== End Google Translate Init ===== -->
 </body>
 
