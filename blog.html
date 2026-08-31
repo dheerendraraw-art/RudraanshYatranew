@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="hi-IN">
 
 <head>
@@ -542,6 +542,84 @@
             transform: translateY(-1px) !important;
         }
 
+        /* ─── Dark Widgets Universal High-Contrast Text Rules ───────────── */
+        .ry-route-summary,
+        .ry-cost-box,
+        .ry-vs-card,
+        .ry-season-banner,
+        .ry-highlight-box,
+        .ry-flight-summary,
+        .ry-cld-banner,
+        .ry-cld-bottom,
+        .ry-sus-banner,
+        .ry-sus-bottom,
+        .ry-5t-banner,
+        .ry-5t-bottom,
+        .ry-snr-banner,
+        .ry-ilp-cta-box,
+        .ry-compare-box {
+            color: #ffffff !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        .ry-route-summary h1, .ry-route-summary h2, .ry-route-summary h3, .ry-route-summary h4,
+        .ry-cost-box h1, .ry-cost-box h2, .ry-cost-box h3, .ry-cost-box h4,
+        .ry-vs-card h1, .ry-vs-card h2, .ry-vs-card h3, .ry-vs-card h4,
+        .ry-season-banner h1, .ry-season-banner h2, .ry-season-banner h3, .ry-season-banner h4,
+        .ry-highlight-box h1, .ry-highlight-box h2, .ry-highlight-box h3, .ry-highlight-box h4,
+        .ry-flight-summary h1, .ry-flight-summary h2, .ry-flight-summary h3, .ry-flight-summary h4,
+        .ry-cld-banner h1, .ry-cld-banner h2, .ry-cld-banner h3, .ry-cld-banner h4,
+        .ry-compare-head, .ry-cost-title, .ry-highlight-title {
+            color: #fbbf24 !important;
+            font-family: var(--font-sans, 'Plus Jakarta Sans', system-ui, sans-serif) !important;
+            margin-top: 0 !important;
+            margin-bottom: 8px !important;
+            line-height: 1.3 !important;
+        }
+
+        .ry-route-summary p,
+        .ry-cost-box p,
+        .ry-vs-card p,
+        .ry-season-banner p,
+        .ry-highlight-box p,
+        .ry-flight-summary p,
+        .ry-cld-banner-desc,
+        .ry-cld-bottom-desc {
+            color: #cbd5e1 !important;
+        }
+
+        .ry-route-summary ul, .ry-cost-box ul, .ry-vs-card ul, .ry-season-banner ul, .ry-highlight-box ul,
+        .ry-flight-summary ul, .ry-vs-points {
+            list-style: none !important;
+            list-style-type: none !important;
+            margin: 10px 0 0 0 !important;
+            padding: 0 !important;
+        }
+
+        .ry-route-summary li, .ry-cost-box li, .ry-vs-card li, .ry-season-banner li, .ry-highlight-box li,
+        .ry-flight-summary li, .ry-vs-points li {
+            list-style: none !important;
+            list-style-type: none !important;
+            color: #e2e8f0 !important;
+            font-size: 14px !important;
+            line-height: 1.6 !important;
+            margin-bottom: 8px !important;
+            padding-left: 0 !important;
+            font-family: var(--font-sans, 'Plus Jakarta Sans', system-ui, sans-serif) !important;
+        }
+
+        .ry-route-summary li strong, .ry-cost-box li strong, .ry-vs-card li strong, 
+        .ry-season-banner li strong, .ry-highlight-box li strong, .ry-flight-summary li strong, .ry-vs-points li strong {
+            color: #ffffff !important;
+            font-weight: 700 !important;
+        }
+
+        .ry-route-summary a, .ry-cost-box a, .ry-vs-card a, .ry-season-banner a, .ry-highlight-box a, .ry-flight-summary a {
+            color: #93c5fd !important;
+            text-decoration: underline;
+        }
+
         /* Mobile Floating CTA Bar (hidden on desktop) */
         .mob-wa-bar { display: none; }
 
@@ -585,6 +663,12 @@
             
             /* Universal table responsiveness for all blog articles */
             .blog-detail-body table,
+            .route-table,
+            .ry-table,
+            .ry-schedule-table,
+            .ry-compare-table,
+            .ry-month-table,
+            .ry-ilp-table,
             .ry-table-wrap,
             .ry-schedule-table-wrap,
             .ry-compare-box,
@@ -595,9 +679,12 @@
                 overflow-x: auto !important;
                 -webkit-overflow-scrolling: touch !important;
                 display: block !important;
+                box-sizing: border-box !important;
             }
             .blog-detail-body table th,
             .blog-detail-body table td,
+            .route-table th,
+            .route-table td,
             .ry-table th,
             .ry-table td {
                 padding: 10px 12px !important;
@@ -609,8 +696,13 @@
             .ry-cost-grid,
             .ry-vs-grid,
             .ry-season-grid,
-            .ry-checklist-grid {
-                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
+            .ry-checklist-grid,
+            .ry-ilp-grid,
+            .ry-snr-grid,
+            .ry-alt-grid,
+            .ry-med-grid,
+            .ry-flight-kpi-row {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)) !important;
                 gap: 10px !important;
             }
             .ry-cost-box,
@@ -618,31 +710,50 @@
             .ry-season-banner,
             .ry-highlight-box,
             .ry-route-summary,
-            .ry-tips-box {
+            .ry-tips-box,
+            .ry-flight-summary,
+            .ry-cld-banner,
+            .ry-cld-bottom {
                 padding: 18px 16px !important;
                 border-radius: 12px !important;
                 margin: 20px 0 !important;
             }
-            .ry-cost-actions {
+            .ry-cost-actions,
+            .ry-summary-actions,
+            .ry-cld-btn-row,
+            .ry-cld-bottom-btn-row {
                 flex-direction: column !important;
                 gap: 8px !important;
+                width: 100% !important;
             }
-            .ry-cost-btn {
+            .ry-cost-btn,
+            .ry-ilp-btn,
+            .ry-snr-btn2,
+            .ry-cld-btn,
+            .ry-cld-bottom-btn {
                 width: 100% !important;
                 min-width: 0 !important;
                 flex: none !important;
                 padding: 12px 14px !important;
                 font-size: 13.5px !important;
+                box-sizing: border-box !important;
+                justify-content: center !important;
             }
         }
 
         /* Phone (680px and below) */
         @media (max-width: 680px) {
+            html, body {
+                overflow-x: hidden !important;
+                max-width: 100% !important;
+            }
             .blog-detail-container {
                 margin: 8px auto;
                 gap: 16px;
                 padding: 0 10px;
                 padding-bottom: 95px;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
             }
 
             /* Article Card: edge padding */
@@ -650,6 +761,11 @@
                 padding: 18px 14px;
                 border-radius: 12px;
                 border: 1px solid var(--glass-border);
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+                overflow-wrap: break-word !important;
+                word-wrap: break-word !important;
+                word-break: break-word !important;
             }
 
             /* Title */
@@ -675,7 +791,14 @@
             }
 
             /* Body Typography */
-            .blog-detail-body { font-size: 15px; line-height: 1.75; }
+            .blog-detail-body {
+                font-size: 15px;
+                line-height: 1.75;
+                max-width: 100% !important;
+                overflow-wrap: break-word !important;
+                word-wrap: break-word !important;
+                word-break: break-word !important;
+            }
             .blog-detail-body p, .blog-text {
                 font-size: 15px;
                 line-height: 1.75;
@@ -738,15 +861,25 @@
             .ry-cost-grid,
             .ry-vs-grid,
             .ry-season-grid,
-            .ry-checklist-grid {
+            .ry-checklist-grid,
+            .ry-ilp-grid,
+            .ry-snr-grid,
+            .ry-alt-grid,
+            .ry-med-grid,
+            .ry-flight-kpi-row,
+            .doc-grid,
+            .pkg-row {
                 grid-template-columns: 1fr !important;
                 gap: 8px !important;
+            }
+            .ry-schedule-table, .ry-compare-table {
+                min-width: 0 !important;
             }
             .ry-cost-card .price { font-size: 20px !important; }
             .ry-cost-card .label { font-size: 11.5px !important; }
             .ry-cost-card .sub { font-size: 11.5px !important; }
             .ry-cost-title, .ry-highlight-title { font-size: 16px !important; }
-            .ry-cost-box, .ry-vs-card, .ry-season-banner, .ry-highlight-box, .ry-route-summary, .ry-tips-box {
+            .ry-cost-box, .ry-vs-card, .ry-season-banner, .ry-highlight-box, .ry-route-summary, .ry-tips-box, .ry-flight-summary, .ry-cld-banner, .ry-cld-bottom {
                 padding: 15px 12px !important;
                 border-radius: 10px !important;
                 margin: 16px 0 !important;
@@ -791,10 +924,10 @@
 
         /* Extra-small (380px and below) */
         @media (max-width: 380px) {
-            .blog-detail-container { padding: 0 6px; }
-            .blog-post-article { padding: 14px 10px; border-radius: 8px; }
-            .blog-detail-title { font-size: 18.5px; }
-            .blog-detail-body p, .blog-text { font-size: 14.5px; line-height: 1.7; }
+            .blog-detail-container { padding: 0 6px !important; }
+            .blog-post-article { padding: 14px 10px !important; }
+            .blog-detail-title { font-size: 18.5px !important; }
+            .blog-detail-body p, .blog-text { font-size: 14.5px !important; line-height: 1.7 !important; }
             .blog-detail-body li { font-size: 14px !important; }
             .promo-card-img-wrap { height: 135px !important; }
             .mob-wa-btn { font-size: 12px; padding: 10px 6px; }

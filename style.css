@@ -1,4 +1,4 @@
-﻿/* Rudraansh Yatra Premium Design System - style.css */
+/* Rudraansh Yatra Premium Design System - style.css */
 
 :root {
     /* Color System */
@@ -159,6 +159,22 @@ img {
     }
     /* Justified text looks bad on mobile narrow columns */
     p { text-align: left; }
+
+    /* Prevent horizontal overflow on mobile screens */
+    html, body {
+        overflow-x: hidden !important;
+        max-width: 100% !important;
+    }
+
+    .blog-detail-container,
+    .blog-post-article,
+    .blog-detail-body {
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        overflow-wrap: break-word !important;
+        word-wrap: break-word !important;
+        word-break: break-word !important;
+    }
 }
 
 /* ── Mobile Performance: Skip rendering for off-screen sections ──────────────
