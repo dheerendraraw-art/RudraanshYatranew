@@ -3084,8 +3084,8 @@ app.get('/api/google-reviews', async (req, res) => {
     }
 
     const fallbackReviews = {
-        rating: 4.7,
-        user_ratings_total: 711,
+        rating: 5.0,
+        user_ratings_total: 34,
         reviews: [
             {
                 author_name: "Ajit Garg",
@@ -3138,8 +3138,8 @@ app.get('/api/google-reviews', async (req, res) => {
 
         if (json.status === 'OK' && json.result) {
             const resultData = {
-                rating: json.result.rating || 4.7,
-                user_ratings_total: json.result.user_ratings_total || 711,
+                rating: json.result.rating || 5.0,
+                user_ratings_total: json.result.user_ratings_total || 34,
                 reviews: (json.result.reviews || []).map(r => ({
                     author_name: r.author_name,
                     profile_photo_url: r.profile_photo_url || "",
