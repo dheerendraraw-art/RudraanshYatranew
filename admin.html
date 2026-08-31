@@ -4403,7 +4403,16 @@
                         throw dbErr;
                     }
 
-                    showAdminToast('Article successfully updated!', 'success');
+                    showAdminToast('Article successfully updated! Submitting to Bing IndexNow...', 'success');
+                    // Auto-index on update
+                    fetch('/api/indexnow', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ slug: slug })
+                    }).then(r => r.json()).then(res => {
+                        console.log('[IndexNow Auto-Index]', res);
+                    }).catch(e => console.warn('[IndexNow Auto-Index Error]', e));
+
                     cancelBlogEdit();
                 } else {
                     btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Publishing Article...`;
@@ -4430,7 +4439,16 @@
                         throw dbErr;
                     }
 
-                    showAdminToast('Article successfully published!', 'success');
+                    showAdminToast('Article successfully published! Submitting to Bing IndexNow...', 'success');
+                    // Auto-index on publish
+                    fetch('/api/indexnow', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ slug: slug })
+                    }).then(r => r.json()).then(res => {
+                        console.log('[IndexNow Auto-Index]', res);
+                    }).catch(e => console.warn('[IndexNow Auto-Index Error]', e));
+
                     if (typeof clearBlogDraft === 'function') clearBlogDraft();
                     document.getElementById('blog-form').reset();
                     const richEditor = document.getElementById('blog-editor-rich');

@@ -1923,7 +1923,11 @@ app.post('/api/admin/blogs', authenticateToken, async (req, res) => {
             const urls = data
                 .filter(b => b.slug)
                 .map(b => `https://rudraanshyatra.com/blog/${b.slug}`);
-            if (urls.length > 0) pingIndexNow(urls).catch(() => {});
+            if (urls.length > 0) {
+                urls.push('https://rudraanshyatra.com/blog.html');
+                urls.push('https://rudraanshyatra.com/blogs.html');
+                pingIndexNow(urls).catch(() => {});
+            }
         }
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -1938,7 +1942,11 @@ app.put('/api/admin/blogs/:id', authenticateToken, async (req, res) => {
         res.json(data || { success: true });
         // Ping Bing/ChatGPT IndexNow for instant re-indexing of updated blog
         if (data && data.length > 0 && data[0].slug) {
-            pingIndexNow([`https://rudraanshyatra.com/blog/${data[0].slug}`]).catch(() => {});
+            pingIndexNow([
+                `https://rudraanshyatra.com/blog/${data[0].slug}`,
+                'https://rudraanshyatra.com/blog.html',
+                'https://rudraanshyatra.com/blogs.html'
+            ]).catch(() => {});
         }
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -3646,38 +3654,96 @@ app.get('/rudraanshyatra2026indexnowkey9f3a7b1c.txt', (req, res) => {
 });
 
 // IndexNow auto-ping function — call this after publishing/updating any page
-// to push updates instantly to Bing (and therefore ChatGPT Search / SearchGPT)
+// to push updates instantly to Bing (and therefore ChatGPT Search / SearchGPT / Yandex)
 async function pingIndexNow(urls) {
-    const key = 'rudraanshyatra2026indexnowkey9f3a7b1c';
+    const key = process.env.INDEXNOW_KEY || 'rudraanshyatra2026indexnowkey9f3a7b1c';
     const host = 'rudraanshyatra.com';
-    const urlList = Array.isArray(urls) ? urls : [urls];
+    let urlList = Array.isArray(urls) ? urls : [urls];
+
+    // Normalize URLs to absolute HTTPS format
+    urlList = urlList.map(u => {
+        if (!u) return null;
+        if (typeof u !== 'string') return null;
+        if (u.startsWith('http://') || u.startsWith('https://')) return u;
+        return `https://${host}${u.startsWith('/') ? '' : '/'}${u}`;
+    }).filter(Boolean);
+
+    if (urlList.length === 0) return { success: false, error: 'No valid URLs provided' };
+
     const body = JSON.stringify({
         host,
         key,
         keyLocation: `https://${host}/${key}.txt`,
         urlList: urlList
     });
+
     try {
         const https = require('https');
         const options = {
             hostname: 'api.indexnow.org',
             path: '/indexnow',
             method: 'POST',
-            headers: { 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': Buffer.byteLength(body) }
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+                'Content-Length': Buffer.byteLength(body)
+            }
         };
-        await new Promise((resolve) => {
+
+        return await new Promise((resolve) => {
             const req = https.request(options, (res) => {
-                console.log(`[IndexNow] Pinged Bing for ${urlList.length} URL(s) — HTTP ${res.statusCode}`);
-                resolve();
+                let responseData = '';
+                res.on('data', chunk => { responseData += chunk; });
+                res.on('end', () => {
+                    console.log(`[IndexNow] Submitted ${urlList.length} URL(s) to Bing IndexNow — Status: HTTP ${res.statusCode}`);
+                    resolve({
+                        success: res.statusCode === 200 || res.statusCode === 202,
+                        status: res.statusCode,
+                        urls: urlList,
+                        response: responseData
+                    });
+                });
             });
-            req.on('error', (e) => { console.error('[IndexNow] Ping failed:', e.message); resolve(); });
+            req.on('error', (e) => {
+                console.error('[IndexNow] Ping failed:', e.message);
+                resolve({ success: false, error: e.message, urls: urlList });
+            });
             req.write(body);
             req.end();
         });
     } catch (e) {
         console.error('[IndexNow] Error during ping:', e.message);
+        return { success: false, error: e.message, urls: urlList };
     }
 }
+
+// Dedicated API endpoint for instant indexing triggers
+app.post('/api/indexnow', async (req, res) => {
+    try {
+        const { urls, slug, url } = req.body || {};
+        let targets = [];
+        if (Array.isArray(urls)) {
+            targets.push(...urls);
+        } else if (url) {
+            targets.push(url);
+        } else if (slug) {
+            targets.push(`https://rudraanshyatra.com/blog/${slug}`);
+            targets.push('https://rudraanshyatra.com/blog.html');
+            targets.push('https://rudraanshyatra.com/blogs.html');
+            targets.push('https://rudraanshyatra.com/sitemap.xml');
+        }
+
+        if (targets.length === 0) {
+            return res.status(400).json({ error: 'Please provide urls, url, or slug to index.' });
+        }
+
+        const result = await pingIndexNow(targets);
+        return res.json({ success: true, result });
+    } catch (err) {
+        console.error('[IndexNow API Error]', err);
+        return res.status(500).json({ error: err.message });
+    }
+});
+
 // Export for use in blog create/update routes
 module.exports && (module.exports.pingIndexNow = pingIndexNow);
 
