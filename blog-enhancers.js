@@ -3657,6 +3657,7 @@ BLOG_ENHANCERS['5-things-you-need-to-do-before-planning-a-trip-to-adi-kailash'] 
     <a href="/blog/best-time-to-visit-adi-kailash-om-parvat-weather-season-guide" class="ry-5t-nav-pill">🗓️ Best Month Guide</a>
     <a href="/blog/is-adi-kailash-yatra-safe-for-senior-citizens-guide" class="ry-5t-nav-pill">👴 Senior Citizens Guide</a>
     <a href="/blog/adi-kailash-yatra-difficulty-level-can-beginners-do-it" class="ry-5t-nav-pill">⛰️ Difficulty Level</a>
+    <a href="/blog/adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitude-ultra-marathon-guide" class="ry-5t-nav-pill">🏃‍♂️ Parikrama Run 2026</a>
   </div>
 </div>`;
 
@@ -3911,6 +3912,7 @@ BLOG_ENHANCERS['adi-kailash-yatra-difficulty-level-can-beginners-do-it'] = {
     <a href="/blog/best-time-to-visit-adi-kailash-om-parvat-weather-season-guide" style="display: inline-flex; align-items: center; gap: 5px; background: #0a192f; color: #f5c842; border: 1.5px solid rgba(212,175,55,0.4); padding: 6px 14px; border-radius: 20px; font-size: 12.5px; font-weight: 700; text-decoration: none;">🗓️ Best Time to Visit</a>
     <a href="/blog/is-adi-kailash-yatra-safe-for-senior-citizens-guide" style="display: inline-flex; align-items: center; gap: 5px; background: #0a192f; color: #f5c842; border: 1.5px solid rgba(212,175,55,0.4); padding: 6px 14px; border-radius: 20px; font-size: 12.5px; font-weight: 700; text-decoration: none;">👴 Senior Citizens Guide</a>
     <a href="/blog/inner-line-permit-adi-kailash-2026-guide" style="display: inline-flex; align-items: center; gap: 5px; background: #0a192f; color: #f5c842; border: 1.5px solid rgba(212,175,55,0.4); padding: 6px 14px; border-radius: 20px; font-size: 12.5px; font-weight: 700; text-decoration: none;">📋 ILP Permit Guide</a>
+    <a href="/blog/adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitude-ultra-marathon-guide" style="display: inline-flex; align-items: center; gap: 5px; background: #0a192f; color: #f5c842; border: 1.5px solid rgba(212,175,55,0.4); padding: 6px 14px; border-radius: 20px; font-size: 12.5px; font-weight: 700; text-decoration: none;">🏃‍♂️ Parikrama Run 2026</a>
   </div>
 </div>`;
 
@@ -4010,6 +4012,517 @@ BLOG_ENHANCERS['adi-kailash-yatra-difficulty-level-can-beginners-do-it'] = {
             return topBanner + enrichedContent + altitudeTable + navPills + bottomCta;
         }
 };
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 12. ADI KAILASH PARIKRAMA RUN 2026 — HIGH-ALTITUDE ULTRA MARATHON GUIDE
+// ─────────────────────────────────────────────────────────────────────────────
+BLOG_ENHANCERS['adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitude-ultra-marathon-guide'] = {
+        meta: {
+            title: 'Adi Kailash Parikrama Run 2026 | Ultra Marathon Guide, Dates, Route & Registration',
+            desc: 'Official guide for Adi Kailash Parikrama Run 2026 (Oct 24–25, Gunji, Byas Valley). 60km/42km/21km/10km/5km categories, altitude (10,300–15,000 ft), ILP permits, 4x4 Bolero transport & homestays with direct local operator Rudraansh Yatra.',
+            dateModified: '2026-08-31T13:30:00+05:30'
+        },
+        schemas: `
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SportsEvent",
+      "name": "Adi Kailash Parikrama Run 2026 — Uttarakhand High-Altitude Ultra Marathon",
+      "alternateName": [
+        "Adi Kailash Ultra Run 2026",
+        "Kailash Parikrama Marathon",
+        "Byas Valley Ultra Run 2026",
+        "Gunji High Altitude Marathon 2026",
+        "India's Highest Mountain Ultra Marathon"
+      ],
+      "description": "The Adi Kailash Parikrama Run is India's highest official ultra marathon (5km, 10km, 21km, 42km, 60km) held in Gunji, Byas Valley, Pithoragarh, Uttarakhand at altitudes from 10,300 ft to 15,000 ft near Parvati Kund and Jolingkong. Scheduled for October 24–25, 2026.",
+      "image": [
+        "https://rudraanshyatra.com/assets/images/adi-kailash-hero.webp"
+      ],
+      "startDate": "2026-10-24T06:00:00+05:30",
+      "endDate": "2026-10-25T18:00:00+05:30",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "location": {
+        "@type": "Place",
+        "name": "Gunji Village Marathon Hub, Byas Valley",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Gunji Village, Byas Valley",
+          "addressLocality": "Dharchula",
+          "addressRegion": "Uttarakhand",
+          "postalCode": "262545",
+          "addressCountry": "IN"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": "30.4800",
+          "longitude": "80.8700"
+        }
+      },
+      "organizer": {
+        "@type": "Organization",
+        "name": "Uttarakhand Tourism Development Board (UTDB) & District Administration Pithoragarh",
+        "url": "https://uttarakhandtourism.gov.in"
+      },
+      "offers": {
+        "@type": "Offer",
+        "name": "Adi Kailash Marathon Logistics, ILP Permits & Homestay Package",
+        "url": "https://rudraanshyatra.com/blog/adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitude-ultra-marathon-guide",
+        "priceCurrency": "INR",
+        "price": "18000",
+        "availability": "https://schema.org/InStock",
+        "validFrom": "2026-08-01",
+        "seller": {
+          "@id": "https://rudraanshyatra.com/#organization"
+        }
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Adi Kailash Parikrama Run 2026: Uttarakhand's High-Altitude Ultra Marathon Guide",
+      "description": "Complete guide to Adi Kailash Parikrama Run 2026 in Gunji, Byas Valley: 60km, 42km, 21km, 10km, 5km categories, altitude profile up to 15,000 ft, ILP permits, mandatory gear, acclimatization rules & local ground logistics from Pithoragarh.",
+      "image": "https://rudraanshyatra.com/assets/images/adi-kailash-hero.webp",
+      "datePublished": "2026-07-28T09:00:00+05:30",
+      "dateModified": "2026-08-31T13:30:00+05:30",
+      "author": {
+        "@type": "Person",
+        "name": "Dheerendra Rautela",
+        "jobTitle": "Himalayan Expedition Guide & Ground Operator",
+        "worksFor": {
+          "@id": "https://rudraanshyatra.com/#organization"
+        }
+      },
+      "publisher": {
+        "@id": "https://rudraanshyatra.com/#organization"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://rudraanshyatra.com/blog/adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitude-ultra-marathon-guide"
+      },
+      "about": [
+        { "@type": "Thing", "name": "Adi Kailash Parikrama Run" },
+        { "@type": "Thing", "name": "High Altitude Ultra Marathon" },
+        { "@type": "Thing", "name": "Gunji Village" },
+        { "@type": "Thing", "name": "Byas Valley" },
+        { "@type": "Thing", "name": "Parvati Kund" },
+        { "@type": "Thing", "name": "Jolingkong" },
+        { "@type": "Thing", "name": "Inner Line Permit Uttarakhand" }
+      ],
+      "keywords": "Adi Kailash Parikrama Run 2026, Adi Kailash ultra marathon, Uttarakhand marathon Gunji, Byas Valley marathon, 60km ultra marathon India, high altitude run Uttarakhand, Gunji marathon registration, Adi Kailash marathon route"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the Adi Kailash Parikrama Run 2026 date and schedule?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Adi Kailash Parikrama Run 2026 is scheduled for October 24–25, 2026 in Gunji village, Byas Valley, Pithoragarh district, Uttarakhand. October 24 includes mandatory BIB collection, medical verification, and route briefing, followed by the main marathon flag-off early morning on October 25."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the distance categories and cut-off times in the Adi Kailash ultra marathon?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "There are 5 official categories: 5 km Fun Run (1.5 hr cut-off), 10 km Trail Run (2.5 hr cut-off), 21 km Half Marathon (4.5 hr cut-off), 42 km Full Marathon (8.5 hr cut-off), and the flagship 60 km Ultra Marathon (12 hr cut-off). All categories start and finish in Gunji Village (10,300 ft)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the maximum altitude and elevation profile of the Adi Kailash marathon route?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The race starts at Gunji (10,300 ft / 3,140m). The 42km and 60km ultra routes climb to a maximum altitude of 15,000 ft (4,570m) near Parvati Kund and Jolingkong Base Camp, making it India's highest officially timed mountain marathon with oxygen levels at approximately 58% to 65% of sea level."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do participants obtain the mandatory Inner Line Permit (ILP) for the race?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Because Gunji and Byas Valley lie in the restricted Indo-Tibet border zone, every participant and spectator must hold an Inner Line Permit (ILP) issued by the SDM Office in Dharchula. Required documents include Aadhaar Card/Passport, doctor-signed medical fitness certificate, and police verification. Rudraansh Yatra manages complete physical processing of ILP permits on behalf of runners."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What high-altitude acclimatization protocol is recommended for runners?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Runners must arrive in the region at least 48 to 72 hours before race day. The recommended staging is: Night 1 in Dharchula (915m), Night 2 in Gunji (3,200m / 10,300 ft), followed by an active acclimatization hike to Nabi or Kuti (3,600m) on Day 3 before race day. Hydrate with 3–4 litres of water daily."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to reach Gunji for the Adi Kailash Parikrama Run from Delhi or Kathgodam?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Travel from Delhi to Kathgodam via overnight train (Ranikhet Express) or fly directly to Naini Saini Airport in Pithoragarh. Drive from Kathgodam/Pithoragarh to Dharchula (7–8 hours), then take a high-clearance 4x4 Mahindra Bolero via Tawaghat, Lakhanpur, and Malpa to Gunji (4–5 hours). Rudraansh Yatra provides direct 4x4 Bolero pickup from Delhi, Kathgodam, or Pithoragarh."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What homestay and accommodation facilities are available in Gunji for participants?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Accommodations in Gunji and neighboring Nabi village consist of authentic Rung tribal homestays offering clean private bedding, heavy quilts, hot water buckets, and freshly cooked high-carbohydrate vegetarian Kumaoni meals (mandua roti, bhatt ki churdkani, dal-rice, porridge) tailored for runners."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What mandatory gear and clothing should runners pack for late October conditions?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Temperatures in late October drop between -5°C at night and 12°C during the day. Mandatory race gear includes: thermal base layers (top & bottom), windproof/waterproof jacket, trail running shoes with aggressive grip, hydration vest with electrolyte tablets, lightweight fleece gloves, UV 400 glacier sunglasses, and an emergency space blanket."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why book marathon travel and logistics with Rudraansh Yatra in Pithoragarh?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Rudraansh Yatra is headquartered in Pithoragarh with dedicated ground teams in Dharchula and Gunji. We own 4x4 Boleros, maintain direct coordination with ITBP medical camps and SDRF emergency rescue, pre-book verified homestay beds, and process SDM permits directly with zero middleman markup."
+          }
+        }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "How to Register and Prepare for the Adi Kailash Parikrama Run 2026",
+      "description": "Step-by-step athlete guide to race registration, high-altitude training, ILP permits, and ground logistics for India's highest ultra marathon.",
+      "totalTime": "P8W",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": "1",
+          "name": "Select Race Category & Register",
+          "text": "Choose your distance (60km Ultra, 42km Full, 21km Half, 10km Trail, 5km Fun) based on your past high-altitude running experience and register early due to strict village capacity quotas in Gunji."
+        },
+        {
+          "@type": "HowToStep",
+          "position": "2",
+          "name": "Obtain Inner Line Permit & Medical Certificate",
+          "text": "Submit your Aadhaar card/Passport copy, police verification certificate, and doctor-signed cardiac/respiratory fitness clearance to Rudraansh Yatra for fast-track processing at SDM Office Dharchula."
+        },
+        {
+          "@type": "HowToStep",
+          "position": "3",
+          "name": "Follow High-Altitude Cardio & Hill Training Routine",
+          "text": "Execute 6–8 weeks of progressive hill intervals, weekly long runs (25–35 km for ultra runners), core strengthening, and breathing endurance routines to prepare for 58% oxygen availability at 15,000 ft."
+        },
+        {
+          "@type": "HowToStep",
+          "position": "4",
+          "name": "Book 4x4 Mountain Transport & Gunji Homestay",
+          "text": "Reserve your dedicated 4x4 Mahindra Bolero mountain transfer from Pithoragarh/Kathgodam to Gunji and lock in confirmed homestay beds with warm bedding and runner nutrition through Rudraansh Yatra."
+        },
+        {
+          "@type": "HowToStep",
+          "position": "5",
+          "name": "Assemble Mandatory Thermal & Trail Gear",
+          "text": "Pack thermal base layers, windproof shell, trail running shoes, hydration pack with electrolytes, UV sunglasses, headlamp, and emergency blister/medical kit for sub-zero late October temperatures."
+        }
+      ]
+    }
+    </script>`,
+
+        render(paragraphsHtml) {
+            const topBanner = `
+<style>
+.ry-prk-hero-banner { background: linear-gradient(135deg, #091a2e 0%, #0f2b48 100%); border: 2px solid #d4af37; border-radius: 14px; padding: 22px 24px; margin: 0 0 28px 0; color: #ffffff; box-shadow: 0 10px 30px rgba(0,0,0,0.45); font-family: var(--font-sans, sans-serif); }
+.ry-prk-hero-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+.ry-prk-hero-title { color: #fbbf24; font-size: 20px; font-weight: 800; line-height: 1.3; margin: 0; }
+.ry-prk-badge-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.ry-prk-badge { background: rgba(212,175,55,0.15); border: 1px solid rgba(212,175,55,0.4); color: #fde68a; font-size: 12.5px; font-weight: 700; padding: 4px 10px; border-radius: 20px; }
+.ry-prk-hero-desc { font-size: 14.5px; line-height: 1.65; color: #e2e8f0; margin-bottom: 16px; }
+.ry-prk-btn-grid { display: flex; gap: 10px; flex-wrap: wrap; }
+.ry-prk-btn-main { padding: 11px 20px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 13.5px; display: inline-flex; align-items: center; gap: 8px; }
+.ry-prk-btn-main.wa { background: #22c55e; color: #ffffff; box-shadow: 0 4px 14px rgba(34,197,94,0.35); }
+.ry-prk-btn-main.pk { background: #d4af37; color: #0a192f; box-shadow: 0 4px 14px rgba(212,175,55,0.35); }
+.ry-prk-btn-main.call { background: transparent; border: 1.5px solid #93c5fd; color: #93c5fd; }
+.ry-prk-quicknav { background: rgba(10,25,47,0.04); border: 1px solid rgba(10,25,47,0.12); border-radius: 10px; padding: 14px 18px; margin: 24px 0; font-family: var(--font-sans, sans-serif); }
+.ry-prk-quicknav strong { color: #0a192f; font-size: 13px; text-transform: uppercase; letter-spacing: 0.6px; display: block; margin-bottom: 10px; }
+.ry-prk-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.ry-prk-pill { background: #0a192f; color: #f5c842; border: 1.5px solid rgba(212,175,55,0.4); padding: 5px 12px; border-radius: 20px; font-size: 12.5px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; }
+.ry-prk-pill:hover { background: #132a4a; color: #ffffff; }
+@media (max-width: 680px) {
+  .ry-prk-hero-banner { padding: 16px 14px; border-radius: 10px; margin-bottom: 20px; }
+  .ry-prk-hero-title { font-size: 16px; }
+  .ry-prk-hero-desc { font-size: 13.5px; }
+  .ry-prk-btn-main { width: 100%; justify-content: center; box-sizing: border-box; }
+  .ry-prk-btn-grid { flex-direction: column; gap: 8px; }
+}
+</style>
+<div class="ry-prk-hero-banner">
+  <div class="ry-prk-hero-head">
+    <span style="font-size: 26px;">🏃‍♂️</span>
+    <h2 class="ry-prk-hero-title">Adi Kailash Parikrama Run 2026 — Runner Logistics & Support Guide</h2>
+  </div>
+  <div class="ry-prk-badge-row">
+    <span class="ry-prk-badge">🗓️ Race Dates: Oct 24–25, 2026</span>
+    <span class="ry-prk-badge">📍 Venue: Gunji Village (10,300 ft), Byas Valley</span>
+    <span class="ry-prk-badge">⛰️ Peak Altitude: 15,000 ft (Parvati Kund)</span>
+    <span class="ry-prk-badge">🏁 5 Categories: 5k | 10k | 21k | 42k | 60k Ultra</span>
+  </div>
+  <p class="ry-prk-hero-desc">
+    Participating in India's highest high-altitude mountain marathon? <strong style="color: #fbbf24;">Rudraansh Yatra</strong> is the <strong>NIDHI-certified direct ground operator based in Pithoragarh</strong> providing end-to-end athlete support: <strong>fast-track SDM Inner Line Permits (ILP)</strong>, <strong>4×4 Mahindra Bolero transfers from Kathgodam/Pithoragarh</strong>, and <strong>confirmed homestays in Gunji & Nabi</strong> with runner-specific meals and emergency oxygen support.
+  </p>
+  <div class="ry-prk-btn-grid">
+    <a href="https://wa.me/917617617651?text=Namaste!%20I%20am%20participating%20in%20Adi%20Kailash%20Parikrama%20Run%202026.%20Please%20guide%20me%20on%20ILP%20permits,%204x4%20Bolero%20transfers,%20and%20Gunji%20homestay%20booking." target="_blank" rel="noopener" class="ry-prk-btn-main wa">
+      <i class="fa-brands fa-whatsapp" style="font-size: 16px;"></i> WhatsApp Runner Support
+    </a>
+    <a href="/adi-kailash" class="ry-prk-btn-main pk">
+      <i class="fa-solid fa-mountain" style="font-size: 14px;"></i> View Full Adi Kailash Yatra Packages
+    </a>
+    <a href="tel:+917617617651" class="ry-prk-btn-main call">
+      <i class="fa-solid fa-phone" style="font-size: 13px;"></i> Call +91 76176 17651
+    </a>
+  </div>
+</div>
+
+<div class="ry-prk-quicknav">
+  <strong>📚 Quick Guide Navigation — Jump to Section</strong>
+  <div class="ry-prk-pills">
+    <a href="#race-categories" class="ry-prk-pill">🏆 Race Categories & Altitude</a>
+    <a href="#acclimatization-plan" class="ry-prk-pill">⏱️ 3-Day Acclimatization Plan</a>
+    <a href="#ilp-permits" class="ry-prk-pill">📋 ILP Permits & SDM Rules</a>
+    <a href="#mandatory-gear" class="ry-prk-pill">🎒 Mandatory Gear Checklist</a>
+    <a href="#how-to-reach" class="ry-prk-pill">🚗 How to Reach Gunji</a>
+    <a href="#homestay-logistics" class="ry-prk-pill">🏡 Gunji Homestay & Food</a>
+    <a href="#marathon-faqs" class="ry-prk-pill">❓ Runner FAQs</a>
+  </div>
+</div>`;
+
+            const raceMatrixTable = `
+<div id="race-categories" style="margin: 32px 0 24px; font-family: var(--font-sans, sans-serif);">
+  <h3 style="color: #0a192f; font-size: 18px; font-weight: 800; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+    <span>📊</span> Adi Kailash Parikrama Run 2026: Race Categories & Elevation Matrix
+  </h3>
+  <div style="overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid rgba(10,25,47,0.12); border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+    <table style="width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 620px;">
+      <thead>
+        <tr style="background: #0a192f; color: #ffffff;">
+          <th style="padding: 12px 14px; text-align: left;">Category</th>
+          <th style="padding: 12px 14px; text-align: left;">Start / Turnaround Point</th>
+          <th style="padding: 12px 14px; text-align: center;">Max Altitude</th>
+          <th style="padding: 12px 14px; text-align: center;">Cut-Off Time</th>
+          <th style="padding: 12px 14px; text-align: left;">Difficulty / Oxygen Level</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background: rgba(10,25,47,0.02); border-bottom: 1px solid rgba(10,25,47,0.08);">
+          <td style="padding: 11px 14px; font-weight: 700; color: #b45309;"><span style="background: #fef3c7; color: #b45309; padding: 2px 8px; border-radius: 4px;">60 km Ultra</span></td>
+          <td style="padding: 11px 14px;">Gunji → Nabi → Kuti → Jolingkong / Parvati Kund → Gunji</td>
+          <td style="padding: 11px 14px; text-align: center; font-weight: 700; color: #dc2626;">15,000 ft (4,570m)</td>
+          <td style="padding: 11px 14px; text-align: center; font-weight: 700;">12.0 Hours</td>
+          <td style="padding: 11px 14px; font-size: 12.5px; color: #475569;">Extreme Alpine | ~58% Sea-Level O₂</td>
+        </tr>
+        <tr style="border-bottom: 1px solid rgba(10,25,47,0.08);">
+          <td style="padding: 11px 14px; font-weight: 700; color: #1d4ed8;"><span style="background: #dbeafe; color: #1d4ed8; padding: 2px 8px; border-radius: 4px;">42 km Full</span></td>
+          <td style="padding: 11px 14px;">Gunji → Nabi → Kuti Village & return circuit</td>
+          <td style="padding: 11px 14px; text-align: center; font-weight: 700; color: #ea580c;">13,800 ft (4,200m)</td>
+          <td style="padding: 11px 14px; text-align: center; font-weight: 700;">8.5 Hours</td>
+          <td style="padding: 11px 14px; font-size: 12.5px; color: #475569;">Very High | ~62% Sea-Level O₂</td>
+        </tr>
+        <tr style="background: rgba(10,25,47,0.02); border-bottom: 1px solid rgba(10,25,47,0.08);">
+          <td style="padding: 11px 14px; font-weight: 700; color: #047857;"><span style="background: #d1fae5; color: #047857; padding: 2px 8px; border-radius: 4px;">21 km Half</span></td>
+          <td style="padding: 11px 14px;">Gunji → Nabi Heritage Village → Gunji</td>
+          <td style="padding: 11px 14px; text-align: center; font-weight: 700; color: #059669;">11,800 ft (3,600m)</td>
+          <td style="padding: 11px 14px; text-align: center; font-weight: 700;">4.5 Hours</td>
+          <td style="padding: 11px 14px; font-size: 12.5px; color: #475569;">Challenging Trail | ~68% Sea-Level O₂</td>
+        </tr>
+        <tr style="border-bottom: 1px solid rgba(10,25,47,0.08);">
+          <td style="padding: 11px 14px; font-weight: 700; color: #4338ca;"><span style="background: #e0e7ff; color: #4338ca; padding: 2px 8px; border-radius: 4px;">10 km Trail</span></td>
+          <td style="padding: 11px 14px;">Gunji Valley Loop along Kali / Kuti River Confluence</td>
+          <td style="padding: 11px 14px; text-align: center; font-weight: 700; color: #4338ca;">11,000 ft (3,350m)</td>
+          <td style="padding: 11px 14px; text-align: center; font-weight: 700;">2.5 Hours</td>
+          <td style="padding: 11px 14px; font-size: 12.5px; color: #475569;">Moderate Trail | Ideal for Mountain Runners</td>
+        </tr>
+        <tr style="background: rgba(10,25,47,0.02);">
+          <td style="padding: 11px 14px; font-weight: 700; color: #0284c7;"><span style="background: #e0f2fe; color: #0284c7; padding: 2px 8px; border-radius: 4px;">5 km Fun Run</span></td>
+          <td style="padding: 11px 14px;">Gunji Village Perimeter Cultural Run</td>
+          <td style="padding: 11px 14px; text-align: center; font-weight: 700; color: #0284c7;">10,300 ft (3,140m)</td>
+          <td style="padding: 11px 14px; text-align: center; font-weight: 700;">1.5 Hours</td>
+          <td style="padding: 11px 14px; font-size: 12.5px; color: #475569;">Beginner Friendly | All Age Groups</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>`;
+
+            const acclimatizationAndGearBoxes = `
+<div id="acclimatization-plan" style="margin: 28px 0; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border: 1.5px solid rgba(212,175,55,0.4); border-radius: 12px; padding: 20px 22px; color: #ffffff; font-family: var(--font-sans, sans-serif);">
+  <h3 style="color: #fbbf24; font-size: 17px; font-weight: 800; margin-top: 0; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+    <span>⏱️</span> Mandatory 3-Day High-Altitude Acclimatization Timeline
+  </h3>
+  <p style="color: #cbd5e1; font-size: 13.5px; line-height: 1.6; margin-bottom: 14px;">
+    Ascending straight into high-intensity mountain running at 10,300–15,000 ft without progressive acclimatization carries severe Acute Mountain Sickness (AMS) risks. Follow the exact staging schedule enforced by Rudraansh Yatra:
+  </p>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px;">
+    <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 12px 14px;">
+      <div style="color: #93c5fd; font-weight: 700; font-size: 13px;">DAY 1: Dharchula (915m)</div>
+      <div style="color: #e2e8f0; font-size: 12.5px; line-height: 1.5; margin-top: 4px;">Arrive via Pithoragarh / Kathgodam. Complete physical ILP verification at SDM Office Dharchula. Rest and hydrate.</div>
+    </div>
+    <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 12px 14px;">
+      <div style="color: #fbbf24; font-weight: 700; font-size: 13px;">DAY 2: Gunji (3,200m / 10,300 ft)</div>
+      <div style="color: #e2e8f0; font-size: 12.5px; line-height: 1.5; margin-top: 4px;">4×4 Bolero transfer via Tawaghat & Malpa. Check in to Gunji homestay. Light 20-minute jog, oximeter test, zero alcohol.</div>
+    </div>
+    <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 12px 14px;">
+      <div style="color: #4ade80; font-weight: 700; font-size: 13px;">DAY 3: Active Trail Hike (Nabi/Kuti)</div>
+      <div style="color: #e2e8f0; font-size: 12.5px; line-height: 1.5; margin-top: 4px;">Climb high (3,600m) to Nabi or Kuti, sleep low at Gunji. Mandatory medical checkup, BIB collection, and route briefing.</div>
+    </div>
+  </div>
+</div>
+
+<div id="mandatory-gear" style="margin: 28px 0; background: rgba(10,25,47,0.03); border: 1.5px solid rgba(10,25,47,0.12); border-left: 5px solid #d4af37; border-radius: 12px; padding: 20px 22px; font-family: var(--font-sans, sans-serif);">
+  <h3 style="color: #0a192f; font-size: 17px; font-weight: 800; margin-top: 0; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+    <span>🎒</span> Mandatory Gear & Clothing for Late October Sub-Zero Racing
+  </h3>
+  <p style="color: #475569; font-size: 13.5px; line-height: 1.6; margin-bottom: 12px;">
+    Late October weather in Byas Valley brings morning temperatures between <strong>-5°C and 4°C</strong>, rising to 12°C under clear mountain sun. Check our detailed <a href="/blog/adi-kailash-packing-list-essential-guide-for-yatris" style="color: #7c3aed; text-decoration: underline; font-weight: 700;">Adi Kailash packing guide</a> and carry:
+  </p>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; font-size: 13px; color: #1e293b;">
+    <div style="background: #ffffff; padding: 10px 12px; border-radius: 6px; border: 1px solid rgba(10,25,47,0.08);">🧥 <strong>Thermal Base Layers:</strong> Merino wool / moisture-wicking synthetic (top & bottom)</div>
+    <div style="background: #ffffff; padding: 10px 12px; border-radius: 6px; border: 1px solid rgba(10,25,47,0.08);">👟 <strong>Trail Shoes:</strong> High-traction vibram/lugged soles for scree, loose moraine & frozen mud</div>
+    <div style="background: #ffffff; padding: 10px 12px; border-radius: 6px; border: 1px solid rgba(10,25,47,0.08);">🥤 <strong>Hydration Pack:</strong> 1.5L–2L bladder with insulated hose + electrolyte replenishment sachets</div>
+    <div style="background: #ffffff; padding: 10px 12px; border-radius: 6px; border: 1px solid rgba(10,25,47,0.08);">🕶️ <strong>UV Glacier Glasses:</strong> Category 3 or 4 UV protection against high-altitude alpine glare</div>
+    <div style="background: #ffffff; padding: 10px 12px; border-radius: 6px; border: 1px solid rgba(10,25,47,0.08);">🧤 <strong>Fleece Gloves & Buff:</strong> Wind-blocking headwear and warm lightweight running gloves</div>
+    <div style="background: #ffffff; padding: 10px 12px; border-radius: 6px; border: 1px solid rgba(10,25,47,0.08);">🩹 <strong>Emergency Foil Blanket:</strong> Mandatory foil space blanket, whistle, and blister tape</div>
+  </div>
+</div>`;
+
+            // Deep Contextual Interlinking Replacements
+            const enrichedContent = paragraphsHtml
+                .replace(/<!--EndFragment-->/g, '')
+                .replace(/ class="font-claude-response-body[^"]*"/g, '')
+                .replace(/ class="text-text-100[^"]*"/g, '')
+                .replace(/ dir="ltr"/g, '')
+                .replace(/<h1[^>]*>.*?<\/h1>/gs, '')
+                .replace(/class="list-disc[^"]*"/g, 'style="padding-left:20px;margin-bottom:16px;"')
+                .replace(/class="[^"]*pl-2[^"]*"/g, '')
+                // 1. ILP Interlink
+                .replace(
+                    /Inner Line Permit \(ILP\)/i,
+                    '<a href="/blog/inner-line-permit-adi-kailash-2026-guide" style="color:#7c3aed;text-decoration:underline;font-weight:600;">Inner Line Permit (ILP)</a>'
+                )
+                // 2. Parvati Kund & Jolingkong Interlink
+                .replace(
+                    /Parvati Kund and Jolingkong/i,
+                    '<a href="/adi-kailash" style="color:#7c3aed;text-decoration:underline;font-weight:600;">Parvati Kund and Jolingkong</a> (view our full <a href="/adi-kailash" style="color:#7c3aed;text-decoration:underline;font-weight:600;">Adi Kailash Yatra packages</a>)'
+                )
+                // 3. Packing & Thermal gear Interlink
+                .replace(
+                    /thermal base layers, windproof jackets/i,
+                    'thermal base layers, windproof jackets (see our complete <a href="/blog/adi-kailash-packing-list-essential-guide-for-yatris" style="color:#7c3aed;text-decoration:underline;font-weight:600;">Adi Kailash packing list</a>)'
+                )
+                // 4. Altitude sickness & Medical clearance Interlink
+                .replace(
+                    /reduced oxygen pressure/i,
+                    'reduced oxygen pressure (read our guide on <a href="/blog/is-adi-kailash-yatra-safe-for-senior-citizens-guide" style="color:#7c3aed;text-decoration:underline;font-weight:600;">altitude sickness prevention & emergency oxygen</a>)'
+                )
+                // 5. Difficulty level Interlink
+                .replace(
+                    /Running above 10,000 feet/i,
+                    'Running above 10,000 feet (consult our <a href="/blog/adi-kailash-yatra-difficulty-level-can-beginners-do-it" style="color:#7c3aed;text-decoration:underline;font-weight:600;">Adi Kailash difficulty level assessment</a>)'
+                )
+                // 6. October Weather Interlink
+                .replace(
+                    /temperature swings between 2°C and 18°C/i,
+                    'temperature swings between 2°C and 18°C (check our <a href="/blog/best-time-to-visit-adi-kailash-om-parvat-weather-season-guide" style="color:#7c3aed;text-decoration:underline;font-weight:600;">October weather & temperature guide</a>)'
+                )
+                // 7. Route & Road Status Interlink
+                .replace(
+                    /SDM Office Dharchula/i,
+                    'SDM Office Dharchula (stay updated with our <a href="/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates" style="color:#7c3aed;text-decoration:underline;font-weight:600;">2026 route status & reopening tracker</a>)'
+                )
+                // 8. How to Reach & Flight / Road Routes Interlink
+                .replace(
+                    /Kathgodam, Tanakpur, Pithoragarh, or Delhi to Gunji/i,
+                    '<a href="/blog/how-to-reach-adi-kailash-from-delhi-kathgodam-pithoragarh-route-map" style="color:#7c3aed;text-decoration:underline;font-weight:600;">Kathgodam, Tanakpur, Pithoragarh, or Delhi to Gunji</a> (including the <a href="/blog/how-to-reach-pithoragarh-from-delhi-dehradun-2026-flight-update" style="color:#7c3aed;text-decoration:underline;font-weight:600;">Delhi-Pithoragarh direct flights</a>)'
+                )
+                // 9. Cost & Pricing Interlink
+                .replace(
+                    /budget their travel/i,
+                    'budget their travel (see our <a href="/blog/adi-kailash-yatra-cost-package-price-breakdown-budget-guide" style="color:#7c3aed;text-decoration:underline;font-weight:600;">Adi Kailash cost & vehicle rental breakdown</a>)'
+                )
+                // 10. Om Parvat Interlink
+                .replace(
+                    /Nabidhang, and Kalapani/i,
+                    '<a href="/om-parvat" style="color:#7c3aed;text-decoration:underline;font-weight:600;">Nabidhang (Om Parvat viewpoint)</a>, and <a href="/om-parvat" style="color:#7c3aed;text-decoration:underline;font-weight:600;">Kalapani</a>'
+                )
+                // 11. Rudraansh Yatra direct ground operator Interlink
+                .replace(
+                    /registered ground operators like <strong>Rudraansh Yatra<\/strong>/i,
+                    'registered local ground operators like <a href="/about" style="color:#7c3aed;text-decoration:underline;font-weight:700;">Rudraansh Yatra</a> (check <a href="/whats-included" style="color:#7c3aed;text-decoration:underline;font-weight:600;">What\'s Included in our packages</a>)'
+                );
+
+            const visualFaqSection = `
+<div id="marathon-faqs" style="margin: 36px 0 24px; font-family: var(--font-sans, sans-serif);">
+  <h3 style="color: #0a192f; font-size: 20px; font-weight: 800; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+    <span>❓</span> Frequently Asked Questions: Adi Kailash Parikrama Run 2026
+  </h3>
+  <div style="display: flex; flex-direction: column; gap: 12px;">
+    <details style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 16px;">
+      <summary style="font-weight: 700; color: #0f172a; cursor: pointer; font-size: 14.5px;">What are the exact dates and schedule for the Adi Kailash Parikrama Run 2026?</summary>
+      <p style="margin: 10px 0 0 0; font-size: 13.5px; line-height: 1.6; color: #475569;">The Adi Kailash Parikrama Run is scheduled for <strong>October 24–25, 2026</strong> in Gunji village, Byas Valley, Pithoragarh, Uttarakhand. Day 1 (Oct 24) is dedicated to BIB distribution, medical clearance verification, and route briefing, followed by the competitive flag-off early morning on Day 2 (Oct 25).</p>
+    </details>
+    <details style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 16px;">
+      <summary style="font-weight: 700; color: #0f172a; cursor: pointer; font-size: 14.5px;">What is the highest altitude reached during the ultra marathon?</summary>
+      <p style="margin: 10px 0 0 0; font-size: 13.5px; line-height: 1.6; color: #475569;">The race begins at <strong>10,300 ft (3,140m)</strong> in Gunji. The 42 km and 60 km categories climb to peak altitudes of <strong>15,000 ft (4,570m)</strong> near Parvati Kund and Jolingkong Base Camp, making it India's highest officially sanctioned mountain ultra marathon.</p>
+    </details>
+    <details style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 16px;">
+      <summary style="font-weight: 700; color: #0f172a; cursor: pointer; font-size: 14.5px;">Is an Inner Line Permit (ILP) required for marathon runners and spectators?</summary>
+      <p style="margin: 10px 0 0 0; font-size: 13.5px; line-height: 1.6; color: #475569;">Yes. All non-local Indian citizens entering Byas Valley must hold an official Inner Line Permit (ILP) issued by the SDM Office Dharchula. Rudraansh Yatra handles physical document submission, police verification verification, and permit approvals on behalf of registered runners.</p>
+    </details>
+    <details style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 16px;">
+      <summary style="font-weight: 700; color: #0f172a; cursor: pointer; font-size: 14.5px;">How can runners book 4x4 Bolero mountain transport and Gunji homestays?</summary>
+      <p style="margin: 10px 0 0 0; font-size: 13.5px; line-height: 1.6; color: #475569;">Due to limited homestay capacity in Gunji, accommodations sell out quickly. Contact <strong>Rudraansh Yatra on WhatsApp (+91 76176 17651)</strong> to book complete athlete packages including Kathgodam/Pithoragarh 4x4 Bolero transport, ILP permit handling, warm homestays, and runner nutrition.</p>
+    </details>
+  </div>
+</div>`;
+
+            const bottomCta = `
+<div id="homestay-logistics" style="background: linear-gradient(135deg, #091a2e 0%, #0f2b48 100%); border: 2px solid #d4af37; border-radius: 14px; padding: 24px 26px; margin: 36px 0 10px 0; color: #ffffff; font-family: var(--font-sans, sans-serif); box-shadow: 0 10px 30px rgba(0,0,0,0.45);">
+  <h3 style="color: #fbbf24; font-size: 18px; font-weight: 800; margin-top: 0; margin-bottom: 8px;">🏔️ Official Runner Logistics & Homestay Support in Gunji</h3>
+  <p style="color: #e2e8f0; font-size: 14px; line-height: 1.65; margin-bottom: 16px;">
+    Headquartered in <strong>Pithoragarh</strong> with ground offices in <strong>Dharchula</strong>, <strong style="color: #fbbf24;">Rudraansh Yatra</strong> provides end-to-end management for athletes competing in the <strong>Adi Kailash Parikrama Run 2026</strong>. From SDM permit clearance and 4x4 Bolero mountain transfers to guaranteed Rung homestay rooms and ITBP-linked emergency medical coordination.
+  </p>
+  <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 18px;">
+    <a href="https://wa.me/917617617651?text=Hi%20Rudraansh%20Yatra,%20I%20am%20registering%20for%20the%20Adi%20Kailash%20Parikrama%20Run%202026.%20Please%20reserve%20my%20ILP%20permits,%204x4%20Bolero%20transport,%20and%20Gunji%20homestay." target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; background: #22c55e; color: #ffffff; padding: 11px 20px; border-radius: 8px; font-size: 13.5px; font-weight: 700; text-decoration: none;">
+      <i class="fa-brands fa-whatsapp" style="font-size: 17px;"></i> Book Runner Logistics via WhatsApp
+    </a>
+    <a href="tel:+917617617651" style="display: inline-flex; align-items: center; gap: 8px; background: rgba(212,175,55,0.15); color: #fbbf24; border: 1.5px solid #fbbf24; padding: 11px 20px; border-radius: 8px; font-size: 13.5px; font-weight: 700; text-decoration: none;">
+      <i class="fa-solid fa-phone"></i> Call +91 76176 17651
+    </a>
+    <a href="/contact" style="display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.1); color: #ffffff; border: 1px solid rgba(255,255,255,0.25); padding: 11px 20px; border-radius: 8px; font-size: 13.5px; font-weight: 700; text-decoration: none;">
+      📍 Pithoragarh Office Details
+    </a>
+  </div>
+  <p style="color: #94a3b8; font-size: 12.5px; margin: 0; line-height: 1.6;">
+    <strong style="color: #cbd5e1;">Related Yatra Guides:</strong>
+    <a href="/blog/inner-line-permit-adi-kailash-2026-guide" style="color: #93c5fd; text-decoration: underline;">ILP Permit Guide</a> ·
+    <a href="/blog/adi-kailash-packing-list-essential-guide-for-yatris" style="color: #93c5fd; text-decoration: underline;">High-Altitude Packing List</a> ·
+    <a href="/blog/best-time-to-visit-adi-kailash-om-parvat-weather-season-guide" style="color: #93c5fd; text-decoration: underline;">October Weather Guide</a> ·
+    <a href="/blog/adi-kailash-yatra-difficulty-level-can-beginners-do-it" style="color: #93c5fd; text-decoration: underline;">Difficulty & Altitude Guide</a> ·
+    <a href="/adi-kailash" style="color: #93c5fd; text-decoration: underline;">Adi Kailash Tour Packages</a>
+  </p>
+</div>`;
+
+            return topBanner + raceMatrixTable + acclimatizationAndGearBoxes + enrichedContent + visualFaqSection + bottomCta;
+        }
+};
+
 
 function getBlogEnhancement(slug, paragraphsHtml) {
     const enhancer = BLOG_ENHANCERS[slug];
