@@ -3072,7 +3072,7 @@ let googleReviewsCache = {
     data: null,
     timestamp: 0
 };
-const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours
+const CACHE_DURATION = 6 * 60 * 60 * 1000; // 6 hours — auto-refreshes live rating/count
 
 app.get('/api/google-reviews', async (req, res) => {
     const apiKey = process.env.GOOGLE_MAPS_API_KEY;
@@ -3161,6 +3161,14 @@ app.get('/api/google-reviews', async (req, res) => {
         console.error("Failed to fetch Google Reviews:", err);
         return res.json(fallbackReviews);
     }
+});
+
+// Force-refresh Google Reviews cache
+// Call GET or POST /api/google-reviews/refresh to bust the cache and fetch fresh data
+app.all('/api/google-reviews/refresh', (req, res) => {
+    googleReviewsCache = { data: null, timestamp: 0 };
+    console.log('[Google Reviews] Cache cleared — next request will fetch live data from Google Places API');
+    res.json({ success: true, message: 'Cache cleared. Homepage will now fetch fresh live Google rating and reviews.' });
 });
 
 
