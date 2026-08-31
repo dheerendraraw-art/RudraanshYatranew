@@ -20,6 +20,7 @@ const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const multer = require('multer');
+const compression = require('compression');
 const { getBlogEnhancement } = require('./blog-enhancers');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'rudraansh_yatra_secure_jwt_secret_key_2026_xyz';
@@ -30,6 +31,7 @@ const upload = multer({
 });
 
 const app = express();
+app.use(compression({ level: 6 }));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 

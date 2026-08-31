@@ -1158,33 +1158,37 @@ function initializeDiscountPopup() {
 
         const allCards = document.querySelectorAll('.blog-carousel-track .blog-card');
 
-        const update3DTransforms = () => {
-            const containerRect = container.getBoundingClientRect();
-            const containerCenter = containerRect.left + containerRect.width / 2;
-
-            allCards.forEach(card => {
-                const cardRect = card.getBoundingClientRect();
-                const cardCenter = cardRect.left + cardRect.width / 2;
-                
-                const offset = cardCenter - containerCenter;
+        let rafId = null;
+        const throttledUpdate3DTransforms = () => {
+            if (rafId) return;
+            rafId = requestAnimationFrame(() => {
+                const containerRect = container.getBoundingClientRect();
+                const containerCenter = containerRect.left + containerRect.width / 2;
                 const maxDistance = containerRect.width / 2;
-                
-                let ratio = offset / maxDistance;
-                ratio = Math.max(-1.5, Math.min(1.5, ratio));
 
-                const rotateY = ratio * -20;
-                const translateZ = Math.abs(ratio) * -100;
-                const scale = 1 - Math.min(0.2, Math.abs(ratio) * 0.1);
-                const opacity = 1 - Math.min(0.5, Math.abs(ratio) * 0.3);
+                allCards.forEach(card => {
+                    const cardRect = card.getBoundingClientRect();
+                    const cardCenter = cardRect.left + cardRect.width / 2;
+                    
+                    const offset = cardCenter - containerCenter;
+                    let ratio = offset / maxDistance;
+                    ratio = Math.max(-1.5, Math.min(1.5, ratio));
 
-                card.style.transform = `perspective(1000px) rotateY(${rotateY}deg) translateZ(${translateZ}px) scale(${scale})`;
-                card.style.opacity = opacity;
+                    const rotateY = ratio * -20;
+                    const translateZ = Math.abs(ratio) * -100;
+                    const scale = 1 - Math.min(0.2, Math.abs(ratio) * 0.1);
+                    const opacity = 1 - Math.min(0.5, Math.abs(ratio) * 0.3);
+
+                    card.style.transform = `perspective(1000px) rotateY(${rotateY}deg) translateZ(${translateZ}px) scale(${scale})`;
+                    card.style.opacity = opacity;
+                });
+                rafId = null;
             });
         };
 
-        // Scroll listener for 3D transforms
-        container.addEventListener('scroll', update3DTransforms);
-        window.addEventListener('resize', update3DTransforms);
+        // Scroll listener for 3D transforms with passive flag
+        container.addEventListener('scroll', throttledUpdate3DTransforms, { passive: true });
+        window.addEventListener('resize', throttledUpdate3DTransforms, { passive: true });
 
         // Navigation button listeners with wrap-around loop
         if (prevBtn && nextBtn) {
@@ -1242,7 +1246,7 @@ function initializeDiscountPopup() {
 
         // Initialize positions starting at scrollLeft 0
         container.scrollLeft = 0;
-        setTimeout(update3DTransforms, 100);
+        setTimeout(throttledUpdate3DTransforms, 100);
     };
 
     // Initialize carousel on DOM load
