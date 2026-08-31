@@ -103,8 +103,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Mobile: all top-level dropdowns toggle
-    document.querySelectorAll('.nav-menu .dropdown > a').forEach(trigger => {
+    // Mobile: all top-level dropdowns toggle (supports both <a> and <button> triggers)
+    document.querySelectorAll('.nav-menu .dropdown > a, .nav-menu .dropdown > button').forEach(trigger => {
         trigger.addEventListener('click', (e) => {
             if (window.innerWidth <= 992) {
                 e.preventDefault();
@@ -114,6 +114,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.querySelectorAll('.nav-menu .dropdown').forEach(d => d.classList.remove('active'));
                 if (!isActive) parent.classList.add('active');
             }
+            // Update aria-expanded for desktop dropdowns too
+            const expanded = trigger.getAttribute('aria-expanded') === 'true';
+            trigger.setAttribute('aria-expanded', String(!expanded));
         });
     });
 
@@ -1360,7 +1363,7 @@ function initializeDiscountPopup() {
             // Check if active
             const isActive = faqItem.classList.contains('active');
             
-            // Close all others
+            // Close all others — reset aria-expanded too
             document.querySelectorAll('.faq-item').forEach(item => {
                 if (item !== faqItem) {
                     item.classList.remove('active');
@@ -1368,6 +1371,9 @@ function initializeDiscountPopup() {
                     if (otherAnswer) otherAnswer.style.maxHeight = null;
                     const otherIcon = item.querySelector('.faq-question i, .faq-question .faq-icon');
                     if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
+                    // Reset aria-expanded on other buttons
+                    const otherBtn = item.querySelector('.faq-question');
+                    if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
                 }
             });
             
@@ -1375,6 +1381,7 @@ function initializeDiscountPopup() {
                 faqItem.classList.remove('active');
                 if (answer) answer.style.maxHeight = null;
                 if (icon) icon.style.transform = 'rotate(0deg)';
+                button.setAttribute('aria-expanded', 'false');
             } else {
                 faqItem.classList.add('active');
                 if (answer) {
@@ -1382,6 +1389,7 @@ function initializeDiscountPopup() {
                     answer.style.maxHeight = h + 'px';
                 }
                 if (icon) icon.style.transform = 'rotate(180deg)';
+                button.setAttribute('aria-expanded', 'true');
             }
         });
     });

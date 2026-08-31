@@ -446,6 +446,17 @@ header.scrolled {
     color: var(--color-gold-dark);
 }
 
+/* Nav dropdown toggle button: visually identical to .nav-link */
+button.nav-dropdown-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-sans);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
 /* Dropdown Menu logic */
 .dropdown {
     position: relative;

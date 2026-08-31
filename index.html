@@ -58,6 +58,9 @@
     <link rel="alternate" hreflang="en-IN" href="https://rudraanshyatra.com/">
     <link rel="alternate" hreflang="hi-IN" href="https://rudraanshyatra.com/">
     <link rel="alternate" hreflang="x-default" href="https://rudraanshyatra.com/">
+    <!-- AI / LLM Agent Discovery: machine-readable content index -->
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM-readable content for AI agents">
+    <meta name="ai-content-declaration" content="llms.txt">
     <!-- Bing Webmaster Tools — powers ChatGPT SearchGPT live search -->
     <meta name="msvalidate.01" content="BING_VERIFICATION_CODE_PENDING">
     <!-- Yandex Webmaster Tools -->
@@ -688,7 +691,7 @@
 </style>
 
     <!-- Full Stylesheet: synchronous load (HTTP/2 + gzip; critical CSS above handles FOUC) -->
-    <link rel="stylesheet" href="style.css?v=7.6">
+    <link rel="stylesheet" href="style.css?v=7.7">
 
     <!-- ===== Meta Pixel ===== -->
     <script>
@@ -703,7 +706,7 @@
         fbq('init', '1071708388842400');
         fbq('track', 'PageView');
     </script>
-    <noscript><img height="1" width="1" style="display:none"
+    <noscript><img height="1" width="1" style="display:none" alt=""
         src="https://www.facebook.com/tr?id=1071708388842400&ev=PageView&noscript=1"
     /></noscript>
     <!-- ===== End Meta Pixel ===== -->
@@ -887,6 +890,9 @@
 
 <body>
 
+    <!-- Skip navigation link: for screen readers and AI agents -->
+    <a class="skip-link" href="#main-content" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;z-index:9999;background:#0A192F;color:#D4AF37;padding:8px 16px;text-decoration:none;font-weight:600;" onfocus="this.style.left='10px';this.style.top='10px';this.style.width='auto';this.style.height='auto';" onblur="this.style.left='-9999px';">Skip to main content</a>
+
     <!-- Top Bar -->
     <div class="top-bar">
         <div class="container">
@@ -931,7 +937,7 @@
     </div>
 
     <!-- Header Navbar -->
-    <header>
+    <header role="banner">
         <div class="container navbar-shell">
             <a href="/" class="logo">
                 <div class="logo-icon-img-wrap">
@@ -949,10 +955,11 @@
                 <span></span>
             </button>
 
+            <nav aria-label="Main navigation">
             <ul class="nav-menu">
                 <li><a href="/" class="nav-link active">Home</a></li>
                 <li class="dropdown">
-                    <a href="javascript:void(0);" class="nav-link">Destinations <i class="fa-solid fa-chevron-down" style="font-size:10px;margin-left:2px;"></i></a>
+                    <button type="button" class="nav-link nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">Destinations <i class="fa-solid fa-chevron-down" style="font-size:10px;margin-left:2px;"></i></button>
                     <ul class="dropdown-menu">
                         <li class="has-submenu">
                             <a href="adi-kailash">Adi Kailash &amp; Om Parvat <i class="fa-solid fa-chevron-right submenu-arrow"></i></a>
@@ -981,11 +988,14 @@
                 </li>
                 <li><a href="gallery" class="nav-link">Gallery</a></li>
                 <li><a href="blogs" class="nav-link">Blogs</a></li>
-                <li><button class="nav-btn" id="custom-trip-btn">Custom Trip <i
-                            class="fa-solid fa-compass"></i></button></li>
+                <li><button class="nav-btn" id="custom-trip-btn" aria-label="Plan your custom trip to Adi Kailash or Kumaon">Custom Trip <i class="fa-solid fa-compass"></i></button></li>
             </ul>
+            </nav>
         </div>
     </header>
+
+    <!-- Main page content starts here -->
+    <main id="main-content">
 
     <!-- Hero Section -->
     <section class="hero" aria-label="Adi Kailash &amp; Om Parvat Yatra — Rudraansh Yatra Home" style="background-image: url('assets/images/adi-kailash-hero.webp');">
@@ -1435,9 +1445,9 @@
                             <div class="counter-outer">
                                 <div class="counter-title">No. of Travelers</div>
                                 <div class="counter-wrap">
-                                    <button type="button" class="counter-btn" id="btn-traveler-minus">-</button>
+                                    <button type="button" class="counter-btn" id="btn-traveler-minus" aria-label="Decrease traveler count">-</button>
                                     <div class="counter-value" id="traveler-val">1</div>
-                                    <button type="button" class="counter-btn" id="btn-traveler-plus">+</button>
+                                    <button type="button" class="counter-btn" id="btn-traveler-plus" aria-label="Increase traveler count">+</button>
                                 </div>
                             </div>
                             <!-- Trip Duration Selector -->
@@ -1616,61 +1626,61 @@
 
             <div class="faq-accordion" itemscope itemtype="https://schema.org/FAQPage">
                 <div class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-                    <button class="faq-question">
+                    <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-1">
                         <span itemprop="name">What is the best time to visit Adi Kailash and Om Parvat?</span>
                         <i class="fa-solid fa-chevron-down"></i>
                     </button>
-                    <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                    <div class="faq-answer" id="faq-answer-1" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
                         <p itemprop="text">The best time to visit Adi Kailash and Om Parvat is between May to June (pre-monsoon) and September to October (post-monsoon). During these months, the weather across Kumaon is pleasant, high-altitude passes in Vyas Valley are open, and you enjoy clear, unobstructed views of the sacred snow-capped peaks.</p>
                     </div>
                 </div>
 
                 <div class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-                    <button class="faq-question">
+                    <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-2">
                         <span itemprop="name">Is the Adi Kailash Yatra safe for senior citizens?</span>
                         <i class="fa-solid fa-chevron-down"></i>
                     </button>
-                    <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                    <div class="faq-answer" id="faq-answer-2" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
                         <p itemprop="text">Yes, the Adi Kailash Yatra is safe for physically fit senior citizens accompanied by a medical fitness certificate from a registered doctor. Rudraansh Yatra provides end-to-end 4x4 Mahindra Bolero transport to eliminate high-altitude trekking fatigue, mandates gradual acclimatization nights at Dharchula and Gunji, and conducts daily pulse-oximeter health checkups with portable emergency oxygen support.</p>
                     </div>
                 </div>
 
                 <div class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-                    <button class="faq-question">
+                    <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-3">
                         <span itemprop="name">How do I get the Inner Line Permit (ILP) for Vyas Valley & Dharchula?</span>
                         <i class="fa-solid fa-chevron-down"></i>
                     </button>
-                    <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                    <div class="faq-answer" id="faq-answer-3" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
                         <p itemprop="text">An Inner Line Permit (ILP) issued by the District Magistrate office is mandatory to travel into border zones like Vyas Valley and Darma Valley. Required documents include a clear Aadhaar card copy, a Police Verification Certificate (PCC), physical passport-sized photographs, and a doctor-signed physical fitness certificate. As local ground operators based in Pithoragarh, Rudraansh Yatra processes all official permits directly with the Dharchula SDM office on your behalf.</p>
                     </div>
                 </div>
 
                 <div class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-                    <button class="faq-question">
+                    <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-4">
                         <span itemprop="name">What are the road conditions and vehicle requirements for high-altitude Kumaon yatras?</span>
                         <i class="fa-solid fa-chevron-down"></i>
                     </button>
-                    <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                    <div class="faq-answer" id="faq-answer-4" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
                         <p itemprop="text">The high-altitude terrain in Vyas Valley and Darma Valley consists of rugged mountain roads, water crossings, and unpaved borderland tracks. Standard cars or luxury coaches cannot navigate these roads. Rudraansh Yatra uses heavy-duty 4x4 Mahindra Boleros operated exclusively by veteran mountain drivers native to Pithoragarh and Dharchula.</p>
                     </div>
                 </div>
 
                 <div class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-                    <button class="faq-question">
+                    <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-5">
                         <span itemprop="name">How does Rudraansh Yatra handle altitude sickness (AMS) and medical emergencies in Vyas Valley?</span>
                         <i class="fa-solid fa-chevron-down"></i>
                     </button>
-                    <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                    <div class="faq-answer" id="faq-answer-5" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
                         <p itemprop="text">High-altitude safety is our top priority. We structure our itineraries with mandatory acclimatization stops at Dharchula (915m) and Gunji (3,200m) before ascending to Jyolingkong (4,570m). Every vehicle carries portable medical oxygen cylinders and first-aid equipment, while our team maintains 24/7 direct communication with ITBP border security medical posts and emergency helicopter evacuation services.</p>
                     </div>
                 </div>
 
                 <div class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-                    <button class="faq-question">
+                    <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-6">
                         <span itemprop="name">Why should travelers book directly with a local Pithoragarh ground operator instead of online travel agents?</span>
                         <i class="fa-solid fa-chevron-down"></i>
                     </button>
-                    <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                    <div class="faq-answer" id="faq-answer-6" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
                         <p itemprop="text">National travel agents and online portals do not operate tours directly; they resell packages and subcontract ground execution to third parties. Rudraansh Yatra is headquartered directly in Pithoragarh. We own our 4x4 vehicles, partner directly with native Rung homestay families, and hold personal relationships with local administrative authorities, ensuring transparent pricing, zero middle-agent markups, and immediate on-ground support.</p>
                     </div>
                 </div>
@@ -1811,21 +1821,21 @@
                         <img src="assets/images/Panchacholi.webp" alt="Panchachuli Peak" class="review-photo-thumb" width="120" height="90" loading="lazy" decoding="async" onclick="openReviewLightbox(this.src)">
                         <img src="assets/images/khaliya-top.webp" alt="Khaliya Top Trek" class="review-photo-thumb" width="120" height="90" loading="lazy" decoding="async" onclick="openReviewLightbox(this.src)">
                     </div>
-                    <a href="https://search.google.com/local/reviews?placeid=ChIJUaOjOEsloTkRjOLS3RK_S_A" class="read-more" target="_blank">Read more..</a>
+                    <a href="https://search.google.com/local/reviews?placeid=ChIJUaOjOEsloTkRjOLS3RK_S_A" class="read-more" target="_blank" rel="noopener noreferrer" aria-label="Read all Rudraansh Yatra reviews on Google">Read more Google reviews..</a>
                 </div>
             </div>
             
             <!-- Navigation arrows -->
-            <div class="slider-nav">
-                <button class="slider-arrow prev-arrow" onclick="scrollReviews(-1)"><i class="fa-solid fa-chevron-left"></i></button>
-                <button class="slider-arrow next-arrow" onclick="scrollReviews(1)"><i class="fa-solid fa-chevron-right"></i></button>
+            <div class="slider-nav" role="group" aria-label="Review navigation">
+                <button class="slider-arrow prev-arrow" onclick="scrollReviews(-1)" aria-label="Previous customer review"><i class="fa-solid fa-chevron-left"></i></button>
+                <button class="slider-arrow next-arrow" onclick="scrollReviews(1)" aria-label="Next customer review"><i class="fa-solid fa-chevron-right"></i></button>
             </div>
         </div>
 
         <!-- Lightbox Modal for Review Photos -->
         <div id="reviewLightbox" class="review-lightbox" onclick="closeReviewLightbox(event)">
             <div class="review-lightbox-content" onclick="event.stopPropagation()">
-                <button class="review-lightbox-close" onclick="closeReviewLightbox(event)">&times;</button>
+                <button class="review-lightbox-close" onclick="closeReviewLightbox(event)" aria-label="Close enlarged review photo">&times;</button>
                 <img id="reviewLightboxImg" src="" alt="Enlarged Review Photo" width="800" height="600" loading="lazy">
             </div>
         </div>
@@ -2038,6 +2048,8 @@
         </div>
     </section>
 
+    </main><!-- /#main-content -->
+
     <!-- Footer -->
     <footer>
         <div class="container footer-grid">
@@ -2121,7 +2133,7 @@
     <!-- Custom Itinerary Modal -->
     <div class="modal-overlay" id="custom-trip-modal">
         <div class="modal-box">
-            <button class="modal-close" id="modal-close-btn">&times;</button>
+            <button class="modal-close" id="modal-close-btn" aria-label="Close enquiry form">&times;</button>
             <h3 class="modal-title">Unlock Special Yatra Discounts</h3>
             <p class="modal-subtitle">Share details to get up to 10% direct discount on your Kumaon booking.</p>
             
@@ -2162,7 +2174,7 @@
         </div>
     </div>
 
-    <script src="app.js?v=1.6" defer></script>
+    <script src="app.js?v=1.7" defer></script>
 
     <!-- ===== Google Translate Init ===== -->
     <div id="google_translate_element"></div>
