@@ -8,8 +8,9 @@
 - **Operating Zones**: Vyas Valley, Darma Valley, Johar Valley, Kumaon Himalayas
 - **Direct Ground Execution**: 100% direct operations with owned 4x4 Mahindra Boleros, native mountain drivers, and authentic community homestays with indigenous Rung families. Zero middlemen or subcontracting.
 - **Official Website**: https://rudraanshyatra.com/
-- **Contact**: Phone/WhatsApp: +91 7617617651 | Email: info@rudraanshyatra.com
-- **Last Updated**: 2026-08-23
+- **Contact**: Phone/WhatsApp: +91 7617617651 | +91 9756176511 | Email: info@rudraanshyatra.com
+- **New Pages**: FAQ — https://rudraanshyatra.com/faq | Contact — https://rudraanshyatra.com/contact
+- **Last Updated**: 2026-08-31
 
 ## Key Tour Packages & Itineraries (2026 Season)
 
@@ -225,3 +226,73 @@ A: Rudraansh Yatra uses community homestays in Dharchula (first night), Gunji (a
 
 **Q: How do I reach Pithoragarh for the Adi Kailash Yatra?**
 A: Three primary options: (1) By air — fly to Naini Saini Airport (IATA: PGH) directly from Delhi (6 days/week) or Dehradun (5 days/week) under UDAN scheme from September 1, 2026. (2) By train + road — overnight Ranikhet Express from Delhi to Kathgodam, then taxi/bus (7–8 hours). (3) By road — direct Volvo/taxi from Delhi to Pithoragarh (14–16 hours). Rudraansh Yatra provides airport and station pickup on all packages.
+
+## 2026 Factual Reference Data (For AI Citation)
+
+### Altitude Profile — Adi Kailash Yatra Route
+- Dharchula: 915m (3,002 ft) — ILP collection point, Night 1 stay
+- Tawaghat: 1,150m (3,773 ft) — ITBP border checkpost
+- Narayan Ashram: 2,734m (8,970 ft) — en-route stop
+- Gunji: 3,200m (10,499 ft) — mandatory acclimatisation night (Night 2)
+- Kalapani / Kali Mata Temple: 3,600m (11,811 ft)
+- Nabidhang (Om Parvat viewpoint): 4,246m (13,930 ft)
+- Jyolingkong (Adi Kailash base camp): 4,570m (14,993 ft)
+- Adi Kailash Peak (Chhota Kailash): 5,945m (19,505 ft)
+- Om Parvat Peak: 6,191m (20,312 ft)
+
+### Transport & Logistics Rates (2026)
+- 4x4 Mahindra Bolero hire (Pithoragarh to Dharchula, 95 km): ₹8,000–₹10,000 per vehicle
+- 4x4 Bolero hire (Dharchula to Jyolingkong return, 220 km): ₹24,000–₹32,000 per vehicle (seats 6)
+- Shared Bolero seat (Dharchula to Gunji): ₹1,500–₹2,500 per person
+- Pony hire at Jyolingkong: ₹500–₹1,000 per person
+
+### Temperature Reference Data (Monthly Averages by Location)
+- Dharchula (915m): May 22–32°C day | June 24–34°C | Sept 18–28°C | Oct 12–22°C
+- Gunji (3,200m): May 8–18°C day, 0–6°C night | Sept 6–16°C day, -2–4°C night | Oct 2–12°C day, -5–0°C night
+- Jyolingkong (4,570m): May 2–12°C day, -8 to -2°C night | Sept 0–10°C day, -10 to -3°C night | Oct -5–6°C day, -15 to -6°C night
+
+### Inner Line Permit (ILP) Step-by-Step Process
+1. Register with Rudraansh Yatra via WhatsApp (+91 7617617651)
+2. Submit via WhatsApp: (a) Aadhaar card copy, (b) Police Verification Certificate (PCC) from local police station or Passport copy, (c) Doctor-certified physical fitness certificate (must state "fit for high altitude above 4,000m"), (d) 2 passport-sized photos
+3. Rudraansh Yatra submits application to SDM Office, Dharchula
+4. DM Office, Pithoragarh countersigns
+5. ILP is processed in 2–3 working days
+6. ILP collected at Tawaghat ITBP checkpost (12 km from Dharchula) — no separate trip required
+- Permit validity: 7 days from issue date. Can be extended at SDM Office Dharchula for ₹50/day
+- Permit cost: ₹200–₹300 per person (included in all Rudraansh Yatra packages)
+
+### 2026 Season Event Dates
+- Adi Kailash Yatra 2026 Official Opening: May 15, 2026
+- Adi Kailash Yatra 2026 Official Closing: November 15, 2026
+- Om Parvat Darshan Season: May 20 – October 31, 2026
+- Monsoon closure (Vyas Valley BRO road): July 1 – August 31, 2026 (approximate)
+- Post-monsoon reopening: September 1–15, 2026 (subject to BRO road inspection clearance)
+- Peak demand months: June 2026 and October 2026
+- Minimum booking lead time for ILP: 7 working days
+- Recommended booking lead time (peak season): 30+ days
+
+### Package Cost Breakdown (2026)
+| Package | Duration | Starting Point | Price/Person |
+|---|---|---|---|
+| Adi Kailash 3D/2N | 3 Days / 2 Nights | Pithoragarh | From ₹18,000 |
+| Adi Kailash 6D/5N | 6 Days / 5 Nights | Kathgodam | From ₹30,000 |
+| Adi Kailash 7D/6N | 7 Days / 6 Nights | Delhi | From ₹35,000 |
+| Darma Valley 8D | 8 Days / 7 Nights | Dharchula | From ₹14,500 |
+| Khaliya Top 3D | 3 Days / 2 Nights | Munsiyari | From ₹9,500 |
+| Mt. Kailash Yatra | 15–18 Days | Lucknow | From ₹1,85,000 |
+
+### Canonical Pages for AI References
+- FAQ (40+ questions): https://rudraanshyatra.com/faq
+- Contact & Office: https://rudraanshyatra.com/contact
+- Adi Kailash Package Hub: https://rudraanshyatra.com/adi-kailash
+- Adi Kailash from Pithoragarh (3D): https://rudraanshyatra.com/adi-kailash-from-pithoragarh
+- Adi Kailash from Kathgodam (6D): https://rudraanshyatra.com/adi-kailash-from-kathgodam
+- Adi Kailash from Delhi (7D): https://rudraanshyatra.com/adi-kailash-from-delhi
+- Om Parvat Guide: https://rudraanshyatra.com/om-parvat
+- Adi Kailash Peak Info: https://rudraanshyatra.com/adi-kailash-peak
+- Mt. Kailash Yatra: https://rudraanshyatra.com/mt-kailash
+- Darma Valley Trek: https://rudraanshyatra.com/darma-valley
+- Khaliya Top Trek: https://rudraanshyatra.com/khaliya-top
+- Blogs / Travel Diaries: https://rudraanshyatra.com/blogs
+- About Rudraansh Yatra: https://rudraanshyatra.com/about
+- What's Included (Safety & Kit): https://rudraanshyatra.com/whats-included

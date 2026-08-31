@@ -7,7 +7,7 @@
   <!-- Homepage -->
   <url>
     <loc>https://rudraanshyatra.com/</loc>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -15,71 +15,85 @@
   <!-- Core Tour Pages -->
   <url>
     <loc>https://rudraanshyatra.com/adi-kailash</loc>
-    <lastmod>2026-08-16</lastmod>
+    <lastmod>2026-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
 
   <url>
     <loc>https://rudraanshyatra.com/adi-kailash-from-pithoragarh</loc>
-    <lastmod>2026-08-16</lastmod>
+    <lastmod>2026-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
 
   <url>
     <loc>https://rudraanshyatra.com/adi-kailash-from-kathgodam</loc>
-    <lastmod>2026-08-16</lastmod>
+    <lastmod>2026-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
 
   <url>
     <loc>https://rudraanshyatra.com/adi-kailash-from-delhi</loc>
-    <lastmod>2026-08-16</lastmod>
+    <lastmod>2026-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
 
   <url>
     <loc>https://rudraanshyatra.com/mt-kailash</loc>
-    <lastmod>2026-08-16</lastmod>
+    <lastmod>2026-08-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.95</priority>
   </url>
 
   <url>
     <loc>https://rudraanshyatra.com/darma-valley</loc>
-    <lastmod>2026-08-16</lastmod>
+    <lastmod>2026-08-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.90</priority>
   </url>
 
   <url>
     <loc>https://rudraanshyatra.com/khaliya-top</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.90</priority>
   </url>
 
   <url>
     <loc>https://rudraanshyatra.com/panchachuli</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.90</priority>
   </url>
 
   <!-- Supporting Pages -->
   <url>
+    <loc>https://rudraanshyatra.com/faq</loc>
+    <lastmod>2026-08-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/contact</loc>
+    <lastmod>2026-08-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
     <loc>https://rudraanshyatra.com/whats-included</loc>
-    <lastmod>2026-08-16</lastmod>
+    <lastmod>2026-08-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
 
   <url>
     <loc>https://rudraanshyatra.com/about</loc>
-    <lastmod>2026-08-16</lastmod>
+    <lastmod>2026-08-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>

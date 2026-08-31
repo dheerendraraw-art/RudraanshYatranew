@@ -3853,6 +3853,48 @@ app.use((req, res, next) => {
     next();
 });
 
+// ── IndexNow Key File (Bing / ChatGPT SearchGPT instant indexing) ────────────
+// Key file must be publicly accessible so Bing can verify site ownership.
+app.get('/rudraanshyatra2026indexnowkey9f3a7b1c.txt', (req, res) => {
+    res.type('text/plain').send('rudraanshyatra2026indexnowkey9f3a7b1c');
+});
+
+// IndexNow auto-ping function — call this after publishing/updating any page
+// to push updates instantly to Bing (and therefore ChatGPT Search / SearchGPT)
+async function pingIndexNow(urls) {
+    const key = 'rudraanshyatra2026indexnowkey9f3a7b1c';
+    const host = 'rudraanshyatra.com';
+    const urlList = Array.isArray(urls) ? urls : [urls];
+    const body = JSON.stringify({
+        host,
+        key,
+        keyLocation: `https://${host}/${key}.txt`,
+        urlList: urlList
+    });
+    try {
+        const https = require('https');
+        const options = {
+            hostname: 'api.indexnow.org',
+            path: '/indexnow',
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': Buffer.byteLength(body) }
+        };
+        await new Promise((resolve) => {
+            const req = https.request(options, (res) => {
+                console.log(`[IndexNow] Pinged Bing for ${urlList.length} URL(s) — HTTP ${res.statusCode}`);
+                resolve();
+            });
+            req.on('error', (e) => { console.error('[IndexNow] Ping failed:', e.message); resolve(); });
+            req.write(body);
+            req.end();
+        });
+    } catch (e) {
+        console.error('[IndexNow] Error during ping:', e.message);
+    }
+}
+// Export for use in blog create/update routes
+module.exports && (module.exports.pingIndexNow = pingIndexNow);
+
 // Serve remaining static files from the root directory with clean URL support
 app.use(express.static(__dirname, { extensions: ['html'] }));
 

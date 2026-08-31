@@ -53,6 +53,9 @@ Allow: /
 User-agent: Timpibot
 Allow: /
 
-# Canonical Sitemaps & LLM Context
+# Canonical Sitemaps, LLM Context & IndexNow
 Sitemap: https://rudraanshyatra.com/sitemap.xml
 Sitemap: https://rudraanshyatra.com/llms.txt
+
+# IndexNow key (Bing/ChatGPT instant indexing)
+# Key file: https://rudraanshyatra.com/rudraanshyatra2026indexnowkey9f3a7b1c.txt
