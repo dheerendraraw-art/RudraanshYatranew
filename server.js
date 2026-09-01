@@ -1585,6 +1585,8 @@ app.get('/api/admin/leads-history', authenticateToken, async (req, res) => {
 
         if (req.query.lead_id) {
             query = query.eq('lead_id', req.query.lead_id);
+        } else {
+            query = query.limit(1000);
         }
 
         const { data, error } = await query;
@@ -1613,7 +1615,8 @@ app.get('/api/admin/leads', authenticateToken, async (req, res) => {
         let allLeads = [];
         let page = 0;
         const PG_SIZE = 1000;
-        while (true) {
+        const MAX_PAGES = 5; // Cap at 5000 leads to guarantee fast sub-second execution & prevent 504 timeouts
+        while (page < MAX_PAGES) {
             let query = supabase.from('leads').select('*');
             if (req.user.role === 'staff') {
                 const agentUuid = req.user.uuid_mapping;

@@ -2142,32 +2142,44 @@
             if (options.body instanceof FormData) {
                 delete headers['Content-Type'];
             }
-            const response = await fetch(url, { ...options, headers });
-            if (response.status === 401) {
-                let errText = 'Session expired. Please log in again.';
-                try {
-                    const errData = await response.clone().json();
-                    if (errData && errData.error) errText = errData.error;
-                } catch(e) {}
-                if (typeof promptReauth === 'function') {
-                    promptReauth('Your security session has expired. Please enter your passcode to continue.');
-                }
-                throw new Error(errText);
-            }
-            if (response.status === 403) {
-                let errText = 'Permission denied.';
-                try {
-                    const errData = await response.clone().json();
-                    if (errData && errData.error) errText = errData.error;
-                    if (errText.includes('token') || errText.includes('expired')) {
-                        if (typeof promptReauth === 'function') {
-                            promptReauth('Your security token is invalid or expired. Please enter your passcode.');
-                        }
+
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 20000); // 20s safety timeout to prevent Nginx 504 gateway timeout
+            try {
+                const response = await fetch(url, { ...options, headers, signal: controller.signal });
+                clearTimeout(timeoutId);
+                if (response.status === 401) {
+                    let errText = 'Session expired. Please log in again.';
+                    try {
+                        const errData = await response.clone().json();
+                        if (errData && errData.error) errText = errData.error;
+                    } catch(e) {}
+                    if (typeof promptReauth === 'function') {
+                        promptReauth('Your security session has expired. Please enter your passcode to continue.');
                     }
-                } catch(e) {}
-                throw new Error(errText);
+                    throw new Error(errText);
+                }
+                if (response.status === 403) {
+                    let errText = 'Permission denied.';
+                    try {
+                        const errData = await response.clone().json();
+                        if (errData && errData.error) errText = errData.error;
+                        if (errText.includes('token') || errText.includes('expired')) {
+                            if (typeof promptReauth === 'function') {
+                                promptReauth('Your security token is invalid or expired. Please enter your passcode.');
+                            }
+                        }
+                    } catch(e) {}
+                    throw new Error(errText);
+                }
+                return response;
+            } catch (err) {
+                clearTimeout(timeoutId);
+                if (err.name === 'AbortError') {
+                    throw new Error('API request timed out (20s). Falling back to direct client database connection.');
+                }
+                throw err;
             }
-            return response;
         }
 
         class SupabaseQueryBuilder {
@@ -3662,8 +3674,8 @@
                 if (icon) icon.className = 'fa-solid fa-chevron-down';
             }
 
-            // Always fetch users first to ensure assignee lists and maps are fully loaded
-            await fetchUsers();
+            // Fetch users mapping asynchronously without blocking remaining dashboard fetches
+            fetchUsers().catch(err => console.warn('fetchUsers non-fatal warning:', err));
 
             if (currentUserRole === 'admin') {
                 fetchBookings();
