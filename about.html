@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -382,6 +382,18 @@
                 min-width: 190px;
             }
         }
+
+        /* FAQ Accordion Styles */
+        .faq-accordion { margin-top: 24px; }
+        .faq-item { border: 1px solid var(--glass-border); border-radius: 12px; margin-bottom: 12px; overflow: hidden; background: var(--color-bg-card); transition: border-color 0.25s ease, box-shadow 0.25s ease; }
+        .faq-item:hover { border-color: var(--color-gold); box-shadow: var(--shadow-sm); }
+        .faq-question { width: 100%; background: var(--color-bg-card); border: none; padding: 18px 22px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; font-family: var(--font-sans); font-weight: 700; font-size: 15px; color: var(--color-primary); text-align: left; gap: 12px; transition: var(--transition-smooth); outline: none; }
+        .faq-question:hover { color: var(--color-gold-dark); }
+        .faq-question i { flex-shrink: 0; color: var(--color-gold); transition: transform 0.3s ease; font-size: 14px; }
+        .faq-item.open .faq-question i, .faq-item.active .faq-question i { transform: rotate(180deg); }
+        .faq-answer { display: none; padding: 0 22px 20px 22px; font-size: 14.5px; color: var(--color-text-secondary); line-height: 1.75; border-top: 1px solid rgba(10, 25, 47, 0.06); }
+        .faq-item.open .faq-answer, .faq-item.active .faq-answer { display: block !important; }
+        .faq-answer p { margin-top: 14px; color: var(--color-text-secondary); line-height: 1.75; font-size: 14.5px; }
     </style>
     <!-- ===== End Language Selector CSS ===== -->
 </head>

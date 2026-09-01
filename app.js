@@ -739,7 +739,45 @@ document.addEventListener('DOMContentLoaded', () => {
     injectDialogs();
     initializeDiscountPopup();
 
-// ── BACKEND API CALLS (PREVIOUSLY SUPABASE LOGGING) ──
+    // 10. FAQ Accordion Toggle (used on about.html, tour pages, and any page using app.js)
+    document.querySelectorAll('.faq-question').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const item = btn.closest('.faq-item') || btn.closest('.faq-accordion');
+            if (!item) return;
+            // Native <details> tags handle open/close naturally
+            if (item.tagName && item.tagName.toLowerCase() === 'details') return;
+
+            e.preventDefault();
+            const isOpen = item.classList.contains('open') || item.classList.contains('active');
+            const accordion = item.closest('.faq-accordion') || item.parentElement;
+
+            // Close other sibling FAQ items
+            if (accordion) {
+                accordion.querySelectorAll('.faq-item, .faq-accordion').forEach(sibling => {
+                    if (sibling !== item && sibling.tagName && sibling.tagName.toLowerCase() !== 'details') {
+                        sibling.classList.remove('open', 'active');
+                        const ans = sibling.querySelector('.faq-answer');
+                        if (ans) {
+                            ans.style.display = 'none';
+                        }
+                    }
+                });
+            }
+
+            // Toggle current item
+            const answer = item.querySelector('.faq-answer');
+            if (isOpen) {
+                item.classList.remove('open', 'active');
+                if (answer) answer.style.display = 'none';
+            } else {
+                item.classList.add('open', 'active');
+                if (answer) answer.style.display = 'block';
+            }
+        });
+    });
+
+
+// ── BACKEND API CALLS ──
 async function saveBookingRequest(data) {
     try {
         const response = await fetch('/api/custom-requests', {
