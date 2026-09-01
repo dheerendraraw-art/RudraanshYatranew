@@ -4653,47 +4653,55 @@ BLOG_ENHANCERS['how-to-reach-pithoragarh'] = {
             );
 
         var css = '<style>' +
-            '.ry-pth-banner{background:linear-gradient(135deg,#0d1a2e 0%,#1a2e46 100%);border:2px solid #d4af37;border-radius:14px;padding:22px 24px;margin:0 0 28px;color:#fff;box-shadow:0 10px 30px rgba(0,0,0,.4)}' +
-            '.ry-pth-banner-head{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}' +
-            '.ry-pth-banner-title{color:#fde68a;font-size:18px;font-weight:700;line-height:1.3}' +
-            '.ry-pth-banner-desc{font-size:14.5px;line-height:1.65;color:#e2e8f0;margin-bottom:14px}' +
-            '.ry-pth-badge{background:rgba(212,175,55,.12);border-left:3px solid #d4af37;padding:10px 14px;border-radius:4px;margin-bottom:16px;font-size:13.5px;color:#fde68a}' +
-            '.ry-pth-btn-row{display:flex;gap:10px;flex-wrap:wrap}' +
-            '.ry-pth-btn{padding:11px 20px;border-radius:8px;text-decoration:none;font-weight:700;font-size:13.5px;display:inline-flex;align-items:center;gap:8px}' +
+            '.ry-pth-banner{background:linear-gradient(135deg,#091a2e 0%,#132a48 100%);border:2px solid #d4af37;border-radius:14px;padding:24px 26px;margin:0 0 28px;color:#fff;box-shadow:0 10px 30px rgba(0,0,0,.15)}' +
+            '.ry-pth-banner-head{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}' +
+            '.ry-pth-banner-title{color:#fde68a;font-size:19px;font-weight:700;line-height:1.35}' +
+            '.ry-pth-banner-desc{font-size:15px;line-height:1.7;color:#f1f5f9;margin-bottom:16px}' +
+            '.ry-pth-badge{background:rgba(212,175,55,.15);border-left:3px solid #d4af37;padding:10px 14px;border-radius:4px;margin-bottom:18px;font-size:14px;color:#fde68a}' +
+            '.ry-pth-btn-row{display:flex;gap:12px;flex-wrap:wrap}' +
+            '.ry-pth-btn{padding:12px 22px;border-radius:8px;text-decoration:none;font-weight:700;font-size:14px;display:inline-flex;align-items:center;gap:8px;transition:all .2s ease}' +
             '.ry-pth-btn.wa{background:#22c55e;color:#fff}' +
-            '.ry-pth-btn.pk{background:#d4af37;color:#0f172a}' +
-            '.ry-pth-toc{background:rgba(15,23,42,.6);border:1px solid rgba(212,175,55,.25);border-radius:10px;padding:14px 16px;margin-bottom:28px;font-size:13.5px;color:#cbd5e1}' +
-            '.ry-pth-toc strong{color:#fbbf24;display:block;margin-bottom:8px;font-size:14px}' +
-            '.ry-pth-toc-pills{display:flex;flex-wrap:wrap;gap:7px}' +
-            '.ry-pth-toc-pill{color:#93c5fd;text-decoration:none;background:rgba(147,197,253,.1);padding:5px 12px;border-radius:20px;border:1px solid rgba(147,197,253,.2);white-space:nowrap;font-size:13px}' +
-            '.ry-pth-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 0 28px;border-radius:10px;border:1px solid rgba(212,175,55,.2)}' +
-            '.ry-pth-table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:480px}' +
-            '.ry-pth-table th{background:rgba(212,175,55,.15);color:#fbbf24;font-weight:700;padding:10px 14px;text-align:left;border-bottom:1px solid rgba(212,175,55,.2);white-space:nowrap}' +
-            '.ry-pth-table td{padding:10px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,.06);vertical-align:top}' +
+            '.ry-pth-btn.wa:hover{background:#16a34a;transform:translateY(-1px)}' +
+            '.ry-pth-btn.pk{background:#d4af37;color:#0a192f}' +
+            '.ry-pth-btn.pk:hover{background:#b89628;transform:translateY(-1px)}' +
+            '.ry-pth-toc{background:#f8fafc;border:1px solid #e2e8f0;border-left:4px solid #d4af37;border-radius:10px;padding:18px 20px;margin-bottom:30px;box-shadow:0 2px 8px rgba(0,0,0,0.04)}' +
+            '.ry-pth-toc strong{color:#0a192f;display:block;margin-bottom:12px;font-size:15px;font-weight:700}' +
+            '.ry-pth-toc-pills{display:flex;flex-wrap:wrap;gap:8px}' +
+            '.ry-pth-toc-pill{color:#1e293b;text-decoration:none;background:#ffffff;padding:6px 14px;border-radius:20px;border:1px solid #cbd5e1;font-weight:600;font-size:13px;display:inline-flex;align-items:center;gap:5px;transition:all .2s ease;box-shadow:0 1px 3px rgba(0,0,0,0.05)}' +
+            '.ry-pth-toc-pill:hover{background:#d4af37;color:#0a192f;border-color:#d4af37;transform:translateY(-1px)}' +
+            '.ry-pth-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:16px 0 28px;border-radius:10px;border:1px solid #e2e8f0;box-shadow:0 4px 14px rgba(0,0,0,0.05);background:#ffffff}' +
+            '.ry-pth-table{width:100%;border-collapse:collapse;font-size:14px;min-width:520px;background:#ffffff}' +
+            '.ry-pth-table th{background:#0a192f;color:#fde68a;font-weight:700;padding:13px 16px;text-align:left;border-bottom:2px solid #d4af37;white-space:nowrap;font-size:13.5px}' +
+            '.ry-pth-table td{padding:13px 16px;color:#1e293b !important;border-bottom:1px solid #e2e8f0;vertical-align:top;font-size:14px;line-height:1.55;background:#ffffff}' +
+            '.ry-pth-table tr:nth-child(even) td{background:#f8fafc}' +
+            '.ry-pth-table tr:hover td{background:rgba(212,175,55,0.08)}' +
             '.ry-pth-table tr:last-child td{border-bottom:none}' +
-            '.ry-pth-bottom{background:#0f172a;border:2px dashed rgba(212,175,55,.5);border-radius:12px;padding:20px 22px;margin:32px 0 8px;color:#fff}' +
-            '.ry-pth-bottom-title{font-size:15px;font-weight:700;color:#fbbf24;margin-bottom:8px}' +
-            '.ry-pth-bottom-desc{font-size:14px;color:#e2e8f0;line-height:1.6;margin-bottom:14px}' +
-            '.ry-pth-bottom-btn-row{display:flex;gap:10px;flex-wrap:wrap}' +
-            '.ry-pth-bottom-btn{padding:9px 18px;border-radius:6px;text-decoration:none;font-weight:700;display:inline-flex;align-items:center;gap:7px}' +
+            '.ry-pth-table td strong{color:#0a192f;font-weight:700}' +
+            '.ry-pth-bottom{background:linear-gradient(135deg,#091a2e 0%,#132a48 100%);border:2px solid #d4af37;border-radius:14px;padding:24px 26px;margin:36px 0 10px;color:#fff;box-shadow:0 10px 30px rgba(0,0,0,.15)}' +
+            '.ry-pth-bottom-title{font-size:17px;font-weight:700;color:#fde68a;margin-bottom:10px}' +
+            '.ry-pth-bottom-desc{font-size:14.5px;color:#f1f5f9;line-height:1.65;margin-bottom:16px}' +
+            '.ry-pth-bottom-btn-row{display:flex;gap:12px;flex-wrap:wrap}' +
+            '.ry-pth-bottom-btn{padding:11px 20px;border-radius:8px;text-decoration:none;font-weight:700;font-size:13.5px;display:inline-flex;align-items:center;gap:8px;transition:all .2s ease}' +
             '.ry-pth-bottom-btn.wa{background:#22c55e;color:#fff}' +
-            '.ry-pth-bottom-btn.call{background:transparent;border:1.5px solid #d4af37;color:#d4af37}' +
-            '.ry-pth-also{margin-top:14px;font-size:13px;color:#94a3b8}' +
-            '.ry-pth-also a{color:#93c5fd}' +
+            '.ry-pth-bottom-btn.wa:hover{background:#16a34a;transform:translateY(-1px)}' +
+            '.ry-pth-bottom-btn.call{background:transparent;border:1.5px solid #d4af37;color:#fde68a}' +
+            '.ry-pth-bottom-btn.call:hover{background:rgba(212,175,55,0.15)}' +
+            '.ry-pth-also{margin-top:16px;font-size:13px;color:#94a3b8}' +
+            '.ry-pth-also a{color:#93c5fd;text-decoration:underline}' +
             '@media(max-width:680px){' +
-            '.ry-pth-banner{padding:16px 14px;border-radius:10px;margin-bottom:20px}' +
-            '.ry-pth-banner-title{font-size:15.5px}' +
-            '.ry-pth-banner-desc{font-size:13.5px;margin-bottom:12px}' +
-            '.ry-pth-badge{padding:8px 10px;font-size:12.5px;margin-bottom:12px}' +
-            '.ry-pth-btn,.ry-pth-bottom-btn{font-size:13px;padding:10px 14px;width:100%;justify-content:center;box-sizing:border-box}' +
+            '.ry-pth-banner{padding:18px 16px;border-radius:10px;margin-bottom:20px}' +
+            '.ry-pth-banner-title{font-size:16px}' +
+            '.ry-pth-banner-desc{font-size:14px;margin-bottom:12px}' +
+            '.ry-pth-badge{padding:8px 12px;font-size:13px;margin-bottom:14px}' +
+            '.ry-pth-btn,.ry-pth-bottom-btn{font-size:13.5px;padding:11px 16px;width:100%;justify-content:center;box-sizing:border-box}' +
             '.ry-pth-btn-row,.ry-pth-bottom-btn-row{flex-direction:column;gap:8px}' +
-            '.ry-pth-toc{padding:12px}' +
-            '.ry-pth-toc-pill{font-size:12px;padding:4px 9px}' +
-            '.ry-pth-table{font-size:12.5px}' +
-            '.ry-pth-table th,.ry-pth-table td{padding:8px 10px}' +
-            '.ry-pth-bottom{padding:16px 14px;border-radius:10px}' +
-            '.ry-pth-bottom-title{font-size:14px}' +
-            '.ry-pth-bottom-desc{font-size:13px;margin-bottom:10px}' +
+            '.ry-pth-toc{padding:14px 16px}' +
+            '.ry-pth-toc-pill{font-size:12.5px;padding:5px 11px}' +
+            '.ry-pth-table{font-size:13px}' +
+            '.ry-pth-table th,.ry-pth-table td{padding:10px 12px}' +
+            '.ry-pth-bottom{padding:18px 16px;border-radius:10px}' +
+            '.ry-pth-bottom-title{font-size:15px}' +
+            '.ry-pth-bottom-desc{font-size:13.5px;margin-bottom:12px}' +
             '}' +
             '</style>';
 
@@ -4713,7 +4721,7 @@ BLOG_ENHANCERS['how-to-reach-pithoragarh'] = {
             '<a href="#pithoragarh-by-train" class="ry-pth-toc-pill">&#128642; By Train</a>' +
             '<a href="#pithoragarh-by-flight" class="ry-pth-toc-pill">&#9992;&#65039; By Flight</a>' +
             '<a href="#pithoragarh-by-road" class="ry-pth-toc-pill">&#128663; By Road</a>' +
-            '<a href="#pithoragarh-route-comparison" class="ry-pth-toc-pill">Route Comparison</a>' +
+            '<a href="#pithoragarh-route-comparison" class="ry-pth-toc-pill">&#128202; Route Comparison</a>' +
             '</div></div>';
 
         var routeTable =
