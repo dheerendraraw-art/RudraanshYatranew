@@ -35,13 +35,19 @@ app.use(compression({ level: 6 }));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
-// HTTP Security Headers
+// HTTP Security & Static Cache Headers
 app.use((req, res, next) => {
     res.setHeader('X-Frame-Options', 'DENY');
     res.setHeader('X-Content-Type-Options', 'nosniff');
     res.setHeader('X-XSS-Protection', '1; mode=block');
     next();
 });
+
+// Serve static files with aggressive 1-year immutable cache headers for images, fonts, css, and js
+app.use('/assets', express.static(path.join(__dirname, 'assets'), {
+    maxAge: '1y',
+    immutable: true
+}));
 
 // Authentication Middleware
 function authenticateToken(req, res, next) {
