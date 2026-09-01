@@ -462,6 +462,12 @@ app.get('/blog/:slug', async (req, res) => {
             contentHtml = modularEnhancement.contentHtml;
         }
 
+        // Auto-wrap any unwrapped <table> in blog content with responsive scroll container
+        contentHtml = contentHtml.replace(/<table([\s\S]*?)<\/table>/gi, (match) => {
+            if (match.includes('ry-table-responsive-wrap') || match.includes('ry-pth-table-wrap')) return match;
+            return `<div class="ry-table-responsive-wrap">${match}</div>`;
+        });
+
         // ── SEO for Kailash Mansarovar final batch blog ──
         if (slug === 'kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanakpur') {
             parikramaMetaOverride = {
