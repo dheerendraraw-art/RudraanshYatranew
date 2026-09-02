@@ -15,12 +15,163 @@
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></noscript>
-    <link rel="stylesheet" href="style.css?v=7.8">
+    <link rel="stylesheet" href="style.css?v=8.0">
     <meta name="robots" content="noindex, nofollow">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
 <style>
+
+/* --- CRITICAL RESILIENT ADMIN LAYOUT STYLES --- */
+.admin-layout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-navbar {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 12px 24px !important;
+    background: linear-gradient(135deg, #0A192F 0%, #172A45 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.admin-logo {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+}
+
+.admin-logo img {
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.admin-logout-btn {
+    background: rgba(239, 68, 68, 0.15) !important;
+    color: #f87171 !important;
+    border: 1px solid rgba(239, 68, 68, 0.4) !important;
+    padding: 6px 14px !important;
+    border-radius: 4px !important;
+    font-size: 12.5px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.2s !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+}
+
+.admin-logout-btn:hover {
+    background: #ef4444 !important;
+    color: #ffffff !important;
+}
+
+.admin-dashboard-container {
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 24px 20px;
+}
+
+.admin-stats-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
+    gap: 16px !important;
+    margin-bottom: 24px !important;
+}
+
+.admin-stat-card {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    padding: 18px 20px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 16px !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05) !important;
+    transition: transform 0.2s, box-shadow 0.2s !important;
+}
+
+.admin-stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+.admin-stat-icon {
+    width: 46px !important;
+    height: 46px !important;
+    border-radius: 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 20px !important;
+    flex-shrink: 0 !important;
+}
+
+.admin-stat-number {
+    font-size: 24px !important;
+    font-weight: 800 !important;
+    color: #0A192F !important;
+    line-height: 1.1 !important;
+}
+
+.admin-stat-label {
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    color: #64748b !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.6px !important;
+    margin-top: 3px !important;
+}
+
+.admin-tabs-nav {
+    display: flex !important;
+    gap: 8px !important;
+    overflow-x: auto !important;
+    padding: 4px 2px 10px 2px !important;
+    margin-bottom: 20px !important;
+    border-bottom: 2px solid #e2e8f0 !important;
+}
+
+.admin-tab-btn {
+    padding: 9px 16px !important;
+    border-radius: 8px !important;
+    border: 1px solid #cbd5e1 !important;
+    background: #ffffff !important;
+    color: #334155 !important;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+    cursor: pointer !important;
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    transition: all 0.2s ease !important;
+}
+
+.admin-tab-btn:hover {
+    background: #f1f5f9 !important;
+    color: #0A192F !important;
+}
+
+.admin-tab-btn.active {
+    background: #0A192F !important;
+    color: #f5c842 !important;
+    border-color: #0A192F !important;
+    box-shadow: 0 4px 12px rgba(10, 25, 47, 0.25) !important;
+}
+
+
 /* =====================================================
    LEADS MANAGER - COMPLETE DISPLAY FIX (HIGH SPECIFICITY)
    Overrides all old dark-mode lead-card-row styles
