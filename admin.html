@@ -977,6 +977,121 @@
     color: #ffffff !important;
 }
 </style>
+<style>
+/* --- RICH FILTERS SYSTEM (TOP BAR & IN-HEADER FILTERS) --- */
+.leads-filters-grid {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    flex-wrap: wrap !important;
+    width: 100% !important;
+    margin-top: 6px !important;
+}
+
+.leads-search-input-wrap {
+    position: relative !important;
+    flex: 1 1 220px !important;
+    min-width: 180px !important;
+}
+
+.leads-filter-select-wrap {
+    flex: 0 1 auto !important;
+    min-width: 140px !important;
+}
+
+.leads-filter-dropdown {
+    width: 100% !important;
+    background: #ffffff !important;
+    color: #0f172a !important;
+    border: 1.5px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+    padding: 8px 10px !important;
+    font-size: 12.5px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    outline: none !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03) !important;
+    box-sizing: border-box !important;
+    transition: border-color 0.2s, box-shadow 0.2s !important;
+}
+
+.leads-filter-dropdown:focus {
+    border-color: #b45309 !important;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15) !important;
+}
+
+.leads-reset-filters-btn {
+    padding: 8px 14px !important;
+    font-size: 12.5px !important;
+    font-weight: 600 !important;
+    border-radius: 8px !important;
+    border: 1px solid #cbd5e1 !important;
+    background: #f8fafc !important;
+    color: #475569 !important;
+    cursor: pointer !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    white-space: nowrap !important;
+    transition: all 0.15s ease !important;
+}
+
+.leads-reset-filters-btn:hover {
+    background: #f1f5f9 !important;
+    color: #0A192F !important;
+    border-color: #94a3b8 !important;
+}
+
+.th-filter-col {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+}
+
+.th-title-text {
+    font-size: 11px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    font-weight: 800 !important;
+    color: #0f172a !important;
+}
+
+.lead-th-filter-select {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 5px !important;
+    padding: 3px 6px !important;
+    font-size: 11.5px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    outline: none !important;
+    max-width: 130px !important;
+    transition: border-color 0.15s !important;
+}
+
+.lead-th-filter-select:focus,
+.lead-th-filter-select:hover {
+    border-color: #b45309 !important;
+}
+
+@media (max-width: 768px) {
+    .leads-filters-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+    }
+    .leads-search-input-wrap {
+        grid-column: 1 / -1 !important;
+        width: 100% !important;
+    }
+    .leads-reset-filters-btn {
+        grid-column: 1 / -1 !important;
+        justify-content: center !important;
+        padding: 10px !important;
+    }
+}
+</style>
 </head>
 
 <body style="background-color: var(--color-bg-base); font-family: var(--font-sans);">
@@ -1701,49 +1816,106 @@
             <div id="pane-leads" class="admin-tab-content-pane" style="display: none;">
                 <div class="leads-header-controls-wrap">
                     <div class="leads-search-filters-bar">
-                        <h3 class="admin-form-title leads-main-heading" style="margin-bottom: 0; border-bottom: none;">
-                            <i class="fa-solid fa-people-group" style="color: var(--color-gold);"></i> Leads Manager
-                        </h3>
-                        <div class="leads-search-input-wrap">
-                            <i class="fa-solid fa-magnifying-glass leads-search-icon"></i>
-                            <input type="text" id="search-leads-input" placeholder="Search name, phone, email, notes..." oninput="applyLeadsFilters()" class="leads-mobile-search-input">
+                        <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; flex-wrap: wrap; gap: 8px;">
+                            <h3 class="admin-form-title leads-main-heading" style="margin-bottom: 0; border-bottom: none;">
+                                <i class="fa-solid fa-people-group" style="color: var(--color-gold);"></i> Leads Manager
+                            </h3>
+                            <button type="button" onclick="openLeadModal()" class="btn btn-primary admin-only-action leads-add-primary-btn" id="add-lead-btn">
+                                <i class="fa-solid fa-plus"></i> Add New Lead
+                            </button>
                         </div>
-                        <div class="leads-status-filter-wrap">
-                            <select id="top-filter-lead-status" onchange="onTopStatusFilterChange(this.value)" class="leads-mobile-status-select">
-                                <option value="">📋 All Statuses</option>
-                                <option value="New">✨ New</option>
-                                <option value="__contacted__">📞 Contacted / In Progress</option>
-                                <option value="Answered">📞 Answered</option>
-                                <option value="Busy">⏳ Busy</option>
-                                <option value="Incorrect Number">🚫 Incorrect Number</option>
-                                <option value="Follow up required">🔁 Follow up required</option>
-                                <option value="Not Answered">🔇 Not Answered</option>
-                                <option value="No. not reachable">📴 No. not reachable</option>
-                                <option value="Lost">❌ Lost</option>
-                                <option value="Switch Off">🔴 Switch Off</option>
-                                <option value="Kailash Mansarovar Yatra">🏔️ Kailash Mansarovar Yatra</option>
-                                <option value="Won">🏆 Won</option>
-                            </select>
+                        
+                        <!-- All Search & Filter Dropdowns Grid -->
+                        <div class="leads-filters-grid">
+                            <div class="leads-search-input-wrap">
+                                <i class="fa-solid fa-magnifying-glass leads-search-icon"></i>
+                                <input type="text" id="search-leads-input" placeholder="Search name, phone, email, notes..." oninput="applyLeadsFilters()" class="leads-mobile-search-input">
+                            </div>
+
+                            <!-- Status Filter -->
+                            <div class="leads-filter-select-wrap">
+                                <select id="top-filter-lead-status" onchange="onTopStatusFilterChange(this.value)" class="leads-filter-dropdown">
+                                    <option value="">📋 All Statuses</option>
+                                    <option value="New">✨ New</option>
+                                    <option value="__contacted__">📞 Contacted / In Progress</option>
+                                    <option value="Answered">📞 Answered</option>
+                                    <option value="Busy">⏳ Busy</option>
+                                    <option value="Incorrect Number">🚫 Incorrect Number</option>
+                                    <option value="Follow up required">🔁 Follow up required</option>
+                                    <option value="Not Answered">🔇 Not Answered</option>
+                                    <option value="No. not reachable">📴 No. not reachable</option>
+                                    <option value="Lost">❌ Lost</option>
+                                    <option value="Switch Off">🔴 Switch Off</option>
+                                    <option value="Kailash Mansarovar Yatra">🏔️ Kailash Mansarovar Yatra</option>
+                                    <option value="Won">🏆 Won</option>
+                                </select>
+                            </div>
+
+                            <!-- Final Status Filter -->
+                            <div class="leads-filter-select-wrap">
+                                <select id="top-filter-lead-finalstatus" onchange="onTopFinalStatusFilterChange(this.value)" class="leads-filter-dropdown">
+                                    <option value="">🎯 All Final Statuses</option>
+                                    <option value="Booking confirmed">🎉 Booking confirmed</option>
+                                    <option value="Booked elsewhere">🏢 Booked elsewhere</option>
+                                    <option value="Postpone">⏳ Postpone</option>
+                                    <option value="Follow Up">🔁 Follow Up</option>
+                                    <option value="Kailash Mansarovar Yatra">🏔️ Kailash Mansarovar Yatra</option>
+                                    <option value="Not Interested">🚫 Not Interested</option>
+                                    <option value="Lost lead">🗑️ Lost lead</option>
+                                </select>
+                            </div>
+
+                            <!-- Assigned To Filter (Admin Only) -->
+                            <div class="leads-filter-select-wrap admin-only-action">
+                                <select id="top-filter-lead-assignee" onchange="onTopAssigneeFilterChange(this.value)" class="leads-filter-dropdown">
+                                    <option value="">👤 All Staff Members</option>
+                                    <option value="unassigned">Unassigned</option>
+                                </select>
+                            </div>
+
+                            <!-- Destination Filter -->
+                            <div class="leads-filter-select-wrap">
+                                <select id="top-filter-lead-destination" onchange="applyLeadsFilters()" class="leads-filter-dropdown">
+                                    <option value="">🏔️ All Destinations</option>
+                                    <option value="adi kailash">Adi Kailash</option>
+                                    <option value="om parvat">Om Parvat</option>
+                                    <option value="kailash">Kailash Mansarovar</option>
+                                    <option value="darma">Darma Valley</option>
+                                    <option value="char dham">Char Dham</option>
+                                    <option value="do dham">Do Dham</option>
+                                </select>
+                            </div>
+
+                            <!-- Source Filter -->
+                            <div class="leads-filter-select-wrap admin-only-action">
+                                <select id="top-filter-lead-source" onchange="onTopSourceFilterChange(this.value)" class="leads-filter-dropdown">
+                                    <option value="">🌐 All Sources</option>
+                                    <option value="Meta Sheet Sync">Meta Sheet Sync</option>
+                                    <option value="Website">Website</option>
+                                    <option value="Manual">Manual</option>
+                                </select>
+                            </div>
+
+                            <!-- Reset Filters -->
+                            <button type="button" onclick="resetLeadsFilters()" class="btn btn-secondary leads-reset-filters-btn" title="Reset all search & dropdown filters">
+                                <i class="fa-solid fa-arrow-rotate-left"></i> Reset Filters
+                            </button>
                         </div>
                     </div>
+
+                    <!-- Toolbar Actions Grid -->
                     <div id="leads-action-buttons-wrap" class="leads-action-toolbar">
-                        <button type="button" onclick="openLeadModal()" class="btn btn-primary admin-only-action leads-add-primary-btn" id="add-lead-btn">
-                            <i class="fa-solid fa-plus"></i> Add New Lead
-                        </button>
-                        <button type="button" onclick="resetLeadsFilters()" class="btn btn-secondary leads-tool-btn" title="Reset all search & dropdown filters">
-                            <i class="fa-solid fa-arrow-rotate-left"></i> Clear Filters
-                        </button>
                         <button type="button" onclick="syncGoogleSheetLeads()" class="btn btn-primary admin-only-action leads-tool-btn leads-sync-btn" id="sync-sheet-leads-btn">
-                            <i class="fa-solid fa-arrows-rotate"></i> Sync Sheet
+                            <i class="fa-solid fa-arrows-rotate"></i> Sync Google Sheet
                         </button>
                         <button type="button" onclick="exportLeads()" class="btn btn-secondary admin-only-action leads-tool-btn" id="export-leads-btn">
-                            <i class="fa-solid fa-file-export"></i> Export
+                            <i class="fa-solid fa-file-export"></i> Export Leads
                         </button>
                         <button type="button" onclick="downloadLeadsTemplate()" class="btn btn-secondary admin-only-action leads-tool-btn" id="leads-template-btn">
                             <i class="fa-solid fa-download"></i> Template
                         </button>
                         <button type="button" onclick="triggerImportLeads()" class="btn btn-secondary admin-only-action leads-tool-btn" id="import-leads-btn">
-                            <i class="fa-solid fa-file-import"></i> Import
+                            <i class="fa-solid fa-file-import"></i> Import CSV
                         </button>
                         <input type="file" id="leads-csv-file" accept=".csv" style="display: none;" onchange="handleLeadsCSVImport(event)">
                     </div>
@@ -1753,34 +1925,68 @@
                     <table class="admin-table">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Phone</th>
-                                <th>Email</th>
-                                <th>Assigned To</th>
-                                <th>Travelers</th>
-                                <th>Travel Date</th>
-                                <th>Status</th>
-                                <th>Source</th>
-                                <th>Remarks</th>
-                                <th>Follow up 1</th>
-                                <th>Follow up 2</th>
-                                <th>
-                                    <div style="display: flex; flex-direction: column; gap: 4px; align-items: center;">
-                                        <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Final Status</span>
-                                        <select id="filter-lead-finalstatus" onchange="applyLeadsFilters()" style="background: #0f172a; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 4px; padding: 2px 4px; font-size: 11px; cursor: pointer; outline: none; min-width: 100px; font-weight: 500;">
+                                <th style="min-width: 170px; text-align: left;">Name</th>
+                                <th style="min-width: 140px; text-align: left;">Phone &amp; Actions</th>
+                                <th style="min-width: 130px; text-align: left;">Destination</th>
+                                <th style="min-width: 130px; text-align: left;">
+                                    <div class="th-filter-col">
+                                        <span class="th-title-text">Assigned To</span>
+                                        <select id="filter-lead-assignee" onchange="applyLeadsFilters()" class="lead-th-filter-select">
                                             <option value="">All</option>
-                                            <option value="Booking confirmed">Booking confirmed</option>
-                                            <option value="Booked elsewhere">Booked elsewhere</option>
-                                            <option value="Postpone">Postpone</option>
-                                            <option value="Follow Up">Follow Up</option>
-                                            <option value="Kailash Mansarovar Yatra">Kailash Mansarovar Yatra</option>
-                                            <option value="Not Interested">Not Interested</option>
-                                            <option value="Lost lead">Lost lead</option>
+                                            <option value="unassigned">Unassigned</option>
                                         </select>
                                     </div>
                                 </th>
-                                <th>Created</th>
-                                <th>Actions</th>
+                                <th style="min-width: 70px; text-align: center;">Travelers</th>
+                                <th style="min-width: 140px; text-align: left;">
+                                    <div class="th-filter-col">
+                                        <span class="th-title-text">Status</span>
+                                        <select id="filter-lead-status" onchange="applyLeadsFilters()" class="lead-th-filter-select">
+                                            <option value="">All</option>
+                                            <option value="New">✨ New</option>
+                                            <option value="__contacted__">📞 Contacted</option>
+                                            <option value="Answered">📞 Answered</option>
+                                            <option value="Busy">⏳ Busy</option>
+                                            <option value="Incorrect Number">🚫 Incorrect No.</option>
+                                            <option value="Follow up required">🔁 Follow up</option>
+                                            <option value="Not Answered">🔇 Not Answered</option>
+                                            <option value="No. not reachable">📴 Not Reachable</option>
+                                            <option value="Lost">❌ Lost</option>
+                                            <option value="Switch Off">🔴 Switch Off</option>
+                                            <option value="Won">🏆 Won</option>
+                                        </select>
+                                    </div>
+                                </th>
+                                <th style="min-width: 130px; text-align: left;">
+                                    <div class="th-filter-col">
+                                        <span class="th-title-text">Final Status</span>
+                                        <select id="filter-lead-finalstatus" onchange="applyLeadsFilters()" class="lead-th-filter-select">
+                                            <option value="">All</option>
+                                            <option value="Booking confirmed">🎉 Confirmed</option>
+                                            <option value="Booked elsewhere">🏢 Elsewhere</option>
+                                            <option value="Postpone">⏳ Postpone</option>
+                                            <option value="Follow Up">🔁 Follow Up</option>
+                                            <option value="Kailash Mansarovar Yatra">🏔️ Kailash</option>
+                                            <option value="Not Interested">🚫 Not Interested</option>
+                                            <option value="Lost lead">🗑️ Lost</option>
+                                        </select>
+                                    </div>
+                                </th>
+                                <th style="min-width: 110px; text-align: center;">
+                                    <div class="th-filter-col" style="align-items: center;">
+                                        <span class="th-title-text">Source</span>
+                                        <select id="filter-lead-source" onchange="applyLeadsFilters()" class="lead-th-filter-select">
+                                            <option value="">All</option>
+                                            <option value="Meta Sheet Sync">Meta Sheet</option>
+                                            <option value="Website">Website</option>
+                                            <option value="Manual">Manual</option>
+                                        </select>
+                                    </div>
+                                </th>
+                                <th style="min-width: 110px; text-align: left;">Follow Up</th>
+                                <th style="min-width: 160px; text-align: left;">Remarks</th>
+                                <th style="min-width: 100px; text-align: left;">Created</th>
+                                <th style="min-width: 110px; text-align: center;">Actions</th>
                             </tr>
                         </thead>
                         <tbody id="leads-table-body">
@@ -6846,19 +7052,47 @@
         };
 
         window.applyLeadsFilters = function(keepPage = false) {
-            const source = document.getElementById('filter-lead-source') ? document.getElementById('filter-lead-source').value : '';
-            const topStatusSelect = document.getElementById('top-filter-lead-status');
-            const tableStatusSelect = document.getElementById('filter-lead-status');
-            const status = (topStatusSelect && topStatusSelect.value !== undefined && topStatusSelect.value !== '')
-                ? topStatusSelect.value
-                : (tableStatusSelect ? tableStatusSelect.value : '');
+            // 1. Source Filter Sync
+            const topSource = document.getElementById('top-filter-lead-source');
+            const tableSource = document.getElementById('filter-lead-source');
+            const source = (topSource && topSource.value !== undefined && topSource.value !== '')
+                ? topSource.value
+                : (tableSource ? tableSource.value : '');
+            if (topSource && topSource.value !== source) topSource.value = source;
+            if (tableSource && tableSource.value !== source) tableSource.value = source;
 
-            // Ensure both dropdowns remain in sync
-            if (topStatusSelect && topStatusSelect.value !== status) topStatusSelect.value = status;
-            if (tableStatusSelect && tableStatusSelect.value !== status) tableStatusSelect.value = status;
+            // 2. Status Filter Sync
+            const topStatus = document.getElementById('top-filter-lead-status');
+            const tableStatus = document.getElementById('filter-lead-status');
+            const status = (topStatus && topStatus.value !== undefined && topStatus.value !== '')
+                ? topStatus.value
+                : (tableStatus ? tableStatus.value : '');
+            if (topStatus && topStatus.value !== status) topStatus.value = status;
+            if (tableStatus && tableStatus.value !== status) tableStatus.value = status;
 
-            const finalStatus = document.getElementById('filter-lead-finalstatus') ? document.getElementById('filter-lead-finalstatus').value : '';
-            const assignee = document.getElementById('filter-lead-assignee') ? document.getElementById('filter-lead-assignee').value : '';
+            // 3. Final Status Filter Sync
+            const topFinal = document.getElementById('top-filter-lead-finalstatus');
+            const tableFinal = document.getElementById('filter-lead-finalstatus');
+            const finalStatus = (topFinal && topFinal.value !== undefined && topFinal.value !== '')
+                ? topFinal.value
+                : (tableFinal ? tableFinal.value : '');
+            if (topFinal && topFinal.value !== finalStatus) topFinal.value = finalStatus;
+            if (tableFinal && tableFinal.value !== finalStatus) tableFinal.value = finalStatus;
+
+            // 4. Assignee Filter Sync
+            const topAssignee = document.getElementById('top-filter-lead-assignee');
+            const tableAssignee = document.getElementById('filter-lead-assignee');
+            const assignee = (topAssignee && topAssignee.value !== undefined && topAssignee.value !== '')
+                ? topAssignee.value
+                : (tableAssignee ? tableAssignee.value : '');
+            if (topAssignee && topAssignee.value !== assignee) topAssignee.value = assignee;
+            if (tableAssignee && tableAssignee.value !== assignee) tableAssignee.value = assignee;
+
+            // 5. Destination Filter
+            const topDest = document.getElementById('top-filter-lead-destination');
+            const dest = topDest ? topDest.value.trim().toLowerCase() : '';
+
+            // 6. Search Input
             const rawSearch = document.getElementById('search-leads-input') ? document.getElementById('search-leads-input').value.trim() : '';
             const searchVal = rawSearch.toLowerCase();
 
@@ -6900,12 +7134,21 @@
                     matchAssignee = (leadAssignee === filterAssignee);
                 }
 
+                let matchDest = true;
+                if (dest) {
+                    const leadDest = (lead.destination || lead.remarks || lead.notes || '').toLowerCase();
+                    matchDest = leadDest.includes(dest);
+                }
+
                 const matchSearch = !searchVal ||
                     (lead.name || '').toLowerCase().includes(searchVal) ||
                     (lead.phone || '').toLowerCase().includes(searchVal) ||
-                    (lead.email || '').toLowerCase().includes(searchVal);
+                    (lead.email || '').toLowerCase().includes(searchVal) ||
+                    (lead.destination || '').toLowerCase().includes(searchVal) ||
+                    (lead.remarks || '').toLowerCase().includes(searchVal) ||
+                    (lead.notes || '').toLowerCase().includes(searchVal);
 
-                return matchSource && matchStatus && matchFinalStatus && matchAssignee && matchSearch;
+                return matchSource && matchStatus && matchFinalStatus && matchAssignee && matchDest && matchSearch;
             });
 
             filteredLeads.sort((a, b) => {
@@ -6930,6 +7173,7 @@
                     status,
                     finalStatus,
                     assignee,
+                    destination: dest,
                     searchVal: rawSearch,
                     currentPage: leadsCurrentPage,
                     pageSize: leadsPageSize,
@@ -6945,50 +7189,86 @@
             window.updateSortIcons();
         };
 
+        window.onTopStatusFilterChange = function(val) {
+            const tableStatus = document.getElementById('filter-lead-status');
+            if (tableStatus) tableStatus.value = val;
+            window.applyLeadsFilters();
+        };
+
+        window.onTopFinalStatusFilterChange = function(val) {
+            const tableFinal = document.getElementById('filter-lead-finalstatus');
+            if (tableFinal) tableFinal.value = val;
+            window.applyLeadsFilters();
+        };
+
+        window.onTopAssigneeFilterChange = function(val) {
+            const tableAssignee = document.getElementById('filter-lead-assignee');
+            if (tableAssignee) tableAssignee.value = val;
+            window.applyLeadsFilters();
+        };
+
+        window.onTopSourceFilterChange = function(val) {
+            const tableSource = document.getElementById('filter-lead-source');
+            if (tableSource) tableSource.value = val;
+            window.applyLeadsFilters();
+        };
+
         window.resetLeadsFilters = function() {
-            const sourceSelect = document.getElementById('filter-lead-source');
-            const statusSelect = document.getElementById('filter-lead-status');
-            const topStatusSelect = document.getElementById('top-filter-lead-status');
-            const finalStatusSelect = document.getElementById('filter-lead-finalstatus');
-            const assigneeSelect = document.getElementById('filter-lead-assignee');
+            const topStatus = document.getElementById('top-filter-lead-status');
+            const tableStatus = document.getElementById('filter-lead-status');
+            const topFinal = document.getElementById('top-filter-lead-finalstatus');
+            const tableFinal = document.getElementById('filter-lead-finalstatus');
+            const topAssignee = document.getElementById('top-filter-lead-assignee');
+            const tableAssignee = document.getElementById('filter-lead-assignee');
+            const topSource = document.getElementById('top-filter-lead-source');
+            const tableSource = document.getElementById('filter-lead-source');
+            const topDest = document.getElementById('top-filter-lead-destination');
             const searchInput = document.getElementById('search-leads-input');
 
-            if (sourceSelect) sourceSelect.value = '';
-            if (statusSelect) statusSelect.value = '';
-            if (topStatusSelect) topStatusSelect.value = '';
-            if (finalStatusSelect) finalStatusSelect.value = '';
-            if (assigneeSelect) assigneeSelect.value = '';
+            if (topStatus) topStatus.value = '';
+            if (tableStatus) tableStatus.value = '';
+            if (topFinal) topFinal.value = '';
+            if (tableFinal) tableFinal.value = '';
+            if (topAssignee) topAssignee.value = '';
+            if (tableAssignee) tableAssignee.value = '';
+            if (topSource) topSource.value = '';
+            if (tableSource) tableSource.value = '';
+            if (topDest) topDest.value = '';
             if (searchInput) searchInput.value = '';
 
             try {
                 sessionStorage.removeItem('admin_leads_state');
                 localStorage.removeItem('admin_leads_state');
-            } catch(e) {}
-            window.applyLeadsFilters();
+            } catch (e) {}
+
+            applyLeadsFilters();
         };
 
-        window.populateAssigneeFilter = function() {
-            let filterOptions = '<option value="">All</option><option value="unassigned">Unassigned</option>';
+        window.populateStaffFilterDropdowns = function() {
+            let filterOptions = '<option value="">👤 All Staff Members</option><option value="unassigned">Unassigned</option>';
+            let thFilterOptions = '<option value="">All</option><option value="unassigned">Unassigned</option>';
+            
             (usersList || []).forEach(user => {
-                const displayName = usersMap[user.id] || user.email;
                 const isMapped = mappedUserIds.has(user.id.toLowerCase());
                 if (isMapped) {
+                    const displayName = usersMap[user.id] || user.email;
                     filterOptions += `<option value="${user.id}">${displayName}</option>`;
+                    thFilterOptions += `<option value="${user.id}">${displayName}</option>`;
                 }
             });
 
-            let filterLeadSelect = document.getElementById('filter-lead-assignee');
-            if (filterLeadSelect) {
-                const curVal = filterLeadSelect.value;
-                filterLeadSelect.innerHTML = filterOptions;
-                if (curVal) filterLeadSelect.value = curVal;
+            const topAssignee = document.getElementById('top-filter-lead-assignee');
+            if (topAssignee) {
+                const curVal = topAssignee.value;
+                topAssignee.innerHTML = filterOptions;
+                if (curVal) topAssignee.value = curVal;
             }
 
-            let filterBookingSelect = document.getElementById('filter-booking-assignee');
-            if (filterBookingSelect) {
-                const curVal = filterBookingSelect.value;
-                filterBookingSelect.innerHTML = filterOptions;
-                if (curVal) filterBookingSelect.value = curVal;
+            const tableAssignee = document.getElementById('filter-lead-assignee');
+            if (tableAssignee) {
+                const curVal = tableAssignee.value;
+                tableAssignee.innerHTML = thFilterOptions;
+                if (curVal) tableAssignee.value = curVal;
             }
         };
 
