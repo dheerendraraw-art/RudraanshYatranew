@@ -172,10 +172,170 @@
 }
 
 
+
 /* =====================================================
-   LEADS MANAGER - COMPLETE DISPLAY FIX (HIGH SPECIFICITY)
-   Overrides all old dark-mode lead-card-row styles
+   LEADS MANAGER - MOBILE & DESKTOP PREMIUM CRM STYLING
    ===================================================== */
+
+.admin-tabs-nav {
+    display: flex !important;
+    gap: 8px !important;
+    overflow-x: auto !important;
+    flex-wrap: nowrap !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding: 4px 2px 10px 2px !important;
+    margin-bottom: 20px !important;
+    border-bottom: 2px solid #e2e8f0 !important;
+    scrollbar-width: none !important;
+}
+.admin-tabs-nav::-webkit-scrollbar {
+    display: none !important;
+}
+.admin-tab-btn {
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+    padding: 9px 16px !important;
+    border-radius: 8px !important;
+    border: 1px solid #cbd5e1 !important;
+    background: #ffffff !important;
+    color: #334155 !important;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+    cursor: pointer !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    transition: all 0.2s ease !important;
+}
+.admin-tab-btn.active {
+    background: #0A192F !important;
+    color: #f5c842 !important;
+    border-color: #0A192F !important;
+    box-shadow: 0 4px 12px rgba(10, 25, 47, 0.25) !important;
+}
+
+.leads-header-controls-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 18px;
+}
+.leads-search-filters-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.leads-main-heading {
+    font-size: 18px !important;
+    font-weight: 800 !important;
+    color: #0A192F !important;
+    margin: 0 !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.leads-search-input-wrap {
+    position: relative;
+    flex: 1 1 240px;
+    min-width: 200px;
+}
+.leads-search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    font-size: 13px;
+    pointer-events: none;
+}
+.leads-mobile-search-input {
+    width: 100% !important;
+    background: #ffffff !important;
+    color: #0f172a !important;
+    border: 1.5px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+    padding: 9px 12px 9px 34px !important;
+    font-size: 13px !important;
+    outline: none !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
+    transition: border-color 0.2s, box-shadow 0.2s !important;
+    box-sizing: border-box !important;
+}
+.leads-mobile-search-input:focus {
+    border-color: #b45309 !important;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2) !important;
+}
+.leads-status-filter-wrap {
+    flex: 0 1 180px;
+    min-width: 150px;
+}
+.leads-mobile-status-select {
+    width: 100% !important;
+    background: #ffffff !important;
+    color: #0f172a !important;
+    border: 1.5px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+    padding: 9px 12px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    outline: none !important;
+    box-sizing: border-box !important;
+}
+.leads-action-toolbar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.leads-add-primary-btn {
+    background: linear-gradient(135deg, #d4af37, #b45309) !important;
+    color: #ffffff !important;
+    border: none !important;
+    padding: 9px 18px !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    box-shadow: 0 2px 8px rgba(180, 83, 9, 0.25) !important;
+    transition: transform 0.15s, box-shadow 0.15s !important;
+}
+.leads-add-primary-btn:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(180, 83, 9, 0.35) !important;
+}
+.leads-tool-btn {
+    padding: 8px 14px !important;
+    font-size: 12.5px !important;
+    font-weight: 600 !important;
+    border-radius: 8px !important;
+    border: 1px solid #cbd5e1 !important;
+    background: #ffffff !important;
+    color: #334155 !important;
+    cursor: pointer !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    transition: all 0.15s ease !important;
+}
+.leads-tool-btn:hover {
+    background: #f1f5f9 !important;
+    color: #0A192F !important;
+    border-color: #94a3b8 !important;
+}
+.leads-sync-btn {
+    background: #0284c7 !important;
+    color: #ffffff !important;
+    border: none !important;
+}
+.leads-sync-btn:hover {
+    background: #0369a1 !important;
+    color: #ffffff !important;
+}
 
 #pane-leads .admin-table-container {
     background-color: #ffffff !important;
@@ -183,6 +343,7 @@
     border-radius: 12px !important;
     overflow-x: auto !important;
     margin-top: 14px !important;
+    margin-bottom: 24px !important;
     box-shadow: 0 2px 12px rgba(0,0,0,0.07) !important;
 }
 
@@ -218,6 +379,7 @@
     white-space: nowrap !important;
     background: #f8fafc !important;
     text-align: left !important;
+    border-bottom: 2px solid #e2e8f0 !important;
 }
 
 #pane-leads .admin-table tbody {
@@ -232,6 +394,7 @@
     margin: 0 !important;
     padding: 0 !important;
     box-shadow: none !important;
+    transition: background-color 0.15s ease !important;
 }
 
 #pane-leads .admin-table tr.lead-table-row:nth-child(even) {
@@ -242,22 +405,13 @@
     background-color: #f1f5f9 !important;
 }
 
-#pane-leads .admin-table tr.lead-table-row td,
-#pane-leads .admin-table tr.lead-table-row td *,
-#pane-leads .admin-table tr.lead-table-row td div,
-#pane-leads .admin-table tr.lead-table-row td span,
-#pane-leads .admin-table tr.lead-table-row td small,
-#pane-leads .admin-table tr.lead-table-row td strong,
-#pane-leads .admin-table tr.lead-table-row td p {
-    color: #0f172a !important;
-}
-
 #pane-leads .admin-table tr.lead-table-row td {
     display: table-cell !important;
     padding: 12px 14px !important;
     border-bottom: 1px solid #e2e8f0 !important;
     vertical-align: middle !important;
     font-size: 13.5px !important;
+    color: #0f172a !important;
     background: transparent !important;
 }
 
@@ -281,6 +435,7 @@
     align-items: center !important;
     justify-content: center !important;
     flex-shrink: 0 !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15) !important;
 }
 
 .lead-name-text {
@@ -293,6 +448,7 @@
     color: #0f172a !important;
     font-size: 14px !important;
     font-weight: 700 !important;
+    transition: color 0.15s !important;
 }
 
 .lead-name-wrap:hover .lead-title-name {
@@ -319,18 +475,21 @@
 .lead-phone-num {
     color: #b45309 !important;
     font-weight: 700 !important;
-    font-size: 13px !important;
+    font-size: 13.5px !important;
     text-decoration: none !important;
     display: inline-flex !important;
     align-items: center !important;
     gap: 4px !important;
 }
 
-.lead-phone-num:hover { text-decoration: underline !important; }
+.lead-phone-num:hover {
+    text-decoration: underline !important;
+}
 
 .lead-quick-actions {
     display: flex !important;
     gap: 6px !important;
+    flex-wrap: nowrap !important;
 }
 
 .lead-quick-btn {
@@ -343,6 +502,7 @@
     align-items: center !important;
     gap: 3px !important;
     border: 1px solid transparent !important;
+    transition: all 0.15s !important;
 }
 
 .lead-quick-call {
@@ -355,6 +515,10 @@
     background: #d1fae5 !important;
     color: #065f46 !important;
     border-color: #6ee7b7 !important;
+}
+
+.lead-quick-btn:hover {
+    opacity: 0.85 !important;
 }
 
 #pane-leads .admin-table tr.lead-table-row td select,
@@ -392,12 +556,12 @@
 .lead-status-dropdown.status-won { background: #ecfdf5 !important; color: #047857 !important; border-color: #6ee7b7 !important; }
 
 .lead-final-dropdown.final-confirmed { background: #ecfdf5 !important; color: #047857 !important; border-color: #6ee7b7 !important; }
-.lead-final-dropdown.final-elsewhere { background: #f1f5f9 !important; color: #475569 !important; }
-.lead-final-dropdown.final-postpone { background: #fefce8 !important; color: #a16207 !important; }
-.lead-final-dropdown.final-followup { background: #faf5ff !important; color: #7e22ce !important; }
-.lead-final-dropdown.final-kailash { background: #f0f9ff !important; color: #0369a1 !important; }
-.lead-final-dropdown.final-notinterested { background: #fef2f2 !important; color: #b91c1c !important; }
-.lead-final-dropdown.final-lost { background: #fef2f2 !important; color: #991b1b !important; }
+.lead-final-dropdown.final-elsewhere { background: #f1f5f9 !important; color: #475569 !important; border-color: #cbd5e1 !important; }
+.lead-final-dropdown.final-postpone { background: #fefce8 !important; color: #a16207 !important; border-color: #fde047 !important; }
+.lead-final-dropdown.final-followup { background: #faf5ff !important; color: #7e22ce !important; border-color: #d8b4fe !important; }
+.lead-final-dropdown.final-kailash { background: #f0f9ff !important; color: #0369a1 !important; border-color: #7dd3fc !important; }
+.lead-final-dropdown.final-notinterested { background: #fef2f2 !important; color: #b91c1c !important; border-color: #fca5a5 !important; }
+.lead-final-dropdown.final-lost { background: #fef2f2 !important; color: #991b1b !important; border-color: #f87171 !important; }
 
 .lead-source-tag {
     font-size: 11px !important;
@@ -421,7 +585,9 @@
     display: block !important;
 }
 
-.lead-remarks-preview:hover { color: #b45309 !important; }
+.lead-remarks-preview:hover {
+    color: #b45309 !important;
+}
 
 .lead-open-btn {
     background: #fef3c7 !important;
@@ -439,7 +605,10 @@
     transition: all 0.15s !important;
 }
 
-.lead-open-btn:hover { background: #d4af37 !important; color: #0f172a !important; }
+.lead-open-btn:hover {
+    background: #d4af37 !important;
+    color: #0f172a !important;
+}
 
 .lead-del-btn {
     background: #fee2e2 !important;
@@ -455,17 +624,128 @@
     transition: all 0.15s !important;
 }
 
-.lead-del-btn:hover { background: #ef4444 !important; color: #fff !important; }
+.lead-del-btn:hover {
+    background: #ef4444 !important;
+    color: #fff !important;
+}
 
+/* Pagination Container */
+.leads-pagination-container {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-top: 16px !important;
+    padding: 12px 18px !important;
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+    flex-wrap: wrap !important;
+    gap: 12px !important;
+}
+.leads-page-size-wrap {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+.leads-pag-label {
+    font-size: 13px !important;
+    color: #64748b !important;
+    font-weight: 600 !important;
+}
+.leads-page-size-select {
+    background: #f8fafc !important;
+    color: #0f172a !important;
+    border: 1.5px solid #cbd5e1 !important;
+    border-radius: 6px !important;
+    padding: 5px 10px !important;
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    outline: none !important;
+}
+.leads-pag-info {
+    font-size: 13px !important;
+    color: #475569 !important;
+    font-weight: 600 !important;
+}
+.leads-pag-nav-wrap {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+}
+.leads-pag-btn {
+    border: 1.5px solid #cbd5e1 !important;
+    background: #ffffff !important;
+    color: #0f172a !important;
+    padding: 6px 14px !important;
+    font-size: 12.5px !important;
+    cursor: pointer !important;
+    border-radius: 6px !important;
+    font-weight: 700 !important;
+    transition: all 0.15s ease !important;
+}
+.leads-pag-btn:hover:not(:disabled) {
+    background: #0A192F !important;
+    color: #f5c842 !important;
+    border-color: #0A192F !important;
+}
+.leads-page-num-pill {
+    font-weight: 800 !important;
+    font-size: 14px !important;
+    padding: 4px 10px !important;
+    background: rgba(212, 175, 55, 0.15) !important;
+    color: #b45309 !important;
+    border-radius: 6px !important;
+    min-width: 32px !important;
+    text-align: center !important;
+}
+
+/* MOBILE ENHANCEMENTS */
 @media (max-width: 768px) {
+    .leads-header-controls-wrap {
+        gap: 12px !important;
+    }
+    .leads-search-filters-bar {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 8px !important;
+    }
+    .leads-search-input-wrap,
+    .leads-status-filter-wrap {
+        flex: 1 1 100% !important;
+        width: 100% !important;
+    }
+    .leads-action-toolbar {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+        width: 100% !important;
+    }
+    .leads-add-primary-btn {
+        grid-column: 1 / -1 !important;
+        justify-content: center !important;
+        padding: 12px 18px !important;
+        font-size: 14px !important;
+    }
+    .leads-tool-btn {
+        justify-content: center !important;
+        padding: 9px 10px !important;
+        font-size: 12px !important;
+    }
+    
+    /* Mobile Lead Cards */
     #pane-leads .admin-table-container {
         border: none !important;
         background: transparent !important;
         box-shadow: none !important;
+        margin-top: 10px !important;
+        overflow-x: visible !important;
     }
     #pane-leads .admin-table {
         display: block !important;
-        min-width: unset !important;
+        min-width: 100% !important;
+        background: transparent !important;
     }
     #pane-leads .admin-table thead {
         display: none !important;
@@ -473,43 +753,228 @@
     #pane-leads .admin-table tbody {
         display: flex !important;
         flex-direction: column !important;
-        gap: 12px !important;
+        gap: 14px !important;
     }
     #pane-leads .admin-table tr.lead-table-row {
-        display: block !important;
+        display: flex !important;
+        flex-direction: column !important;
         background: #ffffff !important;
-        border: 1px solid #e2e8f0 !important;
-        border-left: 4px solid #b45309 !important;
-        border-radius: 12px !important;
+        border: 1.5px solid #e2e8f0 !important;
+        border-left: 5px solid #b45309 !important;
+        border-radius: 14px !important;
         padding: 14px 16px !important;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05) !important;
+        gap: 8px !important;
     }
     #pane-leads .admin-table tr.lead-table-row td {
         display: flex !important;
         justify-content: space-between !important;
         align-items: center !important;
-        padding: 7px 0 !important;
+        padding: 6px 0 !important;
         border-bottom: 1px dashed #e2e8f0 !important;
         font-size: 13px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
     }
     #pane-leads .admin-table tr.lead-table-row td:last-child {
         border-bottom: none !important;
-        padding-top: 10px !important;
-        justify-content: center !important;
+        padding-top: 8px !important;
+        padding-bottom: 0 !important;
     }
     #pane-leads .admin-table tr.lead-table-row td::before {
         content: attr(data-label);
         font-weight: 700 !important;
-        color: #b45309 !important;
+        color: #64748b !important;
         font-size: 11px !important;
         text-transform: uppercase !important;
         letter-spacing: 0.5px !important;
         flex-shrink: 0 !important;
-        margin-right: 8px !important;
+        margin-right: 10px !important;
     }
-    #pane-leads .admin-table td.td-lead-name::before { display: none !important; }
-    #pane-leads .admin-table td.td-actions::before { display: none !important; }
-    #pane-leads .admin-table td.td-actions { justify-content: center !important; }
+    
+    /* Card Header (Name) */
+    #pane-leads .admin-table td.td-lead-name {
+        padding-bottom: 10px !important;
+        border-bottom: 1.5px solid #e2e8f0 !important;
+    }
+    #pane-leads .admin-table td.td-lead-name::before {
+        display: none !important;
+    }
+    .lead-name-wrap {
+        width: 100% !important;
+    }
+    .lead-title-name {
+        font-size: 15px !important;
+    }
+    .lead-sub-email {
+        max-width: 220px !important;
+    }
+
+    /* Quick Actions (Call & WhatsApp) */
+    #pane-leads .admin-table td[data-label="Phone & Actions"] {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 6px !important;
+        padding: 8px 0 !important;
+    }
+    #pane-leads .admin-table td[data-label="Phone & Actions"]::before {
+        display: none !important;
+    }
+    .lead-phone-cell {
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 6px !important;
+    }
+    .lead-phone-num {
+        font-size: 14px !important;
+        justify-content: flex-start !important;
+    }
+    .lead-quick-actions {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+        width: 100% !important;
+    }
+    .lead-quick-btn {
+        justify-content: center !important;
+        padding: 8px 12px !important;
+        font-size: 12.5px !important;
+        border-radius: 8px !important;
+    }
+
+    /* Dropdowns inside card */
+    #pane-leads .admin-table tr.lead-table-row td select,
+    .lead-status-dropdown,
+    .lead-final-dropdown,
+    .lead-assignee-dropdown {
+        max-width: 60% !important;
+        font-size: 12px !important;
+        padding: 6px 8px !important;
+    }
+
+    /* Card Actions Footer */
+    #pane-leads .admin-table td.td-actions {
+        justify-content: stretch !important;
+        width: 100% !important;
+    }
+    #pane-leads .admin-table td.td-actions::before {
+        display: none !important;
+    }
+    #pane-leads .admin-table td.td-actions > div {
+        width: 100% !important;
+        display: grid !important;
+        grid-template-columns: 1fr auto !important;
+        gap: 8px !important;
+    }
+    .lead-open-btn {
+        justify-content: center !important;
+        padding: 9px 14px !important;
+        font-size: 13px !important;
+    }
+    .lead-del-btn {
+        padding: 9px 12px !important;
+        font-size: 13px !important;
+    }
+
+    /* Pagination Bar on Mobile */
+    .leads-pagination-container {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 10px !important;
+        padding: 14px 14px !important;
+        text-align: center !important;
+    }
+    .leads-page-size-wrap {
+        justify-content: space-between !important;
+        width: 100% !important;
+    }
+    .leads-pag-info {
+        text-align: center !important;
+        font-size: 12.5px !important;
+    }
+    .leads-pag-nav-wrap {
+        justify-content: center !important;
+        width: 100% !important;
+    }
+    .leads-pag-btn {
+        flex: 1 !important;
+        justify-content: center !important;
+        padding: 8px 14px !important;
+    }
+}
+
+</style>
+<style>
+/* --- EXPLICIT HIGH CONTRAST COLORS FOR LEADS MANAGER (MOBILE & DESKTOP) --- */
+#pane-leads .admin-table tr.lead-table-row td,
+#pane-leads .admin-table tr.lead-table-row td *,
+#pane-leads .admin-table tr.lead-table-row td div,
+#pane-leads .admin-table tr.lead-table-row td span,
+#pane-leads .admin-table tr.lead-table-row td strong,
+#pane-leads .admin-table tr.lead-table-row td small,
+#pane-leads .admin-table tr.lead-table-row td p,
+#pane-leads .lead-title-name {
+    color: #0f172a !important;
+}
+
+#pane-leads .lead-avatar-circle {
+    color: #ffffff !important;
+    background: linear-gradient(135deg, #d4af37, #b45309) !important;
+}
+
+#pane-leads .lead-sub-email {
+    color: #64748b !important;
+}
+
+#pane-leads .lead-phone-num,
+#pane-leads .admin-table td[data-label="Destination"] strong {
+    color: #b45309 !important;
+}
+
+#pane-leads .lead-remarks-preview {
+    color: #334155 !important;
+}
+
+#pane-leads .lead-quick-call {
+    background: #dcfce7 !important;
+    color: #15803d !important;
+    border: 1px solid #86efac !important;
+}
+#pane-leads .lead-quick-call * {
+    color: #15803d !important;
+}
+
+#pane-leads .lead-quick-wa {
+    background: #d1fae5 !important;
+    color: #065f46 !important;
+    border: 1px solid #6ee7b7 !important;
+}
+#pane-leads .lead-quick-wa * {
+    color: #065f46 !important;
+}
+
+#pane-leads .lead-open-btn {
+    background: #fef3c7 !important;
+    color: #92400e !important;
+    border: 1px solid #fbbf24 !important;
+}
+#pane-leads .lead-open-btn * {
+    color: #92400e !important;
+}
+
+#pane-leads .lead-del-btn {
+    background: #fee2e2 !important;
+    color: #b91c1c !important;
+    border: 1px solid #fca5a5 !important;
+}
+#pane-leads .lead-del-btn * {
+    color: #b91c1c !important;
+}
+
+#pane-leads .lead-source-tag {
+    background: #0284c7 !important;
+    color: #ffffff !important;
 }
 </style>
 </head>
@@ -1234,16 +1699,17 @@
 
             <!-- PANE 6: LEADS MANAGER -->
             <div id="pane-leads" class="admin-tab-content-pane" style="display: none;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
-                    <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; flex-grow: 1;">
-                        <h3 class="admin-form-title" style="margin-bottom: 0; border-bottom: none;"><i
-                                class="fa-solid fa-people-group" style="color: var(--color-gold);"></i> Leads Manager</h3>
-                        <div style="position: relative; width: 240px; max-width: 100%;">
-                            <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: rgba(212, 175, 55, 0.6); font-size: 13px;"></i>
-                            <input type="text" id="search-leads-input" placeholder="Search name, phone, email..." oninput="applyLeadsFilters()" style="background: #1e293b; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: var(--border-radius-sm, 4px); padding: 8px 12px 8px 32px; font-size: 13px; outline: none; width: 100%; font-weight: 500; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); transition: border-color 0.2s ease;">
+                <div class="leads-header-controls-wrap">
+                    <div class="leads-search-filters-bar">
+                        <h3 class="admin-form-title leads-main-heading" style="margin-bottom: 0; border-bottom: none;">
+                            <i class="fa-solid fa-people-group" style="color: var(--color-gold);"></i> Leads Manager
+                        </h3>
+                        <div class="leads-search-input-wrap">
+                            <i class="fa-solid fa-magnifying-glass leads-search-icon"></i>
+                            <input type="text" id="search-leads-input" placeholder="Search name, phone, email, notes..." oninput="applyLeadsFilters()" class="leads-mobile-search-input">
                         </div>
-                        <div style="position: relative; min-width: 170px; max-width: 100%;">
-                            <select id="top-filter-lead-status" onchange="onTopStatusFilterChange(this.value)" style="background: #1e293b; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: var(--border-radius-sm, 4px); padding: 8px 12px; font-size: 13px; outline: none; width: 100%; font-weight: 600; cursor: pointer; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);">
+                        <div class="leads-status-filter-wrap">
+                            <select id="top-filter-lead-status" onchange="onTopStatusFilterChange(this.value)" class="leads-mobile-status-select">
                                 <option value="">📋 All Statuses</option>
                                 <option value="New">✨ New</option>
                                 <option value="__contacted__">📞 Contacted / In Progress</option>
@@ -1260,14 +1726,26 @@
                             </select>
                         </div>
                     </div>
-                    <div id="leads-action-buttons-wrap" style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
-                        <button type="button" onclick="resetLeadsFilters()" class="btn btn-secondary" style="border: 1px solid var(--color-gold); background: #1e293b; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: var(--color-gold); font-weight: 600;"><i class="fa-solid fa-arrow-rotate-left"></i> Clear Filters</button>
-                        <button type="button" onclick="exportLeads()" class="btn btn-primary admin-only-action" id="export-leads-btn" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-file-export"></i> Export Leads</button>
-                        <button type="button" onclick="downloadLeadsTemplate()" class="btn btn-secondary admin-only-action" id="leads-template-btn" style="border: 1px solid var(--color-gold); background: #1e293b; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: var(--color-gold); font-weight: 600;"><i class="fa-solid fa-download"></i> Template</button>
-                        <button type="button" onclick="triggerImportLeads()" class="btn btn-primary admin-only-action" id="import-leads-btn" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-file-import"></i> Import Leads</button>
-                        <button type="button" onclick="syncGoogleSheetLeads()" class="btn btn-primary admin-only-action" id="sync-sheet-leads-btn" style="background-color: #0284c7; border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #ffffff; font-weight: 700; gap: 6px; box-shadow: 0 2px 8px rgba(2,132,199,0.4);"><i class="fa-solid fa-arrows-rotate"></i> Sync Google Sheet</button>
+                    <div id="leads-action-buttons-wrap" class="leads-action-toolbar">
+                        <button type="button" onclick="openLeadModal()" class="btn btn-primary admin-only-action leads-add-primary-btn" id="add-lead-btn">
+                            <i class="fa-solid fa-plus"></i> Add New Lead
+                        </button>
+                        <button type="button" onclick="resetLeadsFilters()" class="btn btn-secondary leads-tool-btn" title="Reset all search & dropdown filters">
+                            <i class="fa-solid fa-arrow-rotate-left"></i> Clear Filters
+                        </button>
+                        <button type="button" onclick="syncGoogleSheetLeads()" class="btn btn-primary admin-only-action leads-tool-btn leads-sync-btn" id="sync-sheet-leads-btn">
+                            <i class="fa-solid fa-arrows-rotate"></i> Sync Sheet
+                        </button>
+                        <button type="button" onclick="exportLeads()" class="btn btn-secondary admin-only-action leads-tool-btn" id="export-leads-btn">
+                            <i class="fa-solid fa-file-export"></i> Export
+                        </button>
+                        <button type="button" onclick="downloadLeadsTemplate()" class="btn btn-secondary admin-only-action leads-tool-btn" id="leads-template-btn">
+                            <i class="fa-solid fa-download"></i> Template
+                        </button>
+                        <button type="button" onclick="triggerImportLeads()" class="btn btn-secondary admin-only-action leads-tool-btn" id="import-leads-btn">
+                            <i class="fa-solid fa-file-import"></i> Import
+                        </button>
                         <input type="file" id="leads-csv-file" accept=".csv" style="display: none;" onchange="handleLeadsCSVImport(event)">
-                        <button type="button" onclick="openLeadModal()" class="btn btn-primary admin-only-action" id="add-lead-btn" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-plus"></i> Add New Lead</button>
                     </div>
                 </div>
 
