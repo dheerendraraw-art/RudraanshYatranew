@@ -66,24 +66,163 @@
           "@id": "https://rudraanshyatra.com/about#webpage",
           "url": "https://rudraanshyatra.com/about",
           "name": "About Rudraansh Yatra — Local Adi Kailash Ground Operator Since 2015, Pithoragarh",
+          "description": "Rudraansh Yatra is an MSME-registered, NIDHI-certified local ground operator headquartered in Pithoragarh, Uttarakhand. Direct execution of Adi Kailash, Om Parvat, Darma Valley and Khaliya Top tours with zero middlemen.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://rudraanshyatra.com/#website",
+            "url": "https://rudraanshyatra.com/",
+            "name": "Rudraansh Yatra"
+          },
           "about": { "@id": "https://rudraanshyatra.com/#organization" },
+          "primaryImageOfPage": {
+            "@type": "ImageObject",
+            "url": "https://rudraanshyatra.com/assets/images/panchachuli-trek.webp"
+          },
           "inLanguage": "en-IN",
           "speakable": {
             "@type": "SpeakableSpecification",
-            "cssSelector": [".about-hero-h1", ".about-story-desc", ".about-mission-tagline", ".faq-answer p"]
+            "cssSelector": [
+              ".about-summary-answer",
+              ".about-story-desc",
+              ".founder-quote",
+              ".faq-question",
+              ".faq-answer p"
+            ]
           }
         },
         {
           "@type": ["LocalBusiness", "TravelAgency", "TourOperator"],
           "@id": "https://rudraanshyatra.com/#organization",
           "name": "Rudraansh Yatra",
+          "legalName": "Rudraansh Yatra",
+          "alternateName": ["Rudraansh Yatra Pithoragarh", "Rudraansh Tour & Travels"],
           "image": "https://rudraanshyatra.com/assets/images/logo.png",
+          "logo": "https://rudraanshyatra.com/assets/images/logo.png",
           "url": "https://rudraanshyatra.com/about",
           "telephone": "+917617617651",
           "email": "info@rudraanshyatra.com",
           "priceRange": "₹9500 - ₹35000",
+          "currenciesAccepted": "INR",
+          "paymentAccepted": "Cash, Credit Card, Debit Card, UPI, Net Banking, Razorpay",
           "foundingDate": "2015",
           "openingHours": "Mo-Su 08:00-21:00",
+          "founder": {
+            "@type": "Person",
+            "@id": "https://rudraanshyatra.com/about#founder",
+            "name": "Dheerendra Rautela",
+            "jobTitle": "Founder & Lead High-Altitude Expedition Director",
+            "worksFor": { "@id": "https://rudraanshyatra.com/#organization" },
+            "birthPlace": {
+              "@type": "Place",
+              "name": "Pithoragarh, Uttarakhand, India"
+            },
+            "nationality": "Indian",
+            "knowsAbout": [
+              "Adi Kailash Yatra Logistics",
+              "Om Parvat Route Navigation",
+              "Darma Valley Expeditions",
+              "Khaliya Top Alpine Trekking",
+              "Inner Line Permit Clearance",
+              "High-Altitude Acute Mountain Sickness (AMS) Protocol"
+            ]
+          },
+          "hasCredential": [
+            {
+              "@type": "EducationalOccupationalCredential",
+              "credentialCategory": "Government Business Registration",
+              "name": "MSME Registration",
+              "recognizedBy": {
+                "@type": "GovernmentOrganization",
+                "name": "Ministry of Micro, Small and Medium Enterprises, Government of India"
+              },
+              "identifier": "UDYAM-UK-09-0012985"
+            },
+            {
+              "@type": "EducationalOccupationalCredential",
+              "credentialCategory": "Hospitality & Tourism Accreditation",
+              "name": "NIDHI Certification",
+              "recognizedBy": {
+                "@type": "GovernmentOrganization",
+                "name": "Ministry of Tourism, Government of India"
+              },
+              "identifier": "EUK000357"
+            }
+          ],
+          "knowsAbout": [
+            "Adi Kailash Yatra",
+            "Om Parvat Darshan",
+            "Darma Valley Exploration",
+            "Khaliya Top Trek",
+            "Kumaon Himalayas Pilgrimage",
+            "Inner Line Permit (ILP) Processing",
+            "High Altitude Mountain Safety & Acclimatization",
+            "Rung Tribal Culture & Homestay Hospitality"
+          ],
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Direct Himalayan Tour Packages",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Trip",
+                  "name": "Adi Kailash & Om Parvat Yatra from Pithoragarh",
+                  "url": "https://rudraanshyatra.com/adi-kailash-from-pithoragarh",
+                  "description": "3 Days / 2 Nights direct ground yatra starting from Pithoragarh in 4x4 Bolero."
+                },
+                "price": "18000",
+                "priceCurrency": "INR"
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Trip",
+                  "name": "Adi Kailash & Om Parvat Yatra from Kathgodam",
+                  "url": "https://rudraanshyatra.com/adi-kailash-from-kathgodam",
+                  "description": "6 Days / 5 Nights complete yatra package starting from Kathgodam Railway Station."
+                },
+                "price": "30000",
+                "priceCurrency": "INR"
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Trip",
+                  "name": "Adi Kailash & Om Parvat Yatra from Delhi",
+                  "url": "https://rudraanshyatra.com/adi-kailash-from-delhi",
+                  "description": "6 Days / 5 Nights all-inclusive pilgrimage package from New Delhi."
+                },
+                "price": "35000",
+                "priceCurrency": "INR"
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Trip",
+                  "name": "Darma Valley Exploration",
+                  "url": "https://rudraanshyatra.com/darma-valley",
+                  "description": "5 Days / 4 Nights exploration of Panchachuli Base Camp and remote Darma villages."
+                },
+                "price": "24999",
+                "priceCurrency": "INR"
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Trip",
+                  "name": "Khaliya Top Alpine Trek",
+                  "url": "https://rudraanshyatra.com/khaliya-top",
+                  "description": "4 Days / 3 Nights scenic alpine meadow trek in Munsiyari with Panchachuli views."
+                },
+                "price": "9500",
+                "priceCurrency": "INR"
+              }
+            ]
+          },
+          "award": [
+            "TripAdvisor Traveller's Choice Recognition",
+            "4.9 Star Google Customer Satisfaction Rating (128+ Verified Reviews)"
+          ],
           "address": {
             "@type": "PostalAddress",
             "streetAddress": "1st Floor Above Maniram Punetha & Sons, Simalgair Bazaar",
@@ -108,14 +247,18 @@
           "areaServed": [
             { "@type": "AdministrativeArea", "name": "Vyas Valley" },
             { "@type": "AdministrativeArea", "name": "Darma Valley" },
-            { "@type": "AdministrativeArea", "name": "Kumaon Himalayas" }
+            { "@type": "AdministrativeArea", "name": "Chaudas Valley" },
+            { "@type": "AdministrativeArea", "name": "Pithoragarh District" },
+            { "@type": "AdministrativeArea", "name": "Kumaon Himalayas" },
+            { "@type": "AdministrativeArea", "name": "Uttarakhand" }
           ],
           "sameAs": [
             "https://www.google.com/maps/place/?q=place_id:ChIJUaOjOEsloTkRjOLS3RK_S_A",
             "https://www.facebook.com/profile.php?id=61589223945628",
             "https://www.instagram.com/rudraansh_yatra/",
             "https://www.youtube.com/@Rudra-Anshyatra",
-            "https://www.tripadvisor.in/Profile/Rudraanshyatra?fid=48ae09cc-5151-4403-9190-446ed02e64e8"
+            "https://www.tripadvisor.in/Profile/Rudraanshyatra?fid=48ae09cc-5151-4403-9190-446ed02e64e8",
+            "https://medium.com/@rudraanshyatra"
           ]
         },
         {
@@ -142,7 +285,7 @@
           "mainEntity": [
             {
               "@type": "Question",
-              "name": "Are you a travel agent or an actual operator?",
+              "name": "Are you a travel agent or an actual ground operator?",
               "acceptedAnswer": {
                 "@type": "Answer",
                 "text": "We are licensed native ground operators based right here in Pithoragarh, Uttarakhand. We own our fleet of 4x4 vehicles, employ local guides, and manage all homestay partnerships directly—we do not outsource your trip to third-party travel brokers."
@@ -170,6 +313,38 @@
               "acceptedAnswer": {
                 "@type": "Answer",
                 "text": "Unlike national online ticketing portals that resell packages, we execute 100% of our tours directly. We know every mountain road, local homestay owner, and SDM administrator personally. This local presence guarantees transparent pricing, real-time weather updates, and authentic safety accountability."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "When was Rudraansh Yatra founded and who runs it?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Rudraansh Yatra was founded in 2015 by Dheerendra Rautela, a native of Pithoragarh, Uttarakhand. Dheerendra was born and raised in the Kumaon Himalayas and has personally guided Adi Kailash and Om Parvat yatris for over a decade. Our office is at Simalgair Bazaar, Pithoragarh — 262501."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What certifications does Rudraansh Yatra hold?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Rudraansh Yatra holds: (1) MSME Registration — No. UDYAM-UK-09-0012985 under Ministry of MSME, Government of India. (2) NIDHI Certification — ID: EUK000357 under Ministry of Tourism, Government of India. We are also on TripAdvisor with a Traveller’s Choice recognition and hold a 4.9★ Google Maps rating."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is Rudraansh Yatra’s Google rating?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Rudraansh Yatra holds a 4.9-star average from 128+ verified guest reviews on Google Maps. Our office is at Simalgair Bazaar, Pithoragarh, Uttarakhand. Search “Rudraansh Yatra Pithoragarh” on Google Maps to find us and read reviews."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Which destinations does Rudraansh Yatra operate from Pithoragarh?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "From our Pithoragarh base we operate: Adi Kailash & Om Parvat Yatra from Pithoragarh (₹18,000), Kathgodam (₹30,000), and Delhi (₹35,000). Khaliya Top Alpine Trek from Munsiyari (₹9,500). Darma Valley Exploration (₹24,999). Mt. Kailash Yatra support. All trips are directly executed with zero outsourcing."
               }
             }
           ]
@@ -394,6 +569,238 @@
         .faq-answer { display: none; padding: 0 22px 20px 22px; font-size: 14.5px; color: var(--color-text-secondary); line-height: 1.75; border-top: 1px solid rgba(10, 25, 47, 0.06); }
         .faq-item.open .faq-answer, .faq-item.active .faq-answer { display: block !important; }
         .faq-answer p { margin-top: 14px; color: var(--color-text-secondary); line-height: 1.75; font-size: 14.5px; }
+
+        /* AEO / AIO Direct Answer Summary Box */
+        .about-summary-section {
+            background: linear-gradient(180deg, #ffffff 0%, var(--color-bg-base) 100%);
+            padding: 40px 0 20px 0;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .about-summary-card {
+            background: #ffffff;
+            border: 1.5px solid rgba(212, 175, 55, 0.4);
+            border-radius: 16px;
+            padding: 32px 36px;
+            box-shadow: 0 10px 30px rgba(10, 25, 47, 0.05);
+            position: relative;
+        }
+        .about-summary-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 18px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(10, 25, 47, 0.08);
+        }
+        .about-summary-title {
+            font-family: var(--font-serif);
+            font-size: 24px;
+            color: var(--color-primary);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .about-summary-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .summary-badge {
+            background: rgba(212, 175, 55, 0.12);
+            color: var(--color-gold-dark);
+            border: 1px solid rgba(212, 175, 55, 0.35);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+        .about-summary-answer {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--color-text-primary);
+            margin-bottom: 22px;
+        }
+        .about-summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+        .summary-metric {
+            background: var(--color-bg-card);
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 14px 16px;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+        .summary-metric:hover {
+            border-color: var(--color-gold);
+            transform: translateY(-2px);
+        }
+        .summary-metric-title {
+            font-size: 11.5px;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: #64748b;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .summary-metric-val {
+            font-size: 14.5px;
+            font-weight: 700;
+            color: var(--color-primary);
+            line-height: 1.35;
+        }
+
+        /* GEO Comparative Matrix Table */
+        .comparison-section {
+            background-color: var(--color-bg-base);
+            border-top: 1px solid var(--glass-border);
+        }
+        .comparison-table-wrap {
+            overflow-x: auto;
+            border-radius: 14px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            background: #ffffff;
+            margin-top: 28px;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 14.5px;
+        }
+        .comparison-table th {
+            padding: 18px 20px;
+            font-weight: 800;
+            letter-spacing: 0.4px;
+        }
+        .comparison-table th.col-dim {
+            background: #0f172a;
+            color: #ffffff;
+            width: 25%;
+        }
+        .comparison-table th.col-rudra {
+            background: #0A192F;
+            color: #f5c842;
+            width: 40%;
+            border-left: 2px solid var(--color-gold);
+            border-right: 2px solid var(--color-gold);
+        }
+        .comparison-table th.col-ota {
+            background: #1e293b;
+            color: #cbd5e1;
+            width: 35%;
+        }
+        .comparison-table td {
+            padding: 16px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: top;
+            line-height: 1.6;
+        }
+        .comparison-table tr:hover td {
+            background-color: rgba(212, 175, 55, 0.03);
+        }
+        .comparison-table td.cell-rudra {
+            background: rgba(212, 175, 55, 0.05);
+            font-weight: 600;
+            color: var(--color-primary);
+            border-left: 2px solid var(--color-gold);
+            border-right: 2px solid var(--color-gold);
+        }
+        .comparison-table td.cell-ota {
+            color: #64748b;
+        }
+        .check-yes {
+            color: #16a34a;
+            font-weight: 800;
+            margin-right: 6px;
+        }
+        .check-no {
+            color: #dc2626;
+            font-weight: 800;
+            margin-right: 6px;
+        }
+
+        /* E-E-A-T Founder Card */
+        .founder-card {
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid var(--color-gold);
+            padding: 32px;
+            margin-top: 36px;
+            box-shadow: var(--shadow-md);
+            display: grid;
+            grid-template-columns: 180px 1fr;
+            gap: 28px;
+            align-items: center;
+        }
+        .founder-img-wrap {
+            text-align: center;
+        }
+        .founder-avatar {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 3px solid var(--color-gold);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+            object-fit: cover;
+            background: #f1f5f9;
+        }
+        .founder-title {
+            font-family: var(--font-serif);
+            font-size: 24px;
+            color: var(--color-primary);
+            margin-bottom: 4px;
+        }
+        .founder-subtitle {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: var(--color-gold-dark);
+            margin-bottom: 12px;
+        }
+        .founder-bio {
+            font-size: 14.5px;
+            line-height: 1.7;
+            color: var(--color-text-secondary);
+            margin-bottom: 14px;
+        }
+        .founder-quote {
+            font-style: italic;
+            font-size: 14px;
+            color: var(--color-primary);
+            border-left: 3px solid var(--color-gold);
+            padding-left: 12px;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .about-summary-card { padding: 22px 18px; }
+            .about-summary-title { font-size: 20px; }
+            .about-summary-answer { font-size: 14.5px; }
+            .founder-card {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding: 24px 18px;
+            }
+            .founder-quote {
+                border-left: none;
+                border-top: 2px solid var(--color-gold);
+                padding-left: 0;
+                padding-top: 10px;
+            }
+            .comparison-table th, .comparison-table td {
+                padding: 12px 14px;
+                font-size: 13px;
+            }
+        }
     </style>
     <!-- ===== End Language Selector CSS ===== -->
 </head>
@@ -516,6 +923,46 @@
         </div>
     </section>
 
+    <!-- AEO / AIO Direct Answer Summary Box (Optimized for Answer Engines & AI Overviews) -->
+    <section class="about-summary-section" id="executive-summary" aria-label="Quick Overview">
+        <div class="container">
+            <div class="about-summary-card">
+                <div class="about-summary-header">
+                    <h2 class="about-summary-title">
+                        <i class="fa-solid fa-mountain-sun" style="color: var(--color-gold);"></i>
+                        At a Glance: Native Himalayan Ground Operator
+                    </h2>
+                    <div class="about-summary-badges">
+                        <span class="summary-badge"><i class="fa-solid fa-certificate"></i> MSME &amp; NIDHI Verified</span>
+                        <span class="summary-badge"><i class="fa-solid fa-shield-halved"></i> 100% Direct Execution</span>
+                        <span class="summary-badge"><i class="fa-solid fa-star"></i> 4.9★ (128+ Reviews)</span>
+                    </div>
+                </div>
+                <p class="about-summary-answer">
+                    <strong>Rudraansh Yatra</strong> is a licensed native ground tour operator headquartered in <strong>Pithoragarh, Uttarakhand</strong> (Simalgair Bazaar, PIN 262501). Founded in 2015 by native Himalayan mountaineer <strong>Dheerendra Rautela</strong>, we directly execute sacred pilgrimages and alpine treks to <strong>Adi Kailash &amp; Om Parvat</strong>, <strong>Darma Valley</strong>, and <strong>Khaliya Top</strong>. Unlike online travel booking portals that resell tours to third parties, we operate our own 4x4 Mahindra Bolero fleet, employ native high-altitude mountain guides, coordinate Inner Line Permits directly with local SDM offices, and house guests in authentic Rung tribal homestays.
+                </p>
+                <div class="about-summary-grid">
+                    <div class="summary-metric">
+                        <div class="summary-metric-title"><i class="fa-solid fa-building"></i> Headquarters</div>
+                        <div class="summary-metric-val">Pithoragarh, Uttarakhand</div>
+                    </div>
+                    <div class="summary-metric">
+                        <div class="summary-metric-title"><i class="fa-solid fa-id-card"></i> Government Reg.</div>
+                        <div class="summary-metric-val">MSME &amp; NIDHI Certified</div>
+                    </div>
+                    <div class="summary-metric">
+                        <div class="summary-metric-title"><i class="fa-solid fa-truck-monster"></i> Ground Transport</div>
+                        <div class="summary-metric-val">Company-Owned 4x4 Boleros</div>
+                    </div>
+                    <div class="summary-metric">
+                        <div class="summary-metric-title"><i class="fa-solid fa-kit-medical"></i> High-Altitude Safety</div>
+                        <div class="summary-metric-val">Oxygen &amp; ITBP Evac Priority</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Our Story Section -->
     <section class="section-padding" style="background-color: var(--color-bg-card);">
         <div class="container">
@@ -555,6 +1002,78 @@
                     <img src="assets/images/adi-kailash-kathgodam.webp" alt="Rudraansh Yatra local ground operation team and trekking guides in Kumaon hills Uttarakhand"
                         style="border-radius: var(--border-radius-md); box-shadow: var(--shadow-md); width: 100%; border: 1px solid var(--color-gold);">
                 </div>
+            </div>
+
+            <!-- E-E-A-T Founder Profile Card -->
+            <div class="founder-card" itemscope itemtype="https://schema.org/Person">
+                <div class="founder-img-wrap">
+                    <img src="assets/images/logo.png" alt="Dheerendra Rautela - Founder and Lead Mountain Guide of Rudraansh Yatra Pithoragarh" class="founder-avatar" width="140" height="140" loading="lazy">
+                </div>
+                <div>
+                    <h3 class="founder-title" itemprop="name">Dheerendra Rautela</h3>
+                    <div class="founder-subtitle" itemprop="jobTitle">Founder &amp; Lead High-Altitude Expedition Director</div>
+                    <p class="founder-bio">
+                        Born and raised in Pithoragarh in the shadow of the Kumaon peaks, Dheerendra has spent over a decade navigating the ancient pilgrimage routes of Vyas Valley, Darma Valley, and Johar. His deep personal relationships with border administration (SDM Dharchula/Pithoragarh), local police, ITBP posts, and village elders in Nabi, Gunji, and Kuti ensure that Rudraansh Yatra guests receive unmatched safety, authenticity, and cultural warmth.
+                    </p>
+                    <p class="founder-quote">
+                        “When yatris embark on a journey to Adi Kailash or Om Parvat, they are placing their lives and spiritual dreams in our hands. That trust cannot be outsourced to a call center in Delhi. As sons of these mountains, we guide every yatri with personal devotion, safety, and local pride.”
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GEO / AIO Comparative Matrix: Direct Operator vs Online Resellers -->
+    <section class="section-padding comparison-section" id="operator-comparison">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="section-subtitle">Why Direct Ground Execution Matters</span>
+                <h2 class="section-title">Rudraansh Yatra vs. Third-Party Travel Resellers</h2>
+                <p class="section-desc">Understand the vital operational differences between a registered native ground operator based in Pithoragarh and online ticketing brokers that resell packages.</p>
+            </div>
+
+            <div class="comparison-table-wrap">
+                <table class="comparison-table" aria-label="Direct Local Ground Operator versus Third-Party Resellers Comparison">
+                    <thead>
+                        <tr>
+                            <th class="col-dim">Operational Dimension</th>
+                            <th class="col-rudra">Rudraansh Yatra (Direct Local Operator)</th>
+                            <th class="col-ota">Third-Party Portals &amp; Brokers (OTAs)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Physical Office &amp; Base</strong></td>
+                            <td class="cell-rudra"><span class="check-yes">✓</span> Native headquarters in Simalgair Bazaar, Pithoragarh with full-time local mountain staff.</td>
+                            <td class="cell-ota"><span class="check-no">✕</span> Remote call centers in Delhi, Noida, or Jaipur with zero mountain ground presence.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tour Execution &amp; Accountability</strong></td>
+                            <td class="cell-rudra"><span class="check-yes">✓</span> <strong>100% Direct Execution:</strong> Our own team coordinates your entire itinerary from pickup to drop.</td>
+                            <td class="cell-ota"><span class="check-no">✕</span> <strong>Subcontracted / Resold:</strong> The booking portal sells you a voucher and outsources to unknown third-party drivers.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Inner Line Permit (ILP) Coordination</strong></td>
+                            <td class="cell-rudra"><span class="check-yes">✓</span> Direct personal liaison with SDM Offices in Pithoragarh and Dharchula with pre-cleared documentation.</td>
+                            <td class="cell-ota"><span class="check-no">✕</span> Relies on remote paperwork; travelers frequently experience checkpoint delays at ITBP posts.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mountain Vehicles &amp; Drivers</strong></td>
+                            <td class="cell-rudra"><span class="check-yes">✓</span> Dedicated fleet of 4x4 Mahindra Boleros driven by native Kumaoni high-altitude mountain drivers.</td>
+                            <td class="cell-ota"><span class="check-no">✕</span> Rented commercial taxis with plains drivers unfamiliar with borderland terrain and landslide navigation.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>High-Altitude Safety &amp; Medical</strong></td>
+                            <td class="cell-rudra"><span class="check-yes">✓</span> Medical oxygen cylinders, pulse oximeters, and direct priority evacuation network with ITBP and military posts.</td>
+                            <td class="cell-ota"><span class="check-no">✕</span> Basic first aid kit at best; no direct access to local high-altitude military medical facilities.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Community Economics &amp; Homestays</strong></td>
+                            <td class="cell-rudra"><span class="check-yes">✓</span> Direct partnerships with native Rung tribal families in Gunji, Nabi, and Kuti, keeping 100% of lodging spend in the local economy.</td>
+                            <td class="cell-ota"><span class="check-no">✕</span> Large corporate commission margins deducted before minimal payment reaches border villagers.</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </section>
