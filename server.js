@@ -3635,7 +3635,7 @@ setInterval(safeSync, 5 * 60 * 1000);
 
 // ── Static Asset Caching ─────────────────────────────────────────────────────
 // Serve images, videos, fonts and versioned CSS/JS with 1-year immutable cache.
-// These files use cache-busting query strings (e.g. style.css?v=8.0) so it is
+// These files use cache-busting query strings (e.g. style.css?v=7.1) so it is
 // safe to cache them for a very long time.
 app.use('/assets', (req, res, next) => {
     res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
