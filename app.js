@@ -739,42 +739,7 @@ document.addEventListener('DOMContentLoaded', () => {
     injectDialogs();
     initializeDiscountPopup();
 
-    // 10. FAQ Accordion Toggle (used on about.html, tour pages, and any page using app.js)
-    document.querySelectorAll('.faq-question').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const item = btn.closest('.faq-item') || btn.closest('.faq-accordion');
-            if (!item) return;
-            // Native <details> tags handle open/close naturally
-            if (item.tagName && item.tagName.toLowerCase() === 'details') return;
 
-            e.preventDefault();
-            const isOpen = item.classList.contains('open') || item.classList.contains('active');
-            const accordion = item.closest('.faq-accordion') || item.parentElement;
-
-            // Close other sibling FAQ items
-            if (accordion) {
-                accordion.querySelectorAll('.faq-item, .faq-accordion').forEach(sibling => {
-                    if (sibling !== item && sibling.tagName && sibling.tagName.toLowerCase() !== 'details') {
-                        sibling.classList.remove('open', 'active');
-                        const ans = sibling.querySelector('.faq-answer');
-                        if (ans) {
-                            ans.style.display = 'none';
-                        }
-                    }
-                });
-            }
-
-            // Toggle current item
-            const answer = item.querySelector('.faq-answer');
-            if (isOpen) {
-                item.classList.remove('open', 'active');
-                if (answer) answer.style.display = 'none';
-            } else {
-                item.classList.add('open', 'active');
-                if (answer) answer.style.display = 'block';
-            }
-        });
-    });
 
 
 // ── BACKEND API CALLS ──
@@ -1399,14 +1364,17 @@ function initializeDiscountPopup() {
             const icon = button.querySelector('i, .faq-icon');
             
             // Check if active
-            const isActive = faqItem.classList.contains('active');
+            const isActive = faqItem.classList.contains('active') || faqItem.classList.contains('open');
             
             // Close all others — reset aria-expanded too
             document.querySelectorAll('.faq-item').forEach(item => {
                 if (item !== faqItem) {
-                    item.classList.remove('active');
+                    item.classList.remove('active', 'open');
                     const otherAnswer = item.querySelector('.faq-answer');
-                    if (otherAnswer) otherAnswer.style.maxHeight = null;
+                    if (otherAnswer) {
+                        otherAnswer.style.maxHeight = null;
+                        otherAnswer.style.display = '';
+                    }
                     const otherIcon = item.querySelector('.faq-question i, .faq-question .faq-icon');
                     if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
                     // Reset aria-expanded on other buttons
@@ -1416,15 +1384,19 @@ function initializeDiscountPopup() {
             });
             
             if (isActive) {
-                faqItem.classList.remove('active');
-                if (answer) answer.style.maxHeight = null;
+                faqItem.classList.remove('active', 'open');
+                if (answer) {
+                    answer.style.maxHeight = null;
+                    answer.style.display = '';
+                }
                 if (icon) icon.style.transform = 'rotate(0deg)';
                 button.setAttribute('aria-expanded', 'false');
             } else {
-                faqItem.classList.add('active');
+                faqItem.classList.add('active', 'open');
                 if (answer) {
+                    answer.style.display = 'block';
                     const h = answer.scrollHeight > 0 ? answer.scrollHeight : 500;
-                    answer.style.maxHeight = h + 'px';
+                    answer.style.maxHeight = (h + 40) + 'px';
                 }
                 if (icon) icon.style.transform = 'rotate(180deg)';
                 button.setAttribute('aria-expanded', 'true');
