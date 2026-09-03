@@ -3105,37 +3105,55 @@ app.get('/api/google-reviews', async (req, res) => {
         user_ratings_total: 34,
         reviews: [
             {
-                author_name: "Ajit Garg",
-                profile_photo_url: "",
+                author_name: "Ranjan Bhatt",
+                profile_photo_url: "https://lh3.googleusercontent.com/a/ACg8ocIp7GFDi4YaR5mXRTAA8baFKFYxp_CZNdsq-C4t4IyaMAr3fA=s128-c0x00000000-cc-rp-mo",
                 rating: 5,
-                text: "I have gone to Kailash Mansarovar Yatra with other three female family members in a conducted tour by Rudraansh Yatra from 22 Aug to 1st September. It was really an amazing trip, Lord shiv...",
-                relative_time_description: "Meerut",
+                text: "I recently completed the Adi Kailash & Om Parvat Yatra with Rudraansh Yatra, and it was truly a memorable experience. The entire trip was very well organized from start to finish. The team was professional, friendly, and always ready to help.",
+                relative_time_description: "a month ago",
                 photos: [
                     "assets/images/om-parvat-group.webp?v=2",
                     "assets/images/adi-kailash-senior-citizens.webp"
                 ]
             },
             {
-                author_name: "Mr. Ankit Kedia",
-                profile_photo_url: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=80&auto=format&fit=crop&q=60",
+                author_name: "Deepak Mehta",
+                profile_photo_url: "https://lh3.googleusercontent.com/a/ACg8ocJyAMsPXyMgLZSQk3ahxcctZVAJrZQk5ADf-FEEuiCzCeCJTA=s128-c0x00000000-cc-rp-mo",
                 rating: 5,
-                text: "It was a dream come true moment for me to travel such a divine and holy place kailash mansarovar yatra. Such a difficult yatra has been made so easy and simple by our travel agency Rudraansh Yatra. I heartily thanks to all...",
-                relative_time_description: "Ranchi",
+                text: "What an amazing trip! Beautiful views, great memories, and unforgettable moments. Can't wait to come back",
+                relative_time_description: "a month ago",
                 photos: [
                     "assets/images/Kailash.webp",
                     "assets/images/adi-kailash-panchachuli.webp"
                 ]
             },
             {
-                author_name: "Balakrishna Siddheshwar",
-                profile_photo_url: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=80&auto=format&fit=crop&q=60",
+                author_name: "Sachin Tiwari",
+                profile_photo_url: "https://lh3.googleusercontent.com/a/ACg8ocJipFGjUGtN4mSZ2XhFJaKYByZeZuuHBUgdFt4-tFBFdIAwqg=s128-c0x00000000-cc-rp-mo",
                 rating: 5,
-                text: "We are very much Thanks to you, & your team supported team, each one is helping nature. The yatra is very beautiful and without any trouble. we have enjoyed lot on every day, by god grace & guidance from...",
-                relative_time_description: "Bangalore",
+                text: "The rudraansh yatra gave me the best travel experience. Everything was well organized, and the hotel and food arrangements were excellent. I truly appreciated the comfort, care, and quality they provided throughout the trip.",
+                relative_time_description: "a month ago",
                 photos: [
                     "assets/images/Panchacholi.webp",
                     "assets/images/khaliya-top.webp"
                 ]
+            },
+            {
+                author_name: "Rohit Bisht",
+                profile_photo_url: "https://lh3.googleusercontent.com/a/ACg8ocJEBfy1K0ku3Ct2pTFfDrfdQFvhh5yZZZpgJ20x2DGhd4CElw=s128-c0x00000000-cc-rp-mo",
+                rating: 5,
+                text: "Best experience with Rudraansh Yatra. The Stay, facilities thier behaviour towards travellers was great.",
+                relative_time_description: "a month ago",
+                photos: [
+                    "assets/images/panchachuli-trek.webp"
+                ]
+            },
+            {
+                author_name: "RaJni mehta",
+                profile_photo_url: "https://lh3.googleusercontent.com/a-/ALV-UjVj7y9sTvl8ewE21e-jCf4DkPW49QQLP1spTdPE8l0dcj1ZNFbi=s128-c0x00000000-cc-rp-mo",
+                rating: 5,
+                text: "My experience was very great and have best safety especially fir girls overall best experience 👍 👌",
+                relative_time_description: "a month ago",
+                photos: []
             }
         ]
     };
