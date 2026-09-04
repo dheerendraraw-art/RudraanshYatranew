@@ -881,6 +881,257 @@
         </div>
     </section>
 
+
+    <!-- Cancellation & Refund Policy Section (inline, above footer) -->
+    <section id="cancellation-policy" style="background:var(--color-bg-subtle,#f8f5f0);padding:72px 0 80px;">
+        <div class="container" style="max-width:900px;">
+
+            <div style="text-align:center;margin-bottom:40px;">
+                <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(212,175,55,0.12);border:1px solid rgba(212,175,55,0.35);color:#b8962e;border-radius:50px;padding:6px 18px;font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px;">
+                    <i class="fa-solid fa-rotate-left"></i> Cancellation &amp; Refund Policy
+                </div>
+                <h2 style="font-family:var(--font-serif,'Cormorant Garamond',serif);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:600;color:var(--color-primary,#0a1628);margin-bottom:10px;">
+                    Our Cancellation &amp; Refund Policy
+                </h2>
+                <p style="font-size:15px;color:var(--color-text-secondary,#4a5568);max-width:600px;margin:0 auto;line-height:1.7;">
+                    We believe in complete transparency. Below is the exact policy that applies to this package — no hidden clauses.
+                </p>
+            </div>
+
+            <style>
+                #cancellation-policy .crp-card {
+                    background: #fff;
+                    border: 1px solid rgba(10,22,40,0.1);
+                    border-radius: 14px;
+                    padding: 32px 36px;
+                    margin-bottom: 20px;
+                    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+                }
+                #cancellation-policy .crp-h3 {
+                    font-family: var(--font-serif,'Cormorant Garamond',serif);
+                    font-size: 1.15rem;
+                    font-weight: 600;
+                    color: var(--color-primary,#0a1628);
+                    margin: 0 0 18px 0;
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                }
+                #cancellation-policy .crp-h3 i {
+                    color: #d4af37;
+                    font-size: 1rem;
+                }
+                #cancellation-policy .crp-table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    border-radius: 10px;
+                    overflow: hidden;
+                    font-size: 14.5px;
+                }
+                #cancellation-policy .crp-table th {
+                    background: var(--color-primary,#0a1628);
+                    color: #d4af37;
+                    padding: 11px 16px;
+                    text-align: left;
+                    font-weight: 700;
+                    font-size: 13px;
+                    letter-spacing: .03em;
+                }
+                #cancellation-policy .crp-table td {
+                    padding: 12px 16px;
+                    border-bottom: 1px solid #f0ede8;
+                    color: var(--color-text-secondary,#4a5568);
+                    vertical-align: middle;
+                }
+                #cancellation-policy .crp-table tr:last-child td { border-bottom: none; }
+                #cancellation-policy .crp-table tr:nth-child(odd) td { background: #fafaf8; }
+                #cancellation-policy .crp-badge { display:inline-block;padding:3px 10px;border-radius:12px;font-size:12.5px;font-weight:700; }
+                #cancellation-policy .crp-badge.green { background:rgba(22,163,74,.1);color:#16a34a; }
+                #cancellation-policy .crp-badge.amber { background:rgba(217,119,6,.1);color:#b45309; }
+                #cancellation-policy .crp-badge.red   { background:rgba(220,38,38,.1);color:#dc2626; }
+                #cancellation-policy .crp-list {
+                    padding: 0;
+                    margin: 0;
+                    list-style: none;
+                }
+                #cancellation-policy .crp-list li {
+                    display: flex;
+                    align-items: flex-start;
+                    gap: 10px;
+                    font-size: 14.5px;
+                    color: var(--color-text-secondary,#4a5568);
+                    padding: 7px 0;
+                    border-bottom: 1px solid #f0ede8;
+                    line-height: 1.6;
+                }
+                #cancellation-policy .crp-list li:last-child { border-bottom: none; }
+                #cancellation-policy .crp-list li i { color: #d4af37; font-size: 13px; flex-shrink:0; margin-top:3px; }
+                #cancellation-policy .crp-note {
+                    background: rgba(212,175,55,0.07);
+                    border-left: 3px solid #d4af37;
+                    border-radius: 0 8px 8px 0;
+                    padding: 14px 18px;
+                    font-size: 14px;
+                    color: var(--color-text-secondary,#4a5568);
+                    margin-top: 18px;
+                    line-height: 1.7;
+                }
+                #cancellation-policy .crp-cta {
+                    background: var(--color-primary,#0a1628);
+                    color: #fff;
+                    border-radius: 14px;
+                    padding: 28px 32px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    gap: 20px;
+                    flex-wrap: wrap;
+                    margin-top: 24px;
+                }
+                #cancellation-policy .crp-cta-text h4 {
+                    font-family: var(--font-serif,'Cormorant Garamond',serif);
+                    font-size: 1.15rem;
+                    font-weight: 600;
+                    color: #fbbf24;
+                    margin: 0 0 4px 0;
+                }
+                #cancellation-policy .crp-cta-text p {
+                    font-size: 13.5px;
+                    color: rgba(244,241,234,0.75);
+                    margin: 0;
+                }
+                #cancellation-policy .crp-cta-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+                #cancellation-policy .crp-btn {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 7px;
+                    padding: 10px 18px;
+                    border-radius: 8px;
+                    font-weight: 700;
+                    font-size: 13.5px;
+                    text-decoration: none;
+                    white-space: nowrap;
+                }
+                #cancellation-policy .crp-btn.wa  { background:#22c55e;color:#fff; }
+                #cancellation-policy .crp-btn.pol { background:rgba(212,175,55,0.15);border:1px solid rgba(212,175,55,0.4);color:#d4af37; }
+                @media(max-width:680px){
+                    #cancellation-policy .crp-card { padding:20px 16px; }
+                    #cancellation-policy .crp-cta { padding:20px 16px; flex-direction:column; align-items:flex-start; }
+                    #cancellation-policy .crp-btn { font-size:13px;padding:9px 14px;width:100%;justify-content:center;box-sizing:border-box; }
+                    #cancellation-policy .crp-cta-btns { flex-direction:column;width:100%; }
+                    #cancellation-policy .crp-table th, #cancellation-policy .crp-table td { padding:10px 10px;font-size:13px; }
+                }
+            </style>
+
+            <!-- Card 1: Refund Schedule Table -->
+            <div class="crp-card">
+                <h3 class="crp-h3"><i class="fa-solid fa-table-cells"></i> Cancellation Window &amp; Refund Schedule</h3>
+                <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:10px;border:1px solid #e8e4dc;">
+                    <table class="crp-table">
+                        <thead>
+                            <tr>
+                                <th>Days Before Departure</th>
+                                <th>Refund Amount</th>
+                                <th>Amount Retained</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>30 days or more</strong></td>
+                                <td><span class="crp-badge green">75% refunded</span></td>
+                                <td>25% — admin, permit application &amp; pre-committed costs</td>
+                            </tr>
+                            <tr>
+                                <td><strong>15 to 29 days</strong></td>
+                                <td><span class="crp-badge amber">50% refunded</span></td>
+                                <td>50% — operator costs largely committed by this stage</td>
+                            </tr>
+                            <tr>
+                                <td><strong>7 to 14 days</strong></td>
+                                <td><span class="crp-badge amber">25% refunded</span></td>
+                                <td>75% — vehicles, homestays &amp; permits fully blocked</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Less than 7 days</strong></td>
+                                <td><span class="crp-badge red">No refund</span></td>
+                                <td>100% — all resources deployed for your trip</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Booking advance / deposit</strong></td>
+                                <td><span class="crp-badge red">Non-refundable</span></td>
+                                <td>Always retained regardless of when you cancel</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="crp-note">
+                    <strong>Why are deductions applied?</strong> When you book, costs are committed immediately: government Inner Line Permit fees (SDM Dharchula), advance payments to Gunji &amp; Nabi homestays, 4x4 vehicle reservations, and guide coordination. These costs are non-recoverable even if you cancel weeks in advance.
+                </div>
+            </div>
+
+            <!-- Card 2: Date Changes & Rescheduling -->
+            <div class="crp-card">
+                <h3 class="crp-h3"><i class="fa-solid fa-calendar-days"></i> Date Change &amp; Rescheduling</h3>
+                <ul class="crp-list">
+                    <li><i class="fa-solid fa-circle-check"></i><span><strong>30+ days before departure:</strong> One complimentary date change per booking — free of charge, subject to availability of slots, permits &amp; accommodation.</span></li>
+                    <li><i class="fa-solid fa-circle-exclamation" style="color:#d97706"></i><span><strong>15–29 days before departure:</strong> Rescheduling fee of ₹1,500 per person applies. New dates subject to availability.</span></li>
+                    <li><i class="fa-solid fa-circle-xmark" style="color:#dc2626"></i><span><strong>Less than 15 days before departure:</strong> Treated as a full cancellation — standard cancellation schedule above applies.</span></li>
+                </ul>
+                <div class="crp-note">
+                    Rescheduled tours are priced at the rate applicable on the new travel date, which may differ from your original booking price.
+                </div>
+            </div>
+
+            <!-- Card 3: Non-Refundable Items -->
+            <div class="crp-card">
+                <h3 class="crp-h3"><i class="fa-solid fa-ban"></i> Non-Refundable Items (Under All Circumstances)</h3>
+                <ul class="crp-list">
+                    <li><i class="fa-solid fa-file-contract"></i><span><strong>Inner Line Permit (ILP) fees</strong> paid to the SDM Office, Dharchula — once applied, these cannot be recovered from the government.</span></li>
+                    <li><i class="fa-solid fa-money-bill"></i><span><strong>Booking advance / deposit</strong> (30–50% of total tour cost) paid at confirmation — always retained.</span></li>
+                    <li><i class="fa-solid fa-helicopter"></i><span><strong>Third-party services already paid</strong> — helicopter bookings, specific homestay advances, and prepaid vehicle reservations.</span></li>
+                    <li><i class="fa-solid fa-credit-card"></i><span><strong>Payment gateway charges</strong> (typically 2–3% of transaction value) are not refunded.</span></li>
+                    <li><i class="fa-solid fa-person-walking"></i><span><strong>Services already delivered</strong> before your cancellation date — any portion of the tour that has commenced.</span></li>
+                </ul>
+            </div>
+
+            <!-- Card 4: Cancellation by Rudraansh Yatra + No-Show (side by side on desktop) -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+                <div class="crp-card" style="margin-bottom:0;">
+                    <h3 class="crp-h3"><i class="fa-solid fa-building-circle-xmark"></i> If We Cancel</h3>
+                    <ul class="crp-list">
+                        <li><i class="fa-solid fa-cloud-bolt" style="color:#0284c7"></i><span>Force majeure (weather, disaster, govt. restriction) — all <em>recoverable</em> costs refunded; non-recoverable costs communicated transparently.</span></li>
+                        <li><i class="fa-solid fa-circle-check"></i><span>Cancellation within our control (minimum group not met, operator failure) — <strong>full refund</strong> processed within 7 business days.</span></li>
+                    </ul>
+                </div>
+                <div class="crp-card" style="margin-bottom:0;">
+                    <h3 class="crp-h3"><i class="fa-solid fa-person-circle-question"></i> No-Show Policy</h3>
+                    <ul class="crp-list">
+                        <li><i class="fa-solid fa-circle-xmark" style="color:#dc2626"></i><span>Failure to arrive at the assembly point on departure day <em>without</em> written cancellation: treated as &lt;7 days cancellation — <strong>no refund</strong>.</span></li>
+                        <li><i class="fa-solid fa-phone"></i><span>Genuine emergency (medical, road blockage)? Call us immediately at <a href="tel:+917617617651" style="color:#d4af37;font-weight:600;">+91 7617617651</a> — we assess case-by-case.</span></li>
+                    </ul>
+                </div>
+            </div>
+            <style>@media(max-width:640px){#cancellation-policy .crp-grid-2{grid-template-columns:1fr!important;}}</style>
+
+            <!-- CTA bar -->
+            <div class="crp-cta">
+                <div class="crp-cta-text">
+                    <h4>Questions About Cancellation?</h4>
+                    <p>Contact us before cancelling — a date change is often a better option and may cost nothing.</p>
+                </div>
+                <div class="crp-cta-btns">
+                    <a href="https://wa.me/917617617651?text=Hi!%20I%20have%20a%20question%20about%20cancellation%20or%20rescheduling%20my%20booking." target="_blank" rel="noopener" class="crp-btn wa">
+                        <i class="fa-brands fa-whatsapp"></i> WhatsApp Us
+                    </a>
+                    <a href="/refund-policy" class="crp-btn pol">
+                        <i class="fa-solid fa-file-lines"></i> Full Policy
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer>
         <div class="container footer-grid">
