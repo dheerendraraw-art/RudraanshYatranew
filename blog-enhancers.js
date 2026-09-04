@@ -3589,43 +3589,42 @@ BLOG_ENHANCERS['5-things-you-need-to-do-before-planning-a-trip-to-adi-kailash'] 
 }
 </script>`,
 
-    // ── RENDER: Full SEO/GEO/AIO/AEO structured content ─────────────────────
     render(paragraphsHtml) {
         const topBanner = `
 <style>
-.ry-5t-banner{background:linear-gradient(135deg,#0a1628 0%,#0f2444 100%);border:2px solid #d4af37;border-radius:14px;padding:22px 24px;margin:0 0 28px 0;color:#fff;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.ry-5t-banner{background:linear-gradient(135deg,#0a1628 0%,#0f2444 100%);border:2px solid #d4af37;border-radius:14px;padding:22px 24px;margin:0 0 28px 0;color:#fff;box-shadow:0 10px 30px rgba(0,0,0,.5);box-sizing:border-box;width:100%;max-width:100%;overflow:hidden}
 .ry-5t-banner-head{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
 .ry-5t-banner-title{color:#fbbf24;font-size:18px;font-weight:700;line-height:1.3}
 .ry-5t-banner-desc{font-size:14.5px;color:#e2e8f0;line-height:1.65;margin-bottom:14px}
-.ry-5t-warning{background:rgba(239,68,68,.12);border-left:3px solid #ef4444;padding:10px 14px;border-radius:0 6px 6px 0;margin-bottom:16px;font-size:13.5px;color:#fca5a5}
+.ry-5t-warning{background:rgba(239,68,68,.12);border-left:3px solid #ef4444;padding:10px 12px;border-radius:0 6px 6px 0;margin-bottom:16px;font-size:13.5px;color:#fca5a5;box-sizing:border-box;width:100%;max-width:100%;word-break:break-word}
 .ry-5t-checklist{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
-.ry-5t-check-item{display:inline-flex;align-items:center;gap:6px;background:rgba(212,175,55,.1);border:1px solid rgba(212,175,55,.3);border-radius:20px;padding:4px 12px;font-size:12.5px;color:#fde68a;font-weight:600}
-.ry-5t-btn-row{display:flex;gap:10px;flex-wrap:wrap}
-.ry-5t-btn{padding:11px 20px;border-radius:8px;text-decoration:none;font-weight:700;font-size:13.5px;display:inline-flex;align-items:center;gap:8px}
+.ry-5t-check-item{display:inline-flex;align-items:center;gap:6px;background:rgba(212,175,55,.1);border:1px solid rgba(212,175,55,.3);border-radius:20px;padding:5px 12px;font-size:12.5px;color:#fde68a;font-weight:600;max-width:100%;box-sizing:border-box}
+.ry-5t-btn-row{display:flex;gap:10px;flex-wrap:wrap;width:100%}
+.ry-5t-btn{padding:11px 20px;border-radius:8px;text-decoration:none;font-weight:700;font-size:13.5px;display:inline-flex;align-items:center;gap:8px;box-sizing:border-box}
 .ry-5t-btn.wa{background:#22c55e;color:#fff;box-shadow:0 4px 14px rgba(34,197,94,.35)}
 .ry-5t-btn.pkg{background:#d4af37;color:#0f172a;box-shadow:0 4px 14px rgba(212,175,55,.3)}
-.ry-5t-nav{background:rgba(15,23,42,.5);border:1px solid rgba(212,175,55,.25);border-radius:10px;padding:14px 16px;margin-bottom:28px;font-size:13.5px;color:#cbd5e1}
+.ry-5t-nav{background:rgba(15,23,42,.5);border:1px solid rgba(212,175,55,.25);border-radius:10px;padding:14px 16px;margin-bottom:28px;font-size:13.5px;color:#cbd5e1;box-sizing:border-box;width:100%;max-width:100%;overflow:hidden}
 .ry-5t-nav strong{color:#fbbf24;display:block;margin-bottom:8px}
 .ry-5t-nav-pills{display:flex;flex-wrap:wrap;gap:7px}
-.ry-5t-nav-pill{color:#93c5fd;text-decoration:none;background:rgba(147,197,253,.1);padding:4px 10px;border-radius:20px;border:1px solid rgba(147,197,253,.2);white-space:nowrap}
-.ry-5t-bottom{background:#0f172a;border:2px dashed rgba(212,175,55,.5);border-radius:12px;padding:22px 24px;margin:32px 0 8px 0;color:#fff}
-.ry-5t-bottom-title{font-size:15px;font-weight:700;color:#fbbf24;margin-bottom:8px}
-.ry-5t-bottom-desc{font-size:14px;color:#e2e8f0;line-height:1.65;margin-bottom:16px}
-.ry-5t-bottom-btn-row{display:flex;gap:10px;flex-wrap:wrap}
-.ry-5t-bottom-btn{padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:700;font-size:13.5px;display:inline-flex;align-items:center;gap:7px}
+.ry-5t-nav-pill{color:#93c5fd;text-decoration:none;background:rgba(147,197,253,.1);padding:5px 11px;border-radius:20px;border:1px solid rgba(147,197,253,.2);font-size:12.5px;display:inline-flex;align-items:center;max-width:100%;box-sizing:border-box}
+.ry-5t-bottom{background:#0f172a;border:2px dashed rgba(212,175,55,.5);border-radius:12px;padding:22px 24px;margin:32px 0 8px 0;color:#fff;box-sizing:border-box;width:100%;max-width:100%;overflow:hidden}
+.ry-5t-bottom-title{font-size:15px;font-weight:700;color:#fbbf24;margin-bottom:8px;word-break:break-word}
+.ry-5t-bottom-desc{font-size:14px;color:#e2e8f0;line-height:1.65;margin-bottom:16px;word-break:break-word}
+.ry-5t-bottom-btn-row{display:flex;gap:10px;flex-wrap:wrap;width:100%}
+.ry-5t-bottom-btn{padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:700;font-size:13.5px;display:inline-flex;align-items:center;gap:7px;box-sizing:border-box}
 .ry-5t-bottom-btn.wa{background:#22c55e;color:#fff}
 .ry-5t-bottom-btn.call{background:transparent;border:1.5px solid #d4af37;color:#d4af37}
-.ry-5t-also{margin-top:14px;font-size:13px;color:#94a3b8}
+.ry-5t-also{margin-top:14px;font-size:13px;color:#94a3b8;word-break:break-word;line-height:1.6}
 .ry-5t-also a{color:#93c5fd}
-.ry-5t-speakable{background:#f0f9ff;border:1.5px solid #bae6fd;border-radius:10px;padding:16px 20px;margin:24px 0;font-size:14.5px;color:#0c4a6e;line-height:1.8}
+.ry-5t-speakable{background:#f0f9ff;border:1.5px solid #bae6fd;border-radius:10px;padding:16px 20px;margin:24px 0;font-size:14.5px;color:#0c4a6e;line-height:1.8;box-sizing:border-box;width:100%;max-width:100%;word-break:break-word}
 .ry-5t-speakable strong{color:#0a1628}
-.ry-5t-quote{background:linear-gradient(135deg,rgba(10,22,40,.04),rgba(212,175,55,.05));border-left:4px solid #d4af37;border-radius:0 10px 10px 0;padding:16px 20px;margin:24px 0;font-style:italic;color:#334155;font-size:15px;line-height:1.75}
+.ry-5t-quote{background:linear-gradient(135deg,rgba(10,22,40,.04),rgba(212,175,55,.05));border-left:4px solid #d4af37;border-radius:0 10px 10px 0;padding:16px 20px;margin:24px 0;font-style:italic;color:#334155;font-size:14.5px;line-height:1.75;box-sizing:border-box;width:100%;max-width:100%;word-break:break-word}
 .ry-5t-quote cite{display:block;margin-top:8px;font-style:normal;font-size:12.5px;font-weight:700;color:#0a1628}
-.ry-5t-doclist{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:20px 0}
-.ry-5t-docitem{display:flex;align-items:flex-start;gap:8px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:10px 12px;font-size:13.5px;color:#334155}
-.ry-5t-docitem i{color:#16a34a;font-size:14px;flex-shrink:0;margin-top:1px}
-.ry-5t-season-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0}
-.ry-5t-season-card{border-radius:10px;padding:14px 16px}
+.ry-5t-doclist{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:20px 0;width:100%;box-sizing:border-box}
+.ry-5t-docitem{display:flex;align-items:flex-start;gap:8px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:10px 12px;font-size:13.5px;color:#334155;box-sizing:border-box;word-break:break-word}
+.ry-5t-docitem i{color:#16a34a;font-size:14px;flex-shrink:0;margin-top:2px}
+.ry-5t-season-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0;width:100%;box-sizing:border-box}
+.ry-5t-season-card{border-radius:10px;padding:14px 16px;box-sizing:border-box;word-break:break-word}
 .ry-5t-season-card.go{background:rgba(34,197,94,.07);border:1.5px solid rgba(34,197,94,.3)}
 .ry-5t-season-card.avoid{background:rgba(239,68,68,.06);border:1.5px solid rgba(239,68,68,.25)}
 .ry-5t-season-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}
@@ -3633,37 +3632,55 @@ BLOG_ENHANCERS['5-things-you-need-to-do-before-planning-a-trip-to-adi-kailash'] 
 .ry-5t-season-card.avoid .ry-5t-season-label{color:#dc2626}
 .ry-5t-season-months{font-size:15px;font-weight:700;color:#0a1628;margin-bottom:4px}
 .ry-5t-season-note{font-size:12.5px;color:#64748b}
-.ry-5t-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:10px;border:1px solid #e2e8f0;margin:20px 0}
-.ry-5t-mtable{width:100%;border-collapse:collapse;font-size:14px}
+.ry-5t-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:10px;border:1px solid #e2e8f0;margin:20px 0;width:100%;max-width:100%;box-sizing:border-box}
+.ry-5t-mtable{width:100%;min-width:480px;border-collapse:collapse;font-size:13.5px}
 .ry-5t-mtable th{background:#0a1628;color:#d4af37;padding:11px 14px;text-align:left;font-weight:700;font-size:12.5px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
 .ry-5t-mtable td{padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#334155;vertical-align:top}
 .ry-5t-mtable tr:last-child td{border-bottom:none}
 .ry-5t-mtable tr:nth-child(even) td{background:#f8fafc}
 .ry-5t-mtable .tl-day{font-weight:700;color:#0a1628;white-space:nowrap}
-.tl-badge{display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700}
+.tl-badge{display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;white-space:nowrap}
 .tl-badge.ok{background:rgba(34,197,94,.1);color:#16a34a}
 .tl-badge.closed{background:rgba(239,68,68,.1);color:#ef4444}
 .tl-badge.warn{background:rgba(245,158,11,.1);color:#d97706}
 @media(max-width:680px){
   .ry-5t-banner{padding:16px 14px;border-radius:10px;margin-bottom:20px}
-  .ry-5t-banner-title{font-size:15px}
-  .ry-5t-banner-desc{font-size:13.5px;margin-bottom:12px}
-  .ry-5t-btn{font-size:13px;padding:10px 14px;width:100%;justify-content:center;box-sizing:border-box}
+  .ry-5t-banner-title{font-size:15.5px}
+  .ry-5t-banner-desc{font-size:13px;line-height:1.6;margin-bottom:12px}
+  .ry-5t-warning{font-size:12.5px;padding:9px 10px;margin-bottom:14px}
+  .ry-5t-checklist{gap:6px;margin-bottom:14px}
+  .ry-5t-check-item{font-size:11.5px;padding:4px 9px}
+  .ry-5t-btn{font-size:13px;padding:11px 14px;width:100%;justify-content:center;box-sizing:border-box}
   .ry-5t-btn-row{flex-direction:column;gap:8px}
-  .ry-5t-nav{padding:12px}
-  .ry-5t-nav-pill{font-size:12px;padding:3px 8px}
-  .ry-5t-bottom{padding:16px 14px;border-radius:10px}
-  .ry-5t-bottom-btn{font-size:13px;padding:10px 14px;width:100%;justify-content:center;box-sizing:border-box}
+  .ry-5t-nav{padding:12px 10px;margin-bottom:20px}
+  .ry-5t-nav strong{font-size:13px}
+  .ry-5t-nav-pills{gap:5px}
+  .ry-5t-nav-pill{font-size:11.5px;padding:4px 8px}
+  .ry-5t-speakable{padding:13px 12px;font-size:13.5px;line-height:1.65;margin:18px 0}
+  .ry-5t-quote{padding:12px 12px;font-size:13px;line-height:1.65;margin:18px 0}
+  .ry-5t-bottom{padding:16px 14px;border-radius:10px;margin:24px 0 8px 0}
+  .ry-5t-bottom-title{font-size:14px}
+  .ry-5t-bottom-desc{font-size:13px;line-height:1.6;margin-bottom:14px}
+  .ry-5t-bottom-btn{font-size:13px;padding:11px 14px;width:100%;justify-content:center;box-sizing:border-box}
   .ry-5t-bottom-btn-row{flex-direction:column;gap:8px}
-  .ry-5t-doclist{grid-template-columns:1fr;gap:8px}
-  .ry-5t-season-row{grid-template-columns:1fr;gap:10px}
-  .ry-5t-mtable td,.ry-5t-mtable th{padding:8px 10px;font-size:13px}
+  .ry-5t-doclist{grid-template-columns:1fr;gap:8px;margin:14px 0}
+  .ry-5t-docitem{padding:9px 10px;font-size:12.5px}
+  .ry-5t-season-row{grid-template-columns:1fr;gap:10px;margin:14px 0}
+  .ry-5t-season-card{padding:12px 10px}
+  .ry-5t-season-months{font-size:14px}
+  .ry-5t-season-note{font-size:12px}
+  .ry-5t-table-wrap{margin:16px 0}
+  .ry-5t-mtable td,.ry-5t-mtable th{padding:8px 10px;font-size:12.5px}
+  .ry-5t-also{font-size:12px;line-height:1.6}
 }
 @media(max-width:380px){
   .ry-5t-banner{padding:12px 10px}
   .ry-5t-banner-title{font-size:14px}
-  .ry-5t-btn{font-size:12px;padding:9px 10px}
-  .ry-5t-bottom-btn{font-size:12px;padding:9px 10px}
+  .ry-5t-banner-desc{font-size:12.5px}
+  .ry-5t-btn{font-size:12px;padding:10px 10px}
+  .ry-5t-bottom-btn{font-size:12px;padding:10px 10px}
+  .ry-5t-check-item{font-size:11px;padding:3px 7px}
+  .ry-5t-nav-pill{font-size:11px;padding:3px 7px}
 }
 </style>
 
