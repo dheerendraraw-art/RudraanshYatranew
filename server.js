@@ -1058,34 +1058,75 @@ app.get('/blog/:slug', async (req, res) => {
         }
 
 
+        // ── Build per-post OG/Twitter/canonical values ─────────────────────────
+        // OG title: use enhancer title (if any) or fall back to blog.title + suffix
+        const ogTitle = parikramaMetaOverride
+            ? parikramaMetaOverride.title
+            : `${blog.title} | Rudraansh Yatra`;
+
+        // DATE_MODIFIED: prefer enhancer dateModified, then blog.created_at
+        const dateModified = (parikramaMetaOverride && parikramaMetaOverride.dateModified)
+            ? parikramaMetaOverride.dateModified
+            : blog.created_at;
+
+        // OG image alt text
+        const ogImageAlt = `${blog.title} — Rudraansh Yatra, Pithoragarh`;
+
+        // Article section: use enhancer-specified or derive from slug
+        const articleSection = (() => {
+            if (targetSlug.includes('permit') || targetSlug.includes('ilp')) return 'Permits & Documentation';
+            if (targetSlug.includes('packing') || targetSlug.includes('gear')) return 'Packing & Gear';
+            if (targetSlug.includes('cost') || targetSlug.includes('budget') || targetSlug.includes('price')) return 'Cost & Budget';
+            if (targetSlug.includes('best-time') || targetSlug.includes('season') || targetSlug.includes('weather')) return 'Travel Seasons';
+            if (targetSlug.includes('difficulty') || targetSlug.includes('beginner')) return 'Travel Fitness';
+            if (targetSlug.includes('senior') || targetSlug.includes('age')) return 'Senior Travel';
+            if (targetSlug.includes('run') || targetSlug.includes('marathon') || targetSlug.includes('ultra')) return 'Adventure Sports';
+            if (targetSlug.includes('status') || targetSlug.includes('suspension') || targetSlug.includes('update')) return 'Route Updates';
+            if (targetSlug.includes('5-things') || targetSlug.includes('checklist') || targetSlug.includes('guide')) return 'Travel Guides & Checklists';
+            if (targetSlug.includes('kailash') || targetSlug.includes('parvat') || targetSlug.includes('yatra')) return 'Pilgrimage Guides';
+            return 'Himalayan Travel';
+        })();
+
+        // Article tag: derive primary keyword from slug
+        const articleTag = (() => {
+            if (targetSlug.includes('adi-kailash')) return 'Adi Kailash Yatra';
+            if (targetSlug.includes('kailash-mansarovar')) return 'Kailash Mansarovar Yatra';
+            if (targetSlug.includes('om-parvat')) return 'Om Parvat';
+            if (targetSlug.includes('lipulekh')) return 'Lipulekh Pass';
+            if (targetSlug.includes('khaliya')) return 'Khaliya Top Trek';
+            if (targetSlug.includes('darma')) return 'Darma Valley';
+            if (targetSlug.includes('panchachuli')) return 'Panchachuli Base Camp';
+            return 'Kumaon Himalaya';
+        })();
+
         // Generic template variable replacements
         blogHtml = blogHtml
-            .replace(/{{META_TITLE}}/g, `${blog.title} - Rudraansh Yatra Diaries`)
+            .replace(/{{META_TITLE}}/g, ogTitle)
+            .replace(/{{OG_TITLE}}/g, ogTitle.replace(/"/g, '&quot;'))
             .replace(/{{META_DESC}}/g, metaDescriptionVal.replace(/"/g, '&quot;'))
             .replace(/{{CANONICAL_URL}}/g, canonicalUrl)
             .replace(/{{OG_IMAGE}}/g, ogImageUrl)
+            .replace(/{{OG_IMAGE_ALT}}/g, ogImageAlt.replace(/"/g, '&quot;'))
+            .replace(/{{DATE_MODIFIED}}/g, dateModified)
+            .replace(/{{ARTICLE_SECTION}}/g, articleSection)
+            .replace(/{{ARTICLE_TAG}}/g, articleTag)
             .replace(/{{TITLE}}/g, blog.title)
-            .replace(/{{AUTHOR}}/g, blog.author)
+            .replace(/{{AUTHOR}}/g, blog.author || 'Dheerendra Rautela')
             .replace(/{{DATE}}/g, dateStr)
             .replace(/{{IMAGE}}/g, resolvedMainImg)
             .replace(/{{IMAGE_ALT}}/g, imageAlt)
             .replace(/{{CONTENT}}/g, contentHtml + extraSchemas)
             .replace(/{{ADJACENT_BLOGS}}/g, adjacentBlogsHtml)
             .replace(/{{SLUG}}/g, `/blog/${blog.slug}`)
-            .replace(/{{CREATED_AT}}/g, blog.created_at)
-            .replace(/{{UPDATED_AT}}/g, blog.updated_at || blog.created_at);
+            .replace(/{{CREATED_AT}}/g, blog.created_at);
 
         // ── Apply parikrama-specific meta & H1 overrides AFTER generic replacements ──
+        // (parikramaMetaOverride title/desc are already baked in via ogTitle above;
+        //  these regex passes catch any stale fallback values in the H1 and BlogPosting schema)
         if (parikramaMetaOverride) {
             blogHtml = blogHtml
-                .replace(/<title>[^<]*<\/title>/, `<title>${parikramaMetaOverride.title}</title>`)
-                .replace(/(<h1 class="blog-detail-title">)[^<]*(<\/h1>)/, `$1${parikramaMetaOverride.title}$2`)
-                .replace(/(<meta name="description" content=")[^"]*(")/, `$1${parikramaMetaOverride.desc.replace(/"/g, '&quot;')}$2`)
-                .replace(/(<meta property="og:title" content=")[^"]*(")/, `$1${parikramaMetaOverride.title.replace(/"/g, '&quot;')}$2`)
-                .replace(/(<meta name="twitter:title" content=")[^"]*(")/, `$1${parikramaMetaOverride.title.replace(/"/g, '&quot;')}$2`)
-                .replace(/(<meta property="og:description" content=")[^"]*(")/, `$1${parikramaMetaOverride.desc.replace(/"/g, '&quot;')}$2`)
-                .replace(/(<meta name="twitter:description" content=")[^"]*(")/, `$1${parikramaMetaOverride.desc.replace(/"/g, '&quot;')}$2`)
-                .replace(/(<meta property="article:modified_time" content=")[^"]*(")/, `$1${parikramaMetaOverride.dateModified}$2`);
+                .replace(/<title>[^<]*<\/title>/, `<title>${parikramaMetaOverride.title}<\/title>`)
+                .replace(/(<h1 class="blog-detail-title">)[^<]*(<\/h1>)/, `$1${parikramaMetaOverride.title}$2`);
         }
 
         // Enable HTTP Edge Cache Control for fast TTFB & instant response

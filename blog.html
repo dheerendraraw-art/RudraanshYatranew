@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hi-IN">
+<html lang="en-IN">
 
 <head>
     <!-- ===== Google Analytics 4 ===== -->
@@ -24,20 +24,29 @@
 
     <!-- Open Graph / Facebook Meta Tags -->
     <meta property="og:type" content="article">
-    <meta property="og:title" content="{{META_TITLE}}">
+    <meta property="og:locale" content="en_IN">
+    <meta property="og:title" content="{{OG_TITLE}}">
     <meta property="og:description" content="{{META_DESC}}">
     <meta property="og:url" content="{{CANONICAL_URL}}">
     <meta property="og:image" content="{{OG_IMAGE}}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="675">
+    <meta property="og:image:alt" content="{{OG_IMAGE_ALT}}">
     <meta property="og:site_name" content="Rudraansh Yatra">
     <meta property="article:published_time" content="{{CREATED_AT}}">
-    <meta property="article:modified_time" content="{{UPDATED_AT}}">
+    <meta property="article:modified_time" content="{{DATE_MODIFIED}}">
     <meta property="article:author" content="{{AUTHOR}}">
+    <meta property="article:section" content="{{ARTICLE_SECTION}}">
+    <meta property="article:tag" content="{{ARTICLE_TAG}}">
 
-    <!-- Twitter Card Meta Tags -->
+    <!-- Twitter / X Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{META_TITLE}}">
+    <meta name="twitter:site" content="@RudraanshYatra">
+    <meta name="twitter:creator" content="@RudraanshYatra">
+    <meta name="twitter:title" content="{{OG_TITLE}}">
     <meta name="twitter:description" content="{{META_DESC}}">
     <meta name="twitter:image" content="{{OG_IMAGE}}">
+    <meta name="twitter:image:alt" content="{{OG_IMAGE_ALT}}">
     <meta name="twitter:url" content="{{CANONICAL_URL}}">
 
     <!-- Schema Markup for Blog Post and Local Business -->
@@ -67,7 +76,7 @@
             "@id": "https://rudraanshyatra.com/#organization"
           },
           "datePublished": "{{CREATED_AT}}",
-          "dateModified": "{{UPDATED_AT}}"
+          "dateModified": "{{DATE_MODIFIED}}"
         },
         {
           "@type": "BreadcrumbList",
