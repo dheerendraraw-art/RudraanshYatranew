@@ -6623,13 +6623,17 @@ html, body {
         gap: 10px !important;
     }
 
-    /* Sidebar promo cards — full-width, lighter padding */
+    /* Sidebar promo cards — vertical stack (1fr) on mobile viewports */
     .sidebar-promo-card {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
         border-radius: 12px !important;
     }
 
     .promo-card-img-wrap {
+        width: 100% !important;
         height: 160px !important;
+        min-height: unset !important;
     }
 
     .promo-card-body {

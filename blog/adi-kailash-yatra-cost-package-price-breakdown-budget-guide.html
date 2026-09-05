@@ -664,11 +664,8 @@
             .breadcrumbs-list [aria-current="page"] span { max-width: 120px; }
 
             /* Promo cards: back to vertical stack */
-            .sidebar-promo-card {
-                display: block !important;
-                grid-template-columns: unset !important;
-            }
-            .promo-card-img-wrap { height: 155px !important; }
+            .sidebar-promo-card { display: grid !important; grid-template-columns: 1fr !important; }
+            .promo-card-img-wrap { width: 100% !important; height: 160px !important; min-height: unset !important; }
             .promo-card-body { padding: 14px 14px !important; }
             .promo-card-title { font-size: 17px !important; }
             .promo-card-desc { font-size: 13px !important; }
