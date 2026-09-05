@@ -187,6 +187,12 @@ img {
         word-wrap: break-word !important;
         word-break: break-word !important;
     }
+
+    .blog-detail-body {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+        box-sizing: border-box !important;
+    }
 }
 
 /* ── Mobile Performance: Skip rendering for off-screen sections ──────────────
@@ -6550,6 +6556,9 @@ html, body {
     .blog-detail-body {
         font-size: 15px !important;
         line-height: 1.75 !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+        box-sizing: border-box !important;
     }
 
     .blog-text {
@@ -6676,6 +6685,9 @@ html, body {
 
     .blog-detail-body {
         font-size: 14.5px !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+        box-sizing: border-box !important;
     }
 
     h2.blog-heading,
