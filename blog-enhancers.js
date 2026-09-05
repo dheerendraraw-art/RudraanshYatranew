@@ -700,7 +700,7 @@ const BLOG_ENHANCERS = {
           "name": "What is the difference between Adi Kailash and Mount Kailash?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Adi Kailash (also known as Chhota Kailash or Little Kailash) is located in Uttarakhand, India at 6,191m elevation, accessible without a passport using only an Indian Inner Line Permit. Mount Kailash (Gang Rinpoche) is situated in Tibet (China) at 6,638m elevation, requiring a valid Indian passport, Chinese group visa, and Tibet Travel Permit."
+            "text": "Adi Kailash (also known as Chhota Kailash or Little Kailash) is located in Uttarakhand, India with a peak elevation of 5,945m (darshan from Jyolingkong base at 4,570m), accessible without a passport using only an Indian Inner Line Permit. Mount Kailash (Gang Rinpoche) is situated in Tibet (China) at 6,638m elevation, requiring a valid Indian passport, Chinese group visa, and Tibet Travel Permit."
           }
         },
         {
@@ -748,7 +748,7 @@ const BLOG_ENHANCERS = {
           "name": "Can we see the natural OM symbol on Mount Kailash?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No. The miraculous natural snow formation forming the sacred symbol 'ॐ' is found exclusively on Om Parvat (4,246m), located in the Byas Valley near Adi Kailash in Uttarakhand, India. Mount Kailash in Tibet does not have the OM formation."
+            "text": "No. The miraculous natural snow formation forming the sacred symbol 'ॐ' is found exclusively on Om Parvat (viewed from Nabidhang viewpoint at 4,246m, peak altitude 5,590m–6,191m), located in the Vyas Valley near Adi Kailash in Uttarakhand, India. Mount Kailash in Tibet does not have the OM formation."
           }
         },
         {
@@ -837,7 +837,7 @@ const BLOG_ENHANCERS = {
             </tr>
             <tr>
                 <td><strong>Peak &amp; Base Elevation</strong></td>
-                <td>Peak: 6,191m | Base Camp: 4,570m (14,993 ft)</td>
+                <td>Peak: 5,945m | Base Camp: 4,570m (14,993 ft)</td>
                 <td>Peak: 6,638m | Dolma La Pass: 5,630m (18,470 ft)</td>
             </tr>
             <tr>
@@ -5158,6 +5158,650 @@ BLOG_ENHANCERS['adi-kailash-yatra-for-solo-female-travellers-safety-guide'] = {
         return withDates;
     }
 };
+
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 15. KAILASH MANSAROVAR YATRA 2026: 10TH & FINAL BATCH VIA LIPULEKH PASS
+// ─────────────────────────────────────────────────────────────────────────────
+BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanakpur'] = {
+    meta: {
+        title: 'Kailash Mansarovar Yatra 2026: 10th Batch Welcomed at Tanakpur TRC via Lipulekh Pass',
+        desc: 'Kailash Mansarovar Yatra 2026: 10th and final batch of 44 yatris from 12 states warmly welcomed with traditional tilak and mala at Tanakpur TRC. Full season data: 468 pilgrims completed via Lipulekh Pass (+97.5% YoY). Route status, Dainik Jagran report & Adi Kailash alternative guide.',
+        dateModified: '2026-08-14T11:00:00+05:30'
+    },
+    schemas: `
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "NewsArticle",
+          "@id": "https://rudraanshyatra.com/blog/kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanakpur#article",
+          "isPartOf": {
+            "@type": "WebPage",
+            "@id": "https://rudraanshyatra.com/blog/kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanakpur"
+          },
+          "headline": "Kailash Mansarovar Yatra 2026: 10th Batch Welcomed at Tanakpur TRC via Lipulekh Pass",
+          "description": "Kailash Mansarovar Yatra 2026: 10th and final batch of 44 yatris from 12 states warmly welcomed with traditional tilak and mala at Tanakpur TRC. Full season data: 468 pilgrims completed via Lipulekh Pass (+97.5% YoY). Route status, Dainik Jagran report & Adi Kailash alternative guide.",
+          "image": [
+            "https://rudraanshyatra.com/assets/images/kailash-mansarovar-yatris-welcome-tanakpur.jpg",
+            "https://rudraanshyatra.com/assets/images/kailash-mansarovar-newspaper-clipping-tanakpur.jpg",
+            "https://rudraanshyatra.com/assets/images/kailash-mansarovar-cover-yatris.jpg"
+          ],
+          "datePublished": "2026-08-13T05:30:00+05:30",
+          "dateModified": "2026-08-14T11:00:00+05:30",
+          "author": {
+            "@type": "Person",
+            "name": "Dheerendra Rautela",
+            "jobTitle": "Founder & Expedition Director",
+            "worksFor": {
+              "@type": "TravelAgency",
+              "name": "Rudraansh Yatra",
+              "url": "https://rudraanshyatra.com"
+            }
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "Rudraansh Yatra",
+            "url": "https://rudraanshyatra.com",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://rudraanshyatra.com/assets/images/rudraansh-logo.webp"
+            }
+          },
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://rudraanshyatra.com/blog/kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanakpur"
+          },
+          "speakable": {
+            "@type": "SpeakableSpecification",
+            "cssSelector": [
+              "#quick-answer",
+              "#demographics-table",
+              "#section-surge"
+            ]
+          },
+          "about": [
+            {
+              "@type": "Thing",
+              "name": "Kailash Mansarovar Yatra"
+            },
+            {
+              "@type": "Place",
+              "name": "Lipulekh Pass",
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": "30.2333",
+                "longitude": "81.0333"
+              }
+            },
+            {
+              "@type": "Place",
+              "name": "Tanakpur Tourist Rest Camp"
+            },
+            {
+              "@type": "Place",
+              "name": "Mount Kailash"
+            },
+            {
+              "@type": "Place",
+              "name": "Lake Mansarovar"
+            }
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://rudraanshyatra.com"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Blog",
+              "item": "https://rudraanshyatra.com/blogs"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Kailash Mansarovar Yatra 2026 Final Batch Welcome",
+              "item": "https://rudraanshyatra.com/blog/kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanakpur"
+            }
+          ]
+        },
+        {
+          "@type": "TouristTrip",
+          "name": "Kailash Mansarovar Yatra via Lipulekh Pass",
+          "description": "Sacred trans-Himalayan pilgrimage route connecting Tanakpur, Pithoragarh, Dharchula, Gunji, and Nabhidhang to Lipulekh Pass at 17,060 ft for holy circumambulation of Mount Kailash.",
+          "touristType": ["Pilgrims", "Spiritual Seekers", "Trekkers"],
+          "itinerary": {
+            "@type": "ItemList",
+            "numberOfItems": 7,
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Tanakpur TRC (255m) — Reception & Medical Check" },
+              { "@type": "ListItem", "position": 2, "name": "Pithoragarh (1,627m) — Acclimatization & Briefing" },
+              { "@type": "ListItem", "position": 3, "name": "Dharchula (940m) — SDM Office Inner Line Permit Validation" },
+              { "@type": "ListItem", "position": 4, "name": "Gunji (3,200m) — High-Altitude Acclimatization & ITBP Medical Clearance" },
+              { "@type": "ListItem", "position": 5, "name": "Nabhidhang (4,240m) — Base camp beneath Om Parvat view" },
+              { "@type": "ListItem", "position": 6, "name": "Lipulekh Pass (5,200m / 17,060 ft) — Border Crossing into Tibet" },
+              { "@type": "ListItem", "position": 7, "name": "Taklakot / Purang (3,900m) ➔ Lake Mansarovar & Mount Kailash Kora" }
+            ]
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Which was the final batch for Kailash Mansarovar Yatra 2026 via Lipulekh Pass?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The 10th batch comprising 44 pilgrims (28 male, 16 female) from 12 Indian states was the final batch of the 2026 season via Lipulekh Pass. They were received with a traditional Kumaoni tilak-mala welcome at Tanakpur Tourist Rest Camp (TRC) before advancing towards Pithoragarh and Dharchula."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How many total pilgrims completed Kailash Mansarovar Yatra via Lipulekh in 2026?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A total of 468 pilgrims across 10 organized batches completed the pilgrimage via the Tanakpur-Pithoragarh-Lipulekh Pass border corridor in 2026. This represents a 97.5% year-over-year surge compared to 2025, which saw 237 pilgrims."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is the state-wise breakdown of the 44 yatris in the 10th batch?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The 44 pilgrims in the 10th batch represented 12 Indian states: Uttar Pradesh led with 11 yatris, Gujarat had 10, Rajasthan had 5, Maharashtra had 4, Delhi had 4, and Tamil Nadu had 3. The remaining devotees hailed from Madhya Pradesh, Bihar, Jharkhand, Jammu & Kashmir, West Bengal, and Uttarakhand."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is the traditional Kumaoni welcome ceremony held at Tanakpur TRC?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "At the Tanakpur TRC, local Kumaoni women dressed in vibrant traditional hill attire welcomed the yatris by applying sacred vermilion (roli-akshat) tilak on their foreheads and presenting fragrant flower garlands (mala). TRC Manager Manoj Kumar highlighted this ceremony as a celebration of Himalayan hospitality and safe journey blessings."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What was the operational status of Batches 7, 8, and 9 during the 10th batch departure?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "While Batch 10 departed Tanakpur for Pithoragarh, the 9th batch reached Nabhidhang after performing darshan at Adi Kailash and Parvati Sarovar. In Tibet, the 8th batch was actively undertaking the holy Mount Kailash circumambulation (Kora/Parikrama), and the 7th batch completed their parikrama and arrived at Taklakot for the return journey."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is the elevation profile and route corridor for Lipulekh Pass Yatra?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The Lipulekh Pass route spans from Tanakpur (elevation 255 m) to Pithoragarh (1,627 m), Dharchula (940 m), Gunji (3,200 m), Nabhidhang (4,240 m), and reaches Lipulekh Pass at 5,200 m (17,060 ft) before entering Tibet towards Taklakot (3,900 m) and Mount Kailash (peak 6,638 m; parikrama up to 5,630 m at Dolma La)."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Why is Lipulekh Pass historically and strategically significant for Kailash Yatra?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Lipulekh Pass is the oldest traditional trans-Himalayan trade and pilgrimage crossing between Kumaon (India) and Ngari Prefecture (Tibet). Under the Ministry of External Affairs (MEA) and KMVN, it provides the primary terrestrial Indian route for the Kailash Mansarovar Yatra, avoiding third-country transit via Nepal or flight dependencies."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can Indian pilgrims currently visit Mount Kailash and Lake Mansarovar from Uttarakhand?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Direct terrestrial border crossing into Tibet via Lipulekh Pass is governed by bilateral government agreements between India and China and MEA lotteries. For independent travellers and private domestic pilgrims without Chinese visas, the sacred Darshan of Om Parvat and Adi Kailash inside Indian territory (Pithoragarh district) remains fully open and operational with an Inner Line Permit (ILP)."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is the best alternative to Kailash Mansarovar Yatra inside Indian territory?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The Adi Kailash (Chhota Kailash) and Om Parvat Yatra in Pithoragarh, Uttarakhand, is the ultimate domestic alternative. Located entirely within Indian territory, it requires no passport or Chinese visa, is reachable by 4x4 motorable roads up to Jyolingkong, and costs significantly less (₹18,000 to ₹35,000 vs ₹2.5–3.5 Lakhs for Tibet)."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How can pilgrims book or get Inner Line Permits (ILP) with Rudraansh Yatra?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Rudraansh Yatra is a verified local ground operator based physically in Pithoragarh. They handle end-to-end Inner Line Permit (ILP) administrative processing with the Dharchula SDM office, government medical certifications, 4x4 Bolero transport, high-altitude homestays in Gunji and Nabi, and local mountain guides. Inquiries can be made via WhatsApp or phone at +91 76176 17651."
+              }
+            }
+          ]
+        },
+        {
+          "@type": "TravelAgency",
+          "@id": "https://rudraanshyatra.com/#organization",
+          "name": "Rudraansh Yatra",
+          "url": "https://rudraanshyatra.com",
+          "telephone": "+917617617651",
+          "email": "info@rudraanshyatra.com",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Pithoragarh",
+            "addressRegion": "Uttarakhand",
+            "postalCode": "262501",
+            "addressCountry": "IN"
+          },
+          "sameAs": [
+            "https://www.facebook.com/rudraanshyatra",
+            "https://www.instagram.com/rudraanshyatra"
+          ]
+        }
+      ]
+    }
+    </script>`,
+    render: function(paragraphsHtml) {
+        var executiveSummary =
+            '<!-- GEO / AEO / AIO Quick Answer Box -->' +
+            '<div id="quick-answer" class="ry-quick-answer-card" style="background: linear-gradient(135deg, rgba(15, 23, 42, 0.92) 0%, rgba(30, 41, 59, 0.95) 100%); border: 1.5px solid rgba(212, 175, 55, 0.5); border-radius: 16px; padding: 24px 26px; margin: 0 0 32px 0; box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35); position: relative; overflow: hidden;">' +
+            '<div style="position: absolute; top: 0; right: 0; background: linear-gradient(135deg, #d4af37, #f59e0b); color: #0f172a; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; padding: 4px 14px; border-bottom-left-radius: 12px;">' +
+            '<i class="fa-solid fa-bolt"></i> Verified Dispatch' +
+            '</div>' +
+            '<div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">' +
+            '<div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(212, 175, 55, 0.15); display: flex; align-items: center; justify-content: center; color: #fbbf24; font-size: 18px;">' +
+            '<i class="fa-solid fa-mountain-sun"></i>' +
+            '</div>' +
+            '<div>' +
+            '<span style="font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: #fbbf24; font-weight: 700;">Executive Summary &bull; Direct Answer</span>' +
+            '<h3 style="font-family: var(--font-serif); color: #f8fafc; margin: 2px 0 0 0; font-size: 20px; font-weight: 700;">Kailash Mansarovar Yatra 2026: 10th &amp; Final Batch via Lipulekh Pass</h3>' +
+            '</div>' +
+            '</div>' +
+            '<p style="font-size: 15.5px; line-height: 1.75; color: #e2e8f0; margin: 0 0 18px 0;">' +
+            'The <strong>10th and final batch</strong> of the Kailash Mansarovar Yatra 2026—comprising <strong>44 yatris (28 male, 16 female) from 12 Indian states</strong>—was warmly received at Tanakpur Tourist Rest Camp (TRC) with traditional Kumaoni vermilion tilak and flower garlands before departing via Pithoragarh, Dharchula, and Gunji toward <strong>Lipulekh Pass (~17,060 ft)</strong>. This milestone marks the formal conclusion of the 2026 season, which witnessed <strong>468 pilgrims across 10 batches</strong>, reflecting a massive <strong>+97.5% year-over-year surge</strong> from 237 pilgrims in 2025.' +
+            '</p>' +
+            '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(212, 175, 55, 0.25);">' +
+            '<div style="background: rgba(255, 255, 255, 0.04); border-radius: 10px; padding: 10px 14px; border-left: 3px solid #d4af37;">' +
+            '<div style="font-size: 11.5px; color: #94a3b8; text-transform: uppercase;">Final Batch Strength</div>' +
+            '<div style="font-size: 16px; font-weight: 700; color: #f8fafc; margin-top: 2px;">44 Devotees (28M / 16F)</div>' +
+            '</div>' +
+            '<div style="background: rgba(255, 255, 255, 0.04); border-radius: 10px; padding: 10px 14px; border-left: 3px solid #38bdf8;">' +
+            '<div style="font-size: 11.5px; color: #94a3b8; text-transform: uppercase;">States Represented</div>' +
+            '<div style="font-size: 16px; font-weight: 700; color: #f8fafc; margin-top: 2px;">12 Indian States</div>' +
+            '</div>' +
+            '<div style="background: rgba(255, 255, 255, 0.04); border-radius: 10px; padding: 10px 14px; border-left: 3px solid #4ade80;">' +
+            '<div style="font-size: 11.5px; color: #94a3b8; text-transform: uppercase;">2026 Season Total</div>' +
+            '<div style="font-size: 16px; font-weight: 700; color: #4ade80; margin-top: 2px;">468 Yatris (+97.5% YoY)</div>' +
+            '</div>' +
+            '<div style="background: rgba(255, 255, 255, 0.04); border-radius: 10px; padding: 10px 14px; border-left: 3px solid #fb923c;">' +
+            '<div style="font-size: 11.5px; color: #94a3b8; text-transform: uppercase;">Border Crossing</div>' +
+            '<div style="font-size: 16px; font-weight: 700; color: #f8fafc; margin-top: 2px;">Lipulekh Pass (17,060 ft)</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '<!-- Modern Interactive Table of Contents -->' +
+            '<nav id="table-of-contents" aria-label="Table of Contents" style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(212, 175, 55, 0.35); border-radius: 14px; padding: 20px 22px; margin-bottom: 32px; box-shadow: 0 4px 16px rgba(0,0,0,0.2);">' +
+            '<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; border-bottom: 1px solid rgba(212, 175, 55, 0.2); padding-bottom: 10px;">' +
+            '<h3 style="font-family: var(--font-serif); color: var(--color-gold); margin: 0; font-size: 18.5px; display: flex; align-items: center; gap: 8px;">' +
+            '<i class="fa-solid fa-list-check" style="color: #fbbf24;"></i> Inside This 2026 Yatra Dispatch' +
+            '</h3>' +
+            '<span style="font-size: 12px; color: #94a3b8; font-weight: 500;">Quick Navigation</span>' +
+            '</div>' +
+            '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; font-size: 14px;">' +
+            '<a href="#section-1" style="display: flex; align-items: center; gap: 8px; color: #cbd5e1; text-decoration: none; padding: 8px 12px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); transition: all 0.2s ease;">' +
+            '<span style="color: #fbbf24; font-weight: 700;">1.</span> Final Batch Departs Lipulekh' +
+            '</a>' +
+            '<a href="#section-2" style="display: flex; align-items: center; gap: 8px; color: #cbd5e1; text-decoration: none; padding: 8px 12px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); transition: all 0.2s ease;">' +
+            '<span style="color: #fbbf24; font-weight: 700;">2.</span> 12-State Demographic Roster' +
+            '</a>' +
+            '<a href="#section-surge" style="display: flex; align-items: center; gap: 8px; color: #cbd5e1; text-decoration: none; padding: 8px 12px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); transition: all 0.2s ease;">' +
+            '<span style="color: #fbbf24; font-weight: 700;">&bull;</span> 2025 vs 2026 Surge (+97.5%)' +
+            '</a>' +
+            '<a href="#section-3" style="display: flex; align-items: center; gap: 8px; color: #cbd5e1; text-decoration: none; padding: 8px 12px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); transition: all 0.2s ease;">' +
+            '<span style="color: #fbbf24; font-weight: 700;">3.</span> Kumaoni Tilak &amp; Mala Welcome' +
+            '</a>' +
+            '<a href="#section-4" style="display: flex; align-items: center; gap: 8px; color: #cbd5e1; text-decoration: none; padding: 8px 12px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); transition: all 0.2s ease;">' +
+            '<span style="color: #fbbf24; font-weight: 700;">4.</span> Dainik Jagran Front Page Report' +
+            '</a>' +
+            '<a href="#section-5" style="display: flex; align-items: center; gap: 8px; color: #cbd5e1; text-decoration: none; padding: 8px 12px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); transition: all 0.2s ease;">' +
+            '<span style="color: #fbbf24; font-weight: 700;">5.</span> Live Status: Batches 7, 8 &amp; 9' +
+            '</a>' +
+            '<a href="#section-elevation" style="display: flex; align-items: center; gap: 8px; color: #cbd5e1; text-decoration: none; padding: 8px 12px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); transition: all 0.2s ease;">' +
+            '<span style="color: #fbbf24; font-weight: 700;">&bull;</span> Lipulekh Elevation Profile' +
+            '</a>' +
+            '<a href="#section-alternative" style="display: flex; align-items: center; gap: 8px; color: #cbd5e1; text-decoration: none; padding: 8px 12px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); transition: all 0.2s ease;">' +
+            '<span style="color: #fbbf24; font-weight: 700;">&bull;</span> Adi Kailash Indian Alternative' +
+            '</a>' +
+            '<a href="#section-6" style="display: flex; align-items: center; gap: 8px; color: #cbd5e1; text-decoration: none; padding: 8px 12px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); transition: all 0.2s ease;">' +
+            '<span style="color: #fbbf24; font-weight: 700;">6.</span> 10 Essential FAQs Answered' +
+            '</a>' +
+            '</div>' +
+            '</nav>';
+
+        var section2Replacement =
+            '<h2 id="section-2" class="blog-heading">2. 44 Yatris Representing 12 States Across India</h2>' +
+            '<p class="blog-text">The final Lipulekh Pass batch comprised <strong>28 male and 16 female pilgrims</strong>, uniting devotees from all corners of the country in high-altitude spiritual fellowship:</p>' +
+            '<!-- State Demographics Infographic Grid -->' +
+            '<div id="demographics-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(135px, 1fr)); gap: 10px; margin: 20px 0 24px 0;">' +
+            '<div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(212, 175, 55, 0.35); border-radius: 10px; padding: 12px 14px; text-align: center;">' +
+            '<div style="font-size: 20px; font-weight: 800; color: #fbbf24;">11</div>' +
+            '<div style="font-size: 13px; font-weight: 600; color: #f8fafc; margin-top: 2px;">Uttar Pradesh</div>' +
+            '<div style="font-size: 10.5px; color: #94a3b8; text-transform: uppercase;">Highest State</div>' +
+            '</div>' +
+            '<div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(212, 175, 55, 0.35); border-radius: 10px; padding: 12px 14px; text-align: center;">' +
+            '<div style="font-size: 20px; font-weight: 800; color: #fbbf24;">10</div>' +
+            '<div style="font-size: 13px; font-weight: 600; color: #f8fafc; margin-top: 2px;">Gujarat</div>' +
+            '<div style="font-size: 10.5px; color: #94a3b8; text-transform: uppercase;">West Zone</div>' +
+            '</div>' +
+            '<div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(212, 175, 55, 0.35); border-radius: 10px; padding: 12px 14px; text-align: center;">' +
+            '<div style="font-size: 20px; font-weight: 800; color: #fbbf24;">5</div>' +
+            '<div style="font-size: 13px; font-weight: 600; color: #f8fafc; margin-top: 2px;">Rajasthan</div>' +
+            '<div style="font-size: 10.5px; color: #94a3b8; text-transform: uppercase;">North-West</div>' +
+            '</div>' +
+            '<div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(212, 175, 55, 0.35); border-radius: 10px; padding: 12px 14px; text-align: center;">' +
+            '<div style="font-size: 20px; font-weight: 800; color: #fbbf24;">4</div>' +
+            '<div style="font-size: 13px; font-weight: 600; color: #f8fafc; margin-top: 2px;">Maharashtra</div>' +
+            '<div style="font-size: 10.5px; color: #94a3b8; text-transform: uppercase;">West Zone</div>' +
+            '</div>' +
+            '<div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(212, 175, 55, 0.35); border-radius: 10px; padding: 12px 14px; text-align: center;">' +
+            '<div style="font-size: 20px; font-weight: 800; color: #fbbf24;">4</div>' +
+            '<div style="font-size: 13px; font-weight: 600; color: #f8fafc; margin-top: 2px;">Delhi NCR</div>' +
+            '<div style="font-size: 10.5px; color: #94a3b8; text-transform: uppercase;">Capital Region</div>' +
+            '</div>' +
+            '<div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(212, 175, 55, 0.35); border-radius: 10px; padding: 12px 14px; text-align: center;">' +
+            '<div style="font-size: 20px; font-weight: 800; color: #fbbf24;">3</div>' +
+            '<div style="font-size: 13px; font-weight: 600; color: #f8fafc; margin-top: 2px;">Tamil Nadu</div>' +
+            '<div style="font-size: 10.5px; color: #94a3b8; text-transform: uppercase;">South Zone</div>' +
+            '</div>' +
+            '<div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(212, 175, 55, 0.35); border-radius: 10px; padding: 12px 14px; text-align: center;">' +
+            '<div style="font-size: 20px; font-weight: 800; color: #fbbf24;">7</div>' +
+            '<div style="font-size: 13px; font-weight: 600; color: #f8fafc; margin-top: 2px;">Other States</div>' +
+            '<div style="font-size: 10.5px; color: #94a3b8; text-transform: uppercase;">MP, BR, JH, JK, WB, UK</div>' +
+            '</div>' +
+            '</div>' +
+            '<!-- Structured State-Wise Demographic Roster Table -->' +
+            '<div id="demographics-table" class="ry-table-responsive-wrap" style="margin: 22px 0; border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 12px; overflow: hidden; background: rgba(15, 23, 42, 0.65);">' +
+            '<table style="width: 100%; border-collapse: collapse; font-size: 14px; text-align: left;">' +
+            '<thead>' +
+            '<tr style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(212, 175, 55, 0.1)); border-bottom: 1.5px solid rgba(212, 175, 55, 0.4);">' +
+            '<th style="padding: 12px 16px; color: #fbbf24; font-weight: 700;">State / Union Territory</th>' +
+            '<th style="padding: 12px 16px; color: #fbbf24; font-weight: 700;">Yatri Count</th>' +
+            '<th style="padding: 12px 16px; color: #fbbf24; font-weight: 700;">Regional Zone</th>' +
+            '<th style="padding: 12px 16px; color: #fbbf24; font-weight: 700;">Key Demographic Highlight</th>' +
+            '</tr>' +
+            '</thead>' +
+            '<tbody>' +
+            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 16px; font-weight: 600; color: #f8fafc;">Uttar Pradesh</td><td style="padding: 10px 16px; color: #4ade80; font-weight: 700;">11 Yatris</td><td style="padding: 10px 16px; color: #94a3b8;">North India</td><td style="padding: 10px 16px; color: #cbd5e1;">Largest state contingent in Batch 10</td></tr>' +
+            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 16px; font-weight: 600; color: #f8fafc;">Gujarat</td><td style="padding: 10px 16px; color: #4ade80; font-weight: 700;">10 Yatris</td><td style="padding: 10px 16px; color: #94a3b8;">West India</td><td style="padding: 10px 16px; color: #cbd5e1;">Strong presence from Ahmedabad, Surat &amp; Rajkot</td></tr>' +
+            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 16px; font-weight: 600; color: #f8fafc;">Rajasthan</td><td style="padding: 10px 16px; color: #4ade80; font-weight: 700;">5 Yatris</td><td style="padding: 10px 16px; color: #94a3b8;">North-West India</td><td style="padding: 10px 16px; color: #cbd5e1;">Devotees from Jaipur &amp; Jodhpur</td></tr>' +
+            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 16px; font-weight: 600; color: #f8fafc;">Maharashtra</td><td style="padding: 10px 16px; color: #4ade80; font-weight: 700;">4 Yatris</td><td style="padding: 10px 16px; color: #94a3b8;">West India</td><td style="padding: 10px 16px; color: #cbd5e1;">Pilgrims from Mumbai &amp; Pune</td></tr>' +
+            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 16px; font-weight: 600; color: #f8fafc;">Delhi NCR</td><td style="padding: 10px 16px; color: #4ade80; font-weight: 700;">4 Yatris</td><td style="padding: 10px 16px; color: #94a3b8;">North India</td><td style="padding: 10px 16px; color: #cbd5e1;">Transit through Kathgodam &amp; Tanakpur</td></tr>' +
+            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 16px; font-weight: 600; color: #f8fafc;">Tamil Nadu</td><td style="padding: 10px 16px; color: #4ade80; font-weight: 700;">3 Yatris</td><td style="padding: 10px 16px; color: #94a3b8;">South India</td><td style="padding: 10px 16px; color: #cbd5e1;">Cross-country spiritual devotion</td></tr>' +
+            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 16px; font-weight: 600; color: #f8fafc;">Jharkhand, MP, Bihar, J&amp;K, WB, UK</td><td style="padding: 10px 16px; color: #4ade80; font-weight: 700;">7 Yatris</td><td style="padding: 10px 16px; color: #94a3b8;">East / Central / North</td><td style="padding: 10px 16px; color: #cbd5e1;">Unified representation completing the 44-yatri roster</td></tr>' +
+            '<tr style="background: rgba(212, 175, 55, 0.1);"><td style="padding: 11px 16px; font-weight: 800; color: #fbbf24;">Batch 10 Total</td><td style="padding: 11px 16px; font-weight: 800; color: #fbbf24;">44 Yatris</td><td style="padding: 11px 16px; color: #fbbf24;" colspan="2">28 Male &bull; 16 Female Devotees</td></tr>' +
+            '</tbody>' +
+            '</table>' +
+            '</div>' +
+            '<!-- 2025 vs 2026 Comparative Analytics Card -->' +
+            '<div id="section-surge" style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%); border: 1.5px solid rgba(74, 222, 128, 0.4); border-radius: 14px; padding: 22px 24px; margin: 26px 0; box-shadow: 0 8px 24px rgba(0,0,0,0.25);">' +
+            '<div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 14px;">' +
+            '<h3 style="font-family: var(--font-serif); color: #4ade80; margin: 0; font-size: 19px; display: flex; align-items: center; gap: 8px;">' +
+            '<i class="fa-solid fa-chart-line"></i> 2026 Season Performance Surge: +97.5% Year-Over-Year' +
+            '</h3>' +
+            '<span style="background: rgba(74, 222, 128, 0.15); color: #4ade80; border: 1px solid rgba(74, 222, 128, 0.4); border-radius: 20px; padding: 3px 12px; font-size: 12px; font-weight: 700;">Official KMVN / MEA Records</span>' +
+            '</div>' +
+            '<p style="font-size: 14.5px; color: #cbd5e1; line-height: 1.65; margin: 0 0 16px 0;">' +
+            'The 2026 pilgrimage via Lipulekh Pass marks a monumental revival for trans-Himalayan yatra logistics. Compared to <strong>237 total pilgrims in 2025</strong>, the 2026 season concluded with <strong>468 pilgrims across 10 complete batches</strong>, achieving a remarkable <strong>+97.5% surge</strong> in completed journeys.' +
+            '</p>' +
+            '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 16px;">' +
+            '<div style="background: rgba(255,255,255,0.03); border-radius: 8px; padding: 12px 14px; text-align: center; border: 1px solid rgba(255,255,255,0.06);">' +
+            '<div style="font-size: 12px; color: #94a3b8; text-transform: uppercase;">2025 Pilgrims Total</div>' +
+            '<div style="font-size: 22px; font-weight: 800; color: #e2e8f0; margin-top: 4px;">237 Yatris</div>' +
+            '<div style="font-size: 11px; color: #94a3b8;">Previous Season Baseline</div>' +
+            '</div>' +
+            '<div style="background: rgba(74, 222, 128, 0.08); border-radius: 8px; padding: 12px 14px; text-align: center; border: 1px solid rgba(74, 222, 128, 0.3);">' +
+            '<div style="font-size: 12px; color: #4ade80; text-transform: uppercase;">2026 Pilgrims Total</div>' +
+            '<div style="font-size: 22px; font-weight: 800; color: #4ade80; margin-top: 4px;">468 Yatris</div>' +
+            '<div style="font-size: 11px; color: #86efac;">+231 Yatris (+97.5% YoY)</div>' +
+            '</div>' +
+            '<div style="background: rgba(255,255,255,0.03); border-radius: 8px; padding: 12px 14px; text-align: center; border: 1px solid rgba(255,255,255,0.06);">' +
+            '<div style="font-size: 12px; color: #94a3b8; text-transform: uppercase;">Batches Mobilized</div>' +
+            '<div style="font-size: 22px; font-weight: 800; color: #fbbf24; margin-top: 4px;">10 Batches</div>' +
+            '<div style="font-size: 11px; color: #fde68a;">100% Departure Rate</div>' +
+            '</div>' +
+            '</div>' +
+            '<p style="font-size: 13px; color: #94a3b8; margin: 0; font-style: italic;">' +
+            '<strong>Full 10-Batch Distribution:</strong> Batch 1 (51 yatris) &bull; Batch 2 (47) &bull; Batch 3 (50) &bull; Batch 4 (48) &bull; Batch 5 (45) &bull; Batch 6 (46) &bull; Batch 7 (45) &bull; Batch 8 (46) &bull; Batch 9 (46) &bull; Batch 10 (44) = <strong>468 Yatris Total</strong>.' +
+            '</p>' +
+            '</div>';
+
+        var section5Replacement =
+            '<h2 id="section-5" class="blog-heading">5. Real-Time Ground Status: 7th, 8th, 9th &amp; 10th Batches</h2>' +
+            '<p class="blog-text">While the 10th batch departed Tanakpur for Pithoragarh, the entire trans-Himalayan corridor was actively buzzing with interconnected batches across Uttarakhand and Tibet:</p>' +
+            '<!-- Live Parallel Batch Pipeline -->' +
+            '<div id="parallel-batches" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 20px 0 24px 0;">' +
+            '<div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 12px; padding: 16px; border-top: 4px solid #38bdf8;">' +
+            '<div style="display: flex; justify-content: space-between; align-items: center;">' +
+            '<span style="font-size: 12px; font-weight: 700; color: #38bdf8; text-transform: uppercase;">Batch 10 (Final)</span>' +
+            '<span style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; font-size: 11px; padding: 2px 8px; border-radius: 10px;">En Route</span>' +
+            '</div>' +
+            '<div style="font-size: 15px; font-weight: 700; color: #f8fafc; margin-top: 6px;">Tanakpur ➔ Pithoragarh</div>' +
+            '<p style="font-size: 12.5px; color: #94a3b8; margin: 6px 0 0 0; line-height: 1.5;">44 yatris advanced to Sor Valley for medical tests &amp; high-altitude road transit.</p>' +
+            '</div>' +
+            '<div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(251, 191, 36, 0.4); border-radius: 12px; padding: 16px; border-top: 4px solid #fbbf24;">' +
+            '<div style="display: flex; justify-content: space-between; align-items: center;">' +
+            '<span style="font-size: 12px; font-weight: 700; color: #fbbf24; text-transform: uppercase;">Batch 9</span>' +
+            '<span style="background: rgba(251, 191, 36, 0.15); color: #fbbf24; font-size: 11px; padding: 2px 8px; border-radius: 10px;">At Nabhidhang</span>' +
+            '</div>' +
+            '<div style="font-size: 15px; font-weight: 700; color: #f8fafc; margin-top: 6px;">Darshan &amp; Base Camp</div>' +
+            '<p style="font-size: 12.5px; color: #94a3b8; margin: 6px 0 0 0; line-height: 1.5;">Completed Adi Kailash &amp; Parvati Sarovar darshan; stationed beneath Om Parvat.</p>' +
+            '</div>' +
+            '<div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(168, 85, 247, 0.4); border-radius: 12px; padding: 16px; border-top: 4px solid #a855f7;">' +
+            '<div style="display: flex; justify-content: space-between; align-items: center;">' +
+            '<span style="font-size: 12px; font-weight: 700; color: #c084fc; text-transform: uppercase;">Batch 8</span>' +
+            '<span style="background: rgba(168, 85, 247, 0.15); color: #c084fc; font-size: 11px; padding: 2px 8px; border-radius: 10px;">In Tibet</span>' +
+            '</div>' +
+            '<div style="font-size: 15px; font-weight: 700; color: #f8fafc; margin-top: 6px;">Mount Kailash Kora</div>' +
+            '<p style="font-size: 12.5px; color: #94a3b8; margin: 6px 0 0 0; line-height: 1.5;">Circumambulating Mount Kailash (4,600m–5,630m across Dolma La pass).</p>' +
+            '</div>' +
+            '<div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(74, 222, 128, 0.4); border-radius: 12px; padding: 16px; border-top: 4px solid #4ade80;">' +
+            '<div style="display: flex; justify-content: space-between; align-items: center;">' +
+            '<span style="font-size: 12px; font-weight: 700; color: #4ade80; text-transform: uppercase;">Batch 7</span>' +
+            '<span style="background: rgba(74, 222, 128, 0.15); color: #4ade80; font-size: 11px; padding: 2px 8px; border-radius: 10px;">Returning</span>' +
+            '</div>' +
+            '<div style="font-size: 15px; font-weight: 700; color: #f8fafc; margin-top: 6px;">Stationed at Taklakot</div>' +
+            '<p style="font-size: 12.5px; color: #94a3b8; margin: 6px 0 0 0; line-height: 1.5;">Completed full Kailash &amp; Mansarovar parikrama; preparing for return crossing.</p>' +
+            '</div>' +
+            '</div>' +
+            '<!-- Elevation Profile & Route Stations Card -->' +
+            '<div id="section-elevation" style="background: rgba(15,23,42,0.6); border: 1px solid rgba(212,175,55,0.3); border-radius: 14px; padding: 22px 24px; margin: 26px 0;">' +
+            '<h3 style="font-family: var(--font-serif); color: var(--color-gold); margin-top: 0; font-size: 18.5px; display: flex; align-items: center; gap: 8px;">' +
+            '<i class="fa-solid fa-route" style="color: #fbbf24;"></i> Lipulekh Pass Yatra Corridor &bull; Station Elevation Profile' +
+            '</h3>' +
+            '<div style="overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 14px; border-radius: 8px;">' +
+            '<table style="width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 550px;">' +
+            '<thead>' +
+            '<tr style="background: rgba(212,175,55,0.15); border-bottom: 1px solid rgba(212,175,55,0.3);">' +
+            '<th style="padding: 10px 14px; text-align: left; color: #fbbf24; font-weight: 700;">Station / Waypoint</th>' +
+            '<th style="padding: 10px 14px; text-align: left; color: #fbbf24; font-weight: 700;">Elevation</th>' +
+            '<th style="padding: 10px 14px; text-align: left; color: #fbbf24; font-weight: 700;">Jurisdiction</th>' +
+            '<th style="padding: 10px 14px; text-align: left; color: #fbbf24; font-weight: 700;">Operational Role</th>' +
+            '</tr>' +
+            '</thead>' +
+            '<tbody>' +
+            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 14px; font-weight: 600; color: #f8fafc;">Tanakpur TRC</td><td style="padding: 10px 14px; color: #38bdf8;">255 m (837 ft)</td><td style="padding: 10px 14px; color: #94a3b8;">Champawat, UK</td><td style="padding: 10px 14px; color: #cbd5e1;">Reception, verification &amp; traditional welcome</td></tr>' +
+            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 14px; font-weight: 600; color: #f8fafc;">Pithoragarh</td><td style="padding: 10px 14px; color: #38bdf8;">1,627 m (5,338 ft)</td><td style="padding: 10px 14px; color: #94a3b8;">Pithoragarh, UK</td><td style="padding: 10px 14px; color: #cbd5e1;">District HQ, medical fitness &amp; staging base</td></tr>' +
+            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 14px; font-weight: 600; color: #f8fafc;">Dharchula</td><td style="padding: 10px 14px; color: #38bdf8;">940 m (3,084 ft)</td><td style="padding: 10px 14px; color: #94a3b8;">Kali River Border</td><td style="padding: 10px 14px; color: #cbd5e1;">SDM Office ILP permit issuance &amp; 4x4 transition</td></tr>' +
+            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 14px; font-weight: 600; color: #f8fafc;">Gunji</td><td style="padding: 10px 14px; color: #fbbf24; font-weight: 700;">3,200 m (10,499 ft)</td><td style="padding: 10px 14px; color: #94a3b8;">Byas Valley</td><td style="padding: 10px 14px; color: #cbd5e1;">Mandatory ITBP medical clearance &amp; acclimatization</td></tr>' +
+            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 14px; font-weight: 600; color: #f8fafc;">Nabhidhang</td><td style="padding: 10px 14px; color: #fbbf24; font-weight: 700;">4,240 m (13,910 ft)</td><td style="padding: 10px 14px; color: #94a3b8;">Indo-Tibet Border</td><td style="padding: 10px 14px; color: #cbd5e1;">Base camp below Om Parvat snow miracle</td></tr>' +
+            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 14px; font-weight: 600; color: #f8fafc;">Lipulekh Pass</td><td style="padding: 10px 14px; color: #f87171; font-weight: 800;">5,200 m (17,060 ft)</td><td style="padding: 10px 14px; color: #94a3b8;">Himalayan Crest</td><td style="padding: 10px 14px; color: #cbd5e1;">International border crossing between India &amp; Tibet</td></tr>' +
+            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 14px; font-weight: 600; color: #f8fafc;">Taklakot (Purang)</td><td style="padding: 10px 14px; color: #38bdf8;">3,900 m (12,795 ft)</td><td style="padding: 10px 14px; color: #94a3b8;">Tibet (China)</td><td style="padding: 10px 14px; color: #cbd5e1;">Immigration, currency exchange &amp; Tibetan coach staging</td></tr>' +
+            '<tr><td style="padding: 10px 14px; font-weight: 600; color: #f8fafc;">Mount Kailash Kora</td><td style="padding: 10px 14px; color: #c084fc; font-weight: 700;">4,600 m &ndash; 5,630 m</td><td style="padding: 10px 14px; color: #94a3b8;">Ngari, Tibet</td><td style="padding: 10px 14px; color: #cbd5e1;">52 km sacred circumambulation via Dolma La pass</td></tr>' +
+            '</tbody>' +
+            '</table>' +
+            '</div>' +
+            '</div>' +
+            '<!-- Adi Kailash & Om Parvat Bridge Card (Accessible Indian Territory Alternative) -->' +
+            '<div id="section-alternative" style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.98) 100%); border: 1.5px solid rgba(212, 175, 55, 0.5); border-radius: 14px; padding: 24px; margin: 28px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.35);">' +
+            '<div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">' +
+            '<span style="background: rgba(212, 175, 55, 0.15); color: #fbbf24; border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 20px; padding: 3px 12px; font-size: 12px; font-weight: 700; text-transform: uppercase;">' +
+            '<i class="fa-solid fa-om"></i> Accessible Domestic Alternative' +
+            '</span>' +
+            '<span style="color: #4ade80; font-size: 13px; font-weight: 700;">No Passport or Chinese Visa Required</span>' +
+            '</div>' +
+            '<h3 style="font-family: var(--font-serif); color: #f8fafc; font-size: 20px; margin: 0 0 12px 0;">' +
+            'Cannot Travel to Tibet? Experience Adi Kailash &amp; Om Parvat Inside Uttarakhand' +
+            '</h3>' +
+            '<p style="font-size: 14.5px; color: #cbd5e1; line-height: 1.7; margin: 0 0 16px 0;">' +
+            'While the Kailash Mansarovar Yatra across Lipulekh Pass requires bilateral diplomatic permissions, foreign passport clearances, and costs ₹2.5–3.5 Lakhs, devotees can experience the same divine vibrations right within Indian territory. The <strong>Adi Kailash (Chhota Kailash) and Om Parvat Yatra</strong> in Pithoragarh is 100% domestic, requires only an Inner Line Permit (ILP), is motorable by 4x4 Boleros, and costs between <strong>₹18,000 to ₹35,000 per person</strong>.' +
+            '</p>' +
+            '<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px;">' +
+            '<a href="/adi-kailash" style="display: inline-flex; align-items: center; gap: 6px; background: #d4af37; color: #0f172a; padding: 9px 16px; border-radius: 8px; font-weight: 700; font-size: 13.5px; text-decoration: none;">' +
+            '<i class="fa-solid fa-map-location-dot"></i> Explore Adi Kailash Packages' +
+            '</a>' +
+            '<a href="/blog/adi-kailash-vs-mount-kailash-comparison-cost-difficulty-permits" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.06); color: #e2e8f0; border: 1px solid rgba(212,175,55,0.35); padding: 9px 16px; border-radius: 8px; font-weight: 600; font-size: 13.5px; text-decoration: none;">' +
+            '<i class="fa-solid fa-scale-balanced"></i> Adi Kailash vs Mount Kailash Guide' +
+            '</a>' +
+            '<a href="/blog/inner-line-permit-adi-kailash-2026-guide" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.06); color: #e2e8f0; border: 1px solid rgba(212,175,55,0.35); padding: 9px 16px; border-radius: 8px; font-weight: 600; font-size: 13.5px; text-decoration: none;">' +
+            '<i class="fa-solid fa-id-card"></i> 2026 ILP Permit Process' +
+            '</a>' +
+            '</div>' +
+            '</div>';
+
+        var section6Replacement =
+            '<h2 id="section-6" class="blog-heading">6. Frequently Asked Questions (FAQ)</h2>' +
+            '<p class="blog-text">Get verified answers regarding the 10th batch, Lipulekh Pass logistics, season statistics, and domestic pilgrimage alternatives:</p>' +
+            '<div style="display: flex; flex-direction: column; gap: 14px; margin: 24px 0;">' +
+            '<div style="background: rgba(15,23,42,0.7); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 18px 20px;">' +
+            '<h3 style="font-family: var(--font-serif); color: var(--color-gold); font-size: 16.5px; margin: 0 0 8px 0; display: flex; align-items: baseline; gap: 8px;">' +
+            '<span style="color: #fbbf24; font-weight: 800;">Q1.</span> Which was the final batch for Kailash Mansarovar Yatra 2026 via Lipulekh Pass?' +
+            '</h3>' +
+            '<p style="margin: 0; font-size: 14.5px; color: #cbd5e1; line-height: 1.65;"><strong>Answer:</strong> The 10th batch comprising 44 pilgrims (28 male, 16 female) from 12 Indian states was the final batch of the 2026 season via Lipulekh Pass. They were received with a traditional Kumaoni tilak-mala welcome at Tanakpur Tourist Rest Camp (TRC) before advancing towards Pithoragarh and Dharchula.</p>' +
+            '</div>' +
+            '<div style="background: rgba(15,23,42,0.7); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 18px 20px;">' +
+            '<h3 style="font-family: var(--font-serif); color: var(--color-gold); font-size: 16.5px; margin: 0 0 8px 0; display: flex; align-items: baseline; gap: 8px;">' +
+            '<span style="color: #fbbf24; font-weight: 800;">Q2.</span> How many total pilgrims completed Kailash Mansarovar Yatra via Lipulekh in 2026?' +
+            '</h3>' +
+            '<p style="margin: 0; font-size: 14.5px; color: #cbd5e1; line-height: 1.65;"><strong>Answer:</strong> A total of 468 pilgrims across 10 organized batches completed the pilgrimage via the Tanakpur-Pithoragarh-Lipulekh Pass border corridor in 2026. This represents a 97.5% year-over-year surge compared to 2025, which saw 237 pilgrims.</p>' +
+            '</div>' +
+            '<div style="background: rgba(15,23,42,0.7); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 18px 20px;">' +
+            '<h3 style="font-family: var(--font-serif); color: var(--color-gold); font-size: 16.5px; margin: 0 0 8px 0; display: flex; align-items: baseline; gap: 8px;">' +
+            '<span style="color: #fbbf24; font-weight: 800;">Q3.</span> What is the state-wise breakdown of the 44 yatris in the 10th batch?' +
+            '</h3>' +
+            '<p style="margin: 0; font-size: 14.5px; color: #cbd5e1; line-height: 1.65;"><strong>Answer:</strong> The 44 pilgrims in the 10th batch represented 12 Indian states: Uttar Pradesh led with 11 yatris, Gujarat had 10, Rajasthan had 5, Maharashtra had 4, Delhi had 4, and Tamil Nadu had 3. The remaining devotees hailed from Madhya Pradesh, Bihar, Jharkhand, Jammu &amp; Kashmir, West Bengal, and Uttarakhand.</p>' +
+            '</div>' +
+            '<div style="background: rgba(15,23,42,0.7); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 18px 20px;">' +
+            '<h3 style="font-family: var(--font-serif); color: var(--color-gold); font-size: 16.5px; margin: 0 0 8px 0; display: flex; align-items: baseline; gap: 8px;">' +
+            '<span style="color: #fbbf24; font-weight: 800;">Q4.</span> What is the traditional Kumaoni welcome ceremony held at Tanakpur TRC?' +
+            '</h3>' +
+            '<p style="margin: 0; font-size: 14.5px; color: #cbd5e1; line-height: 1.65;"><strong>Answer:</strong> At the Tanakpur TRC, local Kumaoni women dressed in vibrant traditional hill attire welcomed the yatris by applying sacred vermilion (roli-akshat) tilak on their foreheads and presenting fragrant flower garlands (mala). TRC Manager Manoj Kumar highlighted this ceremony as a celebration of Himalayan hospitality and safe journey blessings.</p>' +
+            '</div>' +
+            '<div style="background: rgba(15,23,42,0.7); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 18px 20px;">' +
+            '<h3 style="font-family: var(--font-serif); color: var(--color-gold); font-size: 16.5px; margin: 0 0 8px 0; display: flex; align-items: baseline; gap: 8px;">' +
+            '<span style="color: #fbbf24; font-weight: 800;">Q5.</span> What was the operational status of Batches 7, 8, and 9 during the 10th batch departure?' +
+            '</h3>' +
+            '<p style="margin: 0; font-size: 14.5px; color: #cbd5e1; line-height: 1.65;"><strong>Answer:</strong> While Batch 10 departed Tanakpur for Pithoragarh, the 9th batch reached Nabhidhang after performing darshan at Adi Kailash and Parvati Sarovar. In Tibet, the 8th batch was actively undertaking the holy Mount Kailash circumambulation (Kora/Parikrama), and the 7th batch completed their parikrama and arrived at Taklakot for the return journey.</p>' +
+            '</div>' +
+            '<div style="background: rgba(15,23,42,0.7); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 18px 20px;">' +
+            '<h3 style="font-family: var(--font-serif); color: var(--color-gold); font-size: 16.5px; margin: 0 0 8px 0; display: flex; align-items: baseline; gap: 8px;">' +
+            '<span style="color: #fbbf24; font-weight: 800;">Q6.</span> What is the elevation profile and route corridor for Lipulekh Pass Yatra?' +
+            '</h3>' +
+            '<p style="margin: 0; font-size: 14.5px; color: #cbd5e1; line-height: 1.65;"><strong>Answer:</strong> The Lipulekh Pass route spans from Tanakpur (elevation 255 m) to Pithoragarh (1,627 m), Dharchula (940 m), Gunji (3,200 m), Nabhidhang (4,240 m), and reaches Lipulekh Pass at 5,200 m (17,060 ft) before entering Tibet towards Taklakot (3,900 m) and Mount Kailash (peak 6,638 m; parikrama up to 5,630 m at Dolma La).</p>' +
+            '</div>' +
+            '<div style="background: rgba(15,23,42,0.7); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 18px 20px;">' +
+            '<h3 style="font-family: var(--font-serif); color: var(--color-gold); font-size: 16.5px; margin: 0 0 8px 0; display: flex; align-items: baseline; gap: 8px;">' +
+            '<span style="color: #fbbf24; font-weight: 800;">Q7.</span> Why is Lipulekh Pass historically and strategically significant for Kailash Yatra?' +
+            '</h3>' +
+            '<p style="margin: 0; font-size: 14.5px; color: #cbd5e1; line-height: 1.65;"><strong>Answer:</strong> Lipulekh Pass is the oldest traditional trans-Himalayan trade and pilgrimage crossing between Kumaon (India) and Ngari Prefecture (Tibet). Under the Ministry of External Affairs (MEA) and KMVN, it provides the primary terrestrial Indian route for the Kailash Mansarovar Yatra, avoiding third-country transit via Nepal or flight dependencies.</p>' +
+            '</div>' +
+            '<div style="background: rgba(15,23,42,0.7); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 18px 20px;">' +
+            '<h3 style="font-family: var(--font-serif); color: var(--color-gold); font-size: 16.5px; margin: 0 0 8px 0; display: flex; align-items: baseline; gap: 8px;">' +
+            '<span style="color: #fbbf24; font-weight: 800;">Q8.</span> Can Indian pilgrims currently visit Mount Kailash and Lake Mansarovar from Uttarakhand?' +
+            '</h3>' +
+            '<p style="margin: 0; font-size: 14.5px; color: #cbd5e1; line-height: 1.65;"><strong>Answer:</strong> Direct terrestrial border crossing into Tibet via Lipulekh Pass is governed by bilateral government agreements between India and China and MEA lotteries. For independent travellers and private domestic pilgrims without Chinese visas, the sacred Darshan of Om Parvat and Adi Kailash inside Indian territory (Pithoragarh district) remains fully open and operational with an Inner Line Permit (ILP).</p>' +
+            '</div>' +
+            '<div style="background: rgba(15,23,42,0.7); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 18px 20px;">' +
+            '<h3 style="font-family: var(--font-serif); color: var(--color-gold); font-size: 16.5px; margin: 0 0 8px 0; display: flex; align-items: baseline; gap: 8px;">' +
+            '<span style="color: #fbbf24; font-weight: 800;">Q9.</span> What is the best alternative to Kailash Mansarovar Yatra inside Indian territory?' +
+            '</h3>' +
+            '<p style="margin: 0; font-size: 14.5px; color: #cbd5e1; line-height: 1.65;"><strong>Answer:</strong> The Adi Kailash (Chhota Kailash) and Om Parvat Yatra in Pithoragarh, Uttarakhand, is the ultimate domestic alternative. Located entirely within Indian territory, it requires no passport or Chinese visa, is reachable by 4x4 motorable roads up to Jyolingkong, and costs significantly less (₹18,000 to ₹35,000 vs ₹2.5–3.5 Lakhs for Tibet).</p>' +
+            '</div>' +
+            '<div style="background: rgba(15,23,42,0.7); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 18px 20px;">' +
+            '<h3 style="font-family: var(--font-serif); color: var(--color-gold); font-size: 16.5px; margin: 0 0 8px 0; display: flex; align-items: baseline; gap: 8px;">' +
+            '<span style="color: #fbbf24; font-weight: 800;">Q10.</span> How can pilgrims book or get Inner Line Permits (ILP) with Rudraansh Yatra?' +
+            '</h3>' +
+            '<p style="margin: 0; font-size: 14.5px; color: #cbd5e1; line-height: 1.65;"><strong>Answer:</strong> Rudraansh Yatra is a verified local ground operator based physically in Pithoragarh. They handle end-to-end Inner Line Permit (ILP) administrative processing with the Dharchula SDM office, government medical certifications, 4x4 Bolero transport, high-altitude homestays in Gunji and Nabi, and local mountain guides. Inquiries can be made via WhatsApp or phone at +91 76176 17651.</p>' +
+            '</div>' +
+            '</div>';
+
+        var trustBoxAndCta =
+            '<!-- Verified Operator Trust Box -->' +
+            '<div id="plan-your-yatra" class="ry-operator-trust-card" style="background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 100%); border: 2px solid #d4af37; border-radius: 16px; padding: 26px 28px; margin: 32px 0; color: #fff; box-shadow: 0 12px 36px rgba(0,0,0,0.45); position: relative;">' +
+            '<div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 14px;">' +
+            '<h2 style="font-family: var(--font-serif); color: #fbbf24; margin: 0; font-size: 22px; display: flex; align-items: center; gap: 10px;">' +
+            '<i class="fa-solid fa-shield-halved"></i> Plan Your Himalayan Yatra with Rudraansh Yatra' +
+            '</h2>' +
+            '<span style="background: rgba(212, 175, 55, 0.2); border: 1px solid #d4af37; border-radius: 20px; padding: 4px 14px; font-size: 12px; color: #fde68a; font-weight: 700;">' +
+            'NIDHI &amp; MSME Verified' +
+            '</span>' +
+            '</div>' +
+            '<p style="font-size: 15px; line-height: 1.7; color: #e2e8f0; margin: 0 0 16px 0;">' +
+            'If you are planning your journey to <strong>Adi Kailash, Om Parvat</strong>, or seeking ground intelligence on border pilgrimage routes across Pithoragarh, trust <strong>Rudraansh Yatra</strong>—the authentic direct ground operator based physically in Pithoragarh, Uttarakhand. Born and raised in these sacred mountains, our team delivers seamless 4x4 Bolero expeditions, verified SDM Inner Line Permits, authentic tribal homestays, and round-the-clock emergency support.' +
+            '</p>' +
+            '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; margin-bottom: 22px;">' +
+            '<div style="background: rgba(255,255,255,0.06); border-radius: 8px; padding: 10px 12px; font-size: 13px; color: #e2e8f0;">' +
+            '&#9989; <strong>100% Direct Ground Fleet:</strong> Own 4x4 Boleros, native hill drivers' +
+            '</div>' +
+            '<div style="background: rgba(255,255,255,0.06); border-radius: 8px; padding: 10px 12px; font-size: 13px; color: #e2e8f0;">' +
+            '&#9989; <strong>SDM Permit Handling:</strong> End-to-end ILP &amp; police verification' +
+            '</div>' +
+            '<div style="background: rgba(255,255,255,0.06); border-radius: 8px; padding: 10px 12px; font-size: 13px; color: #e2e8f0;">' +
+            '&#9989; <strong>Gunji &amp; Nabi Homestays:</strong> Warm Kumaoni hospitality &amp; hot meals' +
+            '</div>' +
+            '<div style="background: rgba(255,255,255,0.06); border-radius: 8px; padding: 10px 12px; font-size: 13px; color: #e2e8f0;">' +
+            '&#9989; <strong>Zero Middleman Markups:</strong> Honest pricing direct from Pithoragarh' +
+            '</div>' +
+            '</div>' +
+            '<div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center;">' +
+            '<a href="https://wa.me/917617617651?text=Namaste!%20I%20read%20the%20Kailash%20Mansarovar%20final%20batch%20report.%20I%20would%20like%20information%20on%20Adi%20Kailash%20and%20border%20pilgrimage%20packages." target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; background: #25d366; color: #ffffff; padding: 12px 22px; border-radius: 10px; font-weight: 700; font-size: 14.5px; text-decoration: none; box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);">' +
+            '<i class="fa-brands fa-whatsapp" style="font-size: 18px;"></i> WhatsApp Our Ground Team' +
+            '</a>' +
+            '<a href="tel:+917617617651" style="display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #d4af37, #b8860b); color: #0f172a; padding: 12px 22px; border-radius: 10px; font-weight: 800; font-size: 14.5px; text-decoration: none; box-shadow: 0 4px 14px rgba(212, 175, 55, 0.35);">' +
+            '<i class="fa-solid fa-phone" style="font-size: 16px;"></i> Call +91 76176 17651' +
+            '</a>' +
+            '<span style="font-size: 12.5px; color: #94a3b8; margin-left: auto;">' +
+            '<i class="fa-solid fa-location-dot" style="color: #fbbf24;"></i> Physical Office: Pithoragarh, Uttarakhand' +
+            '</span>' +
+            '</div>' +
+            '</div>';
+
+        var enriched = paragraphsHtml.replace(
+            new RegExp('(?:<p class="blog-text"><!-- Table of Contents for SEO & UX --><\\/p>\\s*)?<div class="toc-container"[\\s\\S]*?<\\/div>', 'i'),
+            executiveSummary
+        );
+
+        enriched = enriched.replace(
+            new RegExp('<h2 id="section-2">2\\. 44 Yatris Representing 12 States Across India<\\/h2>[\\s\\S]*?(?=<h2 id="section-3">)', 'i'),
+            section2Replacement
+        );
+
+        enriched = enriched.replace(
+            new RegExp('<h2 id="section-5">5\\. Real-Time Ground Status: 7th, 8th, and 9th Batches<\\/h2>[\\s\\S]*?(?=<h2 id="section-6">)', 'i'),
+            section5Replacement
+        );
+
+        enriched = enriched.replace(
+            new RegExp('<h2 id="section-6">6\\. Frequently Asked Questions \\(FAQ\\)<\\/h2>[\\s\\S]*?(?=<h2>Plan Your Yatra with Rudraansh Yatra<\\/h2>)', 'i'),
+            section6Replacement
+        );
+
+        enriched = enriched.replace(
+            new RegExp('<h2>Plan Your Yatra with Rudraansh Yatra<\\/h2>[\\s\\S]*$', 'i'),
+            trustBoxAndCta
+        );
+
+        return enriched;
+    }
+};
+
 
 function getBlogEnhancement(slug, paragraphsHtml) {
     const enhancer = BLOG_ENHANCERS[slug];

@@ -468,8 +468,8 @@ app.get('/blog/:slug', async (req, res) => {
             return `<div class="ry-table-responsive-wrap">${match}</div>`;
         });
 
-        // ── SEO for Kailash Mansarovar final batch blog ──
-        if (slug === 'kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanakpur') {
+        // ── SEO for Kailash Mansarovar final batch blog (handled by blog-enhancers.js) ──
+        if (false && slug === 'kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanakpur') {
             parikramaMetaOverride = {
                 title: 'Kailash Mansarovar Yatra 2026: Final Batch via Lipulekh Pass Welcomed at Tanakpur',
                 desc: 'The 10th and final batch of 44 pilgrims for the Kailash Mansarovar Yatra 2026 via Lipulekh Pass received a traditional Kumaoni welcome at Tanakpur TRC.',
@@ -1100,17 +1100,20 @@ app.get('/blog/:slug', async (req, res) => {
         })();
 
         // Generic template variable replacements
+        const metaDescFinal = (parikramaMetaOverride && parikramaMetaOverride.desc) ? parikramaMetaOverride.desc : metaDescriptionVal;
+        const finalBlogTitle = (parikramaMetaOverride && parikramaMetaOverride.title) ? parikramaMetaOverride.title : blog.title;
+
         blogHtml = blogHtml
             .replace(/{{META_TITLE}}/g, ogTitle)
             .replace(/{{OG_TITLE}}/g, ogTitle.replace(/"/g, '&quot;'))
-            .replace(/{{META_DESC}}/g, metaDescriptionVal.replace(/"/g, '&quot;'))
+            .replace(/{{META_DESC}}/g, metaDescFinal.replace(/"/g, '&quot;'))
             .replace(/{{CANONICAL_URL}}/g, canonicalUrl)
             .replace(/{{OG_IMAGE}}/g, ogImageUrl)
             .replace(/{{OG_IMAGE_ALT}}/g, ogImageAlt.replace(/"/g, '&quot;'))
             .replace(/{{DATE_MODIFIED}}/g, dateModified)
             .replace(/{{ARTICLE_SECTION}}/g, articleSection)
             .replace(/{{ARTICLE_TAG}}/g, articleTag)
-            .replace(/{{TITLE}}/g, blog.title)
+            .replace(/{{TITLE}}/g, finalBlogTitle)
             .replace(/{{AUTHOR}}/g, blog.author || 'Dheerendra Rautela')
             .replace(/{{DATE}}/g, dateStr)
             .replace(/{{IMAGE}}/g, resolvedMainImg)
