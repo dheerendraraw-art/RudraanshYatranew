@@ -26,8 +26,8 @@
     <link rel="stylesheet" href="../style.css?v=8.2">
     <style>
         .blog-hero{padding:80px 0 60px;background:linear-gradient(to bottom,rgba(10,25,47,.55),rgba(10,25,47,.92)),url('../assets/images/adi-kailash-hero.webp') center/cover;text-align:center}
-        .blog-container{max-width:820px;margin:0 auto;padding:0 20px}
-        .blog-body{padding:50px 0}
+        .blog-container{width:100%;max-width:820px;margin:0 auto;padding:0 20px;box-sizing:border-box}
+        .blog-body{padding:50px 0;width:100%;max-width:100%;box-sizing:border-box;overflow-x:hidden}
         .blog-body h2{font-family:var(--font-serif);font-size:clamp(22px,3vw,30px);color:var(--color-primary);margin:40px 0 14px;border-bottom:2px solid rgba(212,175,55,.2);padding-bottom:10px}
         .blog-body h3{font-family:var(--font-serif);font-size:clamp(18px,2.5vw,23px);color:var(--color-primary);margin:28px 0 10px}
         .blog-body p{color:var(--color-text-secondary);font-size:16px;line-height:1.85;margin-bottom:18px}
@@ -37,7 +37,9 @@
         .blog-body strong{color:var(--color-primary)}
         .info-box{background:linear-gradient(135deg,rgba(212,175,55,.07),rgba(10,25,47,.03));border-left:4px solid var(--color-gold);border-radius:0 10px 10px 0;padding:16px 20px;margin:24px 0}
         .info-box strong{color:var(--color-primary);display:block;margin-bottom:6px}
-        .route-table{width:100%;border-collapse:collapse;margin:20px 0;border-radius:10px;overflow:hidden;border:1px solid rgba(10,25,47,.09);font-size:14.5px}
+        .ry-table-responsive-wrap{width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;display:block;box-sizing:border-box;margin:22px 0;border-radius:10px;border:1px solid rgba(10,25,47,.09);background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.04);position:relative}
+        .ry-table-scroll-hint{display:none;align-items:center;justify-content:center;gap:6px;background:#eff6ff;color:#1d4ed8;font-size:11.5px;font-weight:600;padding:7px 12px;border-bottom:1px solid #dbeafe}
+        .route-table{width:100%;min-width:480px;border-collapse:collapse;margin:0;font-size:14.5px;display:table;box-sizing:border-box}
         .route-table th{background:var(--color-primary);color:#fff;padding:12px 16px;text-align:left;font-size:13px}
         .route-table td{padding:11px 16px;border-bottom:1px solid rgba(10,25,47,.06);color:var(--color-text-secondary)}
         .route-table tr:last-child td{border-bottom:none}
@@ -80,9 +82,9 @@
             .blog-detail-body li { font-size: 15px !important; margin-bottom: 8px !important; line-height: 1.65 !important; }
             .blog-detail-body p, .blog-text { font-size: 15.5px; line-height: 1.75; text-align: left !important; margin-bottom: 16px; }
             /* Tables */
-            .blog-detail-body table,
-            .route-table { display: block !important; width: 100% !important; overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; font-size: 13px !important; }
-            .blog-detail-body table th, .blog-detail-body table td,
+            .ry-table-scroll-hint { display: flex !important; }
+            .ry-table-responsive-wrap { width: 100% !important; max-width: 100% !important; overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; }
+            .route-table { min-width: 460px !important; }
             .route-table th, .route-table td { padding: 9px 11px !important; font-size: 13px !important; white-space: normal; }
         }
 
@@ -103,12 +105,9 @@
             .blog-detail-body ul, .blog-detail-body ol { margin: 12px 0 16px 18px !important; padding-left: 0 !important; }
             .blog-detail-body li { font-size: 14.5px !important; margin-bottom: 8px !important; line-height: 1.65 !important; }
             /* Tables responsive on phone */
-            .blog-detail-body table, .route-table {
-                display: block !important; width: 100% !important;
-                overflow-x: auto !important; -webkit-overflow-scrolling: touch !important;
-                font-size: 12.5px !important; border-radius: 8px !important;
-            }
-            .blog-detail-body table th, .blog-detail-body table td,
+            .ry-table-scroll-hint { display: flex !important; }
+            .ry-table-responsive-wrap { width: 100% !important; max-width: 100% !important; overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; }
+            .route-table { min-width: 440px !important; font-size: 12.5px !important; }
             .route-table th, .route-table td { padding: 8px 10px !important; font-size: 12.5px !important; }
             /* Breadcrumbs */
             .breadcrumbs-nav { margin-bottom: 14px !important; }
@@ -255,19 +254,13 @@
             overflow-x: hidden !important;
             max-width: 100% !important;
         }
-        .blog-detail-container {
-            max-width: 100% !important;
-            box-sizing: border-box !important;
-        }
-        .blog-post-article {
-            max-width: 100% !important;
-            box-sizing: border-box !important;
-            overflow-wrap: break-word !important;
-            word-wrap: break-word !important;
-            word-break: break-word !important;
-        }
+        .blog-detail-container,
+        .blog-container,
+        .blog-body,
+        .blog-post-article,
         .blog-detail-body {
             max-width: 100% !important;
+            box-sizing: border-box !important;
             overflow-wrap: break-word !important;
             word-wrap: break-word !important;
             word-break: break-word !important;
@@ -323,18 +316,21 @@
             <p>For devout Hindus, Om Parvat is considered just as sacred as the more famous <strong>Mt. Kailash</strong> in Tibet. It is part of the Panch Kailash — the five sacred Kailash peaks in the Himalayas.</p>
 
             <h2>Where is Om Parvat? Location Details</h2>
-            <table class="route-table">
-                <thead><tr><th>Detail</th><th>Information</th></tr></thead>
-                <tbody>
-                    <tr><td><strong>Peak Name</strong></td><td>Om Parvat (Adi Om Shivling)</td></tr>
-                    <tr><td><strong>Peak Altitude</strong></td><td>5,590 metres (18,340 ft) / Survey records up to 6,191m (20,312 ft)</td></tr>
-                    <tr><td><strong>Darshan Viewpoint</strong></td><td>Nabidhang, Vyas Valley, Pithoragarh</td></tr>
-                    <tr><td><strong>Viewpoint Altitude</strong></td><td>4,246 metres (13,930 feet)</td></tr>
-                    <tr><td><strong>District</strong></td><td>Pithoragarh, Uttarakhand</td></tr>
-                    <tr><td><strong>Nearest Town</strong></td><td>Gunji / Nabi (10 km from viewpoint)</td></tr>
-                    <tr><td><strong>Best Viewing Time</strong></td><td>7 AM - 10 AM (morning light is best)</td></tr>
-                </tbody>
-            </table>
+            <div class="ry-table-responsive-wrap">
+                <div class="ry-table-scroll-hint"><i class="fa-solid fa-arrows-left-right"></i> Swipe horizontally to view full table</div>
+                <table class="route-table">
+                    <thead><tr><th>Detail</th><th>Information</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Peak Name</strong></td><td>Om Parvat (Adi Om Shivling)</td></tr>
+                        <tr><td><strong>Peak Altitude</strong></td><td>5,590 metres (18,340 ft) / Survey records up to 6,191m (20,312 ft)</td></tr>
+                        <tr><td><strong>Darshan Viewpoint</strong></td><td>Nabidhang, Vyas Valley, Pithoragarh</td></tr>
+                        <tr><td><strong>Viewpoint Altitude</strong></td><td>4,246 metres (13,930 feet)</td></tr>
+                        <tr><td><strong>District</strong></td><td>Pithoragarh, Uttarakhand</td></tr>
+                        <tr><td><strong>Nearest Town</strong></td><td>Gunji / Nabi (10 km from viewpoint)</td></tr>
+                        <tr><td><strong>Best Viewing Time</strong></td><td>7 AM - 10 AM (morning light is best)</td></tr>
+                    </tbody>
+                </table>
+            </div>
 
             <h2>How to Reach Om Parvat Viewpoint (Nabidhang)</h2>
             <p>The Om Parvat viewpoint at Nabidhang is only accessible with a proper <strong>Inner Line Permit (ILP)</strong> and a 4x4 vehicle with an experienced border-route driver. Here is the step-by-step route:</p>
@@ -346,18 +342,21 @@
             </ol>
 
             <h2>Best Time to See Om Parvat — Month-by-Month</h2>
-            <table class="route-table">
-                <thead><tr><th>Month</th><th>Om Parvat Visibility</th><th>Notes</th></tr></thead>
-                <tbody>
-                    <tr><td>May</td><td>&#9989; Clear</td><td>OM symbol clearly formed in snow. Mild weather.</td></tr>
-                    <tr><td>June</td><td>&#9989; Best</td><td>Peak snow accumulation. OM most prominent. Best photos.</td></tr>
-                    <tr><td>July</td><td>&#10060; Cloudy</td><td>Monsoon cloud cover — Om Parvat often obscured.</td></tr>
-                    <tr><td>August</td><td>&#10060; Avoid</td><td>Heavy cloud and landslide risk. Route may close.</td></tr>
-                    <tr><td>September</td><td>&#9989; Excellent</td><td>Post-monsoon clarity. Very clear darshan.</td></tr>
-                    <tr><td>October</td><td>&#9989; Outstanding</td><td>Fresh snowfall enhances the OM symbol. Crisp air. Best photography.</td></tr>
-                    <tr><td>Nov - Apr</td><td>&#10060; Closed</td><td>Route closed due to heavy snowfall.</td></tr>
-                </tbody>
-            </table>
+            <div class="ry-table-responsive-wrap">
+                <div class="ry-table-scroll-hint"><i class="fa-solid fa-arrows-left-right"></i> Swipe horizontally to view full table</div>
+                <table class="route-table">
+                    <thead><tr><th>Month</th><th>Om Parvat Visibility</th><th>Notes</th></tr></thead>
+                    <tbody>
+                        <tr><td>May</td><td>&#9989; Clear</td><td>OM symbol clearly formed in snow. Mild weather.</td></tr>
+                        <tr><td>June</td><td>&#9989; Best</td><td>Peak snow accumulation. OM most prominent. Best photos.</td></tr>
+                        <tr><td>July</td><td>&#10060; Cloudy</td><td>Monsoon cloud cover — Om Parvat often obscured.</td></tr>
+                        <tr><td>August</td><td>&#10060; Avoid</td><td>Heavy cloud and landslide risk. Route may close.</td></tr>
+                        <tr><td>September</td><td>&#9989; Excellent</td><td>Post-monsoon clarity. Very clear darshan.</td></tr>
+                        <tr><td>October</td><td>&#9989; Outstanding</td><td>Fresh snowfall enhances the OM symbol. Crisp air. Best photography.</td></tr>
+                        <tr><td>Nov - Apr</td><td>&#10060; Closed</td><td>Route closed due to heavy snowfall.</td></tr>
+                    </tbody>
+                </table>
+            </div>
 
             <h2>Is Om Parvat Accessible Without an Operator?</h2>
             <p>Technically possible, but practically very difficult. Here is what makes it challenging on your own:</p>

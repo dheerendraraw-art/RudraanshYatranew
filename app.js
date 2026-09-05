@@ -59,6 +59,25 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // 1.5 Automatic Responsive Table Containment Failsafe
+    // Ensures any unwrapped <table> inside articles/blogs is wrapped in .ry-table-responsive-wrap with scroll hint
+    const initResponsiveTables = () => {
+        const tables = document.querySelectorAll('article table, .blog-body table, .blog-detail-body table, .blog-container table, main table');
+        tables.forEach((tbl) => {
+            if (!tbl.closest('.ry-table-responsive-wrap, .ry-table-wrap, .ry-schedule-table-wrap, .ry-distance-table-wrap, .ry-altitude-table-wrap, .ry-pth-table-wrap, .ry-5t-table-wrap')) {
+                const wrap = document.createElement('div');
+                wrap.className = 'ry-table-responsive-wrap';
+                const hint = document.createElement('div');
+                hint.className = 'ry-table-scroll-hint';
+                hint.innerHTML = '<i class="fa-solid fa-arrows-left-right"></i> Swipe horizontally to view full table';
+                tbl.parentNode.insertBefore(wrap, tbl);
+                wrap.appendChild(hint);
+                wrap.appendChild(tbl);
+            }
+        });
+    };
+    initResponsiveTables();
+
     // 2. Mobile Navigation & Mobile Dropdowns
     const menuToggle = document.querySelector('.menu-toggle');
     const navMenu = document.querySelector('.nav-menu');

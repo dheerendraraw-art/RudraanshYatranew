@@ -179,6 +179,8 @@ img {
     }
 
     .blog-detail-container,
+    .blog-container,
+    .blog-body,
     .blog-post-article,
     .blog-detail-body {
         max-width: 100% !important;
@@ -186,6 +188,22 @@ img {
         overflow-wrap: break-word !important;
         word-wrap: break-word !important;
         word-break: break-word !important;
+    }
+
+    /* Universal responsive table wrappers to prevent horizontal blowout on phones */
+    .ry-table-responsive-wrap,
+    .ry-table-wrap,
+    .ry-schedule-table-wrap,
+    .ry-distance-table-wrap,
+    .ry-altitude-table-wrap,
+    .ry-pth-table-wrap,
+    .ry-5t-table-wrap {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        display: block !important;
+        box-sizing: border-box !important;
     }
 }
 
