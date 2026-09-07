@@ -6547,6 +6547,22 @@
                 const autoBookingId = await fetchNextBookingId();
                 const leadDestination = lead.destination || (lead.remarks && lead.remarks.match(/Destination:\s*([^|\n]+)/i) ? lead.remarks.match(/Destination:\s*([^|\n]+)/i)[1].trim() : '') || 'Confirmed Lead Booking';
 
+                // Infer travel date from remarks if missing, otherwise null (never default to today)
+                const inferredTravelDate = lead.travel_date || (function(text) {
+                    if (!text || typeof text !== 'string') return null;
+                    const isoMatch = text.match(/\b(202\d)-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])\b/);
+                    if (isoMatch) return isoMatch[0];
+                    const ddmmyyyy = text.match(/\b([0-2]?\d|3[01])[-/.](0?[1-9]|1[0-2])[-/.](202\d)\b/);
+                    if (ddmmyyyy) return `${ddmmyyyy[3]}-${ddmmyyyy[2].padStart(2, '0')}-${ddmmyyyy[1].padStart(2, '0')}`;
+                    const months = { jan:'01', feb:'02', mar:'03', apr:'04', may:'05', jun:'06', jul:'07', aug:'08', sep:'09', oct:'10', nov:'11', dec:'12' };
+                    const named = text.match(/\b([0-2]?\d|3[01])(?:st|nd|rd|th)?\s+([a-zA-Z]{3,9})(?:\s+(202\d))?\b/i);
+                    if (named) {
+                        const m = months[named[2].toLowerCase().slice(0, 3)];
+                        if (m) return `${named[3] || new Date().getFullYear()}-${m}-${named[1].padStart(2, '0')}`;
+                    }
+                    return null;
+                })(lead.remarks || lead.notes) || null;
+
                 // Insert into bookings table
                 const { error: insertErr } = await supabaseAdmin
                     .from('bookings')
@@ -6557,7 +6573,7 @@
                         email: lead.email || '',
                         package_name: leadDestination,
                         destination: leadDestination,
-                        travel_date: lead.travel_date || new Date().toISOString().split('T')[0],
+                        travel_date: inferredTravelDate,
                         travelers: String(lead.travelers || lead.group_size || 1),
                         message: combinedNotes,
                         assigned_to: staffUuid,

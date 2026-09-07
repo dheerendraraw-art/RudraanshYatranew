@@ -2547,7 +2547,7 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
            .font('Helvetica')
            .fontSize(7.5)
            .text(`Invoice No: BILL-${bill.booking_id}`, pageW - gutter - 220, 82, { align: 'right', width: 220 })
-           .text(`Date: ${new Date(bill.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`, pageW - gutter - 220, 93, { align: 'right', width: 220 });
+           .text(`Invoice Date: ${new Date(bill.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`, pageW - gutter - 220, 93, { align: 'right', width: 220 });
 
         // ─── 2. BOOKING ID RIBBON ─────────────────────────────────────────────
         const ribbonY = headerH;
@@ -2638,7 +2638,7 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
            .text(`  ${bill.group_size || 1} Pax`);
 
         doc.fillColor(slate).font('Helvetica').fontSize(8)
-           .text(`Reporting Date:`, rightCardX + 14, doc.y + 2, { continued: true, width: halfW - 20 })
+           .text(`Travel / Reporting Date:`, rightCardX + 14, doc.y + 2, { continued: true, width: halfW - 20 })
            .fillColor(ink).font('Helvetica-Bold')
            .text(`  ${startDateStr}`);
 
