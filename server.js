@@ -3858,51 +3858,73 @@ function syncStaticFiles() {
     const publicHtmlDir = path.resolve(__dirname, '../../../../public_html');
     if (!fs.existsSync(publicHtmlDir)) {
         console.log(`[Static Sync] Public directory not found at: ${publicHtmlDir}`);
-        return;
+        return { success: false, reason: 'directory_not_found', target: publicHtmlDir };
     }
     
     console.log(`[Static Sync] Syncing static files from ${__dirname} to ${publicHtmlDir}...`);
+    const syncedFiles = [];
     
-    const filesToSync = [
-        'admin.html',
-        'app.js',
-        'style.css',
-        'about.html',
-        'adi-kailash.html',
-        'blog.html',
-        'blogs.html',
-        'darma-valley.html',
-        'gallery.html',
-        'index.html',
-        'khaliya-top.html',
-        'lead-details.html',
-        'mt-kailash.html',
-        'panchachuli.html',
-        'payment.html',
-        'whats-included.html',
-        'privacy-policy.html',
-        'terms-and-conditions.html',
-        'refund-policy.html',
-        'adi-kailash-from-pithoragarh.html',
-        'adi-kailash-from-kathgodam.html',
-        'adi-kailash-from-delhi.html',
-        'sitemap.xml',
-        'robots.txt'
-    ];
-    
-    filesToSync.forEach(file => {
-        try {
-            const srcPath = path.join(__dirname, file);
-            const destPath = path.join(publicHtmlDir, file);
-            if (fs.existsSync(srcPath)) {
-                fs.copyFileSync(srcPath, destPath);
-                console.log(`[Static Sync] Synced ${file}`);
+    // 1. Sync all root HTML, CSS, JS, XML, TXT files
+    try {
+        const rootEntries = fs.readdirSync(__dirname, { withFileTypes: true });
+        for (const entry of rootEntries) {
+            if (entry.isFile()) {
+                const ext = path.extname(entry.name).toLowerCase();
+                if (['.html', '.css', '.js', '.xml', '.txt'].includes(ext)) {
+                    if (entry.name === 'server.js' || entry.name.startsWith('.')) continue;
+                    try {
+                        const srcPath = path.join(__dirname, entry.name);
+                        const destPath = path.join(publicHtmlDir, entry.name);
+                        fs.copyFileSync(srcPath, destPath);
+                        syncedFiles.push(entry.name);
+                    } catch (e) {
+                        console.error(`[Static Sync] Failed to sync ${entry.name}: ${e.message}`);
+                    }
+                }
             }
-        } catch (e) {
-            console.error(`[Static Sync] Failed to sync ${file}: ${e.message}`);
         }
-    });
+    } catch (err) {
+        console.error('[Static Sync] Error reading root directory:', err);
+    }
+    
+    // 2. Sync blog directory
+    try {
+        const blogSrcDir = path.join(__dirname, 'blog');
+        const blogDestDir = path.join(publicHtmlDir, 'blog');
+        if (fs.existsSync(blogSrcDir)) {
+            if (!fs.existsSync(blogDestDir)) {
+                fs.mkdirSync(blogDestDir, { recursive: true });
+            }
+            const blogEntries = fs.readdirSync(blogSrcDir, { withFileTypes: true });
+            for (const entry of blogEntries) {
+                if (entry.isFile() && entry.name.endsWith('.html')) {
+                    try {
+                        fs.copyFileSync(path.join(blogSrcDir, entry.name), path.join(blogDestDir, entry.name));
+                        syncedFiles.push(`blog/${entry.name}`);
+                    } catch (e) {
+                        console.error(`[Static Sync] Failed to sync blog/${entry.name}: ${e.message}`);
+                    }
+                }
+            }
+        }
+    } catch (err) {
+        console.error('[Static Sync] Error syncing blog directory:', err);
+    }
+    
+    console.log(`[Static Sync] Successfully synced ${syncedFiles.length} files to ${publicHtmlDir}`);
+    return { success: true, count: syncedFiles.length, syncedFiles };
 }
+
+// Dedicated API endpoint for triggering static files sync
+app.all('/api/sync-static', (req, res) => {
+    try {
+        const result = syncStaticFiles();
+        res.json(result);
+    } catch (err) {
+        console.error('[Sync API Error]', err);
+        res.status(500).json({ error: err.message });
+    }
+});
 
 // Support Phusion Passenger (Hostinger Node.js runner), Local Node.js, and Vercel
 if (typeof(PhusionPassenger) !== 'undefined') {
