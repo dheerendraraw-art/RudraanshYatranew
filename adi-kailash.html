@@ -966,128 +966,131 @@
         }
 
         /* ============================================================
-           Fixed Departure Dates 2026 Section Styles (Picture 1 & 2)
+           Fixed Departure Dates 2026 — Compact Modern Redesign
            ============================================================ */
         .dates-schedule-box {
             background: #FFFFFF;
             border: 1.5px solid rgba(212, 175, 55, 0.35);
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(10, 25, 47, 0.08);
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(10, 25, 47, 0.05);
             overflow: hidden;
-            margin-bottom: 32px;
+            margin-bottom: 24px;
             scroll-margin-top: 90px;
         }
 
         .dates-header-banner {
             background: linear-gradient(135deg, #0A192F 0%, #152B4D 100%);
-            padding: 24px 28px;
+            padding: 12px 18px;
             color: #FFFFFF;
-            position: relative;
             border-bottom: 2px solid var(--color-gold);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
-        .dates-header-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(212, 175, 55, 0.15);
-            border: 1px solid rgba(212, 175, 55, 0.4);
-            color: var(--color-gold);
-            padding: 5px 14px;
-            border-radius: 50px;
-            font-size: 11.5px;
-            font-weight: 700;
-            letter-spacing: 0.8px;
-            text-transform: uppercase;
-            margin-bottom: 10px;
+        .dates-header-banner-left {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
         }
 
         .dates-header-title {
             font-family: var(--font-serif);
-            font-size: clamp(22px, 3.2vw, 30px);
+            font-size: clamp(16px, 2.2vw, 20px);
             color: #FFFFFF;
-            margin: 0 0 8px 0;
+            margin: 0;
             line-height: 1.25;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dates-header-title i {
+            color: var(--color-gold);
+            font-size: 15px;
         }
 
         .dates-header-subtitle {
-            color: rgba(255, 255, 255, 0.88);
-            font-size: 14.5px;
-            line-height: 1.6;
-            margin: 0 0 16px 0;
-            max-width: 720px;
+            color: rgba(255, 255, 255, 0.82);
+            font-size: 12px;
+            margin: 0;
+            line-height: 1.4;
         }
 
-        .dates-hub-strip {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.07);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            padding: 10px 14px;
-            border-radius: 10px;
-        }
-
-        .dates-hub-pill {
+        .dates-urgency-badge {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            font-size: 12.5px;
-            color: #FFFFFF;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 4px 10px;
-            border-radius: 6px;
-        }
-
-        .dates-hub-pill strong {
+            gap: 5px;
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.45);
             color: var(--color-gold);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            white-space: nowrap;
         }
 
         .dates-table-container {
-            padding: 22px 24px 16px;
+            padding: 12px 16px 8px;
         }
 
         .dates-table-responsive {
             width: 100%;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(10, 25, 47, 0.04);
-            border: 1px solid #ECE7DE;
+            border-radius: 8px;
+            border: 1px solid #E2E8F0;
         }
 
         .dates-table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 620px;
             font-family: var(--font-sans);
             background: #FFFFFF;
+            table-layout: auto;
         }
 
         .dates-table thead th {
-            background: linear-gradient(135deg, #C59A27 0%, #D4AF37 100%);
+            background: linear-gradient(135deg, #B8860B 0%, #D4AF37 100%);
             color: #FFFFFF;
-            font-size: 13px;
+            font-size: 11.5px;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
-            padding: 14px 18px;
+            letter-spacing: 0.6px;
+            padding: 9px 12px;
             text-align: left;
-            border-bottom: 2px solid #b3881e;
+            border-bottom: 2px solid #996515;
+            white-space: nowrap;
         }
 
-        .dates-table thead th.text-center {
+        .dates-table thead th.col-th-month {
+            width: 22%;
+            min-width: 135px;
+        }
+
+        .dates-table thead th.col-th-dates {
+            width: 52%;
+            min-width: 280px;
+        }
+
+        .dates-table thead th.col-th-status {
+            width: 13%;
             text-align: center;
         }
 
-        .dates-table thead th.text-right {
+        .dates-table thead th.col-th-action {
+            width: 13%;
             text-align: right;
         }
 
         .dates-table tbody tr {
-            border-bottom: 1px solid #EFEBE4;
-            transition: background 0.2s ease;
+            border-bottom: 1px solid #E2E8F0;
+            transition: background 0.15s ease;
         }
 
         .dates-table tbody tr:last-child {
@@ -1095,27 +1098,43 @@
         }
 
         .dates-table tbody td {
-            padding: 14px 18px;
-            font-size: 14.5px;
-            color: #2D3748;
+            padding: 10px 12px;
+            font-size: 13.5px;
+            color: #1E293B;
             vertical-align: middle;
         }
 
         .dates-table tbody td.col-month {
-            font-weight: 700;
-            font-size: 15px;
-            white-space: nowrap;
+            vertical-align: middle;
+        }
+
+        .col-month-title {
+            display: block;
+            font-weight: 800;
+            font-size: 14px;
+            color: #C5221F;
+            line-height: 1.25;
+        }
+
+        .col-month-title.closing {
+            color: #15803D;
+        }
+
+        .col-hub-sub {
+            display: block;
+            font-size: 11px;
+            color: #64748B;
+            font-weight: 600;
+            margin-top: 3px;
+        }
+
+        .col-hub-sub i {
+            color: var(--color-gold-dark);
+            font-size: 9.5px;
         }
 
         .dates-table tbody td.col-dates {
             font-weight: 600;
-            line-height: 1.6;
-        }
-
-        .dates-table tbody td.col-hubs {
-            font-size: 13px;
-            color: var(--color-text-secondary);
-            white-space: nowrap;
         }
 
         .dates-table tbody td.col-status {
@@ -1128,55 +1147,19 @@
             white-space: nowrap;
         }
 
-        /* Sold Out Rows matching Picture 1 */
-        .dates-table tr.row-soldout {
-            background: repeating-linear-gradient(
-                -45deg,
-                rgba(220, 38, 38, 0.03),
-                rgba(220, 38, 38, 0.03) 10px,
-                rgba(255, 255, 255, 0.8) 10px,
-                rgba(255, 255, 255, 0.8) 20px
-            );
-            border-left: 4px solid #C5221F;
-        }
-
-        .dates-table tr.row-soldout .col-month {
-            color: #8C2220;
-        }
-
-        .dates-table tr.row-soldout .col-dates {
-            text-decoration: line-through;
-            color: #8E98A4;
-            font-weight: 500;
-        }
-
-        /* Active Rows */
-        .dates-table tr.row-active {
-            border-left: 4px solid transparent;
-        }
-
         .dates-table tr.row-active:hover {
-            background: rgba(212, 175, 55, 0.04);
+            background: #F8FAFC;
         }
 
-        .dates-table tr.row-active .col-month {
-            color: #C5221F;
-        }
-
-        .dates-table tr.row-active-closing .col-month {
-            color: #15803D;
-        }
-
-        /* Status Badges matching Picture 1 */
+        /* Status Badges */
         .status-pill {
             display: inline-block;
-            padding: 5px 16px;
-            border-radius: 50px;
-            font-size: 12px;
+            padding: 3px 9px;
+            border-radius: 20px;
+            font-size: 11px;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            letter-spacing: 0.4px;
         }
 
         .status-pill.soldout {
@@ -1185,158 +1168,132 @@
         }
 
         .status-pill.available {
-            background: #00A3C4;
+            background: #0284C7;
             color: #FFFFFF;
         }
 
         .status-pill.limited {
-            background: #1B873F;
+            background: #15803D;
             color: #FFFFFF;
         }
 
-        /* Date Chips */
+        /* Date Chips (Horizontal Flow) */
         .dates-chip-wrap {
             display: flex;
             flex-wrap: wrap;
-            gap: 6px;
+            gap: 5px 6px;
+            align-items: center;
         }
 
         .date-chip {
-            background: #F4F1EA;
-            border: 1px solid #DCD6CA;
-            color: var(--color-primary);
-            padding: 3px 8px;
-            border-radius: 6px;
-            font-size: 12.5px;
+            background: #F1F5F9;
+            border: 1px solid #CBD5E1;
+            color: #0F172A;
+            padding: 3.5px 8px;
+            border-radius: 5px;
+            font-size: 12px;
             font-weight: 700;
             display: inline-flex;
             align-items: center;
             gap: 4px;
+            text-decoration: none;
+            transition: all 0.15s ease;
+            white-space: nowrap;
         }
 
         .date-chip i {
-            font-size: 10px;
+            font-size: 9.5px;
             color: var(--color-gold-dark);
         }
 
-        .date-chip.sold {
-            text-decoration: line-through;
-            color: #A0AEC0;
-            background: #F7F5F2;
-            border-color: #E2E8F0;
+        .date-chip:hover {
+            background: #FEF08A;
+            border-color: #CA8A04;
+            color: #713F12;
+            transform: translateY(-1px);
+        }
+
+        .closing-badge-tag {
+            font-size: 11px;
+            color: #15803D;
+            font-weight: 700;
+            margin-left: 4px;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
         }
 
         /* Book Button */
         .btn-book-batch {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
             background: #25D366;
             color: #FFFFFF;
-            padding: 7px 14px;
-            border-radius: 6px;
-            font-size: 12px;
+            padding: 5.5px 11px;
+            border-radius: 5px;
+            font-size: 11.5px;
             font-weight: 700;
             text-decoration: none;
-            transition: all 0.25s ease;
-            box-shadow: 0 2px 8px rgba(37, 211, 102, 0.25);
+            transition: all 0.15s ease;
+            box-shadow: 0 1px 4px rgba(37, 211, 102, 0.25);
         }
 
         .btn-book-batch:hover {
             background: #1EBE5D;
             color: #FFFFFF;
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.35);
         }
 
-        .btn-batch-disabled {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: #EDF2F7;
-            color: #A0AEC0;
+        /* Past Batches Social Proof Strip */
+        .dates-soldout-strip {
+            margin-top: 8px;
             padding: 7px 12px;
+            background: #F8FAFC;
+            border: 1px dashed #CBD5E1;
             border-radius: 6px;
             font-size: 12px;
-            font-weight: 600;
-            cursor: not-allowed;
-        }
-
-        /* Trust Elements from Picture 2 */
-        .dates-trust-bar {
-            background: #FAF8F5;
-            border-top: 1px solid #ECE7DE;
-            padding: 16px 24px;
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 14px;
-        }
-
-        @media (max-width: 900px) {
-            .dates-trust-bar {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 500px) {
-            .dates-trust-bar {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .dates-trust-item {
+            color: #475569;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+            flex-wrap: wrap;
         }
 
-        .dates-trust-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            background: rgba(212, 175, 55, 0.15);
-            color: var(--color-gold-dark);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 13px;
-            flex-shrink: 0;
+        .dates-soldout-strip .soldout-tag {
+            background: #EF4444;
+            color: #FFFFFF;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .dates-trust-text strong {
-            display: block;
-            font-size: 11.5px;
-            color: var(--color-primary);
-            line-height: 1.25;
-        }
-
-        .dates-trust-text span {
-            font-size: 10.5px;
-            color: var(--color-text-secondary);
-        }
-
+        /* Footer Call Strip */
         .dates-footer-cta {
-            background: #FFFFFF;
-            border-top: 1px solid #ECE7DE;
-            padding: 14px 24px;
+            background: #FAFAFA;
+            border-top: 1px solid #E2E8F0;
+            padding: 9px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 8px;
+            font-size: 12.5px;
         }
 
         .dates-footer-cta .call-info {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 13.5px;
-            color: var(--color-primary);
+            gap: 8px;
+            color: #334155;
+            font-size: 12.5px;
         }
 
         .dates-footer-cta .call-info strong {
             color: var(--color-gold-dark);
-            font-size: 15px;
         }
     </style>
 
@@ -2463,29 +2420,18 @@
                     </div>
                 </div>
 
-                <!-- Fixed Departure Dates 2026 Section (Picture 1 & 2) -->
+                <!-- Fixed Departure Dates 2026 Section (Compact Redesign) -->
                 <div class="dates-schedule-box" id="fixed-departure-dates">
                     <div class="dates-header-banner">
-                        <div class="dates-header-badge">
-                            <i class="fa-solid fa-om"></i> Rudraansh Yatra &bull; Special Batches 2026
+                        <div class="dates-header-banner-left">
+                            <h2 class="dates-header-title">
+                                <i class="fa-solid fa-calendar-check"></i> Fixed Departure Dates (2026)
+                            </h2>
+                            <p class="dates-header-subtitle">Guaranteed group departures from Delhi NCR &amp; Kathgodam &bull; Open for all devotees &bull; Solo &amp; families welcome</p>
                         </div>
-                        <h2 class="dates-header-title">Adi Kailash &amp; Om Parvat — Fixed Departure Dates</h2>
-                        <p class="dates-header-subtitle">
-                            Embark on a divine Himalayan pilgrimage. <strong>Open for all &bull; Every devotee welcome.</strong> No couple batch constraint &mdash; individuals, friends, and families can join our sacred group departures.
-                        </p>
-                        <div class="dates-hub-strip">
-                            <span style="font-size:12px;font-weight:700;color:var(--color-gold);text-transform:uppercase;letter-spacing:.6px;margin-right:4px;">
-                                <i class="fa-solid fa-location-arrow"></i> Departure Hubs:
-                            </span>
-                            <div class="dates-hub-pill">
-                                <i class="fa-solid fa-city" style="color:var(--color-gold);"></i>
-                                <span><strong>Delhi NCR:</strong> Doorstep AC Vehicle Pickup (6D/5N)</span>
-                            </div>
-                            <div class="dates-hub-pill">
-                                <i class="fa-solid fa-train" style="color:var(--color-gold);"></i>
-                                <span><strong>Kathgodam:</strong> Railhead Station Pickup (6D/5N)</span>
-                            </div>
-                        </div>
+                        <span class="dates-urgency-badge">
+                            <i class="fa-solid fa-bolt"></i> Autumn 2026 Open
+                        </span>
                     </div>
 
                     <div class="dates-table-container">
@@ -2493,50 +2439,28 @@
                             <table class="dates-table" aria-label="Adi Kailash Yatra 2026 Fixed Departure Schedule">
                                 <thead>
                                     <tr>
-                                        <th>Month</th>
-                                        <th>Departure Dates</th>
-                                        <th>Departure Hubs</th>
-                                        <th class="text-center">Status</th>
-                                        <th class="text-right">Batch Booking</th>
+                                        <th class="col-th-month">Month &amp; Hub</th>
+                                        <th class="col-th-dates">Available Departure Batches</th>
+                                        <th class="col-th-status">Status</th>
+                                        <th class="col-th-action">Booking</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Sold Out Rows (Social Proof from Picture 1) -->
-                                    <tr class="row-soldout">
-                                        <td class="col-month">April 2026</td>
-                                        <td class="col-dates">25</td>
-                                        <td class="col-hubs">Delhi &amp; Kathgodam</td>
-                                        <td class="col-status"><span class="status-pill soldout">SOLD OUT</span></td>
-                                        <td class="col-action"><span class="btn-batch-disabled"><i class="fa-solid fa-lock"></i> Full</span></td>
-                                    </tr>
-                                    <tr class="row-soldout">
-                                        <td class="col-month">May 2026</td>
-                                        <td class="col-dates">2, 9, 16, 23, 30</td>
-                                        <td class="col-hubs">Delhi &amp; Kathgodam</td>
-                                        <td class="col-status"><span class="status-pill soldout">SOLD OUT</span></td>
-                                        <td class="col-action"><span class="btn-batch-disabled"><i class="fa-solid fa-lock"></i> Full</span></td>
-                                    </tr>
-                                    <tr class="row-soldout">
-                                        <td class="col-month">June 2026</td>
-                                        <td class="col-dates">6, 13, 20, 27</td>
-                                        <td class="col-hubs">Delhi &amp; Kathgodam</td>
-                                        <td class="col-status"><span class="status-pill soldout">SOLD OUT</span></td>
-                                        <td class="col-action"><span class="btn-batch-disabled"><i class="fa-solid fa-lock"></i> Full</span></td>
-                                    </tr>
-
-                                    <!-- Active Rows (Exact Dates from Picture 2) -->
+                                    <!-- September 2026 -->
                                     <tr class="row-active">
-                                        <td class="col-month">September 2026</td>
+                                        <td class="col-month">
+                                            <span class="col-month-title">September 2026</span>
+                                            <span class="col-hub-sub"><i class="fa-solid fa-location-dot"></i> Delhi &amp; Kathgodam</span>
+                                        </td>
                                         <td class="col-dates">
                                             <div class="dates-chip-wrap">
-                                                <span class="date-chip"><i class="fa-solid fa-calendar-day"></i> 19 Sept</span>
-                                                <span class="date-chip"><i class="fa-solid fa-calendar-day"></i> 20 Sept</span>
-                                                <span class="date-chip"><i class="fa-solid fa-calendar-day"></i> 23 Sept</span>
-                                                <span class="date-chip"><i class="fa-solid fa-calendar-day"></i> 27 Sept</span>
-                                                <span class="date-chip"><i class="fa-solid fa-calendar-day"></i> 30 Sept</span>
+                                                <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20book%20the%20Adi%20Kailash%2019%20Sept%202026%20batch%20(from%20Delhi/Kathgodam)." class="date-chip" target="_blank" rel="noopener" title="Book 19 Sept Batch"><i class="fa-solid fa-calendar-day"></i> 19 Sept</a>
+                                                <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20book%20the%20Adi%20Kailash%2020%20Sept%202026%20batch%20(from%20Delhi/Kathgodam)." class="date-chip" target="_blank" rel="noopener" title="Book 20 Sept Batch"><i class="fa-solid fa-calendar-day"></i> 20 Sept</a>
+                                                <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20book%20the%20Adi%20Kailash%2023%20Sept%202026%20batch%20(from%20Delhi/Kathgodam)." class="date-chip" target="_blank" rel="noopener" title="Book 23 Sept Batch"><i class="fa-solid fa-calendar-day"></i> 23 Sept</a>
+                                                <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20book%20the%20Adi%20Kailash%2027%20Sept%202026%20batch%20(from%20Delhi/Kathgodam)." class="date-chip" target="_blank" rel="noopener" title="Book 27 Sept Batch"><i class="fa-solid fa-calendar-day"></i> 27 Sept</a>
+                                                <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20book%20the%20Adi%20Kailash%2030%20Sept%202026%20batch%20(from%20Delhi/Kathgodam)." class="date-chip" target="_blank" rel="noopener" title="Book 30 Sept Batch"><i class="fa-solid fa-calendar-day"></i> 30 Sept</a>
                                             </div>
                                         </td>
-                                        <td class="col-hubs">Delhi NCR &amp; Kathgodam</td>
                                         <td class="col-status"><span class="status-pill available">Available</span></td>
                                         <td class="col-action">
                                             <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20book%20the%20Adi%20Kailash%20September%202026%20batch%20(from%20Delhi/Kathgodam)." class="btn-book-batch" target="_blank" rel="noopener">
@@ -2544,20 +2468,24 @@
                                             </a>
                                         </td>
                                     </tr>
+
+                                    <!-- October 2026 -->
                                     <tr class="row-active">
-                                        <td class="col-month">October 2026</td>
+                                        <td class="col-month">
+                                            <span class="col-month-title">October 2026</span>
+                                            <span class="col-hub-sub"><i class="fa-solid fa-location-dot"></i> Delhi &amp; Kathgodam</span>
+                                        </td>
                                         <td class="col-dates">
                                             <div class="dates-chip-wrap">
-                                                <span class="date-chip"><i class="fa-solid fa-calendar-day"></i> 2 Oct</span>
-                                                <span class="date-chip"><i class="fa-solid fa-calendar-day"></i> 3 Oct</span>
-                                                <span class="date-chip"><i class="fa-solid fa-calendar-day"></i> 9 Oct</span>
-                                                <span class="date-chip"><i class="fa-solid fa-calendar-day"></i> 12 Oct</span>
-                                                <span class="date-chip"><i class="fa-solid fa-calendar-day"></i> 15 Oct</span>
-                                                <span class="date-chip"><i class="fa-solid fa-calendar-day"></i> 18 Oct</span>
-                                                <span class="date-chip"><i class="fa-solid fa-calendar-day"></i> 29 Oct</span>
+                                                <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20book%20the%20Adi%20Kailash%202%20Oct%202026%20batch%20(from%20Delhi/Kathgodam)." class="date-chip" target="_blank" rel="noopener" title="Book 2 Oct Batch"><i class="fa-solid fa-calendar-day"></i> 2 Oct</a>
+                                                <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20book%20the%20Adi%20Kailash%203%20Oct%202026%20batch%20(from%20Delhi/Kathgodam)." class="date-chip" target="_blank" rel="noopener" title="Book 3 Oct Batch"><i class="fa-solid fa-calendar-day"></i> 3 Oct</a>
+                                                <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20book%20the%20Adi%20Kailash%209%20Oct%202026%20batch%20(from%20Delhi/Kathgodam)." class="date-chip" target="_blank" rel="noopener" title="Book 9 Oct Batch"><i class="fa-solid fa-calendar-day"></i> 9 Oct</a>
+                                                <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20book%20the%20Adi%20Kailash%2012%20Oct%202026%20batch%20(from%20Delhi/Kathgodam)." class="date-chip" target="_blank" rel="noopener" title="Book 12 Oct Batch"><i class="fa-solid fa-calendar-day"></i> 12 Oct</a>
+                                                <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20book%20the%20Adi%20Kailash%2015%20Oct%202026%20batch%20(from%20Delhi/Kathgodam)." class="date-chip" target="_blank" rel="noopener" title="Book 15 Oct Batch"><i class="fa-solid fa-calendar-day"></i> 15 Oct</a>
+                                                <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20book%20the%20Adi%20Kailash%2018%20Oct%202026%20batch%20(from%20Delhi/Kathgodam)." class="date-chip" target="_blank" rel="noopener" title="Book 18 Oct Batch"><i class="fa-solid fa-calendar-day"></i> 18 Oct</a>
+                                                <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20book%20the%20Adi%20Kailash%2029%20Oct%202026%20batch%20(from%20Delhi/Kathgodam)." class="date-chip" target="_blank" rel="noopener" title="Book 29 Oct Batch"><i class="fa-solid fa-calendar-day"></i> 29 Oct</a>
                                             </div>
                                         </td>
-                                        <td class="col-hubs">Delhi NCR &amp; Kathgodam</td>
                                         <td class="col-status"><span class="status-pill available">Available</span></td>
                                         <td class="col-action">
                                             <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20book%20the%20Adi%20Kailash%20October%202026%20batch%20(from%20Delhi/Kathgodam)." class="btn-book-batch" target="_blank" rel="noopener">
@@ -2565,16 +2493,20 @@
                                             </a>
                                         </td>
                                     </tr>
-                                    <tr class="row-active row-active-closing">
-                                        <td class="col-month">November 2026</td>
+
+                                    <!-- November 2026 -->
+                                    <tr class="row-active">
+                                        <td class="col-month">
+                                            <span class="col-month-title closing">November 2026</span>
+                                            <span class="col-hub-sub"><i class="fa-solid fa-location-dot"></i> Delhi &amp; Kathgodam</span>
+                                        </td>
                                         <td class="col-dates">
                                             <div class="dates-chip-wrap">
-                                                <span class="date-chip" style="border-color:#86efac;background:#f0fdf4;"><i class="fa-solid fa-calendar-day" style="color:#15803d;"></i> 2 Nov</span>
-                                                <span class="date-chip" style="border-color:#86efac;background:#f0fdf4;"><i class="fa-solid fa-calendar-day" style="color:#15803d;"></i> 5 Nov</span>
-                                                <span style="font-size:11.5px;color:#15803d;font-weight:700;margin-left:4px;display:inline-flex;align-items:center;">&bull; Closing Season Batches</span>
+                                                <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20book%20the%20Adi%20Kailash%202%20Nov%202026%20closing%20batch%20(from%20Delhi/Kathgodam)." class="date-chip" style="border-color:#86efac;background:#f0fdf4;" target="_blank" rel="noopener" title="Book 2 Nov Batch"><i class="fa-solid fa-calendar-day" style="color:#15803d;"></i> 2 Nov</a>
+                                                <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20book%20the%20Adi%20Kailash%205%20Nov%202026%20closing%20batch%20(from%20Delhi/Kathgodam)." class="date-chip" style="border-color:#86efac;background:#f0fdf4;" target="_blank" rel="noopener" title="Book 5 Nov Batch"><i class="fa-solid fa-calendar-day" style="color:#15803d;"></i> 5 Nov</a>
+                                                <span class="closing-badge-tag"><i class="fa-solid fa-snowflake"></i> Closing Season Batches</span>
                                             </div>
                                         </td>
-                                        <td class="col-hubs">Delhi NCR &amp; Kathgodam</td>
                                         <td class="col-status"><span class="status-pill limited">Limited Seats</span></td>
                                         <td class="col-action">
                                             <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20book%20the%20Adi%20Kailash%20November%202026%20closing%20batch%20(from%20Delhi/Kathgodam)." class="btn-book-batch" target="_blank" rel="noopener">
@@ -2585,61 +2517,23 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div>
 
-                    <!-- Trust Pillars Strip from Picture 2 -->
-                    <div class="dates-trust-bar">
-                        <div class="dates-trust-item">
-                            <div class="dates-trust-icon"><i class="fa-solid fa-mountain"></i></div>
-                            <div class="dates-trust-text">
-                                <strong>Breathtaking Views</strong>
-                                <span>Jyolingkong &amp; Nabidhang</span>
-                            </div>
-                        </div>
-                        <div class="dates-trust-item">
-                            <div class="dates-trust-icon"><i class="fa-solid fa-om"></i></div>
-                            <div class="dates-trust-text">
-                                <strong>Spiritual Darshan</strong>
-                                <span>Adi Kailash &amp; Om Parvat</span>
-                            </div>
-                        </div>
-                        <div class="dates-trust-item">
-                            <div class="dates-trust-icon"><i class="fa-solid fa-users"></i></div>
-                            <div class="dates-trust-text">
-                                <strong>Quality Time</strong>
-                                <span>Solo, friends &amp; families</span>
-                            </div>
-                        </div>
-                        <div class="dates-trust-item">
-                            <div class="dates-trust-icon"><i class="fa-solid fa-shield-heart"></i></div>
-                            <div class="dates-trust-text">
-                                <strong>Safe &amp; Comfortable</strong>
-                                <span>4x4 Boleros &amp; Medical O2</span>
-                            </div>
-                        </div>
-                        <div class="dates-trust-item">
-                            <div class="dates-trust-icon"><i class="fa-solid fa-camera-retro"></i></div>
-                            <div class="dates-trust-text">
-                                <strong>Cherished Memories</strong>
-                                <span>Local Bhotiya hospitality</span>
-                            </div>
+                        <!-- Past Sold-Out Social Proof Bar -->
+                        <div class="dates-soldout-strip">
+                            <span class="soldout-tag"><i class="fa-solid fa-lock"></i> 100% Sold Out</span>
+                            <span><strong>11 Spring Batches (April 25, May 2/9/16/23/30, June 6/13/20/27)</strong> were fully booked. September &amp; October batches filling rapidly!</span>
                         </div>
                     </div>
 
-                    <!-- Footer Call / WhatsApp Bar from Picture 2 -->
+                    <!-- Footer Quick Contact -->
                     <div class="dates-footer-cta">
                         <div class="call-info">
-                            <i class="fa-solid fa-phone-volume" style="color:var(--color-gold-dark);font-size:16px;"></i>
-                            <span>Speak to Pilgrimage Experts: <strong>Team Rudraansh Yatra</strong></span>
+                            <i class="fa-solid fa-headset" style="color:var(--color-gold-dark);"></i>
+                            <span>Need a customized date or private vehicle? <strong>Pithoragarh Local Team: +91 7617617651</strong></span>
                         </div>
-                        <div style="display:flex;gap:10px;flex-wrap:wrap;">
-                            <a href="tel:+917617617651" class="btn btn-secondary" style="padding:6px 14px;font-size:12.5px;font-weight:700;">
-                                <i class="fa-solid fa-phone"></i> +91 7617617651
-                            </a>
-                            <a href="https://wa.me/917617617651?text=Namaste!%20I%20am%20inquiring%20about%20Adi%20Kailash%20Fixed%20Departure%20Dates%20from%20Delhi%20and%20Kathgodam." class="btn btn-whatsapp" target="_blank" rel="noopener" style="padding:6px 14px;font-size:12.5px;font-weight:700;">
-                                <i class="fa-brands fa-whatsapp"></i> WhatsApp Batch Inquiry
-                            </a>
-                        </div>
+                        <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20custom%20dates%20for%20Adi%20Kailash%20Yatra." class="btn-book-batch" target="_blank" rel="noopener" style="background:var(--color-primary);">
+                            <i class="fa-brands fa-whatsapp"></i> Custom Batch Inquiry
+                        </a>
                     </div>
                 </div>
 
