@@ -3911,6 +3911,32 @@ function syncStaticFiles() {
         console.error('[Static Sync] Error syncing blog directory:', err);
     }
     
+    // 3. Sync assets directory (images, fonts, videos, etc.)
+    try {
+        const syncDirRecursive = (src, dest) => {
+            if (!fs.existsSync(src)) return;
+            if (!fs.existsSync(dest)) fs.mkdirSync(dest, { recursive: true });
+            const entries = fs.readdirSync(src, { withFileTypes: true });
+            for (const entry of entries) {
+                const srcPath = path.join(src, entry.name);
+                const destPath = path.join(dest, entry.name);
+                if (entry.isDirectory()) {
+                    syncDirRecursive(srcPath, destPath);
+                } else if (entry.isFile()) {
+                    try {
+                        fs.copyFileSync(srcPath, destPath);
+                        syncedFiles.push(path.relative(__dirname, srcPath).replace(/\\/g, '/'));
+                    } catch (e) {
+                        console.error(`[Static Sync] Failed to sync asset ${entry.name}: ${e.message}`);
+                    }
+                }
+            }
+        };
+        syncDirRecursive(path.join(__dirname, 'assets'), path.join(publicHtmlDir, 'assets'));
+    } catch (err) {
+        console.error('[Static Sync] Error syncing assets directory:', err);
+    }
+    
     console.log(`[Static Sync] Successfully synced ${syncedFiles.length} files to ${publicHtmlDir}`);
     return { success: true, count: syncedFiles.length, syncedFiles };
 }

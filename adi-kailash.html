@@ -239,7 +239,7 @@
 
         .route-cards-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 14px;
             margin-top: 16px;
         }
@@ -2246,6 +2246,8 @@
                                 <li><a href="adi-kailash-from-pithoragarh">From Pithoragarh</a></li>
                                 <li><a href="adi-kailash-from-kathgodam">From Kathgodam</a></li>
                                 <li><a href="adi-kailash-from-delhi">From Delhi</a></li>
+                                <li class="sub-divider"></li>
+                                <li><a href="adi-kailash-patal-bhuvaneshwar" style="color:var(--color-gold);font-weight:600;"><i class="fa-solid fa-gopuram" style="margin-right:4px;"></i>With Patal Bhuvaneshwar</a></li>
                             </ul>
                         </li>
                         <li><a href="khaliya-top">Khaliya Top Trek</a></li>
@@ -2296,6 +2298,7 @@
                 <a href="adi-kailash-from-pithoragarh" class="hero-pill-btn"><i class="fa-solid fa-location-dot"></i> Pithoragarh: <strong>₹18,000</strong> (3D)</a>
                 <a href="adi-kailash-from-kathgodam" class="hero-pill-btn"><i class="fa-solid fa-train"></i> Kathgodam: <strong>₹30,000</strong> (6D)</a>
                 <a href="adi-kailash-from-delhi" class="hero-pill-btn"><i class="fa-solid fa-city"></i> Delhi NCR: <strong>₹35,000</strong> (6D)</a>
+                <a href="adi-kailash-patal-bhuvaneshwar" class="hero-pill-btn" style="background:rgba(212,175,55,0.15);border-color:var(--color-gold);"><i class="fa-solid fa-gopuram" style="color:var(--color-gold);"></i> + Patal Bhuvaneshwar: <strong>₹22,000</strong> (4D)</a>
                 <a href="#fixed-departure-dates" class="hero-pill-btn" style="background:rgba(212,175,55,0.22);border-color:var(--color-gold);"><i class="fa-solid fa-calendar-check" style="color:var(--color-gold);"></i> <strong>Fixed Batches 2026</strong></a>
             </div>
         </div>
@@ -2412,6 +2415,18 @@
                             <div class="route-card-title">From Delhi NCR</div>
                             <div class="route-card-price">₹35,000 <span>/ person</span></div>
                             <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.4;">6 Days / 5 Nights · Doorstep AC vehicle pickup from Delhi/NCR.</div>
+                            <div class="route-card-footer">
+                                <span>View Package Details</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </div>
+                        </a>
+
+                        <!-- Route 4: With Patal Bhuvaneshwar -->
+                        <a href="adi-kailash-patal-bhuvaneshwar" class="route-quick-card" style="border-color:var(--color-gold);background:linear-gradient(to bottom,#fff,rgba(212,175,55,.05));">
+                            <span class="route-card-badge" style="background:rgba(212,175,55,.2);color:var(--color-gold-dark);"><i class="fa-solid fa-gopuram"></i> Sacred Cave Circuit</span>
+                            <div class="route-card-title">With Patal Bhuvaneshwar</div>
+                            <div class="route-card-price">₹22,000 <span>/ person</span></div>
+                            <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.4;">4 to 7 Days · Includes 1 full day at subterranean limestone cave temple.</div>
                             <div class="route-card-footer">
                                 <span>View Package Details</span>
                                 <i class="fa-solid fa-arrow-right"></i>
@@ -3325,9 +3340,13 @@
                         <span><i class="fa-solid fa-train" style="color:var(--color-gold);font-size:12px;margin-right:5px;"></i> From Kathgodam</span>
                         <span style="color:var(--color-gold-dark);font-size:12px;font-weight:700;">₹30,000 · 6D &rarr;</span>
                     </a>
-                    <a href="adi-kailash-from-delhi" style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;text-decoration:none;color:var(--color-primary);font-size:13.5px;font-weight:600;">
+                    <a href="adi-kailash-from-delhi" style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--glass-border);text-decoration:none;color:var(--color-primary);font-size:13.5px;font-weight:600;">
                         <span><i class="fa-solid fa-city" style="color:var(--color-gold);font-size:12px;margin-right:5px;"></i> From Delhi NCR</span>
                         <span style="color:var(--color-gold-dark);font-size:12px;font-weight:700;">₹35,000 · 6D &rarr;</span>
+                    </a>
+                    <a href="adi-kailash-patal-bhuvaneshwar" style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;text-decoration:none;color:var(--color-primary);font-size:13.5px;font-weight:600;">
+                        <span><i class="fa-solid fa-gopuram" style="color:var(--color-gold);font-size:12px;margin-right:5px;"></i> + Patal Bhuvaneshwar</span>
+                        <span style="color:var(--color-gold-dark);font-size:12px;font-weight:700;">₹22,000 · 4D &rarr;</span>
                     </a>
                 </div>
 
@@ -3694,6 +3713,7 @@
                     <li><a href="adi-kailash-from-pithoragarh">From Pithoragarh ₹18K</a></li>
                     <li><a href="adi-kailash-from-kathgodam">From Kathgodam ₹30K</a></li>
                     <li><a href="adi-kailash-from-delhi">From Delhi ₹35K</a></li>
+                    <li><a href="adi-kailash-patal-bhuvaneshwar">With Patal Bhuvaneshwar ₹22K</a></li>
                     <li><a href="khaliya-top">Khaliya Top Trek</a></li>
                     <li><a href="mt-kailash">Mt. Kailash Yatra</a></li>
                 </ul>
