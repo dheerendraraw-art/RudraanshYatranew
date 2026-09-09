@@ -3574,6 +3574,483 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-suspended-due-to-weather-official-reopeni
     }
 };
 
+
+// ─────────────────────────────────────────────────────────────────────────────
+// TARGET BLOG: when-does-adi-kailash-yatra-2026-close-for-winter
+// Comprehensive SEO · AEO · GEO · AIO Optimization Payload
+// ─────────────────────────────────────────────────────────────────────────────
+BLOG_ENHANCERS['when-does-adi-kailash-yatra-2026-close-for-winter'] = {
+    meta: {
+        title: 'When Does Adi Kailash Yatra 2026 Close for Winter? Closing Dates, Snowfall & Last Batch Guide | Rudraansh Yatra',
+        desc: 'Adi Kailash Yatra 2026 winter closing date is November 10, 2026. Get exact snowfall forecast, SDM Dharchula ILP deadlines, Byas Valley migration dates & last batch booking tips.',
+        dateModified: '2026-09-09T12:00:00+05:30'
+    },
+
+    schemas: `
+    <!-- AIO / GEO / SEO / AEO Schema 1: Comprehensive FAQPage Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "When does the Adi Kailash Yatra close for winter in 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The official operational closing date for the Adi Kailash and Om Parvat Yatra 2026 is November 10, 2026. After November 10, the Sub-Divisional Magistrate (SDM) Office in Dharchula and District Administration Pithoragarh halt all civilian Inner Line Permit (ILP) issuance, and ITBP checkpoints at Tawaghat and Chialekh restrict all civilian vehicle movement due to heavy winter snow."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the departure date for the last batch to Adi Kailash in 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The final civilian 4x4 Bolero batches for the 2026 season depart Dharchula between November 3 and November 5, 2026. All pilgrims in these final batches complete their Parvati Sarovar and Om Parvat darshan and safely descend to Dharchula by November 8–10, 2026."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does the Adi Kailash Yatra close in November?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The yatra closes in November due to 5 high-altitude ground realities: (1) Freezing of outdoor gravity water pipelines at Gunji and Jolingkong (-10°C to -18°C); (2) Annual seasonal migration (Kooch) of native Rung villagers from Byas Valley to lower Dharchula, shutting down all village homestays; (3) Heavy snowfall accumulation (3 to 6 ft) burying high roads; (4) BRO snow-clearing assets focusing strictly on military border lifelines; and (5) Severe hypothermia and Acute Mountain Sickness (AMS) risks for civilian travelers."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can we visit Adi Kailash or Om Parvat in December or January?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. The Adi Kailash and Om Parvat route is strictly closed to all civilian tourists and pilgrims in December, January, February, and March. Road tracks past Budhi are buried under deep snow drifts, temperatures plunge below -20°C, and ITBP checkposts at Tawaghat enforce a complete ban on civilian entry."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the deadline for obtaining an Inner Line Permit (ILP) before winter closure?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The SDM Office in Dharchula stops issuing civilian Inner Line Permits for Adi Kailash on November 3, 2026 at 5:00 PM IST. Yatris must submit their Aadhaar cards, police clearances, and high-altitude medical fitness certificates at least 7 to 10 days in advance through registered operators like Rudraansh Yatra."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "When does Parvati Sarovar freeze over completely?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Parvati Sarovar (elevation 4,500m / 14,995 ft) begins forming shore ice crystals by late October. By the second week of November, the entire surface freezes into a solid turquoise ice sheet, remaining frozen through April until the spring thaw in May."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How cold does it get at Gunji and Jolingkong in late October and November?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In late October, daytime temperatures range from 4°C to 10°C, while night temperatures drop to -2°C to -6°C. In early November, daytime temperatures barely reach 0°C to 4°C, and night temperatures plunge to between -8°C and -16°C with intense high-altitude wind chill."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the Byas Valley winter migration (Kooch)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Byas Valley winter migration, known locally as 'Kooch', is the ancestral transhumance migration of the indigenous Rung (Shauka) community from high-altitude villages (Gunji, Nabi, Rongkong, Kuti, Napalchu) down to Dharchula. Taking place between late October and early November, the entire village population relocates with livestock to escape harsh winter freezes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is October better than November for visiting Adi Kailash?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. October is considered the prime golden month of the entire year. It offers crystal-clear cloudless skies, 100% sharp visibility of the Om Parvat 'ॐ' snow formation, fully operational homestays with hot meals and woodfire tandoors, and manageable daytime temperatures (8°C to 14°C) without the extreme sub-zero hazards of November."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "When will the Adi Kailash Yatra reopen in 2027?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Adi Kailash Yatra is scheduled to reopen for the spring/summer season between May 10 and May 15, 2027, following the completion of 'Operation Snow Clearance' by Border Roads Organisation (BRO Project Hirak) and the return migration of local villagers."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- AIO / GEO / SEO Schema 2: Authoritative BlogPosting & Knowledge Graph Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "@id": "https://rudraanshyatra.com/blog/when-does-adi-kailash-yatra-2026-close-for-winter#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://rudraanshyatra.com/blog/when-does-adi-kailash-yatra-2026-close-for-winter"
+      },
+      "headline": "When Does Adi Kailash Yatra 2026 Close for Winter? Closing Dates, Snowfall & Last Batch Guide",
+      "description": "Adi Kailash Yatra 2026 winter closing date is November 10, 2026. Get exact snowfall forecast, SDM Dharchula ILP deadlines, Byas Valley migration dates & last batch booking tips.",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://rudraanshyatra.com/assets/images/adi-kailash-hero.webp",
+        "width": 1200,
+        "height": 675,
+        "caption": "Adi Kailash Peak and Parvati Sarovar preparing for winter snowfall closure - Rudraansh Yatra"
+      },
+      "datePublished": "2026-09-09T12:00:00+05:30",
+      "dateModified": "2026-09-09T12:00:00+05:30",
+      "author": {
+        "@type": "Person",
+        "name": "Dheerendra Rautela",
+        "jobTitle": "Founder & Himalayan Expedition Director",
+        "url": "https://rudraanshyatra.com/about",
+        "worksFor": {
+          "@type": "TravelAgency",
+          "@id": "https://rudraanshyatra.com/#organization"
+        }
+      },
+      "publisher": {
+        "@type": "TravelAgency",
+        "@id": "https://rudraanshyatra.com/#organization",
+        "name": "Rudraansh Yatra",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://rudraanshyatra.com/assets/images/logo.webp"
+        }
+      },
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+          "#aeo-winter-closing-answer",
+          ".ry-winter-tldr",
+          ".blog-heading"
+        ]
+      },
+      "about": [
+        {
+          "@type": "Place",
+          "name": "Adi Kailash",
+          "containedInPlace": {
+            "@type": "AdministrativeArea",
+            "name": "Pithoragarh, Uttarakhand, India"
+          }
+        },
+        {
+          "@type": "Place",
+          "name": "Om Parvat",
+          "containedInPlace": {
+            "@type": "AdministrativeArea",
+            "name": "Pithoragarh, Uttarakhand, India"
+          }
+        },
+        {
+          "@type": "GovernmentOrganization",
+          "name": "Border Roads Organisation (BRO)",
+          "alternateName": "Project Hirak / 67 RCC"
+        },
+        {
+          "@type": "GovernmentOrganization",
+          "name": "Indo-Tibetan Border Police (ITBP)",
+          "alternateName": "ITBP 7th & 14th Battalions"
+        },
+        {
+          "@type": "GovernmentOrganization",
+          "name": "SDM Office Dharchula",
+          "description": "Inner Line Permit issuing authority for Byas Valley"
+        }
+      ],
+      "keywords": "When does Adi Kailash close for winter 2026, Adi Kailash closing date 2026, Adi Kailash winter closing dates, Adi Kailash last batch departure, Can we visit Adi Kailash in November, Adi Kailash snowfall forecast, Parvati Sarovar winter freeze, Byas Valley Kooch migration, Rudraansh Yatra",
+      "articleSection": "Pilgrimage Guidelines & Weather Alerts",
+      "inLanguage": "en-IN",
+      "isAccessibleForFree": true
+    }
+    </script>
+
+    <!-- Schema 3: BreadcrumbList Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "@id": "https://rudraanshyatra.com/blog/when-does-adi-kailash-yatra-2026-close-for-winter#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://rudraanshyatra.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Travel Diaries",
+          "item": "https://rudraanshyatra.com/blogs"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "When Does Adi Kailash Yatra Close for Winter 2026?",
+          "item": "https://rudraanshyatra.com/blog/when-does-adi-kailash-yatra-2026-close-for-winter"
+        }
+      ]
+    }
+    </script>
+`,
+
+    render: function(paragraphsHtml) {
+        // AEO / Voice Search Direct Answer Executive Summary Box
+        const aeoExecutiveBox = `
+        <!-- ==========================================================================
+             AEO / VOICE SEARCH / ZERO-CLICK FEATURED SNIPPET EXECUTIVE ANSWER BOX
+             ========================================================================== -->
+        <div id="aeo-winter-closing-answer" style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); border: 2px solid #f59e0b; border-radius: 16px; padding: 26px; margin: 0 0 32px 0; color: #ffffff; box-shadow: 0 16px 36px rgba(15, 23, 42, 0.45); position: relative; overflow: hidden;">
+            <div style="position: absolute; top: -10px; right: -10px; background: rgba(245, 158, 11, 0.12); width: 140px; height: 140px; border-radius: 50%; pointer-events: none;"></div>
+            
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 16px;">
+                <span style="background: rgba(239, 68, 68, 0.22); border: 1.5px solid #ef4444; color: #fca5a5; font-size: 13px; font-weight: 800; padding: 6px 14px; border-radius: 30px; display: inline-flex; align-items: center; gap: 7px; text-transform: uppercase; letter-spacing: 0.5px;">
+                    <i class="fa-solid fa-snowflake" style="color: #ef4444;"></i> Official Winter Closing: November 10, 2026
+                </span>
+                <span style="font-size: 13px; color: #cbd5e1; font-weight: 600;">
+                    <i class="fa-solid fa-clock-rotate-left" style="color: #f59e0b;"></i> Byas Valley Seasonal Cycle
+                </span>
+            </div>
+
+            <h3 style="font-family: var(--font-serif); font-size: 24px; color: #fef08a; margin: 0 0 14px 0; line-height: 1.35;">
+                Executive Quick Answer: Adi Kailash Yatra 2026 Winter Closure Schedule
+            </h3>
+
+            <p class="ry-winter-tldr" style="font-size: 16px; line-height: 1.7; color: #f1f5f9; margin: 0 0 18px 0;">
+                The <strong>Adi Kailash and Om Parvat Yatra officially closes for the winter season on November 10, 2026</strong>. Final civilian 4x4 Bolero batches depart from Dharchula between <strong>November 3 and November 5, 2026</strong>, with the Sub-Divisional Magistrate (SDM) Office Dharchula ending all Inner Line Permit (ILP) issuance on <strong>November 3, 2026 at 5:00 PM IST</strong>. The route remains completely closed to all civilian tourists and pilgrims for 6 months until the official spring reopening between <strong>May 10 and May 15, 2027</strong>.
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin-bottom: 22px;">
+                <div style="background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 10px; padding: 12px 14px;">
+                    <div style="font-size: 12px; color: #94a3b8; font-weight: 700; text-transform: uppercase;">Closing Date</div>
+                    <div style="font-size: 16px; color: #f87171; font-weight: 800; margin-top: 3px;">November 10, 2026</div>
+                    <div style="font-size: 12px; color: #cbd5e1; margin-top: 2px;">Tawaghat ITBP Lockdown</div>
+                </div>
+
+                <div style="background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 10px; padding: 12px 14px;">
+                    <div style="font-size: 12px; color: #94a3b8; font-weight: 700; text-transform: uppercase;">Last Batch Departure</div>
+                    <div style="font-size: 16px; color: #fbbf24; font-weight: 800; margin-top: 3px;">Nov 3 – Nov 5, 2026</div>
+                    <div style="font-size: 12px; color: #cbd5e1; margin-top: 2px;">From Dharchula / Kathgodam</div>
+                </div>
+
+                <div style="background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 10px; padding: 12px 14px;">
+                    <div style="font-size: 12px; color: #94a3b8; font-weight: 700; text-transform: uppercase;">SDM Permit Deadline</div>
+                    <div style="font-size: 16px; color: #6ee7b7; font-weight: 800; margin-top: 3px;">November 3, 2026</div>
+                    <div style="font-size: 12px; color: #cbd5e1; margin-top: 2px;">5:00 PM IST Portal Freeze</div>
+                </div>
+
+                <div style="background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 10px; padding: 12px 14px;">
+                    <div style="font-size: 12px; color: #94a3b8; font-weight: 700; text-transform: uppercase;">Spring 2027 Reopening</div>
+                    <div style="font-size: 16px; color: #38bdf8; font-weight: 800; margin-top: 3px;">May 10 – May 15, 2027</div>
+                    <div style="font-size: 12px; color: #cbd5e1; margin-top: 2px;">Post-BRO Snow Clearance</div>
+                </div>
+            </div>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center;">
+                <a href="https://wa.me/917617617651?text=Namaste!%20I%20am%20inquiring%20about%20the%20final%20October/November%202026%20Adi%20Kailash%20batches%20before%20winter%20closing." target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; background: #25d366; color: #ffffff; padding: 11px 20px; border-radius: 8px; font-weight: 700; font-size: 14px; text-decoration: none; box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);">
+                    <i class="fa-brands fa-whatsapp" style="font-size: 17px;"></i> Book Last 2026 Batch on WhatsApp
+                </a>
+                <a href="/adi-kailash" style="display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #f59e0b, #d97706); color: #0f172a; padding: 11px 20px; border-radius: 8px; font-weight: 800; font-size: 14px; text-decoration: none; box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);">
+                    <i class="fa-solid fa-mountain" style="font-size: 15px;"></i> View Autumn Packages
+                </a>
+                <span style="font-size: 13px; color: #94a3b8; margin-left: auto;">
+                    <i class="fa-solid fa-location-dot" style="color: #f59e0b;"></i> Ground Ops: Dharchula & Pithoragarh
+                </span>
+            </div>
+        </div>
+        `;
+
+        // GEO Comparison Table 1: 2026 Autumn-to-Winter Transition Timeline
+        const geoTable1 = `
+        <div class="ry-table-responsive-wrap" style="margin: 24px 0;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 14px; text-align: left; background: #0f172a; border: 1px solid #334155; border-radius: 12px; overflow: hidden; color: #f8fafc;">
+                <thead>
+                    <tr style="background: #1e293b; color: #facc15; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #475569;">
+                        <th style="padding: 14px 16px;">Season Phase</th>
+                        <th style="padding: 14px 16px;">Operational Dates</th>
+                        <th style="padding: 14px 16px;">Temperatures (Day / Night)</th>
+                        <th style="padding: 14px 16px;">BRO Road Status</th>
+                        <th style="padding: 14px 16px;">SDM ILP Status</th>
+                        <th style="padding: 14px 16px;">Darshan & 'ॐ' Visibility</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid #1e293b; background: rgba(34, 197, 94, 0.05);">
+                        <td style="padding: 14px 16px; font-weight: 700; color: #86efac;">Fresh Post-Monsoon Opening</td>
+                        <td style="padding: 14px 16px;">Sept 15 – Sept 30, 2026</td>
+                        <td style="padding: 14px 16px;">12°C to 18°C / 2°C to 5°C</td>
+                        <td style="padding: 14px 16px;">Fully Graded & Open for 4x4</td>
+                        <td style="padding: 14px 16px; color: #86efac; font-weight: 600;">Active Daily Issuance</td>
+                        <td style="padding: 14px 16px;">Lush green valleys, clear morning views</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #1e293b; background: rgba(245, 158, 11, 0.06);">
+                        <td style="padding: 14px 16px; font-weight: 700; color: #fde047;">Peak Golden Darshan Window</td>
+                        <td style="padding: 14px 16px;">Oct 1 – Oct 31, 2026</td>
+                        <td style="padding: 14px 16px;">8°C to 14°C / -2°C to -6°C</td>
+                        <td style="padding: 14px 16px;">Dry, stable, peak 4x4 transit</td>
+                        <td style="padding: 14px 16px; color: #fde047; font-weight: 600;">High Volume Pre-bookings</td>
+                        <td style="padding: 14px 16px;">100% crisp blue skies, perfect 'ॐ' symbol</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #1e293b; background: rgba(249, 115, 22, 0.06);">
+                        <td style="padding: 14px 16px; font-weight: 700; color: #fdba74;">Final Batch Wind-Down</td>
+                        <td style="padding: 14px 16px;">Nov 1 – Nov 10, 2026</td>
+                        <td style="padding: 14px 16px;">0°C to 5°C / -8°C to -15°C</td>
+                        <td style="padding: 14px 16px;">Morning black ice, last convoys</td>
+                        <td style="padding: 14px 16px; color: #fdba74; font-weight: 600;">Closes Nov 3 (5 PM)</td>
+                        <td style="padding: 14px 16px;">Glacial frost, partial Parvati Sarovar freeze</td>
+                    </tr>
+                    <tr style="background: rgba(239, 68, 68, 0.08);">
+                        <td style="padding: 14px 16px; font-weight: 700; color: #fca5a5;">Deep Winter Lockdown</td>
+                        <td style="padding: 14px 16px;">Nov 11, 2026 – May 10, 2027</td>
+                        <td style="padding: 14px 16px;">-5°C to -12°C / -15°C to -25°C</td>
+                        <td style="padding: 14px 16px; color: #fca5a5; font-weight: 600;">Closed (3–6 ft Snow Drifts)</td>
+                        <td style="padding: 14px 16px; color: #fca5a5; font-weight: 600;">Completely Suspended</td>
+                        <td style="padding: 14px 16px;">Inaccessible to civilians; Military only</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        `;
+
+        // GEO Sector Accessibility Matrix
+        const geoTable2 = `
+        <div class="ry-table-responsive-wrap" style="margin: 24px 0;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 14px; text-align: left; background: #0f172a; border: 1px solid #334155; border-radius: 12px; overflow: hidden; color: #f8fafc;">
+                <thead>
+                    <tr style="background: #1e293b; color: #38bdf8; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #475569;">
+                        <th style="padding: 14px 16px;">Sector / Checkpoint</th>
+                        <th style="padding: 14px 16px;">Altitude</th>
+                        <th style="padding: 14px 16px;">Late Autumn Conditions</th>
+                        <th style="padding: 14px 16px;">Winter Snowfall Risk</th>
+                        <th style="padding: 14px 16px;">Road Accessibility</th>
+                        <th style="padding: 14px 16px;">Homestay / Lodging Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid #1e293b;">
+                        <td style="padding: 14px 16px; font-weight: 700; color: #f8fafc;">Dharchula Base Town</td>
+                        <td style="padding: 14px 16px;">915m (3,002 ft)</td>
+                        <td style="padding: 14px 16px;">Mild, sunny (15°C–22°C)</td>
+                        <td style="padding: 14px 16px;">0% (No snowfall)</td>
+                        <td style="padding: 14px 16px; color: #86efac; font-weight: 600;">Open 365 days</td>
+                        <td style="padding: 14px 16px;">Hotels & guest houses fully open</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #1e293b;">
+                        <td style="padding: 14px 16px; font-weight: 700; color: #f8fafc;">Tawaghat ITBP Checkpost</td>
+                        <td style="padding: 14px 16px;">1,100m (3,608 ft)</td>
+                        <td style="padding: 14px 16px;">Pleasant daytime temperatures</td>
+                        <td style="padding: 14px 16px;">0% (No snowfall)</td>
+                        <td style="padding: 14px 16px; color: #fca5a5; font-weight: 600;">Civilian Gate Locks Nov 10</td>
+                        <td style="padding: 14px 16px;">Transit checkpoint only</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #1e293b;">
+                        <td style="padding: 14px 16px; font-weight: 700; color: #f8fafc;">Chialekh Ridge & Garbyang</td>
+                        <td style="padding: 14px 16px;">3,150m (10,334 ft)</td>
+                        <td style="padding: 14px 16px;">Biting winds, morning frost</td>
+                        <td style="padding: 14px 16px;">High after Oct 28</td>
+                        <td style="padding: 14px 16px; color: #fdba74; font-weight: 600;">Hazardous morning black ice</td>
+                        <td style="padding: 14px 16px;">ITBP post only</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #1e293b;">
+                        <td style="padding: 14px 16px; font-weight: 700; color: #f8fafc;">Gunji & Nabi Villages</td>
+                        <td style="padding: 14px 16px;">3,200m (10,500 ft)</td>
+                        <td style="padding: 14px 16px;">Sub-zero nights (-8°C), frozen pipes</td>
+                        <td style="padding: 14px 16px;">Very High in November</td>
+                        <td style="padding: 14px 16px; color: #fdba74; font-weight: 600;">Passable till Nov 10</td>
+                        <td style="padding: 14px 16px; color: #fca5a5; font-weight: 600;">Villagers migrate Nov 5–8</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #1e293b;">
+                        <td style="padding: 14px 16px; font-weight: 700; color: #f8fafc;">Nabhidhang (Om Parvat View)</td>
+                        <td style="padding: 14px 16px;">4,267m (13,999 ft)</td>
+                        <td style="padding: 14px 16px;">Sub-zero day & night (-5°C to -15°C)</td>
+                        <td style="padding: 14px 16px;">Severe late October onward</td>
+                        <td style="padding: 14px 16px; color: #fca5a5; font-weight: 600;">Closed to tourists Nov 10</td>
+                        <td style="padding: 14px 16px;">KMVN fiber huts shut down</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 14px 16px; font-weight: 700; color: #f8fafc;">Jolingkong & Parvati Sarovar</td>
+                        <td style="padding: 14px 16px;">4,500m (14,995 ft)</td>
+                        <td style="padding: 14px 16px;">Extreme freeze, lake frozen solid</td>
+                        <td style="padding: 14px 16px;">4–8 ft snow accumulation</td>
+                        <td style="padding: 14px 16px; color: #fca5a5; font-weight: 600;">Completely Blocked Nov–May</td>
+                        <td style="padding: 14px 16px;">Camps uninstalled by Nov 5</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        `;
+
+        // Conversion Trust Box & Direct Booking CTA
+        const trustBox = `
+        <div style="background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%); border: 2px solid #d4af37; border-radius: 14px; padding: 26px; margin: 32px 0 16px 0; color: #ffffff; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 14px;">
+                <h3 style="font-family: var(--font-serif); color: #fbbf24; margin: 0; font-size: 22px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-shield-heart" style="color: #d4af37;"></i> Book the Final 2026 Batches with Rudraansh Yatra
+                </h3>
+                <span style="background: rgba(212, 175, 55, 0.2); border: 1px solid #d4af37; border-radius: 20px; padding: 4px 14px; font-size: 12px; color: #fde68a; font-weight: 700;">
+                    Certified Pithoragarh Direct Operator
+                </span>
+            </div>
+            
+            <p style="font-size: 15px; line-height: 1.7; color: #e2e8f0; margin: 0 0 18px 0;">
+                Late-season high-altitude travel requires seasoned Himalayan navigators who monitor real-time weather forecasts, road grading updates from the BRO, and village migrations daily. With <strong>Rudraansh Yatra</strong>, you get dedicated 4x4 Bolero transport, guaranteed SDM permit processing, heated homestay rooms in Nabi and Gunji, supplemental emergency oxygen, and 24/7 on-ground assistance from native guides.
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-bottom: 22px;">
+                <div style="background: rgba(255,255,255,0.06); border-radius: 8px; padding: 10px 12px; font-size: 13px; color: #e2e8f0;">
+                    &#9989; <strong>Own 4x4 Mountain Fleet:</strong> High-clearance Boleros with snow chains
+                </div>
+                <div style="background: rgba(255,255,255,0.06); border-radius: 8px; padding: 10px 12px; font-size: 13px; color: #e2e8f0;">
+                    &#9989; <strong>Emergency Oxygen:</strong> Medical cylinders & oximeters on board
+                </div>
+                <div style="background: rgba(255,255,255,0.06); border-radius: 8px; padding: 10px 12px; font-size: 13px; color: #e2e8f0;">
+                    &#9989; <strong>SDM Permit Clearance:</strong> Fast-track physical ILP endorsement
+                </div>
+                <div style="background: rgba(255,255,255,0.06); border-radius: 8px; padding: 10px 12px; font-size: 13px; color: #e2e8f0;">
+                    &#9989; <strong>Heated Homestays:</strong> Authentic woodfire warmth & warm Kumaoni food
+                </div>
+            </div>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center;">
+                <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20reserve%20a%20seat%20for%20the%20October/November%202026%20final%20Adi%20Kailash%20batches." target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; background: #25d366; color: #ffffff; padding: 12px 22px; border-radius: 10px; font-weight: 700; font-size: 14.5px; text-decoration: none; box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);">
+                    <i class="fa-brands fa-whatsapp" style="font-size: 18px;"></i> Inquire on WhatsApp
+                </a>
+                <a href="tel:+917617617651" style="display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #d4af37, #b8860b); color: #0f172a; padding: 12px 22px; border-radius: 10px; font-weight: 800; font-size: 14.5px; text-decoration: none; box-shadow: 0 4px 14px rgba(212, 175, 55, 0.35);">
+                    <i class="fa-solid fa-phone" style="font-size: 16px;"></i> Call +91 76176 17651
+                </a>
+                <span style="font-size: 12.5px; color: #94a3b8; margin-left: auto;">
+                    <i class="fa-solid fa-location-dot" style="color: #fbbf24;"></i> Physical Office: Pithoragarh, Uttarakhand
+                </span>
+            </div>
+        </div>
+        `;
+
+        var enriched = paragraphsHtml.replace(
+            new RegExp('(?:<p class="blog-text"><!-- Table of Contents for SEO & UX --><\\/p>\\s*)?<div class="toc-container"[\\s\\S]*?<\\/div>', 'i'),
+            aeoExecutiveBox
+        );
+
+        enriched = enriched.replace(
+            new RegExp('<h2 id="section-3">3\\. Autumn Month-by-Month Transition: September vs October vs November<\\/h2>', 'i'),
+            geoTable1 + '<h2 id="section-3">3. Autumn Month-by-Month Transition: September vs October vs November</h2>'
+        );
+
+        enriched = enriched.replace(
+            new RegExp('<h2 id="section-4">4\\. Sector-by-Sector Accessibility & Weather Matrix: Dharchula to Jolingkong<\\/h2>', 'i'),
+            geoTable2 + '<h2 id="section-4">4. Sector-by-Sector Accessibility & Weather Matrix: Dharchula to Jolingkong</h2>'
+        );
+
+        enriched = enriched.replace(
+            new RegExp('<h2>Plan Your Yatra with Rudraansh Yatra<\\/h2>[\\s\\S]*$', 'i'),
+            trustBox
+        );
+
+        return enriched;
+    }
+};
+
+
 // ─────────────────────────────────────────────────────────────────────────────
 // PRE-TRIP CHECKLIST BLOG: 5-things-you-need-to-do-before-planning-a-trip-to-adi-kailash
 // SEO · AEO · GEO · AIO — Full Enhancement
