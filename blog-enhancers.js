@@ -2763,9 +2763,9 @@ const BLOG_ENHANCERS = {
 // ─────────────────────────────────────────────────────────────────────────────
 BLOG_ENHANCERS['adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates'] = {
     meta: {
-        title: 'Adi Kailash Yatra 2026 Status: Monsoon Closure, Permit Freeze & September 15 Reopening',
-        desc: 'Official 2026 Adi Kailash Yatra status update: Monsoon route closures, SDM Dharchula ILP permit freeze & September 15 reopening date. Live BRO road reports & autumn booking guide.',
-        dateModified: '2026-08-27T08:00:00+05:30'
+        title: 'Adi Kailash Yatra 2026 Latest Status: Reopening Sept 15, Road Updates & Permits | Rudraansh Yatra',
+        desc: 'Live 2026 Adi Kailash & Om Parvat Yatra status: September 15 reopening date, BRO road clearance updates, SDM Dharchula ILP guidelines & autumn booking guide.',
+        dateModified: '2026-09-09T11:45:00+05:30'
     },
 
     schemas: `
@@ -2780,7 +2780,7 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopeni
           "name": "Is the Adi Kailash Yatra open right now?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No. The Adi Kailash and Om Parvat Yatra is currently closed for the monsoon season (July 1 to September 14, 2026). The Pithoragarh district administration and SDM Dharchula suspended all civilian movement and froze Inner Line Permit (ILP) issuances due to heavy rains and landslide activity along the Dharchula–Gunji highway."
+            "text": "The Adi Kailash and Om Parvat Yatra is currently in the final days of its annual monsoon closure (July 1 to September 14, 2026) and officially reopens on September 15, 2026. Border Roads Organisation (BRO Project Hirak) is completing final road grading between Tawaghat and Najang, and the SDM Office in Dharchula begins processing post-monsoon Inner Line Permits (ILP) on September 15, 2026."
           }
         },
         {
@@ -2788,31 +2788,23 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopeni
           "name": "What is the official reopening date for Adi Kailash Yatra 2026?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The official reopening date for the Adi Kailash Yatra 2026 is September 15, 2026. The Border Roads Organisation (BRO) is actively stabilizing the highway infrastructure to ensure safe 4x4 Bolero travel through Tawaghat, Sobla, and Gunji."
+            "text": "The official reopening date for the Adi Kailash Yatra 2026 is September 15, 2026. Civilian pilgrim vehicles (4x4 Mahindra Boleros) will be permitted past the Tawaghat and Chialekh checkposts starting September 15, with first pilgrim batches entering Byas Valley on September 16–18, 2026."
           }
         },
         {
           "@type": "Question",
-          "name": "Are Inner Line Permits (ILP) being issued right now in Dharchula?",
+          "name": "When will Inner Line Permits (ILP) start being issued in Dharchula?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No. The SDM Office in Dharchula and District Administration Pithoragarh have frozen all ILP processing for civilian pilgrims until September 14, 2026. Online and offline permit applications will resume processing for autumn batches starting early September 2026."
+            "text": "The Sub-Divisional Magistrate (SDM) Office in Dharchula and District Administration Pithoragarh resume active ILP verification and permit issuance on September 15, 2026. Pre-booking documentation and medical screenings for autumn batches are being pre-processed by registered ground operators like Rudraansh Yatra."
           }
         },
         {
           "@type": "Question",
-          "name": "Why does the Adi Kailash route close during July and August?",
+          "name": "What is the current road condition between Dharchula and Gunji as of September 2026?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The route traverses fragile Himalayan geology along the Kali River gorge. Monsoon downpours trigger flash floods, rockfalls, and mudslides between Tawaghat and Malpa. Closing the route during peak monsoon months protects pilgrims from strandings and allows BRO engineering teams uninterrupted road maintenance."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What is the best post-monsoon travel window for Adi Kailash in 2026?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "The prime post-monsoon travel window is September 18 to November 10, 2026. Autumn offers crystal-clear skies, razor-sharp Darshan of Om Parvat 'ॐ' snow formations, stable mountain roads, and pleasant daytime temperatures (8°C to 14°C)."
+            "text": "As of September 9, 2026, the Border Roads Organisation (BRO 67 RCC) has cleared all primary monsoon debris from Tawaghat, Mangti, Malpa, and Najang. Minor road stabilization and retaining wall reinforcements are underway, ensuring safe 4x4 Bolero transit for the September 15 reopening."
           }
         },
         {
@@ -2820,7 +2812,15 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopeni
           "name": "Can I travel to Dharchula before September 15 to wait for permit opening?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Arriving early in Dharchula is not recommended. The SDM office will not issue permits prior to the formal September 15 resumption order. It is best to schedule your arrival in Dharchula on or after September 16."
+            "text": "Arriving early in Dharchula before September 15 is not recommended. The SDM office will not issue civilian permits prior to the formal September 15 directive, and the ITBP checkpost at Tawaghat strictly restricts entry. Yatris are advised to time their arrival in Kathgodam or Pithoragarh for September 15 or 16."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the best post-monsoon travel window for Adi Kailash in 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The prime post-monsoon travel window is September 18 to November 10, 2026. Peak Darshan clarity occurs between September 25 and October 31, offering crisp blue Himalayan skies, 100% sharp visibility of the Om Parvat 'ॐ' snow formation, stable 4x4 road tracks, and pleasant daytime temperatures (8°C to 14°C)."
           }
         },
         {
@@ -2828,7 +2828,23 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopeni
           "name": "Is a medical fitness certificate required for post-monsoon 2026 batches?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. Every pilgrim must present an official high-altitude medical fitness certificate issued by a registered MBBS physician, certifying blood pressure, pulse rate, ECG, and oxygen saturation parameters suitable for scaling past 4,400 meters."
+            "text": "Yes. Every pilgrim must submit an official high-altitude medical fitness certificate issued by an MBBS doctor, certifying blood pressure, pulse rate, ECG, and oxygen saturation parameters suitable for elevations exceeding 4,400 meters at Jolingkong and Parvati Sarovar."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can senior citizens safely undertake the post-monsoon Adi Kailash Yatra in autumn?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Because modern BRO roads allow 4x4 vehicles to reach directly to Jyolingkong (Adi Kailash base) and Nabhidhang (Om Parvat viewpoint), seniors need only walk 100–300 meters on flat terrain. Rudraansh Yatra provides dedicated portable oxygen cylinders, local pony support, and acclimatization halts in Dharchula and Gunji."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What emergency medical and rescue infrastructure exists on the route?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The route is supported by Indo-Tibetan Border Police (ITBP) medical inspection rooms at Gunji, Nabi, and Jolingkong, equipped with hyperbaric oxygen chambers and military medical staff. Registered operators carry medical oximeters and portable oxygen in all 4x4 expedition vehicles."
           }
         },
         {
@@ -2836,120 +2852,143 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopeni
           "name": "How can I book or reschedule my Adi Kailash Yatra for autumn 2026?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "You can reserve or reschedule post-monsoon September and October 2026 slots directly with Rudraansh Yatra (native Pithoragarh operator) by calling +91 97563 45785 or visiting https://rudraanshyatra.com/adi-kailash."
+            "text": "You can reserve or reschedule post-monsoon September, October, and November 2026 slots directly with Rudraansh Yatra (native Pithoragarh operator) by calling +91 97563 45785, WhatsApping +91 97563 45785, or visiting https://rudraanshyatra.com/adi-kailash."
           }
         }
       ]
     }
     </script>
 
-    <!-- AIO / GEO / SEO Schema 2: Comprehensive NewsArticle & Event & Breadcrumb Schemas -->
+    <!-- AIO / GEO / SEO Schema 2: NewsArticle & Event & LocalBusiness & Breadcrumb Schemas -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "NewsArticle",
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://rudraanshyatra.com/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates"
-      },
-      "headline": "Adi Kailash Yatra 2026 Status: Monsoon Closure, Permit Freeze & September 15 Reopening",
-      "description": "Official 2026 Adi Kailash Yatra status report: Monsoon route closures, SDM Dharchula ILP permit freeze, BRO highway maintenance, and September 15 reopening schedule.",
-      "image": [
-        "https://ysnzxvvsegmkmkepclti.supabase.co/storage/v1/object/public/blog-images/cover_1784028589317.webp"
-      ],
-      "datePublished": "2026-07-15T08:00:00+05:30",
-      "dateModified": "2026-08-27T08:00:00+05:30",
-      "author": {
-        "@type": "Person",
-        "name": "Dheerendra Rautela",
-        "jobTitle": "Chief Expedition Director & Founder",
-        "worksFor": {
-          "@type": "Organization",
-          "name": "Rudraansh Yatra"
+      "@graph": [
+        {
+          "@type": "NewsArticle",
+          "@id": "https://rudraanshyatra.com/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates#article",
+          "isPartOf": {
+            "@type": "WebPage",
+            "@id": "https://rudraanshyatra.com/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates"
+          },
+          "headline": "Adi Kailash Yatra 2026 Latest Status: Reopening Sept 15, Road Updates & Permits",
+          "description": "Live 2026 Adi Kailash & Om Parvat Yatra status: September 15 reopening date, BRO road clearance updates, SDM Dharchula ILP guidelines & autumn booking guide.",
+          "image": [
+            "https://ysnzxvvsegmkmkepclti.supabase.co/storage/v1/object/public/blog-images/cover_1784028589317.webp"
+          ],
+          "datePublished": "2026-07-15T08:00:00+05:30",
+          "dateModified": "2026-09-09T11:45:00+05:30",
+          "author": {
+            "@type": "Person",
+            "name": "Dheerendra Rautela",
+            "jobTitle": "Chief Expedition Director & Founder",
+            "worksFor": {
+              "@type": "Organization",
+              "name": "Rudraansh Yatra"
+            },
+            "url": "https://rudraanshyatra.com/about.html"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "Rudraansh Yatra",
+            "url": "https://rudraanshyatra.com",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://rudraanshyatra.com/assets/images/logo.png"
+            }
+          },
+          "speakable": {
+            "@type": "SpeakableSpecification",
+            "cssSelector": [
+              "#aeo-executive-answer",
+              ".ry-status-tldr",
+              ".blog-heading"
+            ]
+          }
         },
-        "url": "https://rudraanshyatra.com/about.html"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "Rudraansh Yatra",
-        "url": "https://rudraanshyatra.com",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://rudraanshyatra.com/assets/images/logo.png"
+        {
+          "@type": "Event",
+          "name": "Adi Kailash Yatra Post-Monsoon 2026 Reopening",
+          "startDate": "2026-09-15",
+          "endDate": "2026-11-15",
+          "eventStatus": "https://schema.org/EventScheduled",
+          "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+          "location": {
+            "@type": "Place",
+            "name": "Vyas Valley, Adi Kailash & Om Parvat, Pithoragarh, Uttarakhand, India",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Dharchula",
+              "addressRegion": "Uttarakhand",
+              "postalCode": "262545",
+              "addressCountry": "IN"
+            },
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": "29.85",
+              "longitude": "80.55"
+            }
+          },
+          "organizer": {
+            "@type": "Organization",
+            "name": "Rudraansh Yatra",
+            "url": "https://rudraanshyatra.com"
+          },
+          "description": "Official post-monsoon resumption of the sacred Adi Kailash & Om Parvat Yatra following road clearance by the Border Roads Organisation (BRO)."
         },
-        "contactPoint": {
-          "@type": "ContactPoint",
+        {
+          "@type": "TravelAgency",
+          "@id": "https://rudraanshyatra.com/#organization",
+          "name": "Rudraansh Yatra",
+          "url": "https://rudraanshyatra.com",
+          "logo": "https://rudraanshyatra.com/assets/images/logo.png",
           "telephone": "+91-9756345785",
-          "contactType": "customer service",
-          "areaServed": "IN",
-          "availableLanguage": ["English", "Hindi"]
-        }
-      },
-      "speakable": {
-        "@type": "SpeakableSpecification",
-        "cssSelector": [
-          "#aeo-executive-answer",
-          ".blog-heading",
-          ".blog-bullet"
-        ]
-      }
-    }
-    </script>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Event",
-      "name": "Adi Kailash Yatra Post-Monsoon 2026 Reopening",
-      "startDate": "2026-09-15",
-      "endDate": "2026-11-15",
-      "eventStatus": "https://schema.org/EventScheduled",
-      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-      "location": {
-        "@type": "Place",
-        "name": "Vyas Valley & Adi Kailash, Dharchula, Pithoragarh, Uttarakhand, India",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Dharchula",
-          "addressRegion": "Uttarakhand",
-          "postalCode": "262545",
-          "addressCountry": "IN"
-        },
-        "geo": {
-          "@type": "GeoCoordinates",
-          "latitude": "29.85",
-          "longitude": "80.55"
-        }
-      },
-      "organizer": {
-        "@type": "Organization",
-        "name": "Rudraansh Yatra",
-        "url": "https://rudraanshyatra.com"
-      },
-      "description": "Official reopening of the sacred Adi Kailash & Om Parvat Yatra following monsoon maintenance by Border Roads Organisation (BRO)."
-    }
-    </script>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Home",
-          "item": "https://rudraanshyatra.com"
+          "priceRange": "₹₹₹",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "1st Floor Above Maniram Punetha & Sons, Simalgair Bazaar",
+            "addressLocality": "Pithoragarh",
+            "addressRegion": "Uttarakhand",
+            "postalCode": "262501",
+            "addressCountry": "IN"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "29.5829",
+            "longitude": "80.2182"
+          },
+          "areaServed": [
+            "Pithoragarh",
+            "Dharchula",
+            "Kumaon",
+            "Uttarakhand",
+            "Delhi NCR",
+            "Kathgodam"
+          ]
         },
         {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Travel Diaries & Blogs",
-          "item": "https://rudraanshyatra.com/blogs"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "Adi Kailash Yatra 2026 Live Status & Reopening",
-          "item": "https://rudraanshyatra.com/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates"
+          "@type": "BreadcrumbList",
+          "@id": "https://rudraanshyatra.com/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://rudraanshyatra.com"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Travel Diaries & Blogs",
+              "item": "https://rudraanshyatra.com/blogs"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Adi Kailash Yatra 2026 Live Status & Reopening",
+              "item": "https://rudraanshyatra.com/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates"
+            }
+          ]
         }
       ]
     }
@@ -2959,30 +2998,109 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopeni
     render: function(paragraphsHtml) {
         const executiveAnswerBox = `
         <!-- AEO & Voice Search Executive Answer Box -->
-        <div id="aeo-executive-answer" class="ry-aeo-summary-box" style="background: linear-gradient(135deg, rgba(11, 31, 58, 0.04) 0%, rgba(197, 160, 89, 0.1) 100%); border-left: 5px solid var(--color-gold, #c5a059); border-radius: 8px; padding: 22px 25px; margin: 25px 0 35px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.04);">
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
-                <h3 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-primary, #0B1F3A); margin: 0; display: flex; align-items: center; gap: 8px;">
-                    <i class="fa-solid fa-bullhorn" style="color: #e65100;"></i> Executive Status Summary (Live 2026 Ground Update)
+        <div id="aeo-executive-answer" class="ry-aeo-summary-box" style="background: linear-gradient(135deg, rgba(11, 31, 58, 0.04) 0%, rgba(197, 160, 89, 0.12) 100%); border-left: 5px solid var(--color-gold, #c5a059); border-radius: 10px; padding: 24px 28px; margin: 25px 0 35px 0; box-shadow: 0 6px 20px rgba(0,0,0,0.05);">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+                <h3 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-primary, #0B1F3A); margin: 0; display: flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-bullhorn" style="color: #e65100;"></i> Live Ground Status Update (September 9, 2026)
                 </h3>
-                <span class="ry-status-badge" style="background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; font-weight: 700; padding: 4px 12px; border-radius: 20px; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.5px;">
-                    🔴 Closed for Monsoon | Reopening Sept 15, 2026
+                <span class="ry-status-badge" style="background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; font-weight: 700; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; display: inline-flex; align-items: center; gap: 6px;">
+                    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #2e7d32; animation: pulse 1.5s infinite;"></span>
+                    Reopening September 15, 2026 (6 Days To Go)
                 </span>
             </div>
-            <p style="font-size: 1.02rem; line-height: 1.65; color: #2d3748; margin: 0 0 15px 0;">
-                <strong>Quick Answer:</strong> The <a href="/adi-kailash" style="color: #0B1F3A; font-weight: 700; text-decoration: underline;">Adi Kailash and Om Parvat Yatra</a> route is currently <strong>CLOSED</strong> for the monsoon season (July 1 to September 14, 2026). SDM Dharchula has frozen all Inner Line Permits (ILP). The official reopening date is <strong>September 15, 2026</strong>, following road stabilization by the Border Roads Organisation (BRO).
+            <p class="ry-status-tldr" style="font-size: 1.05rem; line-height: 1.7; color: #1e293b; margin: 0 0 16px 0;">
+                <strong>Quick Answer:</strong> The <a href="/adi-kailash" style="color: #0B1F3A; font-weight: 700; text-decoration: underline;">Adi Kailash and Om Parvat Yatra</a> is scheduled for official reopening on <strong>September 15, 2026</strong>. Border Roads Organisation (BRO Project Hirak) has cleared primary monsoon landslide zones between Tawaghat and Najang. The SDM Office in Dharchula begins stamping post-monsoon Inner Line Permits (ILP) on September 15. The prime autumn Darshan window runs from <strong>September 18 to November 10, 2026</strong>.
             </p>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; font-size: 0.92rem; background: #ffffff; padding: 14px 18px; border-radius: 6px; border: 1px solid rgba(0,0,0,0.06);">
-                <div><strong>🗓️ Current Status:</strong> Monsoon Closure (July–Sept 14)</div>
-                <div><strong>🔓 Official Reopening:</strong> September 15, 2026</div>
-                <div><strong>📜 ILP Processing:</strong> Resumes Early September</div>
-                <div><strong>🌟 Peak Darshan Window:</strong> Sept 18 – Nov 10, 2026</div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; font-size: 0.92rem; background: #ffffff; padding: 16px 20px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.08); box-shadow: 0 2px 6px rgba(0,0,0,0.02);">
+                <div><strong>🗓️ Reopening Date:</strong> September 15, 2026</div>
+                <div><strong>🚧 Highway Status:</strong> BRO Final Grading Active</div>
+                <div><strong>📜 ILP Processing:</strong> Resumes September 15</div>
+                <div><strong>🏔️ Peak Darshan Window:</strong> Sept 25 – Oct 31, 2026</div>
             </div>
         </div>
         `;
 
+        const chokePointTableHTML = `
+        <!-- GEO Table 1: Live Choke-Point Road Clearance & Sector Matrix -->
+        <h2 class="blog-heading" style="margin-top: 40px;">1. Live Route Clearance & Choke-Point Matrix (BRO Project Hirak)</h2>
+        <p class="blog-text">The table below reflects real-time ground reports from the Border Roads Organisation (BRO 67 RCC) and Rudraansh Yatra liaison teams operating along the Dharchula–Lipulekh Highway (NH-107A) as of September 2026:</p>
+
+        <div style="overflow-x: auto; margin: 25px 0;">
+            <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.93rem; background: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                <thead>
+                    <tr style="background-color: #0B1F3A; color: #ffffff;">
+                        <th style="padding: 14px 16px; border: 1px solid #1e3a60;">Route Sector</th>
+                        <th style="padding: 14px 16px; border: 1px solid #1e3a60;">Distance / Alt</th>
+                        <th style="padding: 14px 16px; border: 1px solid #1e3a60;">Current Road Condition</th>
+                        <th style="padding: 14px 16px; border: 1px solid #1e3a60;">4x4 Bolero Clearance</th>
+                        <th style="padding: 14px 16px; border: 1px solid #1e3a60;">Reopening Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background-color: #f8fafc;">
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0; font-weight: 600;">Pithoragarh to Dharchula</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;">92 km | 915m</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;">Two-lane paved tarmac; normal traffic</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;">All vehicles open</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;"><span style="color: #2e7d32; font-weight: 700;">🟢 Open & Normal</span></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0; font-weight: 600;">Dharchula to Tawaghat</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;">19 km | 1,050m</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;">Paved border highway along Kali River</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;">4x4 and light vehicles</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;"><span style="color: #2e7d32; font-weight: 700;">🟢 Open & Clear</span></td>
+                    </tr>
+                    <tr style="background-color: #f8fafc;">
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0; font-weight: 600;">Tawaghat to Mangti & Malpa</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;">22 km | 1,800m</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;">Landslide debris cleared; retaining walls shored</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;">4x4 Boleros only</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;"><span style="color: #15803d; font-weight: 700;">🟡 Ready for Sept 15</span></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0; font-weight: 600;">Malpa to Najang & Budhi</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;">18 km | 2,740m</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;">Gorge cutting stabilized; BRO heavy dozers on standby</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;">4x4 Boleros only</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;"><span style="color: #15803d; font-weight: 700;">🟡 Final Grading Done</span></td>
+                    </tr>
+                    <tr style="background-color: #f8fafc;">
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0; font-weight: 600;">Budhi to Chialekh Pass</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;">8 km | 3,130m</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;">Steep switchbacks; dry firm roadbed</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;">4x4 Boleros only</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;"><span style="color: #2e7d32; font-weight: 700;">🟢 Pass Clear</span></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0; font-weight: 600;">Chialekh to Garbyang & Gunji</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;">17 km | 3,200m</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;">Broad alpine plateau; dry gravel tracks</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;">All 4x4 vehicles</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;"><span style="color: #2e7d32; font-weight: 700;">🟢 Excellent Condition</span></td>
+                    </tr>
+                    <tr style="background-color: #f8fafc;">
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0; font-weight: 600;">Gunji to Nabhidhang (Om Parvat)</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;">22 km | 4,200m</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;">Blacktop border road along Kali stream</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;">All 4x4 vehicles</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;"><span style="color: #2e7d32; font-weight: 700;">🟢 100% Accessible</span></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0; font-weight: 600;">Gunji to Jolingkong (Adi Kailash)</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;">34 km | 4,420m</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;">Firm gravel track via Kuti village to Parvati Sarovar</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;">4x4 Boleros only</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;"><span style="color: #2e7d32; font-weight: 700;">🟢 Fully Driveable</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        `;
+
         const comparisonTableHTML = `
-        <!-- GEO & Search Engine Data Table 1: Route Status & Conditions Matrix -->
-        <h2 class="blog-heading" style="margin-top: 40px;">1. 2026 Yatra Status & Route Conditions Matrix</h2>
+        <!-- GEO Table 2: 2026 Yatra Status & Route Conditions Matrix -->
+        <h2 class="blog-heading" style="margin-top: 40px;">2. 2026 Yatra Status & Season Conditions Matrix</h2>
         <p class="blog-text">To assist yatris in planning their high-altitude pilgrimage, the table below details the ground status, road conditions, administrative permit rules, and Darshan visibility across all three distinct phases of the 2026 season:</p>
 
         <div style="overflow-x: auto; margin: 25px 0;">
@@ -2999,30 +3117,30 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopeni
                 <tbody>
                     <tr style="background-color: #f8fafc;">
                         <td style="padding: 12px 16px; border: 1px solid #e2e8f0; font-weight: 600;">Pre-Monsoon Season</td>
-                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;">May 15 – June 30, 2026</td>
-                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;"><span style="color: #2e7d32; font-weight: 700;">Open & Fully Active</span></td>
-                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;">Active processing at Dharchula SDM</td>
-                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;">Clear mornings; afternoon cloud build-up</td>
+                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">May 15 – June 30, 2026</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;"><span style="color: #2e7d32; font-weight: 700;">Completed (52,000+ Yatris)</span></td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;">Standard processing</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;">Clear mornings; afternoon clouds</td>
                     </tr>
                     <tr style="background-color: #fff5f5;">
-                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0; font-weight: 600; color: #c62828;">Monsoon Suspension (Current)</td>
-                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;">July 1 – Sept 14, 2026</td>
-                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;"><span style="color: #c62828; font-weight: 700;">CLOSED (Landslide Hazards)</span></td>
-                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;"><span style="color: #c62828; font-weight: 700;">FROZEN at source</span></td>
-                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;">Heavy rainfall, low clouds, zero visibility</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0; font-weight: 600; color: #c62828;">Monsoon Suspension (Ending)</td>
+                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">July 1 – Sept 14, 2026</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;"><span style="color: #c62828; font-weight: 700;">CLOSED (BRO Repairs)</span></td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;"><span style="color: #c62828; font-weight: 700;">Frozen at source</span></td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;">Heavy rainfall, mountain mist</td>
                     </tr>
                     <tr style="background-color: #f0fdf4;">
-                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0; font-weight: 600; color: #15803d;">Post-Monsoon Resumption</td>
-                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;">Sept 15 – Nov 15, 2026</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0; font-weight: 600; color: #15803d;">Post-Monsoon Resumption (Active)</td>
+                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">Sept 15 – Nov 15, 2026</td>
                         <td style="padding: 12px 16px; border: 1px solid #e2e8f0;"><span style="color: #15803d; font-weight: 700;">Reopening Sept 15 (4x4 Cleared)</span></td>
-                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;">Resumes Processing (Advance Booking)</td>
+                        <td style="padding: 12px 16px; border: 1px solid #e2e8f0;"><span style="color: #15803d; font-weight: 700;">Resumes Processing (Advance Booking Open)</span></td>
                         <td style="padding: 12px 16px; border: 1px solid #e2e8f0;"><span style="color: #15803d; font-weight: 700;">⭐️ Peak 100% Crisp Visibility & Blue Skies</span></td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <!-- Data Table 2: Post-Monsoon Autumn Travel Window Comparison -->
+        <!-- GEO Table 3: Post-Monsoon Autumn Travel Window Comparison -->
         <h3 class="blog-heading" style="margin-top: 30px; font-size: 1.15rem;">Autumn Month-by-Month Weather & Darshan Guide</h3>
         <div style="overflow-x: auto; margin: 20px 0;">
             <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.92rem; background: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
@@ -3037,25 +3155,66 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopeni
                 </thead>
                 <tbody>
                     <tr>
-                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0; font-weight: 600;">Late September</td>
+                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0; font-weight: 600;">Late September (Sept 18–30)</td>
                         <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">12°C / 2°C</td>
-                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">BRO finalizing road grading</td>
-                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">Excellent (Minimal mist)</td>
-                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">Early yatris & photographer groups</td>
+                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">BRO finalizing road grading; dry roads</td>
+                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">Excellent (Minimal mist, fresh snow)</td>
+                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">Early yatris & photography groups</td>
                     </tr>
                     <tr style="background-color: #f8fafc;">
-                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0; font-weight: 600; color: #c5a059;">October (PEAK)</td>
+                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0; font-weight: 600; color: #c5a059;">October (PEAK MONTH)</td>
                         <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">8°C / -3°C</td>
                         <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">Fully firm, smooth 4x4 tracks</td>
                         <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">💎 100% Crystal-Clear Sharp Views</td>
                         <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">All pilgrims, seniors & families</td>
                     </tr>
                     <tr>
-                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0; font-weight: 600;">Early November</td>
+                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0; font-weight: 600;">Early November (Nov 1–15)</td>
                         <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">5°C / -8°C</td>
-                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">Open (Early winter frost)</td>
-                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">Pure blue skies, heavy snowpack</td>
+                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">Open (Early winter frost on passes)</td>
+                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">Pure deep blue skies, heavy snowpack</td>
                         <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">Adventure yatris & cold-tolerant pilgrims</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- GEO Table 4: Key Administrative & Emergency Ground Directory -->
+        <h3 class="blog-heading" style="margin-top: 30px; font-size: 1.15rem;">Key Administrative & Road Clearance Directory</h3>
+        <div style="overflow-x: auto; margin: 20px 0;">
+            <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.92rem; background: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                <thead>
+                    <tr style="background-color: #0B1F3A; color: #ffffff;">
+                        <th style="padding: 12px 14px; border: 1px solid #1e3a60;">Authority / Entity</th>
+                        <th style="padding: 12px 14px; border: 1px solid #1e3a60;">Operational Role</th>
+                        <th style="padding: 12px 14px; border: 1px solid #1e3a60;">Jurisdiction Location</th>
+                        <th style="padding: 12px 14px; border: 1px solid #1e3a60;">Official Verification Contact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0; font-weight: 600;">SDM Office Dharchula</td>
+                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">Inner Line Permit (ILP) approval & border checkpoint control</td>
+                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">Dharchula, Pithoragarh</td>
+                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">Sub-Divisional Magistrate, Dharchula</td>
+                    </tr>
+                    <tr style="background-color: #f8fafc;">
+                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0; font-weight: 600;">Border Roads Organisation (BRO)</td>
+                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">Project Hirak (67 RCC) — Highway maintenance & dozer clearance</td>
+                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">Dharchula–Tawaghat–Gunji NH-107A</td>
+                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">BRO Control Room Dharchula</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0; font-weight: 600;">ITBP Battalions (7th & 14th)</td>
+                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">Border security, identity checks & emergency high-altitude medical posts</td>
+                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">Chialekh, Gunji, Jolingkong</td>
+                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">ITBP Sector HQ Pithoragarh</td>
+                    </tr>
+                    <tr style="background-color: #f8fafc;">
+                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0; font-weight: 600; color: #c5a059;">Rudraansh Yatra Ground Operations</td>
+                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">Native registered ground operator, 100% permit facilitation, 4x4 convoys</td>
+                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">Simalgair Bazaar, Pithoragarh</td>
+                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0;"><strong>+91 97563 45785 / +91 76176 17651</strong></td>
                     </tr>
                 </tbody>
             </table>
@@ -3084,11 +3243,14 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopeni
         </div>
         `;
 
-        const enrichedContent = paragraphsHtml
-            .replace(/Inner Line Permits/g, '<a href="/blog/inner-line-permit-adi-kailash-2026-guide" style="color: #0B1F3A; font-weight: 700; text-decoration: underline;">Inner Line Permits (ILP)</a>')
-            .replace(/Gunji or Kuti/g, '<a href="/blog/adi-kailash-yatra-complete-guide-2026" style="color: #0B1F3A; font-weight: 600; text-decoration: underline;">Gunji or Kuti villages</a>');
+        const cleanContent = paragraphsHtml.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+        const enrichedContent = cleanContent
+            .replace(/Inner Line Permits/g, '<a href="/blog/inner-line-permit-adi-kailash-2026-step-by-step" style="color: #0B1F3A; font-weight: 700; text-decoration: underline;">Inner Line Permits (ILP)</a>')
+            .replace(/Gunji or Kuti/g, '<a href="/blog/adi-kailash-yatra-complete-guide-2026" style="color: #0B1F3A; font-weight: 600; text-decoration: underline;">Gunji or Kuti villages</a>')
+            .replace(/Kathgodam/g, '<a href="/blog/how-to-reach-adi-kailash-from-delhi-kathgodam-pithoragarh-route-map" style="color: #0B1F3A; font-weight: 600; text-decoration: underline;">Kathgodam</a>')
+            .replace(/Om Parvat/g, '<a href="/blog/om-parvat-darshan-complete-guide-2026" style="color: #0B1F3A; font-weight: 600; text-decoration: underline;">Om Parvat</a>');
 
-        return executiveAnswerBox + comparisonTableHTML + enrichedContent + ctaBannerHTML;
+        return executiveAnswerBox + chokePointTableHTML + comparisonTableHTML + enrichedContent + ctaBannerHTML;
     }
 };
 

@@ -752,6 +752,7 @@
                                 <option value="Lost">❌ Lost</option>
                                 <option value="Switch Off">🔴 Switch Off</option>
                                 <option value="Kailash Mansarovar Yatra">🏔️ Kailash Mansarovar Yatra</option>
+                                <option value="Postpone">⏳ Postpone</option>
                                 <option value="Won">🏆 Won</option>
                             </select>
                         </div>
@@ -1459,6 +1460,7 @@
                             <option value="Lost">❌ Lost</option>
                             <option value="Switch Off">🔴 Switch Off</option>
                             <option value="Kailash Mansarovar Yatra">🏔️ Kailash Mansarovar Yatra</option>
+                            <option value="Postpone">⏳ Postpone</option>
                         </select>
                     </div>
                     <div class="admin-form-group">
@@ -5481,6 +5483,7 @@
             else if (val === 'Lost') el.classList.add('status-lost');
             else if (val === 'Switch Off') el.classList.add('status-switchoff');
             else if (val === 'Kailash Mansarovar Yatra') el.classList.add('status-kailash');
+            else if (val === 'Postpone') el.classList.add('status-postpone');
         };
 
         window.updateFinalStyle = function(el) {
@@ -6090,6 +6093,7 @@
                                             <option value="Lost">Lost</option>
                                             <option value="Switch Off">Switch Off</option>
                                             <option value="Kailash Mansarovar Yatra">Kailash Mansarovar Yatra</option>
+                                            <option value="Postpone">Postpone</option>
                                             <option value="Won">Won</option>
                                         </select>
                                     </div>
@@ -6135,6 +6139,7 @@
                                             <option value="Lost">Lost</option>
                                             <option value="Switch Off">Switch Off</option>
                                             <option value="Kailash Mansarovar Yatra">Kailash Mansarovar Yatra</option>
+                                            <option value="Postpone">Postpone</option>
                                             <option value="Won">Won</option>
                                         </select>
                                     </div>
@@ -6223,7 +6228,8 @@
                     { val: "No. not reachable", text: "📴 No. not reachable" },
                     { val: "Lost", text: "❌ Lost" },
                     { val: "Switch Off", text: "🔴 Switch Off" },
-                    { val: "Kailash Mansarovar Yatra", text: "🏔️ Kailash Mansarovar Yatra" }
+                    { val: "Kailash Mansarovar Yatra", text: "🏔️ Kailash Mansarovar Yatra" },
+                    { val: "Postpone", text: "⏳ Postpone" }
                 ];
                 statuses.forEach(s => {
                     const selected = item.status === s.val ? 'selected' : '';
@@ -6268,6 +6274,7 @@
                 else if (item.status === 'Lost') statusClass = 'status-lost';
                 else if (item.status === 'Switch Off') statusClass = 'status-switchoff';
                 else if (item.status === 'Kailash Mansarovar Yatra') statusClass = 'status-kailash';
+                else if (item.status === 'Postpone') statusClass = 'status-postpone';
 
                 let finalClass = 'final-none';
                 if (item.final_status === 'Booking confirmed') finalClass = 'final-confirmed';

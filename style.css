@@ -3693,6 +3693,15 @@ footer h3::after, footer h4::after {
     background-size: 12px !important;
 }
 
+.status-postpone {
+    background: rgba(245, 158, 11, 0.15) !important;
+    color: #fbbf24 !important;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fbbf24' stroke-width='3'%3e%3cpath d='M6 9l6 6 6-6'/%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 10px center !important;
+    background-size: 12px !important;
+}
+
 .final-select {
     appearance: none;
     -webkit-appearance: none;
@@ -10193,6 +10202,7 @@ html, body { overflow-x: hidden; max-width: 100%; }
 .lead-status-dropdown.status-lost { background: #fef2f2 !important; color: #991b1b !important; border-color: #f87171 !important; }
 .lead-status-dropdown.status-switchoff { background: #fff1f2 !important; color: #be123c !important; border-color: #fda4af !important; }
 .lead-status-dropdown.status-kailash { background: #f0f9ff !important; color: #0369a1 !important; border-color: #7dd3fc !important; }
+.lead-status-dropdown.status-postpone { background: #fefce8 !important; color: #a16207 !important; border-color: #fde047 !important; }
 .lead-status-dropdown.status-won { background: #ecfdf5 !important; color: #047857 !important; border-color: #6ee7b7 !important; }
 
 .lead-final-dropdown.final-confirmed { background: #ecfdf5 !important; color: #047857 !important; border-color: #6ee7b7 !important; }
