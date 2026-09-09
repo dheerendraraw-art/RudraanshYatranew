@@ -286,7 +286,8 @@ app.get('/blog/:slug', async (req, res) => {
     const legacySlugs = {
         'due-to-china-denying-clearance-for-the-lipulekh-crossing-28-indian-businessmen-were-forced-to-return': 'china-denies-lipulekh-clearance-indian-traders-return',
         'ndia-tibet-border-trade-through-lipulekh-pass-finally-resumes-on-august-1-2026-after-a-seven-year-pause-heres-what-changed-since-traders-were-turned-back-in-july': 'india-tibet-border-trade-lipulekh-pass-resumes-august-2026',
-        'inner-line-permit-adi-kailash-2026-step-by-step': 'inner-line-permit-adi-kailash-2026-guide'
+        'inner-line-permit-adi-kailash-2026-step-by-step': 'inner-line-permit-adi-kailash-2026-guide',
+        'adi-kailash-vs-mount-kailash-comparison-cost-difficulty-permits': 'adi-kailash-vs-kailash-mansarovar-real-difference'
     };
 
     const targetSlug = legacySlugs[cleanSlug] || cleanSlug;
