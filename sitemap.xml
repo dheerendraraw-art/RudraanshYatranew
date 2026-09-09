@@ -4,39 +4,39 @@
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
-  <!-- Homepage -->
+  <!-- TIER 1: Homepage -->
   <url>
     <loc>https://rudraanshyatra.com/</loc>
-    <lastmod>2026-08-31</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
-  <!-- Core Tour Pages -->
+  <!-- TIER 2: Core Tour / Destination Pages -->
   <url>
     <loc>https://rudraanshyatra.com/adi-kailash</loc>
-    <lastmod>2026-08-31</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
 
   <url>
     <loc>https://rudraanshyatra.com/adi-kailash-from-pithoragarh</loc>
-    <lastmod>2026-08-31</lastmod>
+    <lastmod>2026-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
 
   <url>
     <loc>https://rudraanshyatra.com/adi-kailash-from-kathgodam</loc>
-    <lastmod>2026-08-31</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
 
   <url>
     <loc>https://rudraanshyatra.com/adi-kailash-from-delhi</loc>
-    <lastmod>2026-08-31</lastmod>
+    <lastmod>2026-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
@@ -50,303 +50,330 @@
 
   <url>
     <loc>https://rudraanshyatra.com/mt-kailash</loc>
-    <lastmod>2026-08-31</lastmod>
+    <lastmod>2026-09-04</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.95</priority>
+    <priority>0.90</priority>
   </url>
 
   <url>
     <loc>https://rudraanshyatra.com/darma-valley</loc>
-    <lastmod>2026-08-31</lastmod>
+    <lastmod>2026-09-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.90</priority>
   </url>
 
   <url>
     <loc>https://rudraanshyatra.com/khaliya-top</loc>
-    <lastmod>2026-08-31</lastmod>
+    <lastmod>2026-09-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.90</priority>
   </url>
 
   <url>
     <loc>https://rudraanshyatra.com/panchachuli</loc>
-    <lastmod>2026-08-31</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.90</priority>
-  </url>
-
-  <!-- Supporting Pages -->
-  <url>
-    <loc>https://rudraanshyatra.com/faq</loc>
-    <lastmod>2026-08-31</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.90</priority>
-  </url>
-
-  <url>
-    <loc>https://rudraanshyatra.com/contact</loc>
-    <lastmod>2026-08-31</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
-  </url>
-
-  <url>
-    <loc>https://rudraanshyatra.com/whats-included</loc>
-    <lastmod>2026-08-31</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
-  </url>
-
-  <url>
-    <loc>https://rudraanshyatra.com/about</loc>
-    <lastmod>2026-08-31</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-
-  <url>
-    <loc>https://rudraanshyatra.com/privacy-policy</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.50</priority>
-  </url>
-
-  <url>
-    <loc>https://rudraanshyatra.com/terms-and-conditions</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.50</priority>
-  </url>
-
-  <url>
-    <loc>https://rudraanshyatra.com/refund-policy</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.50</priority>
-  </url>
-
-  <url>
-    <loc>https://rudraanshyatra.com/gallery</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.70</priority>
-  </url>
-
-  <url>
-    <loc>https://rudraanshyatra.com/blogs</loc>
-    <lastmod>2026-07-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.70</priority>
-  </url>
-
-  <url>
-    <loc>https://rudraanshyatra.com/blog/adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitude-ultra-marathon-guide</loc>
-    <lastmod>2026-07-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-
-  <!-- SEO Blog Posts -->
-  <url>
-    <loc>https://rudraanshyatra.com/blog/adi-kailash-yatra-complete-guide-2026</loc>
-    <lastmod>2026-08-16</lastmod>
+    <lastmod>2026-09-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
 
-  <url>
-    <loc>https://rudraanshyatra.com/blog/om-parvat-darshan-complete-guide-2026</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-
-  <url>
-    <loc>https://rudraanshyatra.com/blog/inner-line-permit-adi-kailash-2026-step-by-step</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-
-  <!-- Sacred Place Detail Pages -->
-  <url>
-    <loc>https://rudraanshyatra.com/manokamna-temple</loc>
-    <lastmod>2026-08-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-
+  <!-- TIER 2: Sacred Place / Destination Detail Pages -->
   <url>
     <loc>https://rudraanshyatra.com/adi-kailash-peak</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.90</priority>
   </url>
 
   <url>
     <loc>https://rudraanshyatra.com/om-parvat</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.90</priority>
   </url>
 
   <url>
-    <loc>https://rudraanshyatra.com/kali-mata-temple-kalapani</loc>
-    <lastmod>2026-08-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-
-  <url>
-    <loc>https://rudraanshyatra.com/mostamanu-temple-pithoragarh</loc>
-    <lastmod>2026-08-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-
-  <url>
-    <loc>https://rudraanshyatra.com/kamakhya-devi-temple-pithoragarh</loc>
-    <lastmod>2026-08-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-
-  <url>
     <loc>https://rudraanshyatra.com/patal-bhuvaneshwar</loc>
-    <lastmod>2026-09-08</lastmod>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.90</priority>
   </url>
 
   <url>
     <loc>https://rudraanshyatra.com/haat-kalika-temple</loc>
-    <lastmod>2026-09-08</lastmod>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.90</priority>
+    <priority>0.88</priority>
   </url>
 
   <url>
     <loc>https://rudraanshyatra.com/jageshwar-dham</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-03</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.90</priority>
-  </url>
-
-  <url>
-    <loc>https://rudraanshyatra.com/chitai-golu-devta</loc>
-    <lastmod>2026-08-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.88</priority>
   </url>
 
   <url>
     <loc>https://rudraanshyatra.com/kainchi-dham</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.88</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/manokamna-temple</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/kali-mata-temple-kalapani</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/mostamanu-temple-pithoragarh</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/kamakhya-devi-temple-pithoragarh</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/chitai-golu-devta</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- TIER 3: Supporting / Info Pages -->
+  <url>
+    <loc>https://rudraanshyatra.com/faq</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/whats-included</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/about</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/contact</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/gallery</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.70</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/privacy-policy</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.40</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/terms-and-conditions</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.40</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/refund-policy</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.40</priority>
+  </url>
+
+  <!-- TIER 3: Blog Index -->
+  <url>
+    <loc>https://rudraanshyatra.com/blogs</loc>
+    <lastmod>2026-09-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <!-- TIER 2: Blog Posts - Live Status / Time-Sensitive (daily changefreq) -->
+  <url>
+    <loc>https://rudraanshyatra.com/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates</loc>
+    <lastmod>2026-09-09</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/blog/when-does-adi-kailash-yatra-2026-close-for-winter</loc>
+    <lastmod>2026-09-09</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.92</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/blog/kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanakpur</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.88</priority>
+  </url>
+
+  <!-- TIER 2: Blog Posts - Evergreen High-Intent SEO -->
+  <url>
+    <loc>https://rudraanshyatra.com/blog/adi-kailash-yatra-complete-guide-2026</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.90</priority>
   </url>
 
   <url>
-    <loc>https://rudraanshyatra.com/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates</loc>
-    <lastmod>2026-09-09</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.90</priority>
+    <loc>https://rudraanshyatra.com/blog/om-parvat-darshan-complete-guide-2026</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.88</priority>
   </url>
+
   <url>
-    <loc>https://rudraanshyatra.com/blog/when-does-adi-kailash-yatra-2026-close-for-winter</loc>
-    <lastmod>2026-09-09</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.90</priority>
+    <loc>https://rudraanshyatra.com/blog/inner-line-permit-adi-kailash-2026-step-by-step</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.88</priority>
   </url>
-  <url>
-    <loc>https://rudraanshyatra.com/blog/adi-kailash-packing-list-essential-guide-for-yatris</loc>
-    <lastmod>2026-08-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://rudraanshyatra.com/blog/adi-kailash-yatra-for-solo-female-travellers-safety-guide</loc>
-    <lastmod>2026-08-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://rudraanshyatra.com/blog/adi-kailash-yatra-2026-suspended-due-to-weather-official-reopening-date</loc>
-    <lastmod>2026-08-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://rudraanshyatra.com/blog/inner-line-permit-adi-kailash-2026-guide</loc>
-    <lastmod>2026-08-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://rudraanshyatra.com/blog/china-denies-lipulekh-clearance-indian-traders-return</loc>
-    <lastmod>2026-08-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://rudraanshyatra.com/blog/5-things-you-need-to-do-before-planning-a-trip-to-adi-kailash</loc>
-    <lastmod>2026-08-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://rudraanshyatra.com/blog/adi-kailash-yatra-difficulty-level-can-beginners-do-it</loc>
-    <lastmod>2026-08-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://rudraanshyatra.com/blog/india-tibet-border-trade-lipulekh-pass-resumes-august-2026</loc>
-    <lastmod>2026-08-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://rudraanshyatra.com/blog/is-adi-kailash-yatra-closed-right-now-reopening-date-why-travellers-get-stuck-at-dharchula</loc>
-    <lastmod>2026-08-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://rudraanshyatra.com/blog/is-adi-kailash-yatra-safe-for-senior-citizens-guide</loc>
-    <lastmod>2026-08-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://rudraanshyatra.com/blog/how-to-reach-adi-kailash-from-delhi-kathgodam-pithoragarh-route-map</loc>
-    <lastmod>2026-08-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://rudraanshyatra.com/blog/kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanakpur</loc>
-    <lastmod>2026-08-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://rudraanshyatra.com/blog/best-time-to-visit-adi-kailash-om-parvat-weather-season-guide</loc>
-    <lastmod>2026-08-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
+
   <url>
     <loc>https://rudraanshyatra.com/blog/adi-kailash-yatra-cost-package-price-breakdown-budget-guide</loc>
-    <lastmod>2026-08-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.88</priority>
   </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/blog/best-time-to-visit-adi-kailash-om-parvat-weather-season-guide</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.88</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/blog/how-to-reach-adi-kailash-from-delhi-kathgodam-pithoragarh-route-map</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/blog/adi-kailash-vs-kailash-mansarovar-real-difference</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
   <url>
     <loc>https://rudraanshyatra.com/blog/how-to-reach-pithoragarh-from-delhi-dehradun-2026-flight-update</loc>
     <lastmod>2026-08-27</lastmod>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
+
+  <!-- TIER 3: Blog Posts - Supporting / Topical Content -->
+  <url>
+    <loc>https://rudraanshyatra.com/blog/adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitude-ultra-marathon-guide</loc>
+    <lastmod>2026-07-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.83</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/blog/5-things-you-need-to-do-before-planning-a-trip-to-adi-kailash</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/blog/adi-kailash-packing-list-essential-guide-for-yatris</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/blog/is-adi-kailash-yatra-safe-for-senior-citizens-guide</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/blog/adi-kailash-yatra-difficulty-level-can-beginners-do-it</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/blog/adi-kailash-yatra-for-solo-female-travellers-safety-guide</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/blog/adi-kailash-yatra-2026-suspended-due-to-weather-official-reopening-date</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.78</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/blog/is-adi-kailash-yatra-closed-right-now-reopening-date-why-travellers-get-stuck-at-dharchula</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.78</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/blog/inner-line-permit-adi-kailash-2026-guide</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.78</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/blog/india-tibet-border-trade-lipulekh-pass-resumes-august-2026</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <url>
+    <loc>https://rudraanshyatra.com/blog/china-denies-lipulekh-clearance-indian-traders-return</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
 </urlset>
