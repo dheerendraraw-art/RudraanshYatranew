@@ -1212,22 +1212,8 @@
 </footer>
 
 <script>
-    document.querySelectorAll('.faq-question').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const item = btn.closest('.faq-item');
-            const isOpen = item.classList.contains('open');
-            // Allow multiple or accordion toggle
-            item.classList.toggle('open');
-        });
-    });
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navMenu = document.querySelector('.nav-menu');
-    if (menuToggle && navMenu) {
-        menuToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            menuToggle.classList.toggle('active');
-        });
-    }
+    // Note: FAQ accordion is handled globally by app.js (line 1365)
+    // Navigation toggle is also handled by app.js
 </script>
 <script src="app.js?v=1.8" defer></script>
 </body>

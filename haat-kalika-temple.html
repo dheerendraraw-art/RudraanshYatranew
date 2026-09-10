@@ -507,19 +507,7 @@
 </footer>
 
 <script>
-    document.querySelectorAll('.faq-question').forEach(btn => {
-        btn.addEventListener('click', () => {
-            btn.closest('.faq-item').classList.toggle('open');
-        });
-    });
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navMenu = document.querySelector('.nav-menu');
-    if (menuToggle && navMenu) {
-        menuToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            menuToggle.classList.toggle('active');
-        });
-    }
+    // Note: FAQ accordion and menu toggle handled globally by app.js
 </script>
 <script src="app.js?v=1.8" defer></script>
 </body>

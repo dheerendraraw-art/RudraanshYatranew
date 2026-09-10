@@ -3906,27 +3906,7 @@
                 });
             });
 
-            // FAQ Accordion Click Handlers
-            const faqQuestions = document.querySelectorAll('.faq-question');
-            faqQuestions.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const item = btn.closest('.faq-item');
-                    const answer = item.querySelector('.faq-answer');
-                    const isOpen = item.classList.contains('active');
-
-                    // Close other items
-                    document.querySelectorAll('.faq-item').forEach(f => {
-                        f.classList.remove('active');
-                        const a = f.querySelector('.faq-answer');
-                        if (a) a.style.maxHeight = '0px';
-                    });
-
-                    if (!isOpen) {
-                        item.classList.add('active');
-                        if (answer) answer.style.maxHeight = answer.scrollHeight + 'px';
-                    }
-                });
-            });
+            // Note: FAQ accordion handled globally by app.js (line 1365)
 
             // Sidebar Pricing Select Synchronizer
             const selectEl = document.getElementById('yatra-package-select');
