@@ -574,7 +574,8 @@ button.nav-dropdown-toggle {
     .nav-menu {
         position: fixed;
         top: 0;
-        right: -320px;
+        right: 0;
+        transform: translateX(100%);
         width: 300px;
         height: 100vh;
         background-color: var(--color-bg-card);
@@ -592,7 +593,7 @@ button.nav-dropdown-toggle {
     }
     
     .nav-menu.active {
-        right: 0;
+        transform: translateX(0);
         visibility: visible;
     }
     
