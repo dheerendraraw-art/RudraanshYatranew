@@ -465,7 +465,7 @@ app.get('/blog/:slug', async (req, res) => {
 
         // Auto-wrap any unwrapped <table> in blog content with responsive scroll container
         contentHtml = contentHtml.replace(/<table([\s\S]*?)<\/table>/gi, (match) => {
-            if (match.includes('ry-table-responsive-wrap') || match.includes('ry-pth-table-wrap')) return match;
+            if (match.includes('ry-table-responsive-wrap') || match.includes('ry-pth-table-wrap') || match.includes('ry-table-wrap') || match.includes('ry-schedule-table-wrap')) return match;
             return `<div class="ry-table-responsive-wrap">${match}</div>`;
         });
 

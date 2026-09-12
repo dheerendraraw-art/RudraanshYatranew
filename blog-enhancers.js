@@ -1,4 +1,4 @@
-﻿/**
+/**
  * blog-enhancers.js
  * High-performance SEO / AEO / GEO dynamic content enhancers and Schema.org builders
  * for Rudraansh Yatra blog posts.
@@ -4897,7 +4897,7 @@ BLOG_ENHANCERS['adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitu
   <h3 style="color: #0a192f; font-size: 18px; font-weight: 800; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
     <span>📊</span> Adi Kailash Parikrama Run 2026: Race Categories & Elevation Matrix
   </h3>
-  <div style="overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid rgba(10,25,47,0.12); border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+  <div class="ry-table-responsive-wrap" style="overflow-x: auto; -webkit-overflow-scrolling: touch; width: 100%; max-width: 100%; box-sizing: border-box; border: 1px solid rgba(10,25,47,0.12); border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
     <table style="width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 620px;">
       <thead>
         <tr style="background: #0a192f; color: #ffffff;">
@@ -5524,7 +5524,7 @@ BLOG_ENHANCERS['adi-kailash-yatra-for-solo-female-travellers-safety-guide'] = {
         var departureDatesBox =
             '<div id="female-departure-dates" style="background:rgba(15,23,42,.7);border:1.5px solid rgba(212,175,55,.4);border-radius:12px;padding:18px 20px;margin:24px 0;color:#fff">' +
             '<p style="color:#fbbf24;font-size:15px;font-weight:700;margin:0 0 10px">&#128197; 2026 Female-Friendly Group Departures</p>' +
-            '<div style="overflow-x:auto;-webkit-overflow-scrolling:touch">' +
+            '<div class="ry-table-responsive-wrap" style="overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;max-width:100%;box-sizing:border-box">' +
             '<table style="width:100%;border-collapse:collapse;font-size:13.5px;min-width:360px">' +
             '<thead><tr style="border-bottom:1px solid rgba(212,175,55,.3)">' +
             '<th style="padding:8px 12px;text-align:left;color:#fbbf24;font-weight:700">Departure Date</th>' +
@@ -6010,7 +6010,7 @@ BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanak
             '<h3 style="font-family: var(--font-serif); color: var(--color-gold); margin-top: 0; font-size: 18.5px; display: flex; align-items: center; gap: 8px;">' +
             '<i class="fa-solid fa-route" style="color: #fbbf24;"></i> Lipulekh Pass Yatra Corridor &bull; Station Elevation Profile' +
             '</h3>' +
-            '<div style="overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 14px; border-radius: 8px;">' +
+            '<div class="ry-table-responsive-wrap" style="overflow-x: auto; -webkit-overflow-scrolling: touch; width: 100%; max-width: 100%; box-sizing: border-box; margin-top: 14px; border-radius: 8px;">' +
             '<table style="width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 550px;">' +
             '<thead>' +
             '<tr style="background: rgba(212,175,55,0.15); border-bottom: 1px solid rgba(212,175,55,0.3);">' +
