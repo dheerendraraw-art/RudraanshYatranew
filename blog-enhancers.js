@@ -4132,7 +4132,7 @@ BLOG_ENHANCERS['5-things-you-need-to-do-before-planning-a-trip-to-adi-kailash'] 
 
 <div class="ry-5t-quote">
   "Every year we see families arrive at the Tawaghat ITBP checkpoint with members whose health data does not clear the government medical norms. The checkpoint does not make exceptions — even for pilgrims who have travelled thousands of kilometres. Check eligibility before booking, not after landing in Dharchula."
-  <cite>— Dheerendra Rautela, Founder, Rudraansh Yatra, Pithoragarh (8+ years operating Adi Kailash Yatras from Vyas Valley)</cite>
+  <cite>— Dheerendra Rautela, Founder, Rudraansh Yatra (THSC-Certified Tour Manager Operations; 10+ years operating in Vyas Valley)</cite>
 </div>
 
 <h2 id="step-ilp">Step 2: Get Your Inner Line Permit (ILP) and Government Medical Certificate</h2>
