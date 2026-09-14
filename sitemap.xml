@@ -221,8 +221,15 @@
 
   <!-- TIER 2: Blog Posts - Live Status / Time-Sensitive (daily changefreq) -->
   <url>
+    <loc>https://rudraanshyatra.com/blog/adi-kailash-ilp-date-revised-to-september-20-2026-updated-from-sept-15</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.96</priority>
+  </url>
+
+  <url>
     <loc>https://rudraanshyatra.com/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates</loc>
-    <lastmod>2026-09-09</lastmod>
+    <lastmod>2026-09-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
@@ -357,9 +364,9 @@
 
   <url>
     <loc>https://rudraanshyatra.com/blog/inner-line-permit-adi-kailash-2026-guide</loc>
-    <lastmod>2026-08-18</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.78</priority>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.82</priority>
   </url>
 
   <url>
