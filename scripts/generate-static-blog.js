@@ -68,7 +68,11 @@ function generateStaticBlog() {
     // Overrides
     blogHtml = blogHtml
         .replace(/<title>[^<]*<\/title>/, `<title>${enh.meta.title}</title>`)
-        .replace(/(<h1 class="blog-detail-title">)[^<]*(<\/h1>)/, `$1${enh.meta.title}$2`);
+        .replace(/(<h1 class="blog-detail-title">)[^<]*(<\/h1>)/, `$1${enh.meta.title}$2`)
+        .replace(
+            '<a href="https://wa.me/917617617651?text=Namaste!%20I%20read%20your%20blog%20and%20I%20am%20interested%20in%20a%20Yatra.%20Please%20share%20details." target="_blank" class="mob-wa-btn wa">',
+            '<a href="https://wa.me/917617617651?text=Namaste%20Rudraansh%20Yatra!%20I%20need%20urgent%20assistance%20regarding%20the%20revised%20Sept%2020%20Adi%20Kailash%20ILP%20date." target="_blank" class="mob-wa-btn wa">'
+        );
 
     const destPath = path.join(__dirname, '..', 'blog', `${slug}.html`);
     fs.writeFileSync(destPath, blogHtml, 'utf8');

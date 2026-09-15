@@ -6379,340 +6379,6 @@ BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanak
     </script>`,
         render: function(paragraphsHtml) {
             const richContent = `
-<style>
-/* ─── Styles for Adi Kailash ILP Date Revision Blog ─── */
-.ry-rev-banner {
-    background: linear-gradient(135deg, #091e3a 0%, #162a45 100%);
-    border: 2px solid #d4af37;
-    border-radius: 14px;
-    padding: 24px 28px;
-    margin: 0 0 32px 0;
-    color: #ffffff;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-}
-.ry-rev-urgent-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding-bottom: 14px;
-    margin-bottom: 16px;
-    border-bottom: 1px solid rgba(212,175,55,0.3);
-}
-.ry-rev-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(239, 68, 68, 0.2);
-    color: #fca5a5;
-    border: 1px solid rgba(239, 68, 68, 0.4);
-    padding: 5px 14px;
-    border-radius: 50px;
-    font-size: 11.5px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-}
-.ry-rev-pulse-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #ef4444;
-    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
-    animation: ryRevPulse 1.8s infinite;
-}
-@keyframes ryRevPulse {
-    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-    70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
-    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
-}
-.ry-rev-source-tag {
-    color: #cbd5e1;
-    font-size: 12px;
-    font-weight: 600;
-}
-.ry-rev-title {
-    color: #fbbf24 !important;
-    font-size: 22px !important;
-    font-weight: 800 !important;
-    line-height: 1.3 !important;
-    margin: 0 0 12px 0 !important;
-    font-family: var(--font-serif), Georgia, serif !important;
-}
-.ry-rev-intro {
-    color: #e2e8f0;
-    font-size: 14.5px;
-    line-height: 1.65;
-    margin: 0 0 20px 0;
-}
-.ry-rev-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 12px;
-    margin-bottom: 20px;
-}
-.ry-rev-card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(212, 175, 55, 0.25);
-    border-radius: 10px;
-    padding: 12px 16px;
-    text-align: left;
-}
-.ry-rev-card .label {
-    font-size: 11px;
-    color: #94a3b8;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    font-weight: 700;
-    margin-bottom: 4px;
-}
-.ry-rev-card .val {
-    font-size: 15px;
-    color: #ffffff;
-    font-weight: 800;
-}
-.ry-rev-card .val.revised {
-    color: #34d399;
-}
-.ry-rev-card .val.previous {
-    color: #f87171;
-    text-decoration: line-through;
-    opacity: 0.85;
-}
-.ry-rev-card .sub {
-    font-size: 11.5px;
-    color: #cbd5e1;
-    margin-top: 3px;
-}
-
-/* Nav Pills for Non-Overlap Navigation */
-.ry-non-overlap-box {
-    background: #0f172a;
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 12px;
-    padding: 18px 20px;
-    margin: 28px 0;
-}
-.ry-nav-pills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 12px;
-}
-.ry-nav-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(255, 255, 255, 0.07);
-    color: #e2e8f0;
-    border: 1px solid rgba(212, 175, 55, 0.3);
-    padding: 8px 14px;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 13px;
-    text-decoration: none;
-    transition: all 0.2s ease;
-}
-.ry-nav-pill:hover {
-    background: rgba(212, 175, 55, 0.2);
-    border-color: #d4af37;
-    color: #ffffff;
-    transform: translateY(-1px);
-}
-
-/* Comparison Tables */
-.ry-table-responsive-wrap {
-    width: 100%;
-    overflow-x: auto;
-    margin: 24px 0;
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow: 0 4px 14px rgba(0,0,0,0.15);
-}
-.ry-rev-table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: left;
-    font-size: 14px;
-    background: #0b1f3a;
-    color: #f1f5f9;
-}
-.ry-rev-table th {
-    background: #061528;
-    color: #fbbf24;
-    padding: 14px 16px;
-    font-weight: 700;
-    border-bottom: 2px solid rgba(212, 175, 55, 0.35);
-    white-space: nowrap;
-}
-.ry-rev-table td {
-    padding: 13px 16px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    line-height: 1.55;
-}
-.ry-rev-table tr:nth-child(even) {
-    background: rgba(255, 255, 255, 0.02);
-}
-.ry-rev-table tr:hover {
-    background: rgba(212, 175, 55, 0.06);
-}
-
-/* Scenario Cards */
-.ry-scenario-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 16px;
-    margin: 24px 0;
-}
-.ry-scenario-card {
-    background: #0b1f3a;
-    border-radius: 12px;
-    padding: 20px 22px;
-    border: 1px solid rgba(212, 175, 55, 0.25);
-}
-.ry-scenario-card.alert {
-    border-color: #ef4444;
-    background: linear-gradient(145deg, #180d1e 0%, #0b1f3a 100%);
-}
-.ry-scenario-card.plan {
-    border-color: #10b981;
-    background: linear-gradient(145deg, #09211c 0%, #0b1f3a 100%);
-}
-.ry-scenario-tag {
-    display: inline-block;
-    font-size: 11px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
-    padding: 3px 10px;
-    border-radius: 4px;
-    margin-bottom: 10px;
-}
-.ry-scenario-card.alert .ry-scenario-tag {
-    background: rgba(239, 68, 68, 0.2);
-    color: #fca5a5;
-    border: 1px solid rgba(239, 68, 68, 0.4);
-}
-.ry-scenario-card.plan .ry-scenario-tag {
-    background: rgba(16, 185, 129, 0.2);
-    color: #6ee7b7;
-    border: 1px solid rgba(16, 185, 129, 0.4);
-}
-
-/* FAQ Accordion Styling */
-.ry-faq-list {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    margin: 28px 0;
-}
-.ry-faq-item {
-    background: #0b1f3a;
-    border: 1px solid rgba(212, 175, 55, 0.22);
-    border-radius: 10px;
-    padding: 18px 20px;
-}
-.ry-faq-q {
-    color: #fbbf24;
-    font-size: 16px;
-    font-weight: 700;
-    margin: 0 0 8px 0;
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-    font-family: var(--font-serif), Georgia, serif;
-}
-.ry-faq-a {
-    color: #cbd5e1;
-    font-size: 14px;
-    line-height: 1.65;
-    margin: 0;
-}
-
-/* Package Promotion Cards */
-.ry-rev-packages {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 14px;
-    margin: 24px 0;
-}
-.ry-rev-pkg-card {
-    background: #0f172a;
-    border: 1px solid rgba(212, 175, 55, 0.3);
-    border-radius: 10px;
-    padding: 16px 18px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-.ry-rev-pkg-card h4 {
-    color: #ffffff;
-    font-size: 15px;
-    margin: 0 0 6px 0;
-    font-weight: 700;
-}
-.ry-rev-pkg-card .price {
-    color: #fbbf24;
-    font-size: 18px;
-    font-weight: 800;
-    margin-bottom: 12px;
-}
-.ry-rev-pkg-card a {
-    display: inline-block;
-    background: #d4af37;
-    color: #0b1f3a;
-    font-size: 12.5px;
-    font-weight: 700;
-    text-align: center;
-    padding: 8px 12px;
-    border-radius: 6px;
-    text-decoration: none;
-    transition: all 0.2s ease;
-}
-.ry-rev-pkg-card a:hover {
-    background: #f59e0b;
-}
-
-/* CTA Bar */
-.ry-cta-bar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin: 20px 0;
-}
-.ry-cta-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 12px 20px;
-    border-radius: 8px;
-    font-weight: 700;
-    font-size: 14px;
-    text-decoration: none;
-    transition: all 0.2s ease;
-    flex: 1;
-    min-width: 220px;
-}
-.ry-cta-btn.wa {
-    background: #25d366;
-    color: #0b1f3a;
-}
-.ry-cta-btn.wa:hover {
-    background: #20bd5a;
-    transform: translateY(-1px);
-}
-.ry-cta-btn.call {
-    background: #f59e0b;
-    color: #0b1f3a;
-}
-.ry-cta-btn.call:hover {
-    background: #d97706;
-    transform: translateY(-1px);
-}
-</style>
-
 <!-- Urgent Breaking News & Executive Answer Banner -->
 <div class="ry-rev-banner" id="executive-summary">
     <div class="ry-rev-urgent-bar">
@@ -6721,14 +6387,14 @@ BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanak
             Official Administrative Bulletin
         </span>
         <span class="ry-rev-source-tag">
-            <i class="fa-solid fa-landmark"></i> SDM Dharchula & Pithoragarh District Administration
+            <i class="fa-solid fa-landmark"></i> SDM Dharchula &amp; Pithoragarh District Administration
         </span>
     </div>
     <h2 class="ry-rev-title">
         Official Notice: Online ILP Opening Deferred to September 20, 2026
     </h2>
     <p class="ry-rev-intro">
-        <strong>Direct Answer for Yatris & Search Engines:</strong> The Sub-Divisional Magistrate (SDM) Office in Dharchula has officially postponed the resumption of online Inner Line Permit (ILP) issuance for the <strong>Adi Kailash and Om Parvat Yatra</strong> from September 15 to <strong>September 20, 2026</strong>. Persistent late-monsoon rainfall and recurring slope washouts along the Dharchula–Tawaghat–Sobla corridor require additional stabilization by the Border Roads Organisation (BRO Project Hirak). Permit processing remains subject to ground weather conditions.
+        <strong>Direct Answer for Yatris &amp; Search Engines:</strong> The Sub-Divisional Magistrate (SDM) Office in Dharchula has officially postponed the resumption of online Inner Line Permit (ILP) issuance for the <strong>Adi Kailash and Om Parvat Yatra</strong> from September 15 to <strong>September 20, 2026</strong>. Persistent late-monsoon rainfall and recurring slope washouts along the Dharchula–Tawaghat–Sobla corridor require additional stabilization by the Border Roads Organisation (BRO Project Hirak). Permit processing remains subject to ground weather conditions.
     </p>
     <div class="ry-rev-grid">
         <div class="ry-rev-card">
@@ -6777,24 +6443,29 @@ BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanak
     <div style="display: flex; align-items: center; gap: 8px; color: #fbbf24; font-weight: 700; font-size: 14px;">
         <i class="fa-solid fa-compass"></i> Guide Navigation &amp; Related Yatra Resources:
     </div>
-    <p style="color: #94a3b8; font-size: 13px; margin: 6px 0 10px 0; line-height: 1.5;">
+    <p style="color: #cbd5e1; font-size: 13px; margin: 6px 0 12px 0; line-height: 1.55;">
         This bulletin covers the <strong>September 14, 2026 administrative circular</strong> deferring permit reopening. If you need standard documentation guides, macro road status, or packing advice, consult our dedicated non-overlapping resources:
     </p>
     <div class="ry-nav-pills">
         <a href="/blog/inner-line-permit-adi-kailash-2026-guide" class="ry-nav-pill">
-            <i class="fa-solid fa-id-card"></i> Complete ILP Documents &amp; Step-by-Step Guide
+            <span><i class="fa-solid fa-id-card" style="color: #fbbf24; margin-right: 6px;"></i> Complete ILP Documents &amp; Step-by-Step Guide</span>
+            <i class="fa-solid fa-chevron-right" style="color: #fbbf24; font-size: 10px;"></i>
         </a>
         <a href="/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates" class="ry-nav-pill">
-            <i class="fa-solid fa-cloud-showers-heavy"></i> 2026 Monsoon Status &amp; Reopening Updates
+            <span><i class="fa-solid fa-cloud-showers-heavy" style="color: #fbbf24; margin-right: 6px;"></i> 2026 Monsoon Status &amp; Reopening Updates</span>
+            <i class="fa-solid fa-chevron-right" style="color: #fbbf24; font-size: 10px;"></i>
         </a>
         <a href="/blog/is-adi-kailash-yatra-closed-right-now-reopening-date-why-travellers-get-stuck-at-dharchula" class="ry-nav-pill">
-            <i class="fa-solid fa-triangle-exclamation"></i> Why Pilgrims Get Stuck at Dharchula
+            <span><i class="fa-solid fa-triangle-exclamation" style="color: #fbbf24; margin-right: 6px;"></i> Why Pilgrims Get Stuck at Dharchula</span>
+            <i class="fa-solid fa-chevron-right" style="color: #fbbf24; font-size: 10px;"></i>
         </a>
         <a href="/blog/best-time-to-visit-adi-kailash-om-parvat-weather-season-guide" class="ry-nav-pill">
-            <i class="fa-solid fa-calendar-check"></i> Best Time to Visit &amp; Autumn Weather Guide
+            <span><i class="fa-solid fa-calendar-check" style="color: #fbbf24; margin-right: 6px;"></i> Best Time to Visit &amp; Autumn Weather Guide</span>
+            <i class="fa-solid fa-chevron-right" style="color: #fbbf24; font-size: 10px;"></i>
         </a>
         <a href="/blog/adi-kailash-packing-list-essential-guide-for-yatris" class="ry-nav-pill">
-            <i class="fa-solid fa-suitcase-rolling"></i> Essential Packing List for Autumn Yatra
+            <span><i class="fa-solid fa-suitcase-rolling" style="color: #fbbf24; margin-right: 6px;"></i> Essential Packing List for Autumn Yatra</span>
+            <i class="fa-solid fa-chevron-right" style="color: #fbbf24; font-size: 10px;"></i>
         </a>
     </div>
 </div>
@@ -6811,6 +6482,7 @@ BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanak
 </p>
 
 <div class="ry-table-responsive-wrap">
+    <div class="ry-table-scroll-hint"><i class="fa-solid fa-arrows-left-right"></i> Scroll sideways to view full comparison &rarr;</div>
     <table class="ry-rev-table">
         <thead>
             <tr>
@@ -6861,6 +6533,7 @@ BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanak
 </p>
 
 <div class="ry-table-responsive-wrap">
+    <div class="ry-table-scroll-hint"><i class="fa-solid fa-arrows-left-right"></i> Scroll sideways to view all sectors &rarr;</div>
     <table class="ry-rev-table">
         <thead>
             <tr>
@@ -6918,32 +6591,32 @@ BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanak
 
 <div class="ry-scenario-grid">
     <div class="ry-scenario-card alert">
-        <span class="ry-scenario-tag">Scenario 1</span>
-        <h3 style="color: #f87171; font-size: 17px; margin: 0 0 10px 0; font-family: var(--font-serif), Georgia, serif;">
-            You Are Booked for Sept 15 &ndash; Sept 19 Departures
-        </h3>
-        <ul style="color: #cbd5e1; font-size: 13.5px; line-height: 1.6; padding-left: 18px; margin: 0 0 14px 0;">
-            <li><strong>Do not proceed past Dharchula:</strong> The SDM office will not clear permits for these dates, and the ITBP barrier at Tawaghat will turn your vehicle back.</li>
-            <li><strong>Reschedule early:</strong> Contact your tour operator or hotel right away. Rudraansh Yatra is rescheduling all affected yatris to batches between September 21 and October 15 without penalty.</li>
-            <li><strong>Adjust transport tickets:</strong> Push back train bookings (Kathgodam) or flights to Pantnagar/Dehradun to avoid arriving before the route reopens.</li>
-        </ul>
-        <a href="https://wa.me/917617617651?text=Namaste%20Rudraansh%20Yatra!%20I%20have%20a%20booking%20between%20Sept%2015-19.%20Please%20help%20me%20reschedule." style="color: #fca5a5; font-size: 13px; font-weight: 700; text-decoration: underline;" target="_blank" rel="noopener">
-            Request Rescheduling Support &rarr;
+        <div>
+            <span class="ry-scenario-tag">Scenario 1</span>
+            <h3>You Are Booked for Sept 15 &ndash; Sept 19 Departures</h3>
+            <ul>
+                <li><strong>Do not proceed past Dharchula:</strong> The SDM office will not clear permits for these dates, and the ITBP barrier at Tawaghat will turn your vehicle back.</li>
+                <li><strong>Reschedule early:</strong> Contact your tour operator or hotel right away. Rudraansh Yatra is rescheduling all affected yatris to batches between September 21 and October 15 without penalty.</li>
+                <li><strong>Adjust transport tickets:</strong> Push back train bookings (Kathgodam) or flights to Pantnagar/Dehradun to avoid arriving before the route reopens.</li>
+            </ul>
+        </div>
+        <a href="https://wa.me/917617617651?text=Namaste%20Rudraansh%20Yatra!%20I%20have%20a%20booking%20between%20Sept%2015-19.%20Please%20help%20me%20reschedule." class="ry-scenario-btn alert" target="_blank" rel="noopener">
+            <i class="fa-brands fa-whatsapp"></i> Chat Live to Reschedule Batches &rarr;
         </a>
     </div>
 
     <div class="ry-scenario-card plan">
-        <span class="ry-scenario-tag">Scenario 2</span>
-        <h3 style="color: #34d399; font-size: 17px; margin: 0 0 10px 0; font-family: var(--font-serif), Georgia, serif;">
-            You Are Planning Departures for September 20 Onwards
-        </h3>
-        <ul style="color: #cbd5e1; font-size: 13.5px; line-height: 1.6; padding-left: 18px; margin: 0 0 14px 0;">
-            <li><strong>Treat Sept 20 as earliest start:</strong> Target departures from Kathgodam/Pithoragarh around September 21–23 to allow the initial queue to clear smoothly.</li>
-            <li><strong>Build a 1-day weather buffer:</strong> Himalayan weather can cause temporary 4–6 hour delays. Keep a reserve day at Dharchula or Pithoragarh.</li>
-            <li><strong>Assemble required paperwork now:</strong> Keep 4 copies of your Aadhaar Card, police verification character certificate, and doctor-signed medical fitness certificate ready.</li>
-        </ul>
-        <a href="/adi-kailash" style="color: #6ee7b7; font-size: 13px; font-weight: 700; text-decoration: underline;">
-            Explore Confirmed Autumn Yatra Batches &rarr;
+        <div>
+            <span class="ry-scenario-tag">Scenario 2</span>
+            <h3>You Are Planning Departures for September 20 Onwards</h3>
+            <ul>
+                <li><strong>Treat Sept 20 as earliest start:</strong> Target departures from Kathgodam/Pithoragarh around September 21–23 to allow the initial queue to clear smoothly.</li>
+                <li><strong>Build a 1-day weather buffer:</strong> Himalayan weather can cause temporary 4–6 hour delays. Keep a reserve day at Dharchula or Pithoragarh.</li>
+                <li><strong>Assemble required paperwork now:</strong> Keep 4 copies of your Aadhaar Card, police verification character certificate, and doctor-signed medical fitness certificate ready.</li>
+            </ul>
+        </div>
+        <a href="/adi-kailash" class="ry-scenario-btn plan">
+            <i class="fa-solid fa-calendar-check"></i> Explore Confirmed Autumn Batches &rarr;
         </a>
     </div>
 </div>
@@ -6958,10 +6631,10 @@ BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanak
 
 <!-- Curated Package Promotion Cards -->
 <div style="margin: 32px 0;">
-    <h3 style="color: #fbbf24; font-size: 18px; font-family: var(--font-serif), Georgia, serif; margin-bottom: 6px;">
+    <h3 style="color: #fbbf24 !important; font-size: 18px; font-family: var(--font-serif), Georgia, serif; margin-bottom: 6px;">
         Confirmed Autumn 2026 Departure Packages (Post-September 20)
     </h3>
-    <p style="color: #94a3b8; font-size: 13.5px; margin-bottom: 16px;">
+    <p style="color: #cbd5e1; font-size: 13.5px; margin-bottom: 16px;">
         Book directly with Pithoragarh's premier local ground operator with zero reseller commission and guaranteed SDM permit processing:
     </p>
     <div class="ry-rev-packages">
@@ -6969,7 +6642,7 @@ BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanak
             <div>
                 <h4>Adi Kailash &amp; Om Parvat from Kathgodam</h4>
                 <div class="price">₹30,000 <span style="font-size: 12px; color: #94a3b8;">/ person (6D/5N)</span></div>
-                <p style="color: #cbd5e1; font-size: 12.5px; line-height: 1.5; margin-bottom: 14px;">4x4 Bolero, Gunji/Nabi homestay, ILP clearance, vegetarian meals &amp; oxygen kit.</p>
+                <p>4x4 Bolero, Gunji/Nabi homestay, ILP clearance, vegetarian meals &amp; oxygen kit.</p>
             </div>
             <a href="/adi-kailash-from-kathgodam">View Kathgodam Itinerary &rarr;</a>
         </div>
@@ -6977,7 +6650,7 @@ BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanak
             <div>
                 <h4>Adi Kailash &amp; Om Parvat from Delhi</h4>
                 <div class="price">₹35,000 <span style="font-size: 12px; color: #94a3b8;">/ person (6D/5N)</span></div>
-                <p style="color: #cbd5e1; font-size: 12.5px; line-height: 1.5; margin-bottom: 14px;">Delhi pick &amp; drop, private transport, full permit processing &amp; guided tour.</p>
+                <p>Delhi pick &amp; drop, private transport, full permit processing &amp; guided tour.</p>
             </div>
             <a href="/adi-kailash-from-delhi">View Delhi Package Details &rarr;</a>
         </div>
@@ -6985,7 +6658,7 @@ BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanak
             <div>
                 <h4>Adi Kailash Express from Pithoragarh</h4>
                 <div class="price">₹18,000 <span style="font-size: 12px; color: #94a3b8;">/ person (3D/2N)</span></div>
-                <p style="color: #cbd5e1; font-size: 12.5px; line-height: 1.5; margin-bottom: 14px;">Fast-track departure from Pithoragarh headquarters. Ideal for short itineraries.</p>
+                <p>Fast-track departure from Pithoragarh headquarters. Ideal for short itineraries.</p>
             </div>
             <a href="/adi-kailash-from-pithoragarh">View Pithoragarh Package &rarr;</a>
         </div>
@@ -7053,18 +6726,16 @@ BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanak
 </p>
 
 <!-- Ground Support Contact Banner -->
-<div style="background: linear-gradient(135deg, #091e3a 0%, #162a45 100%); border: 1px solid #d4af37; border-radius: 12px; padding: 22px 24px; margin-top: 30px; text-align: center; color: #ffffff;">
-    <h3 style="color: #fbbf24; font-size: 19px; margin: 0 0 8px 0; font-family: var(--font-serif), Georgia, serif;">
-        Need Help Rescheduling Your Adi Kailash Yatra?
-    </h3>
-    <p style="color: #cbd5e1; font-size: 14px; max-width: 650px; margin: 0 auto 16px auto; line-height: 1.6;">
+<div class="ry-ground-support-banner">
+    <h3>Need Help Rescheduling Your Adi Kailash Yatra?</h3>
+    <p>
         Speak directly with Dheerendra Rautela and our Pithoragarh operations desk for live permit queues, homestay rebooking, and route clearance updates.
     </p>
-    <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
-        <a href="https://wa.me/917617617651?text=Namaste%20Rudraansh%20Yatra!%20I%20need%20help%20with%20Adi%20Kailash%20ILP%20rescheduling%20for%20September%202026." class="ry-cta-btn wa" style="max-width: 280px;" target="_blank" rel="noopener">
+    <div class="ry-ground-support-actions">
+        <a href="https://wa.me/917617617651?text=Namaste%20Rudraansh%20Yatra!%20I%20need%20help%20with%20Adi%20Kailash%20ILP%20rescheduling%20for%20September%202026." class="ry-cta-btn wa" target="_blank" rel="noopener">
             <i class="fa-brands fa-whatsapp"></i> WhatsApp Operations Desk
         </a>
-        <a href="tel:+917617617651" class="ry-cta-btn call" style="max-width: 280px;">
+        <a href="tel:+917617617651" class="ry-cta-btn call">
             <i class="fa-solid fa-phone"></i> Call +91 7617617651
         </a>
     </div>

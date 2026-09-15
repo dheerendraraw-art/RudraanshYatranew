@@ -377,6 +377,8 @@ app.get('/blog/:slug', async (req, res) => {
             const output = [];
             let inScriptBlock = false;
             let scriptBuffer = [];
+            let inStyleBlock = false;
+            let styleBuffer = [];
 
             for (let i = 0; i < lines.length; i++) {
                 const trimmed = lines[i].trim();
@@ -400,6 +402,28 @@ app.get('/blog/:slug', async (req, res) => {
                         output.push(scriptBuffer.join('\n'));
                         inScriptBlock = false;
                         scriptBuffer = [];
+                    }
+                    continue;
+                }
+
+                // Handle <style> blocks cleanly without wrapping CSS lines in <p>
+                if (!inStyleBlock && trimmed.includes('<style')) {
+                    inStyleBlock = true;
+                    styleBuffer = [trimmed];
+                    if (trimmed.includes('</style>')) {
+                        output.push(styleBuffer.join('\n'));
+                        inStyleBlock = false;
+                        styleBuffer = [];
+                    }
+                    continue;
+                }
+
+                if (inStyleBlock) {
+                    styleBuffer.push(trimmed);
+                    if (trimmed.includes('</style>')) {
+                        output.push(styleBuffer.join('\n'));
+                        inStyleBlock = false;
+                        styleBuffer = [];
                     }
                     continue;
                 }

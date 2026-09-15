@@ -593,7 +593,13 @@
         .ry-5t-bottom,
         .ry-snr-banner,
         .ry-ilp-cta-box,
-        .ry-compare-box {
+        .ry-compare-box,
+        .ry-rev-banner,
+        .ry-non-overlap-box,
+        .ry-scenario-card,
+        .ry-faq-item,
+        .ry-rev-pkg-card,
+        .ry-ground-support-banner {
             color: #ffffff !important;
             max-width: 100% !important;
             box-sizing: border-box !important;
@@ -606,12 +612,85 @@
         .ry-highlight-box h1, .ry-highlight-box h2, .ry-highlight-box h3, .ry-highlight-box h4,
         .ry-flight-summary h1, .ry-flight-summary h2, .ry-flight-summary h3, .ry-flight-summary h4,
         .ry-cld-banner h1, .ry-cld-banner h2, .ry-cld-banner h3, .ry-cld-banner h4,
-        .ry-compare-head, .ry-cost-title, .ry-highlight-title {
+        .ry-rev-banner h1, .ry-rev-banner h2, .ry-rev-banner h3, .ry-rev-banner h4,
+        .ry-ground-support-banner h1, .ry-ground-support-banner h2, .ry-ground-support-banner h3, .ry-ground-support-banner h4,
+        .ry-compare-head, .ry-cost-title, .ry-highlight-title, .ry-rev-title, .ry-faq-q {
             color: #fbbf24 !important;
-            font-family: var(--font-sans, 'Plus Jakarta Sans', system-ui, sans-serif) !important;
+            font-family: var(--font-serif), Georgia, serif !important;
             margin-top: 0 !important;
             margin-bottom: 8px !important;
             line-height: 1.3 !important;
+        }
+
+        .blog-detail-body .ry-rev-banner h2,
+        .blog-detail-body .ry-rev-title,
+        .blog-detail-body h2.ry-rev-title,
+        .blog-detail-body h3.ry-faq-q,
+        .blog-detail-body .ry-faq-q,
+        .blog-detail-body .ry-ground-support-banner h3 {
+            color: #fbbf24 !important;
+            font-family: var(--font-serif), Georgia, serif !important;
+        }
+
+        .blog-detail-body .ry-scenario-card.alert h3,
+        .blog-detail-body .ry-scenario-card.alert h3 * {
+            color: #fca5a5 !important;
+        }
+
+        .blog-detail-body .ry-scenario-card.plan h3,
+        .blog-detail-body .ry-scenario-card.plan h3 * {
+            color: #6ee7b7 !important;
+        }
+
+        .blog-detail-body .ry-scenario-card li,
+        .blog-detail-body .ry-scenario-card ul li {
+            color: #e2e8f0 !important;
+            font-size: 13.5px !important;
+            line-height: 1.6 !important;
+        }
+
+        .blog-detail-body .ry-scenario-card strong {
+            color: #ffffff !important;
+            font-weight: 700 !important;
+        }
+
+        .blog-detail-body .ry-table-responsive-wrap table th,
+        .blog-detail-body table.ry-rev-table th,
+        .blog-detail-body .ry-rev-table th {
+            background: #061528 !important;
+            color: #fbbf24 !important;
+            font-weight: 700 !important;
+            border-bottom: 2px solid rgba(212, 175, 55, 0.35) !important;
+        }
+
+        .blog-detail-body .ry-table-responsive-wrap table td,
+        .blog-detail-body table.ry-rev-table td,
+        .blog-detail-body .ry-rev-table td {
+            background: #0b1f3a !important;
+            color: #f1f5f9 !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+        }
+
+        .blog-detail-body .ry-table-responsive-wrap table tr:nth-child(even) td,
+        .blog-detail-body .ry-rev-table tr:nth-child(even) td {
+            background: rgba(255, 255, 255, 0.03) !important;
+        }
+
+        .blog-detail-body .ry-rev-pkg-card h4 {
+            color: #ffffff !important;
+        }
+
+        .blog-detail-body .ry-rev-pkg-card p {
+            color: #cbd5e1 !important;
+        }
+
+        .blog-detail-body .ry-rev-pkg-card .price {
+            color: #fbbf24 !important;
+        }
+
+        .blog-detail-body .ry-faq-item .ry-faq-a,
+        .blog-detail-body .ry-faq-a {
+            color: #e2e8f0 !important;
         }
 
         .ry-route-summary p,
