@@ -10258,6 +10258,19 @@ html, body { overflow-x: hidden; max-width: 100%; }
     font-size: 13px;
 }
 
+.booking-pickup-select {
+    background: #0f172a;
+    color: #ffffff;
+    border: 1.5px solid var(--color-gold);
+    border-radius: 6px;
+    padding: 6px 8px;
+    font-size: 12px;
+    width: 100%;
+    max-width: 160px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
 .booking-date-badge {
     color: #0f172a;
     font-weight: 700;
@@ -10501,16 +10514,15 @@ html, body { overflow-x: hidden; max-width: 100%; }
         font-weight: 800 !important;
     }
 
-    @media (max-width: 768px) {
-    /* Only hide the video on mobile — the static hero img inside hero-video-bg must stay visible */
-    .hero-video-bg video {
-        display: none !important;
-    }
-}
-
     #pane-bookings .booking-pickup-text {
         color: #f8fafc !important;
         font-size: 13px !important;
+    }
+
+    #pane-bookings .booking-pickup-select {
+        max-width: 60% !important;
+        font-size: 12.5px !important;
+        padding: 6px 8px !important;
     }
 
     #pane-bookings .booking-dest-badge {
@@ -10615,13 +10627,6 @@ html, body { overflow-x: hidden; max-width: 100%; }
     #pane-bookings tr.booking-card-row:not(.show-all-details) .mobile-detail-field {
         display: none !important;
     }
-
-    @media (max-width: 768px) {
-    /* Hide only the video on mobile; the static hero img stays visible */
-    .hero-video-bg video {
-        display: none !important;
-    }
-}
 
     #pane-bookings tr.booking-card-row.show-all-details .mobile-detail-field {
         display: flex !important;
@@ -11085,60 +11090,447 @@ html, body { overflow-x: hidden; max-width: 100%; }
     color: #fff !important;
 }
 
-/* MOBILE LEADS CARDS */
+/* ==================================================
+   ADMIN USER MOBILE OPTIMIZATION (<= 768px & <= 480px)
+   Strictly scoped to body.user-role-admin for Bookings & Leads
+   ================================================== */
 @media (max-width: 768px) {
-    #pane-leads .admin-table-container {
+    /* --------------------------------------------------
+       ADMIN LEADS MANAGER (MOBILE)
+       -------------------------------------------------- */
+    body.user-role-admin #pane-leads .leads-header-wrapper {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 12px !important;
+        margin-bottom: 16px !important;
+    }
+
+    body.user-role-admin #pane-leads .leads-controls-bar {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 10px !important;
+        width: 100% !important;
+    }
+
+    body.user-role-admin #pane-leads .leads-search-wrap,
+    body.user-role-admin #pane-leads .leads-status-wrap {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    body.user-role-admin #pane-leads #search-leads-input {
+        width: 100% !important;
+        padding: 10px 12px 10px 36px !important;
+        font-size: 14px !important;
+        min-height: 42px !important;
+        box-sizing: border-box !important;
+    }
+
+    body.user-role-admin #pane-leads #top-filter-lead-status {
+        width: 100% !important;
+        padding: 10px 12px !important;
+        font-size: 13.5px !important;
+        min-height: 42px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Admin Leads Action Toolbar */
+    body.user-role-admin #pane-leads #leads-action-buttons-wrap {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
+        width: 100% !important;
+    }
+
+    body.user-role-admin #pane-leads #add-lead-btn {
+        grid-column: 1 / -1 !important;
+        width: 100% !important;
+        min-height: 44px !important;
+        font-size: 14px !important;
+        font-weight: 700 !important;
+        justify-content: center !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        box-shadow: 0 4px 12px rgba(212, 175, 55, 0.35) !important;
+    }
+
+    body.user-role-admin #pane-leads #sync-sheet-leads-btn {
+        grid-column: 1 / -1 !important;
+        width: 100% !important;
+        min-height: 40px !important;
+        font-size: 13px !important;
+        justify-content: center !important;
+        display: inline-flex !important;
+        align-items: center !important;
+    }
+
+    body.user-role-admin #pane-leads #leads-action-buttons-wrap button {
+        min-height: 38px !important;
+        font-size: 12px !important;
+        padding: 6px 10px !important;
+        justify-content: center !important;
+        text-align: center !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 4px !important;
+    }
+
+    /* Admin Leads Card Container */
+    body.user-role-admin #pane-leads .admin-table-container {
         border: none !important;
         background: transparent !important;
         box-shadow: none !important;
+        overflow: visible !important;
+        padding: 0 !important;
     }
-    #pane-leads .admin-table {
+
+    body.user-role-admin #pane-leads .admin-table {
         display: block !important;
+        width: 100% !important;
         min-width: unset !important;
     }
-    #pane-leads .admin-table thead {
+
+    body.user-role-admin #pane-leads .admin-table thead {
         display: none !important;
     }
-    #pane-leads .admin-table tbody {
+
+    body.user-role-admin #pane-leads .admin-table tbody {
         display: flex !important;
         flex-direction: column !important;
         gap: 12px !important;
+        width: 100% !important;
     }
-    #pane-leads .admin-table tr.lead-table-row {
+
+    /* Admin Leads Card Row */
+    body.user-role-admin #pane-leads tr.lead-card-row {
         display: block !important;
-        background: #ffffff !important;
-        border: 1px solid #e2e8f0 !important;
-        border-left: 4px solid #b45309 !important;
-        border-radius: 12px !important;
-        padding: 14px 16px !important;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+        background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%) !important;
+        border: 1.5px solid rgba(212, 175, 55, 0.45) !important;
+        border-left: 4px solid var(--color-gold) !important;
+        border-radius: 14px !important;
+        padding: 12px 14px !important;
+        margin-bottom: 0 !important;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45) !important;
+        position: relative !important;
+        cursor: pointer !important;
+        transition: transform 0.15s ease, box-shadow 0.15s ease !important;
     }
-    #pane-leads .admin-table tr.lead-table-row td {
+
+    body.user-role-admin #pane-leads tr.lead-card-row:active {
+        transform: scale(0.995);
+    }
+
+    /* Quick Contact Chips on Mobile Header */
+    body.user-role-admin #pane-leads .lead-quick-contact-chips {
+        display: inline-flex !important;
+        gap: 5px !important;
+        align-items: center !important;
+    }
+
+    body.user-role-admin #pane-leads .lead-quick-call-chip,
+    body.user-role-admin #pane-leads .lead-quick-wa-chip {
+        min-height: 26px !important;
+        padding: 3px 9px !important;
+        font-size: 11px !important;
+    }
+
+    /* Hide duplicate status cell on mobile (status is already in the card header) */
+    body.user-role-admin #pane-leads tr.lead-card-row td.lead-duplicate-status-td {
+        display: none !important;
+    }
+
+    /* Expanded Detail Fields for Admin Leads */
+    body.user-role-admin #pane-leads tr.lead-card-row.expanded .mobile-detail-field {
         display: flex !important;
         justify-content: space-between !important;
         align-items: center !important;
-        padding: 7px 0 !important;
-        border-bottom: 1px dashed #e2e8f0 !important;
-        font-size: 13px !important;
-    }
-    #pane-leads .admin-table tr.lead-table-row td:last-child {
+        padding: 8px 0 !important;
+        border-top: 1px dashed rgba(255, 255, 255, 0.12) !important;
         border-bottom: none !important;
-        padding-top: 10px !important;
-        justify-content: center !important;
+        color: #f8fafc !important;
+        font-size: 13px !important;
+        text-align: right !important;
     }
-    #pane-leads .admin-table tr.lead-table-row td::before {
+
+    body.user-role-admin #pane-leads tr.lead-card-row.expanded .mobile-detail-field::before {
         content: attr(data-label);
-        font-weight: 700 !important;
-        color: #b45309 !important;
+        font-weight: 800 !important;
+        color: var(--color-gold) !important;
         font-size: 11px !important;
         text-transform: uppercase !important;
         letter-spacing: 0.5px !important;
+        text-align: left !important;
         flex-shrink: 0 !important;
-        margin-right: 8px !important;
+        margin-right: 12px !important;
     }
-    #pane-leads .admin-table td.td-lead-name::before { display: none !important; }
-    #pane-leads .admin-table td.td-actions::before { display: none !important; }
-    #pane-leads .admin-table td.td-actions { justify-content: center !important; }
+
+    /* Touch-friendly staff assignee dropdown */
+    body.user-role-admin #pane-leads tr.lead-card-row td select {
+        color: #ffffff !important;
+        background: #1e293b !important;
+        border: 1.5px solid rgba(212, 175, 55, 0.6) !important;
+        border-radius: 6px !important;
+        padding: 6px 10px !important;
+        font-size: 13px !important;
+        min-height: 38px !important;
+        max-width: 60% !important;
+        cursor: pointer !important;
+    }
+
+    /* Admin Action Buttons Row inside Expanded Lead */
+    body.user-role-admin #pane-leads tr.lead-card-row td.lead-card-actions-cell {
+        border-top: 1px dashed rgba(212, 175, 55, 0.3) !important;
+        border-bottom: none !important;
+        padding-top: 12px !important;
+        padding-bottom: 2px !important;
+    }
+
+    body.user-role-admin #pane-leads tr.lead-card-row td.lead-card-actions-cell::before {
+        display: none !important;
+    }
+
+    body.user-role-admin #pane-leads .lead-admin-actions-wrap {
+        display: flex !important;
+        width: 100% !important;
+        gap: 8px !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+    }
+
+    body.user-role-admin #pane-leads .lead-admin-actions-wrap .lead-open-details-btn {
+        flex: 1.2 !important;
+        min-height: 40px !important;
+        justify-content: center !important;
+        font-size: 12.5px !important;
+    }
+
+    body.user-role-admin #pane-leads .lead-admin-actions-wrap .lead-card-edit-btn {
+        flex: 1 !important;
+        min-height: 40px !important;
+        justify-content: center !important;
+        font-size: 12.5px !important;
+    }
+
+    body.user-role-admin #pane-leads .lead-admin-actions-wrap .lead-card-del-btn {
+        flex: 0.8 !important;
+        min-height: 40px !important;
+        justify-content: center !important;
+        font-size: 12.5px !important;
+    }
+
+    /* --------------------------------------------------
+       ADMIN BOOKINGS MANAGER (MOBILE)
+       -------------------------------------------------- */
+    body.user-role-admin #pane-bookings .bookings-header-wrapper {
+        margin-bottom: 16px !important;
+    }
+
+    body.user-role-admin #pane-bookings .bookings-top-row {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 10px !important;
+        margin-bottom: 10px !important;
+    }
+
+    body.user-role-admin #pane-bookings .bookings-search-wrap {
+        width: 100% !important;
+    }
+
+    body.user-role-admin #pane-bookings #search-bookings-input {
+        min-height: 42px !important;
+        font-size: 14px !important;
+        box-sizing: border-box !important;
+    }
+
+    body.user-role-admin #pane-bookings .bookings-primary-btn-wrap {
+        width: 100% !important;
+    }
+
+    body.user-role-admin #pane-bookings #add-booking-btn {
+        width: 100% !important;
+        min-height: 44px !important;
+        justify-content: center !important;
+        font-size: 14px !important;
+        box-shadow: 0 4px 12px rgba(212, 175, 55, 0.35) !important;
+    }
+
+    body.user-role-admin #pane-bookings .bookings-filters-bar {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        padding: 12px !important;
+        gap: 10px !important;
+    }
+
+    body.user-role-admin #pane-bookings .booking-filter-item {
+        width: 100% !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 4px !important;
+    }
+
+    body.user-role-admin #pane-bookings .booking-filter-item input,
+    body.user-role-admin #pane-bookings .booking-filter-item select {
+        width: 100% !important;
+        min-width: 100% !important;
+        min-height: 40px !important;
+        padding: 8px 10px !important;
+        font-size: 13px !important;
+        background: #1e293b !important;
+        box-sizing: border-box !important;
+    }
+
+    body.user-role-admin #pane-bookings #bookings-action-buttons-wrap {
+        width: 100% !important;
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 6px !important;
+        margin-top: 4px !important;
+    }
+
+    body.user-role-admin #pane-bookings #bookings-action-buttons-wrap button {
+        width: 100% !important;
+        min-height: 38px !important;
+        justify-content: center !important;
+        padding: 8px 4px !important;
+        font-size: 12px !important;
+        text-align: center !important;
+    }
+
+    /* Booking Card Row */
+    body.user-role-admin #pane-bookings .admin-table tbody tr.booking-card-row {
+        background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%) !important;
+        border: 1.5px solid rgba(212, 175, 55, 0.45) !important;
+        border-left: 4px solid var(--color-gold) !important;
+        border-radius: 14px !important;
+        padding: 12px 14px !important;
+        margin-bottom: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45) !important;
+        position: relative !important;
+    }
+
+    body.user-role-admin #pane-bookings .admin-table tbody tr.booking-card-row td {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 8px 0 !important;
+        border-bottom: 1px dashed rgba(255, 255, 255, 0.1) !important;
+        font-size: 13.5px !important;
+        color: #f8fafc !important;
+        text-align: right !important;
+        min-height: 36px !important;
+        background: transparent !important;
+    }
+
+    body.user-role-admin #pane-bookings .admin-table tbody tr.booking-card-row td::before {
+        content: attr(data-label);
+        font-weight: 800 !important;
+        color: var(--color-gold) !important;
+        font-size: 11px !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+        margin-right: 10px !important;
+        text-align: left !important;
+        flex-shrink: 0 !important;
+    }
+
+    body.user-role-admin #pane-bookings .booking-client-name {
+        color: #f5c842 !important;
+        font-size: 15px !important;
+        font-weight: 800 !important;
+    }
+
+    body.user-role-admin #pane-bookings .booking-pickup-select {
+        max-width: 60% !important;
+        font-size: 12.5px !important;
+        padding: 6px 8px !important;
+    }
+
+    body.user-role-admin #pane-bookings .booking-action-buttons-wrap {
+        width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 8px !important;
+    }
+
+    body.user-role-admin #pane-bookings .booking-action-buttons-wrap button {
+        min-height: 40px !important;
+        font-size: 13px !important;
+        justify-content: center !important;
+        border-radius: 6px !important;
+    }
+
+    body.user-role-admin #pane-bookings .booking-toggle-details-btn {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 6px !important;
+        color: var(--color-gold) !important;
+        font-size: 12px !important;
+        font-weight: 700 !important;
+        cursor: pointer !important;
+        padding: 10px 0 4px 0 !important;
+        border-top: 1px dashed rgba(255, 255, 255, 0.15) !important;
+        margin-top: 6px !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+        width: 100% !important;
+    }
+
+    /* --------------------------------------------------
+       ADMIN MODALS (MOBILE <= 768px)
+       -------------------------------------------------- */
+    .lead-modal-grid,
+    .booking-modal-grid {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+    }
+
+    .modal-box {
+        max-width: 95% !important;
+        width: 95% !important;
+        padding: 20px 16px !important;
+        margin: 20px auto !important;
+        max-height: 90vh !important;
+        overflow-y: auto !important;
+    }
+
+    .modal-box input,
+    .modal-box select,
+    .modal-box textarea {
+        font-size: 16px !important; /* Prevents iOS auto-zoom */
+        min-height: 40px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    body.user-role-admin #pane-leads #leads-action-buttons-wrap {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 6px !important;
+    }
+
+    body.user-role-admin #pane-leads #leads-action-buttons-wrap button {
+        padding: 7px 4px !important;
+        font-size: 11.5px !important;
+    }
+
+    body.user-role-admin #pane-bookings #bookings-action-buttons-wrap {
+        grid-template-columns: 1fr 1fr 1fr !important;
+        gap: 4px !important;
+    }
+
+    body.user-role-admin #pane-bookings #bookings-action-buttons-wrap button {
+        padding: 7px 2px !important;
+        font-size: 11px !important;
+    }
+
+    body.user-role-admin #pane-leads .lead-chat-name,
+    body.user-role-admin #pane-bookings .booking-client-name {
+        font-size: 14px !important;
+    }
 }
 
 /* ==========================================================================

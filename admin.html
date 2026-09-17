@@ -212,6 +212,17 @@
                                     <option value="unassigned">Unassigned</option>
                                 </select>
                             </div>
+                            <div class="booking-filter-item" style="display: flex; align-items: center; gap: 6px;">
+                                <span style="font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;"><i class="fa-solid fa-location-dot" style="color: var(--color-gold);"></i> Pickup:</span>
+                                <select id="filter-booking-pickup" onchange="applyBookingsFilters()" style="background: #1e293b; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 6px; padding: 6px 10px; font-size: 12px; cursor: pointer; outline: none; min-width: 140px; font-weight: 600;">
+                                    <option value="">All Pickups</option>
+                                    <option value="Delhi to Delhi">Delhi to Delhi</option>
+                                    <option value="Kathgodam to Kathgodam">Kathgodam to Kathgodam</option>
+                                    <option value="Dehradun to Dehradun">Dehradun to Dehradun</option>
+                                    <option value="Dharchula to Dharchula">Dharchula to Dharchula</option>
+                                    <option value="Pithoragarh to Pithoragarh">Pithoragarh to Pithoragarh</option>
+                                </select>
+                            </div>
                             <button type="button" onclick="resetBookingsFilters()" class="btn btn-secondary" style="border: 1px solid rgba(212, 175, 55, 0.4); background: #1e293b; padding: 6px 12px; font-size: 12px; cursor: pointer; border-radius: 6px; color: var(--color-gold); font-weight: 600; display: inline-flex; align-items: center; gap: 4px;"><i class="fa-solid fa-arrow-rotate-left"></i> Reset</button>
                         </div>
                         <div id="bookings-action-buttons-wrap" class="admin-only-action" style="display: flex; gap: 8px; flex-wrap: wrap;">
@@ -730,15 +741,15 @@
 
             <!-- PANE 6: LEADS MANAGER -->
             <div id="pane-leads" class="admin-tab-content-pane" style="display: none;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
-                    <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; flex-grow: 1;">
+                <div class="leads-header-wrapper" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+                    <div class="leads-controls-bar" style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; flex-grow: 1;">
                         <h3 class="admin-form-title" style="margin-bottom: 0; border-bottom: none;"><i
                                 class="fa-solid fa-people-group" style="color: var(--color-gold);"></i> Leads Manager</h3>
-                        <div style="position: relative; width: 240px; max-width: 100%;">
+                        <div class="leads-search-wrap" style="position: relative; width: 240px; max-width: 100%;">
                             <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: rgba(212, 175, 55, 0.6); font-size: 13px;"></i>
                             <input type="text" id="search-leads-input" placeholder="Search name, phone, email..." oninput="applyLeadsFilters()" style="background: #1e293b; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: var(--border-radius-sm, 4px); padding: 8px 12px 8px 32px; font-size: 13px; outline: none; width: 100%; font-weight: 500; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); transition: border-color 0.2s ease;">
                         </div>
-                        <div style="position: relative; min-width: 170px; max-width: 100%;">
+                        <div class="leads-status-wrap" style="position: relative; min-width: 170px; max-width: 100%;">
                             <select id="top-filter-lead-status" onchange="onTopStatusFilterChange(this.value)" style="background: #1e293b; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: var(--border-radius-sm, 4px); padding: 8px 12px; font-size: 13px; outline: none; width: 100%; font-weight: 600; cursor: pointer; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);">
                                 <option value="">📋 All Statuses</option>
                                 <option value="New">✨ New</option>
@@ -1416,7 +1427,7 @@
                 <input type="hidden" id="lead-id">
                 
                 <!-- Group 1: Name & Phone (Always Visible) -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                <div class="lead-modal-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
                     <div class="admin-form-group">
                         <label for="lead-name" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Client Name *</label>
                         <input type="text" id="lead-name" class="admin-input" required style="width: 100%; background: rgba(255,255,255,0.05); border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
@@ -1428,7 +1439,7 @@
                 </div>
 
                 <!-- Group 2: Email & Source (Always Visible) -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                <div class="lead-modal-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
                     <div class="admin-form-group">
                         <label for="lead-email" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Email Address</label>
                         <input type="email" id="lead-email" class="admin-input" style="width: 100%; background: rgba(255,255,255,0.05); border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
@@ -1446,7 +1457,7 @@
                 </div>
 
                 <!-- Group 3: Status & Travel Date (Always Visible) -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                <div class="lead-modal-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
                     <div class="admin-form-group">
                         <label for="lead-status" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Status *</label>
                         <select id="lead-status" class="admin-input" style="width: 100%; background: #1f2937; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
@@ -1470,7 +1481,7 @@
                 </div>
 
                 <!-- Group 4: Assignee & Final Status (Edit Only) -->
-                <div class="edit-only-field" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                <div class="edit-only-field lead-modal-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
                     <div class="admin-form-group">
                         <label for="lead-assignee" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Assign To User</label>
                         <select id="lead-assignee" class="admin-input" style="width: 100%; background: #1f2937; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
@@ -1499,7 +1510,7 @@
                 </div>
 
                 <!-- Group 6: Follow Up 1 & 2 (Edit Only) -->
-                <div class="edit-only-field" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+                <div class="edit-only-field lead-modal-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
                     <div class="admin-form-group">
                         <label for="lead-followup1" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Follow up 1</label>
                         <input type="text" id="lead-followup1" class="admin-input" style="width: 100%; background: rgba(255,255,255,0.05); border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
@@ -1646,6 +1657,17 @@
                         <label for="new-booking-destination">Travel Destination</label>
                         <input type="text" id="new-booking-destination" class="admin-input" placeholder="e.g. Adi Kailash / Om Parvat">
                     </div>
+                </div>
+                <div class="admin-form-group" style="margin-bottom: 12px;">
+                    <label for="new-booking-pickup">Pickup Point</label>
+                    <select id="new-booking-pickup" class="admin-input" style="width: 100%; background: #1f2937; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
+                        <option value="">— Select Pickup Point —</option>
+                        <option value="Delhi to Delhi">Delhi to Delhi</option>
+                        <option value="Kathgodam to Kathgodam">Kathgodam to Kathgodam</option>
+                        <option value="Dehradun to Dehradun">Dehradun to Dehradun</option>
+                        <option value="Dharchula to Dharchula">Dharchula to Dharchula</option>
+                        <option value="Pithoragarh to Pithoragarh">Pithoragarh to Pithoragarh</option>
+                    </select>
                 </div>
                 <div class="admin-form-group" style="margin-bottom: 12px;">
                     <label for="new-booking-name">Client Name *</label>
@@ -1813,6 +1835,8 @@
                                     <option value="Delhi to Delhi (5 Days / 4 Nights)">Delhi to Delhi (5 Days / 4 Nights)</option>
                                     <option value="Delhi to Delhi (6 Days / 5 Nights)">Delhi to Delhi (6 Days / 5 Nights)</option>
                                     <option value="Kathgodam to Kathgodam">Kathgodam to Kathgodam</option>
+                                    <option value="Dehradun to Dehradun">Dehradun to Dehradun</option>
+                                    <option value="Dharchula to Dharchula">Dharchula to Dharchula</option>
                                     <option value="Pithoragarh to Pithoragarh">Pithoragarh to Pithoragarh</option>
                                 </select>
                             </div>
@@ -3773,7 +3797,7 @@
                 console.error(err);
                 const tbody = document.getElementById('bookings-table-body');
                 if (tbody) {
-                    tbody.innerHTML = `<tr><td colspan="10" style="text-align: center; color: red;">Failed to fetch bookings. Error: ${err.message}</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="11" style="text-align: center; color: red;">Failed to fetch bookings. Error: ${err.message}</td></tr>`;
                 }
             }
         }
@@ -3782,6 +3806,7 @@
             if (document.getElementById('search-bookings-input')) document.getElementById('search-bookings-input').value = '';
             if (document.getElementById('filter-booking-travel-date')) document.getElementById('filter-booking-travel-date').value = '';
             if (document.getElementById('filter-booking-assignee')) document.getElementById('filter-booking-assignee').value = '';
+            if (document.getElementById('filter-booking-pickup')) document.getElementById('filter-booking-pickup').value = '';
             applyBookingsFilters();
         };
 
@@ -3789,6 +3814,7 @@
             const searchVal = document.getElementById('search-bookings-input') ? document.getElementById('search-bookings-input').value.trim().toLowerCase() : '';
             const filterAssignee = document.getElementById('filter-booking-assignee') ? document.getElementById('filter-booking-assignee').value : '';
             const filterTravelDate = document.getElementById('filter-booking-travel-date') ? document.getElementById('filter-booking-travel-date').value : '';
+            const filterPickup = document.getElementById('filter-booking-pickup') ? document.getElementById('filter-booking-pickup').value.trim().toLowerCase() : '';
             
             const isStaff = (currentUserRole === 'staff');
             const uname = (currentUsername || '').toLowerCase().trim();
@@ -3834,7 +3860,12 @@
                     matchTravelDate = (itemDate === filterTravelDate);
                 }
 
-                return matchSearch && matchAssignee && matchTravelDate;
+                let matchPickup = true;
+                if (filterPickup) {
+                    matchPickup = (item.pickup_point || '').toLowerCase().includes(filterPickup);
+                }
+
+                return matchSearch && matchAssignee && matchTravelDate && matchPickup;
             });
 
             const tbody = document.getElementById('bookings-table-body');
@@ -3868,6 +3899,28 @@
                         bookingAssigneeOptions += `<option value="${user.id}" ${selected} style="background: #111827; color: white;">${displayName}</option>`;
                     }
                 });
+
+                // Render Booking Pickup Point Dropdown options
+                const standardPickupOptions = [
+                    "Delhi to Delhi",
+                    "Kathgodam to Kathgodam",
+                    "Dehradun to Dehradun",
+                    "Dharchula to Dharchula",
+                    "Pithoragarh to Pithoragarh"
+                ];
+                let pickupOptionsHtml = '<option value="" style="background: #111827; color: white;">— Select Pickup —</option>';
+                const currentPickup = (item.pickup_point || '').trim();
+                let currentPickupMatched = !currentPickup;
+
+                standardPickupOptions.forEach(opt => {
+                    const isSelected = currentPickup.toLowerCase() === opt.toLowerCase();
+                    if (isSelected) currentPickupMatched = true;
+                    pickupOptionsHtml += `<option value="${opt}" ${isSelected ? 'selected' : ''} style="background: #111827; color: white;">${opt}</option>`;
+                });
+
+                if (!currentPickupMatched && currentPickup) {
+                    pickupOptionsHtml += `<option value="${currentPickup}" selected style="background: #111827; color: white;">${currentPickup}</option>`;
+                }
 
                 const phoneVal = item.phone ? item.phone.trim() : '';
                 const phoneClean = phoneVal.replace(/[^0-9]/g, '');
@@ -3915,7 +3968,9 @@
                             <strong class="booking-id-tag">${bookingId}</strong>
                         </td>
                         <td data-label="Pickup Point" class="mobile-detail-field">
-                            <strong class="booking-pickup-text">${item.pickup_point || '—'}</strong>
+                            <select ${currentUserRole === "staff" ? "disabled" : ""} onchange="updateBookingField('${item.id}', 'pickup_point', this.value)" class="booking-pickup-select">
+                                ${pickupOptionsHtml}
+                            </select>
                         </td>
                         <td data-label="Destination">
                             <span class="booking-dest-badge" title="${destVal}">${destVal}</span>
@@ -4740,11 +4795,13 @@
                     return;
                 }
 
-                let csvContent = 'Package Name,Travel Destination,Client Name,Phone,Email,Travel Date,Travelers,Message,Created At\n';
+                let csvContent = 'Booking ID,Package Name,Travel Destination,Pickup Point,Client Name,Phone,Email,Travel Date,Travelers,Message,Created At\n';
                 
                 data.forEach(row => {
+                    const bookingId = `"${(row.booking_id || '').replace(/"/g, '""')}"`;
                     const packageName = `"${(row.package_name || '').replace(/"/g, '""')}"`;
                     const destination = `"${(row.destination || row.package_name || '').replace(/"/g, '""')}"`;
+                    const pickupPoint = `"${(row.pickup_point || '').replace(/"/g, '""')}"`;
                     const name = `"${(row.name || '').replace(/"/g, '""')}"`;
                     const phone = `"${(row.phone || '').replace(/"/g, '""')}"`;
                     const email = `"${(row.email || '').replace(/"/g, '""')}"`;
@@ -4752,7 +4809,7 @@
                     const travelers = row.travelers || 1;
                     const message = `"${(row.message || '').replace(/"/g, '""')}"`;
                     const createdAt = `"${row.created_at || ''}"`;
-                    csvContent += `${packageName},${destination},${name},${phone},${email},${travelDate},${travelers},${message},${createdAt}\n`;
+                    csvContent += `${bookingId},${packageName},${destination},${pickupPoint},${name},${phone},${email},${travelDate},${travelers},${message},${createdAt}\n`;
                 });
 
                 const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -4815,6 +4872,7 @@
 
                     const pkgIdx = getIndex('package', 0);
                     const destIdx = getIndex('destination', -1);
+                    const pickupIdx = getIndex('pickup', -1);
                     const nameIdx = getIndex('client', 1);
                     const phoneIdx = getIndex('phone', 2);
                     const emailIdx = getIndex('email', 3);
@@ -4836,6 +4894,7 @@
 
                         const pkgName = columns[pkgIdx] ? columns[pkgIdx].replace(/^"|"$/g, '') : 'Unknown Package';
                         const destName = (destIdx !== -1 && columns[destIdx]) ? columns[destIdx].replace(/^"|"$/g, '') : pkgName;
+                        const pickupVal = (pickupIdx !== -1 && columns[pickupIdx]) ? columns[pickupIdx].replace(/^"|"$/g, '') : null;
                         const nameVal = columns[nameIdx] ? columns[nameIdx].replace(/^"|"$/g, '') : 'Unknown Client';
                         const rawAssign = hasAssignHeader ? columns[actualAssignIdx] : (columns.length >= 9 ? columns[6] : '');
                         let assignedUuid = null;
@@ -4859,6 +4918,7 @@
                         bookingsToInsert.push({
                             package_name: pkgName,
                             destination: destName,
+                            pickup_point: pickupVal || null,
                             name: nameVal,
                             phone: columns[phoneIdx] ? columns[phoneIdx].replace(/^"|"$/g, '') : '',
                             email: columns[emailIdx] ? columns[emailIdx].replace(/^"|"$/g, '') : '',
@@ -4879,9 +4939,9 @@
                     showAdminToast(`Importing ${bookingsToInsert.length} bookings...`, 'info');
                     const { error } = await supabaseAdmin.from('bookings').insert(bookingsToInsert);
                     if (error) {
-                        if (error.message && error.message.includes('destination')) {
-                            console.warn('Retrying bookings insert without destination property in payload...');
-                            const fallbackBookings = bookingsToInsert.map(({ destination, ...rest }) => rest);
+                        if (error.message && (error.message.includes('destination') || error.message.includes('pickup_point'))) {
+                            console.warn('Retrying bookings insert without destination/pickup_point property in payload...');
+                            const fallbackBookings = bookingsToInsert.map(({ destination, pickup_point, ...rest }) => rest);
                             const { error: err2 } = await supabaseAdmin.from('bookings').insert(fallbackBookings);
                             if (err2) throw err2;
                         } else {
@@ -5646,11 +5706,7 @@
             }
         };
 
-        window.toggleMobileBookingDetails = function(btn) {
-            const row = btn.closest('.lead-card-row') || btn.closest('tr');
-            if (!row) return;
-            row.classList.toggle('expanded');
-        };
+        // Booking mobile details toggle is handled by window.toggleMobileBookingDetails (line ~3960)
 
         window.fetchLeads = async function() {
             applyRolePermissions();
@@ -6365,6 +6421,16 @@
                                         </div>
                                         <div class="lead-chat-sub-row" style="display: flex !important; align-items: center !important; gap: 8px !important; flex-wrap: wrap !important;">
                                             <span class="lead-chat-phone" style="color: #ffffff !important; font-size: 12.5px !important; font-weight: 700 !important; white-space: nowrap !important; display: inline-flex !important; align-items: center !important; gap: 3px;"><i class="fa-solid fa-phone" style="font-size: 10px; color: #f5c842;"></i>${leadPhoneVal || 'No Phone'}</span>
+                                            ${leadPhoneClean ? `
+                                                <span class="lead-quick-contact-chips" style="display: inline-flex; gap: 4px; align-items: center;" onclick="event.stopPropagation();">
+                                                    <a href="tel:${leadPhoneClean}" class="lead-quick-call-chip" title="Call Lead" style="background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); border-radius: 12px; padding: 2px 7px; font-size: 10.5px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 3px;">
+                                                        <i class="fa-solid fa-phone" style="font-size: 9px;"></i> Call
+                                                    </a>
+                                                    <a href="https://wa.me/${waPhone}?text=Namaste%20${encodeURIComponent(item.name || 'Guest')}!%20This%20is%20Rudraansh%20Yatra." target="_blank" class="lead-quick-wa-chip" title="WhatsApp Lead" style="background: rgba(37, 211, 102, 0.2); color: #25D366; border: 1px solid rgba(37, 211, 102, 0.4); border-radius: 12px; padding: 2px 7px; font-size: 10.5px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 3px;">
+                                                        <i class="fa-brands fa-whatsapp" style="font-size: 11px;"></i> Chat
+                                                    </a>
+                                                </span>
+                                            ` : ''}
                                             <span class="lead-chat-time" style="color: #94a3b8 !important; font-size: 10.5px !important; font-weight: 600 !important; white-space: nowrap !important; margin-left: auto !important;">${createdStr}</span>
                                             <select onclick="event.stopPropagation();" onpointerdown="event.stopPropagation();" ontouchstart="event.stopPropagation();" onchange="updateLeadField('${item.id}', 'status', this.value); updateSelectStyle(this)" class="lead-chat-status-tag status-select ${statusClass}">
                                                 ${statusOptions}
@@ -6386,7 +6452,7 @@
                             </td>
                             <td data-label="Travelers" class="mobile-detail-field" style="color: #cbd5e1 !important;">${item.travelers || 1}</td>
                             <td data-label="Travel Date" class="mobile-detail-field" style="white-space: nowrap; color: #cbd5e1 !important;">${item.travel_date ? new Date(item.travel_date).toLocaleDateString() : '-'}</td>
-                            <td data-label="Status" onclick="event.stopPropagation();">
+                            <td data-label="Status" class="lead-duplicate-status-td" onclick="event.stopPropagation();">
                                 <select onclick="event.stopPropagation();" onpointerdown="event.stopPropagation();" ontouchstart="event.stopPropagation();" onchange="updateLeadField('${item.id}', 'status', this.value); updateSelectStyle(this)" class="status-select ${statusClass}">
                                     ${statusOptions}
                                 </select>
@@ -6401,13 +6467,16 @@
                                 </select>
                             </td>
                             <td data-label="Created On" class="mobile-detail-field" style="white-space: nowrap; font-family: monospace; font-size: 11.5px; color: #94a3b8 !important; font-weight: 600;">${createdStr}</td>
-                            <td data-label="Actions" onclick="event.stopPropagation();">
-                                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                                    <button class="admin-btn-edit" onclick="event.stopPropagation(); startEditLead('${item.id}')" style="background-color: var(--color-gold); color: #0f172a; border: none; width: 28px; height: 28px; border-radius: var(--border-radius-sm, 4px); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; margin: 0;" title="Edit Lead">
-                                        <i class="fa-solid fa-pen-to-square"></i>
+                            <td data-label="Actions" class="lead-card-actions-cell" onclick="event.stopPropagation();">
+                                <div class="lead-admin-actions-wrap" style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+                                    <a href="lead-details.html?id=${item.id}" class="lead-open-details-btn" style="background: rgba(212, 175, 55, 0.15); color: var(--color-gold); border: 1px solid var(--color-gold); padding: 7px 12px; border-radius: 6px; font-size: 12px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">
+                                        <i class="fa-solid fa-folder-open"></i> Details
+                                    </a>
+                                    <button class="admin-btn-edit lead-card-edit-btn" onclick="event.stopPropagation(); startEditLead('${item.id}')" style="background-color: var(--color-gold); color: #0f172a; border: none; padding: 7px 12px; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700;" title="Edit Lead">
+                                        <i class="fa-solid fa-pen-to-square"></i> Edit
                                     </button>
-                                    <button class="admin-btn-delete" onclick="event.stopPropagation(); deleteRecord('leads', '${item.id}', fetchLeads)" style="width: 28px; height: 28px; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; margin: 0;" title="Delete Lead">
-                                        <i class="fa-solid fa-trash"></i>
+                                    <button class="admin-btn-delete lead-card-del-btn" onclick="event.stopPropagation(); deleteRecord('leads', '${item.id}', fetchLeads)" style="border-radius: 6px; padding: 7px 10px; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; gap: 4px;" title="Delete Lead">
+                                        <i class="fa-solid fa-trash"></i> Delete
                                     </button>
                                 </div>
                             </td>
@@ -8616,6 +8685,7 @@
             document.getElementById('add-booking-form').reset();
             document.getElementById('edit-booking-id').value = '';
             if (document.getElementById('new-booking-destination')) document.getElementById('new-booking-destination').value = '';
+            if (document.getElementById('new-booking-pickup')) document.getElementById('new-booking-pickup').value = '';
             populateNewBookingAssigneeOptions('');
             document.getElementById('booking-modal-title').innerHTML = '<i class="fa-solid fa-calendar-plus" style="color: var(--color-gold)"></i> Add Single Booking Inquiry';
             const modal = document.getElementById('add-booking-modal');
@@ -8655,6 +8725,29 @@
             document.getElementById('edit-booking-id').value = item.id;
             document.getElementById('new-booking-package').value = item.package_name || '';
             if (document.getElementById('new-booking-destination')) document.getElementById('new-booking-destination').value = item.destination || item.package_name || '';
+            
+            if (document.getElementById('new-booking-pickup')) {
+                const pickupSel = document.getElementById('new-booking-pickup');
+                const pVal = (item.pickup_point || '').trim();
+                let found = false;
+                for (let i = 0; i < pickupSel.options.length; i++) {
+                    if (pickupSel.options[i].value.toLowerCase() === pVal.toLowerCase()) {
+                        pickupSel.selectedIndex = i;
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found && pVal) {
+                    const opt = document.createElement('option');
+                    opt.value = pVal;
+                    opt.text = pVal;
+                    pickupSel.add(opt);
+                    pickupSel.value = pVal;
+                } else if (!pVal) {
+                    pickupSel.value = '';
+                }
+            }
+
             document.getElementById('new-booking-name').value = item.name || '';
             document.getElementById('new-booking-phone').value = item.phone || '';
             document.getElementById('new-booking-email').value = item.email || '';
@@ -8694,6 +8787,7 @@
             const id = document.getElementById('edit-booking-id').value;
             const packageName = document.getElementById('new-booking-package').value.trim();
             const destination = document.getElementById('new-booking-destination') ? document.getElementById('new-booking-destination').value.trim() : '';
+            const pickupPoint = document.getElementById('new-booking-pickup') ? document.getElementById('new-booking-pickup').value.trim() : '';
             const name = document.getElementById('new-booking-name').value.trim();
             const phone = document.getElementById('new-booking-phone').value.trim();
             const email = document.getElementById('new-booking-email').value.trim();
@@ -8706,6 +8800,7 @@
                 const bookingData = {
                     package_name: packageName,
                     destination: destination || packageName,
+                    pickup_point: pickupPoint || null,
                     name: name,
                     phone: phone,
                     email: email,
@@ -8743,8 +8838,8 @@
 
         // CSV Import Template Generators
         window.downloadBookingsTemplate = function() {
-            const headers = ['Package Name', 'Travel Destination', 'Client Name', 'Phone', 'Email', 'Travel Date (YYYY-MM-DD)', 'Travelers', 'Booked By', 'Special Notes', 'Created At (YYYY-MM-DD)'];
-            const sampleRow = ['"Adi Kailash & Om Parvat Yatra"', '"Adi Kailash"', '"John Doe"', '"9876543210"', '"john@example.com"', '"2026-08-15"', '2', '"Mansi"', '"Vegetarian food preferred"', '"2026-07-07"'];
+            const headers = ['Package Name', 'Travel Destination', 'Pickup Point', 'Client Name', 'Phone', 'Email', 'Travel Date (YYYY-MM-DD)', 'Travelers', 'Booked By', 'Special Notes', 'Created At (YYYY-MM-DD)'];
+            const sampleRow = ['"Adi Kailash & Om Parvat Yatra"', '"Adi Kailash"', '"Kathgodam to Kathgodam"', '"John Doe"', '"9876543210"', '"john@example.com"', '"2026-08-15"', '2', '"Mansi"', '"Vegetarian food preferred"', '"2026-07-07"'];
             const csvContent = headers.join(',') + '\n' + sampleRow.join(',');
             
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -8754,7 +8849,7 @@
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            showAdminToast('Bookings CSV template with Destination column downloaded!', 'success');
+            showAdminToast('Bookings CSV template with Destination & Pickup Point downloaded!', 'success');
         };
 
         window.downloadLeadsTemplate = function() {
@@ -8868,6 +8963,30 @@
                     pkgSelect.add(newOpt);
                 }
                 pkgSelect.value = pkgValue;
+            }
+
+            if (document.getElementById('bill-pickup-point')) {
+                const pickupSelect = document.getElementById('bill-pickup-point');
+                const pVal = (booking.pickup_point || '').trim();
+                if (pVal) {
+                    let optionExists = false;
+                    for (let i = 0; i < pickupSelect.options.length; i++) {
+                        if (pickupSelect.options[i].value.toLowerCase() === pVal.toLowerCase()) {
+                            pickupSelect.selectedIndex = i;
+                            optionExists = true;
+                            break;
+                        }
+                    }
+                    if (!optionExists) {
+                        const newOpt = document.createElement('option');
+                        newOpt.value = pVal;
+                        newOpt.text = pVal;
+                        pickupSelect.add(newOpt);
+                        pickupSelect.value = pVal;
+                    }
+                } else {
+                    pickupSelect.selectedIndex = 0;
+                }
             }
 
             document.getElementById('bill-cust-name').value = booking.name || '';
