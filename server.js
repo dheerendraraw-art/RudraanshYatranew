@@ -1618,7 +1618,33 @@ app.get('/api/admin/bookings', authenticateToken, async (req, res) => {
         }
         const { data, error } = await query.order('created_at', { ascending: false });
         if (error) throw error;
-        res.json(data || []);
+
+        // Ensure pickup_point is enriched even if the column is not yet in Supabase schema
+        const enrichedData = (data || []).map(row => {
+            let pickup = row.pickup_point;
+            if (!pickup && row.message) {
+                const tagMatch = row.message.match(/\[Pickup:\s*([^\]]+)\]/i);
+                if (tagMatch) {
+                    pickup = tagMatch[1].trim();
+                } else {
+                    const stdPickups = ["Delhi to Delhi", "Kathgodam to Kathgodam", "Dehradun to Dehradun", "Dharchula to Dharchula", "Pithoragarh to Pithoragarh"];
+                    for (const sp of stdPickups) {
+                        if (row.message.toLowerCase().includes(sp.toLowerCase())) {
+                            pickup = sp;
+                            break;
+                        }
+                    }
+                    if (!pickup && /dheradun\s+to\s+dheradun/i.test(row.message)) pickup = "Dehradun to Dehradun";
+                    if (!pickup && /dharchula\s+to\s+darchula/i.test(row.message)) pickup = "Dharchula to Dharchula";
+                }
+            }
+            return {
+                ...row,
+                pickup_point: pickup || null
+            };
+        });
+
+        res.json(enrichedData);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -1626,22 +1652,70 @@ app.get('/api/admin/bookings', authenticateToken, async (req, res) => {
 
 app.post('/api/admin/bookings', authenticateToken, async (req, res) => {
     try {
-        const { error } = await supabase
-            .from('bookings')
-            .insert(Array.isArray(req.body) ? req.body : [req.body]);
+        let items = Array.isArray(req.body) ? req.body : [req.body];
+        const { error } = await supabase.from('bookings').insert(items);
+        
+        if (error && error.message && (error.message.includes('pickup_point') || error.message.includes('destination'))) {
+            console.warn('[Bookings POST] Schema cache error detected, applying fallback:', error.message);
+            const safeItems = items.map(item => {
+                const copy = { ...item };
+                const pickup = copy.pickup_point;
+                if (error.message.includes('pickup_point')) {
+                    delete copy.pickup_point;
+                    if (pickup) {
+                        const cleanMsg = (copy.message || '').replace(/\[Pickup:\s*[^\]]+\]\n?/gi, '').trim();
+                        copy.message = `[Pickup: ${pickup}]\n${cleanMsg}`.trim();
+                    }
+                }
+                if (error.message.includes('destination')) {
+                    delete copy.destination;
+                }
+                return copy;
+            });
+            const { error: retryErr } = await supabase.from('bookings').insert(safeItems);
+            if (retryErr) throw retryErr;
+            return res.status(201).json({ success: true, fallback: true });
+        }
+
         if (error) throw error;
         res.status(201).json({ success: true });
     } catch (err) {
+        console.error('[Bookings POST Error]:', err);
         res.status(500).json({ error: err.message });
     }
 });
 
 app.put('/api/admin/bookings/:id', authenticateToken, async (req, res) => {
     try {
-        const { error } = await supabase.from('bookings').update(req.body).eq('id', req.params.id);
+        let payload = { ...req.body };
+        const { error } = await supabase.from('bookings').update(payload).eq('id', req.params.id);
+        
+        // If pickup_point or destination column does not exist in Supabase bookings table
+        if (error && error.message && (error.message.includes('pickup_point') || error.message.includes('destination'))) {
+            console.warn('[Bookings PUT] Schema cache error detected, applying fallback:', error.message);
+            const safePayload = { ...payload };
+            const pickup = safePayload.pickup_point;
+            
+            if (error.message.includes('pickup_point')) {
+                delete safePayload.pickup_point;
+                if (pickup) {
+                    const cleanMsg = (safePayload.message || '').replace(/\[Pickup:\s*[^\]]+\]\n?/gi, '').trim();
+                    safePayload.message = `[Pickup: ${pickup}]\n${cleanMsg}`.trim();
+                }
+            }
+            if (error.message.includes('destination')) {
+                delete safePayload.destination;
+            }
+
+            const { error: retryErr } = await supabase.from('bookings').update(safePayload).eq('id', req.params.id);
+            if (retryErr) throw retryErr;
+            return res.json({ success: true, fallback: true });
+        }
+
         if (error) throw error;
         res.json({ success: true });
     } catch (err) {
+        console.error('[Bookings PUT Error]:', err);
         res.status(500).json({ error: err.message });
     }
 });

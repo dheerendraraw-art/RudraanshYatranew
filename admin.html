@@ -2366,6 +2366,16 @@
                             return { data: resultData, error: null, select: () => ({ single: () => ({ data: resultData, error: null }) }) };
                         }
                     }
+                    if (!response.ok && response.status !== 404 && contentType.includes('application/json')) {
+                        let errJson = null;
+                        try { errJson = await response.json(); } catch(e) {}
+                        if (errJson && errJson.error) {
+                            console.warn(`Local API returned error for ${this.table}:`, errJson.error);
+                            if (isMutation) {
+                                return { data: null, error: { message: errJson.error } };
+                            }
+                        }
+                    }
                 } catch (err) {
                     console.warn(`Local API fetch failed for ${this.table}, falling back to direct Supabase REST:`, err.message);
                 }
@@ -2427,8 +2437,22 @@
                     } else {
                         const errText = await resp.text().catch(() => '');
                         console.warn(`Supabase REST ${restMethod} ${this.table} failed (${resp.status}):`, errText);
-                        // For mutations, return success if 404 on static host (local API handles it)
-                        if (isMutation) return { data: [], error: null };
+                        if (isMutation && errText.includes('pickup_point') && requestBody && 'pickup_point' in requestBody) {
+                            console.warn('Retrying Supabase REST without pickup_point...');
+                            const safeBody = { ...requestBody };
+                            const p = safeBody.pickup_point;
+                            delete safeBody.pickup_point;
+                            if (p) {
+                                const cleanMsg = (safeBody.message || '').replace(/\[Pickup:\s*[^\]]+\]\n?/gi, '').trim();
+                                safeBody.message = `[Pickup: ${p}]\n${cleanMsg}`.trim();
+                            }
+                            restOpts.body = JSON.stringify(safeBody);
+                            const retryResp = await fetch(restUrl, restOpts);
+                            if (retryResp.ok) {
+                                return { data: [], error: null };
+                            }
+                        }
+                        if (isMutation) return { data: null, error: { message: errText || `Operation failed (${resp.status})` } };
                     }
                 } catch(err) {
                     console.warn(`Direct Supabase REST also failed for ${this.table}:`, err.message);
@@ -3781,7 +3805,29 @@
                 const { data, error } = await query;
                 if (error) throw error;
 
-                let bData = data || [];
+                let bData = (data || []).map(item => {
+                    let p = item.pickup_point;
+                    if (!p && item.message) {
+                        const m = item.message.match(/\[Pickup:\s*([^\]]+)\]/i);
+                        if (m) p = m[1].trim();
+                        else {
+                            const stdPickups = ["Delhi to Delhi", "Kathgodam to Kathgodam", "Dehradun to Dehradun", "Dharchula to Dharchula", "Pithoragarh to Pithoragarh"];
+                            for (const sp of stdPickups) {
+                                if (item.message.toLowerCase().includes(sp.toLowerCase())) {
+                                    p = sp;
+                                    break;
+                                }
+                            }
+                            if (!p && /dheradun\s+to\s+dheradun/i.test(item.message)) p = "Dehradun to Dehradun";
+                            if (!p && /dharchula\s+to\s+darchula/i.test(item.message)) p = "Dharchula to Dharchula";
+                        }
+                    }
+                    return {
+                        ...item,
+                        pickup_point: p || null
+                    };
+                });
+
                 if (isStaff) {
                     bData = bData.filter(item => {
                         const a = (item.assigned_to || '').toLowerCase();
@@ -3988,7 +4034,7 @@
                             <span class="booking-travelers-badge">👥 ${item.travelers} Pax</span>
                         </td>
                         <td data-label="Special Notes" class="mobile-detail-field">
-                            <div class="booking-notes-text">${item.message || '—'}</div>
+                            <div class="booking-notes-text">${(item.message || '').replace(/\[Pickup:\s*[^\]]+\]\n?/gi, '').trim() || '—'}</div>
                         </td>
                         <td data-label="Booked By">
                             <select ${currentUserRole === "staff" ? "disabled" : ""} onchange="updateBookingField('${item.id}', 'assigned_to', this.value)" class="booking-assignee-select">
@@ -8753,7 +8799,7 @@
             document.getElementById('new-booking-email').value = item.email || '';
             document.getElementById('new-booking-date').value = item.travel_date || '';
             document.getElementById('new-booking-travelers').value = item.travelers || 1;
-            document.getElementById('new-booking-message').value = item.message || '';
+            document.getElementById('new-booking-message').value = (item.message || '').replace(/\[Pickup:\s*[^\]]+\]\n?/gi, '').trim();
             populateNewBookingAssigneeOptions(item.assigned_to || item.user_id || '');
         };
 
@@ -8772,7 +8818,22 @@
                     .update(updateData)
                     .eq('id', bookingId);
 
-                if (error) throw error;
+                if (error) {
+                    if (fieldName === 'pickup_point' && error.message && error.message.includes('pickup_point')) {
+                        console.warn('Retrying pickup_point update via message tag fallback...');
+                        const existing = (bookingsData || []).find(b => b.id === bookingId);
+                        const curMsg = existing ? (existing.message || '') : '';
+                        const cleanMsg = curMsg.replace(/\[Pickup:\s*[^\]]+\]\n?/gi, '').trim();
+                        const newMsg = value ? `[Pickup: ${value}]\n${cleanMsg}`.trim() : cleanMsg;
+                        const { error: err2 } = await supabaseAdmin
+                            .from('bookings')
+                            .update({ message: newMsg })
+                            .eq('id', bookingId);
+                        if (err2) throw err2;
+                    } else {
+                        throw error;
+                    }
+                }
                 
                 showAdminToast('Booking updated successfully!', 'success');
                 fetchBookings();
@@ -8816,7 +8877,24 @@
                         .from('bookings')
                         .update(bookingData)
                         .eq('id', id);
-                    if (error) throw error;
+                    if (error) {
+                        if (error.message && error.message.includes('pickup_point')) {
+                            console.warn('Retrying booking update without pickup_point column...');
+                            const fallbackData = { ...bookingData };
+                            delete fallbackData.pickup_point;
+                            if (pickupPoint) {
+                                const clean = (fallbackData.message || '').replace(/\[Pickup:\s*[^\]]+\]\n?/gi, '').trim();
+                                fallbackData.message = `[Pickup: ${pickupPoint}]\n${clean}`.trim();
+                            }
+                            const { error: err2 } = await supabaseAdmin
+                                .from('bookings')
+                                .update(fallbackData)
+                                .eq('id', id);
+                            if (err2) throw err2;
+                        } else {
+                            throw error;
+                        }
+                    }
                     showAdminToast('Booking updated successfully!', 'success');
                 } else {
                     bookingData.booking_id = await fetchNextBookingId();
@@ -8824,7 +8902,23 @@
                     const { error } = await supabaseAdmin
                         .from('bookings')
                         .insert([bookingData]);
-                    if (error) throw error;
+                    if (error) {
+                        if (error.message && error.message.includes('pickup_point')) {
+                            console.warn('Retrying booking insert without pickup_point column...');
+                            const fallbackData = { ...bookingData };
+                            delete fallbackData.pickup_point;
+                            if (pickupPoint) {
+                                const clean = (fallbackData.message || '').replace(/\[Pickup:\s*[^\]]+\]\n?/gi, '').trim();
+                                fallbackData.message = `[Pickup: ${pickupPoint}]\n${clean}`.trim();
+                            }
+                            const { error: err2 } = await supabaseAdmin
+                                .from('bookings')
+                                .insert([fallbackData]);
+                            if (err2) throw err2;
+                        } else {
+                            throw error;
+                        }
+                    }
                     showAdminToast('Booking inquiry added successfully!', 'success');
                 }
 
