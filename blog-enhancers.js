@@ -2492,201 +2492,6 @@ const BLOG_ENHANCERS = {
         <a href="tel:+917617617651" class="ry-snr-btn2 pk" style="max-width:300px;">
             <i class="fa-solid fa-phone"></i> Call +91 76176 17651
         </a>
-.ry-alt-card.caution { background: rgba(251,191,36,0.08); border-color: rgba(251,191,36,0.3); }
-.ry-alt-card.risk { background: rgba(239,68,68,0.08); border-color: rgba(239,68,68,0.3); }
-.ry-alt-card .alt-loc { font-size: 14.5px; font-weight: 700; color: #1e293b; margin-bottom: 4px; }
-.ry-alt-card .alt-m { font-size: 12px; font-weight: 700; margin-bottom: 6px; }
-.ry-alt-card.safe .alt-m { color: #16a34a; }
-.ry-alt-card.caution .alt-m { color: #b45309; }
-.ry-alt-card.risk .alt-m { color: #dc2626; }
-.ry-alt-card .alt-note { font-size: 12px; color: #475569; line-height: 1.4; }
-.ry-alt-card .alt-badge { display: inline-block; font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-bottom: 6px; }
-.ry-alt-card.safe .alt-badge { background: rgba(34,197,94,0.2); color: #4ade80; }
-.ry-alt-card.caution .alt-badge { background: rgba(251,191,36,0.2); color: #fbbf24; }
-.ry-alt-card.risk .alt-badge { background: rgba(239,68,68,0.2); color: #f87171; }
-/* Month table */
-.ry-month-table-wrap { overflow-x: auto; margin: 22px 0; border-radius: 10px; border: 1px solid rgba(255,255,255,0.08); }
-.ry-month-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.ry-month-table th { background: #0f2010; color: #86efac; padding: 12px 14px; font-weight: 700; border-bottom: 1px solid rgba(34,197,94,0.2); text-align: left; }
-.ry-month-table td { padding: 11px 14px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #cbd5e1; }
-.ry-month-table tr:hover { background: rgba(34,197,94,0.04); }
-.ry-tag-best { background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.3); padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
-.ry-tag-ok { background: rgba(251,191,36,0.15); color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
-.ry-tag-avoid { background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.3); padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
-/* Medical checklist */
-.ry-med-box { background: #0b1322; border: 1px solid #1e40af; border-radius: 12px; padding: 20px 22px; margin: 22px 0; }
-.ry-med-title { color: #93c5fd; font-size: 16px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
-.ry-med-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
-.ry-med-item { display: flex; align-items: flex-start; gap: 8px; background: rgba(255,255,255,0.03); border-radius: 7px; padding: 10px 12px; font-size: 13px; color: #e2e8f0; }
-.ry-med-check { color: #4ade80; font-size: 14px; flex-shrink: 0; margin-top: 1px; }
-/* CTA bottom */
-.ry-snr-cta-bottom { background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%); border: 2px solid #818cf8; border-radius: 14px; padding: 26px; margin: 36px 0 20px 0; text-align: center; color: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-.ry-snr-cta-title { font-size: 20px; font-weight: 800; color: #facc15; margin-bottom: 8px; font-family: var(--font-sans), sans-serif; }
-.ry-snr-cta-text { font-size: 14px; color: #cbd5e1; max-width: 680px; margin: 0 auto 20px; line-height: 1.6; }
-.ry-snr-cta-btns { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
-@media (max-width: 640px) {
-  .ry-snr-btn2 { min-width: 100%; }
-  .ry-snr-cta-btns { flex-direction: column; align-items: stretch; }
-}
-</style>
-<div class="ry-snr-summary">
-    <div class="ry-snr-badge-top"><i class="fa-solid fa-person-cane"></i> Senior Citizen Safety — 2026 Official Guide</div>
-    <h3 style="margin:0 !important;color:#86efac !important;font-size:20px !important;font-weight:800 !important;font-family:var(--font-sans),sans-serif !important;line-height:1.3 !important;">
-        🙏 Adi Kailash Yatra for Senior Citizens — Quick Safety Facts
-    </h3>
-    <p style="color:#dcfce7;font-size:13.5px;margin:10px 0 0;line-height:1.55;">
-        In October 2025, our Pithoragarh team guided a <strong>72-year-old retired schoolteacher</strong> to the Adi Kailash temple at Jyolingkong (4,750m). She rode a 4x4 Bolero all the way and walked just 200 metres on flat ground. The key facts every family should know before deciding:
-    </p>
-    <div class="ry-snr-grid">
-        <div class="ry-snr-item">
-            <div class="slbl">Age Limit</div>
-            <div class="sval">Up to 70–75 Years</div>
-            <div class="ssub">With medical clearance</div>
-        </div>
-        <div class="ry-snr-item">
-            <div class="slbl">Trekking Required?</div>
-            <div class="sval">No — 4x4 to Viewpoints</div>
-            <div class="ssub">100–300m walk only</div>
-        </div>
-        <div class="ry-snr-item">
-            <div class="slbl">Max Altitude</div>
-            <div class="sval">4,750m (Jyolingkong)</div>
-            <div class="ssub">Acclimatization at 3,200m</div>
-        </div>
-        <div class="ry-snr-item">
-            <div class="slbl">Best Months</div>
-            <div class="sval">Sep 15 – Oct 31</div>
-            <div class="ssub">Post-monsoon, stable roads</div>
-        </div>
-        <div class="ry-snr-item">
-            <div class="slbl">Pony Support</div>
-            <div class="sval">Available at Both Points</div>
-            <div class="ssub">Jyolingkong & Nabhidhang</div>
-        </div>
-        <div class="ry-snr-item">
-            <div class="slbl">Oxygen Support</div>
-            <div class="sval">Cylinders in All Vehicles</div>
-            <div class="ssub">+ Pulse Oximeters</div>
-        </div>
-    </div>
-    <div class="ry-snr-btns">
-        <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20plan%20the%20Adi%20Kailash%20Yatra%20for%20a%20senior%20citizen%20in%20my%20family.%20Please%20share%20safety%20details%20and%202026%20dates." target="_blank" rel="noopener" class="ry-snr-btn2 wa">
-            <i class="fa-brands fa-whatsapp"></i> WhatsApp for Senior Citizen Yatra
-        </a>
-        <a href="/adi-kailash" class="ry-snr-btn2 pk">
-            <i class="fa-solid fa-mountain"></i> View Full Yatra Package
-        </a>
-    </div>
-</div>`;
-
-            const altitudeSafetyHtml = `
-<div style="margin: 26px 0;">
-    <h3 style="color: #86efac; font-size: 16.5px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; font-family: var(--font-sans), sans-serif;">
-        <i class="fa-solid fa-gauge-high"></i> Altitude Safety Profile for Senior Citizens — Key Stops
-    </h3>
-    <div class="ry-alt-grid">
-        <div class="ry-alt-card safe">
-            <div class="alt-badge">✅ SAFE</div>
-            <div class="alt-loc">Dharchula</div>
-            <div class="alt-m">915m / 3,002 ft</div>
-            <div class="alt-note">Starting point. Normal oxygen levels. Full acclimatization base. ILP collection & vehicle boarding.</div>
-        </div>
-        <div class="ry-alt-card safe">
-            <div class="alt-badge">✅ ACCLIMATIZE</div>
-            <div class="alt-loc">Gunji Base Camp</div>
-            <div class="alt-m">3,200m / 10,500 ft</div>
-            <div class="alt-note">Mandatory rest day for seniors. SpO₂ monitoring. Light meals. No physical exertion.</div>
-        </div>
-        <div class="ry-alt-card caution">
-            <div class="alt-badge">⚠️ CAUTION</div>
-            <div class="alt-loc">Nabhidhang (Om Parvat)</div>
-            <div class="alt-m">3,850m / 12,630 ft</div>
-            <div class="alt-note">Oxygen dips noticeable. Short stop for darshan. Carry oxygen mask. No overnight stay for seniors.</div>
-        </div>
-        <div class="ry-alt-card risk">
-            <div class="alt-badge">🏔️ HIGHEST POINT</div>
-            <div class="alt-loc">Jyolingkong (Adi Kailash)</div>
-            <div class="alt-m">4,750m / 15,584 ft</div>
-            <div class="alt-note">Maximum altitude. SpO₂ drops to 80–85% for some. Oxygen on standby. 4x4 direct access. Short temple walk.</div>
-        </div>
-    </div>
-</div>`;
-
-            const monthTableHtml = `
-<div class="ry-month-table-wrap">
-    <table class="ry-month-table">
-        <thead>
-            <tr>
-                <th>Month / Season</th>
-                <th>Suitability for Seniors</th>
-                <th>Road Conditions</th>
-                <th>Temperature (Day)</th>
-                <th>Reason</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>May – June</strong></td>
-                <td><span class="ry-tag-ok">Good</span></td>
-                <td>Stable, dry</td>
-                <td>10°C – 22°C</td>
-                <td>Pre-monsoon clear weather, moderate crowds</td>
-            </tr>
-            <tr>
-                <td><strong>July – August</strong></td>
-                <td><span class="ry-tag-avoid">Avoid</span></td>
-                <td>Landslides, closures</td>
-                <td>8°C – 16°C</td>
-                <td>Heavy monsoon rains cause route blockages</td>
-            </tr>
-            <tr style="background: rgba(34,197,94,0.06);">
-                <td><strong>Sep 15 – Oct 31 ⭐</strong></td>
-                <td><span class="ry-tag-best">Best for Seniors</span></td>
-                <td>Excellent, post-monsoon</td>
-                <td>5°C – 18°C</td>
-                <td>Crystal clear skies, stable roads, calm winds</td>
-            </tr>
-            <tr>
-                <td><strong>November+</strong></td>
-                <td><span class="ry-tag-avoid">Closed</span></td>
-                <td>Snow, frozen roads</td>
-                <td>-5°C – 5°C</td>
-                <td>Route shuts for winter snow season</td>
-            </tr>
-        </tbody>
-    </table>
-</div>`;
-
-            const medChecklistHtml = `
-<div class="ry-med-box">
-    <div class="ry-med-title"><i class="fa-solid fa-stethoscope"></i> Medical Checklist for Senior Citizens (Pre-Departure)</div>
-    <div class="ry-med-grid">
-        <div class="ry-med-item"><span class="ry-med-check">✓</span> High-altitude fitness certificate from MBBS/MD doctor (mandatory for ILP)</div>
-        <div class="ry-med-item"><span class="ry-med-check">✓</span> BP, ECG, Blood Sugar & SpO₂ test results (within 30 days of travel)</div>
-        <div class="ry-med-item"><span class="ry-med-check">✓</span> All regular medicines for BP, diabetes, heart, thyroid (minimum 15-day supply)</div>
-        <div class="ry-med-item"><span class="ry-med-check">✓</span> Diamox (Acetazolamide) — AMS prevention tablet — on doctor's advice</div>
-        <div class="ry-med-item"><span class="ry-med-check">✓</span> Personal pulse oximeter (SpO₂ meter) for daily monitoring</div>
-        <div class="ry-med-item"><span class="ry-med-check">✓</span> Paracetamol, Ibuprofen, antacid, rehydration sachets (ORS)</div>
-        <div class="ry-med-item"><span class="ry-med-check">✓</span> Warm inner thermals, fleece jacket, waterproof layer (even in Oct)</div>
-        <div class="ry-med-item"><span class="ry-med-check">✓</span> Walking stick / trekking pole for short walks near temples</div>
-        <div class="ry-med-item"><span class="ry-med-check">✓</span> Lumbar support cushion for 6–8 hour 4x4 mountain drives</div>
-        <div class="ry-med-item"><span class="ry-med-check">✓</span> Emergency contact card + family WhatsApp number with guide</div>
-    </div>
-</div>`;
-
-            const bottomCtaHtml = `
-<div class="ry-snr-cta-bottom">
-    <div class="ry-snr-cta-title">🙏 Plan the Yatra Safely — Talk to Our Pithoragarh Team</div>
-    <div class="ry-snr-cta-text">
-        Rudraansh Yatra is a native ground operator from Pithoragarh that has safely guided 70+ year old senior citizens to Adi Kailash. We carry portable oxygen, handle all ILP & medical certificate paperwork, arrange ponies, and offer flexible departure schedules to match the health needs of elderly pilgrims.
-    </div>
-    <div class="ry-snr-cta-btns">
-        <a href="https://wa.me/917617617651?text=Namaste!%20I%20have%20questions%20about%20the%20Adi%20Kailash%20Yatra%20for%20a%20senior%20citizen.%20Please%20advise%20on%20safety%20and%20medical%20fitness." target="_blank" rel="noopener" class="ry-snr-btn2 wa" style="max-width:300px;">
-            <i class="fa-brands fa-whatsapp"></i> Chat with Senior Yatra Specialist
-        </a>
-        <a href="tel:+917617617651" class="ry-snr-btn2 pk" style="max-width:300px;">
-            <i class="fa-solid fa-phone"></i> Call +91 76176 17651
-        </a>
     </div>
 </div>`;
 
@@ -2734,9 +2539,9 @@ const BLOG_ENHANCERS = {
 // ─────────────────────────────────────────────────────────────────────────────
 BLOG_ENHANCERS['adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates'] = {
     meta: {
-        title: 'Adi Kailash Yatra 2026 Latest Status: Reopening Sept 20 (Revised), Road Updates & Permits | Rudraansh Yatra',
-        desc: 'Live 2026 Adi Kailash & Om Parvat Yatra status: ILP reopening revised to September 20 by SDM Dharchula, BRO road clearance updates & autumn booking guide.',
-        dateModified: '2026-09-19T11:00:00+05:30'
+        title: 'Adi Kailash Yatra 2026 Latest Status: Reopening Sept 15, Road Updates & Permits | Rudraansh Yatra',
+        desc: 'Live 2026 Adi Kailash & Om Parvat Yatra status: September 15 reopening date, BRO road clearance updates, SDM Dharchula ILP guidelines & autumn booking guide.',
+        dateModified: '2026-09-09T11:45:00+05:30'
     },
 
     schemas: `
@@ -2751,7 +2556,7 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopeni
           "name": "Is the Adi Kailash Yatra open right now?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The Adi Kailash and Om Parvat Yatra is currently in the final days of its annual monsoon closure (July 1 to September 19, 2026) and officially reopens on September 20, 2026 (revised from September 15 by SDM Dharchula due to continued rainfall on the Tawaghat–Sobla route). Border Roads Organisation (BRO Project Hirak) is completing final road grading between Tawaghat and Najang, and the SDM Office in Dharchula begins processing post-monsoon Inner Line Permits (ILP) on September 20, 2026."
+            "text": "The Adi Kailash and Om Parvat Yatra is currently in the final days of its annual monsoon closure (July 1 to September 14, 2026) and officially reopens on September 15, 2026. Border Roads Organisation (BRO Project Hirak) is completing final road grading between Tawaghat and Najang, and the SDM Office in Dharchula begins processing post-monsoon Inner Line Permits (ILP) on September 15, 2026."
           }
         },
         {
@@ -2759,7 +2564,7 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopeni
           "name": "What is the official reopening date for Adi Kailash Yatra 2026?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The official reopening date for the Adi Kailash Yatra 2026 is September 20, 2026 (revised from September 15 by SDM Dharchula due to rainfall along Tawaghat–Sobla). Civilian pilgrim vehicles (4x4 Mahindra Boleros) will be permitted past the Tawaghat and Chialekh checkposts starting September 20, with first pilgrim batches entering Byas Valley on September 21–23, 2026."
+            "text": "The official reopening date for the Adi Kailash Yatra 2026 is September 15, 2026. Civilian pilgrim vehicles (4x4 Mahindra Boleros) will be permitted past the Tawaghat and Chialekh checkposts starting September 15, with first pilgrim batches entering Byas Valley on September 16–18, 2026."
           }
         },
         {
@@ -2767,7 +2572,7 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopeni
           "name": "When will Inner Line Permits (ILP) start being issued in Dharchula?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The Sub-Divisional Magistrate (SDM) Office in Dharchula and District Administration Pithoragarh resume active ILP verification and permit issuance on September 20, 2026 (revised from September 15). Pre-booking documentation and medical screenings for autumn batches are being pre-processed by registered ground operators like Rudraansh Yatra."
+            "text": "The Sub-Divisional Magistrate (SDM) Office in Dharchula and District Administration Pithoragarh resume active ILP verification and permit issuance on September 15, 2026. Pre-booking documentation and medical screenings for autumn batches are being pre-processed by registered ground operators like Rudraansh Yatra."
           }
         },
         {
@@ -2775,15 +2580,15 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopeni
           "name": "What is the current road condition between Dharchula and Gunji as of September 2026?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "As of September 19, 2026, the Border Roads Organisation (BRO 67 RCC) has cleared all primary monsoon debris from Tawaghat, Mangti, Malpa, and Najang. Minor road stabilization and retaining wall reinforcements are underway, ensuring safe 4x4 Bolero transit for the September 20 reopening."
+            "text": "As of September 9, 2026, the Border Roads Organisation (BRO 67 RCC) has cleared all primary monsoon debris from Tawaghat, Mangti, Malpa, and Najang. Minor road stabilization and retaining wall reinforcements are underway, ensuring safe 4x4 Bolero transit for the September 15 reopening."
           }
         },
         {
           "@type": "Question",
-          "name": "Can I travel to Dharchula before September 20 to wait for permit opening?",
+          "name": "Can I travel to Dharchula before September 15 to wait for permit opening?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Arriving early in Dharchula before September 20 is not recommended. The SDM office will not issue civilian permits prior to the formal September 20 directive, and the ITBP checkpost at Tawaghat strictly restricts entry. Yatris are advised to time their arrival in Kathgodam or Pithoragarh for September 19 or 20."
+            "text": "Arriving early in Dharchula before September 15 is not recommended. The SDM office will not issue civilian permits prior to the formal September 15 directive, and the ITBP checkpost at Tawaghat strictly restricts entry. Yatris are advised to time their arrival in Kathgodam or Pithoragarh for September 15 or 16."
           }
         },
         {
@@ -2842,13 +2647,13 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopeni
             "@type": "WebPage",
             "@id": "https://rudraanshyatra.com/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates"
           },
-          "headline": "Adi Kailash Yatra 2026 Latest Status: ILP Reopening Revised to Sept 20, Road Updates & Permits",
-          "description": "Live 2026 Adi Kailash & Om Parvat Yatra status: ILP reopening revised to September 20 by SDM Dharchula, BRO road clearance updates & autumn booking guide.",
+          "headline": "Adi Kailash Yatra 2026 Latest Status: Reopening Sept 15, Road Updates & Permits",
+          "description": "Live 2026 Adi Kailash & Om Parvat Yatra status: September 15 reopening date, BRO road clearance updates, SDM Dharchula ILP guidelines & autumn booking guide.",
           "image": [
             "https://ysnzxvvsegmkmkepclti.supabase.co/storage/v1/object/public/blog-images/cover_1784028589317.webp"
           ],
           "datePublished": "2026-07-15T08:00:00+05:30",
-          "dateModified": "2026-09-19T11:00:00+05:30",
+          "dateModified": "2026-09-09T11:45:00+05:30",
           "author": {
             "@type": "Person",
             "name": "Dheerendra Rautela",
@@ -2880,7 +2685,7 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopeni
         {
           "@type": "Event",
           "name": "Adi Kailash Yatra Post-Monsoon 2026 Reopening",
-          "startDate": "2026-09-20",
+          "startDate": "2026-09-15",
           "endDate": "2026-11-15",
           "eventStatus": "https://schema.org/EventScheduled",
           "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
@@ -2970,37 +2775,37 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopeni
         const executiveAnswerBox = `
         <!-- AEO & Voice Search Executive Answer Box -->
         
-            <!-- 🔴 IMPORTANT: ILP Date Revised Notice (Sept 19, 2026) -->
-            <div style="background: linear-gradient(135deg, #1a0505 0%, #2d0808 100%); border: 2px solid #ef4444; border-radius: 10px; padding: 16px 20px; margin-bottom: 20px; color: #fff;">
-                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
-                    <span style="font-size: 20px;">🚨</span>
-                    <strong style="color: #fca5a5; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Date Revised — SDM Dharchula Official Notice</strong>
+            <!-- Urgent Revision Bulletin (Sept 14, 2026) -->
+            <div style="background: #fff3cd; border: 1.5px solid #ffeeba; border-left: 5px solid #d97706; border-radius: 8px; padding: 14px 18px; margin-bottom: 16px;">
+                <div style="display: flex; align-items: center; gap: 8px; color: #92400e; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">
+                    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #d97706;"></span>
+                    Latest Revision Notice (September 14, 2026)
                 </div>
-                <p style="margin: 0 0 10px 0; color: #fed7d7; font-size: 14px; font-weight: 600; line-height: 1.55;">
-                    Due to continued rainfall along the Tawaghat–Sobla route, ILP issuance has been officially pushed back by 5 days. The new confirmed date is <strong style="color: #fff;">September 20, 2026</strong> (was September 15).
+                <p style="margin: 6px 0 6px 0; color: #78350f; font-size: 13.5px; font-weight: 600; line-height: 1.5;">
+                    ⚠️ <strong>Notice Update:</strong> Due to continued rainfall along the Tawaghat–Sobla route, online ILP issuance has been officially pushed back by 5 days from September 15 to <strong>September 20, 2026</strong> by SDM Dharchula.
                 </p>
-                <a href="/blog/adi-kailash-ilp-date-revised-to-september-20-2026-updated-from-sept-15" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(239,68,68,0.2); border: 1px solid #ef4444; color: #fca5a5; padding: 7px 14px; border-radius: 6px; font-weight: 700; font-size: 13px; text-decoration: none;">
-                    📋 Read Full Official Revision Notice &amp; Rescheduling Guide →
+                <a href="/blog/adi-kailash-ilp-date-revised-to-september-20-2026-updated-from-sept-15" style="color: #b45309; font-weight: 700; font-size: 13px; text-decoration: underline;">
+                    Read Official September 20 ILP Revision Notice & Rescheduling Guide &rarr;
                 </a>
             </div>
 
         <div id="aeo-executive-answer" class="ry-aeo-summary-box" style="background: linear-gradient(135deg, rgba(11, 31, 58, 0.04) 0%, rgba(197, 160, 89, 0.12) 100%); border-left: 5px solid var(--color-gold, #c5a059); border-radius: 10px; padding: 24px 28px; margin: 25px 0 35px 0; box-shadow: 0 6px 20px rgba(0,0,0,0.05);">
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
                 <h3 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-primary, #0B1F3A); margin: 0; display: flex; align-items: center; gap: 8px;">
-                    <i class="fa-solid fa-bullhorn" style="color: #e65100;"></i> Live Ground Status Update (September 19, 2026)
+                    <i class="fa-solid fa-bullhorn" style="color: #e65100;"></i> Live Ground Status Update (September 9, 2026)
                 </h3>
-                <span class="ry-status-badge" style="background: #fff3cd; color: #92400e; border: 1px solid #d97706; font-weight: 700; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; display: inline-flex; align-items: center; gap: 6px;">
-                    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #d97706; animation: pulse 1.5s infinite;"></span>
-                    ILP Opening: September 20, 2026 (Revised)
+                <span class="ry-status-badge" style="background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; font-weight: 700; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; display: inline-flex; align-items: center; gap: 6px;">
+                    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #2e7d32; animation: pulse 1.5s infinite;"></span>
+                    Reopening September 15, 2026 (6 Days To Go)
                 </span>
             </div>
             <p class="ry-status-tldr" style="font-size: 1.05rem; line-height: 1.7; color: #1e293b; margin: 0 0 16px 0;">
-                <strong>Quick Answer:</strong> The <a href="/adi-kailash" style="color: #0B1F3A; font-weight: 700; text-decoration: underline;">Adi Kailash and Om Parvat Yatra</a> ILP issuance has been officially revised to <strong>September 20, 2026</strong> (updated from September 15) by SDM Dharchula due to ongoing road work on the Tawaghat–Sobla stretch. Border Roads Organisation (BRO Project Hirak) has cleared primary monsoon landslide zones. The prime autumn Darshan window runs from <strong>September 22 to November 10, 2026</strong>.
+                <strong>Quick Answer:</strong> The <a href="/adi-kailash" style="color: #0B1F3A; font-weight: 700; text-decoration: underline;">Adi Kailash and Om Parvat Yatra</a> is scheduled for official reopening on <strong>September 15, 2026</strong>. Border Roads Organisation (BRO Project Hirak) has cleared primary monsoon landslide zones between Tawaghat and Najang. The SDM Office in Dharchula begins stamping post-monsoon Inner Line Permits (ILP) on September 15. The prime autumn Darshan window runs from <strong>September 18 to November 10, 2026</strong>.
             </p>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; font-size: 0.92rem; background: #ffffff; padding: 16px 20px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.08); box-shadow: 0 2px 6px rgba(0,0,0,0.02);">
-                <div><strong>🗓️ ILP Opening Date:</strong> September 20, 2026 (Revised)</div>
+                <div><strong>🗓️ Reopening Date:</strong> September 15, 2026</div>
                 <div><strong>🚧 Highway Status:</strong> BRO Final Grading Active</div>
-                <div><strong>📜 ILP Processing:</strong> Resumes September 20</div>
+                <div><strong>📜 ILP Processing:</strong> Resumes September 15</div>
                 <div><strong>🏔️ Peak Darshan Window:</strong> Sept 25 – Oct 31, 2026</div>
             </div>
         </div>
@@ -3249,9 +3054,9 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopeni
 // ─────────────────────────────────────────────────────────────────────────────
 BLOG_ENHANCERS['adi-kailash-yatra-2026-suspended-due-to-weather-official-reopening-date'] = {
     meta: {
-        title: 'Adi Kailash Yatra 2026 Suspended: Why the Route Closed & Post-Monsoon Reopening Guide (Sept 20)',
-        desc: 'Adi Kailash Yatra 2026 officially suspended by SDM Dharchula due to monsoon landslides. All ILPs frozen. ILP issuance resumes September 20, 2026 (revised from Sept 15). Booking & rescheduling guide.',
-        dateModified: '2026-09-19T11:30:00+05:30'
+        title: 'Adi Kailash Yatra 2026 Suspended: SDM Dharchula Closure & September 15 Reopening Date',
+        desc: 'Adi Kailash Yatra 2026 officially suspended by SDM Dharchula due to monsoon landslides. All ILPs frozen. Route reopens September 15, 2026. Post-monsoon window: Sep 18–Oct 10. Booking & rescheduling guide.',
+        dateModified: '2026-08-25T12:00:00+05:30'
     },
 
     // ── SCHEMAS: FAQPage + NewsArticle + Event ──────────────────────────────
@@ -3475,21 +3280,17 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-suspended-due-to-weather-official-reopeni
     <strong class="ry-sus-banner-title">Adi Kailash Yatra 2026 — Official Suspension & Reopening Status</strong>
   </div>
   <div class="ry-sus-status-row">
-    <span class="ry-sus-status-pill closed">🔴 Jul 3 – Sep 19: Route CLOSED</span>
-    <span class="ry-sus-status-pill open">🟢 Sep 20+: ILP Reopening (Revised Date)</span>
-  </div>
-  <div style="background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.4); border-radius: 7px; padding: 10px 14px; margin-bottom: 12px; font-size: 13px; color: #fecaca;">
-    ⚠️ <strong>Date Revised:</strong> ILP issuance has been updated from September 15 to <strong>September 20, 2026</strong> by SDM Dharchula. <a href="/blog/adi-kailash-ilp-date-revised-to-september-20-2026-updated-from-sept-15" style="color: #fca5a5; text-decoration: underline; font-weight: 700;">Read official revision notice →</a>
+    <span class="ry-sus-status-pill closed">🔴 Jul 3 – Sep 14: Route CLOSED</span>
+    <span class="ry-sus-status-pill open">🟢 Sep 15+: Reopening Expected</span>
   </div>
   <p class="ry-sus-banner-desc">
-    The <strong>SDM Dharchula officially froze all Inner Line Permits</strong> on July 3, 2026 following monsoon landslide damage to the Dharchula–Gunji highway. No pilgrim movement was permitted until BRO completed road clearance. The official ILP restart date is <strong style="color:#fbbf24">September 20, 2026</strong> (revised from September 15).
+    The <strong>SDM Dharchula officially froze all Inner Line Permits</strong> on July 3, 2026 following monsoon landslide damage to the Dharchula–Gunji highway. No pilgrim movement is permitted until BRO completes road clearance. The official restart window is <strong style="color:#fbbf24">September 15, 2026</strong>.
   </p>
   <ul class="ry-sus-timeline" style="list-style:none; margin:0; padding:0;">
     <li>Jul 3, 2026 — SDM Dharchula suspends all ILP issuances</li>
     <li>Jul–Aug 2026 — BRO repairing Dharchula–Gunji highway debris</li>
-    <li>Sep 14, 2026 — SDM revises ILP date from Sept 15 to Sept 20 (Sobla stretch rainfall)</li>
-    <li>Sep 20, 2026 — Official ILP processing restarts (confirmed revised date)</li>
-    <li>Sep 22–Oct 31 — Optimal post-monsoon travel window</li>
+    <li>Sep 15, 2026 — Official ILP processing restarts (subject to clearance)</li>
+    <li>Sep 18–Oct 10 — Optimal post-monsoon travel window</li>
   </ul>
   <div class="ry-sus-btn-row">
     <a href="https://wa.me/917617617651?text=Namaste!%20I%20have%20a%20booking%20affected%20by%20the%20Adi%20Kailash%20Yatra%202026%20suspension.%20Please%20help%20me%20reschedule%20to%20the%20September%20window." target="_blank" rel="noopener" class="ry-sus-btn wa">
