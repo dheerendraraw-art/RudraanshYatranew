@@ -764,7 +764,7 @@ app.get('/blog/:slug', async (req, res) => {
           "name": "What is the Adi Kailash Yatra reopening date for 2026?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The Adi Kailash Yatra 2026 is expected to reopen around September 15, 2026. However, this date can shift based on ground conditions in the Byas Valley. Rudraansh Yatra tracks reopening announcements in real time from Pithoragarh and will confirm the exact date before finalising any bookings."
+            "text": "The Adi Kailash Yatra 2026 ILP reopening date has been officially revised to September 20, 2026 (updated from the earlier September 15 date by SDM Dharchula due to continued rainfall on the Tawaghat–Sobla route). Rudraansh Yatra tracks reopening announcements in real time from Pithoragarh and will confirm exact ground conditions before finalising any bookings."
           }
         },
         {
@@ -829,7 +829,7 @@ app.get('/blog/:slug', async (req, res) => {
         <strong class="ry-cld-banner-title">Adi Kailash Yatra 2026 — Current Status</strong>
     </div>
     <p class="ry-cld-banner-desc">
-        The route was <strong style="color: #f87171;">suspended during monsoon season</strong> and is expected to reopen around <strong style="color: #fbbf24;">September 15, 2026</strong>. ILP permits from the Dharchula SDM Office will resume from that date. Always confirm with a local operator before setting out.
+        The route was <strong style="color: #f87171;">suspended during monsoon season</strong> and ILP issuance has been officially revised to <strong style="color: #fbbf24;">September 20, 2026</strong> (updated from September 15 by SDM Dharchula). ILP permits from the Dharchula SDM Office will resume from that date. Always confirm with a local operator before setting out.
     </p>
     <div class="ry-cld-btn-row">
         <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20confirm%20current%20Adi%20Kailash%20Yatra%20status%20and%20ILP%20issuance.%20Please%20share%20the%20latest%20update." target="_blank" rel="noopener" class="ry-cld-btn wa">
@@ -866,7 +866,7 @@ app.get('/blog/:slug', async (req, res) => {
             <i class="fa-solid fa-phone"></i> Call +91 76176 17651
         </a>
     </div>
-    <p class="ry-cld-also">Also read: <a href="/blog/adi-kailash-yatra-2026-suspended-due-to-weather-official-reopening-date">Official Suspension & Sep 15 Reopening Notice</a> · <a href="/blog/adi-kailash-yatra-for-solo-female-travellers-safety-guide">Solo Female Travellers Safety Guide</a></p>
+    <p class="ry-cld-also">Also read: <a href="/blog/adi-kailash-ilp-date-revised-to-september-20-2026-updated-from-sept-15">Official Sept 20 ILP Revision Notice</a> · <a href="/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates">Full 2026 Live Status Update</a> · <a href="/blog/adi-kailash-yatra-for-solo-female-travellers-safety-guide">Solo Female Travellers Safety Guide</a></p>
 </div>`;
 
             const cleanedContent = paragraphsHtml
