@@ -6566,7 +6566,7 @@ BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanak
                 <td><strong>Tawaghat to Gunji (via Sobla / Najang)</strong></td>
                 <td>53 km | 3,200 m</td>
                 <td>Active BRO debris clearance, rock clearing at Najang &amp; Malpa</td>
-                <td><span style="color: #ef4444; font-weight: 700;">🔴 Civilian Traffic Paused Until Sept 20</span></td>
+                <td><span style="color: #fca5a5; font-weight: 700;">🔴 Civilian Traffic Paused Until Sept 20</span></td>
             </tr>
             <tr>
                 <td><strong>Gunji to Jolingkong (Adi Kailash)</strong></td>
@@ -6630,18 +6630,18 @@ BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanak
 </p>
 
 <!-- Curated Package Promotion Cards -->
-<div style="margin: 32px 0;">
-    <h3 style="color: #fbbf24 !important; font-size: 18px; font-family: var(--font-serif), Georgia, serif; margin-bottom: 6px;">
+<div class="ry-rev-packages-section" style="margin: 36px 0;">
+    <h3 class="ry-packages-section-title" style="color: var(--color-primary, #0A192F) !important; font-size: 22px !important; font-family: var(--font-serif), Georgia, serif !important; font-weight: 700 !important; margin-bottom: 8px !important; line-height: 1.35 !important;">
         Confirmed Autumn 2026 Departure Packages (Post-September 20)
     </h3>
-    <p style="color: #cbd5e1; font-size: 13.5px; margin-bottom: 16px;">
+    <p class="ry-packages-section-desc" style="color: var(--color-text-secondary, #475569) !important; font-size: 15px !important; margin-bottom: 20px !important; line-height: 1.6 !important;">
         Book directly with Pithoragarh's premier local ground operator with zero reseller commission and guaranteed SDM permit processing:
     </p>
     <div class="ry-rev-packages">
         <div class="ry-rev-pkg-card">
             <div>
                 <h4>Adi Kailash &amp; Om Parvat from Kathgodam</h4>
-                <div class="price">₹30,000 <span style="font-size: 12px; color: #94a3b8;">/ person (6D/5N)</span></div>
+                <div class="price">₹30,000 <span style="font-size: 12px; color: #cbd5e1;">/ person (6D/5N)</span></div>
                 <p>4x4 Bolero, Gunji/Nabi homestay, ILP clearance, vegetarian meals &amp; oxygen kit.</p>
             </div>
             <a href="/adi-kailash-from-kathgodam">View Kathgodam Itinerary &rarr;</a>
@@ -6649,7 +6649,7 @@ BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanak
         <div class="ry-rev-pkg-card">
             <div>
                 <h4>Adi Kailash &amp; Om Parvat from Delhi</h4>
-                <div class="price">₹35,000 <span style="font-size: 12px; color: #94a3b8;">/ person (6D/5N)</span></div>
+                <div class="price">₹35,000 <span style="font-size: 12px; color: #cbd5e1;">/ person (6D/5N)</span></div>
                 <p>Delhi pick &amp; drop, private transport, full permit processing &amp; guided tour.</p>
             </div>
             <a href="/adi-kailash-from-delhi">View Delhi Package Details &rarr;</a>
@@ -6657,7 +6657,7 @@ BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanak
         <div class="ry-rev-pkg-card">
             <div>
                 <h4>Adi Kailash Express from Pithoragarh</h4>
-                <div class="price">₹18,000 <span style="font-size: 12px; color: #94a3b8;">/ person (3D/2N)</span></div>
+                <div class="price">₹18,000 <span style="font-size: 12px; color: #cbd5e1;">/ person (3D/2N)</span></div>
                 <p>Fast-track departure from Pithoragarh headquarters. Ideal for short itineraries.</p>
             </div>
             <a href="/adi-kailash-from-pithoragarh">View Pithoragarh Package &rarr;</a>

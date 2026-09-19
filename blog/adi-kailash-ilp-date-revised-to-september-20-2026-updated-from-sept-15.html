@@ -632,21 +632,37 @@
             font-family: var(--font-serif), Georgia, serif !important;
         }
 
+        .blog-detail-body .ry-scenario-card h3,
         .blog-detail-body .ry-scenario-card.alert h3,
-        .blog-detail-body .ry-scenario-card.alert h3 * {
-            color: #fca5a5 !important;
-        }
-
+        .blog-detail-body .ry-scenario-card.alert h3 *,
         .blog-detail-body .ry-scenario-card.plan h3,
         .blog-detail-body .ry-scenario-card.plan h3 * {
+            color: #ffffff !important;
+            font-family: var(--font-sans), system-ui, -apple-system, sans-serif !important;
+            font-weight: 700 !important;
+            font-size: 18px !important;
+            line-height: 1.35 !important;
+        }
+
+        .blog-detail-body .ry-scenario-card.alert .ry-scenario-tag {
+            background: rgba(239, 68, 68, 0.25) !important;
+            color: #fca5a5 !important;
+            border: 1px solid #ef4444 !important;
+            font-weight: 800 !important;
+        }
+
+        .blog-detail-body .ry-scenario-card.plan .ry-scenario-tag {
+            background: rgba(16, 185, 129, 0.25) !important;
             color: #6ee7b7 !important;
+            border: 1px solid #10b981 !important;
+            font-weight: 800 !important;
         }
 
         .blog-detail-body .ry-scenario-card li,
         .blog-detail-body .ry-scenario-card ul li {
             color: #e2e8f0 !important;
-            font-size: 13.5px !important;
-            line-height: 1.6 !important;
+            font-size: 14px !important;
+            line-height: 1.65 !important;
         }
 
         .blog-detail-body .ry-scenario-card strong {
@@ -673,24 +689,105 @@
 
         .blog-detail-body .ry-table-responsive-wrap table tr:nth-child(even) td,
         .blog-detail-body .ry-rev-table tr:nth-child(even) td {
-            background: rgba(255, 255, 255, 0.03) !important;
+            background: #0f2748 !important;
+            color: #f1f5f9 !important;
+        }
+
+        /* Package Promotion Section & Cards */
+        .ry-packages-section-title {
+            color: var(--color-primary, #0A192F) !important;
+            font-size: 22px !important;
+            font-family: var(--font-serif), Georgia, serif !important;
+            font-weight: 700 !important;
+            margin-bottom: 8px !important;
+            line-height: 1.35 !important;
+        }
+
+        .ry-packages-section-desc {
+            color: var(--color-text-secondary, #475569) !important;
+            font-size: 15px !important;
+            margin-bottom: 20px !important;
+            line-height: 1.6 !important;
+        }
+
+        .ry-rev-packages {
+            display: grid !important;
+            grid-template-columns: repeat(3, 1fr) !important;
+            gap: 16px !important;
+            margin: 20px 0 !important;
+        }
+
+        @media (max-width: 860px) {
+            .ry-rev-packages {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+        .blog-detail-body .ry-rev-pkg-card {
+            background: linear-gradient(145deg, #091e3a 0%, #152d4e 100%) !important;
+            border: 1px solid rgba(212, 175, 55, 0.35) !important;
+            border-radius: 12px !important;
+            padding: 20px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-between !important;
         }
 
         .blog-detail-body .ry-rev-pkg-card h4 {
             color: #ffffff !important;
+            font-size: 16.5px !important;
+            margin: 0 0 8px 0 !important;
+            font-weight: 700 !important;
+            line-height: 1.35 !important;
         }
 
         .blog-detail-body .ry-rev-pkg-card p {
-            color: #cbd5e1 !important;
+            font-size: 13.5px !important;
+            color: #e2e8f0 !important;
+            line-height: 1.6 !important;
+            margin: 0 0 16px 0 !important;
         }
 
         .blog-detail-body .ry-rev-pkg-card .price {
             color: #fbbf24 !important;
+            font-size: 22px !important;
+            font-weight: 800 !important;
+            margin-bottom: 10px !important;
+        }
+
+        .blog-detail-body .ry-rev-pkg-card .price span {
+            color: #cbd5e1 !important;
+            font-size: 12.5px !important;
+            font-weight: 500 !important;
+        }
+
+        .blog-detail-body .ry-rev-pkg-card a {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            background: #d4af37 !important;
+            color: #0b1f3a !important;
+            font-size: 13px !important;
+            font-weight: 700 !important;
+            text-align: center !important;
+            padding: 11px 16px !important;
+            border-radius: 8px !important;
+            text-decoration: none !important;
+            transition: all 0.2s ease !important;
+            min-height: 44px !important;
+            box-sizing: border-box !important;
+        }
+
+        .blog-detail-body .ry-rev-pkg-card a:hover {
+            background: #f59e0b !important;
+            color: #0b1f3a !important;
         }
 
         .blog-detail-body .ry-faq-item .ry-faq-a,
         .blog-detail-body .ry-faq-a {
             color: #e2e8f0 !important;
+            font-size: 14.5px !important;
+            line-height: 1.65 !important;
         }
 
         .ry-route-summary p,
@@ -1612,7 +1709,7 @@
                 <td><strong>Tawaghat to Gunji (via Sobla / Najang)</strong></td>
                 <td>53 km | 3,200 m</td>
                 <td>Active BRO debris clearance, rock clearing at Najang &amp; Malpa</td>
-                <td><span style="color: #ef4444; font-weight: 700;">🔴 Civilian Traffic Paused Until Sept 20</span></td>
+                <td><span style="color: #fca5a5; font-weight: 700;">🔴 Civilian Traffic Paused Until Sept 20</span></td>
             </tr>
             <tr>
                 <td><strong>Gunji to Jolingkong (Adi Kailash)</strong></td>
@@ -1676,18 +1773,18 @@
 </p>
 
 <!-- Curated Package Promotion Cards -->
-<div style="margin: 32px 0;">
-    <h3 style="color: #fbbf24 !important; font-size: 18px; font-family: var(--font-serif), Georgia, serif; margin-bottom: 6px;">
+<div class="ry-rev-packages-section" style="margin: 36px 0;">
+    <h3 class="ry-packages-section-title" style="color: var(--color-primary, #0A192F) !important; font-size: 22px !important; font-family: var(--font-serif), Georgia, serif !important; font-weight: 700 !important; margin-bottom: 8px !important; line-height: 1.35 !important;">
         Confirmed Autumn 2026 Departure Packages (Post-September 20)
     </h3>
-    <p style="color: #cbd5e1; font-size: 13.5px; margin-bottom: 16px;">
+    <p class="ry-packages-section-desc" style="color: var(--color-text-secondary, #475569) !important; font-size: 15px !important; margin-bottom: 20px !important; line-height: 1.6 !important;">
         Book directly with Pithoragarh's premier local ground operator with zero reseller commission and guaranteed SDM permit processing:
     </p>
     <div class="ry-rev-packages">
         <div class="ry-rev-pkg-card">
             <div>
                 <h4>Adi Kailash &amp; Om Parvat from Kathgodam</h4>
-                <div class="price">₹30,000 <span style="font-size: 12px; color: #94a3b8;">/ person (6D/5N)</span></div>
+                <div class="price">₹30,000 <span style="font-size: 12px; color: #cbd5e1;">/ person (6D/5N)</span></div>
                 <p>4x4 Bolero, Gunji/Nabi homestay, ILP clearance, vegetarian meals &amp; oxygen kit.</p>
             </div>
             <a href="/adi-kailash-from-kathgodam">View Kathgodam Itinerary &rarr;</a>
@@ -1695,7 +1792,7 @@
         <div class="ry-rev-pkg-card">
             <div>
                 <h4>Adi Kailash &amp; Om Parvat from Delhi</h4>
-                <div class="price">₹35,000 <span style="font-size: 12px; color: #94a3b8;">/ person (6D/5N)</span></div>
+                <div class="price">₹35,000 <span style="font-size: 12px; color: #cbd5e1;">/ person (6D/5N)</span></div>
                 <p>Delhi pick &amp; drop, private transport, full permit processing &amp; guided tour.</p>
             </div>
             <a href="/adi-kailash-from-delhi">View Delhi Package Details &rarr;</a>
@@ -1703,7 +1800,7 @@
         <div class="ry-rev-pkg-card">
             <div>
                 <h4>Adi Kailash Express from Pithoragarh</h4>
-                <div class="price">₹18,000 <span style="font-size: 12px; color: #94a3b8;">/ person (3D/2N)</span></div>
+                <div class="price">₹18,000 <span style="font-size: 12px; color: #cbd5e1;">/ person (3D/2N)</span></div>
                 <p>Fast-track departure from Pithoragarh headquarters. Ideal for short itineraries.</p>
             </div>
             <a href="/adi-kailash-from-pithoragarh">View Pithoragarh Package &rarr;</a>
