@@ -6278,7 +6278,8 @@ BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanak
         }
       }
     }
-    <\/script>`
+    <\/script>`,
+        render: (html) => html
     };
 
     // ─────────────────────────────────────────────────────────────────────────
