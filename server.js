@@ -21,7 +21,17 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const multer = require('multer');
 const compression = require('compression');
+const rateLimit = require('express-rate-limit');
 const { getBlogEnhancement } = require('./blog-enhancers');
+
+// Rate limiter for admin login — max 10 attempts per IP per 15 minutes
+const adminLoginLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 10,
+    message: { error: 'Too many login attempts. Please try again in 15 minutes.' },
+    standardHeaders: true,
+    legacyHeaders: false,
+});
 
 const JWT_SECRET = process.env.JWT_SECRET || 'rudraansh_yatra_secure_jwt_secret_key_2026_xyz';
 const storage = multer.memoryStorage();
@@ -127,11 +137,63 @@ function slugify(text) {
 // Helper to pre-render blogs HTML
 function renderBlogsHtml(blogs) {
     if (!blogs || blogs.length === 0) {
-        return `<div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--color-text-secondary);">
-            <i class="fa-solid fa-feather-pointed" style="font-size: 48px; color: var(--color-gold); margin-bottom: 16px;"></i>
-            <h3 style="font-family: var(--font-serif); font-size: 22px; color: var(--color-primary); margin-bottom: 8px;">No Travel Diaries Found</h3>
-            <p style="font-size: 14px;">Check back soon for new expedition guides and Himalayan stories.</p>
-        </div>`;
+        // Fallback to static high-priority curated blogs
+        blogs = [
+            {
+                id: 'adi-kailash-first-batch-sept-20',
+                title: 'Adi Kailash Permits Start Sept 20: 1st Autumn Batch (25 Yatris) Successfully Completes Yatra [Ground Report 2026]',
+                slug: 'adi-kailash-permits-open-first-batch-completes-yatra-september-2026',
+                image_url: 'assets/images/om-parvat-group.webp',
+                author: 'Dheerendra Rautela',
+                created_at: '2026-09-25T08:45:00.000Z',
+                content: 'Live Ground Report: Adi Kailash online permits officially resumed on Sept 20, 2026. Rudraansh Yatra\'s 1st Autumn batch of 25 yatris has safely completed Adi Kailash & Om Parvat darshan. Read road status, checkposts & October booking guide.'
+            },
+            {
+                id: 'adi-kailash-ilp-revised',
+                title: 'Adi Kailash ILP Date Revised to Sept 20, 2026 (From Sept 15 Update)',
+                slug: 'adi-kailash-ilp-date-revised-to-september-20-2026-updated-from-sept-15',
+                image_url: 'https://ysnzxvvsegmkmkepclti.supabase.co/storage/v1/object/public/blog-images/file_1789381296324_429.jpeg',
+                author: 'Dheerendra Rautela',
+                created_at: '2026-09-14T10:21:37.000Z',
+                content: 'Online Inner Line Permit (ILP) issuance for Adi Kailash and Om Parvat Yatra has been officially postponed to September 20, 2026 by SDM Dharchula due to late-monsoon rain and active BRO road clearance.'
+            },
+            {
+                id: 'adi-kailash-closing-date',
+                title: 'When Does Adi Kailash Yatra 2026 Close for Winter? Closing Dates, Snowfall & Last Batch Guide',
+                slug: 'when-does-adi-kailash-yatra-2026-close-for-winter',
+                image_url: 'assets/images/adi-kailash-hero.webp',
+                author: 'Dheerendra Rautela',
+                created_at: '2026-09-09T08:00:00.000Z',
+                content: 'Complete winter closing dates for Adi Kailash and Om Parvat Yatra 2026. Official closure schedule, ITBP checkpoint cutoff dates, transhumance migration (Kooch), and final autumn batch booking guidelines.'
+            },
+            {
+                id: 'adi-vs-mt-kailash',
+                title: "Adi Kailash vs. Kailash Mansarovar: What's the Real Difference?",
+                slug: 'adi-kailash-vs-kailash-mansarovar-real-difference',
+                image_url: 'assets/images/adi-kailash-parvat.webp',
+                author: 'Dheerendra Rautela',
+                created_at: '2026-09-05T08:00:00.000Z',
+                content: 'A neutral, high-altitude comparison between Adi Kailash in Uttarakhand and Kailash Mansarovar in Tibet. Detailed breakdown of permit ease, passport requirements, physical difficulty, and cost differences.'
+            },
+            {
+                id: 'adi-kailash-guide-2026',
+                title: 'Adi Kailash Yatra Complete Guide 2026',
+                slug: 'adi-kailash-yatra-complete-guide-2026',
+                image_url: 'assets/images/adi-kailash-hero.webp',
+                author: 'Dheerendra Rautela',
+                created_at: '2026-08-20T08:00:00.000Z',
+                content: 'Everything you need to know before visiting Adi Kailash and Om Parvat. Complete route details from Pithoragarh, Kathgodam, and Delhi, permit checklists, altitude acclimation, and packing essentials.'
+            },
+            {
+                id: 'om-parvat-darshan-guide',
+                title: 'Om Parvat Darshan: Witness the Sacred "ॐ" in Snow',
+                slug: 'om-parvat-darshan-complete-guide-2026',
+                image_url: 'assets/images/om-parvat.webp',
+                author: 'Dheerendra Rautela',
+                created_at: '2026-08-15T08:00:00.000Z',
+                content: 'How to view the snow OM from Nabidhang viewpoint (4,246m) in Vyas Valley. Best morning viewing times, road conditions, 4x4 Bolero transport, and spiritual legends of this divine phenomenon.'
+            }
+        ];
     }
 
     let html = '';
@@ -183,9 +245,9 @@ function renderBlogsHtml(blogs) {
                 </div>
                 <div class="blog-card-content">
                     <div class="blog-card-meta">
-                        <span><i class="fa-solid fa-user" style="color: var(--color-gold);"></i> ${blog.author || 'Dheerendra Rautela'}</span>
+                        <span><i class="fa-solid fa-user" style="color: var(--color-gold);"></i> By ${blog.author || 'Dheerendra Rautela'}</span>
                         <span>•</span>
-                        <span><i class="fa-solid fa-calendar-days" style="color: var(--color-gold);"></i> ${dateStr}</span>
+                        <span><i class="fa-solid fa-calendar-days" style="color: var(--color-gold);"></i> Published: ${dateStr}</span>
                         <span>•</span>
                         <span><i class="fa-solid fa-clock" style="color: var(--color-gold);"></i> ${readTime}</span>
                     </div>
@@ -214,7 +276,7 @@ app.get('/', async (req, res) => {
                 .select('*')
                 .order('created_at', { ascending: false })
                 .limit(5);
-            if (data) dbBlogs = data;
+            if (data && data.length > 0) dbBlogs = data;
         }
 
         const blogsHtml = renderBlogsHtml(dbBlogs);
@@ -240,10 +302,11 @@ app.get('/', async (req, res) => {
                 </div>
                 <button class="carousel-control next" aria-label="Next Slide"><i class="fa-solid fa-chevron-right"></i></button>
             </div>
-        </div>`;
+        </div>
+    </section>`;
 
-        // Replace with regex to handle different OS line endings (\n or \r\n) safely
-        indexHtml = indexHtml.replace(/<!-- Blogs Section -->\s*<section id="homepage-blogs"[^>]*>\s*<!-- Dynamic Blogs will load here -->/i, replacement);
+        // Replace with regex to handle different OS line endings safely
+        indexHtml = indexHtml.replace(/<!-- Blogs Section -->\s*<section id="homepage-blogs"[^>]*>[\s\S]*?<\/section>/i, replacement);
         
         res.send(indexHtml);
     } catch (err) {
@@ -261,14 +324,18 @@ app.get('/blogs', async (req, res) => {
                 .from('blogs')
                 .select('*')
                 .order('created_at', { ascending: false });
-            if (data) dbBlogs = data;
+            if (data && data.length > 0) dbBlogs = data;
         }
 
         const blogsHtml = renderBlogsHtml(dbBlogs);
 
         // Load blogs.html template and inject blogs grid
         let blogsTemplateHtml = fs.readFileSync(path.join(__dirname, 'blogs.html'), 'utf8');
-        blogsTemplateHtml = blogsTemplateHtml.replace('{{BLOGS_GRID}}', blogsHtml);
+        if (blogsTemplateHtml.includes('{{BLOGS_GRID}}')) {
+            blogsTemplateHtml = blogsTemplateHtml.replace('{{BLOGS_GRID}}', blogsHtml);
+        } else {
+            blogsTemplateHtml = blogsTemplateHtml.replace(/(<div class="blog-grid" id="blogs-grid-container">)[\s\S]*?(<\/div>\s*<!-- No Results Message -->)/i, `$1\n${blogsHtml}\n            $2`);
+        }
 
         res.send(blogsTemplateHtml);
     } catch (err) {
@@ -1265,8 +1332,8 @@ app.get('/api/status', (req, res) => {
     res.status(200).json({ status: 'ok', uptime: process.uptime(), timestamp: new Date().toISOString() });
 });
 
-// GET application version for testing
-app.get('/api/version', (req, res) => {
+// GET application version — admin-only diagnostic endpoint
+app.get('/api/version', authenticateToken, requireAdmin, (req, res) => {
     const { exec } = require('child_process');
     exec('git log -n 1 --oneline && git status --porcelain', (err, stdout, stderr) => {
         const gitInfo = err ? `Error: ${err.message}` : stdout;
@@ -1305,8 +1372,8 @@ app.get('/api/version', (req, res) => {
 // SECURITY & AUTHENTICATION API ENDPOINTS
 // ==========================================
 
-// Login Route
-app.post('/api/admin/login', async (req, res) => {
+// Login Route — rate limited to prevent brute-force attacks
+app.post('/api/admin/login', adminLoginLimiter, async (req, res) => {
     const { username, passcode } = req.body || {};
     if (!username || !passcode) {
         return res.status(400).json({ error: 'Username and passcode are required' });
@@ -1316,13 +1383,14 @@ app.post('/api/admin/login', async (req, res) => {
     const cleanPasscode = (passcode || '').toString().trim();
     const rawPasscode = (passcode || '').toString();
 
+    // Fallback credentials loaded from environment variables (never hardcode passwords in source)
     const fallbackCredentials = {
-        'admin': { id: '8de78fbd-2bfe-48c8-a83b-0d971d68cb92', username: 'admin', passcode: 'VandanaDheerendra@2023', role: 'admin', uuid_mapping: 'c380f706-58c2-4f0d-a74e-cd3691b62dd5' },
-        'geetika': { id: '1e06f20b-51e9-4d5c-8c65-565393a13f7e', username: 'geetika', passcode: 'Geetika@Rudra26', role: 'staff', uuid_mapping: '00000000-0000-0000-0000-000000000002' },
-        'mansi': { id: '4bdd728f-cab9-4e14-88ac-8705eb6d8f90', username: 'mansi', passcode: 'Mansi@Rudra26', role: 'staff', uuid_mapping: '00000000-0000-0000-0000-000000000005' },
-        'sneha': { id: '4edec443-bafe-430f-bdd7-0526585d4c76', username: 'sneha', passcode: 'Sneha@Rudra26', role: 'staff', uuid_mapping: '00000000-0000-0000-0000-000000000003' },
-        'seema': { id: 'a4a9bac7-3ba2-48b5-81c3-b362c6275647', username: 'seema', passcode: 'Seema@Rudra26', role: 'staff', uuid_mapping: '00000000-0000-0000-0000-000000000001' },
-        'simran': { id: 'e22366e8-7e52-434a-b4c0-98caba13f187', username: 'simran', passcode: 'Simran@Rudra26', role: 'staff', uuid_mapping: '00000000-0000-0000-0000-000000000004' }
+        'admin':   { id: '8de78fbd-2bfe-48c8-a83b-0d971d68cb92', username: 'admin',   passcode: process.env.ADMIN_PASSCODE            || '', role: 'admin', uuid_mapping: 'c380f706-58c2-4f0d-a74e-cd3691b62dd5' },
+        'geetika': { id: '1e06f20b-51e9-4d5c-8c65-565393a13f7e', username: 'geetika', passcode: process.env.STAFF_GEETIKA_PASSCODE  || '', role: 'staff', uuid_mapping: '00000000-0000-0000-0000-000000000002' },
+        'mansi':   { id: '4bdd728f-cab9-4e14-88ac-8705eb6d8f90', username: 'mansi',   passcode: process.env.STAFF_MANSI_PASSCODE    || '', role: 'staff', uuid_mapping: '00000000-0000-0000-0000-000000000005' },
+        'sneha':   { id: '4edec443-bafe-430f-bdd7-0526585d4c76', username: 'sneha',   passcode: process.env.STAFF_SNEHA_PASSCODE    || '', role: 'staff', uuid_mapping: '00000000-0000-0000-0000-000000000003' },
+        'seema':   { id: 'a4a9bac7-3ba2-48b5-81c3-b362c6275647', username: 'seema',   passcode: process.env.STAFF_SEEMA_PASSCODE    || '', role: 'staff', uuid_mapping: '00000000-0000-0000-0000-000000000001' },
+        'simran':  { id: 'e22366e8-7e52-434a-b4c0-98caba13f187', username: 'simran',  passcode: process.env.STAFF_SIMRAN_PASSCODE   || '', role: 'staff', uuid_mapping: '00000000-0000-0000-0000-000000000004' }
     };
 
     try {
@@ -3207,20 +3275,21 @@ app.get(['/payment', '/payment.html'], (req, res) => {
     res.sendFile(path.join(__dirname, 'payment.html'));
 });
 
-// Serve admin.html with explicit cache-busting headers
+// Serve admin.html — cache-busting + noindex to prevent search engine indexing
 app.get(['/admin', '/admin.html'], (req, res) => {
-
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
     res.setHeader('Pragma', 'no-cache');
     res.setHeader('Expires', '0');
+    res.setHeader('X-Robots-Tag', 'noindex, nofollow, noarchive, nosnippet');
     res.sendFile(path.join(__dirname, 'admin.html'));
 });
 
-// Serve lead-details.html with explicit cache-busting headers
+// Serve lead-details.html — cache-busting + noindex to prevent search engine indexing
 app.get(['/lead-details', '/lead-details.html'], (req, res) => {
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
     res.setHeader('Pragma', 'no-cache');
     res.setHeader('Expires', '0');
+    res.setHeader('X-Robots-Tag', 'noindex, nofollow, noarchive, nosnippet');
     res.sendFile(path.join(__dirname, 'lead-details.html'));
 });
 

@@ -26,21 +26,21 @@ function generateStaticBlog() {
             <img class="sidebar-link-img" src="/assets/images/adi-kailash-hero.webp" alt="Inner Line Permit Guide" width="60" height="45" loading="lazy">
             <div class="sidebar-link-text">
                 <a href="/blog/inner-line-permit-adi-kailash-2026-guide" class="sidebar-link-name">Inner Line Permit (ILP) for Adi Kailash 2026: Step-by-Step Guide</a>
-                <span class="sidebar-link-price">By Dheerendra Rautela</span>
+                <span class="sidebar-link-price">By Dheerendra Rautela &bull; Aug 2026</span>
             </div>
         </li>
         <li class="sidebar-link-item">
             <img class="sidebar-link-img" src="/assets/images/om-parvat.webp" alt="2026 Monsoon Status" width="60" height="45" loading="lazy">
             <div class="sidebar-link-text">
                 <a href="/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates" class="sidebar-link-name">Adi Kailash Yatra 2026 Latest Status & Reopening Updates</a>
-                <span class="sidebar-link-price">By Dheerendra Rautela</span>
+                <span class="sidebar-link-price">By Dheerendra Rautela &bull; Jul 2026</span>
             </div>
         </li>
         <li class="sidebar-link-item">
             <img class="sidebar-link-img" src="/assets/images/adi-kailash-group.webp" alt="Best Time to Visit" width="60" height="45" loading="lazy">
             <div class="sidebar-link-text">
                 <a href="/blog/best-time-to-visit-adi-kailash-om-parvat-weather-season-guide" class="sidebar-link-name">Best Time to Visit Adi Kailash & Om Parvat: Weather & Season Guide</a>
-                <span class="sidebar-link-price">By Dheerendra Rautela</span>
+                <span class="sidebar-link-price">By Dheerendra Rautela &bull; Jul 2026</span>
             </div>
         </li>
     `;

@@ -1192,6 +1192,116 @@
             .mob-wa-btn.wa:active { background: #1da552; transform: scale(0.98); }
             .mob-wa-btn.call { background: var(--color-primary); color: #fff; }
             .mob-wa-btn.call:active { background: #172A45; transform: scale(0.98); }
+
+            /* ─── Ground Report Components ──────────────────── */
+            /* Live Banner (ry-live-banner) */
+            .ry-live-banner {
+                padding: 16px 14px !important;
+                border-radius: 12px !important;
+                margin: 16px 0 20px 0 !important;
+            }
+            .ry-live-badge-row {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 8px !important;
+                margin-bottom: 12px !important;
+            }
+            .ry-status-live { font-size: 11px !important; padding: 4px 10px !important; }
+            .ry-live-source { font-size: 11px !important; }
+            .ry-live-title { font-size: 18px !important; line-height: 1.35 !important; margin-bottom: 10px !important; }
+            .ry-live-intro { font-size: 14px !important; line-height: 1.65 !important; margin-bottom: 16px !important; }
+
+            /* KPI Grid: 2-column on mobile */
+            .ry-kpi-grid {
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 8px !important;
+                margin-bottom: 16px !important;
+            }
+            .ry-kpi-card { padding: 10px 12px !important; border-radius: 8px !important; }
+            .ry-kpi-card .label { font-size: 9.5px !important; letter-spacing: 0.4px !important; margin-bottom: 3px !important; }
+            .ry-kpi-card .val { font-size: 14px !important; line-height: 1.2 !important; }
+            .ry-kpi-card .sub { font-size: 10.5px !important; line-height: 1.3 !important; }
+
+            /* CTA Bar: full-width stacked */
+            .ry-cta-bar {
+                flex-direction: column !important;
+                gap: 8px !important;
+                margin-top: 14px !important;
+                width: 100% !important;
+            }
+            .ry-cta-btn {
+                width: 100% !important;
+                min-width: 0 !important;
+                padding: 13px 16px !important;
+                font-size: 13.5px !important;
+                min-height: 48px !important;
+                box-sizing: border-box !important;
+                justify-content: center !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                gap: 8px !important;
+                border-radius: 8px !important;
+                font-weight: 700 !important;
+                text-decoration: none !important;
+                transition: all 0.2s ease !important;
+            }
+            .ry-cta-btn.wa { background: #22c55e !important; color: #fff !important; border: 1px solid #22c55e !important; }
+            .ry-cta-btn.call { background: rgba(255,255,255,0.12) !important; color: #fff !important; border: 1px solid rgba(255,255,255,0.25) !important; }
+
+            /* Nav Pills: single column */
+            .ry-non-overlap-box { padding: 14px 12px !important; margin: 16px 0 !important; border-radius: 10px !important; }
+            .ry-nav-pills { grid-template-columns: 1fr !important; gap: 8px !important; margin-top: 10px !important; }
+            .ry-nav-pill {
+                width: 100% !important;
+                box-sizing: border-box !important;
+                padding: 11px 12px !important;
+                font-size: 13px !important;
+                border-radius: 8px !important;
+            }
+
+            /* Timeline / Batch Day Cards */
+            .ry-batch-timeline { gap: 12px !important; margin: 16px 0 !important; }
+            .ry-timeline-card { padding: 14px 12px !important; border-radius: 8px !important; }
+            .ry-timeline-header {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 4px !important;
+                margin-bottom: 8px !important;
+            }
+            .ry-day-badge { font-size: 11px !important; padding: 3px 9px !important; }
+            .ry-day-date { font-size: 12px !important; }
+            .ry-timeline-card h4 { font-size: 15.5px !important; margin-bottom: 7px !important; }
+            .ry-timeline-card p { font-size: 13.5px !important; line-height: 1.6 !important; }
+
+            /* Road Status Table */
+            .ry-rev-table { font-size: 13px !important; min-width: 600px !important; }
+            .ry-rev-table th, .ry-rev-table td { padding: 10px 12px !important; font-size: 12.5px !important; white-space: nowrap !important; }
+
+            /* FAQ styling */
+            .ry-faq-section { margin: 24px 0 !important; }
+            .ry-faq-item { margin-bottom: 10px !important; border-radius: 8px !important; }
+            .ry-faq-q { padding: 14px 14px !important; font-size: 14.5px !important; }
+            .ry-faq-a { padding: 0 14px 14px 14px !important; font-size: 13.5px !important; line-height: 1.65 !important; }
+
+            /* Author bio */
+            .author-bio-box {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 14px !important;
+                padding: 18px 14px !important;
+                margin: 28px 0 16px 0 !important;
+                border-radius: 10px !important;
+            }
+            .author-bio-img { width: 70px !important; height: 70px !important; }
+            .author-bio-name { font-size: 17px !important; }
+            .author-bio-role { font-size: 11px !important; margin-bottom: 6px !important; }
+            .author-bio-desc { font-size: 13px !important; }
+
+            /* Inline package promo grid → single column */
+            div[style*="grid-template-columns: repeat(auto-fit"] {
+                grid-template-columns: 1fr !important;
+            }
         }
 
         /* Extra-small (380px and below) */
@@ -1205,8 +1315,12 @@
             .mob-wa-btn { font-size: 12px; padding: 10px 6px; }
             .blog-detail-meta { font-size: 11px; }
             .ry-cost-card .price { font-size: 18px !important; }
+            .ry-kpi-grid { grid-template-columns: 1fr !important; }
+            .ry-live-title { font-size: 16px !important; }
+            .ry-cta-btn { font-size: 12.5px !important; padding: 12px 14px !important; }
         }
     </style>
+
 
     <!-- ===== Meta Pixel ===== -->
     <script>
@@ -1513,7 +1627,7 @@
             
             <div class="blog-detail-meta">
                 <span><i class="fa-solid fa-user"></i> By {{AUTHOR}}</span> &nbsp;|&nbsp; 
-                <span><i class="fa-solid fa-calendar-days"></i> {{DATE}}</span>
+                <span><i class="fa-solid fa-calendar-days"></i> Published: {{DATE}}</span>
             </div>
             
             <div class="blog-detail-img-wrap">
@@ -1774,7 +1888,7 @@
 
         <div class="footer-bottom">
             <div class="container">
-                <p>&copy; 2026 Rudraansh Yatra. All Rights Reserved. Managed Directly by Local Ground Experts in Pithoragarh. | <a href="/admin" style="text-decoration: underline; color: var(--color-gold);">Admin Panel</a></p>
+                <p>&copy; 2026 Rudraansh Yatra. All Rights Reserved. Managed Directly by Local Ground Experts in Pithoragarh.</p>
             </div>
         </div>
     </footer>

@@ -221,6 +221,13 @@
 
   <!-- TIER 2: Blog Posts - Live Status / Time-Sensitive (daily changefreq) -->
   <url>
+    <loc>https://rudraanshyatra.com/blog/adi-kailash-permits-open-first-batch-completes-yatra-september-2026</loc>
+    <lastmod>2026-09-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.98</priority>
+  </url>
+
+  <url>
     <loc>https://rudraanshyatra.com/blog/adi-kailash-ilp-date-revised-to-september-20-2026-updated-from-sept-15</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>daily</changefreq>

@@ -2628,7 +2628,7 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopeni
           "name": "How can I book or reschedule my Adi Kailash Yatra for autumn 2026?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "You can reserve or reschedule post-monsoon September, October, and November 2026 slots directly with Rudraansh Yatra (native Pithoragarh operator) by calling +91 97563 45785, WhatsApping +91 97563 45785, or visiting https://rudraanshyatra.com/adi-kailash."
+            "text": "You can reserve or reschedule post-monsoon September, October, and November 2026 slots directly with Rudraansh Yatra (native Pithoragarh operator) by calling +91 76176 17651, WhatsApping +91 76176 17651, or visiting https://rudraanshyatra.com/adi-kailash."
           }
         }
       ]
@@ -2718,7 +2718,7 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopeni
           "name": "Rudraansh Yatra",
           "url": "https://rudraanshyatra.com",
           "logo": "https://rudraanshyatra.com/assets/images/logo.png",
-          "telephone": "+91-9756345785",
+          "telephone": "+917617617651",
           "priceRange": "₹₹₹",
           "address": {
             "@type": "PostalAddress",
@@ -3005,7 +3005,7 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopeni
                         <td style="padding: 11px 14px; border: 1px solid #e2e8f0; font-weight: 600; color: #c5a059;">Rudraansh Yatra Ground Operations</td>
                         <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">Native registered ground operator, 100% permit facilitation, 4x4 convoys</td>
                         <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">Simalgair Bazaar, Pithoragarh</td>
-                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0;"><strong>+91 97563 45785 / +91 76176 17651</strong></td>
+                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0;"><strong>+91 76176 17651</strong></td>
                     </tr>
                 </tbody>
             </table>
@@ -3021,11 +3021,11 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopeni
                 Avoid middleman commissions and SDM permit delays. Book directly with <strong>Rudraansh Yatra</strong> — native Kumaoni team with 100% on-ground permit assistance, experienced 4x4 drivers, and authentic Gunji/Nabi homestay arrangements.
             </p>
             <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-                <a href="https://wa.me/919756345785?text=Hello%20Rudraansh%20Yatra,%20I%20want%20to%20book/reschedule%20my%20Adi%20Kailash%20Post-Monsoon%202026%20Yatra." target="_blank" rel="noopener" style="background: #25D366; color: #ffffff; padding: 12px 24px; border-radius: 6px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(37,211,102,0.3);">
+                <a href="https://wa.me/917617617651?text=Hello%20Rudraansh%20Yatra,%20I%20want%20to%20book/reschedule%20my%20Adi%20Kailash%20Post-Monsoon%202026%20Yatra." target="_blank" rel="noopener" style="background: #25D366; color: #ffffff; padding: 12px 24px; border-radius: 6px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(37,211,102,0.3);">
                     <i class="fa-brands fa-whatsapp"></i> Reserve via WhatsApp
                 </a>
-                <a href="tel:+919756345785" style="background: var(--color-gold, #c5a059); color: #0B1F3A; padding: 12px 24px; border-radius: 6px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
-                    <i class="fa-solid fa-phone"></i> Call +91 97563 45785
+                <a href="tel:+917617617651" style="background: var(--color-gold, #c5a059); color: #0B1F3A; padding: 12px 24px; border-radius: 6px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-phone"></i> Call +91 76176 17651
                 </a>
                 <a href="/adi-kailash" style="background: transparent; color: #ffffff; border: 1px solid #ffffff; padding: 12px 24px; border-radius: 6px; font-weight: 600; text-decoration: none;">
                     Explore Package Details
@@ -6237,6 +6237,49 @@ BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanak
 };
 
 
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // ADI KAILASH PERMITS OPEN & 1ST BATCH COMPLETED (SEPTEMBER 2026)
+    // ─────────────────────────────────────────────────────────────────────────
+    BLOG_ENHANCERS['adi-kailash-permits-open-first-batch-completes-yatra-september-2026'] = {
+        meta: {
+            title: 'Adi Kailash Permits Start Sept 20: 1st Autumn Batch (25 Yatris) Successfully Completes Yatra [Ground Report 2026]',
+            desc: 'Live Ground Report: Adi Kailash online permits officially resumed on Sept 20, 2026. Rudraansh Yatra\'s 1st Autumn batch of 25 yatris has safely completed Adi Kailash & Om Parvat darshan. Read road status, checkposts & October booking guide.',
+            dateModified: '2026-09-25T08:45:00+05:30'
+        },
+        schemas: `
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "NewsArticle",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://rudraanshyatra.com/blog/adi-kailash-permits-open-first-batch-completes-yatra-september-2026"
+      },
+      "headline": "Adi Kailash Permits Start Sept 20: 1st Autumn Batch (25 Yatris) Successfully Completes Yatra [Ground Report 2026]",
+      "description": "Live Ground Report: Adi Kailash online permits officially resumed on Sept 20, 2026. Rudraansh Yatra's 1st Autumn batch of 25 yatris has safely completed Adi Kailash & Om Parvat darshan. Read road conditions, checkpost updates & booking guide.",
+      "image": [
+        "https://rudraanshyatra.com/assets/images/om-parvat-group.webp",
+        "https://rudraanshyatra.com/assets/images/adi-kailash-hero.webp"
+      ],
+      "datePublished": "2026-09-25T08:45:00+05:30",
+      "dateModified": "2026-09-25T08:45:00+05:30",
+      "author": {
+        "@type": "Person",
+        "name": "Dheerendra Rautela",
+        "jobTitle": "Tour Manager Operations & Lead Expedition Guide"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Rudraansh Yatra",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://rudraanshyatra.com/assets/images/logo.png"
+        }
+      }
+    }
+    <\/script>`
+    };
 
     // ─────────────────────────────────────────────────────────────────────────
     // ADI KAILASH ILP DATE REVISED TO SEPTEMBER 20, 2026 (UPDATED FROM SEPT 15)

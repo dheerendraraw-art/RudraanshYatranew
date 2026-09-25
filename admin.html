@@ -15,7 +15,7 @@
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></noscript>
-    <link rel="stylesheet" href="style.css?v=8.3">
+    <link rel="stylesheet" href="style.css?v=8.4">
     <meta name="robots" content="noindex, nofollow">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
@@ -262,16 +262,16 @@
 
             <!-- PANE 9: BILLING & PAYMENT TRACKING -->
             <div id="pane-billing" class="admin-tab-content-pane" style="display: none;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+                <div class="billing-header-row" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
                     <h3 class="admin-form-title" style="margin-bottom: 0; border-bottom: none;"><i
                             class="fa-solid fa-file-invoice-dollar" style="color: var(--color-gold);"></i> Billing & Payment Tracker</h3>
-                    <button type="button" onclick="openCreateBillModal()" class="btn btn-primary" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;">
+                    <button type="button" onclick="openCreateBillModal()" class="btn btn-primary billing-create-btn" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;">
                         <i class="fa-solid fa-plus"></i> Create New Bill
                     </button>
                 </div>
 
                 <!-- Filters Bar -->
-                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 16px; border-radius: 6px; margin-bottom: 20px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+                <div class="billing-filters-bar" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 16px; border-radius: 6px; margin-bottom: 20px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
                     <div style="flex: 1; min-width: 250px; position: relative;">
                         <input type="text" id="billing-search" class="admin-input" placeholder="Search by Client Name or Booking ID..." oninput="fetchBillingRecords()" style="padding-left: 36px; width: 100%;">
                         <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--color-slate); font-size: 13px;"></i>
@@ -768,7 +768,7 @@
                             </select>
                         </div>
                     </div>
-                    <div id="leads-action-buttons-wrap" style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+                    <div id="leads-action-buttons-wrap" style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center; justify-content: flex-end;">
                         <button type="button" onclick="resetLeadsFilters()" class="btn btn-secondary" style="border: 1px solid var(--color-gold); background: #1e293b; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: var(--color-gold); font-weight: 600;"><i class="fa-solid fa-arrow-rotate-left"></i> Clear Filters</button>
                         <button type="button" onclick="exportLeads()" class="btn btn-primary admin-only-action" id="export-leads-btn" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;"><i class="fa-solid fa-file-export"></i> Export Leads</button>
                         <button type="button" onclick="downloadLeadsTemplate()" class="btn btn-secondary admin-only-action" id="leads-template-btn" style="border: 1px solid var(--color-gold); background: #1e293b; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: var(--color-gold); font-weight: 600;"><i class="fa-solid fa-download"></i> Template</button>
@@ -1725,8 +1725,8 @@
             color: #94a3b8 !important;
             font-weight: 600 !important;
         }
-        #create-bill-modal .cbm-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.82); backdrop-filter: blur(6px); z-index: 10000; display: flex; align-items: center; justify-content: center; overflow-y: auto; padding: 20px; }
-        #create-bill-modal .cbm-card { background: linear-gradient(145deg, #0f1f38 0%, #0d1526 100%); border: 1px solid rgba(212,175,55,0.4); border-radius: 20px; width: 100%; max-width: 660px; box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04) inset; overflow: hidden; position: relative; }
+        #create-bill-modal .cbm-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.82); backdrop-filter: blur(6px); z-index: 10000; display: flex; align-items: flex-start; justify-content: center; overflow-y: auto; padding: 20px; }
+        #create-bill-modal .cbm-card { background: linear-gradient(145deg, #0f1f38 0%, #0d1526 100%); border: 1px solid rgba(212,175,55,0.4); border-radius: 20px; width: 100%; max-width: 660px; box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04) inset; overflow: visible; position: relative; margin: auto; }
         #create-bill-modal .cbm-header { padding: 24px 28px 20px; border-bottom: 1px solid rgba(255,255,255,0.07); display: flex; align-items: center; justify-content: space-between; background: linear-gradient(90deg, rgba(212,175,55,0.08) 0%, transparent 60%); }
         #create-bill-modal .cbm-header-left { display: flex; align-items: center; gap: 14px; }
         #create-bill-modal .cbm-icon-wrap { width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #d4af37, #f5c842); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(212,175,55,0.35); flex-shrink: 0; }
@@ -1778,12 +1778,22 @@
         #create-bill-modal .cbm-submit { width: 100%; padding: 14px; border: none; border-radius: 12px; background: linear-gradient(135deg, #d4af37, #f0c040); color: #0d1526; font-size: 14px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: all 0.25s; box-shadow: 0 4px 20px rgba(212,175,55,0.3); display: flex; align-items: center; justify-content: center; gap: 10px; }
         #create-bill-modal .cbm-submit:hover { transform: translateY(-1px); box-shadow: 0 8px 28px rgba(212,175,55,0.45); }
         #create-bill-modal .cbm-submit:active { transform: translateY(0); }
-        @media (max-width: 580px) {
-            #create-bill-modal .cbm-grid-2, #create-bill-modal .cbm-grid-3, #create-bill-modal .cbm-calc-grid { grid-template-columns: 1fr; }
-            #create-bill-modal .cbm-calc-footer { flex-direction: column; align-items: flex-start; gap: 6px; }
+        @media (max-width: 768px) {
+            #create-bill-modal { padding: 14px 10px !important; -webkit-overflow-scrolling: touch; }
+            #create-bill-modal .cbm-card { border-radius: 16px !important; max-width: 100% !important; margin: 0 auto !important; }
+            #create-bill-modal .cbm-grid-2, #create-bill-modal .cbm-grid-3, #create-bill-modal .cbm-calc-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+            #create-bill-modal .cbm-input,
+            #create-bill-modal .cbm-select,
+            #create-bill-modal .cbm-amount-input { font-size: 16px !important; min-height: 42px !important; }
+            #create-bill-modal .cbm-calc-footer { flex-direction: column !important; align-items: flex-start !important; gap: 6px !important; }
+            #create-bill-modal .cbm-header { padding: 16px 16px 14px !important; }
+            #create-bill-modal .cbm-body { padding: 16px 14px !important; }
+            #create-bill-modal .cbm-title { font-size: 17px !important; }
+            #create-bill-modal .cbm-subtitle { display: none !important; }
+            #create-bill-modal .cbm-submit { min-height: 44px !important; font-size: 14px !important; }
         }
     </style>
-    <div id="create-bill-modal" style="display:none; position:fixed; inset:0; z-index:10000; align-items:center; justify-content:center; overflow-y:auto; padding:20px; background:rgba(0,0,0,0.82); backdrop-filter:blur(6px);">
+    <div id="create-bill-modal" style="display:none; position:fixed; inset:0; z-index:10000; align-items:flex-start; justify-content:center; overflow-y:auto; -webkit-overflow-scrolling:touch; padding:20px 16px; background:rgba(0,0,0,0.82); backdrop-filter:blur(6px);">
         <div class="cbm-card">
             <!-- Header -->
             <div class="cbm-header">
@@ -2006,8 +2016,18 @@
         #add-payment-modal .apm-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         #add-payment-modal .apm-submit { width: 100%; padding: 14px; border: none; border-radius: 12px; background: linear-gradient(135deg, #22c55e, #16a34a); color: #fff; font-size: 13px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: all 0.25s; box-shadow: 0 4px 20px rgba(34,197,94,0.3); display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 8px; }
         #add-payment-modal .apm-submit:hover { transform: translateY(-1px); box-shadow: 0 8px 28px rgba(34,197,94,0.45); }
+        @media (max-width: 768px) {
+            #add-payment-modal { align-items: flex-start !important; padding: 16px 12px !important; }
+            #add-payment-modal .apm-card { margin: auto !important; max-width: 100% !important; border-radius: 16px !important; }
+            #add-payment-modal .apm-header { padding: 16px 18px 14px !important; }
+            #add-payment-modal .apm-body { padding: 16px 18px 20px !important; }
+            #add-payment-modal .apm-input,
+            #add-payment-modal .apm-select { font-size: 16px !important; min-height: 42px !important; }
+            #add-payment-modal .apm-grid-2 { grid-template-columns: 1fr !important; gap: 12px !important; }
+            #add-payment-modal .apm-submit { min-height: 44px !important; font-size: 14px !important; }
+        }
     </style>
-    <div id="add-payment-modal" style="display:none; position:fixed; inset:0; z-index:10000; align-items:center; justify-content:center; background:rgba(0,0,0,0.82); backdrop-filter:blur(6px);">
+    <div id="add-payment-modal" style="display:none; position:fixed; inset:0; z-index:10000; align-items:center; justify-content:center; overflow-y:auto; -webkit-overflow-scrolling:touch; padding:20px 14px; background:rgba(0,0,0,0.82); backdrop-filter:blur(6px);">
         <div class="apm-card">
             <div class="apm-header">
                 <div style="display:flex;align-items:center;gap:12px;">
@@ -5748,7 +5768,14 @@
                         return;
                     }
                 }
-                rowEl.classList.toggle('expanded');
+                // Use 'show-all-details' — the class name CSS is listening for
+                rowEl.classList.toggle('show-all-details');
+                // Visual feedback: highlight the border briefly on expand
+                if (rowEl.classList.contains('show-all-details')) {
+                    rowEl.style.borderLeftColor = '#f5c842';
+                } else {
+                    rowEl.style.borderLeftColor = '';
+                }
             }
         };
 
@@ -8376,7 +8403,8 @@
         // ==========================================
         // BILLING & PAYMENT TRACKING FUNCTIONS
         // ==========================================
-        let billingRecords = [];
+        let billingRecords = window.billingRecords || [];
+        window.billingRecords = billingRecords;
 
         window.fetchBillingRecords = async function() {
             try {
@@ -8404,6 +8432,7 @@
                 }
 
                 billingRecords = result;
+                window.billingRecords = result;
                 renderBillingTable();
                 updateDynamicStats('pane-billing');
                 if (bookingsData && bookingsData.length > 0) {
@@ -8427,13 +8456,15 @@
             const tbody = document.getElementById('billing-table-body');
             if (!tbody) return;
 
-            if (billingRecords.length === 0) {
+            const records = (window.billingRecords && window.billingRecords.length > 0) ? window.billingRecords : (billingRecords || []);
+
+            if (records.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: var(--color-slate); padding: 30px;">No billing records found.</td></tr>`;
                 return;
             }
 
             let html = '';
-            billingRecords.forEach(bill => {
+            records.forEach(bill => {
                 const totalBilled = parseFloat(bill.total_package_amount);
                 const discount = parseFloat(bill.discount || 0);
                 const netAmount = totalBilled - discount;
@@ -8453,71 +8484,71 @@
 
                 const custPhoneClean = (bill.customer_phone || '').replace(/[^0-9]/g, '');
                 const waPhone = custPhoneClean.length === 10 ? '91' + custPhoneClean : custPhoneClean;
-                const custEmail = bill.customer_email ? `<span style="font-size: 11px; color: #64748b; display: block;">${bill.customer_email}</span>` : '';
+                const custEmail = bill.customer_email ? `<span class="billing-customer-email">${bill.customer_email}</span>` : '';
                 const customerHtml = `
-                    <div style="text-align: left;">
-                        <strong style="color: #0f172a; display: block; font-size: 14px; font-weight: 700;">${bill.customer_name}</strong>
-                        <a href="tel:${custPhoneClean}" style="color: #d97706; font-size: 12px; display: inline-flex; align-items: center; gap: 4px; text-decoration: none; font-weight: 700;">
-                            <i class="fa-solid fa-phone" style="font-size: 10px;"></i> ${bill.customer_phone}
+                    <div class="billing-customer-wrap">
+                        <strong class="billing-customer-name">${bill.customer_name}</strong>
+                        <a href="tel:${custPhoneClean}" class="billing-customer-phone">
+                            <i class="fa-solid fa-phone"></i> ${bill.customer_phone}
                         </a>
                         ${custEmail}
-                        <div style="display: flex; gap: 6px; margin-top: 4px;">
-                            <a href="tel:${custPhoneClean}" style="background: rgba(34, 197, 94, 0.12); color: #15803d; border: 1px solid rgba(34, 197, 94, 0.3); padding: 2px 8px; border-radius: 12px; font-size: 11px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
+                        <div class="billing-contact-btns">
+                            <a href="tel:${custPhoneClean}" class="billing-btn-call">
                                 <i class="fa-solid fa-phone"></i> Call
                             </a>
-                            <a href="https://wa.me/${waPhone}?text=Namaste%20${encodeURIComponent(bill.customer_name)}!%20This%20is%20Rudraansh%20Yatra." target="_blank" style="background: rgba(37, 211, 102, 0.12); color: #15803d; border: 1px solid rgba(37, 211, 102, 0.3); padding: 2px 8px; border-radius: 12px; font-size: 11px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
+                            <a href="https://wa.me/${waPhone}?text=Namaste%20${encodeURIComponent(bill.customer_name)}!%20This%20is%20Rudraansh%20Yatra." target="_blank" class="billing-btn-chat">
                                 <i class="fa-brands fa-whatsapp"></i> Chat
                             </a>
                         </div>
                     </div>
                 `;
 
-                const pickupHtml = bill.pickup_point ? `<span style="font-size: 11px; background: #e2e8f0; color: #475569; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-top: 4px; font-weight: 600;"><i class="fa-solid fa-location-dot"></i> ${bill.pickup_point}</span>` : '';
+                const pickupHtml = bill.pickup_point ? `<span class="billing-pickup-badge"><i class="fa-solid fa-location-dot"></i> ${bill.pickup_point}</span>` : '';
                 const packageHtml = `
-                    <div style="text-align: left;">
-                        <strong style="color: #b8860b; display: block; font-size: 13.5px; font-weight: 700;">${bill.package_name}</strong>
-                        <span style="font-size: 12px; color: #475569; font-weight: 600; display: block;">Start: ${startDateStr} | Pax: ${bill.group_size}</span>
+                    <div class="billing-package-wrap">
+                        <strong class="billing-package-name">${bill.package_name}</strong>
+                        <span class="billing-package-meta">Start: ${startDateStr} | Pax: ${bill.group_size}</span>
                         ${pickupHtml}
                     </div>
                 `;
 
                 const progressHtml = `
-                    <div style="width: 100%; min-width: 100px;">
-                        <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 3px; color: #1e293b; font-weight: 700;">
+                    <div class="billing-progress-bar-wrap">
+                        <div class="billing-progress-bar-label">
                             <span>₹${totalPaid.toLocaleString('en-IN')}</span>
                             <span>${progressPct}%</span>
                         </div>
-                        <div style="width: 100%; height: 6px; background: rgba(0,0,0,0.1); border-radius: 3px; overflow: hidden;">
-                            <div style="width: ${progressPct}%; height: 100%; background: ${bill.payment_status === 'Fully Paid' ? '#22c55e' : '#eab308'}; border-radius: 3px;"></div>
+                        <div class="billing-progress-bar-track">
+                            <div class="billing-progress-bar-fill" style="width: ${progressPct}%; background: ${bill.payment_status === 'Fully Paid' ? '#22c55e' : '#eab308'};"></div>
                         </div>
                     </div>
                 `;
 
-                let billedAmtHtml = `<strong style="color: #0f172a; font-size: 14px; font-weight: 800;">₹${netAmount.toLocaleString('en-IN')}</strong>`;
+                let billedAmtHtml = `<strong class="billing-net-amount">₹${netAmount.toLocaleString('en-IN')}</strong>`;
                 if (discount > 0) {
                     billedAmtHtml += `
-                        <div style="font-size: 10px; color: #64748b; font-weight: 600; margin-top: 2px;">
-                            <span>Base: ₹${totalBilled.toLocaleString('en-IN')}</span><br>
-                            <span style="color: #dc2626;">Disc: -₹${discount.toLocaleString('en-IN')}</span>
+                        <div class="billing-disc-wrap">
+                            <span class="billing-base-val">Base: ₹${totalBilled.toLocaleString('en-IN')}</span><br>
+                            <span class="billing-disc-val">Disc: -₹${discount.toLocaleString('en-IN')}</span>
                         </div>
                     `;
                 }
 
                 html += `
-                    <tr>
-                        <td data-label="Booking ID"><strong style="color: #0f172a; background: rgba(212, 175, 55, 0.18); border: 1px solid rgba(212, 175, 55, 0.4); padding: 4px 8px; border-radius: 6px; font-family: monospace; font-size: 12.5px; font-weight: 800; display: inline-block;">${bill.booking_id}</strong></td>
-                        <td data-label="Customer">${customerHtml}</td>
-                        <td data-label="Package">${packageHtml}</td>
-                        <td data-label="Billed Amt">${billedAmtHtml}</td>
-                        <td data-label="Paid Progress">${progressHtml}</td>
-                        <td data-label="Outstanding"><strong style="color: ${remaining > 0 ? '#dc2626' : '#16a34a'}; font-size: 14px; font-weight: 800;">₹${remaining.toLocaleString('en-IN')}</strong></td>
-                        <td data-label="Status"><span class="admin-badge ${statusBadgeClass}" style="padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 11px;">${bill.payment_status}</span></td>
-                        <td data-label="Actions">
-                            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-                                <button onclick="openAddPaymentModal('${bill.id}', '${bill.booking_id}', '${bill.customer_name}', ${remaining})" class="btn btn-secondary" style="border: 1.5px solid #d97706; background: transparent; color: #b45309; padding: 6px 12px; font-size: 11px; cursor: pointer; border-radius: 4px; font-weight: bold; display: inline-flex; align-items: center; gap: 4px;" title="Add Payment">
+                    <tr class="billing-card-row">
+                        <td data-label="Booking ID" class="billing-id-cell"><strong class="billing-id-badge">${bill.booking_id}</strong></td>
+                        <td data-label="Customer" class="billing-customer-cell">${customerHtml}</td>
+                        <td data-label="Package" class="billing-package-cell">${packageHtml}</td>
+                        <td data-label="Billed Amt" class="billing-billed-cell">${billedAmtHtml}</td>
+                        <td data-label="Paid Progress" class="billing-progress-cell">${progressHtml}</td>
+                        <td data-label="Outstanding" class="billing-outstanding-cell"><strong class="${remaining > 0 ? 'amt-unpaid' : 'amt-cleared'}">₹${remaining.toLocaleString('en-IN')}</strong></td>
+                        <td data-label="Status" class="billing-status-cell"><span class="admin-badge ${statusBadgeClass}">${bill.payment_status}</span></td>
+                        <td data-label="Actions" class="billing-actions-cell">
+                            <div class="billing-action-buttons-wrap">
+                                <button onclick="openAddPaymentModal('${bill.id}', '${bill.booking_id}', '${bill.customer_name}', ${remaining})" class="btn btn-secondary billing-pay-btn" title="Add Payment">
                                     <i class="fa-solid fa-plus-minus"></i> + ADD PAY
                                 </button>
-                                <button onclick="downloadBillPdf('${bill.id}')" class="btn btn-secondary" style="border: 1.5px solid #2563eb; background: transparent; color: #1d4ed8; padding: 6px 12px; font-size: 11px; cursor: pointer; border-radius: 4px; font-weight: bold; display: inline-flex; align-items: center; gap: 4px;" title="Download PDF Bill">
+                                <button onclick="downloadBillPdf('${bill.id}')" class="btn btn-secondary billing-pdf-btn" title="Download PDF Bill">
                                     <i class="fa-solid fa-file-pdf"></i> PDF
                                 </button>
                             </div>
@@ -8555,7 +8586,7 @@
                 console.warn('Backend PDF route unavailable, using printable invoice fallback:', err);
             }
 
-            // Client-side Fallback: Open a clean, printable invoice document in a popup window
+            // Client-side Fallback: In-page invoice overlay (works on mobile — no popup needed)
             try {
                 const bill = (billingRecords || []).find(b => b.id === billId) ||
                     (await supabaseAdmin.from('booking_bills').select('*').eq('id', billId).single()).data;
@@ -8576,12 +8607,13 @@
 
                 let paymentRowsHtml = '';
                 payments.forEach((p, idx) => {
+                    const pDate = p.datePaid ? new Date(p.datePaid).toLocaleDateString('en-IN') : '—';
                     paymentRowsHtml += `
                         <tr style="border-bottom: 1px solid #e2e8f0; font-size: 13px;">
-                            <td style="padding: 10px 12px; color: #475569;">#${idx + 1} (${p.method || 'Online / UPI'})</td>
+                            <td style="padding: 10px 12px; color: #475569;">#${idx + 1} (${p.method || p.paymentMode || 'Online / UPI'})</td>
                             <td style="padding: 10px 12px; color: #64748b; font-family: monospace;">${p.refNo || p.transactionId || 'Verified'}</td>
-                            <td style="padding: 10px 12px; color: #64748b;">${new Date(p.datePaid).toLocaleDateString('en-IN')}</td>
-                            <td style="padding: 10px 12px; text-align: right; color: #16a34a; font-weight: 700;">₹${parseFloat(p.amountPaid).toLocaleString('en-IN')}</td>
+                            <td style="padding: 10px 12px; color: #64748b;">${pDate}</td>
+                            <td style="padding: 10px 12px; text-align: right; color: #16a34a; font-weight: 700;">&#8377;${parseFloat(p.amountPaid).toLocaleString('en-IN')}</td>
                         </tr>
                     `;
                 });
@@ -8590,123 +8622,132 @@
                     paymentRowsHtml = `<tr><td colspan="4" style="padding: 12px; text-align: center; color: #94a3b8; font-style: italic;">No payments recorded yet.</td></tr>`;
                 }
 
-                const invoiceWindow = window.open('', '_blank', 'width=850,height=1000');
-                if (!invoiceWindow) {
-                    showAdminToast('Please allow popup to view Invoice', 'warning');
-                    return;
-                }
+                // Remove any stale overlay first
+                const staleOverlay = document.getElementById('invoice-preview-overlay');
+                if (staleOverlay) staleOverlay.remove();
 
-                invoiceWindow.document.write(`
-                    <!DOCTYPE html>
-                    <html>
-                    <head>
-                        <title>Invoice - ${bill.booking_id} - Rudraansh Yatra</title>
-                        <meta charset="utf-8">
-                        <style>
-                            body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8fafc; color: #0f172a; margin: 0; padding: 30px; }
-                            .invoice-card { max-width: 800px; margin: 0 auto; background: #ffffff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); padding: 40px; border: 1px solid #e2e8f0; }
-                            .header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #d4af37; padding-bottom: 24px; margin-bottom: 24px; }
-                            .logo-text { font-size: 26px; font-weight: 800; color: #0b1f3a; letter-spacing: 0.5px; }
-                            .logo-text span { color: #d4af37; }
-                            .inv-badge { background: #0b1f3a; color: #d4af37; padding: 6px 14px; border-radius: 20px; font-weight: 700; font-size: 13px; display: inline-block; }
-                            .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 28px; }
-                            .info-box { background: #f8fafc; padding: 16px; border-radius: 8px; border-left: 4px solid #d4af37; }
-                            table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
-                            th { background: #0b1f3a; color: #ffffff; text-align: left; padding: 10px 12px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
-                            .totals-box { margin-left: auto; width: 320px; background: #f8fafc; border-radius: 8px; padding: 16px; border: 1px solid #e2e8f0; }
-                            .totals-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 14px; }
-                            .totals-row.grand { font-size: 17px; font-weight: 800; color: #0b1f3a; border-top: 2px solid #d4af37; margin-top: 6px; padding-top: 10px; }
-                            .totals-row.balance { font-size: 16px; font-weight: 800; color: ${balanceDue > 0 ? '#dc2626' : '#16a34a'}; border-top: 1px dashed #cbd5e1; margin-top: 6px; padding-top: 8px; }
-                            .print-bar { text-align: center; margin-bottom: 20px; }
-                            .btn-print { background: #d4af37; color: #0b1f3a; border: none; padding: 12px 28px; font-size: 14px; font-weight: 800; border-radius: 6px; cursor: pointer; box-shadow: 0 4px 12px rgba(212,175,55,0.4); }
-                            @media print { .print-bar { display: none; } body { padding: 0; background: #fff; } .invoice-card { border: none; box-shadow: none; padding: 0; } }
-                        </style>
-                    </head>
-                    <body>
-                        <div class="print-bar">
-                            <button class="btn-print" onclick="window.print()">🖨️ Print / Save as PDF</button>
-                        </div>
-                        <div class="invoice-card">
-                            <div class="header">
-                                <div>
-                                    <div class="logo-text">RUDRAANSH <span>YATRA</span></div>
-                                    <div style="font-size: 12px; color: #64748b; margin-top: 4px;">Simalgair Bazaar, Pithoragarh, Uttarakhand 262501</div>
-                                    <div style="font-size: 12px; color: #64748b;">Phone: +91 7617617651 | Email: info@rudraanshyatra.com</div>
-                                </div>
-                                <div style="text-align: right;">
-                                    <span class="inv-badge">BILL OF SUPPLY</span>
-                                    <div style="font-size: 15px; font-weight: 800; color: #0b1f3a; margin-top: 8px;">Booking ID: ${bill.booking_id}</div>
-                                    <div style="font-size: 12px; color: #64748b; margin-top: 2px;">Date: ${billDate}</div>
-                                </div>
-                            </div>
-                            <div class="grid-2">
-                                <div class="info-box">
-                                    <strong style="color: #0b1f3a; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 6px;">Billed To (Customer):</strong>
-                                    <div style="font-size: 15px; font-weight: 700; color: #0f172a;">${bill.customer_name}</div>
-                                    <div style="font-size: 13px; color: #475569; margin-top: 2px;">Phone: ${bill.customer_phone}</div>
-                                    ${bill.customer_email ? `<div style="font-size: 13px; color: #475569;">Email: ${bill.customer_email}</div>` : ''}
-                                    ${bill.pickup_point ? `<div style="font-size: 13px; color: #475569;">Pickup: ${bill.pickup_point}</div>` : ''}
-                                </div>
-                                <div class="info-box">
-                                    <strong style="color: #0b1f3a; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 6px;">Tour Package Details:</strong>
-                                    <div style="font-size: 15px; font-weight: 700; color: #0f172a;">${bill.package_name}</div>
-                                    <div style="font-size: 13px; color: #475569; margin-top: 2px;">Tour Start Date: ${tourDate}</div>
-                                    <div style="font-size: 13px; color: #475569;">Group Size: ${bill.group_size || 1} Person(s)</div>
-                                    <div style="font-size: 13px; color: #475569;">Status: <strong style="color: #16a34a;">${bill.payment_status}</strong></div>
-                                </div>
-                            </div>
-                            <table style="margin-top: 10px;">
-                                <thead>
-                                    <tr>
-                                        <th>Description</th>
-                                        <th>Rate / Person</th>
-                                        <th>Pax</th>
-                                        <th style="text-align: right;">Total (INR)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr style="border-bottom: 1px solid #e2e8f0; font-size: 14px;">
-                                        <td style="padding: 14px 12px; font-weight: 600;">${bill.package_name} (Ground Tour Execution, Permits & Homestays)</td>
-                                        <td style="padding: 14px 12px; color: #64748b;">₹${(totalBilled / (bill.group_size || 1)).toLocaleString('en-IN', { maximumFractionDigits: 0 })}</td>
-                                        <td style="padding: 14px 12px; color: #64748b;">${bill.group_size || 1}</td>
-                                        <td style="padding: 14px 12px; text-align: right; font-weight: 700;">₹${totalBilled.toLocaleString('en-IN')}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-top: 20px;">
-                                <div style="max-width: 400px;">
-                                    <div style="font-size: 12px; font-weight: 700; color: #0b1f3a; text-transform: uppercase; margin-bottom: 6px;">Payment History:</div>
-                                    <table style="font-size: 12px; margin-bottom: 0;">
-                                        <thead>
-                                            <tr>
-                                                <th>Method</th>
-                                                <th>Ref / Trx ID</th>
-                                                <th>Date</th>
-                                                <th style="text-align: right;">Amount</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            ${paymentRowsHtml}
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="totals-box">
-                                    <div class="totals-row"><span>Total Package Amount:</span> <span>₹${totalBilled.toLocaleString('en-IN')}</span></div>
-                                    ${discount > 0 ? `<div class="totals-row" style="color: #dc2626;"><span>Discount Applied:</span> <span>-₹${discount.toLocaleString('en-IN')}</span></div>` : ''}
-                                    <div class="totals-row grand"><span>Net Payable:</span> <span>₹${netAmount.toLocaleString('en-IN')}</span></div>
-                                    <div class="totals-row" style="color: #16a34a; font-weight: 700;"><span>Total Paid:</span> <span>₹${totalPaid.toLocaleString('en-IN')}</span></div>
-                                    <div class="totals-row balance"><span>Balance Due:</span> <span>₹${balanceDue.toLocaleString('en-IN')}</span></div>
-                                </div>
-                            </div>
-                            <div style="margin-top: 40px; border-top: 1px solid #e2e8f0; padding-top: 20px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #94a3b8;">
-                                <div>Thank you for choosing Rudraansh Yatra! Wishing you a divine pilgrimage.</div>
-                                <div style="text-align: right; font-weight: 700; color: #0b1f3a;">Authorised Signatory</div>
-                            </div>
-                        </div>
-                    </body>
-                    </html>
-                `);
-                invoiceWindow.document.close();
+                const balanceColor = balanceDue > 0 ? '#dc2626' : '#16a34a';
+                const invoiceHtml = `<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invoice - ${bill.booking_id} - Rudraansh Yatra</title>
+<style>
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8fafc; color: #0f172a; margin: 0; padding: 30px; }
+.invoice-card { max-width: 800px; margin: 0 auto; background: #fff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); padding: 40px; border: 1px solid #e2e8f0; }
+.header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #d4af37; padding-bottom: 24px; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+.logo-text { font-size: 26px; font-weight: 800; color: #0b1f3a; letter-spacing: 0.5px; }
+.logo-text span { color: #d4af37; }
+.inv-badge { background: #0b1f3a; color: #d4af37; padding: 6px 14px; border-radius: 20px; font-weight: 700; font-size: 13px; display: inline-block; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 28px; }
+.info-box { background: #f8fafc; padding: 16px; border-radius: 8px; border-left: 4px solid #d4af37; }
+table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+.totals-box { margin-left: auto; width: 320px; background: #f8fafc; border-radius: 8px; padding: 16px; border: 1px solid #e2e8f0; }
+.totals-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 14px; }
+.totals-row.grand { font-size: 17px; font-weight: 800; color: #0b1f3a; border-top: 2px solid #d4af37; margin-top: 6px; padding-top: 10px; }
+.totals-row.balance { font-size: 16px; font-weight: 800; color: ${balanceColor}; border-top: 1px dashed #cbd5e1; margin-top: 6px; padding-top: 8px; }
+@media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } .totals-box { width: 100%; margin-left: 0; } body { padding: 12px; } .invoice-card { padding: 16px; } }
+@media print { .no-print { display: none !important; } body { padding: 0; background: #fff; } .invoice-card { border: none; box-shadow: none; padding: 20px; } }
+</style>
+</head>
+<body>
+<div class="invoice-card">
+<div class="header">
+  <div>
+    <div class="logo-text">RUDRAANSH <span>YATRA</span></div>
+    <div style="font-size:12px;color:#64748b;margin-top:4px;">Simalgair Bazaar, Pithoragarh, Uttarakhand 262501</div>
+    <div style="font-size:12px;color:#64748b;">Phone: +91 7617617651 | Email: info@rudraanshyatra.com</div>
+  </div>
+  <div style="text-align:right;">
+    <span class="inv-badge">BILL OF SUPPLY</span>
+    <div style="font-size:15px;font-weight:800;color:#0b1f3a;margin-top:8px;">Booking ID: ${bill.booking_id}</div>
+    <div style="font-size:12px;color:#64748b;margin-top:2px;">Date: ${billDate}</div>
+  </div>
+</div>
+<div class="grid-2">
+  <div class="info-box">
+    <strong style="color:#0b1f3a;font-size:12px;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Billed To (Customer):</strong>
+    <div style="font-size:15px;font-weight:700;color:#0f172a;">${bill.customer_name}</div>
+    <div style="font-size:13px;color:#475569;margin-top:2px;">Phone: ${bill.customer_phone}</div>
+    ${bill.customer_email ? `<div style="font-size:13px;color:#475569;">Email: ${bill.customer_email}</div>` : ''}
+    ${bill.pickup_point ? `<div style="font-size:13px;color:#475569;">Pickup: ${bill.pickup_point}</div>` : ''}
+  </div>
+  <div class="info-box">
+    <strong style="color:#0b1f3a;font-size:12px;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Tour Package Details:</strong>
+    <div style="font-size:15px;font-weight:700;color:#0f172a;">${bill.package_name}</div>
+    <div style="font-size:13px;color:#475569;margin-top:2px;">Tour Start Date: ${tourDate}</div>
+    <div style="font-size:13px;color:#475569;">Group Size: ${bill.group_size || 1} Person(s)</div>
+    <div style="font-size:13px;color:#475569;">Status: <strong style="color:#16a34a;">${bill.payment_status}</strong></div>
+  </div>
+</div>
+<table style="margin-top:10px;">
+  <thead><tr><th>Description</th><th>Rate / Person</th><th>Pax</th><th style="text-align:right;">Total (INR)</th></tr></thead>
+  <tbody>
+    <tr style="border-bottom:1px solid #e2e8f0;font-size:14px;">
+      <td style="padding:14px 12px;font-weight:600;">${bill.package_name} (Ground Tour Execution, Permits &amp; Homestays)</td>
+      <td style="padding:14px 12px;color:#64748b;">&#8377;${(totalBilled / (bill.group_size || 1)).toLocaleString('en-IN', { maximumFractionDigits: 0 })}</td>
+      <td style="padding:14px 12px;color:#64748b;">${bill.group_size || 1}</td>
+      <td style="padding:14px 12px;text-align:right;font-weight:700;">&#8377;${totalBilled.toLocaleString('en-IN')}</td>
+    </tr>
+  </tbody>
+</table>
+<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-top:20px;flex-wrap:wrap;gap:20px;">
+  <div style="flex:1;min-width:220px;">
+    <div style="font-size:12px;font-weight:700;color:#0b1f3a;text-transform:uppercase;margin-bottom:6px;">Payment History:</div>
+    <table style="font-size:12px;margin-bottom:0;">
+      <thead><tr><th>Method</th><th>Ref / Trx ID</th><th>Date</th><th style="text-align:right;">Amount</th></tr></thead>
+      <tbody>${paymentRowsHtml}</tbody>
+    </table>
+  </div>
+  <div class="totals-box">
+    <div class="totals-row"><span>Total Package Amount:</span><span>&#8377;${totalBilled.toLocaleString('en-IN')}</span></div>
+    ${discount > 0 ? `<div class="totals-row" style="color:#dc2626;"><span>Discount Applied:</span><span>-&#8377;${discount.toLocaleString('en-IN')}</span></div>` : ''}
+    <div class="totals-row grand"><span>Net Payable:</span><span>&#8377;${netAmount.toLocaleString('en-IN')}</span></div>
+    <div class="totals-row" style="color:#16a34a;font-weight:700;"><span>Total Paid:</span><span>&#8377;${totalPaid.toLocaleString('en-IN')}</span></div>
+    <div class="totals-row balance"><span>Balance Due:</span><span>&#8377;${balanceDue.toLocaleString('en-IN')}</span></div>
+  </div>
+</div>
+<div style="margin-top:40px;border-top:1px solid #e2e8f0;padding-top:20px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#94a3b8;flex-wrap:wrap;gap:8px;">
+  <div>Thank you for choosing Rudraansh Yatra! Wishing you a divine pilgrimage.</div>
+  <div style="text-align:right;font-weight:700;color:#0b1f3a;">Authorised Signatory</div>
+</div>
+</div>
+</body></html>`;
+
+                // Create full-screen in-page overlay (works on all mobile browsers — no popup permission needed)
+                const overlay = document.createElement('div');
+                overlay.id = 'invoice-preview-overlay';
+                overlay.style.cssText = 'position:fixed;inset:0;z-index:99999;background:#f8fafc;overflow-y:auto;';
+
+                const toolbar = document.createElement('div');
+                toolbar.className = 'no-print';
+                toolbar.style.cssText = 'position:sticky;top:0;z-index:10;background:#0b1f3a;padding:10px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 8px rgba(0,0,0,0.3);flex-wrap:wrap;';
+                toolbar.innerHTML = `
+                    <span style="color:#d4af37;font-weight:700;font-size:13px;"><i class="fa-solid fa-file-invoice-dollar"></i> Invoice Preview</span>
+                    <button onclick="window.frames['invoice-frame'].print()" style="background:#d4af37;color:#0b1f3a;border:none;padding:9px 20px;font-size:13px;font-weight:800;border-radius:6px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
+                        <i class="fa-solid fa-print"></i> Print / Save PDF
+                    </button>
+                    <button onclick="document.getElementById('invoice-preview-overlay').remove()" style="background:rgba(255,255,255,0.1);color:#fff;border:1px solid rgba(255,255,255,0.2);padding:9px 16px;font-size:13px;font-weight:700;border-radius:6px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;margin-left:auto;">
+                        <i class="fa-solid fa-xmark"></i> Close
+                    </button>
+                `;
+
+                const iframe = document.createElement('iframe');
+                iframe.name = 'invoice-frame';
+                iframe.style.cssText = 'width:100%;height:calc(100vh - 54px);border:none;display:block;';
+                iframe.title = `Invoice ${bill.booking_id}`;
+
+                overlay.appendChild(toolbar);
+                overlay.appendChild(iframe);
+                document.body.appendChild(overlay);
+
+                iframe.contentDocument.open();
+                iframe.contentDocument.write(invoiceHtml);
+                iframe.contentDocument.close();
+
+                showAdminToast('Invoice ready \u2014 tap Print / Save PDF', 'success');
             } catch (fallbackErr) {
                 console.error('Invoice generation failed:', fallbackErr);
                 showAdminToast('Failed to generate invoice: ' + fallbackErr.message, 'error');
