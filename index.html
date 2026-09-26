@@ -2,18 +2,7 @@
 <html lang="en">
 
 <head>
-    <!-- ===== Google Analytics 4 ===== -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3CGY0WCBBJ"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-3CGY0WCBBJ', {
-            'send_page_view': true,
-            'cookie_flags': 'SameSite=None;Secure'
-        });
-    </script>
-    <!-- ===== End Google Analytics 4 ===== -->
+    <!-- GA4 deferred to window.onload for performance — loaded at bottom of body -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adi Kailash & Om Parvat Yatra Packages 2026 | Rudraansh Yatra Pithoragarh</title>
@@ -29,7 +18,7 @@
 
     <!-- Open Graph / Facebook / WhatsApp -->
     <meta property="og:type" content="website">
-    <meta property="article:modified_time" content="2026-08-25T14:00:00+05:30">
+    <meta property="article:modified_time" content="2026-09-26T14:00:00+05:30">
     <meta property="og:url" content="https://rudraanshyatra.com/">
     <meta property="og:title" content="Adi Kailash & Om Parvat Yatra Packages 2026 | Rudraansh Yatra Pithoragarh">
     <meta property="og:description" content="Explore Adi Kailash, Om Parvat, and Darma Valley with Rudraansh Yatra — a hyper-local ground operator in Pithoragarh. Direct execution, local homestays, zero middlemen.">
@@ -895,6 +884,75 @@
     </style>
     <!-- ===== End Language Selector CSS ===== -->
     
+    <style>
+        /* ===== HOMEPAGE FIX OVERRIDES (Sep 26 2026) ===== */
+
+        /* FIX: card-desc text should be left-aligned, not justify */
+        .card-desc { text-align: left !important; }
+
+        /* FIX: Why Choose Us cards â€” equal heights */
+        .features-grid .feature-box,
+        .grid-3 .feature-box {
+            display: flex !important;
+            flex-direction: column !important;
+            min-height: 260px !important;
+        }
+
+        /* FIX: About section â€” reduce dead space below buttons */
+        #about-operator { padding-bottom: 48px !important; }
+
+        /* FIX: Blog section â€” reduce gap between header and cards */
+        #homepage-blogs .section-header { margin-bottom: 24px !important; }
+        #homepage-blogs .blog-carousel-wrapper { margin-top: 0 !important; }
+
+        /* FIX: Hero on mobile â€” lighten overlay so mountain shows through */
+        @media (max-width: 768px) {
+            .hero::before {
+                opacity: 0.42 !important;
+            }
+            /* Compact mobile hero badge pills */
+            .hero-desc > span span {
+                font-size: 11px !important;
+                padding: 3px 8px !important;
+            }
+        }
+
+        /* FIX: Certifications section â€” reduce excessive padding */
+        section[aria-label*="Certifications"] {
+            padding-top: 56px !important;
+            padding-bottom: 56px !important;
+        }
+
+        /* FIX: Gallery nav should not appear active/gold on homepage */
+        header nav .nav-link[href="gallery"] {
+            color: var(--color-primary) !important;
+            border-bottom: none !important;
+        }
+        header nav .nav-link[href="gallery"]:hover {
+            color: var(--color-gold) !important;
+        }
+
+        /* FIX: Wizard summary bar â€” show only when has content */
+        .wizard-summary-bar {
+            transition: opacity 0.4s ease;
+        }
+
+        /* FIX: Khaliya Top card description â€” ensure no stray newlines cause layout break */
+        .card-desc {
+            -webkit-hyphens: none !important;
+            hyphens: none !important;
+        }
+
+        /* FIX: Reviews section heading alignment */
+        .reviews-section-title {
+            font-size: clamp(1.6rem, 3vw, 2.2rem) !important;
+        }
+
+        /* FIX: Section padding bottom for about */
+        #about-operator.section-padding {
+            padding-bottom: 48px !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -1174,8 +1232,21 @@
                             <span><i class="fa-solid fa-snowflake"></i> Alpine Meadows</span>
                         </div>
                         <h3 class="card-title" itemprop="name">Khaliya Top Meadow Trek</h3>
-                        <p class="card-desc" itemprop="description">Walk through rhododendron forests to the grand alpine Bugyals of Munsiyari.
-                            Enjoy a 360-degree panorama of the Panchachuli peaks.</p>
+                        <p class="card-desc" itemprop="description">Walk through rhododendron forests to the grand alpine Bugyals of Munsiyari. Enjoy a 360-degree panorama of the Panchachuli peaks.</p>
+                        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px;">
+                            <a href="khaliya-top" style="display:flex;justify-content:space-between;align-items:center;padding:7px 10px;border-radius:6px;border:1px solid rgba(10,25,47,.08);text-decoration:none;color:var(--color-primary);font-size:12.5px;font-weight:600;background:#f8f9fc;">
+                                <span><i class="fa-solid fa-location-dot" style="color:var(--color-gold);margin-right:5px;"></i>From Pithoragarh</span>
+                                <span style="color:var(--color-gold);font-weight:700;">&#8377;9,500 &middot; 4D &rarr;</span>
+                            </a>
+                            <a href="khaliya-top" style="display:flex;justify-content:space-between;align-items:center;padding:7px 10px;border-radius:6px;border:1px solid rgba(10,25,47,.08);text-decoration:none;color:var(--color-primary);font-size:12.5px;font-weight:600;background:#f8f9fc;">
+                                <span><i class="fa-solid fa-train" style="color:var(--color-gold);margin-right:5px;"></i>From Kathgodam</span>
+                                <span style="color:var(--color-gold);font-weight:700;">&#8377;18,000 &middot; 5D &rarr;</span>
+                            </a>
+                            <a href="khaliya-top" style="display:flex;justify-content:space-between;align-items:center;padding:7px 10px;border-radius:6px;border:1px solid rgba(10,25,47,.08);text-decoration:none;color:var(--color-primary);font-size:12.5px;font-weight:600;background:#f8f9fc;">
+                                <span><i class="fa-solid fa-city" style="color:var(--color-gold);margin-right:5px;"></i>From Delhi NCR</span>
+                                <span style="color:var(--color-gold);font-weight:700;">&#8377;22,000 &middot; 5D &rarr;</span>
+                            </a>
+                        </div>
                         <div class="card-footer" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
                             <meta itemprop="priceCurrency" content="INR" />
                             <meta itemprop="price" content="9500" />
@@ -1550,7 +1621,7 @@
                     </div>
 
                     <!-- LIVE SUMMARY & PROGRESS BAR -->
-                    <div class="wizard-summary-bar">
+                    <div class="wizard-summary-bar" style="opacity:0;transition:opacity 0.4s ease;" id="wizard-summary-bar-el">
                         <div class="summary-details-wrap">
                             <div class="summary-selection-text" id="wizard-summary-selection">Destination: Not Selected</div>
                             <div class="summary-meta-text" id="wizard-summary-meta">Pace: Standard | Month: Flexible | Group: 1 Traveler</div>
@@ -1890,7 +1961,7 @@
     <!-- Google Reviews Section -->
     <section class="google-reviews-section">
         <div class="container">
-            <h2 class="reviews-section-title">We Appreciate Our Customers Feedbacks!</h2>
+            <h2 class="reviews-section-title">What Our Yatris Say</h2>
             
             <div class="reviews-slider-container">
                 <!-- Review Card 1: Happy Experience Summary -->
@@ -2500,6 +2571,45 @@
     </script>
     <script defer src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <!-- ===== End Google Translate Init ===== -->
+    <!-- ===== Google Analytics 4 (deferred) ===== -->
+    <script>
+        window.addEventListener('load', function() {
+            var s = document.createElement('script');
+            s.async = true;
+            s.src = 'https://www.googletagmanager.com/gtag/js?id=G-3CGY0WCBBJ';
+            document.head.appendChild(s);
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-3CGY0WCBBJ', { 'send_page_view': true, 'cookie_flags': 'SameSite=None;Secure' });
+        });
+    </script>
+    <!-- ===== End GA4 ===== -->
+    <script>
+        // Show summary bar when user starts interacting
+        function showSummaryBar() {
+            var bar = document.getElementById('wizard-summary-bar-el');
+            if (bar) bar.style.opacity = '1';
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            var destCards = document.querySelectorAll('.dest-select-card');
+            destCards.forEach(function(c) { c.addEventListener('click', showSummaryBar); });
+        });</script>
+
+    <!-- ===== Google Analytics 4 (deferred for performance) ===== -->
+    <script>
+        window.addEventListener('load', function() {
+            var s = document.createElement('script');
+            s.async = true;
+            s.src = 'https://www.googletagmanager.com/gtag/js?id=G-3CGY0WCBBJ';
+            document.head.appendChild(s);
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-3CGY0WCBBJ', { 'send_page_view': true, 'cookie_flags': 'SameSite=None;Secure' });
+        });
+    </script>
+    <!-- ===== End GA4 ===== -->
 </body>
 
 </html>
