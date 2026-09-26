@@ -2,18 +2,7 @@
 <html lang="en-IN">
 
 <head>
-    <!-- ===== Google Analytics 4 ===== -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3CGY0WCBBJ"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-3CGY0WCBBJ', {
-            'send_page_view': true,
-            'cookie_flags': 'SameSite=None;Secure'
-        });
-    </script>
-    <!-- ===== End Google Analytics 4 ===== -->
+    <!-- GA4 deferred - loaded at bottom for performance -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adi Kailash Permits Start Sept 20: 1st Autumn Batch (25 Yatris) Successfully Completes Yatra [Ground Report 2026]</title>
@@ -691,12 +680,16 @@
             margin: 40px 0 20px 0;
         }
         .author-bio-img {
-            width: 85px;
-            height: 85px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--color-gold);
-            flex-shrink: 0;
+            width: 85px !important;
+            height: 85px !important;
+            min-width: 85px !important;
+            min-height: 85px !important;
+            max-width: 85px !important;
+            max-height: 85px !important;
+            border-radius: 50% !important;
+            object-fit: cover !important;
+            border: 2px solid var(--color-gold) !important;
+            flex-shrink: 0 !important;
         }
         .author-bio-name {
             font-family: var(--font-serif);
@@ -1642,7 +1635,7 @@
 
                 <!-- Author Bio Box -->
                 <div class="author-bio-box">
-                    <img src="/assets/images/dheerendra-rautela.webp" alt="Dheerendra Rautela - Lead Expedition Guide" class="author-bio-img" loading="lazy">
+                    <img src="/assets/images/dheerendra-rautela.webp" alt="Dheerendra Rautela - Lead Expedition Guide, Rudraansh Yatra" class="author-bio-img" width="85" height="85" loading="lazy" decoding="async" style="width:85px!important;height:85px!important;min-width:85px!important;max-width:85px!important;object-fit:cover!important;border-radius:50%!important;">
                     <div>
                         <h3 class="author-bio-name">Dheerendra Rautela</h3>
                         <div class="author-bio-role">Tour Manager Operations &bull; Certified Lead Himalayan Expedition Guide</div>
@@ -1861,8 +1854,23 @@
             } catch(e){}
         });
     </script>
-    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" defer></script>
     <!-- ===== End Google Translate Init ===== -->
+
+    <!-- ===== Google Analytics 4 (deferred) ===== -->
+    <script>
+        window.addEventListener('load', function() {
+            var s = document.createElement('script');
+            s.async = true;
+            s.src = 'https://www.googletagmanager.com/gtag/js?id=G-3CGY0WCBBJ';
+            document.head.appendChild(s);
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-3CGY0WCBBJ', { 'send_page_view': true, 'cookie_flags': 'SameSite=None;Secure' });
+        });
+    </script>
+    <!-- ===== End GA4 ===== -->
 </body>
 
 </html>
