@@ -1674,6 +1674,28 @@ app.get('/api/gallery', async (req, res) => {
 // PROTECTED SECURED ADMIN/STAFF ENDPOINTS
 // ==========================================
 
+// Helper to parse yatra_status & completed_at from row or message tag
+function enrichBookingYatraStatus(row) {
+    if (!row) return row;
+    let yatraStatus = row.yatra_status;
+    let completedAt = row.completed_at;
+    if (!yatraStatus && row.message) {
+        const match = row.message.match(/\[YatraStatus:\s*([^\|\]]+)(?:\|\s*CompletedAt:\s*([^\]]+))?\]/i);
+        if (match) {
+            yatraStatus = match[1].trim();
+            if (match[2]) completedAt = match[2].trim();
+        }
+    }
+    if (!yatraStatus) {
+        yatraStatus = 'In Progress';
+    }
+    return {
+        ...row,
+        yatra_status: yatraStatus,
+        completed_at: completedAt || (yatraStatus === 'Yatra Completed' ? (row.travel_date || row.created_at) : null)
+    };
+}
+
 // Bookings CRUD
 app.get('/api/admin/bookings', authenticateToken, async (req, res) => {
     try {
@@ -1687,7 +1709,7 @@ app.get('/api/admin/bookings', authenticateToken, async (req, res) => {
         const { data, error } = await query.order('created_at', { ascending: false });
         if (error) throw error;
 
-        // Ensure pickup_point is enriched even if the column is not yet in Supabase schema
+        // Ensure pickup_point & yatra_status are enriched even if columns are not yet in Supabase schema
         const enrichedData = (data || []).map(row => {
             let pickup = row.pickup_point;
             if (!pickup && row.message) {
@@ -1706,8 +1728,9 @@ app.get('/api/admin/bookings', authenticateToken, async (req, res) => {
                     if (!pickup && /dharchula\s+to\s+darchula/i.test(row.message)) pickup = "Dharchula to Dharchula";
                 }
             }
+            const withYatra = enrichBookingYatraStatus(row);
             return {
-                ...row,
+                ...withYatra,
                 pickup_point: pickup || null
             };
         });
@@ -1797,6 +1820,171 @@ app.delete('/api/admin/bookings/:id', authenticateToken, async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
+
+// PATCH /api/admin/bookings/:id/yatra-status — update booking lifecycle status
+app.patch('/api/admin/bookings/:id/yatra-status', authenticateToken, async (req, res) => {
+    try {
+        if (!supabase) return res.status(500).json({ error: 'Supabase not initialized' });
+        const { yatra_status } = req.body;
+        const validStatuses = ['In Progress', 'Yatra Completed', 'Cancelled'];
+        if (!yatra_status || !validStatuses.includes(yatra_status)) {
+            return res.status(400).json({ error: `Invalid yatra_status. Must be one of: ${validStatuses.join(', ')}` });
+        }
+        const completed_at = yatra_status === 'Yatra Completed' ? new Date().toISOString() : null;
+        const payload = { yatra_status };
+        if (completed_at) payload.completed_at = completed_at;
+
+        let finalBooking = null;
+        const { data, error } = await supabase
+            .from('bookings')
+            .update(payload)
+            .eq('id', req.params.id)
+            .select()
+            .single();
+
+        if (error) {
+            // Schema fallback: if columns don't exist yet in Supabase, embed in message field
+            if (error.message && (error.message.includes('yatra_status') || error.message.includes('completed_at'))) {
+                console.warn('[PATCH yatra-status] Schema column missing, falling back to message tag');
+                const { data: currentBooking } = await supabase.from('bookings').select('*').eq('id', req.params.id).single();
+                if (currentBooking) {
+                    let cleanMsg = (currentBooking.message || '').replace(/\[YatraStatus:\s*[^\]]+\]\n?/gi, '').trim();
+                    const statusTag = `[YatraStatus: ${yatra_status}${completed_at ? ' | CompletedAt: ' + completed_at : ''}]`;
+                    const newMsg = cleanMsg ? `${statusTag}\n${cleanMsg}` : statusTag;
+                    const { error: msgErr } = await supabase.from('bookings').update({ message: newMsg }).eq('id', req.params.id);
+                    if (msgErr) throw msgErr;
+                    finalBooking = { ...currentBooking, message: newMsg, yatra_status, completed_at };
+                    return res.json({ success: true, data: enrichBookingYatraStatus(finalBooking), fallback: true });
+                }
+            }
+            throw error;
+        } else {
+            finalBooking = data;
+        }
+        res.json({ success: true, data: enrichBookingYatraStatus(finalBooking) });
+    } catch (err) {
+        console.error('[PATCH yatra-status Error]:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// ─── Phase 4: Analytics API Endpoints ──────────────────────────────────────
+
+// GET /api/analytics/completed-yatras — fetch completed yatras with optional filters
+app.get('/api/analytics/completed-yatras', authenticateToken, async (req, res) => {
+    try {
+        if (!supabase) return res.status(500).json({ error: 'Supabase not initialized' });
+        const { month, year, staff_id } = req.query;
+
+        let query = supabase.from('bookings').select('*');
+        if (staff_id) {
+            query = query.or(`assigned_to.eq.${staff_id},user_id.eq.${staff_id}`);
+        }
+
+        const { data, error } = await query;
+        if (error) throw error;
+
+        // Enrich each row with schema-resilient yatra_status & completed_at
+        let completed = (data || []).map(enrichBookingYatraStatus).filter(b => b.yatra_status === 'Yatra Completed');
+
+        if (month && year) {
+            completed = completed.filter(b => {
+                const dateStr = b.completed_at || b.travel_date;
+                if (!dateStr) return false;
+                const d = new Date(dateStr);
+                return d.getFullYear() === parseInt(year) && (d.getMonth() + 1) === parseInt(month);
+            });
+        } else if (year) {
+            completed = completed.filter(b => {
+                const dateStr = b.completed_at || b.travel_date;
+                if (!dateStr) return false;
+                const d = new Date(dateStr);
+                return d.getFullYear() === parseInt(year);
+            });
+        }
+
+        completed.sort((a, b) => new Date(b.completed_at || b.travel_date || 0) - new Date(a.completed_at || a.travel_date || 0));
+
+        res.json(completed);
+    } catch (err) {
+        console.error('[GET completed-yatras Error]:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// GET /api/analytics/monthly-incentives?year=2026&staff_id= — month-wise incentive breakdown
+app.get('/api/analytics/monthly-incentives', authenticateToken, async (req, res) => {
+    try {
+        if (!supabase) return res.status(500).json({ error: 'Supabase not initialized' });
+        const { staff_id, year = new Date().getFullYear() } = req.query;
+        const yr = parseInt(year);
+
+        let bQuery = supabase.from('bookings').select('*');
+        if (staff_id) {
+            bQuery = bQuery.or(`assigned_to.eq.${staff_id},user_id.eq.${staff_id}`);
+        }
+
+        const { data: allBookings, error: bErr } = await bQuery;
+        if (bErr) throw bErr;
+
+        // Filter completed bookings for the specified year
+        const bookings = (allBookings || [])
+            .map(enrichBookingYatraStatus)
+            .filter(b => {
+                if (b.yatra_status !== 'Yatra Completed') return false;
+                const dateStr = b.completed_at || b.travel_date;
+                if (!dateStr) return false;
+                return new Date(dateStr).getFullYear() === yr;
+            });
+
+        // Cross-reference billing to get net amounts
+        const bookingIds = (bookings || []).map(b => b.booking_id).filter(Boolean);
+        let billMap = {};
+        if (bookingIds.length > 0) {
+            const { data: bills } = await supabase
+                .from('booking_bills')
+                .select('booking_id, total_package_amount, discount, payment_status')
+                .in('booking_id', bookingIds);
+            (bills || []).forEach(b => {
+                billMap[b.booking_id] = {
+                    net: Math.max(0, parseFloat(b.total_package_amount || 0) - parseFloat(b.discount || 0)),
+                    fullyPaid: b.payment_status === 'Fully Paid'
+                };
+            });
+        }
+
+        // Build 12-month structure
+        const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        const monthlyData = Array.from({ length: 12 }, (_, i) => ({
+            month: i + 1,
+            month_name: MONTHS[i],
+            yatras_completed: 0,
+            net_revenue: 0,
+            incentive_earned: 0
+        }));
+
+        (bookings || []).forEach(booking => {
+            const dateStr = booking.completed_at || booking.travel_date;
+            if (!dateStr) return;
+            const m = new Date(dateStr).getMonth(); // 0-indexed
+            if (m < 0 || m > 11) return;
+            const billingInfo = billMap[booking.booking_id] || { net: 0, fullyPaid: false };
+            monthlyData[m].yatras_completed += 1;
+            monthlyData[m].net_revenue      += billingInfo.net;
+            // Only count incentive if bill is fully paid
+            if (billingInfo.fullyPaid) {
+                monthlyData[m].incentive_earned += Math.round(billingInfo.net * 0.03);
+            }
+        });
+
+        res.json({ year: yr, monthly: monthlyData });
+    } catch (err) {
+        console.error('[GET monthly-incentives Error]:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// ───────────────────────────────────────────────────────────────────────────
 
 // Lead History Log Endpoints
 app.get('/api/admin/leads-history', authenticateToken, async (req, res) => {
@@ -2565,6 +2753,54 @@ app.post('/api/billing/:id/payment', authenticateToken, async (req, res) => {
             .single();
 
         if (updateErr) throw updateErr;
+
+        // ─── Phase 2: Auto-complete Yatra trigger (server-side) ───────────────
+        if (newStatus === 'Fully Paid' && bill.booking_id) {
+            try {
+                const { data: bookingRows } = await supabase
+                    .from('bookings')
+                    .select('*')
+                    .eq('booking_id', bill.booking_id)
+                    .limit(1);
+
+                if (bookingRows && bookingRows.length > 0) {
+                    const rawBooking = bookingRows[0];
+                    const booking = enrichBookingYatraStatus(rawBooking);
+                    const travelDate = booking.travel_date ? new Date(booking.travel_date) : null;
+                    const today = new Date();
+                    today.setHours(0, 0, 0, 0);
+
+                    if (travelDate && travelDate < today && booking.yatra_status !== 'Yatra Completed') {
+                        const compAt = new Date().toISOString();
+                        const { error: autoErr } = await supabase
+                            .from('bookings')
+                            .update({
+                                yatra_status: 'Yatra Completed',
+                                completed_at: compAt
+                            })
+                            .eq('id', booking.id);
+
+                        if (autoErr && (autoErr.message.includes('yatra_status') || autoErr.message.includes('completed_at'))) {
+                            // Fallback to storing status tag in message field
+                            let cleanMsg = (booking.message || '').replace(/\[YatraStatus:\s*[^\]]+\]\n?/gi, '').trim();
+                            const statusTag = `[YatraStatus: Yatra Completed | CompletedAt: ${compAt}]`;
+                            const newMsg = cleanMsg ? `${statusTag}\n${cleanMsg}` : statusTag;
+                            await supabase.from('bookings').update({ message: newMsg }).eq('id', booking.id);
+                            console.log(`[Auto-complete] Booking ${bill.booking_id} auto-marked via message fallback`);
+                            updatedBill.yatra_auto_completed = true;
+                        } else if (!autoErr) {
+                            console.log(`[Auto-complete] Booking ${bill.booking_id} auto-marked as Yatra Completed`);
+                            updatedBill.yatra_auto_completed = true;
+                        }
+                    }
+                }
+            } catch (autoEx) {
+                // Non-critical — don't fail the payment response
+                console.warn('[Auto-complete] Non-critical error:', autoEx.message);
+            }
+        }
+        // ─────────────────────────────────────────────────────────────────────
+
         res.json(updatedBill);
     } catch (err) {
         console.error('API Add Payment Error:', err);

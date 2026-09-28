@@ -223,6 +223,15 @@
                                     <option value="Pithoragarh to Pithoragarh">Pithoragarh to Pithoragarh</option>
                                 </select>
                             </div>
+                            <div class="booking-filter-item" style="display: flex; align-items: center; gap: 6px;">
+                                <span style="font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;"><i class="fa-solid fa-route" style="color: var(--color-gold);"></i> Yatra Status:</span>
+                                <select id="filter-booking-yatra-status" onchange="applyBookingsFilters()" style="background: #1e293b; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 6px; padding: 6px 10px; font-size: 12px; cursor: pointer; outline: none; min-width: 150px; font-weight: 600;">
+                                    <option value="">All Statuses</option>
+                                    <option value="In Progress">🟡 In Progress</option>
+                                    <option value="Yatra Completed">✅ Yatra Completed</option>
+                                    <option value="Cancelled">❌ Cancelled</option>
+                                </select>
+                            </div>
                             <button type="button" onclick="resetBookingsFilters()" class="btn btn-secondary" style="border: 1px solid rgba(212, 175, 55, 0.4); background: #1e293b; padding: 6px 12px; font-size: 12px; cursor: pointer; border-radius: 6px; color: var(--color-gold); font-weight: 600; display: inline-flex; align-items: center; gap: 4px;"><i class="fa-solid fa-arrow-rotate-left"></i> Reset</button>
                         </div>
                         <div id="bookings-action-buttons-wrap" class="admin-only-action" style="display: flex; gap: 8px; flex-wrap: wrap;">
@@ -233,6 +242,17 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- 5D: Quick-Filter Status Pill Tabs -->
+                <div id="booking-quick-filter-tabs" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; align-items:center;">
+                    <span style="font-size:11px; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:0.6px; margin-right:4px;">Quick Filter:</span>
+                    <button onclick="setBookingQuickFilter('')"         id="bqf-all"       class="booking-qf-pill active" style="padding:5px 14px; border-radius:20px; font-size:12px; font-weight:700; border:1.5px solid rgba(212,175,55,0.5); background:#1e293b; color:#cbd5e1; cursor:pointer; transition:all 0.18s;">All</button>
+                    <button onclick="setBookingQuickFilter('In Progress')"   id="bqf-progress"  class="booking-qf-pill"        style="padding:5px 14px; border-radius:20px; font-size:12px; font-weight:700; border:1.5px solid rgba(245,158,11,0.4); background:rgba(245,158,11,0.08); color:#f59e0b; cursor:pointer; transition:all 0.18s;">🟡 In Progress</button>
+                    <button onclick="setBookingQuickFilter('Yatra Completed')" id="bqf-completed" class="booking-qf-pill"     style="padding:5px 14px; border-radius:20px; font-size:12px; font-weight:700; border:1.5px solid rgba(34,197,94,0.4); background:rgba(34,197,94,0.08); color:#22c55e; cursor:pointer; transition:all 0.18s;">✅ Yatra Completed</button>
+                    <button onclick="setBookingQuickFilter('Cancelled')"    id="bqf-cancelled" class="booking-qf-pill"        style="padding:5px 14px; border-radius:20px; font-size:12px; font-weight:700; border:1.5px solid rgba(239,68,68,0.4); background:rgba(239,68,68,0.08); color:#ef4444; cursor:pointer; transition:all 0.18s;">❌ Cancelled</button>
+                    <span id="bqf-count" style="margin-left:auto; font-size:11px; color:#64748b; font-weight:600;"></span>
+                </div>
+
                 <div class="admin-table-container">
                     <table class="admin-table">
                         <thead>
@@ -246,14 +266,14 @@
                                 <th>Travelers</th>
                                 <th>Special Notes</th>
                                 <th>Booked By</th>
+                                <th>Yatra Status</th>
                                 <th>Created</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="bookings-table-body">
                             <tr>
-                                <td colspan="11" style="text-align: center; color: var(--color-slate);">Loading bookings
-                                    data...</td>
+                                <td colspan="12" style="text-align: center; color: var(--color-slate);">Loading bookings data...</td>
                             </tr>
                         </tbody>
                     </table>
@@ -282,6 +302,7 @@
                             <option value="Pending">Pending</option>
                             <option value="Partially Paid">Partially Paid</option>
                             <option value="Fully Paid">Fully Paid</option>
+                            <option value="Fully Paid - Yatra Completed">✅ Fully Paid + Yatra Completed</option>
                         </select>
                     </div>
                 </div>
@@ -296,13 +317,14 @@
                                 <th>Billed Amt</th>
                                 <th>Amount Paid</th>
                                 <th>Outstanding</th>
-                                <th>Status</th>
+                                <th>Payment Status</th>
+                                <th>Yatra Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="billing-table-body">
                             <tr>
-                                <td colspan="8" style="text-align: center; color: var(--color-slate); padding: 30px;">Loading billing tracker data...</td>
+                                <td colspan="9" style="text-align: center; color: var(--color-slate); padding: 30px;">Loading billing tracker data...</td>
                             </tr>
                         </tbody>
                     </table>
@@ -373,6 +395,16 @@
                             <div id="analytics-card-converted" style="font-size: 28px; font-weight: 800; color: #db2777;">0</div>
                         </div>
                     </div>
+
+                    <div id="analytics-filter-card-completed" onclick="setAnalyticsMetricFilter('completed')" class="analytics-clickable-card" style="background: #ffffff; border: 1.5px solid rgba(212, 175, 55, 0.35); box-shadow: 0 4px 15px rgba(0,0,0,0.04); border-radius: 12px; padding: 18px 20px; display: flex; align-items: center; gap: 16px; cursor: pointer; transition: all 0.2s;">
+                        <div style="width: 48px; height: 48px; border-radius: 10px; background: rgba(34, 197, 94, 0.12); color: #22c55e; display: flex; align-items: center; justify-content: center; font-size: 22px;">
+                            <i class="fa-solid fa-flag-checkered"></i>
+                        </div>
+                        <div>
+                            <div style="font-size: 11px; color: #475569; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 700;">Yatras Completed</div>
+                            <div id="analytics-card-completed" style="font-size: 28px; font-weight: 800; color: #22c55e;">0</div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Staff Performance Table -->
@@ -385,6 +417,7 @@
                                 <th>Connected (Answered)</th>
                                 <th>Pending (Uncalled/No Ans)</th>
                                 <th>Converted Bookings</th>
+                                <th>Yatras Completed</th>
                                 <th>Earned Incentive (3%)</th>
                                 <th>Contact Rate</th>
                                 <th>Conversion Rate</th>
@@ -394,7 +427,7 @@
                         </thead>
                         <tbody id="analytics-staff-table-body">
                             <tr>
-                                <td colspan="10" style="text-align: center; color: var(--color-slate); padding: 30px;">Loading staff performance data...</td>
+                                <td colspan="11" style="text-align: center; color: var(--color-slate); padding: 30px;">Loading staff performance data...</td>
                             </tr>
                         </tbody>
                     </table>
@@ -430,6 +463,87 @@
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                </div>
+
+                <!-- Month-wise Incentive & Completed Yatras Chart (admin only, shown when analytics tab active) -->
+                <div id="analytics-monthly-incentive-section" style="margin-bottom:28px; display:none;">
+                    <!-- Section header + controls -->
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:8px;">
+                        <h4 style="margin:0; font-size:15px; color:#f8fafc; font-weight:700; display:flex; align-items:center; gap:8px;">
+                            <i class="fa-solid fa-chart-column" style="color:var(--color-gold);"></i>
+                            <span id="analytics-monthly-title">Month-wise Yatras Completed &amp; Incentive Earned</span>
+                        </h4>
+                        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                            <select id="analytics-monthly-staff-filter" onchange="loadMonthlyIncentiveFromApi()" style="background:#1f2937; color:white; border:1.5px solid var(--color-gold); border-radius:4px; padding:5px 10px; font-size:12px; font-weight:600; cursor:pointer;">
+                                <option value="all">All Staff</option>
+                            </select>
+                            <select id="analytics-monthly-year-filter" onchange="loadMonthlyIncentiveFromApi()" style="background:#1f2937; color:white; border:1.5px solid var(--color-gold); border-radius:4px; padding:5px 10px; font-size:12px; font-weight:600; cursor:pointer;">
+                                <option value="2026">2026</option>
+                                <option value="2025">2025</option>
+                                <option value="2027">2027</option>
+                            </select>
+                            <button class="btn btn-secondary" onclick="loadMonthlyIncentiveFromApi()" style="padding:5px 12px; font-size:12px; font-weight:700;">
+                                <i class="fa-solid fa-rotate-right"></i> Refresh
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Phase 4: KPI Summary Strip -->
+                    <div id="monthly-incentive-kpis" style="display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:18px;">
+                        <div style="background:rgba(34,197,94,0.08); border:1px solid rgba(34,197,94,0.25); border-radius:10px; padding:16px; text-align:center;">
+                            <div style="font-size:10px; color:#94a3b8; text-transform:uppercase; letter-spacing:0.8px; font-weight:700; margin-bottom:4px;">Total Yatras (Year)</div>
+                            <div id="kpi-total-yatras" style="font-size:26px; font-weight:800; color:#22c55e;">—</div>
+                        </div>
+                        <div style="background:rgba(212,175,55,0.08); border:1px solid rgba(212,175,55,0.25); border-radius:10px; padding:16px; text-align:center;">
+                            <div style="font-size:10px; color:#94a3b8; text-transform:uppercase; letter-spacing:0.8px; font-weight:700; margin-bottom:4px;">Total Revenue (Year)</div>
+                            <div id="kpi-total-revenue" style="font-size:26px; font-weight:800; color:#f59e0b;">—</div>
+                        </div>
+                        <div style="background:rgba(59,130,246,0.08); border:1px solid rgba(59,130,246,0.25); border-radius:10px; padding:16px; text-align:center;">
+                            <div style="font-size:10px; color:#94a3b8; text-transform:uppercase; letter-spacing:0.8px; font-weight:700; margin-bottom:4px;">Total Incentive (Year)</div>
+                            <div id="kpi-total-incentive" style="font-size:26px; font-weight:800; color:#3b82f6;">—</div>
+                        </div>
+                    </div>
+
+                    <!-- Canvas bar chart -->
+                    <div style="background:#0f172a; border:1px solid rgba(212,175,55,0.25); border-radius:10px; padding:20px 16px; margin-bottom:16px; overflow-x:auto;">
+                        <canvas id="analytics-monthly-chart" height="220" style="width:100%; min-width:500px; display:block;"></canvas>
+                    </div>
+
+                    <!-- Phase 4 enhanced breakdown table: Net Revenue + vs Last Month -->
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Month</th>
+                                    <th>Yatras Completed</th>
+                                    <th>Net Revenue</th>
+                                    <th>Incentive Earned (3%)</th>
+                                    <th>vs Last Month</th>
+                                </tr>
+                            </thead>
+                            <tbody id="analytics-monthly-tbody">
+                                <tr><td colspan="5" style="text-align:center; color:var(--color-slate); padding:20px;">Click Refresh to load month-wise data from server.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 5E: Staff Leaderboard Widget -->
+                <div id="analytics-leaderboard-section" style="margin-bottom:28px; display:none;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:8px;">
+                        <h4 style="margin:0; font-size:15px; color:#f8fafc; font-weight:700; display:flex; align-items:center; gap:8px;">
+                            <i class="fa-solid fa-ranking-star" style="color:var(--color-gold);"></i>
+                            <span>Staff Leaderboard — <span id="leaderboard-month-label" style="color:var(--color-gold);">This Month</span></span>
+                        </h4>
+                        <select id="leaderboard-timeframe" onchange="renderStaffLeaderboard()" style="background:#1f2937; color:white; border:1.5px solid var(--color-gold); border-radius:4px; padding:5px 10px; font-size:12px; font-weight:600; cursor:pointer;">
+                            <option value="this_month">This Month</option>
+                            <option value="last_month">Last Month</option>
+                            <option value="all">All Time</option>
+                        </select>
+                    </div>
+                    <div id="analytics-leaderboard-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:16px;">
+                        <!-- dynamically rendered -->
                     </div>
                 </div>
 
@@ -1683,6 +1797,52 @@
             <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 13px; color: #94a3b8;">
                 <span id="staff-modal-count-info" style="font-weight: 600;">Total Booked: 0</span>
                 <button type="button" onclick="closeStaffConvertedLeadsModal()" class="btn btn-secondary" style="border: 1px solid #64748b; color: #cbd5e1; background: transparent; padding: 6px 18px; border-radius: 6px; font-weight: 700; cursor: pointer;">Close</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Yatra Status Update Modal -->
+    <div id="yatra-status-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+         background:rgba(0,0,0,0.78); z-index:10001; justify-content:center; align-items:center;
+         overflow-y:auto; padding:16px; box-sizing:border-box;">
+        <div style="background:#111827; border:2px solid var(--color-gold); max-width:420px; width:100%;
+                    padding:28px 24px; border-radius:10px; position:relative; margin:auto;
+                    box-shadow:0 20px 50px rgba(0,0,0,0.7);">
+            <button onclick="closeYatraStatusModal()" style="position:absolute; top:12px; right:16px;
+                    font-size:22px; background:none; border:none; color:#94a3b8; cursor:pointer;">&times;</button>
+            <h3 style="color:#f8fafc; margin:0 0 4px; font-size:18px; display:flex; align-items:center; gap:8px;">
+                <i class="fa-solid fa-route" style="color:var(--color-gold);"></i> Update Yatra Status
+            </h3>
+            <p id="yatra-status-modal-ref" style="color:#94a3b8; font-size:12px; margin:0 0 20px;"></p>
+            <div style="margin-bottom:18px;">
+                <label style="font-size:12px; font-weight:700; color:#94a3b8; text-transform:uppercase;
+                              letter-spacing:0.6px; display:block; margin-bottom:6px;">New Status</label>
+                <select id="yatra-status-select" style="width:100%; background:#1e293b; color:#f8fafc;
+                        border:1.5px solid rgba(212,175,55,0.5); border-radius:6px; padding:10px 14px;
+                        font-size:14px; font-weight:600; cursor:pointer; outline:none;">
+                    <option value="In Progress">🟡 In Progress</option>
+                    <option value="Yatra Completed">✅ Yatra Completed</option>
+                    <option value="Cancelled">❌ Cancelled</option>
+                </select>
+            </div>
+            <div id="yatra-status-complete-note" style="display:none; background:rgba(34,197,94,0.1);
+                 border:1px solid rgba(34,197,94,0.3); border-radius:6px; padding:10px 14px;
+                 margin-bottom:18px; font-size:12px; color:#4ade80; line-height:1.5;">
+                <i class="fa-solid fa-circle-info"></i>
+                Marking as <strong>Yatra Completed</strong> will record the completion timestamp.
+                Ensure the traveller has returned safely before confirming.
+            </div>
+            <div style="display:flex; gap:10px; justify-content:flex-end;">
+                <button onclick="closeYatraStatusModal()" style="padding:9px 18px; background:#1e293b;
+                        border:1px solid #334155; color:#94a3b8; border-radius:6px; cursor:pointer;
+                        font-size:13px; font-weight:600;">Cancel</button>
+                <button onclick="saveYatraStatus()" id="yatra-status-save-btn"
+                        style="padding:9px 20px; background:var(--color-gold); border:none; color:#111827;
+                               border-radius:6px; cursor:pointer; font-size:13px; font-weight:800;
+                               display:inline-flex; align-items:center; gap:6px;">
+                    <i class="fa-solid fa-check"></i> Save Status
+                </button>
             </div>
         </div>
     </div>
@@ -3505,16 +3665,42 @@
                 const total = bookingsData.length;
                 const totalTravelers = bookingsData.reduce((acc, curr) => acc + (parseInt(curr.travelers) || 0), 0);
                 const adiKailashBookings = bookingsData.filter(b => b.package_name && b.package_name.includes('Adi Kailash')).length;
-                const darmaValleyBookings = bookingsData.filter(b => b.package_name && b.package_name.includes('Darma')).length;
-                const mtKailashBookings = bookingsData.filter(b => b.package_name && b.package_name.includes('Kailash') && !b.package_name.includes('Adi')).length;
-                const otherBookings = total - (adiKailashBookings + darmaValleyBookings + mtKailashBookings);
+
+                // 5A: Completed Yatras This Month
+                const now = new Date();
+                const thisMonthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+                const completedThisMonth = bookingsData.filter(b => {
+                    if ((b.yatra_status || '') !== 'Yatra Completed') return false;
+                    const d = new Date(b.completed_at || b.travel_date || '');
+                    return d >= thisMonthStart;
+                }).length;
+
+                // 5A: Revenue This Month (from billing records, Fully Paid, completed this month)
+                const completedIdsThisMonth = new Set(
+                    bookingsData
+                        .filter(b => {
+                            if ((b.yatra_status || '') !== 'Yatra Completed') return false;
+                            const d = new Date(b.completed_at || b.travel_date || '');
+                            return d >= thisMonthStart;
+                        })
+                        .map(b => b.booking_id)
+                        .filter(Boolean)
+                );
+                const revenueThisMonth = (billingRecords || [])
+                    .filter(br => completedIdsThisMonth.has(br.booking_id) && br.payment_status === 'Fully Paid')
+                    .reduce((sum, br) => {
+                        const net = Math.max(0, parseFloat(br.total_package_amount || 0) - parseFloat(br.discount || 0));
+                        return sum + net;
+                    }, 0);
+
+                const inProgress = bookingsData.filter(b => (b.yatra_status || 'In Progress') === 'In Progress').length;
 
                 setCard(0, true, '<i class="fa-solid fa-calendar-check"></i>', total, 'Total Bookings');
                 setCard(1, true, '<i class="fa-solid fa-users"></i>', totalTravelers, 'Total Travelers');
-                setCard(2, true, '<i class="fa-solid fa-mountain"></i>', adiKailashBookings, 'Adi Kailash');
-                setCard(3, true, '<i class="fa-solid fa-compass"></i>', darmaValleyBookings, 'Darma Valley');
-                setCard(4, true, '<i class="fa-solid fa-person-praying"></i>', mtKailashBookings, 'Mt. Kailash');
-                setCard(5, true, '<i class="fa-solid fa-person-hiking"></i>', otherBookings, 'Other Treks');
+                setCard(2, true, '<i class="fa-solid fa-flag-checkered" style="color:#22c55e;"></i>', completedThisMonth, 'Completed This Month');
+                setCard(3, true, '<i class="fa-solid fa-indian-rupee-sign" style="color:#f59e0b;"></i>', '₹' + Math.round(revenueThisMonth).toLocaleString('en-IN'), 'Revenue This Month');
+                setCard(4, true, '<i class="fa-solid fa-mountain" style="color:var(--color-gold);"></i>', adiKailashBookings, 'Adi Kailash');
+                setCard(5, true, '<i class="fa-solid fa-spinner" style="color:#f59e0b;"></i>', inProgress, 'In Progress');
             }
             else if (paneId === 'pane-billing') {
                 const totalBilled = billingRecords.reduce((sum, b) => {
@@ -3900,9 +4086,21 @@
                             if (!p && /dharchula\s+to\s+darchula/i.test(item.message)) p = "Dharchula to Dharchula";
                         }
                     }
+                    let yStatus = item.yatra_status;
+                    let compAt = item.completed_at;
+                    if (!yStatus && item.message) {
+                        const sm = item.message.match(/\[YatraStatus:\s*([^\|\]]+)(?:\|\s*CompletedAt:\s*([^\]]+))?\]/i);
+                        if (sm) {
+                            yStatus = sm[1].trim();
+                            if (sm[2]) compAt = sm[2].trim();
+                        }
+                    }
+                    if (!yStatus) yStatus = 'In Progress';
                     return {
                         ...item,
-                        pickup_point: p || null
+                        pickup_point: p || null,
+                        yatra_status: yStatus,
+                        completed_at: compAt || (yStatus === 'Yatra Completed' ? (item.travel_date || item.created_at) : null)
                     };
                 });
 
@@ -3926,11 +4124,41 @@
             }
         }
 
+        // ─── 5D: Quick-Filter Pill Tabs ──────────────────────────────────────
+        window.setBookingQuickFilter = function(status) {
+            // Set the yatra status dropdown value
+            const sel = document.getElementById('filter-booking-yatra-status');
+            if (sel) sel.value = status;
+            // Apply filters
+            applyBookingsFilters();
+            // Sync pill highlight
+            _syncBookingQfPills(status);
+        };
+
+        function _syncBookingQfPills(activeVal) {
+            const pillMap = { '': 'bqf-all', 'In Progress': 'bqf-progress', 'Yatra Completed': 'bqf-completed', 'Cancelled': 'bqf-cancelled' };
+            Object.entries(pillMap).forEach(([val, id]) => {
+                const btn = document.getElementById(id);
+                if (!btn) return;
+                if (val === activeVal) {
+                    btn.style.boxShadow = '0 0 0 2px var(--color-gold)';
+                    btn.style.fontWeight = '800';
+                    btn.style.opacity = '1';
+                } else {
+                    btn.style.boxShadow = 'none';
+                    btn.style.fontWeight = '700';
+                    btn.style.opacity = '0.72';
+                }
+            });
+        }
+        // ─────────────────────────────────────────────────────────────────────
+
         window.resetBookingsFilters = function() {
             if (document.getElementById('search-bookings-input')) document.getElementById('search-bookings-input').value = '';
             if (document.getElementById('filter-booking-travel-date')) document.getElementById('filter-booking-travel-date').value = '';
             if (document.getElementById('filter-booking-assignee')) document.getElementById('filter-booking-assignee').value = '';
             if (document.getElementById('filter-booking-pickup')) document.getElementById('filter-booking-pickup').value = '';
+            if (document.getElementById('filter-booking-yatra-status')) document.getElementById('filter-booking-yatra-status').value = '';
             applyBookingsFilters();
         };
 
@@ -3939,6 +4167,7 @@
             const filterAssignee = document.getElementById('filter-booking-assignee') ? document.getElementById('filter-booking-assignee').value : '';
             const filterTravelDate = document.getElementById('filter-booking-travel-date') ? document.getElementById('filter-booking-travel-date').value : '';
             const filterPickup = document.getElementById('filter-booking-pickup') ? document.getElementById('filter-booking-pickup').value.trim().toLowerCase() : '';
+            const filterYatraStatus = document.getElementById('filter-booking-yatra-status') ? document.getElementById('filter-booking-yatra-status').value : '';
             
             const isStaff = (currentUserRole === 'staff');
             const uname = (currentUsername || '').toLowerCase().trim();
@@ -3989,14 +4218,27 @@
                     matchPickup = (item.pickup_point || '').toLowerCase().includes(filterPickup);
                 }
 
-                return matchSearch && matchAssignee && matchTravelDate && matchPickup;
+                let matchYatraStatus = true;
+                if (filterYatraStatus) {
+                    matchYatraStatus = (item.yatra_status || 'In Progress') === filterYatraStatus;
+                }
+
+                return matchSearch && matchAssignee && matchTravelDate && matchPickup && matchYatraStatus;
             });
 
             const tbody = document.getElementById('bookings-table-body');
             if (!tbody) return;
 
+            // 5D: Sync pill state and count badge
+            _syncBookingQfPills(filterYatraStatus);
+            const countEl = document.getElementById('bqf-count');
+            if (countEl) {
+                const label = filterYatraStatus ? `${filteredBookings.length} booking${filteredBookings.length !== 1 ? 's' : ''}` : `${filteredBookings.length} / ${bookingsData.length} bookings`;
+                countEl.textContent = label;
+            }
+
             if (filteredBookings.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="11" style="text-align: center; color: var(--color-slate);">No bookings match your search.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="12" style="text-align: center; color: var(--color-slate);">No bookings match your search.</td></tr>`;
                 return;
             }
 
@@ -4086,6 +4328,17 @@
                     }
                 }
 
+                // --- Yatra Status badge & update button ---
+                const yatraStatus = item.yatra_status || 'In Progress';
+                const _ysMap = {
+                    'In Progress':     { bg:'rgba(245,158,11,0.15)',  color:'#f59e0b', border:'rgba(245,158,11,0.4)',  icon:'fa-route',          label:'In Progress' },
+                    'Yatra Completed': { bg:'rgba(34,197,94,0.15)',   color:'#22c55e', border:'rgba(34,197,94,0.4)',   icon:'fa-flag-checkered', label:'Yatra Completed' },
+                    'Cancelled':       { bg:'rgba(239,68,68,0.15)',   color:'#ef4444', border:'rgba(239,68,68,0.4)',   icon:'fa-ban',            label:'Cancelled' }
+                };
+                const yCfg = _ysMap[yatraStatus] || _ysMap['In Progress'];
+                const _ysBadge = `<span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;background:${yCfg.bg};color:${yCfg.color};border:1px solid ${yCfg.border};font-size:11.5px;font-weight:700;white-space:nowrap;"><i class="fa-solid ${yCfg.icon}" style="font-size:10px;"></i> ${yCfg.label}</span>`;
+                const _ysBtn = currentUserRole !== 'staff' ? `<button onclick="openYatraStatusModal('${item.id}','${bookingId}','${yatraStatus}')" style="margin-top:4px;padding:4px 8px;font-size:11px;background:#1e293b;border:1px solid rgba(212,175,55,0.4);color:var(--color-gold);border-radius:5px;cursor:pointer;font-weight:700;display:inline-flex;align-items:center;gap:4px;" title="Update Yatra Status"><i class="fa-solid fa-route"></i> Status</button>` : '';
+
                 html += `
                     <tr class="booking-card-row">
                         <td data-label="Booking ID">
@@ -4118,6 +4371,11 @@
                             <select ${currentUserRole === "staff" ? "disabled" : ""} onchange="updateBookingField('${item.id}', 'assigned_to', this.value)" class="booking-assignee-select">
                                 ${bookingAssigneeOptions}
                             </select>
+                        </td>
+                        <td data-label="Yatra Status" style="white-space:nowrap;">
+                            <div style="display:flex;flex-direction:column;align-items:flex-start;gap:4px;">
+                                ${_ysBadge}${_ysBtn}
+                            </div>
                         </td>
                         <td data-label="Created" class="mobile-detail-field">
                             <span class="booking-created-text">${createdStr}</span>
@@ -5176,6 +5434,25 @@
                 let connectedCount = 0;
                 let pendingCount = 0;
                 let convertedCount = 0;
+                let completedYatrasCount = 0;
+
+                // Count completed yatras from bookings (uses yatra_status field)
+                const _completedBookings = (bookings || []).filter(b => (b.yatra_status || '') === 'Yatra Completed');
+                if (currentUserRole === 'staff') {
+                    const uuidSet = new Set();
+                    if (currentUserUuidMapping) uuidSet.add(currentUserUuidMapping);
+                    const uname = (currentUsername || '').toLowerCase().trim();
+                    if (AGENT_UUIDS && AGENT_UUIDS[uname]) uuidSet.add(AGENT_UUIDS[uname]);
+                    for (const [id, name] of Object.entries(usersMap || {})) {
+                        if ((name || '').toLowerCase() === uname) uuidSet.add(id);
+                    }
+                    completedYatrasCount = _completedBookings.filter(b => {
+                        const a = (b.assigned_to || b.user_id || '').toLowerCase();
+                        return uuidSet.has(a) || a === uname;
+                    }).length;
+                } else {
+                    completedYatrasCount = _completedBookings.length;
+                }
 
                 const connectedList = ['answered', 'follow up required', 'won'];
                 const pendingList = ['new', 'not answered', 'no. not reachable', 'busy', 'incorrect number', 'switch off'];
@@ -5218,13 +5495,15 @@
                 if (document.getElementById('analytics-card-connected')) document.getElementById('analytics-card-connected').innerText = connectedCount;
                 if (document.getElementById('analytics-card-pending')) document.getElementById('analytics-card-pending').innerText = pendingCount;
                 if (document.getElementById('analytics-card-converted')) document.getElementById('analytics-card-converted').innerText = convertedCount;
+                if (document.getElementById('analytics-card-completed')) document.getElementById('analytics-card-completed').innerText = completedYatrasCount;
 
                 // Sync card highlight border according to active filter
                 const cardsMap = {
                     'all': document.getElementById('analytics-filter-card-all'),
                     'connected': document.getElementById('analytics-filter-card-connected'),
                     'pending': document.getElementById('analytics-filter-card-pending'),
-                    'converted': document.getElementById('analytics-filter-card-converted')
+                    'converted': document.getElementById('analytics-filter-card-converted'),
+                    'completed': document.getElementById('analytics-filter-card-completed')
                 };
 
                 Object.entries(cardsMap).forEach(([key, cardEl]) => {
@@ -5337,6 +5616,7 @@
                                 <th>Connected (Answered)</th>
                                 <th>Pending (Uncalled/No Ans)</th>
                                 <th>Converted Bookings</th>
+                                <th>Yatras Completed</th>
                                 <th>Earned Incentive (3%)</th>
                                 <th>Contact Rate</th>
                                 <th>Conversion Rate</th>
@@ -5357,7 +5637,24 @@
                     ];
 
                     allStaffList.forEach(s => {
-                        staffStats[s.id] = { id: s.id, name: s.name, total: 0, connected: 0, pending: 0, converted: 0 };
+                        staffStats[s.id] = { id: s.id, name: s.name, total: 0, connected: 0, pending: 0, converted: 0, yatraCompleted: 0 };
+                    });
+
+                    // Count Yatras Completed per staff from bookings
+                    (bookings || []).filter(b => (b.yatra_status || '') === 'Yatra Completed').forEach(b => {
+                        const key = (b.assigned_to || b.user_id || 'unassigned').toLowerCase();
+                        // Find the matching staffStats key
+                        const matchKey = Object.keys(staffStats).find(k =>
+                            k.toLowerCase() === key ||
+                            (usersMap[k] || '').toLowerCase() === key
+                        ) || key;
+                        if (staffStats[matchKey]) {
+                            staffStats[matchKey].yatraCompleted++;
+                        } else {
+                            // Create entry if not present
+                            const nm = usersMap[key] || key;
+                            staffStats[key] = { id: key, name: nm, total: 0, connected: 0, pending: 0, converted: 0, yatraCompleted: 1 };
+                        }
                     });
 
                     filteredLeads.forEach(lead => {
@@ -5429,6 +5726,14 @@
                                             <span style="color: #94a3b8; font-weight: 600; font-size: 14px; padding: 4px 12px;">0</span>
                                         `}
                                     </td>
+                                    <td data-label="Yatras Completed" style="white-space:nowrap;">
+                                        ${st.yatraCompleted > 0 ? `
+                                            <span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;
+                                                background:rgba(34,197,94,0.15);color:#22c55e;border:1px solid rgba(34,197,94,0.4);
+                                                font-size:12px;font-weight:800;">
+                                                <i class="fa-solid fa-flag-checkered" style="font-size:10px;"></i> ${st.yatraCompleted}
+                                            </span>` : `<span style="color:#94a3b8;font-weight:600;font-size:13px;">0</span>`}
+                                    </td>
                                     <td data-label="Earned Incentive (3%)"><strong style="color: #22c55e; font-size: 14px; font-weight: 800;">₹${incVal.toLocaleString('en-IN')}</strong></td>
                                     <td data-label="Contact Rate">
                                         <div style="display: flex; align-items: center; gap: 8px;">
@@ -5459,8 +5764,18 @@
                                 </tr>
                             `;
                         });
-                        tbody.innerHTML = html || `<tr><td colspan="10" style="text-align: center; color: var(--color-slate); padding: 30px;">No lead activity found for this timeframe.</td></tr>`;
+                        tbody.innerHTML = html || `<tr><td colspan="11" style="text-align: center; color: var(--color-slate); padding: 30px;">No lead activity found for this timeframe.</td></tr>`;
                     }
+
+                    // Show monthly incentive chart section (admin only)
+                    const monthlySection = document.getElementById('analytics-monthly-incentive-section');
+                    if (monthlySection) monthlySection.style.display = 'block';
+                    loadMonthlyIncentiveFromApi();
+
+                    // 5E: Show staff leaderboard (admin only)
+                    const leaderboardSection = document.getElementById('analytics-leaderboard-section');
+                    if (leaderboardSection) leaderboardSection.style.display = 'block';
+                    renderStaffLeaderboard();
                 }
 
                 // Render Filtered Leads Drill-Down List
@@ -5590,6 +5905,7 @@
                                 <ul style="margin: 0; padding-left: 20px; color: #334155; font-size: 14px; line-height: 1.7;">
                                     <li><strong>💰 Total Staff Incentive Pool:</strong> Total 3% incentive earned across staff is <strong style="color: #22c55e;">₹${totalTeamIncentive.toLocaleString('en-IN')}</strong>.</li>
                                     <li><strong>Uncalled Backlog (${pendingCount} Leads):</strong> High priority outreach is recommended for uncontacted leads.</li>
+                                    <li><strong>\ud83c\udfc1 Yatras Completed (All Time):</strong> <strong style="color: #22c55e;">${completedYatrasCount}</strong> yatras have been successfully completed.</li>
                                     <li><strong>Follow-Up Directives:</strong> Instruct staff to update <code>Final Status = Booking Confirmed</code> when deals close verbally.</li>
                                 </ul>
                             </div>
@@ -5609,6 +5925,521 @@
                 applyLeadsFilters();
             }
         };
+
+        // ─── Phase 3: Month-wise Incentive Chart ──────────────────────────────
+        let _monthlyChartInstance = null; // tracks drawn canvas chart
+
+        window.renderMonthlyIncentiveChart = function() {
+            try {
+                const bookings = bookingsData || [];
+                const bills    = billingRecords || [];
+                if (!bookings.length) return;
+
+                // Populate staff filter dropdown on first run
+                const staffSel = document.getElementById('analytics-monthly-staff-filter');
+                if (staffSel && staffSel.options.length <= 1) {
+                    const staffNames = [...new Set(
+                        bookings
+                            .map(b => (b.assigned_to || b.user_id || '').trim())
+                            .filter(Boolean)
+                            .map(id => usersMap[id] || id)
+                    )].sort();
+                    staffNames.forEach(name => {
+                        const opt = document.createElement('option');
+                        opt.value = name; opt.textContent = name;
+                        staffSel.appendChild(opt);
+                    });
+                }
+
+                // Populate year filter
+                const yearSel = document.getElementById('analytics-monthly-year-filter');
+                const allYears = [...new Set(
+                    bookings
+                        .filter(b => b.yatra_status === 'Yatra Completed' && b.completed_at)
+                        .map(b => new Date(b.completed_at).getFullYear())
+                )].sort((a,b) => b - a);
+                if (yearSel && allYears.length && yearSel.options.length === 0) {
+                    allYears.forEach(y => {
+                        const opt = document.createElement('option');
+                        opt.value = y; opt.textContent = y;
+                        yearSel.appendChild(opt);
+                    });
+                }
+
+                const selectedStaff = staffSel ? staffSel.value : 'all';
+                const selectedYear  = yearSel  ? parseInt(yearSel.value) : (new Date().getFullYear());
+
+                // Build month buckets for completed yatras
+                const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+                const buckets = {}; // 'YYYY-MM' -> { label, completed, incentive, total }
+
+                bookings
+                    .filter(b => {
+                        if (b.yatra_status !== 'Yatra Completed') return false;
+                        const dateStr = b.completed_at || b.travel_date;
+                        if (!dateStr) return false;
+                        const d = new Date(dateStr);
+                        if (isNaN(d.getFullYear())) return false;
+                        if (selectedYear && d.getFullYear() !== selectedYear) return false;
+                        if (selectedStaff !== 'all') {
+                            const assignId = (b.assigned_to || b.user_id || '').trim();
+                            const assignName = usersMap[assignId] || assignId;
+                            if (assignName !== selectedStaff && assignId !== selectedStaff) return false;
+                        }
+                        return true;
+                    })
+                    .forEach(b => {
+                        const dateStr = b.completed_at || b.travel_date;
+                        const d = new Date(dateStr);
+                        const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+                        if (!buckets[key]) {
+                            buckets[key] = { label: MONTHS[d.getMonth()] + ' ' + d.getFullYear(), completed: 0, incentive: 0, total: 0 };
+                        }
+                        buckets[key].completed++;
+                        buckets[key].total++;
+                        // Add incentive from linked bill
+                        const bill = bills.find(br =>
+                            (br.booking_id && (br.booking_id === b.booking_id || br.booking_id === b.id)) ||
+                            (br.booking_uuid && br.booking_uuid === b.id)
+                        );
+                        if (bill && bill.payment_status === 'Fully Paid') {
+                            const net = Math.max(0, parseFloat(bill.total_package_amount||0) - parseFloat(bill.discount||0));
+                            buckets[key].incentive += Math.round(net * 0.03);
+                        }
+                    });
+
+                const sortedKeys = Object.keys(buckets).sort();
+                const labels     = sortedKeys.map(k => buckets[k].label);
+                const completed  = sortedKeys.map(k => buckets[k].completed);
+                const incentives = sortedKeys.map(k => buckets[k].incentive);
+
+                // ── Draw canvas bar chart ─────────────────────────────────────
+                const canvas = document.getElementById('analytics-monthly-chart');
+                if (canvas && canvas.getContext) {
+                    const ctx = canvas.getContext('2d');
+                    const W = canvas.offsetWidth || 600;
+                    const H = 220;
+                    canvas.width = W; canvas.height = H;
+                    ctx.clearRect(0, 0, W, H);
+
+                    if (sortedKeys.length === 0) {
+                        ctx.fillStyle = '#475569'; ctx.font = '14px Inter, sans-serif';
+                        ctx.textAlign = 'center';
+                        ctx.fillText('No completed yatras found for the selected filters.', W/2, H/2);
+                    } else {
+                        const padL=55, padR=20, padT=24, padB=44;
+                        const chartW = W - padL - padR;
+                        const chartH = H - padT - padB;
+                        const maxVal = Math.max(...completed, 1);
+                        const barW   = Math.max(18, Math.min(48, (chartW / sortedKeys.length) * 0.55));
+                        const gap    = chartW / sortedKeys.length;
+
+                        // Grid lines
+                        ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+                        ctx.lineWidth = 1;
+                        for (let i=0; i<=4; i++) {
+                            const y = padT + chartH - (i/4)*chartH;
+                            ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(W-padR, y); ctx.stroke();
+                            ctx.fillStyle = '#64748b'; ctx.font = '10px Inter,sans-serif'; ctx.textAlign='right';
+                            ctx.fillText(Math.round((i/4)*maxVal), padL-5, y+4);
+                        }
+
+                        // Bars & labels
+                        sortedKeys.forEach((k, i) => {
+                            const val = buckets[k].completed;
+                            const x0  = padL + i * gap + gap/2 - barW/2;
+                            const barH = val > 0 ? Math.max(4, (val/maxVal)*chartH) : 2;
+                            const y0  = padT + chartH - barH;
+
+                            // Gold gradient bar
+                            const grad = ctx.createLinearGradient(0, y0, 0, y0+barH);
+                            grad.addColorStop(0, '#d4af37');
+                            grad.addColorStop(1, 'rgba(212,175,55,0.35)');
+                            ctx.fillStyle = grad;
+                            ctx.beginPath();
+                            const r = Math.min(5, barW/2);
+                            ctx.moveTo(x0+r, y0); ctx.lineTo(x0+barW-r, y0);
+                            ctx.quadraticCurveTo(x0+barW, y0, x0+barW, y0+r);
+                            ctx.lineTo(x0+barW, y0+barH); ctx.lineTo(x0, y0+barH);
+                            ctx.lineTo(x0, y0+r);
+                            ctx.quadraticCurveTo(x0, y0, x0+r, y0);
+                            ctx.fill();
+
+                            // Value on top of bar
+                            if (val > 0) {
+                                ctx.fillStyle = '#d4af37'; ctx.font = 'bold 11px Inter,sans-serif'; ctx.textAlign='center';
+                                ctx.fillText(val, x0+barW/2, y0-5);
+                            }
+
+                            // Month label
+                            ctx.fillStyle = '#94a3b8'; ctx.font = '10px Inter,sans-serif'; ctx.textAlign='center';
+                            const shortLbl = labels[i].replace(' '+selectedYear,'');
+                            ctx.fillText(shortLbl, x0+barW/2, H-padB+16);
+
+                            // Incentive below month label
+                            if (buckets[k].incentive > 0) {
+                                ctx.fillStyle = '#22c55e'; ctx.font = '9px Inter,sans-serif';
+                                ctx.fillText('₹'+Math.round(buckets[k].incentive/1000)+'k', x0+barW/2, H-padB+27);
+                            }
+                        });
+
+                        // Y-axis label
+                        ctx.save(); ctx.translate(12, H/2); ctx.rotate(-Math.PI/2);
+                        ctx.fillStyle='#94a3b8'; ctx.font='10px Inter,sans-serif'; ctx.textAlign='center';
+                        ctx.fillText('Yatras Completed', 0, 0);
+                        ctx.restore();
+                    }
+                }
+
+                // ── Monthly breakdown table ───────────────────────────────────
+                const tbody = document.getElementById('analytics-monthly-tbody');
+                if (!tbody) return;
+
+                if (sortedKeys.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--color-slate);padding:20px;">No completed yatras found for the selected filters.</td></tr>`;
+                    return;
+                }
+
+                let tableHtml = '';
+                sortedKeys.forEach(k => {
+                    const b = buckets[k];
+                    // Gather staff names for this month
+                    const staffInMonth = [...new Set(
+                        bookings
+                            .filter(bk => {
+                                if (bk.yatra_status !== 'Yatra Completed') return false;
+                                const ds = bk.completed_at || bk.travel_date;
+                                if (!ds) return false;
+                                const d = new Date(ds);
+                                return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}` === k;
+                            })
+                            .map(bk => usersMap[(bk.assigned_to||bk.user_id||'').trim()] || (bk.assigned_to||bk.user_id||'Unassigned'))
+                    )].join(', ') || '—';
+
+                    tableHtml += `
+                        <tr>
+                            <td data-label="Month"><strong style="color:#f8fafc;">${b.label}</strong></td>
+                            <td data-label="Staff Member"><span style="color:#94a3b8;font-size:12px;">${staffInMonth}</span></td>
+                            <td data-label="Yatras Completed">
+                                <span style="display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;
+                                    background:rgba(34,197,94,0.15);color:#22c55e;border:1px solid rgba(34,197,94,0.4);
+                                    font-size:12px;font-weight:800;">
+                                    <i class="fa-solid fa-flag-checkered" style="font-size:10px;"></i> ${b.completed}
+                                </span>
+                            </td>
+                            <td data-label="Incentive Earned">
+                                <strong style="color:#22c55e;font-size:14px;font-weight:800;">₹${b.incentive.toLocaleString('en-IN')}</strong>
+                                ${b.incentive === 0 ? '<br><small style="color:#64748b;font-size:10px;">Bill not Fully Paid</small>' : ''}
+                            </td>
+                            <td data-label="Bookings Handled"><span style="color:#d4af37;font-weight:700;">${b.total}</span></td>
+                        </tr>`;
+                });
+                tbody.innerHTML = tableHtml;
+
+            } catch(err) {
+                console.warn('Monthly incentive chart error:', err);
+            }
+        };
+        // ──────────────────────────────────────────────────────────────────────
+
+        // ─── Phase 4: API-powered monthly incentive loader ────────────────────
+        window.loadMonthlyIncentiveFromApi = async function() {
+            const staffSel = document.getElementById('analytics-monthly-staff-filter');
+            const yearSel  = document.getElementById('analytics-monthly-year-filter');
+            const tbody    = document.getElementById('analytics-monthly-tbody');
+
+            const staffVal = staffSel ? staffSel.value : 'all';
+            const yearVal  = yearSel  ? yearSel.value  : new Date().getFullYear();
+
+            // Populate staff dropdown if empty (first run)
+            if (staffSel && staffSel.options.length <= 1 && bookingsData && bookingsData.length) {
+                const staffNames = [...new Set(
+                    (bookingsData || [])
+                        .map(b => (b.assigned_to || b.user_id || '').trim())
+                        .filter(Boolean)
+                        .map(id => usersMap[id] || id)
+                )].sort();
+                staffNames.forEach(name => {
+                    const opt = document.createElement('option');
+                    opt.value = name; opt.textContent = name;
+                    staffSel.appendChild(opt);
+                });
+            }
+
+            if (tbody) tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--color-slate);padding:20px;"><i class="fa-solid fa-spinner fa-spin"></i> Loading from server...</td></tr>`;
+
+            try {
+                const token = localStorage.getItem('admin_token') || localStorage.getItem('token') || '';
+                // Resolve staff filter: if a name is selected, find the id
+                let staffIdParam = '';
+                if (staffVal !== 'all') {
+                    // Try to find uuid from usersMap
+                    for (const [id, name] of Object.entries(usersMap || {})) {
+                        if (name === staffVal || id === staffVal) { staffIdParam = id; break; }
+                    }
+                    if (!staffIdParam) staffIdParam = staffVal; // fallback: use value directly
+                }
+
+                const url = `/api/analytics/monthly-incentives?year=${yearVal}${staffIdParam ? '&staff_id=' + encodeURIComponent(staffIdParam) : ''}`;
+                const res  = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
+
+                if (!res.ok) throw new Error(`Server returned ${res.status}`);
+                const data = await res.json();
+
+                // Update KPI cards
+                const totYatras   = (data.monthly || []).reduce((s, m) => s + (m.yatras_completed || 0), 0);
+                const totRevenue  = (data.monthly || []).reduce((s, m) => s + (m.net_revenue || 0), 0);
+                const totIncentive= (data.monthly || []).reduce((s, m) => s + (m.incentive_earned || 0), 0);
+
+                const kpiY = document.getElementById('kpi-total-yatras');
+                const kpiR = document.getElementById('kpi-total-revenue');
+                const kpiI = document.getElementById('kpi-total-incentive');
+                if (kpiY) kpiY.textContent = totYatras;
+                if (kpiR) kpiR.textContent = '₹' + Math.round(totRevenue).toLocaleString('en-IN');
+                if (kpiI) kpiI.textContent = '₹' + Math.round(totIncentive).toLocaleString('en-IN');
+
+                // Draw canvas bar chart using the same canvas renderer
+                const canvas = document.getElementById('analytics-monthly-chart');
+                if (canvas && canvas.getContext && data.monthly) {
+                    const ctx = canvas.getContext('2d');
+                    const W = canvas.offsetWidth || 700;
+                    const H = 220;
+                    canvas.width = W; canvas.height = H;
+                    ctx.clearRect(0,0,W,H);
+
+                    const completed = data.monthly.map(m => m.yatras_completed || 0);
+                    const maxVal    = Math.max(...completed, 1);
+                    const padL=55, padR=20, padT=24, padB=44;
+                    const chartW = W-padL-padR;
+                    const chartH = H-padT-padB;
+                    const gap    = chartW / 12;
+                    const barW   = Math.max(14, Math.min(42, gap * 0.55));
+
+                    // Grid
+                    ctx.strokeStyle='rgba(255,255,255,0.06)'; ctx.lineWidth=1;
+                    for (let i=0;i<=4;i++) {
+                        const y = padT + chartH - (i/4)*chartH;
+                        ctx.beginPath(); ctx.moveTo(padL,y); ctx.lineTo(W-padR,y); ctx.stroke();
+                        ctx.fillStyle='#64748b'; ctx.font='10px Inter,sans-serif'; ctx.textAlign='right';
+                        ctx.fillText(Math.round((i/4)*maxVal), padL-5, y+4);
+                    }
+
+                    data.monthly.forEach((m, i) => {
+                        const val  = m.yatras_completed || 0;
+                        const x0   = padL + i*gap + gap/2 - barW/2;
+                        const barH = val > 0 ? Math.max(4, (val/maxVal)*chartH) : 2;
+                        const y0   = padT + chartH - barH;
+
+                        const grad = ctx.createLinearGradient(0,y0,0,y0+barH);
+                        grad.addColorStop(0,'#d4af37');
+                        grad.addColorStop(1,'rgba(212,175,55,0.3)');
+                        ctx.fillStyle = grad;
+                        ctx.beginPath();
+                        const r = Math.min(5,barW/2);
+                        ctx.moveTo(x0+r,y0); ctx.lineTo(x0+barW-r,y0);
+                        ctx.quadraticCurveTo(x0+barW,y0,x0+barW,y0+r);
+                        ctx.lineTo(x0+barW,y0+barH); ctx.lineTo(x0,y0+barH);
+                        ctx.lineTo(x0,y0+r); ctx.quadraticCurveTo(x0,y0,x0+r,y0);
+                        ctx.fill();
+
+                        if (val > 0) {
+                            ctx.fillStyle='#d4af37'; ctx.font='bold 11px Inter,sans-serif'; ctx.textAlign='center';
+                            ctx.fillText(val, x0+barW/2, y0-5);
+                        }
+                        ctx.fillStyle='#94a3b8'; ctx.font='10px Inter,sans-serif'; ctx.textAlign='center';
+                        ctx.fillText(m.month_name, x0+barW/2, H-padB+16);
+                        if (m.incentive_earned > 0) {
+                            ctx.fillStyle='#22c55e'; ctx.font='9px Inter,sans-serif';
+                            ctx.fillText('₹'+Math.round(m.incentive_earned/1000)+'k', x0+barW/2, H-padB+27);
+                        }
+                    });
+
+                    ctx.save(); ctx.translate(12,H/2); ctx.rotate(-Math.PI/2);
+                    ctx.fillStyle='#94a3b8'; ctx.font='10px Inter,sans-serif'; ctx.textAlign='center';
+                    ctx.fillText('Yatras Completed',0,0);
+                    ctx.restore();
+                }
+
+                // Render table with "vs Last Month" trend
+                if (tbody && data.monthly) {
+                    const rows = data.monthly.map((m, i) => {
+                        const prev  = i > 0 ? data.monthly[i-1].incentive_earned : null;
+                        const delta = prev !== null ? m.incentive_earned - prev : null;
+                        let trend   = '<span style="color:#64748b;">—</span>';
+                        if (delta !== null && delta > 0)
+                            trend = `<span style="color:#22c55e;font-weight:700;">▲ ₹${delta.toLocaleString('en-IN')}</span>`;
+                        else if (delta !== null && delta < 0)
+                            trend = `<span style="color:#ef4444;font-weight:700;">▼ ₹${Math.abs(delta).toLocaleString('en-IN')}</span>`;
+                        else if (delta === 0)
+                            trend = `<span style="color:#94a3b8;">— No change</span>`;
+
+                        const yatrasBadge = m.yatras_completed > 0
+                            ? `<span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;background:rgba(34,197,94,0.15);color:#22c55e;border:1px solid rgba(34,197,94,0.4);font-size:12px;font-weight:800;"><i class="fa-solid fa-flag-checkered" style="font-size:10px;"></i> ${m.yatras_completed}</span>`
+                            : `<span style="color:#475569;font-size:13px;">0</span>`;
+
+                        return `<tr>
+                            <td data-label="Month"><strong style="color:#f8fafc;">${m.month_name} ${yearVal}</strong></td>
+                            <td data-label="Yatras Completed">${yatrasBadge}</td>
+                            <td data-label="Net Revenue"><span style="color:#f59e0b;font-weight:700;">₹${Math.round(m.net_revenue||0).toLocaleString('en-IN')}</span></td>
+                            <td data-label="Incentive Earned"><strong style="color:#22c55e;font-size:14px;">₹${Math.round(m.incentive_earned||0).toLocaleString('en-IN')}</strong></td>
+                            <td data-label="vs Last Month">${trend}</td>
+                        </tr>`;
+                    });
+                    tbody.innerHTML = rows.join('');
+                }
+
+            } catch (err) {
+                console.warn('[loadMonthlyIncentiveFromApi] API call failed, falling back to client-side render:', err.message);
+                // Graceful fallback to the existing canvas renderer that uses bookingsData
+                renderMonthlyIncentiveChart();
+                if (tbody) {
+                    // Append error note
+                    const note = document.createElement('tr');
+                    note.innerHTML = `<td colspan="5" style="text-align:center;color:#f59e0b;font-size:11px;padding:8px;"><i class="fa-solid fa-triangle-exclamation"></i> Server endpoint not available yet — showing client-side data. Run server update to enable API-powered chart.</td>`;
+                    tbody.appendChild(note);
+                }
+            }
+        };
+        // ──────────────────────────────────────────────────────────────────────
+
+        // ─── 5E: Staff Leaderboard ────────────────────────────────────────────
+        window.renderStaffLeaderboard = function() {
+            try {
+                const grid = document.getElementById('analytics-leaderboard-grid');
+                const labelEl = document.getElementById('leaderboard-month-label');
+                if (!grid) return;
+
+                const timeframe = (document.getElementById('leaderboard-timeframe') || {}).value || 'this_month';
+                const now = new Date();
+
+                let dateFrom, dateTo, label;
+                if (timeframe === 'this_month') {
+                    dateFrom = new Date(now.getFullYear(), now.getMonth(), 1);
+                    dateTo   = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
+                    label    = now.toLocaleString('default', { month: 'long' }) + ' ' + now.getFullYear();
+                } else if (timeframe === 'last_month') {
+                    dateFrom = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+                    dateTo   = new Date(now.getFullYear(), now.getMonth(), 0, 23, 59, 59);
+                    const lm = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+                    label    = lm.toLocaleString('default', { month: 'long' }) + ' ' + lm.getFullYear();
+                } else {
+                    dateFrom = new Date('2000-01-01');
+                    dateTo   = new Date('2099-12-31');
+                    label    = 'All Time';
+                }
+                if (labelEl) labelEl.textContent = label;
+
+                // Build per-staff stats
+                const staffMap = {}; // id -> { name, yatraCompleted, incentive, leads, converted }
+
+                // Seed from usersMap
+                Object.entries(usersMap || {}).forEach(([id, name]) => {
+                    if (name) staffMap[id] = { name, yatraCompleted: 0, incentive: 0, leads: 0, converted: 0 };
+                });
+
+                // Yatras Completed + Incentive (from bookingsData + billingRecords)
+                (bookingsData || [])
+                    .filter(b => {
+                        if ((b.yatra_status || '') !== 'Yatra Completed') return false;
+                        const d = new Date(b.completed_at || b.travel_date || '');
+                        return d >= dateFrom && d <= dateTo;
+                    })
+                    .forEach(b => {
+                        const key = (b.assigned_to || b.user_id || 'unassigned').toLowerCase();
+                        const matchKey = Object.keys(staffMap).find(k => k.toLowerCase() === key) || key;
+                        if (!staffMap[matchKey]) staffMap[matchKey] = { name: usersMap[matchKey] || matchKey, yatraCompleted: 0, incentive: 0, leads: 0, converted: 0 };
+                        staffMap[matchKey].yatraCompleted++;
+                        // Add incentive from bill
+                        const bill = (billingRecords || []).find(br =>
+                            (br.booking_id && br.booking_id === b.booking_id) ||
+                            (br.booking_uuid && br.booking_uuid === b.id)
+                        );
+                        if (bill && bill.payment_status === 'Fully Paid') {
+                            const net = Math.max(0, parseFloat(bill.total_package_amount || 0) - parseFloat(bill.discount || 0));
+                            staffMap[matchKey].incentive += Math.round(net * 0.03);
+                        }
+                    });
+
+                // Conversion Rate (from currentLeads)
+                const connectedStatuses = ['answered', 'follow up required', 'won'];
+                (currentLeads || [])
+                    .filter(l => {
+                        const d = new Date(l.created_at || '');
+                        return d >= dateFrom && d <= dateTo;
+                    })
+                    .forEach(l => {
+                        const key = (l.assigned_to || l.user_id || 'unassigned').toLowerCase();
+                        const matchKey = Object.keys(staffMap).find(k => k.toLowerCase() === key) || key;
+                        if (!staffMap[matchKey]) staffMap[matchKey] = { name: usersMap[matchKey] || matchKey, yatraCompleted: 0, incentive: 0, leads: 0, converted: 0 };
+                        staffMap[matchKey].leads++;
+                        if ((l.final_status || '').toLowerCase() === 'booking confirmed' ||
+                            (l.status || '').toLowerCase() === 'won') {
+                            staffMap[matchKey].converted++;
+                        }
+                    });
+
+                const staffList = Object.values(staffMap).filter(s => s.name);
+                if (staffList.length === 0) {
+                    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:var(--color-slate);padding:24px;">No staff data available for the selected timeframe.</div>`;
+                    return;
+                }
+
+                const MEDALS = ['🥇', '🥈', '🥉'];
+                const MEDAL_COLORS = ['#d4af37', '#94a3b8', '#cd7f32'];
+
+                const buildCard = (title, icon, sortFn, valueFn, emptyMsg) => {
+                    const ranked = [...staffList].sort(sortFn).slice(0, 3);
+                    const rows = ranked.map((s, i) => {
+                        const val = valueFn(s);
+                        return `
+                        <div style="display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06);">
+                            <span style="font-size:20px; min-width:28px;">${MEDALS[i] || ''}</span>
+                            <div style="flex:1; min-width:0;">
+                                <div style="font-size:13px; font-weight:700; color:#f1f5f9; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${s.name}</div>
+                            </div>
+                            <div style="font-size:14px; font-weight:800; color:${MEDAL_COLORS[i] || '#64748b'}; white-space:nowrap;">${val}</div>
+                        </div>`;
+                    }).join('');
+
+                    return `
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(212,175,55,0.2); border-radius:12px; padding:20px;">
+                        <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px;">
+                            <span style="font-size:18px;">${icon}</span>
+                            <h5 style="margin:0; font-size:13px; font-weight:700; color:#f8fafc; text-transform:uppercase; letter-spacing:0.5px;">${title}</h5>
+                        </div>
+                        ${rows || `<div style="color:var(--color-slate);font-size:12px;text-align:center;padding:12px;">${emptyMsg}</div>`}
+                    </div>`;
+                };
+
+                grid.innerHTML =
+                    buildCard(
+                        'Most Yatras Completed', '🏁',
+                        (a, b) => b.yatraCompleted - a.yatraCompleted,
+                        s => s.yatraCompleted > 0 ? `${s.yatraCompleted} yatra${s.yatraCompleted !== 1 ? 's' : ''}` : '0',
+                        'No completed yatras yet'
+                    ) +
+                    buildCard(
+                        'Highest Incentive Earned', '💰',
+                        (a, b) => b.incentive - a.incentive,
+                        s => '₹' + s.incentive.toLocaleString('en-IN'),
+                        'No incentive data'
+                    ) +
+                    buildCard(
+                        'Best Conversion Rate', '🎯',
+                        (a, b) => {
+                            const rA = a.leads > 0 ? a.converted / a.leads : 0;
+                            const rB = b.leads > 0 ? b.converted / b.leads : 0;
+                            return rB - rA;
+                        },
+                        s => s.leads > 0 ? `${((s.converted / s.leads) * 100).toFixed(1)}% (${s.converted}/${s.leads})` : '—',
+                        'No lead data'
+                    );
+
+            } catch (err) {
+                console.warn('[renderStaffLeaderboard] Error:', err);
+            }
+        };
+        // ─────────────────────────────────────────────────────────────────────
 
         window.openStaffConvertedLeadsModal = function(staffId, staffNameEscaped) {
             try {
@@ -6969,7 +7800,8 @@
                         message: combinedNotes,
                         assigned_to: staffUuid,
                         user_id: staffUuid,
-                        lead_id: lead.id
+                        lead_id: lead.id,
+                        yatra_status: 'In Progress'
                     }]);
 
                 if (insertErr) throw insertErr;
@@ -8653,11 +9485,14 @@
                 const searchVal = document.getElementById('billing-search') ? document.getElementById('billing-search').value.trim() : '';
                 const statusVal = document.getElementById('billing-filter-status') ? document.getElementById('billing-filter-status').value : '';
 
-                
                 let query = supabaseAdmin.from('booking_bills').select('*');
 
-                if (statusVal && statusVal !== 'All') {
+                // Special cross-filter: Fully Paid bills where booking is also Yatra Completed
+                const isCrossFilter = statusVal === 'Fully Paid - Yatra Completed';
+                if (statusVal && statusVal !== 'All' && !isCrossFilter) {
                     query = query.eq('payment_status', statusVal);
+                } else if (isCrossFilter) {
+                    query = query.eq('payment_status', 'Fully Paid');
                 }
 
                 const { data, error } = await query.order('created_at', { ascending: false });
@@ -8667,10 +9502,18 @@
                 let result = data || [];
                 if (searchVal) {
                     const term = searchVal.toLowerCase();
-                    result = result.filter(bill => 
-                        bill.customer_name.toLowerCase().includes(term) || 
+                    result = result.filter(bill =>
+                        bill.customer_name.toLowerCase().includes(term) ||
                         bill.booking_id.toLowerCase().includes(term)
                     );
+                }
+
+                // Cross-filter: keep only bills whose linked booking is Yatra Completed
+                if (isCrossFilter && bookingsData && bookingsData.length > 0) {
+                    const completedIds = new Set(
+                        (bookingsData || []).filter(b => b.yatra_status === 'Yatra Completed').map(b => b.booking_id)
+                    );
+                    result = result.filter(bill => completedIds.has(bill.booking_id));
                 }
 
                 billingRecords = result;
@@ -8701,7 +9544,7 @@
             const records = (window.billingRecords && window.billingRecords.length > 0) ? window.billingRecords : (billingRecords || []);
 
             if (records.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: var(--color-slate); padding: 30px;">No billing records found.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: var(--color-slate); padding: 30px;">No billing records found.</td></tr>`;
                 return;
             }
 
@@ -8784,7 +9627,8 @@
                         <td data-label="Billed Amt" class="billing-billed-cell">${billedAmtHtml}</td>
                         <td data-label="Paid Progress" class="billing-progress-cell">${progressHtml}</td>
                         <td data-label="Outstanding" class="billing-outstanding-cell"><strong class="${remaining > 0 ? 'amt-unpaid' : 'amt-cleared'}">₹${remaining.toLocaleString('en-IN')}</strong></td>
-                        <td data-label="Status" class="billing-status-cell"><span class="admin-badge ${statusBadgeClass}">${bill.payment_status}</span></td>
+                        <td data-label="Payment Status" class="billing-status-cell"><span class="admin-badge ${statusBadgeClass}">${bill.payment_status}</span></td>
+                        <td data-label="Yatra Status" style="white-space:nowrap;">${_getBillingYatraStatusBadge(bill.booking_id)}</td>
                         <td data-label="Actions" class="billing-actions-cell">
                             <div class="billing-action-buttons-wrap">
                                 <button onclick="openAddPaymentModal('${bill.id}', '${bill.booking_id}', '${bill.customer_name}', ${remaining})" class="btn btn-secondary billing-pay-btn" title="Add Payment">
@@ -8799,6 +9643,25 @@
                 `;
             });
             tbody.innerHTML = html;
+        }
+
+        // Helper: get Yatra Status badge for a booking_id (looked up from bookingsData)
+        function _getBillingYatraStatusBadge(bookingId) {
+            const booking = (bookingsData || []).find(b => b.booking_id === bookingId);
+            const status = (booking && booking.yatra_status) || null;
+            if (!status) {
+                return '<span style="color:#475569;font-size:11px;">—</span>';
+            }
+            const cfg = {
+                'In Progress':     { bg:'rgba(245,158,11,0.15)',  color:'#f59e0b', border:'rgba(245,158,11,0.4)',  icon:'fa-route',          label:'In Progress' },
+                'Yatra Completed': { bg:'rgba(34,197,94,0.15)',   color:'#22c55e', border:'rgba(34,197,94,0.4)',   icon:'fa-flag-checkered', label:'Yatra Completed' },
+                'Cancelled':       { bg:'rgba(239,68,68,0.15)',   color:'#ef4444', border:'rgba(239,68,68,0.4)',   icon:'fa-ban',            label:'Cancelled' }
+            }[status] || { bg:'rgba(100,116,139,0.15)', color:'#94a3b8', border:'rgba(100,116,139,0.3)', icon:'fa-circle-question', label: status };
+            return `<span style="display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;
+                background:${cfg.bg};color:${cfg.color};border:1px solid ${cfg.border};
+                font-size:11px;font-weight:700;white-space:nowrap;">
+                <i class="fa-solid ${cfg.icon}" style="font-size:10px;"></i> ${cfg.label}
+            </span>`;
         }
 
         window.downloadBillPdf = async function(billId) {
@@ -9032,6 +9895,77 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
             }
         };
 
+        // ─── Yatra Status Modal ────────────────────────────────────────────────
+        let _yatraStatusTargetId = null;
+
+        window.openYatraStatusModal = function(bookingUuid, bookingId, currentStatus) {
+            _yatraStatusTargetId = bookingUuid;
+            const refEl = document.getElementById('yatra-status-modal-ref');
+            if (refEl) refEl.textContent = 'Booking: ' + bookingId;
+            const sel = document.getElementById('yatra-status-select');
+            if (sel) sel.value = currentStatus || 'In Progress';
+            // Show/hide note
+            const noteEl = document.getElementById('yatra-status-complete-note');
+            if (noteEl) noteEl.style.display = (currentStatus === 'Yatra Completed') ? 'block' : 'none';
+            // Listen for dropdown change to show/hide note
+            if (sel) {
+                sel.onchange = function() {
+                    if (noteEl) noteEl.style.display = (this.value === 'Yatra Completed') ? 'block' : 'none';
+                };
+            }
+            const modal = document.getElementById('yatra-status-modal');
+            if (modal) { modal.style.display = 'flex'; }
+        };
+
+        window.closeYatraStatusModal = function() {
+            const modal = document.getElementById('yatra-status-modal');
+            if (modal) { modal.style.display = 'none'; }
+            _yatraStatusTargetId = null;
+        };
+
+        window.saveYatraStatus = async function() {
+            if (!_yatraStatusTargetId) return;
+            const newStatus = document.getElementById('yatra-status-select').value;
+            const btn = document.getElementById('yatra-status-save-btn');
+            if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...'; }
+            try {
+                const payload = { yatra_status: newStatus };
+                if (newStatus === 'Yatra Completed') {
+                    payload.completed_at = new Date().toISOString();
+                }
+                const { error } = await supabaseAdmin
+                    .from('bookings')
+                    .update(payload)
+                    .eq('id', _yatraStatusTargetId);
+
+                if (error) {
+                    // Graceful fallback if yatra_status column not yet in schema
+                    if (error.message && (error.message.includes('yatra_status') || error.message.includes('completed_at'))) {
+                        const { data: curBooking } = await supabaseAdmin.from('bookings').select('*').eq('id', _yatraStatusTargetId).single();
+                        if (curBooking) {
+                            let cleanMsg = (curBooking.message || '').replace(/\[YatraStatus:\s*[^\]]+\]\n?/gi, '').trim();
+                            const compTag = (newStatus === 'Yatra Completed') ? ` | CompletedAt: ${new Date().toISOString()}` : '';
+                            const statusTag = `[YatraStatus: ${newStatus}${compTag}]`;
+                            const newMsg = cleanMsg ? `${statusTag}\n${cleanMsg}` : statusTag;
+                            const { error: msgErr } = await supabaseAdmin.from('bookings').update({ message: newMsg }).eq('id', _yatraStatusTargetId);
+                            if (msgErr) throw msgErr;
+                        }
+                    } else {
+                        throw error;
+                    }
+                }
+                const statusColors = { 'In Progress': '🟡', 'Yatra Completed': '✅', 'Cancelled': '❌' };
+                showAdminToast(`${statusColors[newStatus] || '🔄'} Yatra Status updated to "${newStatus}" successfully!`, 'success');
+                closeYatraStatusModal();
+                fetchBookings();
+            } catch (err) {
+                showAdminToast('Failed to update Yatra Status: ' + err.message, 'error');
+            } finally {
+                if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-check"></i> Save Status'; }
+            }
+        };
+        // ──────────────────────────────────────────────────────────────────────
+
         window.startEditBooking = function(itemOrIdOrIndex) {
             let item = null;
             if (typeof itemOrIdOrIndex === 'object' && itemOrIdOrIndex.id) {
@@ -9182,6 +10116,7 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
                 } else {
                     bookingData.booking_id = await fetchNextBookingId();
                     bookingData.created_at = new Date().toISOString();
+                    bookingData.yatra_status = 'In Progress';
                     const { error } = await supabaseAdmin
                         .from('bookings')
                         .insert([bookingData]);
@@ -9610,7 +10545,14 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
 
                 if (error) throw error;
 
-                showAdminToast('Payment transaction logged successfully!', 'success');
+                // ─── Phase 2: Auto-complete trigger ───────────────────────────
+                if (newStatus === 'Fully Paid') {
+                    await _checkAndAutoCompleteYatra(bill.booking_id, newBalance);
+                } else {
+                    showAdminToast('✅ Payment logged! Outstanding: ₹' + newBalance.toLocaleString('en-IN'), 'success');
+                }
+                // ──────────────────────────────────────────────────────────────
+
                 closeAddPaymentModal();
                 fetchBillingRecords();
             } catch (err) {
@@ -9618,6 +10560,91 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
                 showAdminToast('Error logging payment: ' + err.message, 'error');
             }
         };
+
+        // ─── Phase 2: Auto-complete helper ────────────────────────────────────
+        async function _checkAndAutoCompleteYatra(bookingId, balance) {
+            try {
+                // Find the booking record by booking_id
+                const { data: bookingRows, error: bErr } = await supabaseAdmin
+                    .from('bookings')
+                    .select('id, travel_date, yatra_status, name')
+                    .eq('booking_id', bookingId)
+                    .limit(1);
+
+                if (bErr || !bookingRows || bookingRows.length === 0) {
+                    // No matching booking found — just show success toast
+                    showAdminToast('💰 Payment complete! Bill is now Fully Paid.', 'success');
+                    return;
+                }
+
+                const booking = bookingRows[0];
+                const travelDate = booking.travel_date ? new Date(booking.travel_date) : null;
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+
+                const alreadyCompleted = booking.yatra_status === 'Yatra Completed';
+
+                if (alreadyCompleted) {
+                    showAdminToast('💰 Payment complete! ' + bookingId + ' is Fully Paid. (Yatra was already marked Completed)', 'success');
+                    return;
+                }
+
+                if (travelDate && travelDate < today) {
+                    // Travel date has passed → auto-complete
+                    const { error: uErr } = await supabaseAdmin
+                        .from('bookings')
+                        .update({
+                            yatra_status: 'Yatra Completed',
+                            completed_at: new Date().toISOString()
+                        })
+                        .eq('id', booking.id);
+
+                    if (uErr && uErr.message && (uErr.message.includes('yatra_status') || uErr.message.includes('completed_at'))) {
+                        try {
+                            const { data: curB } = await supabaseAdmin.from('bookings').select('*').eq('id', booking.id).single();
+                            if (curB) {
+                                let cleanMsg = (curB.message || '').replace(/\[YatraStatus:\s*[^\]]+\]\n?/gi, '').trim();
+                                const statusTag = `[YatraStatus: Yatra Completed | CompletedAt: ${new Date().toISOString()}]`;
+                                const newMsg = cleanMsg ? `${statusTag}\n${cleanMsg}` : statusTag;
+                                await supabaseAdmin.from('bookings').update({ message: newMsg }).eq('id', booking.id);
+                            }
+                            showAdminToast(
+                                '🎉 Payment complete & Yatra Completed! Booking ' + bookingId + ' has been marked "Yatra Completed".',
+                                'success'
+                            );
+                            fetchBookings();
+                        } catch (fErr) {
+                            showAdminToast('💰 Payment complete! Bill is now Fully Paid.', 'success');
+                        }
+                    } else if (uErr) {
+                        console.warn('Auto-complete yatra_status failed:', uErr.message);
+                        showAdminToast('💰 Fully Paid! (Could not auto-update Yatra Status: ' + uErr.message + ')', 'info');
+                    } else {
+                        // Success — show a special green banner toast
+                        showAdminToast(
+                            '🎉 Payment complete & Yatra Completed! Booking ' + bookingId + ' for ' + (booking.name || 'traveller') + ' has been automatically marked as "Yatra Completed".',
+                            'success'
+                        );
+                        fetchBookings(); // Refresh bookings tab to reflect new status
+                    }
+                } else if (travelDate && travelDate >= today) {
+                    // Travel date is in the future — fully paid but yatra upcoming
+                    const travelStr = travelDate.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+                    showAdminToast(
+                        '💰 Booking ' + bookingId + ' is now Fully Paid! Yatra scheduled for ' + travelStr + '. Status will be updated to "Yatra Completed" after the trip.',
+                        'success'
+                    );
+                } else {
+                    // No travel date set
+                    showAdminToast('💰 Booking ' + bookingId + ' is now Fully Paid! No travel date set — mark Yatra Completed manually after the trip.', 'success');
+                }
+            } catch (err) {
+                console.warn('Auto-complete check failed (non-critical):', err.message);
+                showAdminToast('💰 Payment logged successfully as Fully Paid!', 'success');
+            }
+        }
+        // ──────────────────────────────────────────────────────────────────────
+
 
         // ==========================================
         // DESKTOP NOTIFICATIONS FOR REMINDERS
