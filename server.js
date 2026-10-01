@@ -2084,6 +2084,78 @@ app.put('/api/admin/leads/:id', authenticateToken, async (req, res) => {
         }
         const { error } = await supabase.from('leads').update(req.body).eq('id', req.params.id);
         if (error) throw error;
+
+        // ── Auto-create Booking when lead is marked as "Booking confirmed" ──────
+        // If the update sets final_status to "Booking confirmed", automatically
+        // create a record in the bookings table (if one doesn't already exist).
+        if (req.body.final_status === 'Booking confirmed') {
+            try {
+                // Check if a booking already exists for this lead
+                const { data: existingBooking } = await supabase
+                    .from('bookings')
+                    .select('id')
+                    .eq('lead_id', req.params.id)
+                    .maybeSingle();
+
+                if (!existingBooking) {
+                    // Fetch full lead data to build the booking record
+                    const { data: fullLead } = await supabase
+                        .from('leads')
+                        .select('*')
+                        .eq('id', req.params.id)
+                        .single();
+
+                    if (fullLead) {
+                        // Generate booking ID: RY-YYYY-<3-letter name>-<3-digit random>
+                        const year = new Date().getFullYear();
+                        const namePrefix = (fullLead.name || 'UNK').replace(/\s+/g, '').substring(0, 3).toUpperCase();
+                        const { data: allIds } = await supabase.from('bookings').select('booking_id');
+                        const usedSuffixes = (allIds || [])
+                            .map(b => b.booking_id)
+                            .filter(id => id && id.includes(`-${namePrefix}-`))
+                            .map(id => parseInt(id.split('-').pop()))
+                            .filter(n => !isNaN(n));
+                        let suffix = Math.floor(100 + Math.random() * 900);
+                        let attempts = 0;
+                        while (usedSuffixes.includes(suffix) && attempts < 50) {
+                            suffix = Math.floor(100 + Math.random() * 900);
+                            attempts++;
+                        }
+                        const bookingId = `RY-${year}-${namePrefix}-${suffix}`;
+
+                        // Use updated fields from req.body if present, else fallback to fullLead
+                        const mergedLead = { ...fullLead, ...req.body };
+
+                        const bookingData = {
+                            booking_id:   bookingId,
+                            lead_id:      req.params.id,
+                            name:         mergedLead.name || '',
+                            phone:        mergedLead.phone || '',
+                            email:        mergedLead.email || '',
+                            package_name: mergedLead.destination || 'Confirmed Lead Booking',
+                            destination:  mergedLead.destination || null,
+                            travel_date:  mergedLead.travel_date || new Date().toISOString().split('T')[0],
+                            travelers:    String(mergedLead.travelers || 1),
+                            message:      mergedLead.remarks || '',
+                            user_id:      mergedLead.assigned_to || null,
+                            assigned_to:  mergedLead.assigned_to || null,
+                        };
+
+                        const { error: bookingErr } = await supabase.from('bookings').insert(bookingData);
+                        if (bookingErr) {
+                            console.warn('[Auto-Booking] Failed to create booking for lead', req.params.id, ':', bookingErr.message);
+                        } else {
+                            console.log(`[Auto-Booking] Created booking ${bookingId} for lead ${req.params.id} (${fullLead.name})`);
+                        }
+                    }
+                }
+            } catch (autoBookErr) {
+                // Non-fatal — lead update already succeeded, just log the auto-booking failure
+                console.warn('[Auto-Booking] Error during auto-booking creation:', autoBookErr.message);
+            }
+        }
+        // ── End Auto-Booking ────────────────────────────────────────────────────
+
         res.json({ success: true });
     } catch (err) {
         res.status(500).json({ error: err.message });
