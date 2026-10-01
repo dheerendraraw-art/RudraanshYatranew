@@ -7795,7 +7795,7 @@
                         email: lead.email || '',
                         package_name: leadDestination,
                         destination: leadDestination,
-                        travel_date: inferredTravelDate,
+                        travel_date: inferredTravelDate || new Date().toISOString().split('T')[0],
                         travelers: String(lead.travelers || lead.group_size || 1),
                         message: combinedNotes,
                         assigned_to: staffUuid,
