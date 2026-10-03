@@ -1381,6 +1381,14 @@ app.post('/api/admin/git-pull', authenticateToken, requireAdmin, (req, res) => {
     });
 });
 
+// POST /api/admin/restart — exits the process so Hostinger auto-restarts with latest code
+app.post('/api/admin/restart', authenticateToken, requireAdmin, (req, res) => {
+    res.json({ success: true, message: 'Server restarting...', timestamp: new Date().toISOString() });
+    setTimeout(() => {
+        console.log('[Admin] Restart triggered via API');
+        process.exit(0);
+    }, 500);
+});
 
 // Login Route — rate limited to prevent brute-force attacks
 app.post('/api/admin/login', adminLoginLimiter, async (req, res) => {
