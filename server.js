@@ -1368,9 +1368,19 @@ app.get('/api/version', authenticateToken, requireAdmin, (req, res) => {
     });
 });
 
-// ==========================================
-// SECURITY & AUTHENTICATION API ENDPOINTS
-// ==========================================
+// POST /api/admin/git-pull — pulls latest code from GitHub on the live server
+app.post('/api/admin/git-pull', authenticateToken, requireAdmin, (req, res) => {
+    const { exec } = require('child_process');
+    exec('git pull origin main 2>&1', { cwd: __dirname }, (err, stdout, stderr) => {
+        const output = stdout || stderr || (err && err.message) || 'No output';
+        res.json({
+            success: !err,
+            output: output.trim(),
+            timestamp: new Date().toISOString()
+        });
+    });
+});
+
 
 // Login Route — rate limited to prevent brute-force attacks
 app.post('/api/admin/login', adminLoginLimiter, async (req, res) => {
