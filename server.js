@@ -4035,7 +4035,7 @@ async function syncGoogleSheetLeads() {
 
             toInsert.push({
                 name: name,
-                phone: rawPhone || 'N/A',
+                phone: String(rawPhone || 'N/A').trim(),
                 email: (r.email || '').trim(),
                 destination: (r.form_name || r.destination || '').trim(),
                 source: 'Meta Sheet Sync',
@@ -4137,7 +4137,7 @@ app.post('/api/webhooks/google-sheets-lead', async (req, res) => {
         if (supabase) {
             const { data: newLead, error } = await supabase.from('leads').insert([{
                 name: name || 'Meta Sheet Lead',
-                phone: rawPhone || 'N/A',
+                phone: String(rawPhone || 'N/A').trim(),
                 email: email || '',
                 destination: destination || '',
                 source: 'Meta Sheet Webhook',
