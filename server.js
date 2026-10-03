@@ -4054,17 +4054,39 @@ async function syncGoogleSheetLeads() {
             });
         }
 
+        let insertedCount = 0;
+        let skippedCount = 0;
         if (toInsert.length > 0) {
-            const { error: insErr } = await supabase.from('leads').insert(toInsert);
-            if (insErr) throw insErr;
-            console.log(`[Google Sheet Sync] Successfully imported ${toInsert.length} new leads (${duplicateCount} duplicates skipped).`);
+            // Insert row-by-row so one bad row doesn't block the entire batch
+            for (const lead of toInsert) {
+                const safeRow = {
+                    name: String(lead.name || '').trim(),
+                    phone: String(lead.phone || 'N/A').trim(),
+                    email: String(lead.email || '').trim(),
+                    destination: String(lead.destination || '').trim(),
+                    source: String(lead.source || 'Meta Sheet Sync'),
+                    status: String(lead.status || 'New'),
+                    travelers: Number.isInteger(lead.travelers) ? lead.travelers : 1,
+                    remarks: String(lead.remarks || '').trim(),
+                    created_at: lead.created_at
+                };
+                const { error: rowErr } = await supabase.from('leads').insert([safeRow]);
+                if (rowErr) {
+                    console.error(`[Google Sheet Sync] Skipped row (${safeRow.name} / ${safeRow.phone}): ${rowErr.message}`);
+                    skippedCount++;
+                } else {
+                    insertedCount++;
+                }
+            }
+            console.log(`[Google Sheet Sync] Imported ${insertedCount} leads. Skipped ${skippedCount} bad rows. Duplicates: ${duplicateCount}.`);
         } else {
             console.log(`[Google Sheet Sync] Check complete. No new leads to import (${duplicateCount} duplicates skipped).`);
         }
 
         return {
             success: true,
-            newLeadsCount: toInsert.length,
+            newLeadsCount: insertedCount,
+            skippedCount: skippedCount,
             totalSheetRows: rows.length,
             duplicateCount: duplicateCount
         };
