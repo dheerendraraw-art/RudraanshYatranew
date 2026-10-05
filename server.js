@@ -82,13 +82,20 @@ function requireAdmin(req, res, next) {
 
 const PORT = HOSTINGER_PORT || process.env.PORT || 3000;
 
-// Initialize Razorpay Client (gracefully falls back if keys are not set in .env)
-const razorpayKeyId = process.env.RAZORPAY_KEY_ID || 'rzp_test_dummykeyid123';
-const razorpayKeySecret = process.env.RAZORPAY_KEY_SECRET || 'dummysecret123';
-const razorpay = new Razorpay({
-    key_id: razorpayKeyId,
-    key_secret: razorpayKeySecret
-});
+// Initialize Razorpay Client from environment variables
+const razorpayKeyId = process.env.RAZORPAY_KEY_ID;
+const razorpayKeySecret = process.env.RAZORPAY_KEY_SECRET;
+let razorpay = null;
+if (razorpayKeyId && razorpayKeySecret) {
+    try {
+        razorpay = new Razorpay({
+            key_id: razorpayKeyId,
+            key_secret: razorpayKeySecret
+        });
+    } catch (err) {
+        console.error('[Razorpay] Failed to initialize client:', err);
+    }
+}
 
 
 // Initialize Supabase Client
@@ -3413,186 +3420,214 @@ app.get('/api/payment/lookup/:bookingId', async (req, res) => {
 // 2. Create Razorpay Order
 app.post('/api/create-order', async (req, res) => {
     try {
-        const { bookingId, amount } = req.body;
-        if (!bookingId || !amount) {
-            return res.status(400).json({ error: 'Missing bookingId or amount' });
+        const { bookingId, amount, currency = 'INR', receipt } = req.body;
+        if (!amount && amount !== 0) {
+            return res.status(400).json({ error: 'Missing required field: amount' });
         }
 
-        const numericAmount = parseFloat(amount);
-        if (isNaN(numericAmount) || (numericAmount * 100) < 100) {
+        // Amount calculation (minimum 100 paise):
+        // If bookingId is provided (from website checkout), amount is in INR Rupees
+        // Otherwise, amount is treated as paise directly
+        let amountInPaise;
+        const parsedAmount = parseFloat(amount);
+        if (isNaN(parsedAmount)) {
+            return res.status(400).json({ error: 'Invalid amount value' });
+        }
+
+        if (bookingId) {
+            amountInPaise = Math.round(parsedAmount * 100);
+        } else {
+            amountInPaise = Math.round(parsedAmount);
+        }
+
+        if (amountInPaise < 100) {
             return res.status(400).json({ error: 'Amount must be at least 100 paise (₹1)' });
+        }
+
+        if (!razorpayKeyId || !razorpayKeySecret || !razorpay) {
+            return res.status(500).json({ error: 'Razorpay environment credentials missing or invalid' });
         }
 
         let actualBookingId = bookingId;
 
         if (bookingId === 'PENDING') {
-            if (!supabase) {
-                return res.status(500).json({ error: 'Supabase client not initialized' });
+            if (supabase) {
+                // Generate a clean unique Booking ID for this instant online booking
+                actualBookingId = 'RY-ONL-' + Date.now().toString().slice(-6) + Math.floor(Math.random() * 10);
+                const packagePrice = req.body.totalPackageAmount ? parseFloat(req.body.totalPackageAmount) : (amountInPaise / 100);
+                
+                const newBill = {
+                    booking_id: actualBookingId,
+                    customer_name: req.body.customerName || 'Instant Customer',
+                    customer_phone: req.body.customerPhone || '',
+                    customer_email: req.body.customerEmail || '',
+                    group_size: parseInt(req.body.groupSize) || 1,
+                    tour_start_date: req.body.tourStartDate || new Date().toISOString().split('T')[0],
+                    package_name: req.body.packageName || 'Online Package',
+                    total_package_amount: packagePrice,
+                    payments_received: [],
+                    balance_remaining: packagePrice,
+                    payment_status: 'Pending'
+                };
+
+                const { error: dbError } = await supabase
+                    .from('booking_bills')
+                    .insert([newBill]);
+
+                if (dbError) {
+                    console.error('Error creating pending booking bill in Supabase:', dbError);
+                }
+            } else {
+                actualBookingId = 'RY-ONL-' + Date.now().toString().slice(-6);
             }
-            // Generate a clean unique Booking ID for this instant online booking
-            actualBookingId = 'RY-ONL-' + Date.now().toString().slice(-6) + Math.floor(Math.random() * 10);
-            
-            const packagePrice = req.body.totalPackageAmount ? parseFloat(req.body.totalPackageAmount) : numericAmount;
-            
-            const newBill = {
-                booking_id: actualBookingId,
-                customer_name: req.body.customerName || 'Instant Customer',
-                customer_phone: req.body.customerPhone || '',
-                customer_email: req.body.customerEmail || '',
-                group_size: parseInt(req.body.groupSize) || 1,
-                tour_start_date: req.body.tourStartDate || new Date().toISOString().split('T')[0],
-                package_name: req.body.packageName || 'Online Package',
-                total_package_amount: packagePrice,
-                payments_received: [],
-                balance_remaining: packagePrice,
-                payment_status: 'Pending'
-            };
-
-            const { error: dbError } = await supabase
-                .from('booking_bills')
-                .insert([newBill]);
-
-            if (dbError) throw dbError;
         }
 
-        const isDummy = razorpayKeyId === 'rzp_test_dummykeyid123';
-        let order;
+        // Generate receipt identifier (max 40 chars per Razorpay requirements)
+        const orderReceipt = (receipt || ('rcpt_' + (actualBookingId ? actualBookingId.replace(/[^a-zA-Z0-9]/g, '_').slice(0, 16) : 'gen') + '_' + Date.now().toString().slice(-6))).slice(0, 40);
 
-        if (isDummy) {
-            // Mock Razorpay order for local sandbox testing
-            order = {
-                id: 'order_mock_' + Date.now() + Math.floor(Math.random() * 100),
-                amount: Math.round(numericAmount * 100),
-                currency: 'INR'
-            };
-        } else {
-            // Create actual Razorpay Order
-            const options = {
-                amount: Math.round(numericAmount * 100), // amount in paise
-                currency: 'INR',
-                receipt: 'rcpt_' + actualBookingId.replace(/[^a-zA-Z0-9]/g, '_').slice(0, 20) + '_' + Date.now().toString().slice(-4),
-            };
-            try {
-                order = await razorpay.orders.create(options);
-            } catch (err) {
-                console.error('Razorpay SDK Order Error:', err);
-                if (err.statusCode === 401 || (err.error && err.error.code === 'BAD_REQUEST_ERROR' && err.message.includes('auth'))) {
-                    return res.status(401).json({ error: 'Razorpay authentication failed' });
-                }
-                return res.status(500).json({ error: err.message || 'Razorpay API error' });
+        // Call Razorpay API to create order
+        const options = {
+            amount: amountInPaise,
+            currency: currency,
+            receipt: orderReceipt
+        };
+
+        let order;
+        try {
+            order = await razorpay.orders.create(options);
+        } catch (err) {
+            console.error('Razorpay SDK Order Error:', err);
+            if (err.statusCode === 401 || (err.error && err.error.code === 'BAD_REQUEST_ERROR' && String(err.message).toLowerCase().includes('auth'))) {
+                return res.status(401).json({ error: 'Razorpay authentication failed' });
             }
+            return res.status(500).json({ error: err.error?.description || err.message || 'Razorpay API error' });
         }
 
         res.json({
+            order_id: order.id,
             orderId: order.id,
             amount: order.amount,
             currency: order.currency,
-            keyId: isDummy ? 'rzp_test_dummykeyid123' : razorpayKeyId,
+            key_id: razorpayKeyId,
+            keyId: razorpayKeyId,
+            receipt: order.receipt,
             bookingId: actualBookingId
         });
     } catch (err) {
         console.error('API Create Order Error:', err);
-        res.status(500).json({ error: err.message });
+        res.status(500).json({ error: err.message || 'Failed to create order' });
     }
 });
 
 // 3. Verify Razorpay Payment Signature
 app.post('/api/verify-payment', async (req, res) => {
     try {
-        if (!supabase) {
-            return res.status(500).json({ error: 'Supabase client not initialized' });
+        const orderId = req.body.razorpay_order_id || req.body.order_id;
+        const paymentId = req.body.razorpay_payment_id || req.body.payment_id;
+        const signature = req.body.razorpay_signature || req.body.signature;
+        const bookingId = req.body.bookingId;
+        const amountPaid = req.body.amountPaid;
+
+        // Check required fields
+        if (!orderId || !paymentId || !signature) {
+            return res.status(400).json({
+                success: false,
+                error: 'Missing required fields: razorpay_order_id, razorpay_payment_id, and razorpay_signature are required'
+            });
         }
 
-        const {
-            razorpay_payment_id,
-            razorpay_order_id,
-            razorpay_signature,
-            bookingId,
-            amountPaid
-        } = req.body;
-
-        if (!bookingId || !amountPaid) {
-            return res.status(400).json({ error: 'Missing bookingId or amountPaid' });
+        if (!razorpayKeySecret) {
+            return res.status(500).json({
+                success: false,
+                error: 'Razorpay key secret not configured on server'
+            });
         }
 
-        const additionalPaid = parseFloat(amountPaid);
-        if (isNaN(additionalPaid) || additionalPaid <= 0) {
-            return res.status(400).json({ error: 'Invalid payment amount' });
+        // Cryptographic Signature Verification: HMAC-SHA256(order_id + "|" + payment_id, KEY_SECRET)
+        const body = orderId + '|' + paymentId;
+        const expectedSignature = crypto
+            .createHmac('sha256', razorpayKeySecret)
+            .update(body)
+            .digest('hex');
+
+        let isMatch = false;
+        try {
+            isMatch = (expectedSignature.length === signature.length) &&
+                crypto.timingSafeEqual(Buffer.from(expectedSignature, 'utf-8'), Buffer.from(signature, 'utf-8'));
+        } catch (e) {
+            isMatch = false;
         }
 
-        const isDummy = razorpayKeyId === 'rzp_test_dummykeyid123';
+        if (!isMatch) {
+            return res.status(400).json({
+                success: false,
+                error: 'Signature verification failed. Invalid payment signature.'
+            });
+        }
 
-        // Cryptographic Signature Verification
-        if (!isDummy) {
-            if (!razorpay_payment_id || !razorpay_order_id || !razorpay_signature) {
-                return res.status(400).json({ error: 'Missing Razorpay details for verification' });
+        // Signature verified successfully!
+        const receiptId = paymentId;
+        let updatedBill = null;
+
+        // Update database if bookingId and Supabase are present
+        if (bookingId && supabase) {
+            try {
+                const { data: bill } = await supabase
+                    .from('booking_bills')
+                    .select('*')
+                    .eq('booking_id', bookingId)
+                    .maybeSingle();
+
+                if (bill) {
+                    const additionalPaid = parseFloat(amountPaid) || 0;
+                    const newPayment = {
+                        receiptId,
+                        amountPaid: additionalPaid,
+                        date: new Date().toISOString().split('T')[0],
+                        paymentMode: 'Online (Razorpay)',
+                        paymentType: bill.payments_received && bill.payments_received.length === 0 ? 'Online Advance' : 'Online Installment'
+                    };
+
+                    const updatedPayments = [...(bill.payments_received || []), newPayment];
+                    const totalPaid = updatedPayments.reduce((sum, p) => sum + (parseFloat(p.amountPaid) || 0), 0);
+                    const discount = parseFloat(bill.discount || 0);
+                    const netAmount = Math.max(0, parseFloat(bill.total_package_amount || 0) - discount);
+                    const newBalance = Math.max(0, netAmount - totalPaid);
+
+                    let newStatus = 'Pending';
+                    if (totalPaid > 0) {
+                        newStatus = totalPaid >= netAmount ? 'Fully Paid' : 'Partially Paid';
+                    }
+
+                    const { data: billResult } = await supabase
+                        .from('booking_bills')
+                        .update({
+                            payments_received: updatedPayments,
+                            balance_remaining: newBalance,
+                            payment_status: newStatus
+                        })
+                        .eq('id', bill.id)
+                        .select()
+                        .single();
+
+                    updatedBill = billResult;
+                }
+            } catch (dbErr) {
+                console.error('[Verify Payment] Error updating Supabase billing record:', dbErr);
             }
-            const body = razorpay_order_id + '|' + razorpay_payment_id;
-            const expectedSignature = crypto
-                .createHmac('sha256', razorpayKeySecret)
-                .update(body.toString())
-                .digest('hex');
-
-            if (expectedSignature !== razorpay_signature) {
-                return res.status(400).json({ error: 'Invalid payment signature. Verification failed.' });
-            }
         }
-
-        // Signature is verified or bypassed in dummy mode. Update Supabase billing record:
-        // 1. Fetch current bill
-        const { data: bill, error: fetchErr } = await supabase
-            .from('booking_bills')
-            .select('*')
-            .eq('booking_id', bookingId)
-            .maybeSingle();
-
-        if (fetchErr || !bill) {
-            return res.status(404).json({ error: 'Billing record not found for Booking ID ' + bookingId });
-        }
-
-        // 2. Add receipt to payments_received history
-        const paymentMode = isDummy ? 'Online (Mock Razorpay)' : 'Online (Razorpay)';
-        const receiptId = razorpay_payment_id || 'PAY-MOCK-' + Date.now() + Math.floor(Math.random() * 10);
-        const newPayment = {
-            receiptId,
-            amountPaid: additionalPaid,
-            date: new Date().toISOString().split('T')[0],
-            paymentMode,
-            paymentType: bill.payments_received && bill.payments_received.length === 0 ? 'Online Advance' : 'Online Installment'
-        };
-
-        const updatedPayments = [...(bill.payments_received || []), newPayment];
-        const totalPaid = updatedPayments.reduce((sum, p) => sum + p.amountPaid, 0);
-        const discount = parseFloat(bill.discount || 0);
-        const netAmount = Math.max(0, parseFloat(bill.total_package_amount || 0) - discount);
-        const newBalance = Math.max(0, netAmount - totalPaid);
-
-        let newStatus = 'Pending';
-        if (totalPaid > 0) {
-            newStatus = totalPaid >= netAmount ? 'Fully Paid' : 'Partially Paid';
-        }
-
-        const { data: updatedBill, error: updateErr } = await supabase
-            .from('booking_bills')
-            .update({
-                payments_received: updatedPayments,
-                balance_remaining: newBalance,
-                payment_status: newStatus
-            })
-            .eq('id', bill.id)
-            .select()
-            .single();
-
-        if (updateErr) throw updateErr;
 
         res.json({
             success: true,
+            message: 'Payment verified successfully',
             receiptId,
+            order_id: orderId,
+            payment_id: paymentId,
             bill: updatedBill
         });
     } catch (err) {
         console.error('API Payment Verification Error:', err);
-        res.status(500).json({ error: err.message });
+        res.status(500).json({ success: false, error: err.message || 'Internal verification error' });
     }
 });
 

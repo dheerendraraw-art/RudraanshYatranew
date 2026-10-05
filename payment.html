@@ -1363,13 +1363,13 @@
 
                 // Initialize Razorpay Options
                 const options = {
-                    key: orderData.keyId,
+                    key: orderData.key_id || orderData.keyId,
                     amount: orderData.amount,
                     currency: orderData.currency,
                     name: 'Rudraansh Yatra',
                     description: `${currentBill.package_name} - ${orderData.bookingId || currentBill.booking_id}`,
                     image: '/assets/images/logo.png',
-                    order_id: orderData.orderId,
+                    order_id: orderData.order_id || orderData.orderId,
                     prefill: {
                         name: currentBill.customer_name,
                         email: currentBill.customer_email || '',
