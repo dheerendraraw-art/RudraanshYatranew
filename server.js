@@ -4031,7 +4031,9 @@ async function syncGoogleSheetLeads() {
 
             let travelersNum = 1;
             const parsedInt = parseInt(peopleInfo, 10);
-            if (!isNaN(parsedInt) && parsedInt > 0) {
+            // Clamp to valid int32 range and realistic group size (1–99)
+            // Guards against phone numbers accidentally in the travelers column
+            if (!isNaN(parsedInt) && parsedInt > 0 && parsedInt <= 99) {
                 travelersNum = parsedInt;
             }
 
@@ -4066,7 +4068,7 @@ async function syncGoogleSheetLeads() {
                     destination: String(lead.destination || '').trim(),
                     source: String(lead.source || 'Meta Sheet Sync'),
                     status: String(lead.status || 'New'),
-                    travelers: Number.isInteger(lead.travelers) ? lead.travelers : 1,
+                    travelers: (Number.isInteger(lead.travelers) && lead.travelers > 0 && lead.travelers <= 99) ? lead.travelers : 1,
                     remarks: String(lead.remarks || '').trim(),
                     created_at: lead.created_at
                 };
