@@ -3444,6 +3444,7 @@
         }
 
         // Load statistics & tables
+        // Load statistics & tables with smart prioritization and staggering to keep UI snappy
         async function loadAllDashboardData() {
             if (!supabaseAdmin) return;
 
@@ -3457,32 +3458,34 @@
                 if (icon) icon.className = 'fa-solid fa-chevron-down';
             }
 
-            // Always fetch users first to ensure assignee lists and maps are fully loaded
-            await fetchUsers();
+            // Fetch users mapping asynchronously without blocking remaining dashboard fetches
+            fetchUsers().catch(err => console.warn('fetchUsers non-fatal warning:', err));
 
-            if (currentUserRole === 'admin') {
-                fetchBookings();
-                fetchCustomRequests();
-                fetchDiscountRegistrations();
+            // Load primary data immediately
+            fetchBookings();
+            fetchBillingRecords();
+            fetchLeads();
+
+            // Stagger secondary background data loads slightly so network and UI aren't flooded
+            setTimeout(() => {
                 fetchBlogs();
                 fetchGallery();
-                fetchLeads();
-                fetchCredentials();
-                fetchBillingRecords();
                 fetchGlobalLeadHistory();
+            }, 150);
+
+            setTimeout(() => {
+                if (currentUserRole === 'admin') {
+                    fetchCustomRequests();
+                    fetchDiscountRegistrations();
+                    fetchCredentials();
+                }
                 if (window.fetchRemindersData) fetchRemindersData();
                 if (window.renderAttendanceHistory) renderAttendanceHistory();
-            } else {
-                fetchBookings();
-                fetchLeads();
-                fetchBlogs();
-                fetchGallery();
-                fetchCredentials();
-                fetchBillingRecords();
-                fetchGlobalLeadHistory();
-                if (window.fetchRemindersData) fetchRemindersData();
-                if (window.renderAttendanceHistory) renderAttendanceHistory();
-            }
+            }, 300);
+
+            setTimeout(() => {
+                refreshActiveTabStats();
+            }, 700);
         }
 
         // Tab Switch logic
@@ -3973,46 +3976,7 @@
             document.getElementById(containerId).style.display = 'none';
         }
 
-        // Load statistics & tables
-        async function loadAllDashboardData() {
-            if (!supabaseAdmin) return;
 
-            // Apply collapsed state from localStorage
-            if (localStorage.getItem('stats_collapsed') === 'true') {
-                const grid = document.getElementById('dashboard-stats-grid');
-                const text = document.getElementById('stats-collapse-text');
-                const icon = document.getElementById('stats-collapse-icon');
-                if (grid) grid.style.display = 'none';
-                if (text) text.innerText = 'Expand Stats';
-                if (icon) icon.className = 'fa-solid fa-chevron-down';
-            }
-
-            // Fetch users mapping asynchronously without blocking remaining dashboard fetches
-            fetchUsers().catch(err => console.warn('fetchUsers non-fatal warning:', err));
-
-            if (currentUserRole === 'admin') {
-                fetchBookings();
-                fetchCustomRequests();
-                fetchDiscountRegistrations();
-                fetchBlogs();
-                fetchGallery();
-                fetchLeads();
-                fetchCredentials();
-                fetchBillingRecords();
-                fetchGlobalLeadHistory();
-            } else {
-                fetchBookings();
-                fetchLeads();
-                fetchBlogs();
-                fetchBillingRecords();
-                fetchGlobalLeadHistory();
-            }
-
-            // Initially set active stats
-            setTimeout(() => {
-                refreshActiveTabStats();
-            }, 600);
-        }
 
         window.fetchNextBookingId = async function() {
             try {

@@ -4062,6 +4062,7 @@ async function syncGoogleSheetLeads() {
             });
             if (leadPage.length < PAGE_SIZE) break; // last page
             page++;
+            await new Promise(r => setTimeout(r, 20)); // Yield to event loop between pages
         }
         console.log(`[Google Sheet Sync] Loaded ${existingPhones.size} phones, ${existingEmails.size} emails, and ${existingNameKeys.size} keys from existing leads.`);
 
@@ -4164,9 +4165,10 @@ async function syncGoogleSheetLeads() {
         let insertedCount = 0;
         let skippedCount = 0;
         if (toInsert.length > 0) {
-            // Insert row-by-row so one bad row doesn't block the entire batch
-            for (const lead of toInsert) {
-                const safeRow = {
+            // Batch insert in chunks of 25 for dramatic speedup and zero event-loop blocking
+            const BATCH_SIZE = 25;
+            for (let i = 0; i < toInsert.length; i += BATCH_SIZE) {
+                const batch = toInsert.slice(i, i + BATCH_SIZE).map(lead => ({
                     name: String(lead.name || '').trim(),
                     phone: String(lead.phone || 'N/A').trim(),
                     email: String(lead.email || '').trim(),
@@ -4176,14 +4178,25 @@ async function syncGoogleSheetLeads() {
                     travelers: (Number.isInteger(lead.travelers) && lead.travelers > 0 && lead.travelers <= 99) ? lead.travelers : 1,
                     remarks: String(lead.remarks || '').trim(),
                     created_at: lead.created_at
-                };
-                const { error: rowErr } = await supabase.from('leads').insert([safeRow]);
-                if (rowErr) {
-                    console.error(`[Google Sheet Sync] Skipped row (${safeRow.name} / ${safeRow.phone}): ${rowErr.message}`);
-                    skippedCount++;
+                }));
+
+                const { error: batchErr } = await supabase.from('leads').insert(batch);
+                if (batchErr) {
+                    console.warn(`[Google Sheet Sync] Batch insert error, falling back to individual inserts: ${batchErr.message}`);
+                    for (const row of batch) {
+                        const { error: rowErr } = await supabase.from('leads').insert([row]);
+                        if (rowErr) {
+                            console.error(`[Google Sheet Sync] Skipped row (${row.name} / ${row.phone}): ${rowErr.message}`);
+                            skippedCount++;
+                        } else {
+                            insertedCount++;
+                        }
+                    }
                 } else {
-                    insertedCount++;
+                    insertedCount += batch.length;
                 }
+                // Yield to event loop to allow pending HTTP requests to process smoothly
+                await new Promise(r => setTimeout(r, 40));
             }
             console.log(`[Google Sheet Sync] Imported ${insertedCount} leads. Skipped ${skippedCount} bad rows. Duplicates: ${duplicateCount}.`);
         } else {
@@ -4296,8 +4309,9 @@ app.post('/api/webhooks/google-sheets-lead', async (req, res) => {
 });
 
 
-// Start background periodic Google Sheet sync every 5 minutes
-// A simple lock flag prevents overlapping sync runs
+// Start background periodic Google Sheet sync
+// Delayed start (3 minutes after server start) so cold boot is instantaneous and never times out.
+// Runs periodically every 30 minutes.
 let _sheetSyncRunning = false;
 async function safeSync() {
     if (_sheetSyncRunning) {
@@ -4313,8 +4327,8 @@ async function safeSync() {
         _sheetSyncRunning = false;
     }
 }
-setTimeout(safeSync, 10000);
-setInterval(safeSync, 5 * 60 * 1000);
+setTimeout(safeSync, 3 * 60 * 1000); // 3 minutes after boot
+setInterval(safeSync, 30 * 60 * 1000); // every 30 minutes
 
 
 
@@ -4486,6 +4500,23 @@ function syncStaticFiles() {
     
     console.log(`[Static Sync] Syncing static files from ${__dirname} to ${publicHtmlDir}...`);
     const syncedFiles = [];
+
+    // Helper to only copy files if missing or modified (prevents massive disk I/O lockup)
+    const copyIfChanged = (src, dest) => {
+        try {
+            if (fs.existsSync(dest)) {
+                const sStat = fs.statSync(src);
+                const dStat = fs.statSync(dest);
+                if (sStat.size === dStat.size && sStat.mtimeMs <= dStat.mtimeMs) {
+                    return false; // already identical
+                }
+            }
+            fs.copyFileSync(src, dest);
+            return true;
+        } catch (e) {
+            return false;
+        }
+    };
     
     // 1. Sync all root HTML, CSS, JS, XML, TXT files
     try {
@@ -4495,13 +4526,10 @@ function syncStaticFiles() {
                 const ext = path.extname(entry.name).toLowerCase();
                 if (['.html', '.css', '.js', '.xml', '.txt'].includes(ext)) {
                     if (entry.name === 'server.js' || entry.name.startsWith('.')) continue;
-                    try {
-                        const srcPath = path.join(__dirname, entry.name);
-                        const destPath = path.join(publicHtmlDir, entry.name);
-                        fs.copyFileSync(srcPath, destPath);
+                    const srcPath = path.join(__dirname, entry.name);
+                    const destPath = path.join(publicHtmlDir, entry.name);
+                    if (copyIfChanged(srcPath, destPath)) {
                         syncedFiles.push(entry.name);
-                    } catch (e) {
-                        console.error(`[Static Sync] Failed to sync ${entry.name}: ${e.message}`);
                     }
                 }
             }
@@ -4521,11 +4549,10 @@ function syncStaticFiles() {
             const blogEntries = fs.readdirSync(blogSrcDir, { withFileTypes: true });
             for (const entry of blogEntries) {
                 if (entry.isFile() && entry.name.endsWith('.html')) {
-                    try {
-                        fs.copyFileSync(path.join(blogSrcDir, entry.name), path.join(blogDestDir, entry.name));
+                    const srcPath = path.join(blogSrcDir, entry.name);
+                    const destPath = path.join(blogDestDir, entry.name);
+                    if (copyIfChanged(srcPath, destPath)) {
                         syncedFiles.push(`blog/${entry.name}`);
-                    } catch (e) {
-                        console.error(`[Static Sync] Failed to sync blog/${entry.name}: ${e.message}`);
                     }
                 }
             }
@@ -4546,11 +4573,8 @@ function syncStaticFiles() {
                 if (entry.isDirectory()) {
                     syncDirRecursive(srcPath, destPath);
                 } else if (entry.isFile()) {
-                    try {
-                        fs.copyFileSync(srcPath, destPath);
+                    if (copyIfChanged(srcPath, destPath)) {
                         syncedFiles.push(path.relative(__dirname, srcPath).replace(/\\/g, '/'));
-                    } catch (e) {
-                        console.error(`[Static Sync] Failed to sync asset ${entry.name}: ${e.message}`);
                     }
                 }
             }
@@ -4560,7 +4584,7 @@ function syncStaticFiles() {
         console.error('[Static Sync] Error syncing assets directory:', err);
     }
     
-    console.log(`[Static Sync] Successfully synced ${syncedFiles.length} files to ${publicHtmlDir}`);
+    console.log(`[Static Sync] Successfully synced ${syncedFiles.length} updated files to ${publicHtmlDir}`);
     return { success: true, count: syncedFiles.length, syncedFiles };
 }
 
@@ -4576,25 +4600,37 @@ app.all('/api/sync-static', (req, res) => {
 });
 
 // Support Phusion Passenger (Hostinger Node.js runner), Local Node.js, and Vercel
+let serverInstance;
 if (typeof(PhusionPassenger) !== 'undefined') {
     PhusionPassenger.configure({ autoInstall: false });
-    app.listen('passenger', () => {
+    serverInstance = app.listen('passenger', () => {
         console.log('Server is running under Phusion Passenger');
-        try {
-            syncStaticFiles();
-        } catch (e) {
-            console.error('Error during static files sync:', e);
-        }
+        // Run static sync in the background so HTTP requests can respond immediately
+        setTimeout(() => {
+            try {
+                syncStaticFiles();
+            } catch (e) {
+                console.error('Error during static files sync:', e);
+            }
+        }, 5000);
     });
 } else if (!process.env.VERCEL) {
-    app.listen(PORT, () => {
+    serverInstance = app.listen(PORT, () => {
         console.log(`Server is running on port ${PORT}`);
-        try {
-            syncStaticFiles();
-        } catch (e) {
-            console.error('Error during static files sync:', e);
-        }
+        setTimeout(() => {
+            try {
+                syncStaticFiles();
+            } catch (e) {
+                console.error('Error during static files sync:', e);
+            }
+        }, 5000);
     });
+}
+
+// Configure Keep-Alive timeouts for reverse proxies (Nginx / Hostinger CDN) to prevent 502/504 timeouts
+if (serverInstance && typeof serverInstance.setTimeout === 'function') {
+    serverInstance.keepAliveTimeout = 65000;
+    serverInstance.headersTimeout = 66000;
 }
 
 // Required for Vercel serverless — must export the app
