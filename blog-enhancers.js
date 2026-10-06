@@ -6794,6 +6794,510 @@ BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanak
     };
 
 
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 18. ADI KAILASH ILP SUSPENDED OCT 19–26, 2026 FOR PARIKRAMA RUN
+// ─────────────────────────────────────────────────────────────────────────────
+BLOG_ENHANCERS['adi-kailash-ilp-suspended-oct-19-to-26-2026-for-parikrama-run'] = {
+    meta: {
+        title: 'Adi Kailash ILP Suspended Oct 19–26, 2026 for Parikrama Run | Official Notice',
+        desc: 'Online ILP for Adi Kailash & Om Parvat Yatra is suspended October 19–26, 2026 for the Adi Kailash Parikrama Run (Oct 24–25). No new permits issued during this window. Book before Oct 19 or after Oct 27.',
+        dateModified: '2026-10-05T22:51:14+05:30'
+    },
+    schemas: `
+    <!-- GEO Meta Tags -->
+    <meta name="geo.region" content="IN-UT">
+    <meta name="geo.placename" content="Pithoragarh, Uttarakhand, India">
+    <meta name="geo.position" content="29.5829;80.2182">
+    <meta name="ICBM" content="29.5829, 80.2182">
+    <!-- Freshness / Robots -->
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="revisit-after" content="1 day">
+    <meta name="rating" content="general">
+    <meta name="author" content="Dheerendra Rautela, Rudraansh Yatra">
+    <meta name="keywords" content="Adi Kailash ILP suspended October 2026, inner line permit Dharchula October 19 26, Adi Kailash permit pause Parikrama Run, Adi Kailash Parikrama Run 2026 October, ILP suspension Byas Valley, Om Parvat permit October 2026, Adi Kailash October booking guide, SDM Dharchula ILP halt">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "NewsArticle",
+          "@id": "https://rudraanshyatra.com/blog/adi-kailash-ilp-suspended-oct-19-to-26-2026-for-parikrama-run#entry",
+          "isPartOf": {
+            "@type": "WebPage",
+            "@id": "https://rudraanshyatra.com/blog/adi-kailash-ilp-suspended-oct-19-to-26-2026-for-parikrama-run"
+          },
+          "headline": "Adi Kailash ILP Suspended Oct 19–26, 2026 for Parikrama Run",
+          "description": "Online Inner Line Permit issuance for Adi Kailash & Om Parvat Yatra will pause from October 19 to October 26, 2026, to accommodate the Adi Kailash Parikrama Run ultra marathon on October 24–25.",
+          "image": [
+            "https://ysnzxvvsegmkmkepclti.supabase.co/storage/v1/object/public/blog-images/file_1791220873335_833.JPEG",
+            "https://rudraanshyatra.com/assets/images/adi-kailash-hero.webp"
+          ],
+          "datePublished": "2026-10-05T22:51:14+05:30",
+          "dateModified": "2026-10-05T22:51:14+05:30",
+          "mainEntityOfPage": "https://rudraanshyatra.com/blog/adi-kailash-ilp-suspended-oct-19-to-26-2026-for-parikrama-run",
+          "author": {
+            "@type": "Person",
+            "name": "Dheerendra Rautela",
+            "image": "https://rudraanshyatra.com/assets/images/dheerendra-rautela.webp",
+            "jobTitle": "Tour Manager Operations & Lead Expedition Guide",
+            "hasCredential": {
+              "@type": "EducationalOccupationalCredential",
+              "credentialCategory": "Professional Certification",
+              "name": "Tour Manager Operations Certificate",
+              "recognizedBy": {
+                "@type": "Organization",
+                "name": "Tourism and Hospitality Skill Council (THSC)"
+              }
+            }
+          },
+          "publisher": {
+            "@id": "https://rudraanshyatra.com/#organization"
+          },
+          "about": [
+            { "@type": "Thing", "name": "Inner Line Permit Adi Kailash" },
+            { "@type": "Thing", "name": "Adi Kailash Parikrama Run 2026" },
+            { "@type": "Thing", "name": "SDM Dharchula" },
+            { "@type": "Thing", "name": "Byas Valley" },
+            { "@type": "Thing", "name": "Adi Kailash Yatra 2026" }
+          ],
+          "keywords": "Adi Kailash ILP suspended October 2026, Parikrama Run permit pause, inner line permit Dharchula halt, Byas Valley marathon 2026, Om Parvat permit October",
+          "mentions": [
+            { "@type": "Event", "name": "Adi Kailash Parikrama Run 2026", "startDate": "2026-10-24", "endDate": "2026-10-25" }
+          ]
+        },
+        {
+          "@type": "SpecialAnnouncement",
+          "@id": "https://rudraanshyatra.com/blog/adi-kailash-ilp-suspended-oct-19-to-26-2026-for-parikrama-run#announcement",
+          "name": "Adi Kailash ILP Suspension: October 19–26, 2026",
+          "text": "Online Inner Line Permit (ILP) issuance for the Adi Kailash and Om Parvat Yatra route will be suspended from October 19 to October 26, 2026. The suspension is to accommodate the Adi Kailash Parikrama Run, a high-altitude ultra marathon taking place on October 24–25, 2026 in Gunji, Byas Valley. No new yatri permits will be issued during this window. Travellers must complete their yatra before October 19 or plan to depart from October 27 onwards.",
+          "datePosted": "2026-10-05",
+          "expires": "2026-10-27",
+          "category": "https://www.wikidata.org/wiki/Q83267",
+          "spatialCoverage": {
+            "@type": "Place",
+            "name": "Adi Kailash Yatra Route, Byas Valley, Pithoragarh, Uttarakhand"
+          },
+          "announcementLocation": {
+            "@type": "GovernmentOffice",
+            "name": "SDM Office Dharchula, Pithoragarh District Administration",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Dharchula",
+              "addressRegion": "Uttarakhand",
+              "addressCountry": "IN"
+            }
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://rudraanshyatra.com/blog/adi-kailash-ilp-suspended-oct-19-to-26-2026-for-parikrama-run#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "When is the Adi Kailash ILP suspended in October 2026?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Online Inner Line Permit (ILP) issuance for the Adi Kailash and Om Parvat Yatra will be suspended from October 19 to October 26, 2026. No new permits will be issued during this 8-day window."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Why is the Adi Kailash ILP being suspended in October 2026?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The ILP suspension is to accommodate the Adi Kailash Parikrama Run 2026, a high-altitude ultra marathon taking place on October 24–25, 2026, in Gunji, Byas Valley. The Gunji–Jolingkong mountain road serves as the race course during this period and cannot simultaneously handle regular yatri vehicle traffic for safety reasons."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I still do the Adi Kailash Yatra during the ILP suspension period?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. Since no new ILPs will be issued between October 19 and October 26, you cannot start a fresh Adi Kailash Yatra during this window. You must either complete your trip before October 19 or book for October 27 onwards, once the permit portal reopens."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I watch the Parikrama Run and do the Adi Kailash Yatra in the same trip?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. Since yatri ILPs are not being issued during the Parikrama Run window (October 19–26), you cannot combine both activities in a single trip. Plan attending the race as a completely separate trip from your Adi Kailash pilgrimage."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What should I do if my Adi Kailash booking falls between October 19 and 26?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Contact your tour operator immediately to reschedule. Rebooking early gives you more flexibility with transport and homestay availability. No amount of advance planning can override the ILP suspension — permits simply will not be issued during these dates. Rudraansh Yatra at +91 7617617651 can help with rescheduling."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "When do Adi Kailash permits resume after the Parikrama Run suspension?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "ILP issuance is expected to resume from October 27, 2026, once the Parikrama Run event, its logistics, and road clearance are complete. October 27 onwards is a safe and recommended window for planning your Adi Kailash Yatra before the winter closure."
+              }
+            }
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://rudraanshyatra.com/blog/adi-kailash-ilp-suspended-oct-19-to-26-2026-for-parikrama-run#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://rudraanshyatra.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Travel Diaries",
+              "item": "https://rudraanshyatra.com/blogs"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Adi Kailash ILP Suspended Oct 19–26, 2026 for Parikrama Run",
+              "item": "https://rudraanshyatra.com/blog/adi-kailash-ilp-suspended-oct-19-to-26-2026-for-parikrama-run"
+            }
+          ]
+        },
+        {
+          "@type": "TravelAgency",
+          "@id": "https://rudraanshyatra.com/#organization",
+          "name": "Rudraansh Yatra",
+          "description": "NIDHI-certified direct ground operator and travel agency based physically in Pithoragarh, executing authentic spiritual pilgrimages (Adi Kailash, Om Parvat) and adventure treks across the Kumaon border valleys.",
+          "url": "https://rudraanshyatra.com",
+          "logo": "https://rudraanshyatra.com/assets/images/logo.png",
+          "image": "https://rudraanshyatra.com/assets/images/logo.png",
+          "telephone": "+917617617651",
+          "priceRange": "₹₹₹",
+          "areaServed": [
+            { "@type": "AdministrativeArea", "name": "Kumaon Uttarakhand" },
+            { "@type": "AdministrativeArea", "name": "Pithoragarh" },
+            { "@type": "AdministrativeArea", "name": "Dharchula" },
+            { "@type": "AdministrativeArea", "name": "Gunji" },
+            { "@type": "AdministrativeArea", "name": "Byas Valley" }
+          ],
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "1st Floor Above Maniram Punetha & Sons, Simalgair Bazaar",
+            "addressLocality": "Pithoragarh",
+            "addressRegion": "Uttarakhand",
+            "postalCode": "262501",
+            "addressCountry": "IN"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "29.5829",
+            "longitude": "80.2182"
+          },
+          "sameAs": [
+            "https://www.tripadvisor.in/Profile/Rudraanshyatra?fid=48ae09cc-5151-4403-9190-446ed02e64e8"
+          ]
+        }
+      ]
+    }
+    </script>
+    <!-- Speakable Schema (AEO / Voice Search / AI Answer Engines) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Adi Kailash ILP Suspended Oct 19–26, 2026 for Parikrama Run",
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": ["#executive-summary", ".ry-suspension-title", ".ry-suspension-intro", "#frequently-asked-questions", ".ry-faq-section"]
+      },
+      "url": "https://rudraanshyatra.com/blog/adi-kailash-ilp-suspended-oct-19-to-26-2026-for-parikrama-run"
+    }
+    </script>`,
+    render: function(paragraphsHtml) {
+        const richContent = `
+<!-- ===== AEO / AIO Executive Alert Banner ===== -->
+<div class="ry-live-banner" id="executive-summary" style="border-color: #f59e0b;">
+    <div class="ry-live-badge-row">
+        <span class="ry-status-live" style="background: rgba(245,158,11,0.18); border-color: #f59e0b; color: #fbbf24;">
+            <span class="ry-pulse-green" style="background:#f59e0b; box-shadow:0 0 0 0 rgba(245,158,11,0.7);"></span>
+            ⚠ Official ILP Suspension Notice
+        </span>
+        <span class="ry-live-source">
+            <i class="fa-solid fa-landmark"></i> SDM Dharchula &amp; Pithoragarh District Administration
+        </span>
+    </div>
+    <h2 class="ry-live-title ry-suspension-title">
+        Adi Kailash ILP Suspended October 19–26, 2026 — Plan Accordingly
+    </h2>
+    <p class="ry-live-intro ry-suspension-intro">
+        <strong>Direct Answer for Yatris &amp; Search Engines:</strong> Online Inner Line Permit (ILP) issuance for the <strong>Adi Kailash &amp; Om Parvat Yatra</strong> will be <strong>suspended from October 19 to October 26, 2026</strong>. The pause is to clear the route for the <strong>Adi Kailash Parikrama Run</strong> — a high-altitude ultra marathon on October 24–25 in Gunji, Byas Valley. No new yatri permits go out during this window. Either wrap up your trip <strong>before October 19</strong>, or plan to depart <strong>October 27 onwards</strong>.
+    </p>
+    <!-- KPI Quick-Fact Grid -->
+    <div class="ry-kpi-grid">
+        <div class="ry-kpi-card">
+            <div class="label">ILP Suspended From</div>
+            <div class="val" style="color:#fb923c;">October 19, 2026</div>
+            <div class="sub">No new permits from this date</div>
+        </div>
+        <div class="ry-kpi-card">
+            <div class="label">ILP Suspended Until</div>
+            <div class="val" style="color:#fb923c;">October 26, 2026</div>
+            <div class="sub">8-day suspension window</div>
+        </div>
+        <div class="ry-kpi-card">
+            <div class="label">Reason for Pause</div>
+            <div class="val" style="color:#fbbf24;">Parikrama Run</div>
+            <div class="sub">Ultra marathon Oct 24–25</div>
+        </div>
+        <div class="ry-kpi-card">
+            <div class="label">Race Location</div>
+            <div class="val success">Gunji, Byas Valley</div>
+            <div class="sub">10,300 ft – 15,000 ft altitude</div>
+        </div>
+        <div class="ry-kpi-card">
+            <div class="label">Permits Resume</div>
+            <div class="val success">October 27, 2026</div>
+            <div class="sub">Book post-suspension batches now</div>
+        </div>
+        <div class="ry-kpi-card">
+            <div class="label">Season Still Open</div>
+            <div class="val success">Through Early Nov</div>
+            <div class="sub">Autumn window intact</div>
+        </div>
+    </div>
+    <!-- CTAs -->
+    <div class="ry-cta-bar">
+        <a href="https://wa.me/917617617651?text=Namaste%20Rudraansh%20Yatra!%20I%20need%20help%20rescheduling%20my%20Adi%20Kailash%20Yatra%20around%20the%20October%20ILP%20suspension%20(Oct%2019-26%202026)." class="ry-cta-btn wa" target="_blank" rel="noopener">
+            <i class="fa-brands fa-whatsapp"></i> Reschedule via WhatsApp (+91 7617617651)
+        </a>
+        <a href="tel:+917617617651" class="ry-cta-btn call">
+            <i class="fa-solid fa-phone"></i> Call Ground Operations (Pithoragarh)
+        </a>
+    </div>
+</div>
+
+<!-- Inter-linking Nav Pills — Related Content -->
+<div class="ry-non-overlap-box">
+    <div style="display:flex; align-items:center; gap:8px; color:#fbbf24; font-weight:700; font-size:14px;">
+        <i class="fa-solid fa-compass"></i> Related ILP &amp; October 2026 Planning Guides:
+    </div>
+    <p style="color:#cbd5e1; font-size:13px; margin:6px 0 12px 0; line-height:1.55;">
+        Understand the full October 2026 picture — from the Parikrama Run itself to winter closing dates and the ILP process:
+    </p>
+    <div class="ry-nav-pills">
+        <a href="/blog/adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitude-ultra-marathon-guide" class="ry-nav-pill">
+            <span><i class="fa-solid fa-person-running" style="color:#fbbf24; margin-right:6px;"></i> Parikrama Run 2026 — Full Runner's Guide</span>
+            <i class="fa-solid fa-chevron-right" style="color:#fbbf24; font-size:10px;"></i>
+        </a>
+        <a href="/blog/inner-line-permit-adi-kailash-2026-guide" class="ry-nav-pill">
+            <span><i class="fa-solid fa-id-card" style="color:#fbbf24; margin-right:6px;"></i> ILP Step-by-Step Guide 2026</span>
+            <i class="fa-solid fa-chevron-right" style="color:#fbbf24; font-size:10px;"></i>
+        </a>
+        <a href="/blog/when-does-adi-kailash-yatra-2026-close-for-winter" class="ry-nav-pill">
+            <span><i class="fa-solid fa-snowflake" style="color:#fbbf24; margin-right:6px;"></i> Winter Closing Dates &amp; Last Batch Guide</span>
+            <i class="fa-solid fa-chevron-right" style="color:#fbbf24; font-size:10px;"></i>
+        </a>
+        <a href="/blog/adi-kailash-permits-open-first-batch-completes-yatra-september-2026" class="ry-nav-pill">
+            <span><i class="fa-solid fa-check-circle" style="color:#fbbf24; margin-right:6px;"></i> 1st Autumn Batch Completed — Ground Report</span>
+            <i class="fa-solid fa-chevron-right" style="color:#fbbf24; font-size:10px;"></i>
+        </a>
+        <a href="/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates" class="ry-nav-pill">
+            <span><i class="fa-solid fa-road" style="color:#fbbf24; margin-right:6px;"></i> 2026 Full Route &amp; Status History</span>
+            <i class="fa-solid fa-chevron-right" style="color:#fbbf24; font-size:10px;"></i>
+        </a>
+        <a href="/blog/best-time-to-visit-adi-kailash-om-parvat-weather-season-guide" class="ry-nav-pill">
+            <span><i class="fa-solid fa-calendar-days" style="color:#fbbf24; margin-right:6px;"></i> Best Time to Visit — Month-by-Month Guide</span>
+            <i class="fa-solid fa-chevron-right" style="color:#fbbf24; font-size:10px;"></i>
+        </a>
+    </div>
+</div>
+
+<!-- ===== Main Article Content (from CMS) ===== -->
+${paragraphsHtml}
+
+<!-- ===== FAQ Section (AEO / Featured Snippet Optimized) ===== -->
+<div class="ry-faq-section" id="frequently-asked-questions">
+    <h2 class="blog-heading">Frequently Asked Questions</h2>
+
+    <div class="ry-faq-item">
+        <h3 class="ry-faq-q">
+            <span><i class="fa-solid fa-circle-question" style="color:var(--color-gold); margin-right:8px;"></i>When exactly is the Adi Kailash ILP suspended in October 2026?</span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </h3>
+        <p class="ry-faq-a">
+            <strong>Answer:</strong> Online ILP issuance for Adi Kailash &amp; Om Parvat Yatra will be paused from <strong>October 19 to October 26, 2026</strong> (8 days). No new permits will be issued during this window. Permits are expected to resume from <strong>October 27, 2026</strong>.
+        </p>
+    </div>
+
+    <div class="ry-faq-item">
+        <h3 class="ry-faq-q">
+            <span><i class="fa-solid fa-circle-question" style="color:var(--color-gold); margin-right:8px;"></i>Why is the ILP suspended — what is the Parikrama Run?</span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </h3>
+        <p class="ry-faq-a">
+            <strong>Answer:</strong> The <a href="/blog/adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitude-ultra-marathon-guide" style="color:var(--color-gold); font-weight:600;">Adi Kailash Parikrama Run 2026</a> is a high-altitude ultra marathon held on October 24–25, 2026 in Gunji, Byas Valley, with routes from 5 km to 60 km reaching altitudes of 15,000 ft. The Gunji–Jolingkong stretch doubles as the race course, making simultaneous yatri vehicle traffic a safety risk. Authorities clear the route for the full event setup, race, and teardown period — October 19 to 26.
+        </p>
+    </div>
+
+    <div class="ry-faq-item">
+        <h3 class="ry-faq-q">
+            <span><i class="fa-solid fa-circle-question" style="color:var(--color-gold); margin-right:8px;"></i>Can I do the yatra AND watch the Parikrama Run in the same trip?</span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </h3>
+        <p class="ry-faq-a">
+            <strong>Answer:</strong> No. Because ILP issuance is completely suspended October 19–26, you cannot combine both in one trip. The race window is effectively off-limits for fresh yatra bookings. Treat watching the Parikrama Run as a separate trip — see our <a href="/blog/adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitude-ultra-marathon-guide" style="color:var(--color-gold); font-weight:600;">complete runner's guide</a> for logistics.
+        </p>
+    </div>
+
+    <div class="ry-faq-item">
+        <h3 class="ry-faq-q">
+            <span><i class="fa-solid fa-circle-question" style="color:var(--color-gold); margin-right:8px;"></i>What should I do if my existing booking falls inside the suspended window?</span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </h3>
+        <p class="ry-faq-a">
+            <strong>Answer:</strong> Contact your operator immediately — the earlier you reschedule, the more options you have for alternative transport and homestay slots in Gunji and Nabi. Rudraansh Yatra can be reached at <a href="tel:+917617617651" style="color:var(--color-gold); font-weight:600;">+91 7617617651</a> or on <a href="https://wa.me/917617617651?text=I%20need%20to%20reschedule%20my%20Adi%20Kailash%20booking%20due%20to%20October%20ILP%20suspension." target="_blank" rel="noopener" style="color:var(--color-gold); font-weight:600;">WhatsApp</a>. No permits will be issued regardless of how far in advance you applied.
+        </p>
+    </div>
+
+    <div class="ry-faq-item">
+        <h3 class="ry-faq-q">
+            <span><i class="fa-solid fa-circle-question" style="color:var(--color-gold); margin-right:8px;"></i>Is October 27 onwards safe for the Adi Kailash Yatra before winter closes?</span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </h3>
+        <p class="ry-faq-a">
+            <strong>Answer:</strong> Yes. October 27 through early November is a perfectly viable window. The autumn season typically operates until late October or the first week of November, depending on snowfall onset. See our <a href="/blog/when-does-adi-kailash-yatra-2026-close-for-winter" style="color:var(--color-gold); font-weight:600;">complete winter closing dates guide</a> for exact cutoff timelines.
+        </p>
+    </div>
+
+    <div class="ry-faq-item">
+        <h3 class="ry-faq-q">
+            <span><i class="fa-solid fa-circle-question" style="color:var(--color-gold); margin-right:8px;"></i>How do I get live permit and road status for October 2026?</span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </h3>
+        <p class="ry-faq-a">
+            <strong>Answer:</strong> Contact Rudraansh Yatra directly at <a href="tel:+917617617651" style="color:var(--color-gold); font-weight:600;">+91 7617617651</a>. As a Pithoragarh-based operator with daily liaison to the SDM Dharchula office and ITBP checkpoints, we provide real-time, verified ground intelligence — not call-centre estimates.
+        </p>
+    </div>
+</div>
+
+<!-- ===== October Planning Date Table (AIO / Featured Snippet) ===== -->
+<h2 class="blog-heading">October 2026 Adi Kailash Booking Calendar — At a Glance</h2>
+<div class="ry-table-responsive-wrap">
+    <div class="ry-table-scroll-hint"><i class="fa-solid fa-arrows-left-right"></i> Scroll to see full table</div>
+    <table class="ry-rev-table">
+        <thead>
+            <tr>
+                <th>October 2026 Dates</th>
+                <th>ILP Status</th>
+                <th>What Happens</th>
+                <th>Recommended Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Oct 1–18</strong></td>
+                <td style="color:#22c55e; font-weight:700;">✅ Active</td>
+                <td>Peak autumn season — crystal skies, clear roads</td>
+                <td>Best window — <strong>book now</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Oct 19</strong></td>
+                <td style="color:#f59e0b; font-weight:700;">⚠ Suspends</td>
+                <td>ILP portal closes for Parikrama Run logistics</td>
+                <td>Must have permit <strong>before this date</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Oct 19–23</strong></td>
+                <td style="color:#ef4444; font-weight:700;">🚫 Suspended</td>
+                <td>Race course setup — no yatri permits</td>
+                <td>Do <strong>not</strong> plan yatra</td>
+            </tr>
+            <tr>
+                <td><strong>Oct 24–25</strong></td>
+                <td style="color:#ef4444; font-weight:700;">🏃 Race Days</td>
+                <td>Adi Kailash Parikrama Run on Gunji–Jolingkong route</td>
+                <td>Attend race separately — no yatra</td>
+            </tr>
+            <tr>
+                <td><strong>Oct 26</strong></td>
+                <td style="color:#f59e0b; font-weight:700;">⚠ Clearance</td>
+                <td>Post-race logistics and road clearance day</td>
+                <td>Wait — permits still not available</td>
+            </tr>
+            <tr>
+                <td><strong>Oct 27 onward</strong></td>
+                <td style="color:#22c55e; font-weight:700;">✅ Resumes</td>
+                <td>Permits reopen — final autumn window before winter</td>
+                <td><strong>Book Oct 27+</strong> batches now</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- ===== Package Links (Inter-linking to tour pages) ===== -->
+<h2 class="blog-heading">Book Your October 27+ Adi Kailash Batch with Rudraansh Yatra</h2>
+<p class="blog-text">
+    Planning to visit Adi Kailash after the ILP suspension lifts on October 27? The autumn window remains fully open through early November — crisp skies, clear roads, and the magic of Adi Kailash in golden autumn light.
+    Choose your starting point:
+</p>
+<div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:16px; margin:20px 0 30px 0;">
+    <a href="/adi-kailash-from-pithoragarh" style="display:block; background:linear-gradient(135deg,#0a192f,#0f2d5c); border:1px solid rgba(212,175,55,0.35); border-radius:12px; padding:18px; text-decoration:none; transition:all 0.2s;">
+        <div style="color:#fbbf24; font-weight:800; font-size:15px; margin-bottom:6px;">🏔 From Pithoragarh</div>
+        <div style="color:#e2e8f0; font-size:13px; line-height:1.5;">3 Days / 2 Nights &bull; ₹18,000/person</div>
+        <div style="color:#94a3b8; font-size:12px; margin-top:6px;">→ Fastest route for locals &amp; nearby travellers</div>
+    </a>
+    <a href="/adi-kailash-from-kathgodam" style="display:block; background:linear-gradient(135deg,#0a192f,#0f2d5c); border:1px solid rgba(212,175,55,0.35); border-radius:12px; padding:18px; text-decoration:none; transition:all 0.2s;">
+        <div style="color:#fbbf24; font-weight:800; font-size:15px; margin-bottom:6px;">🚂 From Kathgodam</div>
+        <div style="color:#e2e8f0; font-size:13px; line-height:1.5;">6 Days / 5 Nights &bull; ₹30,000/person</div>
+        <div style="color:#94a3b8; font-size:12px; margin-top:6px;">→ Train-friendly for Mumbai, Pune, Ahmedabad</div>
+    </a>
+    <a href="/adi-kailash-from-delhi" style="display:block; background:linear-gradient(135deg,#0a192f,#0f2d5c); border:1px solid rgba(212,175,55,0.35); border-radius:12px; padding:18px; text-decoration:none; transition:all 0.2s;">
+        <div style="color:#fbbf24; font-weight:800; font-size:15px; margin-bottom:6px;">✈ From Delhi</div>
+        <div style="color:#e2e8f0; font-size:13px; line-height:1.5;">6 Days / 5 Nights &bull; ₹35,000/person</div>
+        <div style="color:#94a3b8; font-size:12px; margin-top:6px;">→ Flights to Pithoragarh or Pantnagar</div>
+    </a>
+</div>
+
+<!-- ===== Author Bio Box ===== -->
+<div class="author-bio-box">
+    <img src="/assets/images/dheerendra-rautela.webp" alt="Dheerendra Rautela - Lead Expedition Guide, Rudraansh Yatra" class="author-bio-img" width="85" height="85" loading="lazy" decoding="async" style="width:85px!important;height:85px!important;min-width:85px!important;max-width:85px!important;object-fit:cover!important;border-radius:50%!important;">
+    <div>
+        <p class="author-bio-name">Dheerendra Rautela</p>
+        <p class="author-bio-role">Lead Expedition Guide &amp; Founder, Rudraansh Yatra</p>
+        <p class="author-bio-desc">
+            Native of Pithoragarh, THSC-certified Tour Manager Operations professional, and founder of Rudraansh Yatra. With 10+ years guiding yatris across the Vyas, Darma, and Chaudas valleys, Dheerendra provides real-time, first-hand intelligence on ILP status, road conditions, and permit office updates directly from Dharchula.
+        </p>
+    </div>
+</div>
+
+<!-- ===== Ground Support CTA ===== -->
+<div class="ry-ground-support-banner" style="background:linear-gradient(135deg,#0a192f,#0f2d5c); border:1.5px solid rgba(212,175,55,0.4); border-radius:14px; padding:24px; margin:32px 0; text-align:center;">
+    <h3 style="color:#fbbf24; font-family:var(--font-serif),Georgia,serif; font-size:22px; margin:0 0 10px 0;">Need Help Navigating the October ILP Window?</h3>
+    <p style="color:#e2e8f0; font-size:14.5px; line-height:1.6; margin-bottom:18px;">
+        Rudraansh Yatra's Pithoragarh operations desk tracks every permit update, road closure, and seasonal event — so you don't have to. Reach out now to lock in your October 27+ batch before slots fill.
+    </p>
+    <div class="ry-cta-bar" style="justify-content:center;">
+        <a href="https://wa.me/917617617651?text=Namaste%20Rudraansh%20Yatra!%20I%20want%20to%20book%20Adi%20Kailash%20Yatra%20after%20October%2027%20(post%20ILP%20suspension)." class="ry-cta-btn wa" target="_blank" rel="noopener">
+            <i class="fa-brands fa-whatsapp"></i> WhatsApp Operations Desk
+        </a>
+        <a href="tel:+917617617651" class="ry-cta-btn call">
+            <i class="fa-solid fa-phone"></i> Call +91 7617617651
+        </a>
+        <a href="/adi-kailash" class="ry-cta-btn" style="background:rgba(212,175,55,0.2); color:#fbbf24; border:1px solid rgba(212,175,55,0.5);">
+            <i class="fa-solid fa-mountain"></i> View All Packages
+        </a>
+    </div>
+</div>
+`;
+        return richContent;
+    }
+};
+
+
 function getBlogEnhancement(slug, paragraphsHtml) {
     const enhancer = BLOG_ENHANCERS[slug];
     if (!enhancer) return null;
