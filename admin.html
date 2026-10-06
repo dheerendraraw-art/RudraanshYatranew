@@ -1829,9 +1829,8 @@
             <div id="yatra-status-complete-note" style="display:none; background:rgba(34,197,94,0.1);
                  border:1px solid rgba(34,197,94,0.3); border-radius:6px; padding:10px 14px;
                  margin-bottom:18px; font-size:12px; color:#4ade80; line-height:1.5;">
-                <i class="fa-solid fa-circle-info"></i>
-                Marking as <strong>Yatra Completed</strong> will record the completion timestamp.
-                Ensure the traveller has returned safely before confirming.
+                <i class="fa-solid fa-circle-check"></i>
+                Marking as <strong>Yatra Completed</strong> will record completion and automatically update Payment Status in the <strong>Billing &amp; Payment</strong> tab to <strong>Fully Paid</strong>.
             </div>
             <div style="display:flex; gap:10px; justify-content:flex-end;">
                 <button onclick="closeYatraStatusModal()" style="padding:9px 18px; background:#1e293b;
@@ -9897,9 +9896,11 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
 
         // ─── Yatra Status Modal ────────────────────────────────────────────────
         let _yatraStatusTargetId = null;
+        let _yatraStatusTargetBookingId = null;
 
         window.openYatraStatusModal = function(bookingUuid, bookingId, currentStatus) {
             _yatraStatusTargetId = bookingUuid;
+            _yatraStatusTargetBookingId = bookingId;
             const refEl = document.getElementById('yatra-status-modal-ref');
             if (refEl) refEl.textContent = 'Booking: ' + bookingId;
             const sel = document.getElementById('yatra-status-select');
@@ -9921,7 +9922,72 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
             const modal = document.getElementById('yatra-status-modal');
             if (modal) { modal.style.display = 'none'; }
             _yatraStatusTargetId = null;
+            _yatraStatusTargetBookingId = null;
         };
+
+        // Helper: automatically mark linked bill as Fully Paid in booking_bills when Yatra is Completed
+        async function _syncBillingToFullyPaid(bookingId) {
+            try {
+                if (!bookingId) return false;
+                const { data: bills, error } = await supabaseAdmin
+                    .from('booking_bills')
+                    .select('*')
+                    .eq('booking_id', bookingId);
+
+                if (error || !bills || bills.length === 0) return false;
+
+                let anyUpdated = false;
+                for (const bill of bills) {
+                    if (bill.payment_status === 'Fully Paid' && parseFloat(bill.balance_remaining || 0) <= 0) {
+                        continue;
+                    }
+
+                    const totalBilled = parseFloat(bill.total_package_amount || 0);
+                    const discount = parseFloat(bill.discount || 0);
+                    const netAmount = Math.max(0, totalBilled - discount);
+                    const payments = Array.isArray(bill.payments_received) ? bill.payments_received : [];
+                    const totalPaid = payments.reduce((sum, p) => sum + (parseFloat(p.amountPaid) || 0), 0);
+                    const remaining = Math.max(0, netAmount - totalPaid);
+
+                    let updatedPayments = [...payments];
+                    if (remaining > 0) {
+                        updatedPayments.push({
+                            receiptId: 'REC-CMPL-' + Date.now() + Math.floor(Math.random() * 100),
+                            amountPaid: remaining,
+                            date: new Date().toISOString().split('T')[0],
+                            paymentMode: 'Direct/Cash',
+                            paymentType: 'Final Settlement (Trip Completed)'
+                        });
+                    }
+
+                    const { error: upErr } = await supabaseAdmin
+                        .from('booking_bills')
+                        .update({
+                            payment_status: 'Fully Paid',
+                            balance_remaining: 0,
+                            payments_received: updatedPayments
+                        })
+                        .eq('id', bill.id);
+
+                    if (!upErr) {
+                        anyUpdated = true;
+                        // Also update in-memory cache if available
+                        if (window.billingRecords && Array.isArray(window.billingRecords)) {
+                            const cached = window.billingRecords.find(b => b.id === bill.id);
+                            if (cached) {
+                                cached.payment_status = 'Fully Paid';
+                                cached.balance_remaining = 0;
+                                cached.payments_received = updatedPayments;
+                            }
+                        }
+                    }
+                }
+                return anyUpdated;
+            } catch (err) {
+                console.warn('Error syncing billing to Fully Paid:', err);
+                return false;
+            }
+        }
 
         window.saveYatraStatus = async function() {
             if (!_yatraStatusTargetId) return;
@@ -9929,6 +9995,7 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
             const btn = document.getElementById('yatra-status-save-btn');
             if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...'; }
             try {
+                const targetBookingId = _yatraStatusTargetBookingId || (bookingsData || []).find(b => b.id === _yatraStatusTargetId)?.booking_id;
                 const payload = { yatra_status: newStatus };
                 if (newStatus === 'Yatra Completed') {
                     payload.completed_at = new Date().toISOString();
@@ -9954,10 +10021,22 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
                         throw error;
                     }
                 }
+
+                // If marked Yatra Completed, automatically update linked bill in Billing & Payment tab to Fully Paid
+                let billUpdated = false;
+                if (newStatus === 'Yatra Completed' && targetBookingId) {
+                    billUpdated = await _syncBillingToFullyPaid(targetBookingId);
+                }
+
                 const statusColors = { 'In Progress': '🟡', 'Yatra Completed': '✅', 'Cancelled': '❌' };
-                showAdminToast(`${statusColors[newStatus] || '🔄'} Yatra Status updated to "${newStatus}" successfully!`, 'success');
+                if (newStatus === 'Yatra Completed' && billUpdated) {
+                    showAdminToast(`🎉 Yatra Status set to "Yatra Completed" & Payment Status updated to "Fully Paid" in Billing & Payment!`, 'success');
+                } else {
+                    showAdminToast(`${statusColors[newStatus] || '🔄'} Yatra Status updated to "${newStatus}" successfully!`, 'success');
+                }
                 closeYatraStatusModal();
                 fetchBookings();
+                if (window.fetchBillingRecords) fetchBillingRecords();
             } catch (err) {
                 showAdminToast('Failed to update Yatra Status: ' + err.message, 'error');
             } finally {

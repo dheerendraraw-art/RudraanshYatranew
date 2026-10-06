@@ -1825,10 +1825,21 @@ app.put('/api/admin/bookings/:id', authenticateToken, async (req, res) => {
 
             const { error: retryErr } = await supabase.from('bookings').update(safePayload).eq('id', req.params.id);
             if (retryErr) throw retryErr;
+
+            if (payload.yatra_status === 'Yatra Completed') {
+                const bRow = await supabase.from('bookings').select('booking_id').eq('id', req.params.id).single();
+                if (bRow?.data?.booking_id) await syncBillToFullyPaid(bRow.data.booking_id);
+            }
             return res.json({ success: true, fallback: true });
         }
 
         if (error) throw error;
+
+        if (payload.yatra_status === 'Yatra Completed') {
+            const bRow = await supabase.from('bookings').select('booking_id').eq('id', req.params.id).single();
+            if (bRow?.data?.booking_id) await syncBillToFullyPaid(bRow.data.booking_id);
+        }
+
         res.json({ success: true });
     } catch (err) {
         console.error('[Bookings PUT Error]:', err);
@@ -1845,6 +1856,56 @@ app.delete('/api/admin/bookings/:id', authenticateToken, async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
+
+// Helper: automatically mark linked bill as Fully Paid when Yatra is Completed
+async function syncBillToFullyPaid(bookingId) {
+    if (!supabase || !bookingId) return;
+    try {
+        const { data: bills, error } = await supabase
+            .from('booking_bills')
+            .select('*')
+            .eq('booking_id', bookingId);
+            
+        if (error || !bills || bills.length === 0) return;
+
+        for (const bill of bills) {
+            if (bill.payment_status === 'Fully Paid' && parseFloat(bill.balance_remaining || 0) <= 0) {
+                continue;
+            }
+
+            const totalBilled = parseFloat(bill.total_package_amount || 0);
+            const discount = parseFloat(bill.discount || 0);
+            const netAmount = Math.max(0, totalBilled - discount);
+            const payments = Array.isArray(bill.payments_received) ? bill.payments_received : [];
+            const totalPaid = payments.reduce((sum, p) => sum + (parseFloat(p.amountPaid) || 0), 0);
+            const remaining = Math.max(0, netAmount - totalPaid);
+
+            let updatedPayments = [...payments];
+            if (remaining > 0) {
+                updatedPayments.push({
+                    receiptId: 'REC-CMPL-' + Date.now() + Math.floor(Math.random() * 100),
+                    amountPaid: remaining,
+                    date: new Date().toISOString().split('T')[0],
+                    paymentMode: 'Direct/Cash',
+                    paymentType: 'Final Settlement (Trip Completed)'
+                });
+            }
+
+            await supabase
+                .from('booking_bills')
+                .update({
+                    payment_status: 'Fully Paid',
+                    balance_remaining: 0,
+                    payments_received: updatedPayments
+                })
+                .eq('id', bill.id);
+
+            console.log(`[Billing Sync] Bill for ${bookingId} auto-marked as Fully Paid upon Yatra Completion`);
+        }
+    } catch (err) {
+        console.warn('[Billing Sync Error]:', err.message);
+    }
+}
 
 // PATCH /api/admin/bookings/:id/yatra-status — update booking lifecycle status
 app.patch('/api/admin/bookings/:id/yatra-status', authenticateToken, async (req, res) => {
@@ -1879,6 +1940,9 @@ app.patch('/api/admin/bookings/:id/yatra-status', authenticateToken, async (req,
                     const { error: msgErr } = await supabase.from('bookings').update({ message: newMsg }).eq('id', req.params.id);
                     if (msgErr) throw msgErr;
                     finalBooking = { ...currentBooking, message: newMsg, yatra_status, completed_at };
+                    if (yatra_status === 'Yatra Completed' && finalBooking?.booking_id) {
+                        await syncBillToFullyPaid(finalBooking.booking_id);
+                    }
                     return res.json({ success: true, data: enrichBookingYatraStatus(finalBooking), fallback: true });
                 }
             }
@@ -1886,6 +1950,12 @@ app.patch('/api/admin/bookings/:id/yatra-status', authenticateToken, async (req,
         } else {
             finalBooking = data;
         }
+
+        // When Yatra is marked Completed, automatically update linked bill to Fully Paid
+        if (yatra_status === 'Yatra Completed' && finalBooking?.booking_id) {
+            await syncBillToFullyPaid(finalBooking.booking_id);
+        }
+
         res.json({ success: true, data: enrichBookingYatraStatus(finalBooking) });
     } catch (err) {
         console.error('[PATCH yatra-status Error]:', err);
