@@ -6865,10 +6865,7 @@ BLOG_ENHANCERS['adi-kailash-ilp-suspended-oct-19-to-26-2026-for-parikrama-run'] 
             { "@type": "Thing", "name": "Byas Valley" },
             { "@type": "Thing", "name": "Adi Kailash Yatra 2026" }
           ],
-          "keywords": "Adi Kailash ILP suspended October 2026, Parikrama Run permit pause, inner line permit Dharchula halt, Byas Valley marathon 2026, Om Parvat permit October",
-          "mentions": [
-            { "@type": "Event", "name": "Adi Kailash Parikrama Run 2026", "startDate": "2026-10-24", "endDate": "2026-10-25" }
-          ]
+          "keywords": "Adi Kailash ILP suspended October 2026, Parikrama Run permit pause, inner line permit Dharchula halt, Byas Valley marathon 2026, Om Parvat permit October"
         },
         {
           "@type": "SpecialAnnouncement",
