@@ -567,6 +567,10 @@ app.get('/blog/:slug', async (req, res) => {
             return `<div class="ry-table-responsive-wrap">${match}</div>`;
         });
 
+        // Safeguard: Deduplicate author-bio-box so master blog.html template never renders duplicate cards
+        contentHtml = contentHtml.replace(/<!--[\s\S]*?Author Bio Box[\s\S]*?-->\s*<div class="author-bio-box"[\s\S]*?<\/div>\s*<\/div>/gi, '');
+        contentHtml = contentHtml.replace(/<div class="author-bio-box"[\s\S]*?<\/div>\s*<\/div>/gi, '');
+
         // ── SEO for Kailash Mansarovar final batch blog (handled by blog-enhancers.js) ──
         if (false && slug === 'kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanakpur') {
             parikramaMetaOverride = {
