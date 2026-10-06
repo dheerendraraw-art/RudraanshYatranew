@@ -7263,18 +7263,6 @@ ${paragraphsHtml}
     </a>
 </div>
 
-<!-- ===== Author Bio Box ===== -->
-<div class="author-bio-box">
-    <img src="/assets/images/dheerendra-rautela.webp" alt="Dheerendra Rautela - Lead Expedition Guide, Rudraansh Yatra" class="author-bio-img" width="85" height="85" loading="lazy" decoding="async" style="width:85px!important;height:85px!important;min-width:85px!important;max-width:85px!important;object-fit:cover!important;border-radius:50%!important;">
-    <div>
-        <p class="author-bio-name">Dheerendra Rautela</p>
-        <p class="author-bio-role">Lead Expedition Guide &amp; Founder, Rudraansh Yatra</p>
-        <p class="author-bio-desc">
-            Native of Pithoragarh, THSC-certified Tour Manager Operations professional, and founder of Rudraansh Yatra. With 10+ years guiding yatris across the Vyas, Darma, and Chaudas valleys, Dheerendra provides real-time, first-hand intelligence on ILP status, road conditions, and permit office updates directly from Dharchula.
-        </p>
-    </div>
-</div>
-
 <!-- ===== Ground Support CTA ===== -->
 <div class="ry-ground-support-banner" style="background:linear-gradient(135deg,#0a192f,#0f2d5c); border:1.5px solid rgba(212,175,55,0.4); border-radius:14px; padding:24px; margin:32px 0; text-align:center;">
     <h3 style="color:#fbbf24; font-family:var(--font-serif),Georgia,serif; font-size:22px; margin:0 0 10px 0;">Need Help Navigating the October ILP Window?</h3>
