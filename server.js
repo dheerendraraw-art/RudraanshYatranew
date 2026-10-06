@@ -3737,7 +3737,7 @@ let googleReviewsCache = {
 const CACHE_DURATION = 6 * 60 * 60 * 1000; // 6 hours — auto-refreshes live rating/count
 
 app.get('/api/google-reviews', async (req, res) => {
-    const apiKey = process.env.GOOGLE_MAPS_API_KEY;
+    const apiKey = process.env.GOOGLE_MAPS_API_KEY || 'AIzaSyDBaTteTkLdacsSnkiM0XGrL7U9hyibuOM';
     const placeId = process.env.GOOGLE_PLACE_ID || 'ChIJUaOjOEsloTkRjOLS3RK_S_A';
     const now = Date.now();
 
@@ -3749,8 +3749,18 @@ app.get('/api/google-reviews', async (req, res) => {
 
     const fallbackReviews = {
         rating: 5.0,
-        user_ratings_total: 34,
+        user_ratings_total: 39,
         reviews: [
+            {
+                author_name: "Himanshi Kharkwal",
+                profile_photo_url: "https://lh3.googleusercontent.com/a/ACg8ocJyJXlXrDQytDWWEc8w4iuI1LjBURhF0CZ0R8AwIhGMhSpGLA=s128-c0x00000000-cc-rp-mo",
+                rating: 5,
+                text: "One of the best adventure experiences I've ever had with Rudra-Ansh Yatra! Thank you Rudra-Ansh Yatra for making our Munsyari, Khaliya Top Trip so smooth and memorable. The entire team was professional, friendly, and made us feel safe throughout the journey. Highly recommended to anyone looking for an unforgettable adventure. Thank you, Rudra-Ansh Yatra, for such an amazing experience! ❤️🏔️",
+                relative_time_description: "a month ago",
+                photos: [
+                    "assets/images/khaliya-top.webp"
+                ]
+            },
             {
                 author_name: "Ranjan Bhatt",
                 profile_photo_url: "https://lh3.googleusercontent.com/a/ACg8ocIp7GFDi4YaR5mXRTAA8baFKFYxp_CZNdsq-C4t4IyaMAr3fA=s128-c0x00000000-cc-rp-mo",
@@ -3763,11 +3773,21 @@ app.get('/api/google-reviews', async (req, res) => {
                 ]
             },
             {
+                author_name: "Thakur Dheerendra",
+                profile_photo_url: "https://lh3.googleusercontent.com/a-/ALV-UjVIlfMyXRcpuoDTiSzmDRN20d1gVWmwCkFKl8REcez0qaPvM9R5=s128-c0x00000000-cc-rp-mo-ba2",
+                rating: 5,
+                text: "Huge thanks to Rudraansh Yatra for their brilliant support during the Adi Kailash Parikrama Run 2025! 🏔️ Running at 15,000 ft requires a lot of backend support, and these local Pithoragarh experts nailed it. From quick Inner Line Permits to the best local homestays and 4x4 rides in the Vyas Valley, their service is unmatched. Highly recommend them for any Adi Kailash or Om Parvat Yatra! 🏃‍♂️⛰️",
+                relative_time_description: "2 months ago",
+                photos: [
+                    "assets/images/Kailash.webp"
+                ]
+            },
+            {
                 author_name: "Deepak Mehta",
                 profile_photo_url: "https://lh3.googleusercontent.com/a/ACg8ocJyAMsPXyMgLZSQk3ahxcctZVAJrZQk5ADf-FEEuiCzCeCJTA=s128-c0x00000000-cc-rp-mo",
                 rating: 5,
                 text: "What an amazing trip! Beautiful views, great memories, and unforgettable moments. Can't wait to come back",
-                relative_time_description: "a month ago",
+                relative_time_description: "2 months ago",
                 photos: [
                     "assets/images/Kailash.webp",
                     "assets/images/adi-kailash-panchachuli.webp"
@@ -3778,29 +3798,11 @@ app.get('/api/google-reviews', async (req, res) => {
                 profile_photo_url: "https://lh3.googleusercontent.com/a/ACg8ocJipFGjUGtN4mSZ2XhFJaKYByZeZuuHBUgdFt4-tFBFdIAwqg=s128-c0x00000000-cc-rp-mo",
                 rating: 5,
                 text: "The rudraansh yatra gave me the best travel experience. Everything was well organized, and the hotel and food arrangements were excellent. I truly appreciated the comfort, care, and quality they provided throughout the trip.",
-                relative_time_description: "a month ago",
+                relative_time_description: "2 months ago",
                 photos: [
                     "assets/images/Panchacholi.webp",
                     "assets/images/khaliya-top.webp"
                 ]
-            },
-            {
-                author_name: "Rohit Bisht",
-                profile_photo_url: "https://lh3.googleusercontent.com/a/ACg8ocJEBfy1K0ku3Ct2pTFfDrfdQFvhh5yZZZpgJ20x2DGhd4CElw=s128-c0x00000000-cc-rp-mo",
-                rating: 5,
-                text: "Best experience with Rudraansh Yatra. The Stay, facilities thier behaviour towards travellers was great.",
-                relative_time_description: "a month ago",
-                photos: [
-                    "assets/images/panchachuli-trek.webp"
-                ]
-            },
-            {
-                author_name: "RaJni mehta",
-                profile_photo_url: "https://lh3.googleusercontent.com/a-/ALV-UjVj7y9sTvl8ewE21e-jCf4DkPW49QQLP1spTdPE8l0dcj1ZNFbi=s128-c0x00000000-cc-rp-mo",
-                rating: 5,
-                text: "My experience was very great and have best safety especially fir girls overall best experience 👍 👌",
-                relative_time_description: "a month ago",
-                photos: []
             }
         ]
     };
@@ -3821,7 +3823,7 @@ app.get('/api/google-reviews', async (req, res) => {
         if (json.status === 'OK' && json.result) {
             const resultData = {
                 rating: json.result.rating || 5.0,
-                user_ratings_total: json.result.user_ratings_total || 34,
+                user_ratings_total: json.result.user_ratings_total || 39,
                 reviews: (json.result.reviews || []).map(r => ({
                     author_name: r.author_name,
                     profile_photo_url: r.profile_photo_url || "",
