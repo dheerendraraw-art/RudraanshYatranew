@@ -1935,23 +1935,23 @@ const BLOG_ENHANCERS = {
 </style>
 <div class="ry-ilp-summary">
     
-    <!-- Breaking Bulletin Alert (Sept 14, 2026) -->
+    <!-- Breaking Bulletin Alert (Oct 5, 2026) -->
     <div style="background: linear-gradient(135deg, rgba(220, 38, 38, 0.25) 0%, rgba(153, 27, 27, 0.35) 100%); border: 1.5px solid #ef4444; border-radius: 10px; padding: 14px 18px; margin-bottom: 20px; box-shadow: 0 4px 14px rgba(239, 68, 68, 0.2);">
         <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 6px;">
             <span style="display: inline-flex; align-items: center; gap: 6px; color: #fca5a5; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px;">
                 <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #ef4444;"></span>
-                Urgent Ground Notice (September 14, 2026)
+                Active Permit Advisory (October 2026)
             </span>
-            <span style="background: rgba(239,68,68,0.25); color: #fecaca; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; border: 1px solid rgba(239,68,68,0.5);">5-Day Date Revision</span>
+            <span style="background: rgba(239,68,68,0.25); color: #fecaca; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; border: 1px solid rgba(239,68,68,0.5);">7-Day ILP Pause</span>
         </div>
         <div style="color: #ffffff; font-size: 14.5px; font-weight: 700; line-height: 1.4; margin-bottom: 4px;">
-            ⚠️ Online ILP Issuance Opening Date Revised from September 15 to September 20, 2026
+            🚨 Online ILP Suspended from October 19 to 26, 2026 for Adi Kailash Parikrama Run
         </div>
         <p style="color: #cbd5e1; font-size: 13px; line-height: 1.5; margin: 0 0 10px 0;">
-            Due to persistent late-monsoon rainfall on the Tawaghat–Sobla–Gunji stretch, SDM Dharchula has officially postponed online ILP processing to <strong>September 20, 2026</strong>. If you had travel planned between Sept 15–19, review the revised schedule and rescheduling guidelines.
+            SDM Dharchula has officially confirmed that online Inner Line Permits (ILP) will be paused between October 19–26, 2026 for the high-altitude Parikrama Run. No new general pilgrim permits are issued during this window. Plan travel before Oct 19 or after Oct 27.
         </p>
-        <a href="/blog/adi-kailash-ilp-date-revised-to-september-20-2026-updated-from-sept-15" style="display: inline-flex; align-items: center; gap: 6px; color: #fef08a; font-size: 13px; font-weight: 700; text-decoration: underline;">
-            Read the September 20 ILP Revision Bulletin & Yatris Action Plan <i class="fa-solid fa-arrow-right"></i>
+        <a href="/blog/adi-kailash-ilp-suspended-oct-19-to-26-2026-for-parikrama-run" style="display: inline-flex; align-items: center; gap: 6px; color: #fef08a; font-size: 13px; font-weight: 700; text-decoration: underline;">
+            Read Complete ILP Suspension Notice, Batch Dates & Rescheduling Guide <i class="fa-solid fa-arrow-right"></i>
         </a>
     </div>
 
@@ -3294,7 +3294,9 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-suspended-due-to-weather-official-reopeni
     <li>Jul–Aug 2026 — BRO repairing Dharchula–Gunji highway debris</li>
     <li>Sep 14, 2026 — SDM revises ILP date from Sept 15 to Sept 20 (Sobla stretch rainfall)</li>
     <li>Sep 20, 2026 — Official ILP processing restarts (confirmed revised date)</li>
-    <li>Sep 22–Oct 31 — Optimal post-monsoon travel window</li>
+    <li>Sep 22–Oct 18 — Optimal post-monsoon travel window</li>
+    <li>Oct 19–Oct 26 — ILP suspended for Adi Kailash Parikrama Run (<a href="/blog/adi-kailash-ilp-suspended-oct-19-to-26-2026-for-parikrama-run" style="color:#fbbf24;text-decoration:underline;">see notice</a>)</li>
+    <li>Oct 27–Nov 10 — Autumn second-batch & final pre-winter darshan window</li>
   </ul>
   <div class="ry-sus-btn-row">
     <a href="https://wa.me/917617617651?text=Namaste!%20I%20have%20a%20booking%20affected%20by%20the%20Adi%20Kailash%20Yatra%202026%20suspension.%20Please%20help%20me%20reschedule%20to%20the%20September%20window." target="_blank" rel="noopener" class="ry-sus-btn wa">
@@ -3309,6 +3311,7 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-suspended-due-to-weather-official-reopeni
 <div class="ry-sus-nav">
   <strong>📚 Essential Guides for Rescheduling Pilgrims</strong>
   <div class="ry-sus-nav-pills">
+    <a href="/blog/adi-kailash-ilp-suspended-oct-19-to-26-2026-for-parikrama-run" class="ry-sus-nav-pill" style="border: 1.5px solid #ef4444; color: #fca5a5;">🚨 Oct 19–26 ILP Suspension</a>
     <a href="/blog/inner-line-permit-adi-kailash-2026-guide" class="ry-sus-nav-pill">📋 ILP Permit Guide</a>
     <a href="/blog/best-time-to-visit-adi-kailash-om-parvat-weather-season-guide" class="ry-sus-nav-pill">🗓️ Best Time to Visit</a>
     <a href="/blog/adi-kailash-yatra-cost-package-price-breakdown-budget-guide" class="ry-sus-nav-pill">💰 Cost & Budget Guide</a>
@@ -3681,7 +3684,7 @@ BLOG_ENHANCERS['when-does-adi-kailash-yatra-2026-close-for-winter'] = {
                     </tr>
                     <tr style="border-bottom: 1px solid #1e293b; background: rgba(245, 158, 11, 0.06);">
                         <td style="padding: 14px 16px; font-weight: 700; color: #fde047;">Peak Golden Darshan Window</td>
-                        <td style="padding: 14px 16px;">Oct 1 – Oct 31, 2026</td>
+                        <td style="padding: 14px 16px;">Oct 1 – Oct 31, 2026<br><span style="color:#fbbf24; font-size:11.5px;">⚠️ ILP paused Oct 19–26 for Marathon (<a href="/blog/adi-kailash-ilp-suspended-oct-19-to-26-2026-for-parikrama-run" style="color:#fde047; text-decoration:underline;">notice</a>)</span></td>
                         <td style="padding: 14px 16px;">8°C to 14°C / -2°C to -6°C</td>
                         <td style="padding: 14px 16px;">Dry, stable, peak 4x4 transit</td>
                         <td style="padding: 14px 16px; color: #fde047; font-weight: 600;">High Volume Pre-bookings</td>
@@ -4922,6 +4925,7 @@ BLOG_ENHANCERS['adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitu
 <div class="ry-prk-quicknav">
   <strong>📚 Quick Guide Navigation — Jump to Section</strong>
   <div class="ry-prk-pills">
+    <a href="/blog/adi-kailash-ilp-suspended-oct-19-to-26-2026-for-parikrama-run" class="ry-prk-pill" style="border-color:#ef4444; color:#fca5a5;">⚠️ Oct 19–26 General ILP Suspension</a>
     <a href="#race-categories" class="ry-prk-pill">🏆 Race Categories & Altitude</a>
     <a href="#acclimatization-plan" class="ry-prk-pill">⏱️ 3-Day Acclimatization Plan</a>
     <a href="#ilp-permits" class="ry-prk-pill">📋 ILP Permits & SDM Rules</a>
