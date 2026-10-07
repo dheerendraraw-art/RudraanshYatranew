@@ -303,6 +303,7 @@
                             <option value="Partially Paid">Partially Paid</option>
                             <option value="Fully Paid">Fully Paid</option>
                             <option value="Fully Paid - Yatra Completed">✅ Fully Paid + Yatra Completed</option>
+                            <option value="Cancelled">❌ Cancelled</option>
                         </select>
                     </div>
                 </div>
@@ -3604,6 +3605,7 @@
             const unameLower = (staffUname || '').toLowerCase().trim();
 
             const staffBookings = (bookingsData || []).filter(b => {
+                if ((b.yatra_status || '') === 'Cancelled') return false;
                 const assign = (b.assigned_to || b.user_id || '').toLowerCase().trim();
                 return assign === staffIdLower || assign === unameLower || (usersMap[assign] && usersMap[assign].toLowerCase() === unameLower);
             });
@@ -3614,6 +3616,7 @@
                     (br.booking_uuid && br.booking_uuid === b.id)
                 );
                 if (bill) {
+                    if (bill.payment_status === 'Cancelled') return;
                     const gross = parseFloat(bill.total_package_amount || 0);
                     const disc = parseFloat(bill.discount || 0);
                     totalBilledNet += Math.max(0, gross - disc);
@@ -3664,14 +3667,15 @@
             };
 
             if (paneId === 'pane-bookings') {
-                const total = bookingsData.length;
-                const totalTravelers = bookingsData.reduce((acc, curr) => acc + (parseInt(curr.travelers) || 0), 0);
-                const adiKailashBookings = bookingsData.filter(b => b.package_name && b.package_name.includes('Adi Kailash')).length;
+                const activeBookings = bookingsData.filter(b => (b.yatra_status || '') !== 'Cancelled');
+                const total = activeBookings.length;
+                const totalTravelers = activeBookings.reduce((acc, curr) => acc + (parseInt(curr.travelers) || 0), 0);
+                const adiKailashBookings = activeBookings.filter(b => b.package_name && b.package_name.includes('Adi Kailash')).length;
 
                 // 5A: Completed Yatras This Month
                 const now = new Date();
                 const thisMonthStart = new Date(now.getFullYear(), now.getMonth(), 1);
-                const completedThisMonth = bookingsData.filter(b => {
+                const completedThisMonth = activeBookings.filter(b => {
                     if ((b.yatra_status || '') !== 'Yatra Completed') return false;
                     const d = new Date(b.completed_at || b.travel_date || '');
                     return d >= thisMonthStart;
@@ -3679,7 +3683,7 @@
 
                 // 5A: Revenue This Month (from billing records, Fully Paid, completed this month)
                 const completedIdsThisMonth = new Set(
-                    bookingsData
+                    activeBookings
                         .filter(b => {
                             if ((b.yatra_status || '') !== 'Yatra Completed') return false;
                             const d = new Date(b.completed_at || b.travel_date || '');
@@ -3695,9 +3699,9 @@
                         return sum + net;
                     }, 0);
 
-                const inProgress = bookingsData.filter(b => (b.yatra_status || 'In Progress') === 'In Progress').length;
+                const inProgress = activeBookings.filter(b => (b.yatra_status || 'In Progress') === 'In Progress').length;
 
-                setCard(0, true, '<i class="fa-solid fa-calendar-check"></i>', total, 'Total Bookings');
+                setCard(0, true, '<i class="fa-solid fa-calendar-check"></i>', total, 'Active Bookings');
                 setCard(1, true, '<i class="fa-solid fa-users"></i>', totalTravelers, 'Total Travelers');
                 setCard(2, true, '<i class="fa-solid fa-flag-checkered" style="color:#22c55e;"></i>', completedThisMonth, 'Completed This Month');
                 setCard(3, true, '<i class="fa-solid fa-indian-rupee-sign" style="color:#f59e0b;"></i>', '₹' + Math.round(revenueThisMonth).toLocaleString('en-IN'), 'Revenue This Month');
@@ -3705,12 +3709,18 @@
                 setCard(5, true, '<i class="fa-solid fa-spinner" style="color:#f59e0b;"></i>', inProgress, 'In Progress');
             }
             else if (paneId === 'pane-billing') {
-                const totalBilled = billingRecords.reduce((sum, b) => {
+                const activeBills = billingRecords.filter(b => {
+                    if (b.payment_status === 'Cancelled') return false;
+                    const linkedBooking = (bookingsData || []).find(bk => bk.booking_id === b.booking_id);
+                    if (linkedBooking && (linkedBooking.yatra_status || '') === 'Cancelled') return false;
+                    return true;
+                });
+                const totalBilled = activeBills.reduce((sum, b) => {
                     const gross = parseFloat(b.total_package_amount || 0);
                     const disc = parseFloat(b.discount || 0);
-                    return sum + (gross - disc);
+                    return sum + Math.max(0, gross - disc);
                 }, 0);
-                const totalPaid = billingRecords.reduce((sum, b) => {
+                const totalPaid = activeBills.reduce((sum, b) => {
                     const payments = b.payments_received || [];
                     return sum + payments.reduce((pSum, p) => pSum + (parseFloat(p.amountPaid) || 0), 0);
                 }, 0);
@@ -9517,8 +9527,8 @@
                 const discount = parseFloat(bill.discount || 0);
                 const netAmount = totalBilled - discount;
                 const payments = bill.payments_received || [];
-                const totalPaid = payments.reduce((sum, p) => sum + p.amountPaid, 0);
-                const remaining = netAmount - totalPaid;
+                const isCancelled = bill.payment_status === 'Cancelled' || _getBillingYatraStatusBadge(bill.booking_id).includes('Cancelled');
+                const remaining = isCancelled ? 0 : Math.max(0, netAmount - totalPaid);
                 const startDateStr = new Date(bill.tour_start_date).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' });
 
                 const progressPct = netAmount > 0 ? Math.min(100, Math.max(0, (totalPaid / netAmount) * 100)).toFixed(0) : 0;
@@ -9528,6 +9538,8 @@
                     statusBadgeClass = 'status-won';
                 } else if (bill.payment_status === 'Partially Paid') {
                     statusBadgeClass = 'status-answered';
+                } else if (bill.payment_status === 'Cancelled') {
+                    statusBadgeClass = 'status-lost';
                 }
 
                 const custPhoneClean = (bill.customer_phone || '').replace(/[^0-9]/g, '');
@@ -9564,16 +9576,19 @@
                     <div class="billing-progress-bar-wrap">
                         <div class="billing-progress-bar-label">
                             <span>₹${totalPaid.toLocaleString('en-IN')}</span>
-                            <span>${progressPct}%</span>
+                            <span>${isCancelled ? 'Cancelled' : progressPct + '%'}</span>
                         </div>
                         <div class="billing-progress-bar-track">
-                            <div class="billing-progress-bar-fill" style="width: ${progressPct}%; background: ${bill.payment_status === 'Fully Paid' ? '#22c55e' : '#eab308'};"></div>
+                            <div class="billing-progress-bar-fill" style="width: ${isCancelled ? '100' : progressPct}%; background: ${isCancelled ? '#ef4444' : bill.payment_status === 'Fully Paid' ? '#22c55e' : '#eab308'};"></div>
                         </div>
                     </div>
                 `;
 
-                let billedAmtHtml = `<strong class="billing-net-amount">₹${netAmount.toLocaleString('en-IN')}</strong>`;
-                if (discount > 0) {
+                let billedAmtHtml = isCancelled
+                    ? `<div style="display:flex;flex-direction:column;gap:2px;"><strong class="billing-net-amount" style="text-decoration:line-through;color:#94a3b8;font-size:13px;">₹${netAmount.toLocaleString('en-IN')}</strong><span style="font-size:10px;font-weight:700;color:#ef4444;background:rgba(239,68,68,0.1);padding:1px 6px;border-radius:4px;display:inline-block;width:max-content;">Cancelled</span></div>`
+                    : `<strong class="billing-net-amount">₹${netAmount.toLocaleString('en-IN')}</strong>`;
+
+                if (discount > 0 && !isCancelled) {
                     billedAmtHtml += `
                         <div class="billing-disc-wrap">
                             <span class="billing-base-val">Base: ₹${totalBilled.toLocaleString('en-IN')}</span><br>
@@ -9582,6 +9597,10 @@
                     `;
                 }
 
+                const outstandingDisplay = isCancelled
+                    ? `<span class="amt-cleared" style="color:#94a3b8;font-size:12px;">₹0 <span style="font-size:10px;">(Cancelled)</span></span>`
+                    : `<strong class="${remaining > 0 ? 'amt-unpaid' : 'amt-cleared'}">₹${remaining.toLocaleString('en-IN')}</strong>`;
+
                 html += `
                     <tr class="billing-card-row">
                         <td data-label="Booking ID" class="billing-id-cell"><strong class="billing-id-badge">${bill.booking_id}</strong></td>
@@ -9589,7 +9608,7 @@
                         <td data-label="Package" class="billing-package-cell">${packageHtml}</td>
                         <td data-label="Billed Amt" class="billing-billed-cell">${billedAmtHtml}</td>
                         <td data-label="Paid Progress" class="billing-progress-cell">${progressHtml}</td>
-                        <td data-label="Outstanding" class="billing-outstanding-cell"><strong class="${remaining > 0 ? 'amt-unpaid' : 'amt-cleared'}">₹${remaining.toLocaleString('en-IN')}</strong></td>
+                        <td data-label="Outstanding" class="billing-outstanding-cell">${outstandingDisplay}</td>
                         <td data-label="Payment Status" class="billing-status-cell"><span class="admin-badge ${statusBadgeClass}">${bill.payment_status}</span></td>
                         <td data-label="Yatra Status" style="white-space:nowrap;">${_getBillingYatraStatusBadge(bill.booking_id)}</td>
                         <td data-label="Actions" class="billing-actions-cell">
@@ -9953,6 +9972,59 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
             }
         }
 
+        // Helper: automatically mark linked bill as Cancelled with 0 balance when Yatra is Cancelled
+        async function _syncBillingToCancelled(bookingId, targetBookingUuid) {
+            try {
+                if (!bookingId) return false;
+                const { data: bills, error } = await supabaseAdmin
+                    .from('booking_bills')
+                    .select('*')
+                    .eq('booking_id', bookingId);
+
+                if (error || !bills || bills.length === 0) return false;
+
+                let anyUpdated = false;
+                for (const bill of bills) {
+                    const { error: upErr } = await supabaseAdmin
+                        .from('booking_bills')
+                        .update({
+                            payment_status: 'Cancelled',
+                            balance_remaining: 0
+                        })
+                        .eq('id', bill.id);
+
+                    if (!upErr) {
+                        anyUpdated = true;
+                        if (window.billingRecords && Array.isArray(window.billingRecords)) {
+                            const cached = window.billingRecords.find(b => b.id === bill.id);
+                            if (cached) {
+                                cached.payment_status = 'Cancelled';
+                                cached.balance_remaining = 0;
+                            }
+                        }
+                    }
+                }
+
+                // Also update linked lead status to Cancelled if lead_id exists
+                try {
+                    const bookingObj = (bookingsData || []).find(b => b.booking_id === bookingId || b.id === targetBookingUuid);
+                    if (bookingObj && bookingObj.lead_id) {
+                        await supabaseAdmin
+                            .from('leads')
+                            .update({ final_status: 'Cancelled', status: 'Cancelled' })
+                            .eq('id', bookingObj.lead_id);
+                    }
+                } catch (leadSyncErr) {
+                    console.warn('Lead cancellation sync error:', leadSyncErr);
+                }
+
+                return anyUpdated;
+            } catch (err) {
+                console.warn('Error syncing billing to Cancelled:', err);
+                return false;
+            }
+        }
+
         window.saveYatraStatus = async function() {
             if (!_yatraStatusTargetId) return;
             const newStatus = document.getElementById('yatra-status-select').value;
@@ -9990,11 +10062,15 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
                 let billUpdated = false;
                 if (newStatus === 'Yatra Completed' && targetBookingId) {
                     billUpdated = await _syncBillingToFullyPaid(targetBookingId);
+                } else if (newStatus === 'Cancelled' && targetBookingId) {
+                    billUpdated = await _syncBillingToCancelled(targetBookingId, _yatraStatusTargetId);
                 }
 
                 const statusColors = { 'In Progress': '🟡', 'Yatra Completed': '✅', 'Cancelled': '❌' };
                 if (newStatus === 'Yatra Completed' && billUpdated) {
                     showAdminToast(`🎉 Yatra Status set to "Yatra Completed" & Payment Status updated to "Fully Paid" in Billing & Payment!`, 'success');
+                } else if (newStatus === 'Cancelled' && billUpdated) {
+                    showAdminToast(`❌ Booking cancelled: Billing status set to "Cancelled" & Outstanding balance cleared to ₹0!`, 'info');
                 } else {
                     showAdminToast(`${statusColors[newStatus] || '🔄'} Yatra Status updated to "${newStatus}" successfully!`, 'success');
                 }

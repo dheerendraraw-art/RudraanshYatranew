@@ -1911,6 +1911,32 @@ async function syncBillToFullyPaid(bookingId) {
     }
 }
 
+async function syncBillToCancelled(bookingId) {
+    if (!supabase || !bookingId) return;
+    try {
+        const { data: bills, error } = await supabase
+            .from('booking_bills')
+            .select('*')
+            .eq('booking_id', bookingId);
+            
+        if (error || !bills || bills.length === 0) return;
+
+        for (const bill of bills) {
+            await supabase
+                .from('booking_bills')
+                .update({
+                    payment_status: 'Cancelled',
+                    balance_remaining: 0
+                })
+                .eq('id', bill.id);
+
+            console.log(`[Billing Sync] Bill for ${bookingId} auto-marked as Cancelled upon Booking Cancellation`);
+        }
+    } catch (err) {
+        console.warn('[Billing Sync Error]:', err.message);
+    }
+}
+
 // PATCH /api/admin/bookings/:id/yatra-status — update booking lifecycle status
 app.patch('/api/admin/bookings/:id/yatra-status', authenticateToken, async (req, res) => {
     try {
@@ -1946,6 +1972,8 @@ app.patch('/api/admin/bookings/:id/yatra-status', authenticateToken, async (req,
                     finalBooking = { ...currentBooking, message: newMsg, yatra_status, completed_at };
                     if (yatra_status === 'Yatra Completed' && finalBooking?.booking_id) {
                         await syncBillToFullyPaid(finalBooking.booking_id);
+                    } else if (yatra_status === 'Cancelled' && finalBooking?.booking_id) {
+                        await syncBillToCancelled(finalBooking.booking_id);
                     }
                     return res.json({ success: true, data: enrichBookingYatraStatus(finalBooking), fallback: true });
                 }
@@ -1958,6 +1986,8 @@ app.patch('/api/admin/bookings/:id/yatra-status', authenticateToken, async (req,
         // When Yatra is marked Completed, automatically update linked bill to Fully Paid
         if (yatra_status === 'Yatra Completed' && finalBooking?.booking_id) {
             await syncBillToFullyPaid(finalBooking.booking_id);
+        } else if (yatra_status === 'Cancelled' && finalBooking?.booking_id) {
+            await syncBillToCancelled(finalBooking.booking_id);
         }
 
         res.json({ success: true, data: enrichBookingYatraStatus(finalBooking) });
@@ -3149,8 +3179,8 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
            .text('PAYMENT STATUS:', gutter + 298, ribbonY + 8);
 
         const statusLabel = bill.payment_status || 'Pending';
-        const statusColor = statusLabel === 'Fully Paid' ? '#1A6B3A' : statusLabel === 'Partially Paid' ? '#92400E' : '#7C3AED';
-        const statusBg    = statusLabel === 'Fully Paid' ? '#D1FAE5' : statusLabel === 'Partially Paid' ? '#FEF3C7' : '#EDE9FE';
+        const statusColor = statusLabel === 'Fully Paid' ? '#1A6B3A' : statusLabel === 'Partially Paid' ? '#92400E' : statusLabel === 'Cancelled' ? '#DC2626' : '#7C3AED';
+        const statusBg    = statusLabel === 'Fully Paid' ? '#D1FAE5' : statusLabel === 'Partially Paid' ? '#FEF3C7' : statusLabel === 'Cancelled' ? '#FEE2E2' : '#EDE9FE';
         const statusW     = doc.widthOfString(statusLabel, { fontSize: 8 }) + 16;
 
         drawRoundRect(gutter + 385, ribbonY + 5, statusW, 16, 3, statusBg, null);
@@ -3346,8 +3376,9 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
         const totalPackage = parseFloat(bill.total_package_amount || 0);
         const discount     = parseFloat(bill.discount || 0);
         const netAmount    = totalPackage - discount;
+        const isCancelled  = bill.payment_status === 'Cancelled';
         const totalPaid    = payments.reduce((s, p) => s + parseFloat(p.amountPaid || 0), 0);
-        const balance      = Math.max(0, netAmount - totalPaid);
+        const balance      = isCancelled ? 0 : Math.max(0, netAmount - totalPaid);
 
         const summLineH = 22;
         let sY = summaryY;
@@ -3388,14 +3419,14 @@ app.get('/api/billing/:id/pdf', async (req, res) => {
         // Balance Due box – premium design
         const balBoxH = 40;
         // Outer shadow layer
-        drawRoundRect(summColX + 2, sY + 2, summColW, balBoxH, 6, '#D4B86A22', null);
+        drawRoundRect(summColX + 2, sY + 2, summColW, balBoxH, 6, isCancelled ? '#EF444422' : '#D4B86A22', null);
         // Main box
-        drawRoundRect(summColX, sY, summColW, balBoxH, 6, goldLight, gold, 1.5);
+        drawRoundRect(summColX, sY, summColW, balBoxH, 6, isCancelled ? '#FEE2E2' : goldLight, isCancelled ? '#EF4444' : gold, 1.5);
 
-        doc.fillColor('#7A5C00').font('Helvetica').fontSize(8)
-           .text('BALANCE DUE', summColX + 12, sY + 8);
-        doc.fillColor('#4A3500').font('Helvetica-Bold').fontSize(16)
-           .text(`₹ ${fmt(balance)}`, summColX + 12, sY + 18, { width: summColW - 24, align: 'right' });
+        doc.fillColor(isCancelled ? '#991B1B' : '#7A5C00').font('Helvetica').fontSize(8)
+           .text(isCancelled ? 'BALANCE DUE (BOOKING CANCELLED)' : 'BALANCE DUE', summColX + 12, sY + 8);
+        doc.fillColor(isCancelled ? '#DC2626' : '#4A3500').font('Helvetica-Bold').fontSize(16)
+           .text(isCancelled ? '₹ 0 (Cleared)' : `₹ ${fmt(balance)}`, summColX + 12, sY + 18, { width: summColW - 24, align: 'right' });
 
         // ─── 7. DECORATIVE MOUNTAIN DIVIDER ──────────────────────────────────
         const footDivY = 760;

@@ -18,8 +18,8 @@ const billing = {
     pickup_point:         'Delhi to Delhi (5 Days / 4 Nights)',
     total_package_amount: 30000,
     discount:             5000,
-    balance_remaining:    23000,
-    payment_status:       'Partially Paid',
+    balance_remaining:    0,
+    payment_status:       'Cancelled',
     payments_received: [
         {
             date:        '2026-09-28',
@@ -34,7 +34,7 @@ const billing = {
 // ─── Computed ─────────────────────────────────────────────────────────────
 const netAmount   = billing.total_package_amount - billing.discount;  // 25000
 const totalPaid   = billing.payments_received.reduce((s, p) => s + (parseFloat(p.amountPaid) || 0), 0); // 2000
-const balanceDue  = netAmount - totalPaid;  // 23000
+const balanceDue  = 0;  // 0 since booking is cancelled
 
 // ─── Output path ──────────────────────────────────────────────────────────
 const outDir  = path.join(__dirname, '..', 'invoices');
