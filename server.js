@@ -45,6 +45,16 @@ app.use(compression({ level: 6 }));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
+// Canonical Domain Enforcement: 301 Redirect www to apex domain
+app.use((req, res, next) => {
+    const host = req.headers.host || '';
+    if (host.startsWith('www.')) {
+        const cleanHost = host.replace(/^www\./i, '');
+        return res.redirect(301, `https://${cleanHost}${req.originalUrl || req.url}`);
+    }
+    next();
+});
+
 // HTTP Security & Static Cache Headers
 app.use((req, res, next) => {
     res.setHeader('X-Frame-Options', 'DENY');
