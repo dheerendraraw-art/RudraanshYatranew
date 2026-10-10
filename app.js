@@ -419,6 +419,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Show active pane
             const activePane = document.getElementById(`step-pane-${currentStep}`);
+            const summaryEl = document.getElementById('wizard-summary-bar-el');
+            if (summaryEl && (currentStep > 1 || selectedDestination)) {
+                summaryEl.style.display = 'flex';
+                summaryEl.style.opacity = '1';
+            }
             if (activePane) activePane.classList.add('active');
 
             // Update steps indicator state

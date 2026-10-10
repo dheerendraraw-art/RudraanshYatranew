@@ -1678,7 +1678,7 @@
                     </div>
 
                     <!-- LIVE SUMMARY & PROGRESS BAR -->
-                    <div class="wizard-summary-bar" style="opacity:0;transition:opacity 0.4s ease;" id="wizard-summary-bar-el">
+                    <div class="wizard-summary-bar" style="display:none;opacity:0;transition:opacity 0.4s ease;" id="wizard-summary-bar-el">
                         <div class="summary-details-wrap">
                             <div class="summary-selection-text" id="wizard-summary-selection">Destination: Not Selected</div>
                             <div class="summary-meta-text" id="wizard-summary-meta">Pace: Standard | Month: Flexible | Group: 1 Traveler</div>
@@ -2646,7 +2646,7 @@
         // Show summary bar when user starts interacting
         function showSummaryBar() {
             var bar = document.getElementById('wizard-summary-bar-el');
-            if (bar) bar.style.opacity = '1';
+            if (bar) { bar.style.display = 'flex'; requestAnimationFrame(function() { bar.style.opacity = '1'; }); }
         }
         document.addEventListener('DOMContentLoaded', function() {
             var destCards = document.querySelectorAll('.dest-select-card');
