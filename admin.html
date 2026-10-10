@@ -9527,6 +9527,7 @@
                 const discount = parseFloat(bill.discount || 0);
                 const netAmount = totalBilled - discount;
                 const payments = bill.payments_received || [];
+                const totalPaid = payments.reduce((sum, p) => sum + (parseFloat(p.amountPaid) || 0), 0);
                 const isCancelled = bill.payment_status === 'Cancelled' || _getBillingYatraStatusBadge(bill.booking_id).includes('Cancelled');
                 const remaining = isCancelled ? 0 : Math.max(0, netAmount - totalPaid);
                 const startDateStr = new Date(bill.tour_start_date).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' });
