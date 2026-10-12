@@ -322,6 +322,16 @@ img {
     font-size: 14px;
 }
 
+.top-addr-desktop {
+    display: inline;
+}
+
+@media (max-width: 768px) {
+    .top-addr-desktop {
+        display: none !important;
+    }
+}
+
 .top-socials {
     display: flex;
     gap: 18px;
@@ -2425,7 +2435,8 @@ footer h3::after, footer h4::after {
         flex-direction: row !important;
     }
     .top-info span:nth-child(2) {
-        display: none !important; /* Hide long location to prevent layout break/wrapping */
+        display: inline-flex !important;
+        align-items: center !important;
     }
 }
 
@@ -4515,6 +4526,8 @@ img {
     padding: 3px 8px;
     border-radius: 20px;
     letter-spacing: 0.5px;
+    white-space: nowrap;
+    z-index: 2;
 }
 
 .dest-card-icon {
@@ -5194,12 +5207,15 @@ html, body {
         height: 40px !important;
         padding: 4px 8px !important;
     }
-    .whatsapp-floating {
-        bottom: 18px !important;
-        right: 18px !important;
-        width: 52px !important;
-        height: 52px !important;
-        font-size: 26px !important;
+    .whatsapp-floating,
+    .whatsapp-float {
+        bottom: 20px !important;
+        right: 14px !important;
+        width: 46px !important;
+        height: 46px !important;
+        font-size: 22px !important;
+        box-shadow: 0 4px 14px rgba(37, 211, 102, 0.4) !important;
+        z-index: 990 !important;
     }
 }
 
@@ -5243,11 +5259,35 @@ html, body {
         font-size: 13.5px !important;
         line-height: 1.45 !important;
     }
+    .breadcrumbs-nav {
+        display: flex !important;
+        width: fit-content !important;
+        margin: 0 auto 10px auto !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        padding: 0 !important;
+    }
     .hero-badge {
+        display: inline-flex !important;
+        margin: 0 auto 14px auto !important;
         font-size: 10.5px !important;
         padding: 4px 10px !important;
     }
+    .trust-strip {
+        padding: 12px 0 !important;
+        margin-top: 0 !important;
+        background: #FFFFFF !important;
+        border-top: 1px solid rgba(212, 175, 55, 0.2) !important;
+        border-bottom: 1px solid rgba(10, 25, 47, 0.08) !important;
+    }
     .breadcrumbs-list {
+        background: rgba(10, 25, 47, 0.45) !important;
+        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        padding: 4px 12px !important;
+        border-radius: 20px !important;
         flex-wrap: wrap !important;
         gap: 4px 6px !important;
         font-size: 11px !important;
@@ -5409,20 +5449,31 @@ html, body {
         align-items: center !important;
     }
     .top-info span:nth-child(2) {
-        display: none !important;
+        display: inline-flex !important;
+        align-items: center !important;
     }
     .top-info {
-        font-size: 12px !important;
+        font-size: 11.5px !important;
     }
     .tour-meta-badges {
-        gap: 6px !important;
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
         margin-bottom: 15px !important;
     }
     .meta-badge {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
         font-size: 10px !important;
-        padding: 5px 10px !important;
-        border-radius: 20px !important;
-        letter-spacing: 0.5px !important;
+        padding: 7px 8px !important;
+        border-radius: 8px !important;
+        letter-spacing: 0.3px !important;
+        white-space: nowrap !important;
+        text-align: center !important;
+        box-sizing: border-box !important;
+        width: 100% !important;
+        min-width: 0 !important;
     }
     .payment-methods-section {
         padding: 20px 14px !important;
@@ -5474,18 +5525,26 @@ html, body {
         line-height: 1.3 !important;
     }
 
-    /* 4. Meta badge row: ensure wrapping + smaller pills */
+    /* 4. Meta badge row: balanced 2-column grid */
     .tour-meta-badges {
-        flex-wrap: wrap !important;
-        gap: 6px !important;
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
         margin-bottom: 14px !important;
     }
     .meta-badge {
-        font-size: 9.5px !important;
-        padding: 5px 10px !important;
-        border-radius: 20px !important;
-        letter-spacing: 0.4px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 10px !important;
+        padding: 7px 8px !important;
+        border-radius: 8px !important;
+        letter-spacing: 0.3px !important;
         white-space: nowrap !important;
+        text-align: center !important;
+        box-sizing: border-box !important;
+        width: 100% !important;
+        min-width: 0 !important;
     }
 
     /* 5. Paragraph text: left-align on narrow screens to avoid
@@ -5720,6 +5779,13 @@ html, body {
     .feature-box {
         padding: 22px 18px !important;
     }
+    .feature-icon {
+        width: 48px !important;
+        height: 48px !important;
+        font-size: 20px !important;
+        margin-bottom: 14px !important;
+        border-radius: 10px !important;
+    }
     .feature-title {
         font-size: 16px !important;
     }
@@ -5751,6 +5817,15 @@ html, body {
     /* Destination selection cards */
     .dest-select-card {
         padding: 16px !important;
+    }
+    .dest-card-badge {
+        font-size: 8.5px !important;
+        padding: 3px 7px !important;
+        white-space: nowrap !important;
+        right: 10px !important;
+        top: 10px !important;
+        letter-spacing: 0.3px !important;
+        z-index: 2 !important;
     }
     .dest-card-icon {
         font-size: 22px !important;
@@ -6466,17 +6541,19 @@ html, body {
     }
 
     .blog-filter-pills {
+        display: flex !important;
+        flex-wrap: wrap !important;
         gap: 8px !important;
-        padding-bottom: 8px !important;
-        /* ensure momentum scroll */
-        -webkit-overflow-scrolling: touch;
+        padding-bottom: 6px !important;
+        overflow-x: visible !important;
     }
 
     .blog-pill {
-        padding: 8px 14px !important;
-        font-size: 12.5px !important;
-        border-radius: 10px !important;
-        flex-shrink: 0;
+        padding: 7px 13px !important;
+        font-size: 12px !important;
+        border-radius: 50px !important;
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
     }
 
     /* Results meta */
@@ -7378,20 +7455,27 @@ html, body {
     .top-bar .container {
         padding: 0 12px !important;
         max-width: 100% !important;
-        flex-direction: column !important;
-        gap: 6px !important;
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        justify-content: space-between !important;
         align-items: center !important;
+        gap: 6px 12px !important;
     }
 
     .top-info {
-        gap: 8px !important;
-        justify-content: center !important;
-        text-align: center !important;
-        font-size: 12px !important;
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 6px 12px !important;
+        justify-content: flex-start !important;
+        text-align: left !important;
+        font-size: 11.5px !important;
     }
 
     .top-info span:nth-child(2) {
-        display: none !important; /* Hide lengthy office address on mobile header */
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 4px !important;
     }
 
     /* Executive Bulletin Banner Mobile */
@@ -9893,14 +9977,47 @@ input[type="date"].form-control::-webkit-calendar-picker-indicator {
 *, *::before, *::after { box-sizing: border-box; }
 html, body { overflow-x: hidden; max-width: 100%; }
 
-/* ── 1. Top-Bar: stack on mobile ──────────────────────────────────────── */
+/* ── 1. Top-Bar: compact layout on mobile ──────────────────────────────── */
 @media (max-width: 768px) {
-    .top-bar { padding: 8px 0; font-size: 11px; }
-    .top-bar .container { flex-direction: column; gap: 6px; align-items: flex-start; padding: 0 16px; }
-    .top-info { flex-direction: column; gap: 4px; width: 100%; }
-    .top-info span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
-    .top-socials { gap: 14px; }
-    .lang-selector-wrap { margin-left: 0; }
+    .top-bar { padding: 5px 0 !important; font-size: 11px !important; }
+    .top-bar .container {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        gap: 4px 10px !important;
+        padding: 0 12px !important;
+    }
+    .top-info {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        gap: 6px 12px !important;
+        align-items: center !important;
+        font-size: 11px !important;
+    }
+    .top-info span {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 4px !important;
+        white-space: nowrap !important;
+        font-size: 11px !important;
+    }
+    .top-socials {
+        display: flex !important;
+        align-items: center !important;
+        gap: 10px !important;
+    }
+    .lang-selector-wrap {
+        margin-left: 0 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+    }
+    .lang-selector-btn {
+        padding: 3px 8px !important;
+        font-size: 11px !important;
+    }
 }
 
 /* ── 2. Navbar ──────────────────────────────────────────────────────────── */
@@ -10067,8 +10184,16 @@ html, body { overflow-x: hidden; max-width: 100%; }
     .cta-title { font-size: clamp(20px, 6vw, 34px) !important; }
     .cta-subtitle { font-size: 14px !important; }
     .cta-buttons { flex-direction: column; gap: 12px; align-items: center; }
-    .cta-buttons .btn { width: 100%; max-width: 280px; justify-content: center; }
-    .whatsapp-float { bottom: 16px !important; right: 16px !important; width: 52px !important; height: 52px !important; font-size: 24px !important; }
+    .whatsapp-floating,
+    .whatsapp-float {
+        bottom: 20px !important;
+        right: 14px !important;
+        width: 46px !important;
+        height: 46px !important;
+        font-size: 22px !important;
+        box-shadow: 0 4px 14px rgba(37, 211, 102, 0.4) !important;
+        z-index: 990 !important;
+    }
 }
 
 /* ── 18. Footer ─────────────────────────────────────────────────────────── */
@@ -10077,7 +10202,7 @@ html, body { overflow-x: hidden; max-width: 100%; }
     .footer-col-title { font-size: 15px !important; }
     .footer-links { gap: 8px !important; }
     .footer-links a { font-size: 13px !important; }
-    .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+    .footer-bottom { flex-direction: column; gap: 10px; text-align: center; padding-bottom: 20px !important; }
     .footer-bottom-links { justify-content: center; }
     .footer-brand-name { font-size: 22px !important; }
     .footer-tagline { font-size: 13px !important; }
