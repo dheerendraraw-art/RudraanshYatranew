@@ -6770,8 +6770,8 @@
                         if (lead) {
                             await copyLeadToBooking(lead);
                         }
-                    } else if (wasConfirmed) {
-                        // Reverted from booking confirmed. Delete corresponding booking record.
+                    } else {
+                        // Reverted or changed away from booking confirmed. Delete corresponding booking record.
                         const { error: deleteBookingErr } = await supabaseAdmin
                             .from('bookings')
                             .delete()
@@ -6779,8 +6779,8 @@
                         if (deleteBookingErr) {
                             console.error('Failed to remove booking on status revert:', deleteBookingErr);
                         } else {
-                            showAdminToast('Associated booking removed.', 'info');
-                            fetchBookings(); // refresh bookings list
+                            if (wasConfirmed) showAdminToast('Associated booking removed.', 'info');
+                            if (typeof fetchBookings === 'function') fetchBookings(); // refresh bookings list
                         }
                     }
                 }
@@ -8278,6 +8278,10 @@
                     if (final_status === 'Booking confirmed') {
                         const fullLead = { ...originalLead, ...leadData };
                         await copyLeadToBooking(fullLead);
+                    } else {
+                        // If final status is not booking confirmed, ensure any booking record associated with this lead is removed
+                        const { error: delErr } = await supabaseAdmin.from('bookings').delete().eq('lead_id', id);
+                        if (!delErr && typeof fetchBookings === 'function') fetchBookings();
                     }
                     
                     showAdminToast('Lead updated successfully!', 'success');

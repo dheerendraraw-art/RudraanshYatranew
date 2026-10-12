@@ -1174,9 +1174,14 @@
                     await supabaseAdmin.from('lead_history').insert(rowsToInsert);
                 }
 
-                if (newFinalStatus === 'Booking confirmed' && oldFinalStatus !== 'Booking confirmed') {
+                if (leadData) {
+                    Object.assign(leadData, updateData);
+                }
+
+                if (newFinalStatus === 'Booking confirmed') {
                     await copyLeadToBooking({ ...leadData, ...updateData, id: leadId });
-                } else if (oldFinalStatus === 'Booking confirmed' && newFinalStatus !== 'Booking confirmed') {
+                } else {
+                    // Whenever final_status is anything other than 'Booking confirmed', ensure no associated booking remains
                     await supabaseAdmin.from('bookings').delete().eq('lead_id', leadId);
                 }
 
