@@ -37,6 +37,9 @@
     <!-- Preload Hero Image -->
     <link rel="preload" as="image" href="assets/images/adi-kailash-hero.webp" type="image/webp">
     <link rel="stylesheet" href="style.css?v=8.3">
+    <!-- Font Awesome Icons -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></noscript>
     
     <style>
         /* Redesigned Premium Styles for Master Hub Page */
@@ -61,8 +64,7 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            overflow: hidden;
-            height: 60vh;
+            padding: 50px 0 60px;
             min-height: 480px;
         }
         
@@ -72,9 +74,56 @@
             bottom: 0;
             left: 0;
             right: 0;
-            height: 100px;
+            height: 50px;
             background: linear-gradient(to top, var(--color-bg-base), rgba(244, 241, 234, 0));
             pointer-events: none;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                min-height: auto !important;
+                height: auto !important;
+                padding: 24px 12px 36px !important;
+                overflow: visible !important;
+            }
+            .hero::after {
+                display: none !important;
+            }
+            .hero-badge {
+                font-size: 11px !important;
+                letter-spacing: 0.5px !important;
+                padding: 5px 12px !important;
+                max-width: 96% !important;
+                white-space: normal !important;
+                text-align: center !important;
+                line-height: 1.35 !important;
+                margin-bottom: 12px !important;
+            }
+            .hero-title {
+                font-size: clamp(24px, 6.8vw, 32px) !important;
+                margin-bottom: 10px !important;
+                line-height: 1.2 !important;
+            }
+            .hero-desc {
+                font-size: 13.5px !important;
+                line-height: 1.55 !important;
+                margin-bottom: 14px !important;
+            }
+            .hero-quick-pills {
+                gap: 8px !important;
+                margin-top: 8px !important;
+            }
+            .hero-pill-btn {
+                font-size: 12px !important;
+                padding: 7px 12px !important;
+            }
+            .trust-icon {
+                color: #b8860b !important;
+            }
+            .trust-icon i {
+                font-size: 18px !important;
+                display: inline-block !important;
+            }
         }
 
         .hero-content {
@@ -2140,6 +2189,29 @@
                 <a href="https://www.instagram.com/rudraansh_yatra/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
                 <a href="https://www.youtube.com/@Rudra-Anshyatra" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
             </div>
+
+            <div class="lang-selector-wrap" id="langSelectorWrap">
+                <button class="lang-selector-btn" aria-label="Select Language" aria-expanded="false">
+                    <span class="lang-globe">🌐</span>
+                    <span class="lang-label">Language</span>
+                    <span class="lang-arrow">▼</span>
+                </button>
+                <div class="lang-dropdown" role="listbox" aria-label="Available Languages">
+                    <div class="lang-dropdown-title">Select Language</div>
+                    <div class="lang-option active" data-lang="en" data-name="English" onclick="rudraSetLanguage('en')" role="option">English <span class="lang-native">English</span></div>
+                    <div class="lang-option" data-lang="hi" data-name="हिन्दी" onclick="rudraSetLanguage('hi')" role="option">Hindi <span class="lang-native">हिन्दी</span></div>
+                    <div class="lang-option" data-lang="bn" data-name="বাংলা" onclick="rudraSetLanguage('bn')" role="option">Bengali <span class="lang-native">বাংলা</span></div>
+                    <div class="lang-option" data-lang="gu" data-name="ગુજરાતી" onclick="rudraSetLanguage('gu')" role="option">Gujarati <span class="lang-native">ગુજરાતી</span></div>
+                    <div class="lang-option" data-lang="mr" data-name="मराठी" onclick="rudraSetLanguage('mr')" role="option">Marathi <span class="lang-native">मराठी</span></div>
+                    <div class="lang-option" data-lang="ta" data-name="தமிழ்" onclick="rudraSetLanguage('ta')" role="option">Tamil <span class="lang-native">தமிழ்</span></div>
+                    <div class="lang-option" data-lang="te" data-name="తెలుగు" onclick="rudraSetLanguage('te')" role="option">Telugu <span class="lang-native">తెలుగు</span></div>
+                    <div class="lang-option" data-lang="kn" data-name="ಕನ್ನಡ" onclick="rudraSetLanguage('kn')" role="option">Kannada <span class="lang-native">ಕನ್ನಡ</span></div>
+                    <div class="lang-option" data-lang="ml" data-name="മലയാളം" onclick="rudraSetLanguage('ml')" role="option">Malayalam <span class="lang-native">മലയാളം</span></div>
+                    <div class="lang-option" data-lang="pa" data-name="ਪੰਜਾਬੀ" onclick="rudraSetLanguage('pa')" role="option">Punjabi <span class="lang-native">ਪੰਜਾਬੀ</span></div>
+                    <div class="lang-option" data-lang="ne" data-name="नेपाली" onclick="rudraSetLanguage('ne')" role="option">Nepali <span class="lang-native">नेपाली</span></div>
+                    <div class="lang-option" data-lang="or" data-name="ଓଡ଼ିଆ" onclick="rudraSetLanguage('or')" role="option">Odia <span class="lang-native">ଓଡ଼ିଆ</span></div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -2254,32 +2326,6 @@
                     <strong>5.0 / 5 Rating</strong>
                     <span>34 verified Google reviews</span>
                 </div>
-
-            <div class="lang-selector-wrap" id="langSelectorWrap">
-                <button class="lang-selector-btn" aria-label="Select Language" aria-expanded="false">
-                    <span class="lang-globe">🌐</span>
-                    <span class="lang-label">Language</span>
-                    <span class="lang-arrow">▼</span>
-                </button>
-                <div class="lang-dropdown" role="listbox" aria-label="Available Languages">
-                    <div class="lang-dropdown-title">Select Language</div>
-                    <div class="lang-option active" data-lang="en" data-name="English" onclick="rudraSetLanguage('en')" role="option">English <span class="lang-native">English</span></div>
-                    <div class="lang-option" data-lang="hi" data-name="हिन्दी" onclick="rudraSetLanguage('hi')" role="option">Hindi <span class="lang-native">हिन्दी</span></div>
-                    <div class="lang-option" data-lang="bn" data-name="বাংলা" onclick="rudraSetLanguage('bn')" role="option">Bengali <span class="lang-native">বাংলা</span></div>
-                    <div class="lang-option" data-lang="gu" data-name="ગુજરાતી" onclick="rudraSetLanguage('gu')" role="option">Gujarati <span class="lang-native">ગુજરાતી</span></div>
-                    <div class="lang-option" data-lang="mr" data-name="मराठी" onclick="rudraSetLanguage('mr')" role="option">Marathi <span class="lang-native">मराठी</span></div>
-                    <div class="lang-option" data-lang="ta" data-name="தமிழ்" onclick="rudraSetLanguage('ta')" role="option">Tamil <span class="lang-native">தமிழ்</span></div>
-                    <div class="lang-option" data-lang="te" data-name="తెలుగు" onclick="rudraSetLanguage('te')" role="option">Telugu <span class="lang-native">తెలుగు</span></div>
-                    <div class="lang-option" data-lang="kn" data-name="ಕನ್ನಡ" onclick="rudraSetLanguage('kn')" role="option">Kannada <span class="lang-native">ಕನ್ನಡ</span></div>
-                    <div class="lang-option" data-lang="ml" data-name="മലയാളം" onclick="rudraSetLanguage('ml')" role="option">Malayalam <span class="lang-native">മലയാളം</span></div>
-                    <div class="lang-option" data-lang="pa" data-name="ਪੰਜਾਬੀ" onclick="rudraSetLanguage('pa')" role="option">Punjabi <span class="lang-native">ਪੰਜਾਬੀ</span></div>
-                    <div class="lang-option" data-lang="ne" data-name="नेपाली" onclick="rudraSetLanguage('ne')" role="option">Nepali <span class="lang-native">नेपाली</span></div>
-                    <div class="lang-option" data-lang="or" data-name="ଓଡ଼ିଆ" onclick="rudraSetLanguage('or')" role="option">Odia <span class="lang-native">ଓଡ଼ିଆ</span></div>
-                </div>
-            </div>
-            </div>
-            </div>
-
             </div>
         </div>
     </div>
