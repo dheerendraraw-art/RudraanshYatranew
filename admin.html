@@ -2199,6 +2199,7 @@
 
     <!-- Create Bill Modal -->
     <style>
+        /* ── Staff Leads Modal passthrough ── */
         #staff-converted-leads-modal.active {
             display: flex !important;
             opacity: 1 !important;
@@ -2213,82 +2214,275 @@
         }
         .lead-card-row td,
         .lead-card-row td *,
-        td[data-label="Created On"] {
-            color: #cbd5e1 !important;
-        }
-        .lead-card-row td small {
-            color: #cbd5e1 !important;
-        }
-        td[data-label="Created On"] {
-            color: #94a3b8 !important;
-            font-weight: 600 !important;
-        }
-        #create-bill-modal .cbm-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.82); backdrop-filter: blur(6px); z-index: 10000; display: flex; align-items: flex-start; justify-content: center; overflow-y: auto; padding: 20px; }
-        #create-bill-modal .cbm-card { background: linear-gradient(145deg, #0f1f38 0%, #0d1526 100%); border: 1px solid rgba(212,175,55,0.4); border-radius: 20px; width: 100%; max-width: 660px; box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04) inset; overflow: visible; position: relative; margin: auto; }
-        #create-bill-modal .cbm-header { padding: 24px 28px 20px; border-bottom: 1px solid rgba(255,255,255,0.07); display: flex; align-items: center; justify-content: space-between; background: linear-gradient(90deg, rgba(212,175,55,0.08) 0%, transparent 60%); }
-        #create-bill-modal .cbm-header-left { display: flex; align-items: center; gap: 14px; }
-        #create-bill-modal .cbm-icon-wrap { width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #d4af37, #f5c842); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(212,175,55,0.35); flex-shrink: 0; }
-        #create-bill-modal .cbm-icon-wrap i { color: #0f1526; font-size: 18px; }
-        #create-bill-modal .cbm-title { font-size: 20px; font-weight: 700; color: #fff; letter-spacing: -0.3px; margin: 0; }
-        #create-bill-modal .cbm-subtitle { font-size: 12px; color: rgba(255,255,255,0.4); margin: 2px 0 0; }
-        #create-bill-modal .cbm-close { width: 32px; height: 32px; border-radius: 8px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
-        #create-bill-modal .cbm-close:hover { background: rgba(255,255,255,0.12); color: #fff; }
-        #create-bill-modal .cbm-body { padding: 24px 28px; }
-        #create-bill-modal .cbm-section { margin-bottom: 22px; }
-        #create-bill-modal .cbm-section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
-        #create-bill-modal .cbm-section-badge { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #d4af37; background: rgba(212,175,55,0.12); border: 1px solid rgba(212,175,55,0.25); border-radius: 20px; padding: 3px 10px; }
-        #create-bill-modal .cbm-section-line { flex: 1; height: 1px; background: rgba(255,255,255,0.06); }
-        #create-bill-modal .cbm-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-        #create-bill-modal .cbm-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
-        #create-bill-modal .cbm-field { display: flex; flex-direction: column; gap: 6px; }
-        #create-bill-modal .cbm-field label { font-size: 11px; font-weight: 600; letter-spacing: 0.6px; text-transform: uppercase; color: rgba(255,255,255,0.45); }
-        #create-bill-modal .cbm-field label span.req { color: #d4af37; margin-left: 2px; }
-        #create-bill-modal .cbm-input { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 11px 14px; color: #fff; font-size: 14px; width: 100%; box-sizing: border-box; transition: all 0.2s; outline: none; }
-        #create-bill-modal .cbm-input::placeholder { color: rgba(255,255,255,0.2); }
-        #create-bill-modal .cbm-input:focus { border-color: rgba(212,175,55,0.6); background: rgba(212,175,55,0.06); box-shadow: 0 0 0 3px rgba(212,175,55,0.12); }
-        #create-bill-modal .cbm-select { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 11px 14px; color: #fff; font-size: 14px; width: 100%; box-sizing: border-box; transition: all 0.2s; outline: none; appearance: none; cursor: pointer; }
-        #create-bill-modal .cbm-select:focus { border-color: rgba(212,175,55,0.6); box-shadow: 0 0 0 3px rgba(212,175,55,0.12); }
-        #create-bill-modal .cbm-select option { background: #1a2a44; color: #fff; }
-        #create-bill-modal .cbm-amount-wrap { position: relative; }
-        #create-bill-modal .cbm-amount-prefix { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #d4af37; font-weight: 700; font-size: 15px; pointer-events: none; }
-        #create-bill-modal .cbm-amount-input { padding-left: 30px !important; font-size: 14px !important; font-weight: 600 !important; color: #f5c842 !important; }
-        #create-bill-modal .cbm-payment-box { background: rgba(212,175,55,0.04); border: 1px solid rgba(212,175,55,0.18); border-radius: 14px; padding: 18px; }
-        #create-bill-modal .cbm-payment-toggle { display: flex; align-items: center; gap: 10px; margin-bottom: 0; }
-        #create-bill-modal .cbm-payment-toggle-label { font-size: 12px; font-weight: 600; color: #d4af37; letter-spacing: 0.5px; text-transform: uppercase; }
-        #create-bill-modal .cbm-payment-optional { font-size: 11px; color: rgba(255,255,255,0.3); margin-left: auto; }
-        #create-bill-modal .cbm-payment-fields { margin-top: 16px; }
-        
-        /* Calculation Breakdown Box */
-        #create-bill-modal .cbm-calc-box { background: linear-gradient(135deg, rgba(212,175,55,0.07) 0%, rgba(15,23,42,0.7) 100%); border: 1.5px solid rgba(212,175,55,0.35); border-radius: 14px; padding: 16px 18px; margin-top: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.35); }
-        #create-bill-modal .cbm-calc-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px solid rgba(212,175,55,0.2); padding-bottom: 8px; flex-wrap: wrap; gap: 8px; }
-        #create-bill-modal .cbm-calc-badge { font-size: 10.5px; font-weight: 800; letter-spacing: 0.8px; text-transform: uppercase; color: #fbbf24; display: flex; align-items: center; gap: 6px; }
-        #create-bill-modal .cbm-calc-formula { font-size: 11.5px; color: #38bdf8; font-family: 'Consolas', monospace; font-weight: 600; }
-        #create-bill-modal .cbm-calc-grid { display: grid; grid-template-columns: 1fr 1fr 1.3fr; gap: 10px; margin-bottom: 12px; }
-        #create-bill-modal .cbm-calc-item { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 10px 12px; text-align: center; }
-        #create-bill-modal .cbm-calc-item.highlight { background: rgba(212,175,55,0.12); border-color: rgba(212,175,55,0.4); box-shadow: 0 4px 14px rgba(212,175,55,0.15); }
-        #create-bill-modal .cbm-calc-item .c-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; margin-bottom: 4px; font-weight: 600; }
-        #create-bill-modal .cbm-calc-item .c-val { font-size: 16px; font-weight: 800; color: #fff; }
-        #create-bill-modal .cbm-calc-item .c-val.green { color: #34d399; }
-        #create-bill-modal .cbm-calc-item .c-val.red { color: #f87171; }
-        #create-bill-modal .cbm-calc-item .c-val.gold { color: #fbbf24; font-size: 17px; }
-        #create-bill-modal .cbm-calc-footer { display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.35); border-radius: 8px; padding: 10px 14px; font-size: 12px; border: 1px solid rgba(255,255,255,0.05); }
+        td[data-label="Created On"] { color: #cbd5e1 !important; }
+        .lead-card-row td small { color: #cbd5e1 !important; }
+        td[data-label="Created On"] { color: #94a3b8 !important; font-weight: 600 !important; }
 
-        #create-bill-modal .cbm-submit { width: 100%; padding: 14px; border: none; border-radius: 12px; background: linear-gradient(135deg, #d4af37, #f0c040); color: #0d1526; font-size: 14px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: all 0.25s; box-shadow: 0 4px 20px rgba(212,175,55,0.3); display: flex; align-items: center; justify-content: center; gap: 10px; }
-        #create-bill-modal .cbm-submit:hover { transform: translateY(-1px); box-shadow: 0 8px 28px rgba(212,175,55,0.45); }
-        #create-bill-modal .cbm-submit:active { transform: translateY(0); }
+        /* ═══════════════════════════════════════════════════════════
+           CREATE BOOKING BILL MODAL — Premium v2
+        ═══════════════════════════════════════════════════════════ */
+
+        @keyframes cbmSlideUp {
+            from { opacity: 0; transform: translateY(28px) scale(0.96); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes cbmTopBarSweep {
+            0%   { background-position: -200% center; }
+            100% { background-position:  200% center; }
+        }
+        @keyframes cbmShimmer {
+            0%        { left: -120%; }
+            60%, 100% { left:  120%; }
+        }
+        @keyframes cbmIconPulse {
+            0%, 100% { box-shadow: 0 6px 20px rgba(212,175,55,0.4), 0 0 0 0   rgba(212,175,55,0.3); }
+            50%       { box-shadow: 0 6px 20px rgba(212,175,55,0.5), 0 0 0 7px rgba(212,175,55,0); }
+        }
+        @keyframes cbmCounterPop {
+            0%  { transform: scale(1); }
+            50% { transform: scale(1.14); }
+            100%{ transform: scale(1); }
+        }
+
+        /* Card */
+        #create-bill-modal .cbm-card {
+            background:
+                radial-gradient(ellipse at 15%   0%, rgba(212,175,55,0.09) 0%, transparent 50%),
+                radial-gradient(ellipse at 85% 100%, rgba(212,175,55,0.05) 0%, transparent 45%),
+                linear-gradient(155deg, #101f3a 0%, #0b1525 55%, #0d1c33 100%);
+            border: 1px solid rgba(212,175,55,0.35);
+            border-radius: 22px;
+            width: 100%; max-width: 680px;
+            box-shadow: 0 48px 100px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,255,255,0.04) inset;
+            overflow: hidden; position: relative; margin: auto;
+            animation: cbmSlideUp 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+        }
+        #create-bill-modal .cbm-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; z-index: 5;
+            background: linear-gradient(90deg, transparent 0%, #d4af37 20%, #ffe47a 50%, #d4af37 80%, transparent 100%);
+            background-size: 200% 100%;
+            animation: cbmTopBarSweep 3.2s linear infinite;
+        }
+
+        /* Header */
+        #create-bill-modal .cbm-header {
+            padding: 22px 28px 18px;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+            display: flex; align-items: center; justify-content: space-between;
+            background: linear-gradient(90deg, rgba(212,175,55,0.1) 0%, transparent 65%);
+            position: relative; z-index: 2;
+        }
+        #create-bill-modal .cbm-header-left { display: flex; align-items: center; gap: 14px; }
+        #create-bill-modal .cbm-icon-wrap {
+            width: 46px; height: 46px; border-radius: 13px;
+            background: linear-gradient(135deg, #d4af37, #f5c842);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            animation: cbmIconPulse 2.8s ease-in-out infinite;
+        }
+        #create-bill-modal .cbm-icon-wrap i { color: #0f1526; font-size: 19px; }
+        #create-bill-modal .cbm-title { font-size: 20px; font-weight: 800; color: #fff; letter-spacing: -0.4px; margin: 0; }
+        #create-bill-modal .cbm-subtitle { font-size: 11.5px; color: rgba(255,255,255,0.38); margin: 3px 0 0; font-style: italic; }
+        #create-bill-modal .cbm-close {
+            width: 32px; height: 32px; border-radius: 8px;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.45); font-size: 15px;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s ease; flex-shrink: 0;
+        }
+        #create-bill-modal .cbm-close:hover {
+            background: rgba(212,175,55,0.18); border-color: rgba(212,175,55,0.4);
+            color: #f5d060; transform: rotate(90deg) scale(1.1);
+        }
+
+        /* Body */
+        #create-bill-modal .cbm-body { padding: 22px 28px; position: relative; z-index: 2; }
+        #create-bill-modal .cbm-section { margin-bottom: 20px; }
+
+        /* Section headers */
+        #create-bill-modal .cbm-section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+        #create-bill-modal .cbm-section-badge {
+            font-size: 9.5px; font-weight: 800; letter-spacing: 1.2px;
+            text-transform: uppercase; color: #f5d060;
+            background: linear-gradient(135deg, rgba(212,175,55,0.2), rgba(212,175,55,0.08));
+            border: 1px solid rgba(212,175,55,0.32); border-radius: 20px; padding: 4px 11px;
+            display: inline-flex; align-items: center; gap: 5px; white-space: nowrap;
+        }
+        #create-bill-modal .cbm-section-line {
+            flex: 1; height: 1px;
+            background: linear-gradient(90deg, rgba(212,175,55,0.18), transparent);
+        }
+
+        /* Grids */
+        #create-bill-modal .cbm-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; }
+        #create-bill-modal .cbm-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 13px; }
+        #create-bill-modal .cbm-field  { display: flex; flex-direction: column; gap: 6px; }
+
+        /* Labels */
+        #create-bill-modal .cbm-field label {
+            font-size: 10.5px; font-weight: 700; letter-spacing: 0.8px;
+            text-transform: uppercase; color: rgba(212,175,55,0.75);
+            display: flex; align-items: center; gap: 4px;
+        }
+        #create-bill-modal .cbm-field label span.req { color: #f87171; margin-left: 1px; }
+
+        /* Inputs */
+        #create-bill-modal .cbm-input {
+            background: rgba(255,255,255,0.04); border: 1.5px solid rgba(255,255,255,0.09);
+            border-radius: 11px; padding: 11px 14px; color: #fff; font-size: 14px;
+            width: 100%; box-sizing: border-box;
+            transition: border-color 0.25s, box-shadow 0.25s, background 0.25s; outline: none;
+            font-family: inherit;
+        }
+        #create-bill-modal .cbm-input::placeholder { color: rgba(255,255,255,0.18); }
+        #create-bill-modal .cbm-input:hover:not(:focus) { border-color: rgba(255,255,255,0.16); background: rgba(255,255,255,0.06); }
+        #create-bill-modal .cbm-input:focus {
+            border-color: rgba(212,175,55,0.65); background: rgba(212,175,55,0.05);
+            box-shadow: 0 0 0 3px rgba(212,175,55,0.13), 0 0 18px rgba(212,175,55,0.07);
+        }
+
+        /* Selects */
+        #create-bill-modal .cbm-select {
+            background: rgba(255,255,255,0.04); border: 1.5px solid rgba(255,255,255,0.09);
+            border-radius: 11px; padding: 11px 36px 11px 14px; color: #fff; font-size: 14px;
+            width: 100%; box-sizing: border-box; outline: none;
+            appearance: none; -webkit-appearance: none; cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(212,175,55,0.85)' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 13px center;
+            transition: border-color 0.25s, box-shadow 0.25s; font-family: inherit;
+        }
+        #create-bill-modal .cbm-select:hover:not(:focus) { border-color: rgba(255,255,255,0.16); }
+        #create-bill-modal .cbm-select:focus {
+            border-color: rgba(212,175,55,0.65); background-color: rgba(212,175,55,0.05);
+            box-shadow: 0 0 0 3px rgba(212,175,55,0.13);
+        }
+        #create-bill-modal .cbm-select option { background: #1a2a44; color: #fff; }
+
+        /* Amount fields */
+        #create-bill-modal .cbm-amount-wrap { position: relative; }
+        #create-bill-modal .cbm-amount-prefix {
+            position: absolute; left: 13px; top: 50%; transform: translateY(-50%);
+            color: #d4af37; font-weight: 800; font-size: 14px; pointer-events: none; line-height: 1;
+        }
+        #create-bill-modal .cbm-amount-input { padding-left: 28px !important; font-weight: 700 !important; color: #f5c842 !important; }
+
+        /* Calc Breakdown Box */
+        #create-bill-modal .cbm-calc-box {
+            background: linear-gradient(135deg, rgba(212,175,55,0.09) 0%, rgba(10,21,40,0.7) 100%);
+            border: 1.5px solid rgba(212,175,55,0.38); border-radius: 16px;
+            padding: 16px 18px; margin-top: 16px;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.35), 0 0 0 1px rgba(212,175,55,0.06) inset;
+            position: relative; overflow: hidden;
+        }
+        #create-bill-modal .cbm-calc-box::before {
+            content: ''; position: absolute; top: 0; left: -120%; width: 60%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212,175,55,0.07), transparent);
+            animation: cbmShimmer 4s ease-in-out infinite;
+        }
+        #create-bill-modal .cbm-calc-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 14px; padding-bottom: 10px;
+            border-bottom: 1px solid rgba(212,175,55,0.18);
+            flex-wrap: wrap; gap: 8px; position: relative;
+        }
+        #create-bill-modal .cbm-calc-badge {
+            font-size: 11px; font-weight: 800; letter-spacing: 0.6px;
+            text-transform: uppercase; color: #fbbf24;
+            display: flex; align-items: center; gap: 7px;
+        }
+        #create-bill-modal .cbm-calc-formula {
+            font-size: 12px; color: #38bdf8;
+            font-family: 'Consolas', 'Courier New', monospace; font-weight: 700;
+            background: rgba(56,189,248,0.08); border: 1px solid rgba(56,189,248,0.2);
+            border-radius: 6px; padding: 2px 9px;
+        }
+        #create-bill-modal .cbm-calc-grid {
+            display: grid; grid-template-columns: 1fr 1fr 1.3fr; gap: 10px;
+            margin-bottom: 14px; position: relative;
+        }
+        #create-bill-modal .cbm-calc-item {
+            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px; padding: 12px 14px; text-align: center;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        #create-bill-modal .cbm-calc-item.highlight {
+            background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(212,175,55,0.07));
+            border-color: rgba(212,175,55,0.45);
+            box-shadow: 0 4px 18px rgba(212,175,55,0.2), 0 0 0 1px rgba(212,175,55,0.1) inset;
+        }
+        #create-bill-modal .cbm-calc-item .c-label {
+            font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.7px;
+            color: rgba(255,255,255,0.42); margin-bottom: 6px; font-weight: 700;
+        }
+        #create-bill-modal .cbm-calc-item .c-val { font-size: 18px; font-weight: 900; color: #fff; transition: transform 0.25s, color 0.2s; }
+        #create-bill-modal .cbm-calc-item .c-val.green { color: #34d399; }
+        #create-bill-modal .cbm-calc-item .c-val.red   { color: #f87171; }
+        #create-bill-modal .cbm-calc-item .c-val.gold  {
+            font-size: 20px;
+            background: linear-gradient(135deg, #ffe47a, #f5c842);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            filter: drop-shadow(0 1px 6px rgba(212,175,55,0.4));
+        }
+        #create-bill-modal .cbm-calc-item .c-val.updated { animation: cbmCounterPop 0.3s ease; }
+        #create-bill-modal .cbm-calc-footer {
+            display: flex; align-items: center; justify-content: space-between;
+            background: rgba(0,0,0,0.3); border-radius: 10px; padding: 10px 14px;
+            font-size: 12px; border: 1px solid rgba(255,255,255,0.06); gap: 12px; flex-wrap: wrap; position: relative;
+        }
+        #create-bill-modal .cbm-calc-footer span { color: rgba(255,255,255,0.4); text-transform: uppercase; font-size: 10.5px; font-weight: 700; letter-spacing: 0.5px; }
+
+        /* Payment Box */
+        #create-bill-modal .cbm-payment-box {
+            background: rgba(212,175,55,0.05); border: 1.5px solid rgba(212,175,55,0.22);
+            border-radius: 16px; padding: 18px; position: relative; overflow: hidden;
+        }
+        #create-bill-modal .cbm-payment-box::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(212,175,55,0.4), transparent);
+        }
+        #create-bill-modal .cbm-payment-toggle { display: flex; align-items: center; gap: 10px; margin-bottom: 0; }
+        #create-bill-modal .cbm-payment-toggle-label { font-size: 11.5px; font-weight: 800; color: #d4af37; letter-spacing: 0.8px; text-transform: uppercase; }
+        #create-bill-modal .cbm-payment-optional { font-size: 11px; color: rgba(255,255,255,0.28); margin-left: auto; font-style: italic; }
+        #create-bill-modal .cbm-payment-fields { margin-top: 16px; }
+
+        /* Submit */
+        #create-bill-modal .cbm-submit {
+            width: 100%; padding: 15px; border: none; border-radius: 14px;
+            background: linear-gradient(110deg, #b8922a 0%, #d4af37 35%, #f5d060 55%, #d4af37 75%, #b8922a 100%);
+            background-size: 200% 100%;
+            color: #0d1526; font-size: 14.5px; font-weight: 900;
+            letter-spacing: 1px; text-transform: uppercase; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+            box-shadow: 0 8px 28px rgba(212,175,55,0.38), 0 2px 8px rgba(0,0,0,0.3);
+            font-family: inherit; position: relative; overflow: hidden;
+        }
+        #create-bill-modal .cbm-submit::after {
+            content: ''; position: absolute; top: 0; left: -120%; width: 60%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
+            animation: cbmShimmer 2.8s ease-in-out infinite;
+        }
+        #create-bill-modal .cbm-submit:hover {
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 14px 40px rgba(212,175,55,0.55), 0 4px 14px rgba(0,0,0,0.35);
+            filter: brightness(1.06);
+        }
+        #create-bill-modal .cbm-submit:active { transform: translateY(0) scale(0.99); }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            #create-bill-modal { padding: 14px 10px !important; -webkit-overflow-scrolling: touch; }
-            #create-bill-modal .cbm-card { border-radius: 16px !important; max-width: 100% !important; margin: 0 auto !important; }
-            #create-bill-modal .cbm-grid-2, #create-bill-modal .cbm-grid-3, #create-bill-modal .cbm-calc-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+            #create-bill-modal { padding: 12px 8px !important; -webkit-overflow-scrolling: touch; }
+            #create-bill-modal .cbm-card { border-radius: 18px !important; max-width: 100% !important; margin: 0 auto !important; }
+            #create-bill-modal .cbm-grid-2, #create-bill-modal .cbm-grid-3, #create-bill-modal .cbm-calc-grid { grid-template-columns: 1fr !important; gap: 11px !important; }
             #create-bill-modal .cbm-input,
             #create-bill-modal .cbm-select,
-            #create-bill-modal .cbm-amount-input { font-size: 16px !important; min-height: 42px !important; }
+            #create-bill-modal .cbm-amount-input { font-size: 16px !important; min-height: 44px !important; }
             #create-bill-modal .cbm-calc-footer { flex-direction: column !important; align-items: flex-start !important; gap: 6px !important; }
-            #create-bill-modal .cbm-header { padding: 16px 16px 14px !important; }
+            #create-bill-modal .cbm-header { padding: 18px 16px 14px !important; }
             #create-bill-modal .cbm-body { padding: 16px 14px !important; }
             #create-bill-modal .cbm-title { font-size: 17px !important; }
             #create-bill-modal .cbm-subtitle { display: none !important; }
-            #create-bill-modal .cbm-submit { min-height: 44px !important; font-size: 14px !important; }
+            #create-bill-modal .cbm-submit { min-height: 46px !important; font-size: 13.5px !important; }
         }
     </style>
     <div id="create-bill-modal" style="display:none; position:fixed; inset:0; z-index:10000; align-items:flex-start; justify-content:center; overflow-y:auto; -webkit-overflow-scrolling:touch; padding:20px 16px; background:rgba(0,0,0,0.82); backdrop-filter:blur(6px);">
