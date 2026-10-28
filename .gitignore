@@ -4,4 +4,5 @@
 # Dependencies
 node_modules/
 .DS_Store
-tmp/
+tmp/*
+!tmp/restart.txt
