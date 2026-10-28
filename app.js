@@ -888,6 +888,12 @@ function injectDialogs() {
                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M1 1L17 17M17 1L1 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
                 </button>
 
+                <!-- Urgency Strip -->
+                <div class="dmo-urgency-strip">
+                    <span class="dmo-urgency-dot"></span>
+                    Only a few spots left at this price — offer expires soon!
+                </div>
+
                 <!-- Header -->
                 <div class="dmo-header">
                     <div class="dmo-badge">LIMITED OFFER</div>
