@@ -33,7 +33,14 @@ const adminLoginLimiter = rateLimit({
     legacyHeaders: false,
 });
 
-const JWT_SECRET = process.env.JWT_SECRET || 'rudraansh_yatra_secure_jwt_secret_key_2026_xyz';
+let JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+    if (process.env.NODE_ENV === 'production') {
+        throw new Error('FATAL SECURITY ERROR: JWT_SECRET environment variable is missing.');
+    }
+    console.warn('[SECURITY WARNING] JWT_SECRET is not set in environment. Generating an ephemeral instance secret.');
+    JWT_SECRET = crypto.randomBytes(64).toString('hex');
+}
 const storage = multer.memoryStorage();
 const upload = multer({
     storage: storage,
@@ -69,11 +76,17 @@ app.use('/assets', express.static(path.join(__dirname, 'assets'), {
     immutable: true
 }));
 
+// Server-side Token Revocation / Blacklist (with 24-hour memory cleanup)
+const tokenBlacklist = new Set();
+
 // Authentication Middleware
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
     if (!token) return res.status(401).json({ error: 'Access token required' });
+    if (tokenBlacklist.has(token)) {
+        return res.status(401).json({ error: 'Token has been revoked. Please log in again.' });
+    }
 
     jwt.verify(token, JWT_SECRET, (err, user) => {
         if (err) return res.status(401).json({ error: 'Invalid or expired token' });
@@ -108,34 +121,26 @@ if (razorpayKeyId && razorpayKeySecret) {
 }
 
 
-// Initialize Supabase Client
+// Initialize Supabase Client (Singleton)
 const DEFAULT_SUPABASE_URL = 'https://ysnzxvvsegmkmkepclti.supabase.co';
 const DEFAULT_SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlzbnp4dnZzZWdta21rZXBjbHRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NDY3NjMsImV4cCI6MjA5NjMyMjc2M30.V6q3OpJCf6PEu6JTM__6E7PJDrY5lY--FZfjyy_toLM';
 
-const supabaseUrl = process.env.SUPABASE_URL || DEFAULT_SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_KEY || DEFAULT_SUPABASE_KEY;
-let supabase = null;
-
-try {
-    if (supabaseUrl && supabaseKey) {
-        supabase = createClient(supabaseUrl, supabaseKey);
-    }
-} catch (err) {
-    console.error('Error initializing Supabase client:', err);
-}
-
+let supabaseInstance = null;
 function getSupabase() {
-    if (!supabase) {
-        try {
-            const url = process.env.SUPABASE_URL || DEFAULT_SUPABASE_URL;
-            const key = process.env.SUPABASE_KEY || DEFAULT_SUPABASE_KEY;
-            supabase = createClient(url, key);
-        } catch (e) {
-            console.error('Failed to get Supabase client:', e);
+    if (!supabaseInstance) {
+        const url = process.env.SUPABASE_URL || DEFAULT_SUPABASE_URL;
+        const key = process.env.SUPABASE_KEY || DEFAULT_SUPABASE_KEY;
+        if (url && key) {
+            try {
+                supabaseInstance = createClient(url, key);
+            } catch (e) {
+                console.error('Error initializing Supabase client:', e.message);
+            }
         }
     }
-    return supabase;
+    return supabaseInstance;
 }
+const supabase = getSupabase();
 
 
 // Helper to pre-render blogs HTML
@@ -185,7 +190,7 @@ function renderBlogsHtml(blogs) {
             },
             {
                 id: 'adi-vs-mt-kailash',
-                title: "Adi Kailash vs. Kailash Mansarovar: What's the Real Difference?",
+                title: "Adi Kailash vs. Kailash Mansarovar: What's the Real Difference? (2027 Guide)",
                 slug: 'adi-kailash-vs-kailash-mansarovar-real-difference',
                 image_url: 'assets/images/adi-kailash-parvat.webp',
                 author: 'Dheerendra Rautela',
@@ -194,7 +199,7 @@ function renderBlogsHtml(blogs) {
             },
             {
                 id: 'adi-kailash-guide-2026',
-                title: 'Adi Kailash Yatra Complete Guide 2026',
+                title: 'Adi Kailash Yatra Complete Guide 2027',
                 slug: 'adi-kailash-yatra-complete-guide-2026',
                 image_url: 'assets/images/adi-kailash-hero.webp',
                 author: 'Dheerendra Rautela',
@@ -203,7 +208,7 @@ function renderBlogsHtml(blogs) {
             },
             {
                 id: 'om-parvat-darshan-guide',
-                title: 'Om Parvat Darshan: Witness the Sacred "ॐ" in Snow',
+                title: 'Om Parvat Darshan Guide 2027: Witness the Sacred "ॐ" in Snow',
                 slug: 'om-parvat-darshan-complete-guide-2026',
                 image_url: 'assets/images/om-parvat.webp',
                 author: 'Dheerendra Rautela',
@@ -221,8 +226,34 @@ function renderBlogsHtml(blogs) {
             day: 'numeric'
         });
 
-        // Strip HTML tags for clean text excerpt
-        let rawContent = (blog.content || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+        // Strip all non-content blocks: script, style, noscript, nav (ToC), table, figure, aside
+        let rawContent = (blog.content || '')
+            .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, ' ')
+            .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, ' ')
+            .replace(/<noscript\b[^>]*>[\s\S]*?<\/noscript>/gi, ' ')
+            .replace(/<nav\b[^>]*>[\s\S]*?<\/nav>/gi, ' ')
+            .replace(/<table\b[^>]*>[\s\S]*?<\/table>/gi, ' ')
+            .replace(/<figure\b[^>]*>[\s\S]*?<\/figure>/gi, ' ')
+            .replace(/<aside\b[^>]*>[\s\S]*?<\/aside>/gi, ' ')
+            .replace(/<section[^>]*class="[^"]*aeo[^"]*"[^>]*>[\s\S]*?<\/section>/gi, ' ')
+            .replace(/<div[^>]*class="[^"]*cta[^"]*"[^>]*>[\s\S]*?<\/div>/gi, ' ')
+            .replace(/<[^>]*>/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim();
+
+        // Try to extract first real prose paragraph (at least 80 chars, starts with a word not a number/label)
+        const paraMatches = rawContent.match(/[A-Z][a-z][^.!?]{78,}[.!?]/g);
+        if (paraMatches && paraMatches.length > 0) {
+            // Skip matches that look like stat labels or header text (all caps or short words)
+            const prosePara = paraMatches.find(p => {
+                const wordCount = p.split(/\s+/).length;
+                const hasVerb = /\b(is|are|was|were|has|have|had|will|can|held|organized|features|runs|took|completed|covers|includes|offers|provides|marks|serves|situated|plays|transforms|manages|represents|attacked|designed|bringing|seeking|traverse)\b/i.test(p);
+                return wordCount >= 12 && hasVerb;
+            });
+            if (prosePara) {
+                rawContent = prosePara + ' ' + rawContent.substring(rawContent.indexOf(prosePara) + prosePara.length).trim();
+            }
+        }
         
         // Remove duplicate title heading from start of excerpt if present
         const titleClean = (blog.title || '').replace(/[^\w\s]/gi, '').toLowerCase();
@@ -371,7 +402,8 @@ app.get('/blog/:slug', async (req, res) => {
         'due-to-china-denying-clearance-for-the-lipulekh-crossing-28-indian-businessmen-were-forced-to-return': 'china-denies-lipulekh-clearance-indian-traders-return',
         'ndia-tibet-border-trade-through-lipulekh-pass-finally-resumes-on-august-1-2026-after-a-seven-year-pause-heres-what-changed-since-traders-were-turned-back-in-july': 'india-tibet-border-trade-lipulekh-pass-resumes-august-2026',
         'inner-line-permit-adi-kailash-2026-step-by-step': 'inner-line-permit-adi-kailash-2026-guide',
-        'adi-kailash-vs-mount-kailash-comparison-cost-difficulty-permits': 'adi-kailash-vs-kailash-mansarovar-real-difference'
+        'adi-kailash-vs-mount-kailash-comparison-cost-difficulty-permits': 'adi-kailash-vs-kailash-mansarovar-real-difference',
+        'adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitude-ultra-marathon-guide': 'adi-kailash-parikrama-run-2-0-winners-results-gunji'
     };
 
     const targetSlug = legacySlugs[cleanSlug] || cleanSlug;
@@ -548,7 +580,12 @@ app.get('/blog/:slug', async (req, res) => {
         // Set alt tags on dynamic images automatically
         const imageAlt = `${blog.title} Cover Photo - Rudraansh Yatra`;
 
-        const plainTextContent = (blog.content || '').replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+        const plainTextContent = (blog.content || '')
+            .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, ' ')
+            .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, ' ')
+            .replace(/<[^>]*>/g, '')
+            .replace(/\s+/g, ' ')
+            .trim();
         const metaDescriptionVal = blog.meta_description || `${plainTextContent.substring(0, 155)}...`;
 
         const resolvedMainImg = blog.image_url ? (blog.image_url.startsWith('http') || blog.image_url.startsWith('/') ? blog.image_url : '/' + blog.image_url) : '/assets/images/adi-kailash-hero.webp';
@@ -1254,6 +1291,11 @@ app.get('/blog/:slug', async (req, res) => {
     }
 });
 
+// Redirect direct /blog.html template access to /blogs
+app.get('/blog.html', (req, res) => {
+    return res.redirect(301, '/blogs');
+});
+
 // 4. Backward Compatibility Redirect for Legacy Links (/blog?id=XYZ)
 app.get('/blog', async (req, res) => {
     const blogId = req.query.id;
@@ -1477,6 +1519,16 @@ app.post('/api/admin/login', adminLoginLimiter, async (req, res) => {
             return res.status(400).json({ error: 'Invalid Username or Passcode.' });
         }
 
+        // Auto-upgrade legacy plaintext passcodes to bcrypt hashes on successful login
+        if (supabase && userRecord.id && !storedPass.startsWith('$2a$') && !storedPass.startsWith('$2b$')) {
+            try {
+                const upgradedHash = await bcrypt.hash(cleanPasscode, 12);
+                await supabase.from('staff_credentials').update({ passcode: upgradedHash }).eq('id', userRecord.id);
+            } catch (upgradeErr) {
+                console.warn('[Security] Failed to auto-upgrade password hash:', upgradeErr.message);
+            }
+        }
+
         const userPayload = {
             id: userRecord.id,
             username: userRecord.username,
@@ -1495,9 +1547,16 @@ app.post('/api/admin/login', adminLoginLimiter, async (req, res) => {
     }
 });
 
-// Logout Route
+// Logout Route — Revokes JWT token server-side immediately
 app.post('/api/admin/logout', (req, res) => {
-    res.json({ success: true, message: 'Logged out successfully' });
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    if (token) {
+        tokenBlacklist.add(token);
+        // Clean up token from memory after 24 hours
+        setTimeout(() => tokenBlacklist.delete(token), 24 * 60 * 60 * 1000);
+    }
+    res.json({ success: true, message: 'Logged out and token revoked successfully' });
 });
 
 // ==========================================
@@ -1843,7 +1902,28 @@ app.put('/api/admin/bookings/:id', authenticateToken, async (req, res) => {
             if (payload.yatra_status === 'Yatra Completed') {
                 const bRow = await supabase.from('bookings').select('booking_id').eq('id', req.params.id).single();
                 if (bRow?.data?.booking_id) await syncBillToFullyPaid(bRow.data.booking_id);
+            } else if (payload.yatra_status === 'Cancelled') {
+                const bRow = await supabase.from('bookings').select('booking_id').eq('id', req.params.id).single();
+                if (bRow?.data?.booking_id) await syncBillToCancelled(bRow.data.booking_id);
             }
+
+            // Sync date, travelers, pickup point to linked invoice in booking_bills
+            try {
+                const bRow = await supabase.from('bookings').select('booking_id').eq('id', req.params.id).single();
+                const bId = bRow?.data?.booking_id;
+                if (bId) {
+                    const billSync = {};
+                    if (payload.travel_date) billSync.tour_start_date = payload.travel_date;
+                    if (payload.travelers) billSync.group_size = parseInt(payload.travelers) || 1;
+                    if (payload.pickup_point) billSync.pickup_point = payload.pickup_point;
+                    if (Object.keys(billSync).length > 0) {
+                        await supabase.from('booking_bills').update(billSync).eq('booking_id', bId);
+                    }
+                }
+            } catch (syncErr) {
+                console.warn('[Sync Booking -> Bill Warning]:', syncErr.message);
+            }
+
             return res.json({ success: true, fallback: true });
         }
 
@@ -1852,6 +1932,26 @@ app.put('/api/admin/bookings/:id', authenticateToken, async (req, res) => {
         if (payload.yatra_status === 'Yatra Completed') {
             const bRow = await supabase.from('bookings').select('booking_id').eq('id', req.params.id).single();
             if (bRow?.data?.booking_id) await syncBillToFullyPaid(bRow.data.booking_id);
+        } else if (payload.yatra_status === 'Cancelled') {
+            const bRow = await supabase.from('bookings').select('booking_id').eq('id', req.params.id).single();
+            if (bRow?.data?.booking_id) await syncBillToCancelled(bRow.data.booking_id);
+        }
+
+        // Sync date, travelers, pickup point to linked invoice in booking_bills
+        try {
+            const bRow = await supabase.from('bookings').select('booking_id').eq('id', req.params.id).single();
+            const bId = bRow?.data?.booking_id;
+            if (bId) {
+                const billSync = {};
+                if (payload.travel_date) billSync.tour_start_date = payload.travel_date;
+                if (payload.travelers) billSync.group_size = parseInt(payload.travelers) || 1;
+                if (payload.pickup_point) billSync.pickup_point = payload.pickup_point;
+                if (Object.keys(billSync).length > 0) {
+                    await supabase.from('booking_bills').update(billSync).eq('booking_id', bId);
+                }
+            }
+        } catch (syncErr) {
+            console.warn('[Sync Booking -> Bill Warning]:', syncErr.message);
         }
 
         res.json({ success: true });
@@ -1863,6 +1963,10 @@ app.put('/api/admin/bookings/:id', authenticateToken, async (req, res) => {
 
 app.delete('/api/admin/bookings/:id', authenticateToken, async (req, res) => {
     try {
+        const bRow = await supabase.from('bookings').select('booking_id').eq('id', req.params.id).single();
+        if (bRow?.data?.booking_id) {
+            await syncBillToCancelled(bRow.data.booking_id);
+        }
         const { error } = await supabase.from('bookings').delete().eq('id', req.params.id);
         if (error) throw error;
         res.json({ success: true });
@@ -2087,7 +2191,7 @@ app.get('/api/analytics/monthly-incentives', authenticateToken, async (req, res)
             (bills || []).forEach(b => {
                 billMap[b.booking_id] = {
                     net: Math.max(0, parseFloat(b.total_package_amount || 0) - parseFloat(b.discount || 0)),
-                    fullyPaid: b.payment_status === 'Fully Paid'
+                    payment_status: b.payment_status || ''
                 };
             });
         }
@@ -2107,11 +2211,14 @@ app.get('/api/analytics/monthly-incentives', authenticateToken, async (req, res)
             if (!dateStr) return;
             const m = new Date(dateStr).getMonth(); // 0-indexed
             if (m < 0 || m > 11) return;
-            const billingInfo = billMap[booking.booking_id] || { net: 0, fullyPaid: false };
+            const billingInfo = billMap[booking.booking_id] || { 
+                net: parseFloat(booking.total_package_amount || booking.amount || 0), 
+                payment_status: '' 
+            };
             monthlyData[m].yatras_completed += 1;
             monthlyData[m].net_revenue      += billingInfo.net;
-            // Only count incentive if bill is fully paid
-            if (billingInfo.fullyPaid) {
+            // Incentive is earned once booking status is "Yatra Completed" (excluding cancelled bills)
+            if (billingInfo.payment_status !== 'Cancelled') {
                 monthlyData[m].incentive_earned += Math.round(billingInfo.net * 0.03);
             }
         });
@@ -2265,6 +2372,22 @@ app.put('/api/admin/leads/:id', authenticateToken, async (req, res) => {
                         // Use updated fields from req.body if present, else fallback to fullLead
                         const mergedLead = { ...fullLead, ...req.body };
 
+                        // Infer travel date from remarks if missing, otherwise fallback to today
+                        const inferredTravelDate = mergedLead.travel_date || (function(text) {
+                            if (!text || typeof text !== 'string') return null;
+                            const isoMatch = text.match(/\b(202\d)-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])\b/);
+                            if (isoMatch) return isoMatch[0];
+                            const ddmmyyyy = text.match(/\b([0-2]?\d|3[01])[-/.](0?[1-9]|1[0-2])[-/.](202\d)\b/);
+                            if (ddmmyyyy) return `${ddmmyyyy[3]}-${ddmmyyyy[2].padStart(2, '0')}-${ddmmyyyy[1].padStart(2, '0')}`;
+                            const months = { jan:'01', feb:'02', mar:'03', apr:'04', may:'05', jun:'06', jul:'07', aug:'08', sep:'09', oct:'10', nov:'11', dec:'12' };
+                            const named = text.match(/\b([0-2]?\d|3[01])(?:st|nd|rd|th)?\s+([a-zA-Z]{3,9})(?:\s+(202\d))?\b/i);
+                            if (named) {
+                                const m = months[named[2].toLowerCase().slice(0, 3)];
+                                if (m) return `${named[3] || new Date().getFullYear()}-${m}-${named[1].padStart(2, '0')}`;
+                            }
+                            return null;
+                        })(mergedLead.remarks || mergedLead.notes);
+
                         const bookingData = {
                             booking_id:   bookingId,
                             lead_id:      req.params.id,
@@ -2273,7 +2396,7 @@ app.put('/api/admin/leads/:id', authenticateToken, async (req, res) => {
                             email:        mergedLead.email || '',
                             package_name: mergedLead.destination || 'Confirmed Lead Booking',
                             destination:  mergedLead.destination || null,
-                            travel_date:  mergedLead.travel_date || new Date().toISOString().split('T')[0],
+                            travel_date:  inferredTravelDate || new Date().toISOString().split('T')[0],
                             travelers:    String(mergedLead.travelers || 1),
                             message:      mergedLead.remarks || '',
                             user_id:      mergedLead.assigned_to || null,
@@ -2549,8 +2672,7 @@ app.post('/api/admin/blogs', authenticateToken, async (req, res) => {
                 .filter(b => b.slug)
                 .map(b => `https://rudraanshyatra.com/blog/${b.slug}`);
             if (urls.length > 0) {
-                urls.push('https://rudraanshyatra.com/blog.html');
-                urls.push('https://rudraanshyatra.com/blogs.html');
+                urls.push('https://rudraanshyatra.com/blogs');
                 pingIndexNow(urls).catch(() => {});
             }
         }
@@ -2569,8 +2691,7 @@ app.put('/api/admin/blogs/:id', authenticateToken, async (req, res) => {
         if (data && data.length > 0 && data[0].slug) {
             pingIndexNow([
                 `https://rudraanshyatra.com/blog/${data[0].slug}`,
-                'https://rudraanshyatra.com/blog.html',
-                'https://rudraanshyatra.com/blogs.html'
+                'https://rudraanshyatra.com/blogs'
             ]).catch(() => {});
         }
     } catch (err) {
@@ -2691,7 +2812,7 @@ app.post('/api/admin/credentials', authenticateToken, requireAdmin, async (req, 
     try {
         const credentialData = { ...req.body };
         if (credentialData.passcode) {
-            credentialData.passcode = await bcrypt.hash(credentialData.passcode, 10);
+            credentialData.passcode = await bcrypt.hash(credentialData.passcode, 12);
         }
         const { error } = await supabase.from('staff_credentials').insert([credentialData]);
         if (error) throw error;
@@ -2721,7 +2842,7 @@ app.put('/api/admin/credentials/:id', authenticateToken, async (req, res) => {
         } else {
             const isAlreadyHashed = updates.passcode.startsWith('$2a$') || updates.passcode.startsWith('$2b$');
             if (!isAlreadyHashed) {
-                updates.passcode = await bcrypt.hash(updates.passcode, 10);
+                updates.passcode = await bcrypt.hash(updates.passcode, 12);
             }
         }
 
@@ -2838,6 +2959,24 @@ app.post('/api/billing', authenticateToken, async (req, res) => {
                 .insert(directBills)
                 .select();
             if (error) throw error;
+
+            // Sync date, travelers, pickup point to bookings table
+            for (const b of directBills) {
+                if (b.booking_id) {
+                    try {
+                        const bkSync = {};
+                        if (b.tour_start_date) bkSync.travel_date = b.tour_start_date;
+                        if (b.group_size) bkSync.travelers = String(b.group_size);
+                        if (b.pickup_point) bkSync.pickup_point = b.pickup_point;
+                        if (Object.keys(bkSync).length > 0) {
+                            await supabase.from('bookings').update(bkSync).eq('booking_id', b.booking_id);
+                        }
+                    } catch (e) {
+                        console.warn('[Sync Bill -> Booking Warning]:', e.message);
+                    }
+                }
+            }
+
             return res.status(201).json(data);
         }
 
@@ -2900,6 +3039,22 @@ app.post('/api/billing', authenticateToken, async (req, res) => {
             .single();
 
         if (error) throw error;
+
+        // Sync tour date, group size, pickup to bookings table
+        if (bookingId) {
+            try {
+                const bkSync = {};
+                if (customerDetails.tourStartDate) bkSync.travel_date = customerDetails.tourStartDate;
+                if (customerDetails.groupSize) bkSync.travelers = String(customerDetails.groupSize);
+                if (customerDetails.pickupPoint) bkSync.pickup_point = customerDetails.pickupPoint;
+                if (Object.keys(bkSync).length > 0) {
+                    await supabase.from('bookings').update(bkSync).eq('booking_id', bookingId);
+                }
+            } catch (bkSyncErr) {
+                console.warn('[Sync Bill -> Booking Error]:', bkSyncErr.message);
+            }
+        }
+
         res.status(201).json(data);
     } catch (err) {
         console.error('API POST Billing Error:', err);
@@ -4498,8 +4653,7 @@ app.post('/api/indexnow', async (req, res) => {
             targets.push(url);
         } else if (slug) {
             targets.push(`https://rudraanshyatra.com/blog/${slug}`);
-            targets.push('https://rudraanshyatra.com/blog.html');
-            targets.push('https://rudraanshyatra.com/blogs.html');
+            targets.push('https://rudraanshyatra.com/blogs');
             targets.push('https://rudraanshyatra.com/sitemap.xml');
         }
 

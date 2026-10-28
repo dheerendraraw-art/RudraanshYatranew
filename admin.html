@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Portal - Rudraansh Yatra</title>
-    <link rel="icon" type="image/png" href="assets/images/logo.png">
-    <link rel="shortcut icon" type="image/png" href="assets/images/logo.png">
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="shortcut icon" type="image/png" href="/assets/images/logo.png">
 
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,7 +15,7 @@
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></noscript>
-    <link rel="stylesheet" href="style.css?v=8.4">
+    <link rel="stylesheet" href="/style.css?v=8.4">
     <meta name="robots" content="noindex, nofollow">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
@@ -61,7 +61,7 @@
         <!-- Header Navbar -->
         <nav class="admin-navbar">
             <div class="admin-logo">
-                <img src="assets/images/logo.png" alt="Logo" width="40" height="40" decoding="async">
+                <img src="/assets/images/logo.png" alt="Logo" width="40" height="40" decoding="async">
                 <span>Rudraansh Yatra <strong style="color: var(--color-gold);">Admin Portal</strong></span>
             </div>
             <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
@@ -95,42 +95,42 @@
                 <div class="admin-stat-card" id="stat-card-0">
                     <div class="admin-stat-icon" id="stat-icon-0"><i class="fa-solid fa-calendar-check"></i></div>
                     <div class="admin-stat-info">
-                        <span class="admin-stat-num" id="stat-num-0">0</span>
+                        <span class="admin-stat-num" id="stat-num-0"><i class="fa-solid fa-spinner fa-spin" style="font-size: 13px; opacity: 0.6;"></i></span>
                         <span class="admin-stat-label" id="stat-label-0">Total Bookings</span>
                     </div>
                 </div>
                 <div class="admin-stat-card" id="stat-card-1">
                     <div class="admin-stat-icon" id="stat-icon-1"><i class="fa-solid fa-people-group"></i></div>
                     <div class="admin-stat-info">
-                        <span class="admin-stat-num" id="stat-num-1">0</span>
+                        <span class="admin-stat-num" id="stat-num-1"><i class="fa-solid fa-spinner fa-spin" style="font-size: 13px; opacity: 0.6;"></i></span>
                         <span class="admin-stat-label" id="stat-label-1">Total Leads</span>
                     </div>
                 </div>
                 <div class="admin-stat-card" id="stat-card-2">
                     <div class="admin-stat-icon" id="stat-icon-2"><i class="fa-solid fa-compass"></i></div>
                     <div class="admin-stat-info">
-                        <span class="admin-stat-num" id="stat-num-2">0</span>
+                        <span class="admin-stat-num" id="stat-num-2"><i class="fa-solid fa-spinner fa-spin" style="font-size: 13px; opacity: 0.6;"></i></span>
                         <span class="admin-stat-label" id="stat-label-2">Custom Requests</span>
                     </div>
                 </div>
                 <div class="admin-stat-card" id="stat-card-3">
                     <div class="admin-stat-icon" id="stat-icon-3"><i class="fa-solid fa-tags"></i></div>
                     <div class="admin-stat-info">
-                        <span class="admin-stat-num" id="stat-num-3">0</span>
+                        <span class="admin-stat-num" id="stat-num-3"><i class="fa-solid fa-spinner fa-spin" style="font-size: 13px; opacity: 0.6;"></i></span>
                         <span class="admin-stat-label" id="stat-label-3">Discount Claims</span>
                     </div>
                 </div>
                 <div class="admin-stat-card" id="stat-card-4">
                     <div class="admin-stat-icon" id="stat-icon-4"><i class="fa-solid fa-newspaper"></i></div>
                     <div class="admin-stat-info">
-                        <span class="admin-stat-num" id="stat-num-4">0</span>
+                        <span class="admin-stat-num" id="stat-num-4"><i class="fa-solid fa-spinner fa-spin" style="font-size: 13px; opacity: 0.6;"></i></span>
                         <span class="admin-stat-label" id="stat-label-4">Blog Posts</span>
                     </div>
                 </div>
                 <div class="admin-stat-card" id="stat-card-5">
                     <div class="admin-stat-icon" id="stat-icon-5"><i class="fa-solid fa-images"></i></div>
                     <div class="admin-stat-info">
-                        <span class="admin-stat-num" id="stat-num-5">0</span>
+                        <span class="admin-stat-num" id="stat-num-5"><i class="fa-solid fa-spinner fa-spin" style="font-size: 13px; opacity: 0.6;"></i></span>
                         <span class="admin-stat-label" id="stat-label-5">Gallery Photos</span>
                     </div>
                 </div>
@@ -1222,7 +1222,7 @@
                                 </div>
                                 <div class="admin-form-group" style="margin-bottom: 0;">
                                     <label>Absent Days</label>
-                                    <input type="text" id="calc-absent-days" class="admin-input" readonly value="2" style="padding: 8px 12px; background: rgba(0,0,0,0.05); cursor: not-allowed; font-weight: 700; color: #dc2626;">
+                                    <input type="text" id="calc-absent-days" class="admin-input" readonly value="0" style="padding: 8px 12px; background: rgba(0,0,0,0.05); cursor: not-allowed; font-weight: 700; color: #dc2626;">
                                 </div>
                             </div>
 
@@ -1302,6 +1302,13 @@
                                 <button onclick="exportAttendanceCSV()" class="btn btn-secondary" style="border: 1.5px solid #16a34a; background: rgba(34, 197, 94, 0.1); color: #16a34a; padding: 6px 12px; font-size: 12px; cursor: pointer; border-radius: 4px; font-weight: bold; display: flex; align-items: center; gap: 4px;" title="Export CSV Spreadsheet">
                                     <i class="fa-solid fa-file-excel"></i> Export CSV
                                 </button>
+                                <button onclick="backupAttendanceJSON()" class="btn btn-secondary" style="border: 1.5px solid var(--color-gold); background: rgba(212, 175, 55, 0.1); color: var(--color-gold); padding: 6px 12px; font-size: 12px; cursor: pointer; border-radius: 4px; font-weight: bold; display: flex; align-items: center; gap: 4px;" title="Export full backup of all attendance & payroll records to JSON file">
+                                    <i class="fa-solid fa-download"></i> Backup Data
+                                </button>
+                                <button onclick="triggerRestoreAttendance()" class="btn btn-secondary" style="border: 1.5px solid #3b82f6; background: rgba(59, 130, 246, 0.1); color: #3b82f6; padding: 6px 12px; font-size: 12px; cursor: pointer; border-radius: 4px; font-weight: bold; display: flex; align-items: center; gap: 4px;" title="Import and restore attendance records from JSON backup">
+                                    <i class="fa-solid fa-upload"></i> Restore
+                                </button>
+                                <input type="file" id="attendance-restore-file" accept=".json" style="display: none;" onchange="handleAttendanceJSONRestore(event)">
                                 <button onclick="clearAttendanceHistory()" class="btn btn-secondary" style="border: 1.5px solid #dc2626; background: transparent; color: #dc2626; padding: 6px 12px; font-size: 12px; cursor: pointer; border-radius: 4px; font-weight: bold; display: flex; align-items: center; gap: 4px;" title="Delete all logs">
                                     <i class="fa-solid fa-trash-can"></i> Clear All
                                 </button>
@@ -1840,78 +1847,143 @@
                 <button onclick="saveYatraStatus()" id="yatra-status-save-btn"
                         style="padding:9px 20px; background:var(--color-gold); border:none; color:#111827;
                                border-radius:6px; cursor:pointer; font-size:13px; font-weight:800;
-                               display:inline-flex; align-items:center; gap:6px;">
-                    <i class="fa-solid fa-check"></i> Save Status
-                </button>
+                               display:inline-flex; align-items:c    <!-- Add / Edit Booking Modal -->
+    <div class="modal-overlay" id="add-booking-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);backdrop-filter:blur(4px);z-index:10000;justify-content:center;align-items:flex-start;overflow-y:auto;padding:20px;box-sizing:border-box;">
+        <div style="background:linear-gradient(160deg,#0f172a 0%,#1e293b 100%);border:1.5px solid rgba(212,175,55,0.5);max-width:540px;width:100%;padding:0;border-radius:16px;position:relative;margin:auto;box-shadow:0 32px 64px rgba(0,0,0,0.7);overflow:hidden;">
+
+            <!-- Modal Header -->
+            <div style="background:linear-gradient(90deg,rgba(212,175,55,0.12) 0%,transparent 70%);padding:20px 24px 16px;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:space-between;">
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#d4af37,#f5c842);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(212,175,55,0.4);">
+                        <i class="fa-solid fa-calendar-plus" style="color:#0f172a;font-size:16px;"></i>
+                    </div>
+                    <div>
+                        <h3 id="booking-modal-title" style="font-family:var(--font-serif);color:#fff;margin:0;font-size:18px;font-weight:700;">Add Booking Inquiry</h3>
+                        <p style="color:rgba(255,255,255,0.4);font-size:11px;margin:2px 0 0;">Fill in all required fields marked with *</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeAddBookingModal()" style="width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .2s;" onmouseover="this.style.background='rgba(255,255,255,0.12)'" onmouseout="this.style.background='rgba(255,255,255,0.06)'">&times;</button>
             </div>
+
+            <!-- Modal Form -->
+            <form id="add-booking-form" onsubmit="submitAddBooking(event)" style="padding:20px 24px 24px;">
+                <input type="hidden" id="edit-booking-id">
+
+                <!-- Section 1: Trip Details -->
+                <div style="margin-bottom:18px;">
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+                        <i class="fa-solid fa-mountain" style="color:var(--color-gold);font-size:12px;"></i>
+                        <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.4);">Trip Details</span>
+                        <div style="flex:1;height:1px;background:rgba(255,255,255,0.07);margin-left:4px;"></div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+                        <div>
+                            <label for="new-booking-package" style="display:block;font-size:11px;font-weight:600;color:rgba(255,255,255,0.55);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;">Package Name *</label>
+                            <input type="text" id="new-booking-package" class="admin-input" required placeholder="e.g. Adi Kailash Yatra" style="width:100%;box-sizing:border-box;">
+                        </div>
+                        <div>
+                            <label for="new-booking-destination" style="display:block;font-size:11px;font-weight:600;color:rgba(255,255,255,0.55);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;">Destination</label>
+                            <input type="text" id="new-booking-destination" class="admin-input" placeholder="e.g. Adi Kailash / Om Parvat" style="width:100%;box-sizing:border-box;">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="new-booking-pickup" style="display:block;font-size:11px;font-weight:600;color:rgba(255,255,255,0.55);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;"><i class="fa-solid fa-location-dot" style="color:var(--color-gold);margin-right:4px;"></i>Pickup Point</label>
+                        <select id="new-booking-pickup" class="admin-input" style="width:100%;background:#1f2937;border:1.5px solid rgba(212,175,55,0.4);border-radius:8px;padding:9px 12px;color:white;box-sizing:border-box;">
+                            <option value="">— Select Pickup Point —</option>
+                            <option value="Delhi to Delhi">🚉 Delhi to Delhi</option>
+                            <option value="Kathgodam to Kathgodam">🚉 Kathgodam to Kathgodam</option>
+                            <option value="Dehradun to Dehradun">🚉 Dehradun to Dehradun</option>
+                            <option value="Dharchula to Dharchula">🏔️ Dharchula to Dharchula</option>
+                            <option value="Pithoragarh to Pithoragarh">🏔️ Pithoragarh to Pithoragarh</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Section 2: Client Info -->
+                <div style="margin-bottom:18px;">
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+                        <i class="fa-solid fa-user" style="color:var(--color-gold);font-size:12px;"></i>
+                        <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.4);">Client Info</span>
+                        <div style="flex:1;height:1px;background:rgba(255,255,255,0.07);margin-left:4px;"></div>
+                    </div>
+                    <div style="margin-bottom:10px;">
+                        <label for="new-booking-name" style="display:block;font-size:11px;font-weight:600;color:rgba(255,255,255,0.55);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;">Client Full Name *</label>
+                        <input type="text" id="new-booking-name" class="admin-input" required placeholder="e.g. Ramesh Sharma" style="width:100%;box-sizing:border-box;">
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                        <div>
+                            <label for="new-booking-phone" style="display:block;font-size:11px;font-weight:600;color:rgba(255,255,255,0.55);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;"><i class="fa-solid fa-phone" style="color:#22c55e;margin-right:4px;"></i>Phone *</label>
+                            <input type="tel" id="new-booking-phone" class="admin-input" required placeholder="Mobile Number" style="width:100%;box-sizing:border-box;">
+                        </div>
+                        <div>
+                            <label for="new-booking-email" style="display:block;font-size:11px;font-weight:600;color:rgba(255,255,255,0.55);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;"><i class="fa-solid fa-envelope" style="color:#60a5fa;margin-right:4px;"></i>Email</label>
+                            <input type="email" id="new-booking-email" class="admin-input" placeholder="email@example.com" style="width:100%;box-sizing:border-box;">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 3: Travel Details -->
+                <div style="margin-bottom:18px;">
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+                        <i class="fa-solid fa-calendar-days" style="color:var(--color-gold);font-size:12px;"></i>
+                        <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.4);">Travel Details</span>
+                        <div style="flex:1;height:1px;background:rgba(255,255,255,0.07);margin-left:4px;"></div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+                        <div>
+                            <label for="new-booking-date" style="display:block;font-size:11px;font-weight:600;color:rgba(255,255,255,0.55);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;">Travel Date</label>
+                            <input type="date" id="new-booking-date" class="admin-input" style="width:100%;box-sizing:border-box;color-scheme:dark;">
+                        </div>
+                        <div>
+                            <label for="new-booking-travelers" style="display:block;font-size:11px;font-weight:600;color:rgba(255,255,255,0.55);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;">Travelers *</label>
+                            <input type="number" id="new-booking-travelers" class="admin-input" required min="1" value="1" style="width:100%;box-sizing:border-box;">
+                        </div>
+                        <div>
+                            <label for="new-booking-budget" style="display:block;font-size:11px;font-weight:600;color:rgba(255,255,255,0.55);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;">Budget (₹)</label>
+                            <input type="number" id="new-booking-budget" class="admin-input" placeholder="e.g. 25000" min="0" style="width:100%;box-sizing:border-box;">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 4: Assignment -->
+                <div style="margin-bottom:18px;">
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+                        <i class="fa-solid fa-user-tie" style="color:var(--color-gold);font-size:12px;"></i>
+                        <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.4);">Assignment</span>
+                        <div style="flex:1;height:1px;background:rgba(255,255,255,0.07);margin-left:4px;"></div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+                        <div>
+                            <label for="new-booking-assignee" style="display:block;font-size:11px;font-weight:600;color:rgba(255,255,255,0.55);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;">Assigned To</label>
+                            <select id="new-booking-assignee" class="admin-input" style="width:100%;background:#1f2937;border:1.5px solid rgba(212,175,55,0.4);border-radius:8px;padding:9px 12px;color:white;box-sizing:border-box;">
+                                <option value="">Unassigned</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="new-booking-status" style="display:block;font-size:11px;font-weight:600;color:rgba(255,255,255,0.55);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;">Status</label>
+                            <select id="new-booking-status" class="admin-input" style="width:100%;background:#1f2937;border:1.5px solid rgba(212,175,55,0.4);border-radius:8px;padding:9px 12px;color:white;box-sizing:border-box;">
+                                <option value="pending">🟡 Pending</option>
+                                <option value="confirmed">🟢 Confirmed</option>
+                                <option value="cancelled">🔴 Cancelled</option>
+                                <option value="completed">✅ Completed</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="new-booking-message" style="display:block;font-size:11px;font-weight:600;color:rgba(255,255,255,0.55);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;"><i class="fa-solid fa-note-sticky" style="color:rgba(255,255,255,0.3);margin-right:4px;"></i>Notes / Special Requests</label>
+                        <textarea id="new-booking-message" class="admin-input" rows="3" placeholder="Any special requests, medical notes, or transfer details..." style="width:100%;box-sizing:border-box;resize:vertical;"></textarea>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div style="display:flex;justify-content:flex-end;gap:10px;padding-top:4px;border-top:1px solid rgba(255,255,255,0.07);">
+                    <button type="button" onclick="closeAddBookingModal()" style="padding:10px 20px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.7);border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;letter-spacing:.3px;transition:all .2s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">CANCEL</button>
+                    <button type="submit" style="padding:10px 24px;background:linear-gradient(135deg,#d4af37,#f5c842);border:none;color:#0f172a;border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;letter-spacing:.5px;box-shadow:0 4px 14px rgba(212,175,55,0.35);transition:all .2s;" onmouseover="this.style.boxShadow='0 6px 20px rgba(212,175,55,0.5)'" onmouseout="this.style.boxShadow='0 4px 14px rgba(212,175,55,0.35)'"><i class="fa-solid fa-floppy-disk" style="margin-right:6px;"></i>SAVE BOOKING</button>
+                </div>
+            </form>
         </div>
     </div>
-
-    <!-- Add Booking Modal -->
-    <div class="modal-overlay" id="add-booking-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 10000; justify-content: center; align-items: center; overflow-y: auto; padding: 16px; box-sizing: border-box;">
-        <div class="modal-box booking-modal-box" style="background: #111827; border: 2px solid var(--color-gold); max-width: 500px; width: 100%; padding: 24px; border-radius: var(--border-radius-md); position: relative; margin: auto; box-sizing: border-box; box-shadow: 0 20px 40px rgba(0,0,0,0.6);">
-            <button type="button" class="modal-close" onclick="closeAddBookingModal()" style="position: absolute; top: 12px; right: 16px; font-size: 24px; background: none; border: none; color: var(--color-text-secondary); cursor: pointer;">&times;</button>
-            <h3 id="booking-modal-title" style="font-family: var(--font-serif); color: white; margin-bottom: 16px; font-size: 20px; display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-calendar-plus" style="color: var(--color-gold)"></i> Add Single Booking Inquiry</h3>
-            <form id="add-booking-form" onsubmit="submitAddBooking(event)">
-                <input type="hidden" id="edit-booking-id">
-                <div class="booking-modal-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
-                    <div class="admin-form-group">
-                        <label for="new-booking-package">Package Name *</label>
-                        <input type="text" id="new-booking-package" class="admin-input" required placeholder="e.g. Adi Kailash & Om Parvat Yatra">
-                    </div>
-                    <div class="admin-form-group">
-                        <label for="new-booking-destination">Travel Destination</label>
-                        <input type="text" id="new-booking-destination" class="admin-input" placeholder="e.g. Adi Kailash / Om Parvat">
-                    </div>
-                </div>
-                <div class="admin-form-group" style="margin-bottom: 12px;">
-                    <label for="new-booking-pickup">Pickup Point</label>
-                    <select id="new-booking-pickup" class="admin-input" style="width: 100%; background: #1f2937; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
-                        <option value="">— Select Pickup Point —</option>
-                        <option value="Delhi to Delhi">Delhi to Delhi</option>
-                        <option value="Kathgodam to Kathgodam">Kathgodam to Kathgodam</option>
-                        <option value="Dehradun to Dehradun">Dehradun to Dehradun</option>
-                        <option value="Dharchula to Dharchula">Dharchula to Dharchula</option>
-                        <option value="Pithoragarh to Pithoragarh">Pithoragarh to Pithoragarh</option>
-                    </select>
-                </div>
-                <div class="admin-form-group" style="margin-bottom: 12px;">
-                    <label for="new-booking-name">Client Name *</label>
-                    <input type="text" id="new-booking-name" class="admin-input" required placeholder="Client's Full Name">
-                </div>
-                <div class="booking-modal-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
-                    <div class="admin-form-group">
-                        <label for="new-booking-phone">Phone Number *</label>
-                        <input type="tel" id="new-booking-phone" class="admin-input" required placeholder="Mobile Number">
-                    </div>
-                    <div class="admin-form-group">
-                        <label for="new-booking-email">Email Address</label>
-                        <input type="email" id="new-booking-email" class="admin-input" placeholder="email@example.com">
-                    </div>
-                </div>
-                <div class="booking-modal-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
-                    <div class="admin-form-group">
-                        <label for="new-booking-date">Travel Date</label>
-                        <input type="date" id="new-booking-date" class="admin-input" style="color-scheme: dark;">
-                    </div>
-                    <div class="admin-form-group">
-                        <label for="new-booking-travelers">Travelers *</label>
-                        <input type="number" id="new-booking-travelers" class="admin-input" required min="1" value="1">
-                    </div>
-                </div>
-                <div class="admin-form-group" style="margin-bottom: 12px;">
-                    <label for="new-booking-assignee">Booked By (Staff / User)</label>
-                    <select id="new-booking-assignee" class="admin-input" style="width: 100%; background: #1f2937; border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
-                        <option value="">Unassigned</option>
-                    </select>
-                </div>
-                <div class="admin-form-group" style="margin-bottom: 16px;">
-                    <label for="new-booking-message">Special Notes / Message</label>
-                    <textarea id="new-booking-message" class="admin-input" rows="3" placeholder="Any special requests or inquiries..."></textarea>
-                </div>
-                <div style="display: flex; justify-content: flex-end; gap: 12px;">
-                    <button type="button" class="btn btn-secondary" onclick="closeAddBookingModal()" style="border: 1px solid var(--color-gold); background: transparent; padding: 10px 18px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: white;">Cancel</button>
-                    <button type="submit" class="btn btn-primary" style="background-color: var(--color-gold); border: none; padding: 10px 20px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 700;">Save Booking</button>
+radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 700;">Save Booking</button>
                 </div>
             </form>
         </div>
@@ -2385,12 +2457,33 @@
 
     <!-- Admin Portal Script -->
     <script>
+        // Safe logging in production: sanitize internal error stacks to protect database structure and internal paths
+        (function() {
+            const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+            if (!isLocal) {
+                const _rawError = console.error;
+                console.error = function(...args) {
+                    const sanitized = args.map(arg => {
+                        if (arg instanceof Error) return arg.message || 'Error occurred';
+                        if (typeof arg === 'object' && arg !== null) {
+                            return arg.message || arg.error || 'System notice';
+                        }
+                        if (typeof arg === 'string') {
+                            return arg.split('\n')[0];
+                        }
+                        return arg;
+                    });
+                    _rawError.call(console, '[Portal Notice]:', ...sanitized);
+                };
+            }
+        })();
+
         // Global error reporting for debugging
         window.addEventListener('error', function(e) {
-            console.error('Admin Portal Error:', e.message, 'In:', e.filename, 'Line:', e.lineno);
+            console.error('Admin Portal Error:', e.message);
         });
         window.addEventListener('unhandledrejection', function(e) {
-            console.error('Admin Unhandled Rejection:', e.reason);
+            console.error('Admin Unhandled Rejection:', e.reason ? (e.reason.message || e.reason) : 'Unknown rejection');
         });
 
         async function fetchWithAuth(url, options = {}) {
@@ -2772,19 +2865,47 @@
         document.addEventListener('DOMContentLoaded', () => {
             const token = localStorage.getItem('admin_token');
             const isVerified = localStorage.getItem('admin_verified') === 'true';
+            const loginTime = localStorage.getItem('admin_login_time');
+            const SESSION_TTL_MS = 24 * 60 * 60 * 1000; // 24-hour expiry
+
+            // Check session TTL expiry
+            if (isVerified && loginTime && (Date.now() - parseInt(loginTime, 10) > SESSION_TTL_MS)) {
+                console.warn('Admin session expired (TTL exceeded 24 hours).');
+                logoutAdmin();
+                return;
+            }
 
             // Purge legacy non-JWT/static tokens so a fresh valid JWT is always acquired
             if (isVerified && (!token || token.startsWith('static-token-') || token.split('.').length !== 3)) {
                 console.warn('Clearing legacy or non-JWT admin session to ensure clean re-authentication.');
                 localStorage.removeItem('admin_verified');
                 localStorage.removeItem('admin_token');
+                localStorage.removeItem('admin_login_time');
                 showAdminToast('Please enter your passcode to log in securely.', 'info');
             } else if (isVerified && token) {
+                if (!loginTime) {
+                    localStorage.setItem('admin_login_time', Date.now().toString());
+                }
                 currentUserRole = localStorage.getItem('admin_role') || 'admin';
                 currentUsername = localStorage.getItem('admin_username') || 'admin';
                 currentUserUuidMapping = localStorage.getItem('admin_uuid_mapping') || '';
                 showDashboard();
             }
+            // Anti-tamper enforcement: prevent client-side bypassing of passcode gate via DevTools
+            const gateContainer = document.getElementById('gate-container');
+            const dashContainer = document.getElementById('dashboard-container');
+            if (window.MutationObserver && gateContainer && dashContainer) {
+                const tamperObserver = new MutationObserver(() => {
+                    const currentTok = localStorage.getItem('admin_token');
+                    const hasValidToken = currentTok && currentTok.split('.').length === 3;
+                    if (!hasValidToken && dashContainer.style.display !== 'none') {
+                        dashContainer.style.display = 'none';
+                        gateContainer.style.display = 'flex';
+                    }
+                });
+                tamperObserver.observe(dashContainer, { attributes: true, attributeFilter: ['style', 'class'] });
+            }
+
             if (typeof initBlogDraftAutoSave === 'function') {
                 initBlogDraftAutoSave();
             }
@@ -2830,16 +2951,7 @@
             'mansi': '00000000-0000-0000-0000-000000000005'
         };
 
-        const STATIC_CREDENTIALS = {
-            'admin': { passcode: 'VandanaDheerendra@2023', role: 'admin', uuid_mapping: 'c380f706-58c2-4f0d-a74e-cd3691b62dd5' },
-            'geetika': { passcode: 'Geetika@Rudra26', role: 'staff', uuid_mapping: '00000000-0000-0000-0000-000000000002' },
-            'mansi': { passcode: 'Mansi@Rudra26', role: 'staff', uuid_mapping: '00000000-0000-0000-0000-000000000005' },
-            'sneha': { passcode: 'Sneha@Rudra26', role: 'staff', uuid_mapping: '00000000-0000-0000-0000-000000000003' },
-            'seema': { passcode: 'Seema@Rudra26', role: 'staff', uuid_mapping: '00000000-0000-0000-0000-000000000001' },
-            'simran': { passcode: 'Simran@Rudra26', role: 'staff', uuid_mapping: '00000000-0000-0000-0000-000000000004' }
-        };
-
-        // Passcode Gate Action querying staff_credentials via Backend API with static fallback
+        // Passcode Gate Action querying staff_credentials via secure Backend API
         async function verifyPasscode(event) {
             event.preventDefault();
             const usernameInput = document.getElementById('admin-username');
@@ -2869,8 +2981,9 @@
             let userData = null;
             let tokenStr = '';
             let backendReachable = false;
+            let errorMessage = 'Invalid Username or Passcode.';
 
-            // 1. ALWAYS try Backend API first to get a secure signed JWT
+            // ALWAYS authenticate against Backend API to get a secure signed JWT
             try {
                 const response = await fetch('/api/admin/login', {
                     method: 'POST',
@@ -2892,33 +3005,15 @@
                     }
                 } else {
                     const errData = await response.json().catch(() => ({}));
-                    console.warn('Backend login rejected:', errData.error || response.status);
+                    if (errData && errData.error) errorMessage = errData.error;
                 }
             } catch (apiErr) {
-                console.warn('Backend API unreachable (falling back to static offline mode):', apiErr.message);
-            }
-
-            // 2. Fallback to static credentials ONLY IF backend server is offline / unreachable
-            if (!loginSuccess && !backendReachable) {
-                const staticUser = STATIC_CREDENTIALS[usernameVal];
-                if (staticUser) {
-                    const rawPass = passcodeInput.value || '';
-                    const trimmedPass = rawPass.trim();
-                    const passMatch = (rawPass === staticUser.passcode) || (trimmedPass === staticUser.passcode);
-                    if (passMatch) {
-                        userData = {
-                            username: usernameVal,
-                            role: staticUser.role,
-                            uuid_mapping: staticUser.uuid_mapping
-                        };
-                        tokenStr = 'static-token-' + Date.now();
-                        loginSuccess = true;
-                    }
-                }
+                console.warn('Backend API unreachable:', apiErr.message);
+                errorMessage = 'Authentication server is unreachable. Please check your connection or contact the administrator.';
             }
 
             if (!loginSuccess) {
-                showAdminToast('Invalid Username or Passcode.', 'error');
+                showAdminToast(errorMessage || 'Invalid Username or Passcode.', 'error');
                 if (gateCard) {
                     gateCard.classList.add('shake-animation');
                     setTimeout(() => gateCard.classList.remove('shake-animation'), 400);
@@ -2942,6 +3037,7 @@
             localStorage.setItem('admin_role', currentUserRole);
             localStorage.setItem('admin_username', currentUsername);
             localStorage.setItem('admin_uuid_mapping', currentUserUuidMapping);
+            localStorage.setItem('admin_login_time', Date.now().toString());
             
             if ('Notification' in window && Notification.permission === 'default') {
                 Notification.requestPermission().catch(() => {});
@@ -3184,12 +3280,26 @@
             }
         };
 
-        function logoutAdmin() {
+        async function logoutAdmin() {
+            const token = localStorage.getItem('admin_token');
+            if (token) {
+                try {
+                    await fetch('/api/admin/logout', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                } catch(e) {}
+            }
             localStorage.removeItem('admin_verified');
             localStorage.removeItem('admin_token');
             localStorage.removeItem('admin_role');
             localStorage.removeItem('admin_username');
             localStorage.removeItem('admin_uuid_mapping');
+            localStorage.removeItem('admin_login_time');
+            try { sessionStorage.clear(); } catch(e) {}
             window.location.reload();
         }
 
@@ -3238,6 +3348,7 @@
                 let tokenStr = '';
                 let userData = null;
                 let loginSuccess = false;
+                let backendReachable = false;
 
                 try {
                     const response = await fetch('/api/admin/login', {
@@ -3246,6 +3357,8 @@
                         body: JSON.stringify({ username, passcode })
                     });
 
+                    backendReachable = true;
+
                     if (response.ok) {
                         const resData = await response.json();
                         if (resData && resData.token) {
@@ -3253,26 +3366,17 @@
                             userData = resData.user;
                             loginSuccess = true;
                         }
+                    } else {
+                        const errData = await response.json().catch(() => ({}));
+                        console.warn('Backend login rejected during reauth:', errData.error || response.status);
                     }
                 } catch(apiErr) {
                     console.warn('Backend login attempt during re-auth failed:', apiErr);
                 }
 
+                // If authentication failed, reject reauth
                 if (!loginSuccess) {
-                    const staticUser = STATIC_CREDENTIALS[username];
-                    if (staticUser && (passcode.trim() === staticUser.passcode || passcode === staticUser.passcode)) {
-                        tokenStr = 'static-token-' + Date.now();
-                        userData = {
-                            username: username,
-                            role: staticUser.role,
-                            uuid_mapping: staticUser.uuid_mapping
-                        };
-                        loginSuccess = true;
-                    }
-                }
-
-                if (!loginSuccess) {
-                    showAdminToast('Incorrect passcode. Please check and try again.', 'error');
+                    showAdminToast('Incorrect passcode or server unreachable. Please try again.', 'error');
                     passEl.value = '';
                     passEl.focus();
                     if (btn) {
@@ -3284,6 +3388,7 @@
 
                 localStorage.setItem('admin_token', tokenStr);
                 localStorage.setItem('admin_verified', 'true');
+                localStorage.setItem('admin_login_time', Date.now().toString());
                 if (userData) {
                     currentUserRole = userData.role || currentUserRole;
                     currentUsername = userData.username || currentUsername;
@@ -3320,7 +3425,7 @@
             const metaDescEl = document.getElementById('blog-meta-desc');
 
             const saveDraft = () => {
-                if (editingBlogId) return;
+                if (editingBlogId || document.getElementById('btn-cancel-blog-edit')) return;
                 const draft = {
                     title: titleEl ? titleEl.value : '',
                     author: authorEl ? authorEl.value : '',
@@ -3344,7 +3449,7 @@
         }
 
         function restoreBlogDraft() {
-            if (editingBlogId) return;
+            if (editingBlogId || document.getElementById('btn-cancel-blog-edit')) return;
             try {
                 const saved = localStorage.getItem('ry_blog_form_draft');
                 if (!saved) return;
@@ -3389,11 +3494,13 @@
                 document.body.classList.remove('user-role-staff');
             }
 
-            // Hide tabs for Staff (Keep Leads, Bookings, Blogs, Gallery, Staff, Attendance, Reminders & History accessible for staff)
+            // Hide tabs for Staff (Keep Leads, Bookings, Blogs, Gallery, Reminders & History accessible for staff)
             const adminOnlyTabIds = [
                 'tab-billing-btn',
                 'tab-requests-btn',
-                'tab-discounts-btn'
+                'tab-discounts-btn',
+                'tab-passwords-btn',
+                'tab-attendance-btn'
             ];
             adminOnlyTabIds.forEach(id => {
                 const el = document.getElementById(id);
@@ -3404,8 +3511,6 @@
             const staffAccessibleTabIds = [
                 'tab-analytics-btn',
                 'tab-gallery-btn',
-                'tab-passwords-btn',
-                'tab-attendance-btn',
                 'tab-lead-history-btn',
                 'tab-reminders-btn'
             ];
@@ -3479,9 +3584,9 @@
                     fetchCustomRequests();
                     fetchDiscountRegistrations();
                     fetchCredentials();
+                    if (window.renderAttendanceHistory) renderAttendanceHistory();
                 }
                 if (window.fetchRemindersData) fetchRemindersData();
-                if (window.renderAttendanceHistory) renderAttendanceHistory();
             }, 300);
 
             setTimeout(() => {
@@ -3492,6 +3597,14 @@
         // Tab Switch logic
         function switchTab(evt, paneId) {
             applyRolePermissions();
+            const role = (localStorage.getItem('admin_role') || currentUserRole || 'admin').toString().toLowerCase().trim();
+            const uname = (localStorage.getItem('admin_username') || currentUsername || 'admin').toString().toLowerCase().trim();
+            const isStaff = (role === 'staff' || (role !== 'admin' && uname !== 'admin'));
+            const adminOnlyPanes = ['pane-billing', 'pane-requests', 'pane-discounts', 'pane-passwords', 'pane-attendance'];
+            if (isStaff && adminOnlyPanes.includes(paneId)) {
+                showAdminToast('Access restricted: Only administrators can view this section.', 'error');
+                paneId = 'pane-leads';
+            }
             if (paneId) {
                 try {
                     sessionStorage.setItem('admin_active_pane', paneId);
@@ -3561,6 +3674,8 @@
             }
             if (paneId === 'pane-attendance') {
                 if (window.renderAttendanceHistory) window.renderAttendanceHistory();
+                if (window.loadStaffAttendanceDefaults) window.loadStaffAttendanceDefaults();
+                else if (window.recalcAttendanceOutputs) window.recalcAttendanceOutputs();
             }
 
             // Update dynamic stats
@@ -3599,13 +3714,45 @@
             }
         };
 
+        // Earned incentive is strictly given ONLY after yatra_status is "Yatra Completed"
         window.computeIncentiveForStaff = function(staffId, staffUname) {
             let totalBilledNet = 0;
             const staffIdLower = (staffId || '').toLowerCase().trim();
             const unameLower = (staffUname || '').toLowerCase().trim();
 
             const staffBookings = (bookingsData || []).filter(b => {
-                if ((b.yatra_status || '') === 'Cancelled') return false;
+                if ((b.yatra_status || '') !== 'Yatra Completed') return false;
+                const assign = (b.assigned_to || b.user_id || '').toLowerCase().trim();
+                return assign === staffIdLower || assign === unameLower || (usersMap[assign] && usersMap[assign].toLowerCase() === unameLower);
+            });
+
+            staffBookings.forEach(b => {
+                const bill = (billingRecords || []).find(br => 
+                    (br.booking_id && (br.booking_id === b.booking_id || br.booking_id === b.id)) ||
+                    (br.booking_uuid && br.booking_uuid === b.id)
+                );
+                if (bill) {
+                    if (bill.payment_status === 'Cancelled') return;
+                    const gross = parseFloat(bill.total_package_amount || 0);
+                    const disc = parseFloat(bill.discount || 0);
+                    totalBilledNet += Math.max(0, gross - disc);
+                } else {
+                    totalBilledNet += parseFloat(b.total_package_amount || b.amount || 0);
+                }
+            });
+
+            return Math.round(totalBilledNet * 0.03);
+        };
+
+        // Pipeline / upcoming incentive for bookings that are still "In Progress"
+        window.computePendingIncentiveForStaff = function(staffId, staffUname) {
+            let totalBilledNet = 0;
+            const staffIdLower = (staffId || '').toLowerCase().trim();
+            const unameLower = (staffUname || '').toLowerCase().trim();
+
+            const staffBookings = (bookingsData || []).filter(b => {
+                const ys = b.yatra_status || 'In Progress';
+                if (ys !== 'In Progress') return false;
                 const assign = (b.assigned_to || b.user_id || '').toLowerCase().trim();
                 return assign === staffIdLower || assign === unameLower || (usersMap[assign] && usersMap[assign].toLowerCase() === unameLower);
             });
@@ -3650,7 +3797,7 @@
                     card.el.style.cursor = filterType ? 'pointer' : 'default';
                     card.el.title = filterType ? `Click to filter by ${label}` : '';
                     if (card.icon) card.icon.innerHTML = iconHtml;
-                    if (card.num) card.num.innerText = num;
+                    if (card.num) card.num.innerHTML = (num !== undefined && num !== null) ? num : '<i class="fa-solid fa-spinner fa-spin" style="font-size: 13px; opacity: 0.6;"></i>';
                     if (card.label) card.label.innerText = label;
 
                     if (filterType) {
@@ -3832,33 +3979,50 @@
 
                 if (currentUserRole === 'staff') {
                     const myIncentive = computeIncentiveForStaff(currentUserUuidMapping, currentUsername);
+                    const myPending = computePendingIncentiveForStaff(currentUserUuidMapping, currentUsername);
                     setCard(0, true, '<i class="fa-solid fa-users" style="color: #3b82f6;"></i>', total, 'My Assigned Leads');
                     setCard(1, true, '<i class="fa-solid fa-phone-volume" style="color: #22c55e;"></i>', answered, 'My Connected Calls');
                     setCard(2, true, '<i class="fa-solid fa-hourglass-half" style="color: #eab308;"></i>', pending, 'My Pending Outreach');
                     setCard(3, true, '<i class="fa-solid fa-trophy" style="color: #ec4899;"></i>', converted, 'My Converted Bookings');
                     setCard(4, true, '<i class="fa-solid fa-chart-line" style="color: var(--color-gold);"></i>', contactRate, 'My Contact Rate');
-                    setCard(5, true, '<i class="fa-solid fa-hand-holding-dollar" style="color: #22c55e;"></i>', '₹' + myIncentive.toLocaleString('en-IN'), 'My Incentive Earned (3%)');
+                    const incLabel = myPending > 0 ? `My Earned Incentive (3%)<br><span style="font-size:10.5px;color:#f59e0b;font-weight:600;">+₹${myPending.toLocaleString('en-IN')} in progress</span>` : 'My Earned Incentive (3%)';
+                    setCard(5, true, '<i class="fa-solid fa-hand-holding-dollar" style="color: #22c55e;"></i>', '₹' + myIncentive.toLocaleString('en-IN'), incLabel);
                 } else {
                     let totalTeamIncentive = 0;
+                    let totalPendingTeamIncentive = 0;
                     (bookingsData || []).forEach(b => {
+                        const ys = b.yatra_status || 'In Progress';
+                        if (ys === 'Cancelled') return;
                         const bill = (billingRecords || []).find(br => 
                             (br.booking_id && (br.booking_id === b.booking_id || br.booking_id === b.id)) ||
                             (br.booking_uuid && br.booking_uuid === b.id)
                         );
+                        let net = 0;
                         if (bill) {
+                            if (bill.payment_status === 'Cancelled') return;
                             const gross = parseFloat(bill.total_package_amount || 0);
                             const disc = parseFloat(bill.discount || 0);
-                            totalTeamIncentive += Math.max(0, gross - disc);
+                            net = Math.max(0, gross - disc);
+                        } else {
+                            net = parseFloat(b.total_package_amount || b.amount || 0);
+                        }
+
+                        if (ys === 'Yatra Completed') {
+                            totalTeamIncentive += net;
+                        } else if (ys === 'In Progress') {
+                            totalPendingTeamIncentive += net;
                         }
                     });
                     totalTeamIncentive = Math.round(totalTeamIncentive * 0.03);
+                    totalPendingTeamIncentive = Math.round(totalPendingTeamIncentive * 0.03);
 
                     setCard(0, true, '<i class="fa-solid fa-users" style="color: #3b82f6;"></i>', total, 'Total Leads');
                     setCard(1, true, '<i class="fa-solid fa-phone-volume" style="color: #22c55e;"></i>', answered, 'Connected Calls');
                     setCard(2, true, '<i class="fa-solid fa-hourglass-half" style="color: #eab308;"></i>', pending, 'Pending Outreach');
                     setCard(3, true, '<i class="fa-solid fa-trophy" style="color: #ec4899;"></i>', converted, 'Converted Bookings');
                     setCard(4, true, '<i class="fa-solid fa-chart-line" style="color: var(--color-gold);"></i>', contactRate, 'Overall Contact Rate');
-                    setCard(5, true, '<i class="fa-solid fa-hand-holding-dollar" style="color: #22c55e;"></i>', '₹' + totalTeamIncentive.toLocaleString('en-IN'), 'Total Staff Incentive (3%)');
+                    const teamLabel = totalPendingTeamIncentive > 0 ? `Staff Incentive (Completed)<br><span style="font-size:10.5px;color:#f59e0b;font-weight:600;">+₹${totalPendingTeamIncentive.toLocaleString('en-IN')} in progress</span>` : 'Staff Incentive (Completed)';
+                    setCard(5, true, '<i class="fa-solid fa-hand-holding-dollar" style="color: #22c55e;"></i>', '₹' + totalTeamIncentive.toLocaleString('en-IN'), teamLabel);
                 }
             }
             else if (paneId === 'pane-lead-history') {
@@ -3918,7 +4082,13 @@
         window.onTopStatusFilterChange = function(val) {
             const statusSelect = document.getElementById('filter-lead-status');
             if (statusSelect) statusSelect.value = val;
-            window.applyLeadsFilters();
+            window.applyLeadsFilters(false, val);
+        };
+
+        window.onTableStatusFilterChange = function(val) {
+            const topSelect = document.getElementById('top-filter-lead-status');
+            if (topSelect) topSelect.value = val;
+            window.applyLeadsFilters(false, val);
         };
 
         window.onStatCardClick = function(paneId, filterType, cardIndex) {
@@ -3965,13 +4135,31 @@
             }
         };
 
-        // Preview images instantly
+        // Preview images instantly with validation
         function previewImage(input, previewId) {
-            const file = input.files[0];
+            const file = input && input.files ? input.files[0] : null;
             const previewContainer = document.getElementById(previewId + '-container');
             const previewImg = document.getElementById(previewId);
 
             if (file) {
+                const maxBytes = 5 * 1024 * 1024;
+                if (file.size > maxBytes) {
+                    showAdminToast(`File "${file.name}" is too large (${(file.size / (1024 * 1024)).toFixed(1)}MB). Max allowed size is 5MB.`, 'error');
+                    input.value = '';
+                    if (previewContainer) previewContainer.style.display = 'none';
+                    if (previewImg) previewImg.src = '';
+                    return;
+                }
+
+                const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif'];
+                if (file.type && !allowedTypes.includes(file.type)) {
+                    showAdminToast('Invalid file format. Please upload a JPG, PNG, WEBP, GIF, or AVIF image.', 'error');
+                    input.value = '';
+                    if (previewContainer) previewContainer.style.display = 'none';
+                    if (previewImg) previewImg.src = '';
+                    return;
+                }
+
                 const reader = new FileReader();
                 reader.onload = function (e) {
                     previewImg.src = e.target.result;
@@ -4011,6 +4199,7 @@
 
         // 1. Fetch Bookings
         async function fetchBookings() {
+            if (!supabaseAdmin) return;
             try {
                 let query = supabaseAdmin
                     .from('bookings')
@@ -4384,6 +4573,7 @@
 
         // 2. Fetch Custom Itinerary Requests
         async function fetchCustomRequests() {
+            if (!supabaseAdmin) return;
             try {
                 const { data, error } = await supabaseAdmin
                     .from('custom_requests')
@@ -4448,6 +4638,7 @@
 
         // 3. Fetch Discount Registrations
         async function fetchDiscountRegistrations() {
+            if (!supabaseAdmin) return;
             try {
                 const { data, error } = await supabaseAdmin
                     .from('discount_registrations')
@@ -4533,6 +4724,7 @@
 
         // 4. Fetch Blogs
         async function fetchBlogs() {
+            if (!supabaseAdmin) return;
             try {
                 const { data, error } = await supabaseAdmin
                     .from('blogs')
@@ -4769,6 +4961,11 @@
                 return;
             }
 
+            if (file && file.size > 5 * 1024 * 1024) {
+                showAdminToast(`Selected image is too large (${(file.size / (1024 * 1024)).toFixed(1)}MB). Max allowed size is 5MB.`, 'error');
+                return;
+            }
+
             btn.disabled = true;
 
             try {
@@ -4912,6 +5109,11 @@
 
             if (!file) {
                 showAdminToast('Please select an image file first.', 'error');
+                return;
+            }
+
+            if (file.size > 5 * 1024 * 1024) {
+                showAdminToast(`Selected image is too large (${(file.size / (1024 * 1024)).toFixed(1)}MB). Max allowed size is 5MB.`, 'error');
                 return;
             }
 
@@ -5138,6 +5340,10 @@
 
         // --- 2. BOOKINGS CSV EXPORT & IMPORT ---
         document.getElementById('export-bookings-btn').addEventListener('click', async () => {
+            if (currentUserRole !== 'admin') {
+                showAdminToast('Unauthorized: Only administrators can export bookings.', 'error');
+                return;
+            }
             try {
                 const { data, error } = await supabaseAdmin
                     .from('bookings')
@@ -5182,7 +5388,27 @@
             }
         });
 
+        window.downloadBookingsTemplate = function() {
+            if (currentUserRole !== 'admin') {
+                showAdminToast('Unauthorized: Only administrators can download bookings template.', 'error');
+                return;
+            }
+            const csv = 'Package Name,Destination,Pickup Point,Client Name,Phone,Email,Travel Date,Travelers,Assignee,Message\nAdi Kailash Yatra,Adi Kailash,Kathgodam to Kathgodam,Jane Doe,9876543210,jane@example.com,2026-06-15,2,Seema,Standard package\n';
+            const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.setAttribute('href', url);
+            link.setAttribute('download', 'bookings_import_template.csv');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        };
+
         document.getElementById('import-bookings-btn').addEventListener('click', () => {
+            if (currentUserRole !== 'admin') {
+                showAdminToast('Unauthorized: Only administrators can import bookings.', 'error');
+                return;
+            }
             document.getElementById('import-bookings-file').click();
         });
 
@@ -5329,7 +5555,8 @@
                 'all': document.getElementById('analytics-filter-card-all'),
                 'connected': document.getElementById('analytics-filter-card-connected'),
                 'pending': document.getElementById('analytics-filter-card-pending'),
-                'converted': document.getElementById('analytics-filter-card-converted')
+                'converted': document.getElementById('analytics-filter-card-converted'),
+                'completed': document.getElementById('analytics-filter-card-completed')
             };
 
             Object.entries(cards).forEach(([key, cardEl]) => {
@@ -5496,7 +5723,13 @@
                 const tbody = document.getElementById('analytics-staff-table-body');
 
                 if (currentUserRole === 'staff') {
+                    const monthlySection = document.getElementById('analytics-monthly-incentive-section');
+                    if (monthlySection) monthlySection.style.display = 'none';
+                    const leaderboardSection = document.getElementById('analytics-leaderboard-section');
+                    if (leaderboardSection) leaderboardSection.style.display = 'none';
+
                     const myIncentive = computeIncentiveForStaff(currentUserUuidMapping, currentUsername);
+                    const myPending = computePendingIncentiveForStaff(currentUserUuidMapping, currentUsername);
 
                     if (thead) {
                         thead.innerHTML = `
@@ -5537,7 +5770,13 @@
                         categories.forEach(cat => {
                             const cnt = statusCounts[cat.name] || 0;
                             const pct = totalLeadsCount > 0 ? ((cnt / totalLeadsCount) * 100).toFixed(1) : 0;
-                            const incValHtml = cat.name === 'Booking Confirmed' && myIncentive > 0 ? `<strong style="color: #22c55e; font-size: 14px; font-weight: 800;">₹${myIncentive.toLocaleString('en-IN')}</strong>` : '<span style="color: #94a3b8;">—</span>';
+                            let incValHtml = '<span style="color: #94a3b8;">—</span>';
+                            if (cat.name === 'Booking Confirmed' && (myIncentive > 0 || myPending > 0)) {
+                                incValHtml = `<div style="display:flex;flex-direction:column;gap:2px;">
+                                    <strong style="color: #22c55e; font-size: 14px; font-weight: 800;">₹${myIncentive.toLocaleString('en-IN')}</strong>
+                                    ${myPending > 0 ? `<span style="color:#d97706;font-size:11px;font-weight:700;" title="Will unlock once Yatra Status is set to Yatra Completed">+₹${myPending.toLocaleString('en-IN')} in progress</span>` : ''}
+                                </div>`;
+                            }
 
                             tableHtml += `
                                 <tr>
@@ -5663,6 +5902,7 @@
                             const contactRate = st.total > 0 ? ((st.connected / st.total) * 100).toFixed(1) : 0;
                             const conversionRate = st.total > 0 ? ((st.converted / st.total) * 100).toFixed(1) : 0;
                             const incVal = computeIncentiveForStaff(st.id, st.name);
+                            const pendingInc = computePendingIncentiveForStaff(st.id, st.name);
 
                             let badgeHtml = '';
                             if (st.converted > 0) {
@@ -5707,7 +5947,12 @@
                                                 <i class="fa-solid fa-flag-checkered" style="font-size:10px;"></i> ${st.yatraCompleted}
                                             </span>` : `<span style="color:#94a3b8;font-weight:600;font-size:13px;">0</span>`}
                                     </td>
-                                    <td data-label="Earned Incentive (3%)"><strong style="color: #22c55e; font-size: 14px; font-weight: 800;">₹${incVal.toLocaleString('en-IN')}</strong></td>
+                                    <td data-label="Earned Incentive (3%)">
+                                        <div style="display:flex;flex-direction:column;gap:2px;">
+                                            <strong style="color: #22c55e; font-size: 14px; font-weight: 800;">₹${incVal.toLocaleString('en-IN')}</strong>
+                                            ${pendingInc > 0 ? `<span style="color:#d97706;font-size:11px;font-weight:700;" title="Will unlock when Yatra Status is set to Yatra Completed">+₹${pendingInc.toLocaleString('en-IN')} in progress</span>` : ''}
+                                        </div>
+                                    </td>
                                     <td data-label="Contact Rate">
                                         <div style="display: flex; align-items: center; gap: 8px;">
                                             <div style="flex-grow: 1; height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden; min-width: 60px;">
@@ -5772,6 +6017,13 @@
                             return fs === 'booking confirmed' || st === 'won';
                         });
                         metricTitleLabel = 'Converted Booking Leads';
+                    } else if (currentAnalyticsMetricFilter === 'completed') {
+                        drillDownLeads = filteredLeads.filter(l => {
+                            const st = (l.status || '').trim().toLowerCase();
+                            const fs = (l.final_status || '').trim().toLowerCase();
+                            return fs === 'booking confirmed' || fs === 'yatra completed' || st === 'won';
+                        });
+                        metricTitleLabel = 'Yatras Completed & Booked Leads';
                     }
 
                     if (drillDownTitle) {
@@ -5843,32 +6095,47 @@
                 if (insightsBox) {
                     if (currentUserRole === 'staff') {
                         const myIncentive = computeIncentiveForStaff(currentUserUuidMapping, currentUsername);
+                        const myPending = computePendingIncentiveForStaff(currentUserUuidMapping, currentUsername);
                         insightsBox.innerHTML = `
                             <div style="background: #ffffff; border: 1.5px solid rgba(212, 175, 55, 0.35); box-shadow: 0 4px 15px rgba(0,0,0,0.04); border-radius: 12px; padding: 20px;">
                                 <h4 style="margin: 0 0 12px 0; color: #b45309; font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px;">
                                     <i class="fa-solid fa-lightbulb"></i> My Performance Checklist & Incentive Summary
                                 </h4>
                                 <ul style="margin: 0; padding-left: 20px; color: #334155; font-size: 14px; line-height: 1.7;">
-                                    <li><strong>🎉 Earned Incentive (3%):</strong> You have earned <strong style="color: #22c55e;">₹${myIncentive.toLocaleString('en-IN')}</strong> on your converted booking payments!</li>
+                                    <li><strong>🎉 Earned Incentive (3%):</strong> You have earned <strong style="color: #22c55e;">₹${myIncentive.toLocaleString('en-IN')}</strong> on your completed yatras! ${myPending > 0 ? `<span style="color:#b45309;font-weight:600;">(Plus <strong style="color:#d97706;">₹${myPending.toLocaleString('en-IN')}</strong> in progress which unlocks upon Yatra Completion).</span>` : ''}</li>
                                     <li><strong>Uncalled Queue (${pendingCount} Leads):</strong> Priority outreach is recommended for uncontacted leads in your queue.</li>
-                                    <li><strong>Deal Closing:</strong> When a client agrees to travel, open their lead card and set <code>Final Status = Booking Confirmed</code> to trigger your 3% incentive.</li>
+                                    <li><strong>Yatra Completion:</strong> 3% incentive is earned and unlocked once the booking status is changed to <code>Yatra Completed</code>.</li>
                                 </ul>
                             </div>
                         `;
                     } else {
                         let totalTeamIncentive = 0;
+                        let totalPendingTeamIncentive = 0;
                         (bookingsData || []).forEach(b => {
+                            const ys = b.yatra_status || 'In Progress';
+                            if (ys === 'Cancelled') return;
                             const bill = (billingRecords || []).find(br => 
                                 (br.booking_id && (br.booking_id === b.booking_id || br.booking_id === b.id)) ||
                                 (br.booking_uuid && br.booking_uuid === b.id)
                             );
+                            let net = 0;
                             if (bill) {
+                                if (bill.payment_status === 'Cancelled') return;
                                 const gross = parseFloat(bill.total_package_amount || 0);
                                 const disc = parseFloat(bill.discount || 0);
-                                totalTeamIncentive += Math.max(0, gross - disc);
+                                net = Math.max(0, gross - disc);
+                            } else {
+                                net = parseFloat(b.total_package_amount || b.amount || 0);
+                            }
+
+                            if (ys === 'Yatra Completed') {
+                                totalTeamIncentive += net;
+                            } else if (ys === 'In Progress') {
+                                totalPendingTeamIncentive += net;
                             }
                         });
                         totalTeamIncentive = Math.round(totalTeamIncentive * 0.03);
+                        totalPendingTeamIncentive = Math.round(totalPendingTeamIncentive * 0.03);
 
                         insightsBox.innerHTML = `
                             <div style="background: #ffffff; border: 1.5px solid rgba(212, 175, 55, 0.35); box-shadow: 0 4px 15px rgba(0,0,0,0.04); border-radius: 12px; padding: 20px;">
@@ -5876,7 +6143,7 @@
                                     <i class="fa-solid fa-lightbulb"></i> Strategic Insights & Incentive Summary
                                 </h4>
                                 <ul style="margin: 0; padding-left: 20px; color: #334155; font-size: 14px; line-height: 1.7;">
-                                    <li><strong>💰 Total Staff Incentive Pool:</strong> Total 3% incentive earned across staff is <strong style="color: #22c55e;">₹${totalTeamIncentive.toLocaleString('en-IN')}</strong>.</li>
+                                    <li><strong>💰 Total Staff Incentive Pool:</strong> Total 3% incentive earned on completed yatras is <strong style="color: #22c55e;">₹${totalTeamIncentive.toLocaleString('en-IN')}</strong> ${totalPendingTeamIncentive > 0 ? `<span style="color:#b45309;font-weight:600;">(+<strong style="color:#d97706;">₹${totalPendingTeamIncentive.toLocaleString('en-IN')}</strong> in progress)</span>` : ''}.</li>
                                     <li><strong>Uncalled Backlog (${pendingCount} Leads):</strong> High priority outreach is recommended for uncontacted leads.</li>
                                     <li><strong>\ud83c\udfc1 Yatras Completed (All Time):</strong> <strong style="color: #22c55e;">${completedYatrasCount}</strong> yatras have been successfully completed.</li>
                                     <li><strong>Follow-Up Directives:</strong> Instruct staff to update <code>Final Status = Booking Confirmed</code> when deals close verbally.</li>
@@ -5975,8 +6242,13 @@
                             (br.booking_id && (br.booking_id === b.booking_id || br.booking_id === b.id)) ||
                             (br.booking_uuid && br.booking_uuid === b.id)
                         );
-                        if (bill && bill.payment_status === 'Fully Paid') {
-                            const net = Math.max(0, parseFloat(bill.total_package_amount||0) - parseFloat(bill.discount||0));
+                        if (bill) {
+                            if (bill.payment_status !== 'Cancelled') {
+                                const net = Math.max(0, parseFloat(bill.total_package_amount||0) - parseFloat(bill.discount||0));
+                                buckets[key].incentive += Math.round(net * 0.03);
+                            }
+                        } else {
+                            const net = parseFloat(b.total_package_amount || b.amount || 0);
                             buckets[key].incentive += Math.round(net * 0.03);
                         }
                     });
@@ -6102,7 +6374,6 @@
                             </td>
                             <td data-label="Incentive Earned">
                                 <strong style="color:#22c55e;font-size:14px;font-weight:800;">₹${b.incentive.toLocaleString('en-IN')}</strong>
-                                ${b.incentive === 0 ? '<br><small style="color:#64748b;font-size:10px;">Bill not Fully Paid</small>' : ''}
                             </td>
                             <td data-label="Bookings Handled"><span style="color:#d4af37;font-weight:700;">${b.total}</span></td>
                         </tr>`;
@@ -6327,8 +6598,13 @@
                             (br.booking_id && br.booking_id === b.booking_id) ||
                             (br.booking_uuid && br.booking_uuid === b.id)
                         );
-                        if (bill && bill.payment_status === 'Fully Paid') {
-                            const net = Math.max(0, parseFloat(bill.total_package_amount || 0) - parseFloat(bill.discount || 0));
+                        if (bill) {
+                            if (bill.payment_status !== 'Cancelled') {
+                                const net = Math.max(0, parseFloat(bill.total_package_amount || 0) - parseFloat(bill.discount || 0));
+                                staffMap[matchKey].incentive += Math.round(net * 0.03);
+                            }
+                        } else {
+                            const net = parseFloat(b.total_package_amount || b.amount || 0);
                             staffMap[matchKey].incentive += Math.round(net * 0.03);
                         }
                     });
@@ -6771,7 +7047,19 @@
                             await copyLeadToBooking(lead);
                         }
                     } else {
-                        // Reverted or changed away from booking confirmed. Delete corresponding booking record.
+                        // Reverted or changed away from booking confirmed. Cancel bill and delete booking record.
+                        try {
+                            const { data: bToDel } = await supabaseAdmin.from('bookings').select('booking_id').eq('lead_id', leadId);
+                            if (bToDel && bToDel.length > 0) {
+                                for (const b of bToDel) {
+                                    if (b.booking_id) {
+                                        await supabaseAdmin.from('booking_bills').update({ payment_status: 'Cancelled', balance_remaining: 0 }).eq('booking_id', b.booking_id);
+                                    }
+                                }
+                            }
+                        } catch (e) {
+                            console.warn('Bill cancellation error on lead status revert:', e);
+                        }
                         const { error: deleteBookingErr } = await supabaseAdmin
                             .from('bookings')
                             .delete()
@@ -6779,8 +7067,9 @@
                         if (deleteBookingErr) {
                             console.error('Failed to remove booking on status revert:', deleteBookingErr);
                         } else {
-                            if (wasConfirmed) showAdminToast('Associated booking removed.', 'info');
-                            if (typeof fetchBookings === 'function') fetchBookings(); // refresh bookings list
+                            if (wasConfirmed) showAdminToast('Associated booking and billing cancelled.', 'info');
+                            if (typeof fetchBookings === 'function') fetchBookings();
+                            if (typeof fetchBillingRecords === 'function') fetchBillingRecords();
                         }
                     }
                 }
@@ -6828,6 +7117,7 @@
         // Booking mobile details toggle is handled by window.toggleMobileBookingDetails (line ~3960)
 
         window.fetchLeads = async function() {
+            if (!supabaseAdmin) return;
             applyRolePermissions();
             try {
                 let query = supabaseAdmin
@@ -6870,6 +7160,7 @@
         let leadsMapForHistory = {};
 
         window.fetchGlobalLeadHistory = async function() {
+            if (!supabaseAdmin) return;
             const tbody = document.getElementById('lead-history-table-body');
             if (tbody) {
                 tbody.innerHTML = `<tr><td colspan="3" style="text-align: center; color: var(--color-slate); font-weight: 500; padding: 24px;"><i class="fa-solid fa-spinner fa-spin" style="margin-right: 8px; color: var(--color-gold);"></i> Loading activity log...</td></tr>`;
@@ -7041,13 +7332,19 @@
             }
         };
 
-        window.applyLeadsFilters = function(keepPage = false) {
+        window.applyLeadsFilters = function(keepPage = false, explicitStatus = null) {
             const source = document.getElementById('filter-lead-source') ? document.getElementById('filter-lead-source').value : '';
             const topStatusSelect = document.getElementById('top-filter-lead-status');
             const tableStatusSelect = document.getElementById('filter-lead-status');
-            const status = (topStatusSelect && topStatusSelect.value !== undefined && topStatusSelect.value !== '')
-                ? topStatusSelect.value
-                : (tableStatusSelect ? tableStatusSelect.value : '');
+            
+            let status = '';
+            if (explicitStatus !== null && explicitStatus !== undefined) {
+                status = explicitStatus;
+            } else if (topStatusSelect && topStatusSelect.value !== undefined && topStatusSelect.value !== '') {
+                status = topStatusSelect.value;
+            } else if (tableStatusSelect) {
+                status = tableStatusSelect.value;
+            }
 
             // Ensure both dropdowns remain in sync
             if (topStatusSelect && topStatusSelect.value !== status) topStatusSelect.value = status;
@@ -7069,7 +7366,7 @@
                 if (!filterStatus) {
                     matchStatus = true;
                 } else if (filterStatus === '__contacted__') {
-                    matchStatus = ['answered', 'busy', 'follow up required', 'not answered', 'no. not reachable', 'contacted', 'in progress'].includes(leadStatus);
+                    matchStatus = ['answered', 'busy', 'follow up required', 'not answered', 'no. not reachable', 'contacted', 'in progress', 'switch off'].includes(leadStatus) || leadStatus.includes('contacted') || leadStatus.includes('follow') || leadStatus.includes('answered');
                 } else {
                     matchStatus = (leadStatus === filterStatus);
                 }
@@ -7255,7 +7552,7 @@
                                 <th>
                                     <div style="display: flex; flex-direction: column; gap: 4px; align-items: center;">
                                         <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Status</span>
-                                        <select id="filter-lead-status" onchange="applyLeadsFilters()" style="background: #0f172a; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 4px; padding: 2px 4px; font-size: 11px; cursor: pointer; outline: none; min-width: 90px; font-weight: 500;">
+                                        <select id="filter-lead-status" onchange="onTableStatusFilterChange(this.value)" style="background: #0f172a; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 4px; padding: 2px 4px; font-size: 11px; cursor: pointer; outline: none; min-width: 90px; font-weight: 500;">
                                             <option value="">All</option>
                                             <option value="New">New</option>
                                             <option value="__contacted__">📞 Contacted / In Progress</option>
@@ -7301,7 +7598,7 @@
                                 <th>
                                     <div style="display: flex; flex-direction: column; gap: 4px; align-items: center;">
                                         <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Status</span>
-                                        <select id="filter-lead-status" onchange="applyLeadsFilters()" style="background: #0f172a; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 4px; padding: 2px 4px; font-size: 11px; cursor: pointer; outline: none; min-width: 100px; font-weight: 500;">
+                                        <select id="filter-lead-status" onchange="onTableStatusFilterChange(this.value)" style="background: #0f172a; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 4px; padding: 2px 4px; font-size: 11px; cursor: pointer; outline: none; min-width: 100px; font-weight: 500;">
                                             <option value="">All</option>
                                             <option value="New">New</option>
                                             <option value="__contacted__">📞 Contacted / In Progress</option>
@@ -7788,11 +8085,35 @@
 
         // Bulk CSV Import for Leads
         window.triggerImportLeads = function() {
+            if (currentUserRole !== 'admin') {
+                showAdminToast('Unauthorized: Only administrators can import leads.', 'error');
+                return;
+            }
             document.getElementById('leads-csv-file').click();
+        };
+
+        window.downloadLeadsTemplate = function() {
+            if (currentUserRole !== 'admin') {
+                showAdminToast('Unauthorized: Only administrators can download leads template.', 'error');
+                return;
+            }
+            const csv = 'Name,Phone,Email,Travel Destination,Source,Status,Remarks,FollowUp1,FollowUp2,FinalStatus\nJane Doe,9876543210,jane@example.com,Adi Kailash,Website,New,Interested in 7-day yatra,Will call tomorrow,,In Progress\n';
+            const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.setAttribute('href', url);
+            link.setAttribute('download', 'leads_import_template.csv');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         };
 
         // Sync Meta Leads directly from Google Sheet
         window.syncGoogleSheetLeads = async function() {
+            if (currentUserRole !== 'admin') {
+                showAdminToast('Unauthorized: Only administrators can sync Google Sheet leads.', 'error');
+                return;
+            }
             const btn = document.getElementById('sync-sheet-leads-btn');
             if (btn) {
                 btn.disabled = true;
@@ -8279,9 +8600,24 @@
                         const fullLead = { ...originalLead, ...leadData };
                         await copyLeadToBooking(fullLead);
                     } else {
-                        // If final status is not booking confirmed, ensure any booking record associated with this lead is removed
+                        // If final status is not booking confirmed, ensure any booking record associated with this lead is removed and bill cancelled
+                        try {
+                            const { data: bToDel } = await supabaseAdmin.from('bookings').select('booking_id').eq('lead_id', id);
+                            if (bToDel && bToDel.length > 0) {
+                                for (const b of bToDel) {
+                                    if (b.booking_id) {
+                                        await supabaseAdmin.from('booking_bills').update({ payment_status: 'Cancelled', balance_remaining: 0 }).eq('booking_id', b.booking_id);
+                                    }
+                                }
+                            }
+                        } catch (e) {
+                            console.warn('Bill cancellation error on lead modal update:', e);
+                        }
                         const { error: delErr } = await supabaseAdmin.from('bookings').delete().eq('lead_id', id);
-                        if (!delErr && typeof fetchBookings === 'function') fetchBookings();
+                        if (!delErr) {
+                            if (typeof fetchBookings === 'function') fetchBookings();
+                            if (typeof fetchBillingRecords === 'function') fetchBillingRecords();
+                        }
                     }
                     
                     showAdminToast('Lead updated successfully!', 'success');
@@ -8318,6 +8654,7 @@
         let staffCredentialsList = [];
 
         window.fetchCredentials = async function() {
+            if (!supabaseAdmin) return;
             try {
                 const { data, error } = await supabaseAdmin
                     .from('staff_credentials')
@@ -8917,6 +9254,7 @@
             }
 
             localStorage.setItem('staff_attendance_history', JSON.stringify(history));
+            localStorage.setItem('ry_attendance_backup_snapshot', JSON.stringify(history));
             showAdminToast(`Attendance saved for ${staff} (${month} ${yearVal})!`, 'success');
             
             renderAttendanceHistory();
@@ -9232,6 +9570,140 @@
             refreshActiveTabStats();
         };
 
+        window.exportAttendanceCSV = function() {
+            let history = [];
+            try {
+                history = JSON.parse(localStorage.getItem('staff_attendance_history')) || [];
+            } catch(e){}
+
+            if (history.length === 0) {
+                showAdminToast('No attendance records found to export.', 'error');
+                return;
+            }
+
+            const filterMonthEl = document.getElementById('filter-history-month');
+            const filterYearEl = document.getElementById('filter-history-year');
+            const selectedMonth = filterMonthEl ? filterMonthEl.value : '';
+            const selectedYear = filterYearEl ? filterYearEl.value : '';
+
+            let recordsToExport = history;
+            if (selectedMonth && selectedYear) {
+                recordsToExport = history.filter(item => item.month === selectedMonth && (item.year ? item.year.toString() === selectedYear : true));
+                if (recordsToExport.length === 0) recordsToExport = history; // fallback to all if filtered is empty
+            }
+
+            let csv = 'Staff Name,Month,Year,Salary Type,Rate,Total Days,Present,Leaves,Absent,Half Days,Attendance Rate (%),Net Payable Salary (INR)\n';
+            recordsToExport.forEach(item => {
+                const staff = `"${(item.staff || '').replace(/"/g, '""')}"`;
+                const month = `"${item.month || ''}"`;
+                const year = item.year || 2026;
+                const type = `"${item.type || 'Fixed'}"`;
+                const rate = item.rate || 0;
+                const totalDays = item.totalDays || 30;
+                const present = item.present || 0;
+                const leaves = item.leaves || 0;
+                const absent = item.absent !== undefined ? item.absent : (totalDays - present - leaves);
+                const halfDays = item.halfDays || 0;
+                const attRate = item.attendanceRate || 0;
+                const payable = item.salaryPaid || 0;
+                csv += `${staff},${month},${year},${type},${rate},${totalDays},${present},${leaves},${absent},${halfDays},${attRate},${payable}\n`;
+            });
+
+            const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.setAttribute('href', url);
+            link.setAttribute('download', `staff_attendance_${selectedMonth || 'all'}_${selectedYear || new Date().getFullYear()}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showAdminToast('Attendance CSV exported successfully!', 'success');
+        };
+
+        window.backupAttendanceJSON = function() {
+            let history = [];
+            try {
+                history = JSON.parse(localStorage.getItem('staff_attendance_history')) || [];
+            } catch(e){}
+
+            if (history.length === 0) {
+                showAdminToast('No attendance records to backup.', 'info');
+                return;
+            }
+
+            const backupObj = {
+                version: '1.0',
+                exportedAt: new Date().toISOString(),
+                recordCount: history.length,
+                data: history
+            };
+
+            const jsonStr = JSON.stringify(backupObj, null, 2);
+            const blob = new Blob([jsonStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.setAttribute('href', url);
+            link.setAttribute('download', `rudraansh_attendance_backup_${new Date().toISOString().split('T')[0]}.json`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showAdminToast(`Backup created with ${history.length} attendance records!`, 'success');
+        };
+
+        window.triggerRestoreAttendance = function() {
+            const input = document.getElementById('attendance-restore-file');
+            if (input) input.click();
+        };
+
+        window.handleAttendanceJSONRestore = function(event) {
+            const file = event.target.files && event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const parsed = JSON.parse(e.target.result);
+                    const importedRecords = Array.isArray(parsed) ? parsed : (parsed.data && Array.isArray(parsed.data) ? parsed.data : null);
+
+                    if (!importedRecords || importedRecords.length === 0) {
+                        showAdminToast('Invalid backup file or no records found.', 'error');
+                        return;
+                    }
+
+                    let existing = [];
+                    try {
+                        existing = JSON.parse(localStorage.getItem('staff_attendance_history')) || [];
+                    } catch(err){}
+
+                    // Merge by record ID or staff+month+year
+                    const existingMap = new Map();
+                    existing.forEach(item => {
+                        const key = item.id || `${item.staff}_${item.month}_${item.year}`;
+                        existingMap.set(key, item);
+                    });
+
+                    importedRecords.forEach(item => {
+                        const key = item.id || `${item.staff}_${item.month}_${item.year}`;
+                        existingMap.set(key, item);
+                    });
+
+                    const merged = Array.from(existingMap.values());
+                    localStorage.setItem('staff_attendance_history', JSON.stringify(merged));
+                    localStorage.setItem('ry_attendance_backup_snapshot', JSON.stringify(merged));
+
+                    renderAttendanceHistory();
+                    refreshActiveTabStats();
+                    showAdminToast(`Successfully restored & merged ${importedRecords.length} records!`, 'success');
+                } catch(err) {
+                    console.error('Error restoring attendance JSON:', err);
+                    showAdminToast('Failed to restore backup: ' + err.message, 'error');
+                } finally {
+                    event.target.value = '';
+                }
+            };
+            reader.readAsText(file);
+        };
+
         window.clearAttendanceHistory = function() {
             if (!confirm('Are you sure you want to delete all saved attendance records? This cannot be undone.')) return;
             localStorage.removeItem('staff_attendance_history');
@@ -9458,6 +9930,7 @@
         window.billingRecords = billingRecords;
 
         window.fetchBillingRecords = async function() {
+            if (!supabaseAdmin) return;
             try {
                 const searchVal = document.getElementById('billing-search') ? document.getElementById('billing-search').value.trim() : '';
                 const statusVal = document.getElementById('billing-filter-status') ? document.getElementById('billing-filter-status').value : '';
@@ -10175,6 +10648,17 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
                         throw error;
                     }
                 }
+
+                // Sync pickup_point or travel_date to linked bill
+                const curBk = (bookingsData || []).find(b => b.id === bookingId);
+                const bId = curBk ? (curBk.booking_id || curBk.id) : null;
+                if (bId) {
+                    if (fieldName === 'pickup_point' && value) {
+                        supabaseAdmin.from('booking_bills').update({ pickup_point: value }).eq('booking_id', bId).then();
+                    } else if (fieldName === 'travel_date' && value) {
+                        supabaseAdmin.from('booking_bills').update({ tour_start_date: value }).eq('booking_id', bId).then();
+                    }
+                }
                 
                 showAdminToast('Booking updated successfully!', 'success');
                 fetchBookings();
@@ -10236,6 +10720,24 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
                             throw error;
                         }
                     }
+
+                    // Keep linked billing record in sync with edited booking
+                    const curBk = (bookingsData || []).find(b => b.id === id);
+                    const bId = curBk ? (curBk.booking_id || curBk.id) : null;
+                    if (bId) {
+                        try {
+                            const billSync = {};
+                            if (travelDate) billSync.tour_start_date = travelDate;
+                            if (travelers) billSync.group_size = travelers;
+                            if (pickupPoint) billSync.pickup_point = pickupPoint;
+                            if (Object.keys(billSync).length > 0) {
+                                await supabaseAdmin.from('booking_bills').update(billSync).eq('booking_id', bId);
+                            }
+                        } catch (billSyncErr) {
+                            console.warn('[Sync Booking -> Bill] Error syncing bill:', billSyncErr);
+                        }
+                    }
+
                     showAdminToast('Booking updated successfully!', 'success');
                 } else {
                     bookingData.booking_id = await fetchNextBookingId();
@@ -10571,6 +11073,28 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
                     .single();
 
                 if (error) throw error;
+
+                // Keep bookings table in sync with invoice tour date, travelers, and pickup point
+                if (bookingId) {
+                    try {
+                        const bkUpdate = {
+                            travel_date: tourStartDate,
+                            travelers: String(groupSize),
+                            pickup_point: pickupPoint || null
+                        };
+                        const { error: bkErr } = await supabaseAdmin
+                            .from('bookings')
+                            .update(bkUpdate)
+                            .eq('booking_id', bookingId);
+                        if (bkErr && bkErr.message && bkErr.message.includes('pickup_point')) {
+                            delete bkUpdate.pickup_point;
+                            await supabaseAdmin.from('bookings').update(bkUpdate).eq('booking_id', bookingId);
+                        }
+                        if (typeof fetchBookings === 'function') fetchBookings();
+                    } catch (syncErr) {
+                        console.warn('[Sync Bill -> Booking] Error syncing booking date:', syncErr);
+                    }
+                }
 
                 if (debugText) debugText.innerText = 'Success! Closing modal...';
                 showAdminToast('Billing record created successfully!', 'success');

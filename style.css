@@ -433,7 +433,8 @@ header.scrolled {
 
 
 /* Nav Menu & Links */
-.nav-menu {
+.nav-menu,
+.nav-links {
     display: flex;
     list-style: none;
     gap: 32px;

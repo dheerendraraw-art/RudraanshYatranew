@@ -4,6 +4,8 @@ User-agent: *
 Allow: /
 Disallow: /admin.html
 Disallow: /lead-details.html
+Disallow: /payment.html
+Disallow: /payment
 Disallow: /api/
 
 # AI Search Engine & Generative Engine Crawlers
