@@ -1427,7 +1427,7 @@ app.get('/api/version', authenticateToken, requireAdmin, (req, res) => {
 // POST /api/admin/git-pull — pulls latest code from GitHub on the live server
 app.post('/api/admin/git-pull', authenticateToken, requireAdmin, (req, res) => {
     const { exec } = require('child_process');
-    exec('git pull origin main 2>&1', { cwd: __dirname }, (err, stdout, stderr) => {
+    exec('git checkout -- tmp/restart.txt package-lock.json 2>&1; git pull origin main 2>&1', { cwd: __dirname }, (err, stdout, stderr) => {
         const output = stdout || stderr || (err && err.message) || 'No output';
         res.json({
             success: !err,
