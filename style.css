@@ -10620,6 +10620,11 @@ html, body { overflow-x: hidden; max-width: 100%; }
     white-space: nowrap;
 }
 
+.booking-notes-cell {
+    min-width: 190px;
+    max-width: 280px;
+}
+
 .booking-dest-badge {
     background: #ffedd5 !important;
     color: #92400e !important;
@@ -11189,15 +11194,20 @@ html, body { overflow-x: hidden; max-width: 100%; }
     }
 
     /* Special Notes — ALWAYS VISIBLE, full-width readable */
-    #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Special Notes"] {
+    #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Special Notes"],
+    #pane-bookings .admin-table tbody tr.booking-card-row td.booking-notes-cell {
         flex-direction: column !important;
         align-items: flex-start !important;
-        padding: 10px 10px !important;
+        padding: 10px 12px !important;
         min-height: unset !important;
         background: rgba(212, 175, 55, 0.05) !important;
         border-radius: 8px !important;
         border-bottom: 1px solid rgba(212, 175, 55, 0.15) !important;
-        margin: 2px 0 !important;
+        margin: 4px 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: unset !important;
+        box-sizing: border-box !important;
     }
 
     #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Special Notes"]::before {
@@ -12539,15 +12549,20 @@ html, body { overflow-x: hidden; max-width: 100%; }
     }
 
     /* Special Notes — full width and readable */
-    body.user-role-admin #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Special Notes"] {
+    body.user-role-admin #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Special Notes"],
+    body.user-role-admin #pane-bookings .admin-table tbody tr.booking-card-row td.booking-notes-cell {
         flex-direction: column !important;
         align-items: flex-start !important;
-        padding: 10px 10px !important;
+        padding: 10px 12px !important;
         min-height: unset !important;
         background: rgba(212, 175, 55, 0.05) !important;
         border-radius: 8px !important;
         border-bottom: 1px solid rgba(212, 175, 55, 0.15) !important;
-        margin: 2px 0 !important;
+        margin: 4px 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: unset !important;
+        box-sizing: border-box !important;
     }
 
     body.user-role-admin #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Special Notes"]::before {
@@ -12719,6 +12734,34 @@ html, body { overflow-x: hidden; max-width: 100%; }
 }
 
 @media (max-width: 480px) {
+    /* Small Phone Booking Improvements (<= 480px) */
+    #pane-bookings .bookings-filters-bar,
+    body.user-role-admin #pane-bookings .bookings-filters-bar {
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+    }
+
+    #pane-bookings .booking-action-buttons-wrap,
+    body.user-role-admin #pane-bookings .booking-action-buttons-wrap {
+        flex-wrap: wrap !important;
+    }
+
+    #pane-bookings .booking-action-buttons-wrap .booking-bill-btn,
+    body.user-role-admin #pane-bookings .booking-action-buttons-wrap .booking-bill-btn {
+        flex: 1 1 100% !important;
+        width: 100% !important;
+    }
+
+    #pane-bookings .booking-action-buttons-wrap .booking-edit-btn,
+    body.user-role-admin #pane-bookings .booking-action-buttons-wrap .booking-edit-btn {
+        flex: 1 !important;
+    }
+
+    #pane-bookings .booking-action-buttons-wrap .booking-delete-btn,
+    body.user-role-admin #pane-bookings .booking-action-buttons-wrap .booking-delete-btn {
+        flex: 0 0 44px !important;
+    }
+
     body.user-role-admin #pane-leads #leads-action-buttons-wrap {
         grid-template-columns: 1fr 1fr !important;
         gap: 6px !important;
