@@ -10683,12 +10683,14 @@ html, body { overflow-x: hidden; max-width: 100%; }
 }
 
 .booking-notes-text {
-    color: #334155;
-    font-size: 12px;
+    color: #0f172a;
+    font-size: 12.5px;
+    min-width: 170px;
     max-width: 280px;
-    line-height: 1.4;
+    line-height: 1.45;
     font-weight: 600;
-    white-space: pre-line;
+    word-break: normal;
+    overflow-wrap: break-word;
 }
 
 .booking-assignee-select {
@@ -11101,11 +11103,25 @@ html, body { overflow-x: hidden; max-width: 100%; }
     }
 
     #pane-bookings .booking-notes-text {
-        color: #cbd5e1 !important;
+        color: #f8fafc !important;
         font-size: 12.5px !important;
         text-align: right !important;
         max-width: 65% !important;
+        min-width: unset !important;
         line-height: 1.4 !important;
+    }
+
+    #pane-bookings .booking-notes-text .ry-client-note {
+        color: #f8fafc !important;
+    }
+
+    #pane-bookings .booking-notes-text .ry-last-update-badge {
+        background: rgba(56, 189, 248, 0.18) !important;
+        border-color: rgba(56, 189, 248, 0.45) !important;
+    }
+
+    #pane-bookings .booking-notes-text .ry-last-update-badge span {
+        color: #f0f9ff !important;
     }
 
     #pane-bookings .booking-email-text {
