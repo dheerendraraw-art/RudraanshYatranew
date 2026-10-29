@@ -4697,10 +4697,32 @@
             let raw = (item.message || '');
 
             // 1. Strip internal system tags
-            raw = raw.replace(/\[Pickup:\s*[^\]]+\]\n?/gi, '');
-            raw = raw.replace(/\[YatraStatus:\s*[^\]]+\]\n?/gi, '');
-            raw = raw.trim();
-            if (!raw) return '<span style="color:#94a3b8;font-weight:600;">—</span>';
+            let clean = raw.replace(/\[Pickup:\s*[^\]]+\]\n?/gi, '')
+                           .replace(/\[YatraStatus:\s*[^\]]+\]\n?/gi, '')
+                           .trim();
+
+            // Fallback to linked lead if message has no client notes
+            if (!clean && window.currentLeads && window.currentLeads.length > 0) {
+                let matchedLead = null;
+                if (item.lead_id) {
+                    matchedLead = window.currentLeads.find(l => l.id === item.lead_id);
+                }
+                if (!matchedLead && item.phone) {
+                    const cleanP = (item.phone || '').replace(/[^0-9]/g, '').slice(-10);
+                    if (cleanP) {
+                        matchedLead = window.currentLeads.find(l => {
+                            const lp = (l.phone || '').replace(/[^0-9]/g, '').slice(-10);
+                            return lp && lp === cleanP;
+                        });
+                    }
+                }
+                if (matchedLead && (matchedLead.remarks || matchedLead.notes)) {
+                    clean = (matchedLead.remarks || matchedLead.notes || '').trim();
+                }
+            }
+
+            if (!clean) return '<span style="color:#94a3b8;font-weight:600;">—</span>';
+            raw = clean;
 
             // 2. Handle old comma-separated transfer format:
             if (/^Transfer\s+\w+\s+from\s+/i.test(raw) && !raw.includes('\n')) {

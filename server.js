@@ -1801,27 +1801,57 @@ app.get('/api/admin/bookings', authenticateToken, async (req, res) => {
         if (error) throw error;
 
         // Ensure pickup_point & yatra_status are enriched even if columns are not yet in Supabase schema
+        // Also ensure special notes / remarks from linked lead are enriched if booking message is tags-only or empty
+        const needLeadIds = (data || [])
+            .filter(r => r.lead_id && !(r.message || '').replace(/\[Pickup:\s*[^\]]+\]\n?/gi, '').replace(/\[YatraStatus:\s*[^\]]+\]\n?/gi, '').trim())
+            .map(r => r.lead_id);
+
+        let leadRemarksMap = {};
+        if (needLeadIds.length > 0) {
+            try {
+                const { data: leadRows } = await supabase.from('leads').select('id, remarks, notes').in('id', needLeadIds);
+                (leadRows || []).forEach(l => {
+                    const txt = (l.remarks || l.notes || '').trim();
+                    if (txt) leadRemarksMap[l.id] = txt;
+                });
+            } catch (leadFetchErr) {
+                console.warn('[Bookings API] Error enriching remarks from leads:', leadFetchErr.message);
+            }
+        }
+
         const enrichedData = (data || []).map(row => {
+            let msg = row.message || '';
+            const cleanMsg = msg.replace(/\[Pickup:\s*[^\]]+\]\n?/gi, '').replace(/\[YatraStatus:\s*[^\]]+\]\n?/gi, '').trim();
+            if (!cleanMsg && row.lead_id && leadRemarksMap[row.lead_id]) {
+                const tagMatches = [];
+                const pTag = msg.match(/\[Pickup:\s*([^\]]+)\]/i);
+                if (pTag) tagMatches.push(pTag[0]);
+                const yTag = msg.match(/\[YatraStatus:\s*([^\]]+)\]/i);
+                if (yTag) tagMatches.push(yTag[0]);
+                msg = tagMatches.length > 0 ? `${tagMatches.join('\n')}\n${leadRemarksMap[row.lead_id]}` : leadRemarksMap[row.lead_id];
+            }
+
             let pickup = row.pickup_point;
-            if (!pickup && row.message) {
-                const tagMatch = row.message.match(/\[Pickup:\s*([^\]]+)\]/i);
+            if (!pickup && msg) {
+                const tagMatch = msg.match(/\[Pickup:\s*([^\]]+)\]/i);
                 if (tagMatch) {
                     pickup = tagMatch[1].trim();
                 } else {
                     const stdPickups = ["Delhi to Delhi", "Kathgodam to Kathgodam", "Dehradun to Dehradun", "Dharchula to Dharchula", "Pithoragarh to Pithoragarh"];
                     for (const sp of stdPickups) {
-                        if (row.message.toLowerCase().includes(sp.toLowerCase())) {
+                        if (msg.toLowerCase().includes(sp.toLowerCase())) {
                             pickup = sp;
                             break;
                         }
                     }
-                    if (!pickup && /dheradun\s+to\s+dheradun/i.test(row.message)) pickup = "Dehradun to Dehradun";
-                    if (!pickup && /dharchula\s+to\s+darchula/i.test(row.message)) pickup = "Dharchula to Dharchula";
+                    if (!pickup && /dheradun\s+to\s+dheradun/i.test(msg)) pickup = "Dehradun to Dehradun";
+                    if (!pickup && /dharchula\s+to\s+darchula/i.test(msg)) pickup = "Dharchula to Dharchula";
                 }
             }
-            const withYatra = enrichBookingYatraStatus(row);
+            const withYatra = enrichBookingYatraStatus({ ...row, message: msg });
             return {
                 ...withYatra,
+                message: msg,
                 pickup_point: pickup || null
             };
         });
