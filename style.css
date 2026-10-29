@@ -10957,16 +10957,18 @@ html, body { overflow-x: hidden; max-width: 100%; }
     #pane-bookings .bookings-primary-btn-wrap #add-booking-btn {
         width: 100% !important;
         justify-content: center !important;
-        padding: 11px 16px !important;
+        padding: 12px 16px !important;
         font-size: 14px !important;
+        min-height: 44px !important;
     }
 
-    /* Filter Bar on Mobile */
+    /* Filter Bar — 2x2 Grid on Mobile */
     #pane-bookings .bookings-filters-bar {
-        flex-direction: column !important;
-        align-items: stretch !important;
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        align-items: start !important;
         padding: 12px !important;
-        gap: 10px !important;
+        gap: 8px !important;
     }
 
     #pane-bookings .booking-filter-item {
@@ -10981,9 +10983,10 @@ html, body { overflow-x: hidden; max-width: 100%; }
         width: 100% !important;
         min-width: 100% !important;
         padding: 8px 10px !important;
-        font-size: 13px !important;
+        font-size: 14px !important;
         background: #1e293b !important;
         box-sizing: border-box !important;
+        min-height: 40px !important;
     }
 
     #pane-bookings #bookings-action-buttons-wrap {
@@ -11000,6 +11003,25 @@ html, body { overflow-x: hidden; max-width: 100%; }
         padding: 8px 6px !important;
         font-size: 11.5px !important;
         text-align: center !important;
+    }
+
+    /* Quick Filter Pills */
+    #pane-bookings .bookings-qf-bar {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        flex-wrap: nowrap !important;
+        padding-bottom: 4px !important;
+        scrollbar-width: none !important;
+    }
+
+    #pane-bookings .bookings-qf-bar::-webkit-scrollbar {
+        display: none !important;
+    }
+
+    #pane-bookings .bookings-qf-pill {
+        flex-shrink: 0 !important;
+        min-height: 36px !important;
+        white-space: nowrap !important;
     }
 
     /* Table Container on Mobile */
@@ -11026,21 +11048,23 @@ html, body { overflow-x: hidden; max-width: 100%; }
     #pane-bookings .admin-table tbody {
         display: flex !important;
         flex-direction: column !important;
-        gap: 12px !important;
+        gap: 14px !important;
         width: 100% !important;
     }
 
-    /* Mobile Booking Card */
+    /* ====================================================
+       MOBILE BOOKING CARD
+       ==================================================== */
     #pane-bookings .admin-table tbody tr.booking-card-row {
-        background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%) !important;
-        border: 1.5px solid rgba(212, 175, 55, 0.4) !important;
-        border-left: 4px solid var(--color-gold) !important;
-        border-radius: 14px !important;
-        padding: 12px 14px !important;
+        background: linear-gradient(145deg, #1a2744 0%, #0f172a 100%) !important;
+        border: 1.5px solid rgba(212, 175, 55, 0.35) !important;
+        border-left: 5px solid var(--color-gold) !important;
+        border-radius: 16px !important;
+        padding: 14px 16px !important;
         margin-bottom: 0 !important;
         display: flex !important;
         flex-direction: column !important;
-        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4) !important;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45) !important;
         position: relative !important;
         gap: 0 !important;
     }
@@ -11050,104 +11074,228 @@ html, body { overflow-x: hidden; max-width: 100%; }
         justify-content: space-between !important;
         align-items: center !important;
         padding: 8px 0 !important;
-        border-bottom: 1px dashed rgba(255, 255, 255, 0.1) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07) !important;
         font-size: 13.5px !important;
         color: #f8fafc !important;
         text-align: right !important;
-        min-height: 36px !important;
+        min-height: 38px !important;
         background: transparent !important;
+        gap: 8px !important;
+        flex-wrap: wrap !important;
     }
 
     #pane-bookings .admin-table tbody tr.booking-card-row td::before {
         content: attr(data-label);
-        font-weight: 800;
-        color: var(--color-gold) !important;
-        font-size: 11px !important;
+        font-weight: 700;
+        color: #94a3b8 !important;
+        font-size: 10.5px !important;
         text-transform: uppercase !important;
-        letter-spacing: 0.5px !important;
-        margin-right: 10px !important;
+        letter-spacing: 0.7px !important;
         text-align: left !important;
         flex-shrink: 0 !important;
+        min-width: 80px !important;
+        white-space: nowrap !important;
     }
 
-    /* High-contrast mobile card typography */
+    /* Booking ID row */
+    #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Booking ID"] {
+        border-bottom: 1px solid rgba(212, 175, 55, 0.2) !important;
+        padding-bottom: 10px !important;
+    }
+
+    #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Booking ID"]::before {
+        display: none !important;
+    }
+
+    #pane-bookings .booking-id-tag {
+        font-family: 'Courier New', monospace !important;
+        font-size: 12px !important;
+        font-weight: 800 !important;
+        color: var(--color-gold) !important;
+        background: rgba(212, 175, 55, 0.12) !important;
+        border: 1px solid rgba(212, 175, 55, 0.3) !important;
+        padding: 4px 10px !important;
+        border-radius: 6px !important;
+        letter-spacing: 0.5px !important;
+    }
+
+    /* Client Name */
     #pane-bookings .booking-client-name {
         color: #f5c842 !important;
-        font-size: 15px !important;
+        font-size: 16px !important;
         font-weight: 800 !important;
     }
 
-    #pane-bookings .booking-pickup-text {
-        color: #f8fafc !important;
+    /* Phone row — full-width layout */
+    #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Phone / Contact"] {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 6px !important;
+        padding: 10px 0 !important;
+        min-height: unset !important;
+    }
+
+    #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Phone / Contact"]::before {
+        display: none !important;
+    }
+
+    #pane-bookings .booking-phone-wrap {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 6px !important;
+        width: 100% !important;
+    }
+
+    #pane-bookings .booking-phone-link {
+        font-size: 14px !important;
+        font-weight: 800 !important;
+        color: #f5c842 !important;
+    }
+
+    #pane-bookings .booking-quick-call,
+    #pane-bookings .booking-quick-wa {
+        min-height: 40px !important;
+        flex: 1 !important;
+        justify-content: center !important;
         font-size: 13px !important;
-    }
-
-    #pane-bookings .booking-pickup-select {
-        max-width: 60% !important;
-        font-size: 12.5px !important;
-        padding: 6px 8px !important;
-    }
-
-    #pane-bookings .booking-dest-badge {
-        font-size: 12px !important;
-        max-width: 60% !important;
-    }
-
-    #pane-bookings .booking-date-badge {
-        color: #f8fafc !important;
         font-weight: 700 !important;
     }
 
-    #pane-bookings .booking-travelers-badge {
+    #pane-bookings .booking-email-text {
+        color: #94a3b8 !important;
         font-size: 12px !important;
+        text-align: left !important;
+    }
+
+    /* Destination */
+    #pane-bookings .booking-dest-badge {
+        font-size: 12.5px !important;
+        max-width: 70% !important;
+        white-space: normal !important;
+        word-break: break-word !important;
+    }
+
+    /* Travel Date */
+    #pane-bookings .booking-date-badge {
+        color: #f8fafc !important;
+        font-weight: 700 !important;
+        font-size: 13px !important;
+    }
+
+    /* Travelers */
+    #pane-bookings .booking-travelers-badge {
+        font-size: 13px !important;
+        font-weight: 700 !important;
+    }
+
+    /* Special Notes — ALWAYS VISIBLE, full-width readable */
+    #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Special Notes"] {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        padding: 10px 10px !important;
+        min-height: unset !important;
+        background: rgba(212, 175, 55, 0.05) !important;
+        border-radius: 8px !important;
+        border-bottom: 1px solid rgba(212, 175, 55, 0.15) !important;
+        margin: 2px 0 !important;
+    }
+
+    #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Special Notes"]::before {
+        color: var(--color-gold) !important;
+        font-size: 10px !important;
+        font-weight: 800 !important;
+        margin-bottom: 6px !important;
     }
 
     #pane-bookings .booking-notes-text {
-        color: #f8fafc !important;
-        font-size: 12.5px !important;
-        text-align: right !important;
-        max-width: 65% !important;
+        color: #e2e8f0 !important;
+        font-size: 13px !important;
+        text-align: left !important;
+        max-width: 100% !important;
+        width: 100% !important;
         min-width: unset !important;
-        line-height: 1.4 !important;
+        line-height: 1.55 !important;
+        word-break: break-word !important;
     }
 
     #pane-bookings .booking-notes-text .ry-client-note {
-        color: #f8fafc !important;
+        color: #e2e8f0 !important;
+        font-size: 13px !important;
+        display: block !important;
+        margin-bottom: 6px !important;
+        white-space: pre-wrap !important;
+        word-break: break-word !important;
     }
 
     #pane-bookings .booking-notes-text .ry-last-update-badge {
-        background: rgba(56, 189, 248, 0.18) !important;
-        border-color: rgba(56, 189, 248, 0.45) !important;
+        background: rgba(56, 189, 248, 0.12) !important;
+        border: 1px solid rgba(56, 189, 248, 0.35) !important;
+        border-radius: 8px !important;
+        padding: 6px 10px !important;
+        margin-top: 6px !important;
+        display: flex !important;
+        align-items: flex-start !important;
+        gap: 6px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
     }
 
     #pane-bookings .booking-notes-text .ry-last-update-badge span {
-        color: #f0f9ff !important;
-    }
-
-    #pane-bookings .booking-email-text {
-        color: #cbd5e1 !important;
+        color: #e0f2fe !important;
         font-size: 12px !important;
+        line-height: 1.5 !important;
+        white-space: normal !important;
+        word-break: break-word !important;
     }
 
+    /* Assignee select */
+    #pane-bookings .booking-assignee-select {
+        max-width: 60% !important;
+        font-size: 13px !important;
+        padding: 6px 8px !important;
+        min-height: 36px !important;
+    }
+
+    /* Yatra Status */
+    #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Yatra Status"] {
+        flex-wrap: wrap !important;
+        min-height: unset !important;
+        padding: 10px 0 !important;
+    }
+
+    #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Yatra Status"] > div {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        gap: 8px !important;
+        flex: 1 !important;
+        justify-content: flex-end !important;
+    }
+
+    /* Pickup select */
+    #pane-bookings .booking-pickup-select {
+        max-width: 60% !important;
+        font-size: 13px !important;
+        padding: 6px 8px !important;
+        min-height: 36px !important;
+    }
+
+    /* Created date */
     #pane-bookings .booking-created-text {
         color: #94a3b8 !important;
         font-size: 12px !important;
     }
 
-    #pane-bookings .booking-assignee-select {
-        max-width: 55% !important;
-        font-size: 13px !important;
-        padding: 6px 8px !important;
-    }
-
-    /* Action Buttons Row */
+    /* Actions Cell */
     #pane-bookings .admin-table tbody tr.booking-card-row td.booking-actions-cell {
         border-bottom: none !important;
-        padding-top: 10px !important;
+        padding-top: 12px !important;
         padding-bottom: 2px !important;
         flex-direction: column !important;
         align-items: stretch !important;
-        gap: 8px !important;
+        gap: 10px !important;
+        min-height: unset !important;
     }
 
     #pane-bookings .admin-table tbody tr.booking-card-row td.booking-actions-cell::before {
@@ -11158,29 +11306,30 @@ html, body { overflow-x: hidden; max-width: 100%; }
         width: 100% !important;
         display: flex !important;
         align-items: center !important;
-        justify-content: space-between !important;
         gap: 8px !important;
     }
 
     #pane-bookings .booking-action-buttons-wrap button {
-        min-height: 38px !important;
+        min-height: 44px !important;
         font-size: 13px !important;
         justify-content: center !important;
-        border-radius: 6px !important;
+        border-radius: 8px !important;
+        font-weight: 700 !important;
     }
 
     #pane-bookings .booking-action-buttons-wrap .booking-bill-btn {
-        flex: 1.4 !important;
-        font-size: 12px !important;
+        flex: 2 !important;
+        font-size: 12.5px !important;
     }
 
     #pane-bookings .booking-action-buttons-wrap .booking-edit-btn {
-        flex: 1 !important;
+        flex: 1.2 !important;
     }
 
     #pane-bookings .booking-action-buttons-wrap .booking-delete-btn {
-        flex: 0 0 42px !important;
-        width: 42px !important;
+        flex: 0 0 44px !important;
+        width: 44px !important;
+        min-width: 44px !important;
     }
 
     #pane-bookings .booking-toggle-details-btn {
@@ -11189,14 +11338,14 @@ html, body { overflow-x: hidden; max-width: 100%; }
         justify-content: center !important;
         gap: 6px !important;
         color: var(--color-gold) !important;
-        font-size: 11.5px !important;
+        font-size: 12px !important;
         font-weight: 700 !important;
         cursor: pointer !important;
-        padding: 8px 0 2px 0 !important;
-        border-top: 1px dashed rgba(255, 255, 255, 0.12) !important;
+        padding: 10px 0 4px 0 !important;
+        border-top: 1px dashed rgba(255, 255, 255, 0.15) !important;
         margin-top: 4px !important;
         text-transform: uppercase !important;
-        letter-spacing: 0.5px !important;
+        letter-spacing: 0.6px !important;
         width: 100% !important;
     }
 
@@ -12196,7 +12345,7 @@ html, body { overflow-x: hidden; max-width: 100%; }
     }
 
     /* --------------------------------------------------
-       ADMIN BOOKINGS MANAGER (MOBILE)
+       ADMIN BOOKINGS MANAGER (MOBILE <= 768px)
        -------------------------------------------------- */
     body.user-role-admin #pane-bookings .bookings-header-wrapper {
         margin-bottom: 16px !important;
@@ -12231,11 +12380,13 @@ html, body { overflow-x: hidden; max-width: 100%; }
         box-shadow: 0 4px 12px rgba(212, 175, 55, 0.35) !important;
     }
 
+    /* Filter Bar — 2x2 Grid */
     body.user-role-admin #pane-bookings .bookings-filters-bar {
-        flex-direction: column !important;
-        align-items: stretch !important;
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        align-items: start !important;
         padding: 12px !important;
-        gap: 10px !important;
+        gap: 8px !important;
     }
 
     body.user-role-admin #pane-bookings .booking-filter-item {
@@ -12251,7 +12402,7 @@ html, body { overflow-x: hidden; max-width: 100%; }
         min-width: 100% !important;
         min-height: 40px !important;
         padding: 8px 10px !important;
-        font-size: 13px !important;
+        font-size: 13.5px !important;
         background: #1e293b !important;
         box-sizing: border-box !important;
     }
@@ -12275,16 +12426,17 @@ html, body { overflow-x: hidden; max-width: 100%; }
 
     /* Booking Card Row */
     body.user-role-admin #pane-bookings .admin-table tbody tr.booking-card-row {
-        background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%) !important;
+        background: linear-gradient(145deg, #1a2744 0%, #0f172a 100%) !important;
         border: 1.5px solid rgba(212, 175, 55, 0.45) !important;
-        border-left: 4px solid var(--color-gold) !important;
-        border-radius: 14px !important;
-        padding: 12px 14px !important;
+        border-left: 5px solid var(--color-gold) !important;
+        border-radius: 16px !important;
+        padding: 14px 16px !important;
         margin-bottom: 0 !important;
         display: flex !important;
         flex-direction: column !important;
-        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45) !important;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45) !important;
         position: relative !important;
+        gap: 0 !important;
     }
 
     body.user-role-admin #pane-bookings .admin-table tbody tr.booking-card-row td {
@@ -12292,51 +12444,235 @@ html, body { overflow-x: hidden; max-width: 100%; }
         justify-content: space-between !important;
         align-items: center !important;
         padding: 8px 0 !important;
-        border-bottom: 1px dashed rgba(255, 255, 255, 0.1) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
         font-size: 13.5px !important;
         color: #f8fafc !important;
         text-align: right !important;
-        min-height: 36px !important;
+        min-height: 38px !important;
         background: transparent !important;
+        gap: 8px !important;
+        flex-wrap: wrap !important;
     }
 
     body.user-role-admin #pane-bookings .admin-table tbody tr.booking-card-row td::before {
         content: attr(data-label);
-        font-weight: 800 !important;
-        color: var(--color-gold) !important;
-        font-size: 11px !important;
+        font-weight: 700 !important;
+        color: #94a3b8 !important;
+        font-size: 10.5px !important;
         text-transform: uppercase !important;
-        letter-spacing: 0.5px !important;
-        margin-right: 10px !important;
+        letter-spacing: 0.6px !important;
+        margin-right: 8px !important;
         text-align: left !important;
         flex-shrink: 0 !important;
+        min-width: 80px !important;
+        white-space: nowrap !important;
     }
 
+    /* Booking ID */
+    body.user-role-admin #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Booking ID"] {
+        border-bottom: 1px solid rgba(212, 175, 55, 0.25) !important;
+        padding-bottom: 10px !important;
+    }
+
+    body.user-role-admin #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Booking ID"]::before {
+        display: none !important;
+    }
+
+    body.user-role-admin #pane-bookings .booking-id-tag {
+        font-family: 'Courier New', monospace !important;
+        font-size: 12px !important;
+        font-weight: 800 !important;
+        color: var(--color-gold) !important;
+        background: rgba(212, 175, 55, 0.12) !important;
+        border: 1px solid rgba(212, 175, 55, 0.3) !important;
+        padding: 4px 10px !important;
+        border-radius: 6px !important;
+        letter-spacing: 0.5px !important;
+    }
+
+    /* Client name */
     body.user-role-admin #pane-bookings .booking-client-name {
         color: #f5c842 !important;
-        font-size: 15px !important;
+        font-size: 16px !important;
         font-weight: 800 !important;
     }
 
+    /* Phone / Contact */
+    body.user-role-admin #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Phone / Contact"] {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 6px !important;
+        padding: 10px 0 !important;
+        min-height: unset !important;
+    }
+
+    body.user-role-admin #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Phone / Contact"]::before {
+        display: none !important;
+    }
+
+    body.user-role-admin #pane-bookings .booking-phone-wrap {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 6px !important;
+        width: 100% !important;
+    }
+
+    body.user-role-admin #pane-bookings .booking-phone-link {
+        font-size: 14px !important;
+        font-weight: 800 !important;
+        color: #f5c842 !important;
+    }
+
+    body.user-role-admin #pane-bookings .booking-quick-call,
+    body.user-role-admin #pane-bookings .booking-quick-wa {
+        min-height: 40px !important;
+        flex: 1 !important;
+        justify-content: center !important;
+        font-size: 13px !important;
+        font-weight: 700 !important;
+    }
+
+    body.user-role-admin #pane-bookings .booking-email-text {
+        color: #94a3b8 !important;
+        font-size: 12px !important;
+        text-align: left !important;
+    }
+
+    /* Special Notes — full width and readable */
+    body.user-role-admin #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Special Notes"] {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        padding: 10px 10px !important;
+        min-height: unset !important;
+        background: rgba(212, 175, 55, 0.05) !important;
+        border-radius: 8px !important;
+        border-bottom: 1px solid rgba(212, 175, 55, 0.15) !important;
+        margin: 2px 0 !important;
+    }
+
+    body.user-role-admin #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Special Notes"]::before {
+        color: var(--color-gold) !important;
+        font-size: 10.5px !important;
+        font-weight: 800 !important;
+        margin-bottom: 6px !important;
+    }
+
+    body.user-role-admin #pane-bookings .booking-notes-text {
+        color: #e2e8f0 !important;
+        font-size: 13px !important;
+        text-align: left !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        min-width: unset !important;
+        line-height: 1.55 !important;
+        word-break: break-word !important;
+    }
+
+    body.user-role-admin #pane-bookings .booking-notes-text .ry-client-note {
+        color: #e2e8f0 !important;
+        font-size: 13px !important;
+        display: block !important;
+        margin-bottom: 6px !important;
+        white-space: pre-wrap !important;
+    }
+
+    body.user-role-admin #pane-bookings .booking-notes-text .ry-last-update-badge {
+        background: rgba(56, 189, 248, 0.12) !important;
+        border: 1px solid rgba(56, 189, 248, 0.35) !important;
+        border-radius: 8px !important;
+        padding: 6px 10px !important;
+        margin-top: 6px !important;
+        display: flex !important;
+        align-items: flex-start !important;
+        gap: 6px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    body.user-role-admin #pane-bookings .booking-notes-text .ry-last-update-badge span {
+        color: #e0f2fe !important;
+        font-size: 12px !important;
+        line-height: 1.5 !important;
+        white-space: normal !important;
+        word-break: break-word !important;
+    }
+
+    /* Pickup */
     body.user-role-admin #pane-bookings .booking-pickup-select {
         max-width: 60% !important;
-        font-size: 12.5px !important;
+        font-size: 13px !important;
         padding: 6px 8px !important;
+        min-height: 36px !important;
+    }
+
+    /* Assignee */
+    body.user-role-admin #pane-bookings .booking-assignee-select {
+        max-width: 60% !important;
+        font-size: 13px !important;
+        padding: 6px 8px !important;
+        min-height: 36px !important;
+    }
+
+    /* Yatra Status */
+    body.user-role-admin #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Yatra Status"] {
+        flex-wrap: wrap !important;
+        min-height: unset !important;
+        padding: 10px 0 !important;
+    }
+
+    body.user-role-admin #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Yatra Status"] > div {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        gap: 8px !important;
+        flex: 1 !important;
+        justify-content: flex-end !important;
+    }
+
+    /* Actions */
+    body.user-role-admin #pane-bookings .admin-table tbody tr.booking-card-row td.booking-actions-cell {
+        border-bottom: none !important;
+        padding-top: 12px !important;
+        padding-bottom: 2px !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 10px !important;
+        min-height: unset !important;
+    }
+
+    body.user-role-admin #pane-bookings .admin-table tbody tr.booking-card-row td.booking-actions-cell::before {
+        display: none !important;
     }
 
     body.user-role-admin #pane-bookings .booking-action-buttons-wrap {
         width: 100% !important;
         display: flex !important;
         align-items: center !important;
-        justify-content: space-between !important;
         gap: 8px !important;
     }
 
     body.user-role-admin #pane-bookings .booking-action-buttons-wrap button {
-        min-height: 40px !important;
+        min-height: 44px !important;
         font-size: 13px !important;
         justify-content: center !important;
-        border-radius: 6px !important;
+        border-radius: 8px !important;
+        font-weight: 700 !important;
+    }
+
+    body.user-role-admin #pane-bookings .booking-action-buttons-wrap .booking-bill-btn {
+        flex: 2 !important;
+        font-size: 12.5px !important;
+    }
+
+    body.user-role-admin #pane-bookings .booking-action-buttons-wrap .booking-edit-btn {
+        flex: 1.2 !important;
+    }
+
+    body.user-role-admin #pane-bookings .booking-action-buttons-wrap .booking-delete-btn {
+        flex: 0 0 44px !important;
+        width: 44px !important;
+        min-width: 44px !important;
     }
 
     body.user-role-admin #pane-bookings .booking-toggle-details-btn {
@@ -12350,9 +12686,9 @@ html, body { overflow-x: hidden; max-width: 100%; }
         cursor: pointer !important;
         padding: 10px 0 4px 0 !important;
         border-top: 1px dashed rgba(255, 255, 255, 0.15) !important;
-        margin-top: 6px !important;
+        margin-top: 4px !important;
         text-transform: uppercase !important;
-        letter-spacing: 0.5px !important;
+        letter-spacing: 0.6px !important;
         width: 100% !important;
     }
 

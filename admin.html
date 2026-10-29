@@ -244,12 +244,12 @@
                 </div>
 
                 <!-- 5D: Quick-Filter Status Pill Tabs -->
-                <div id="booking-quick-filter-tabs" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; align-items:center;">
+                <div id="booking-quick-filter-tabs" class="bookings-qf-bar" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; align-items:center;">
                     <span style="font-size:11px; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:0.6px; margin-right:4px;">Quick Filter:</span>
                     <button onclick="setBookingQuickFilter('')"         id="bqf-all"       class="booking-qf-pill active" style="padding:5px 14px; border-radius:20px; font-size:12px; font-weight:700; border:1.5px solid rgba(212,175,55,0.5); background:#1e293b; color:#cbd5e1; cursor:pointer; transition:all 0.18s;">All</button>
-                    <button onclick="setBookingQuickFilter('In Progress')"   id="bqf-progress"  class="booking-qf-pill"        style="padding:5px 14px; border-radius:20px; font-size:12px; font-weight:700; border:1.5px solid rgba(245,158,11,0.4); background:rgba(245,158,11,0.08); color:#f59e0b; cursor:pointer; transition:all 0.18s;">🟡 In Progress</button>
-                    <button onclick="setBookingQuickFilter('Yatra Completed')" id="bqf-completed" class="booking-qf-pill"     style="padding:5px 14px; border-radius:20px; font-size:12px; font-weight:700; border:1.5px solid rgba(34,197,94,0.4); background:rgba(34,197,94,0.08); color:#22c55e; cursor:pointer; transition:all 0.18s;">✅ Yatra Completed</button>
-                    <button onclick="setBookingQuickFilter('Cancelled')"    id="bqf-cancelled" class="booking-qf-pill"        style="padding:5px 14px; border-radius:20px; font-size:12px; font-weight:700; border:1.5px solid rgba(239,68,68,0.4); background:rgba(239,68,68,0.08); color:#ef4444; cursor:pointer; transition:all 0.18s;">❌ Cancelled</button>
+                    <button onclick="setBookingQuickFilter('In Progress')"   id="bqf-progress"  class="booking-qf-pill"        style="padding:5px 14px; border-radius:20px; font-size:12px; font-weight:700; border:1.5px solid rgba(245,158,11,0.4); background:rgba(245,158,11,0.08); color:#f59e0b; cursor:pointer; transition:all 0.18s;"><i class="fa-solid fa-route" style="font-size:10px; margin-right:4px;"></i> In Progress</button>
+                    <button onclick="setBookingQuickFilter('Yatra Completed')" id="bqf-completed" class="booking-qf-pill"     style="padding:5px 14px; border-radius:20px; font-size:12px; font-weight:700; border:1.5px solid rgba(34,197,94,0.4); background:rgba(34,197,94,0.08); color:#22c55e; cursor:pointer; transition:all 0.18s;"><i class="fa-solid fa-flag-checkered" style="font-size:10px; margin-right:4px;"></i> Yatra Completed</button>
+                    <button onclick="setBookingQuickFilter('Cancelled')"    id="bqf-cancelled" class="booking-qf-pill"        style="padding:5px 14px; border-radius:20px; font-size:12px; font-weight:700; border:1.5px solid rgba(239,68,68,0.4); background:rgba(239,68,68,0.08); color:#ef4444; cursor:pointer; transition:all 0.18s;"><i class="fa-solid fa-ban" style="font-size:10px; margin-right:4px;"></i> Cancelled</button>
                     <span id="bqf-count" style="margin-left:auto; font-size:11px; color:#64748b; font-weight:600;"></span>
                 </div>
 
@@ -4991,7 +4991,7 @@
                         <td data-label="Travelers">
                             <span class="booking-travelers-badge">👥 ${item.travelers} Pax</span>
                         </td>
-                        <td data-label="Special Notes" class="mobile-detail-field" style="min-width: 190px; max-width: 280px;">
+                        <td data-label="Special Notes" style="min-width: 190px; max-width: 280px;">
                             <div class="booking-notes-text">${formatBookingSpecialNotes(item)}</div>
                         </td>
                         <td data-label="Booked By">
