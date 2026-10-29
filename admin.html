@@ -4720,21 +4720,35 @@
         window.formatBookingSpecialNotes = function(item) {
             if (!item) return '—';
             let raw = (item.message || '');
-            
+
             // 1. Strip internal system tags
             raw = raw.replace(/\[Pickup:\s*[^\]]+\]\n?/gi, '');
             raw = raw.replace(/\[YatraStatus:\s*[^\]]+\]\n?/gi, '');
             raw = raw.trim();
-            if (!raw) return '<span style="color: rgba(255,255,255,0.35);">—</span>';
+            if (!raw) return '<span style="color:rgba(255,255,255,0.35)">—</span>';
 
-            // 2. Separate lines: transfers vs client notes vs planning tags
-            const lines = raw.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
-            const transferLines = [];
-            const notesLines = [];
-            const planningLines = [];
+            // 2. Handle old comma-separated transfer format:
+            // "Transfer admin from admin, Unassigned admin, admin to admin, Mansi by Admin"
+            // Convert to modern format for display
+            if (/^Transfer\s+\w+\s+from\s+/i.test(raw) && !raw.includes('\n')) {
+                raw = '🔄 Transferred from (legacy) to ' + raw.split(' ').slice(-2).join(' ');
+            }
 
-            lines.forEach(line => {
-                if (/^(?:🔄\s*)?Transferred\s+from/i.test(line)) {
+            // 3. Split lines
+            const lines = raw.split(/\r?\n/).map(function(l) { return l.trim(); }).filter(Boolean);
+            var transferLines = [];
+            var notesLines = [];
+            var planningLines = [];
+
+            lines.forEach(function(line) {
+                // Match ANY line that looks like a system transfer/assignment line:
+                // - "🔄 Transferred from X to Y"
+                // - "Transferred from X to Y"
+                // - "🔄 Unassigned X" 
+                // - "🔄 X to Y by Z"
+                // - "🔄 admin to admin" etc.
+                if (/^(?:🔄\s*)?(?:Transferred\s+from|Unassigned\s+|Transfer\s+from)/i.test(line) ||
+                    /^🔄\s+\S+.*(?:\s+to\s+|\s+by\s+)/i.test(line)) {
                     transferLines.push(line);
                 } else if (/^Planning:\s*/i.test(line)) {
                     planningLines.push(line);
@@ -4743,38 +4757,36 @@
                 }
             });
 
-            // 3. Take ONLY the LAST transfer/update
-            let lastUpdate = null;
+            // 4. Take ONLY the LAST transfer/update line
+            var lastUpdate = null;
             if (transferLines.length > 0) {
                 lastUpdate = transferLines[transferLines.length - 1];
-                if (!lastUpdate.startsWith('🔄')) {
-                    lastUpdate = '🔄 ' + lastUpdate;
-                }
+                if (!lastUpdate.startsWith('🔄')) lastUpdate = '🔄 ' + lastUpdate;
             }
 
-            let html = '';
+            var html = '';
 
-            // User's custom note
+            // Show genuine client notes (non-system lines) with visible color
             if (notesLines.length > 0) {
-                const noteContent = notesLines.map(l => escapeHtml(l)).join('<br>');
-                html += '<div class="ry-client-custom-note" style="color: #f1f5f9; font-size: 12px; font-weight: 500; line-height: 1.45; word-break: break-word;' + (lastUpdate ? ' margin-bottom: 6px;' : '') + '">' + noteContent + '</div>';
+                var noteContent = notesLines.map(function(l) { return escapeHtml(l); }).join('<br>');
+                html += '<div style="color:#e2e8f0;font-size:12px;font-weight:500;line-height:1.45;word-break:break-word;' + (lastUpdate ? 'margin-bottom:5px;' : '') + '">' + noteContent + '</div>';
             }
 
-            // Last update by user badge
+            // Show ONLY the last update badge
             if (lastUpdate) {
-                const cleanUpdateText = lastUpdate.replace(/^🔄\s*/, '');
-                html += '<div class="ry-last-update-badge" title="' + escapeHtml(lastUpdate) + '" style="display: inline-flex; align-items: center; gap: 5px; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.3); color: #38bdf8; font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 6px; line-height: 1.35; max-width: 100%; word-break: break-word;">' +
-                    '<span style="font-size: 10px; opacity: 0.85; text-transform: uppercase; letter-spacing: 0.4px; color: #7dd3fc; font-weight: 700;">Last Update:</span>' +
-                    '<span>' + escapeHtml(cleanUpdateText) + '</span>' +
-                '</div>';
+                var cleanText = lastUpdate.replace(/^🔄\s*/, '');
+                html += '<div style="display:inline-flex;align-items:center;gap:4px;background:rgba(56,189,248,0.12);border:1px solid rgba(56,189,248,0.3);color:#38bdf8;font-size:11px;font-weight:600;padding:3px 8px;border-radius:6px;line-height:1.35;max-width:100%;word-break:break-word;">' +
+                    '<span style="font-size:10px;text-transform:uppercase;letter-spacing:0.4px;color:#7dd3fc;font-weight:700;white-space:nowrap;">Last:</span>' +
+                    '<span style="color:#bae6fd;">' + escapeHtml(cleanText) + '</span>' +
+                    '</div>';
             }
 
-            // Fallback for planning metadata if no notes or transfer
+            // Fallback: planning metadata
             if (!html && planningLines.length > 0) {
-                html = '<div style="color: rgba(255,255,255,0.45); font-size: 11px; line-height: 1.4; word-break: break-word;">' + escapeHtml(planningLines.join(' | ')) + '</div>';
+                html = '<div style="color:rgba(255,255,255,0.45);font-size:11px;line-height:1.4;word-break:break-word;">' + escapeHtml(planningLines.join(' | ')) + '</div>';
             }
 
-            return html || '<span style="color: rgba(255,255,255,0.35);">—</span>';
+            return html || '<span style="color:rgba(255,255,255,0.35)">—</span>';
         };
 
         window.resetBookingsFilters = function() {
