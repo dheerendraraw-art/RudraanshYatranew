@@ -437,10 +437,16 @@
                 <!-- Filtered Leads Drill-Down List Section -->
                 <div id="analytics-filtered-leads-container" style="margin-bottom: 24px;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
-                        <h4 style="margin: 0; font-size: 15px; color: #f8fafc; font-weight: 700; display: flex; align-items: center; gap: 8px;">
-                            <i class="fa-solid fa-filter" style="color: var(--color-gold);"></i> 
-                            <span id="analytics-filtered-leads-title">Leads Detail List</span>
-                        </h4>
+                        <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+                            <h4 style="margin: 0; font-size: 16px; color: #0f172a; font-weight: 800; display: flex; align-items: center; gap: 8px;">
+                                <i class="fa-solid fa-filter" style="color: var(--color-gold);"></i> 
+                                <span id="analytics-filtered-leads-title">Leads Detail List</span>
+                            </h4>
+                            <div style="position:relative; width:240px; max-width:100%;">
+                                <i class="fa-solid fa-magnifying-glass" style="position:absolute; left:10px; top:50%; transform:translateY(-50%); color:var(--color-gold); font-size:12px; pointer-events:none;"></i>
+                                <input type="text" id="analytics-drilldown-search" placeholder="Search client, phone, dest..." oninput="filterAnalyticsDrilldown(this.value)" style="width:100%; padding:6px 10px 6px 30px; border-radius:6px; border:1.5px solid #cbd5e1; font-size:12px; outline:none; background:#ffffff; color:#0f172a; font-weight:500;" />
+                            </div>
+                        </div>
                         <button class="btn btn-secondary" onclick="setAnalyticsMetricFilter('all')" style="padding: 4px 10px; font-size: 11px; font-weight: 700;" title="Reset Card Filter">
                             <i class="fa-solid fa-xmark"></i> Show All Leads
                         </button>
@@ -4169,7 +4175,7 @@
                     card.el.title = filterType ? `Click to filter by ${label}` : '';
                     if (card.icon) card.icon.innerHTML = iconHtml;
                     if (card.num) card.num.innerHTML = (num !== undefined && num !== null) ? num : '<i class="fa-solid fa-spinner fa-spin" style="font-size: 13px; opacity: 0.6;"></i>';
-                    if (card.label) card.label.innerText = label;
+                    if (card.label) card.label.innerHTML = label;
 
                     if (filterType) {
                         card.el.onclick = function() {
@@ -6049,6 +6055,23 @@
         // --- 2.5 STAFF ANALYTICS DASHBOARD LOGIC ---
         window.currentAnalyticsMetricFilter = 'all';
 
+        window.filterAnalyticsDrilldown = function(searchVal) {
+            const q = (searchVal || '').toLowerCase().trim();
+            const rows = document.querySelectorAll('#analytics-filtered-leads-tbody tr.drilldown-row');
+            let visibleCount = 0;
+            rows.forEach(row => {
+                const text = row.innerText.toLowerCase();
+                const match = !q || text.includes(q);
+                row.style.display = match ? '' : 'none';
+                if (match) visibleCount++;
+            });
+            const titleEl = document.getElementById('analytics-filtered-leads-title');
+            if (titleEl && q) {
+                const baseTitle = titleEl.innerText.replace(/\s*\([0-9]+\)/, '');
+                titleEl.innerText = baseTitle + ' (' + visibleCount + ' matches)';
+            }
+        };
+
         window.setAnalyticsMetricFilter = function(filterType) {
             if (window.currentAnalyticsMetricFilter === filterType && filterType !== 'all') {
                 window.currentAnalyticsMetricFilter = 'all';
@@ -6409,23 +6432,44 @@
                             const incVal = computeIncentiveForStaff(st.id, st.name);
                             const pendingInc = computePendingIncentiveForStaff(st.id, st.name);
 
+                            // Intelligent, realistic workload & performance indicators
                             let badgeHtml = '';
-                            if (st.converted > 0) {
-                                badgeHtml += `<span class="badge" style="background: rgba(219, 39, 119, 0.1); color: #db2777; border: 1px solid rgba(219, 39, 119, 0.3); padding: 4px 8px; border-radius: 4px; font-weight: 700; font-size: 11px; white-space: nowrap;"><i class="fa-solid fa-star"></i> Top Performer</span>`;
+                            const maxConverted = Math.max(...sortedStaff.map(s => s.converted || 0));
+                            const numContactRate = parseFloat(contactRate) || 0;
+                            const pendingRatio = st.total > 0 ? (st.pending / st.total) : 0;
+
+                            if (st.converted === maxConverted && maxConverted > 0) {
+                                badgeHtml += `<span class="badge" style="background: rgba(219, 39, 119, 0.12); color: #be185d; border: 1.5px solid rgba(219, 39, 119, 0.4); padding: 3px 8px; border-radius: 6px; font-weight: 800; font-size: 11px; white-space: nowrap;"><i class="fa-solid fa-crown" style="color:#d4af37;"></i> Top Closer</span>`;
+                            } else if (st.converted >= 5) {
+                                badgeHtml += `<span class="badge" style="background: rgba(217, 119, 6, 0.12); color: #b45309; border: 1px solid rgba(217, 119, 6, 0.35); padding: 3px 8px; border-radius: 6px; font-weight: 700; font-size: 11px; white-space: nowrap;"><i class="fa-solid fa-star"></i> High Converter</span>`;
                             }
-                            if (st.connected >= 20) {
-                                badgeHtml += `<span class="badge" style="background: rgba(22, 163, 74, 0.1); color: #16a34a; border: 1px solid rgba(22, 163, 74, 0.3); padding: 4px 8px; border-radius: 4px; font-weight: 700; font-size: 11px; white-space: nowrap;"><i class="fa-solid fa-bolt"></i> High Contact Rate</span>`;
+
+                            if (numContactRate >= 45) {
+                                badgeHtml += `<span class="badge" style="background: rgba(22, 163, 74, 0.12); color: #15803d; border: 1px solid rgba(22, 163, 74, 0.35); padding: 3px 8px; border-radius: 6px; font-weight: 700; font-size: 11px; white-space: nowrap;"><i class="fa-solid fa-bolt"></i> High Contact</span>`;
+                            } else if (numContactRate < 35 && st.total > 50) {
+                                badgeHtml += `<span class="badge" style="background: rgba(234, 179, 8, 0.15); color: #a16207; border: 1px solid rgba(234, 179, 8, 0.4); padding: 3px 8px; border-radius: 6px; font-weight: 700; font-size: 11px; white-space: nowrap;"><i class="fa-regular fa-clock"></i> Outreach Lag</span>`;
                             }
-                            if (st.pending >= 20) {
-                                badgeHtml += `<span class="badge" style="background: rgba(220, 38, 38, 0.1); color: #dc2626; border: 1px solid rgba(220, 38, 38, 0.3); padding: 4px 8px; border-radius: 4px; font-weight: 700; font-size: 11px; white-space: nowrap;"><i class="fa-solid fa-triangle-exclamation"></i> High Backlog</span>`;
+
+                            if (st.pending > 300 && pendingRatio >= 0.5) {
+                                badgeHtml += `<span class="badge" style="background: rgba(220, 38, 38, 0.12); color: #b91c1c; border: 1px solid rgba(220, 38, 38, 0.35); padding: 3px 8px; border-radius: 6px; font-weight: 700; font-size: 11px; white-space: nowrap;"><i class="fa-solid fa-triangle-exclamation"></i> High Backlog</span>`;
+                            } else if (st.total > 0 && pendingRatio <= 0.35) {
+                                badgeHtml += `<span class="badge" style="background: rgba(37, 99, 235, 0.1); color: #1d4ed8; border: 1px solid rgba(37, 99, 235, 0.3); padding: 3px 8px; border-radius: 6px; font-weight: 700; font-size: 11px; white-space: nowrap;"><i class="fa-solid fa-check"></i> Balanced</span>`;
                             }
+
                             if (!badgeHtml) {
-                                badgeHtml = `<span class="badge" style="background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 4px; font-weight: 600; font-size: 11px; white-space: nowrap;">Active</span>`;
+                                badgeHtml = `<span class="badge" style="background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 6px; font-weight: 600; font-size: 11px; white-space: nowrap;">Active</span>`;
                             }
 
                             html += `
                                 <tr>
-                                    <td data-label="Staff Name"><strong style="color: #0f172a; font-size: 14px; font-weight: 700;">${st.name}</strong></td>
+                                    <td data-label="Staff Name">
+                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                            <div style="width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #0f172a, #1e293b); color: var(--color-gold); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px; border: 1.5px solid rgba(212,175,55,0.4); flex-shrink: 0; box-shadow: 0 2px 6px rgba(0,0,0,0.12);">${(st.name || 'S').trim().charAt(0).toUpperCase()}</div>
+                                            <div>
+                                                <strong style="color: #0f172a; font-size: 14px; font-weight: 800; display: block;">${st.name}</strong>
+                                            </div>
+                                        </div>
+                                    </td>
                                     <td data-label="Assigned Leads"><span style="font-weight: 800; font-size: 14px; color: #d97706;">${st.total}</span></td>
                                     <td data-label="Connected"><span style="color: #16a34a; font-weight: 700; font-size: 14px;">${st.connected}</span></td>
                                     <td data-label="Pending"><span style="color: #d97706; font-weight: 700; font-size: 14px;">${st.pending}</span></td>
@@ -6460,18 +6504,18 @@
                                     </td>
                                     <td data-label="Contact Rate">
                                         <div style="display: flex; align-items: center; gap: 8px;">
-                                            <div style="flex-grow: 1; height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden; min-width: 60px;">
-                                                <div style="width: ${contactRate}%; height: 100%; background: #16a34a;"></div>
+                                            <div style="flex-grow: 1; height: 7px; background: #e2e8f0; border-radius: 10px; overflow: hidden; min-width: 55px;">
+                                                <div style="width: ${contactRate}%; height: 100%; border-radius: 10px; background: linear-gradient(90deg, #16a34a, #22c55e);"></div>
                                             </div>
-                                            <span style="font-size: 12px; font-weight: 700; color: #0f172a;">${contactRate}%</span>
+                                            <span style="font-size: 12px; font-weight: 800; color: #0f172a; min-width: 40px; text-align: right;">${contactRate}%</span>
                                         </div>
                                     </td>
                                     <td data-label="Conversion Rate">
                                         <div style="display: flex; align-items: center; gap: 8px;">
-                                            <div style="flex-grow: 1; height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden; min-width: 60px;">
-                                                <div style="width: ${conversionRate}%; height: 100%; background: #db2777;"></div>
+                                            <div style="flex-grow: 1; height: 7px; background: #e2e8f0; border-radius: 10px; overflow: hidden; min-width: 55px;">
+                                                <div style="width: ${conversionRate}%; height: 100%; border-radius: 10px; background: linear-gradient(90deg, #db2777, #f43f5e);"></div>
                                             </div>
-                                            <span style="font-size: 12px; font-weight: 700; color: #0f172a;">${conversionRate}%</span>
+                                            <span style="font-size: 12px; font-weight: 800; color: #0f172a; min-width: 40px; text-align: right;">${conversionRate}%</span>
                                         </div>
                                     </td>
                                     <td data-label="Workload Indicator">
@@ -6480,8 +6524,8 @@
                                         </div>
                                     </td>
                                     <td data-label="Actions">
-                                        <button class="btn btn-secondary" onclick="filterStaffLeadsFromAnalytics('${st.id}')" style="padding: 4px 10px; font-size: 11px; font-weight: 700;" title="View Leads for ${st.name}">
-                                            <i class="fa-solid fa-eye"></i> View Leads
+                                        <button class="btn btn-secondary" onclick="filterStaffLeadsFromAnalytics('${st.id}')" style="padding: 5px 12px; font-size: 11.5px; font-weight: 700; border-radius: 6px; display: inline-flex; align-items: center; gap: 5px;" title="View Leads for ${st.name}">
+                                            <i class="fa-solid fa-list-check" style="color: var(--color-gold);"></i> View Leads
                                         </button>
                                     </td>
                                 </tr>
@@ -6562,16 +6606,17 @@
                             let badgeColor = '#e2e8f0';
                             let badgeLabel = st;
 
+                            let badgeBorder = 'rgba(0,0,0,0.1)';
                             if (fs.toLowerCase() === 'booking confirmed' || st.toLowerCase() === 'won') {
-                                badgeBg = 'rgba(219, 39, 119, 0.2)'; badgeColor = '#f472b6'; badgeLabel = '🏆 Booking Confirmed';
+                                badgeBg = 'rgba(219, 39, 119, 0.12)'; badgeColor = '#be185d'; badgeBorder = 'rgba(219, 39, 119, 0.35)'; badgeLabel = '🏆 Booking Confirmed';
                             } else if (st.toLowerCase() === 'answered') {
-                                badgeBg = 'rgba(34, 197, 94, 0.2)'; badgeColor = '#4ade80'; badgeLabel = '📞 Answered';
+                                badgeBg = 'rgba(22, 163, 74, 0.12)'; badgeColor = '#15803d'; badgeBorder = 'rgba(22, 163, 74, 0.35)'; badgeLabel = '📞 Answered';
                             } else if (st.toLowerCase() === 'follow up required') {
-                                badgeBg = 'rgba(59, 130, 246, 0.2)'; badgeColor = '#60a5fa'; badgeLabel = '⏳ Follow Up';
+                                badgeBg = 'rgba(37, 99, 235, 0.12)'; badgeColor = '#1d4ed8'; badgeBorder = 'rgba(37, 99, 235, 0.35)'; badgeLabel = '⏳ Follow Up';
                             } else if (st.toLowerCase() === 'not answered') {
-                                badgeBg = 'rgba(239, 68, 68, 0.2)'; badgeColor = '#f87171'; badgeLabel = '❌ Not Answered';
+                                badgeBg = 'rgba(220, 38, 38, 0.12)'; badgeColor = '#b91c1c'; badgeBorder = 'rgba(220, 38, 38, 0.35)'; badgeLabel = '❌ Not Answered';
                             } else if (['new', 'uncalled'].includes(st.toLowerCase())) {
-                                badgeBg = 'rgba(245, 158, 11, 0.2)'; badgeColor = '#fbbf24'; badgeLabel = '🔔 New';
+                                badgeBg = 'rgba(217, 119, 6, 0.12)'; badgeColor = '#b45309'; badgeBorder = 'rgba(217, 119, 6, 0.35)'; badgeLabel = '🔔 New';
                             }
 
                             const cleanPhone = phone.replace(/[^0-9]/g, '');
@@ -6583,7 +6628,7 @@
                                     <td data-label="Phone / WhatsApp"><span class="drilldown-phone">${phone}</span> ${waBtn}</td>
                                     <td data-label="Destination"><span class="badge drilldown-dest-badge">${dest}</span></td>
                                     <td data-label="Assigned Staff"><span class="badge drilldown-staff-badge">👤 ${assign}</span></td>
-                                    <td data-label="Lead Status"><span class="badge" style="background: ${badgeBg}; color: ${badgeColor}; padding: 3px 8px; border-radius: 4px; font-weight: 700; font-size: 11px;">${badgeLabel}</span></td>
+                                    <td data-label="Lead Status"><span class="badge" style="background: ${badgeBg}; color: ${badgeColor}; border: 1px solid ${badgeBorder || 'rgba(0,0,0,0.1)'}; padding: 3px 8px; border-radius: 6px; font-weight: 700; font-size: 11.5px; white-space: nowrap;">${badgeLabel}</span></td>
                                     <td data-label="Actions">
                                         <a href="lead-details.html?id=${lead.id}" target="_blank" class="btn btn-primary drilldown-action-btn">
                                             <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Card
