@@ -6602,21 +6602,37 @@
                             const st = lead.status || 'New';
                             const fs = lead.final_status || '';
 
-                            let badgeBg = 'rgba(255, 255, 255, 0.08)';
-                            let badgeColor = '#e2e8f0';
-                            let badgeLabel = st;
+                            const sLower = (st || '').toLowerCase().trim();
+                            const fLower = (fs || '').toLowerCase().trim();
 
-                            let badgeBorder = 'rgba(0,0,0,0.1)';
-                            if (fs.toLowerCase() === 'booking confirmed' || st.toLowerCase() === 'won') {
+                            // Default crisp fallback (slate dark charcoal on soft slate background)
+                            let badgeBg = '#f1f5f9';
+                            let badgeColor = '#1e293b';
+                            let badgeBorder = '#cbd5e1';
+                            let badgeLabel = st || 'Active';
+
+                            if (fLower === 'booking confirmed' || sLower === 'won' || sLower === 'converted' || sLower === 'booked') {
                                 badgeBg = 'rgba(219, 39, 119, 0.12)'; badgeColor = '#be185d'; badgeBorder = 'rgba(219, 39, 119, 0.35)'; badgeLabel = '🏆 Booking Confirmed';
-                            } else if (st.toLowerCase() === 'answered') {
+                            } else if (sLower === 'answered') {
                                 badgeBg = 'rgba(22, 163, 74, 0.12)'; badgeColor = '#15803d'; badgeBorder = 'rgba(22, 163, 74, 0.35)'; badgeLabel = '📞 Answered';
-                            } else if (st.toLowerCase() === 'follow up required') {
+                            } else if (sLower === 'follow up required' || sLower === 'follow up' || fLower === 'follow up') {
                                 badgeBg = 'rgba(37, 99, 235, 0.12)'; badgeColor = '#1d4ed8'; badgeBorder = 'rgba(37, 99, 235, 0.35)'; badgeLabel = '⏳ Follow Up';
-                            } else if (st.toLowerCase() === 'not answered') {
+                            } else if (sLower === 'postpone' || fLower === 'postpone' || sLower === 'postponed') {
+                                badgeBg = 'rgba(124, 58, 237, 0.12)'; badgeColor = '#6d28d9'; badgeBorder = 'rgba(124, 58, 237, 0.35)'; badgeLabel = '⏸️ Postpone';
+                            } else if (sLower === 'cancelled' || fLower === 'cancelled' || sLower === 'cancel') {
+                                badgeBg = 'rgba(71, 85, 105, 0.14)'; badgeColor = '#334155'; badgeBorder = 'rgba(71, 85, 105, 0.35)'; badgeLabel = '🚫 Cancelled';
+                            } else if (sLower === 'not answered' || sLower === 'no answer' || sLower === 'unreachable') {
                                 badgeBg = 'rgba(220, 38, 38, 0.12)'; badgeColor = '#b91c1c'; badgeBorder = 'rgba(220, 38, 38, 0.35)'; badgeLabel = '❌ Not Answered';
-                            } else if (['new', 'uncalled'].includes(st.toLowerCase())) {
+                            } else if (sLower === 'lost' || fLower === 'lost lead' || fLower === 'not interested' || fLower === 'booked elsewhere') {
+                                badgeBg = 'rgba(239, 68, 68, 0.12)'; badgeColor = '#dc2626'; badgeBorder = 'rgba(239, 68, 68, 0.35)'; badgeLabel = '🗑️ ' + (fs || st || 'Lost');
+                            } else if (sLower === 'busy') {
+                                badgeBg = 'rgba(245, 158, 11, 0.15)'; badgeColor = '#b45309'; badgeBorder = 'rgba(245, 158, 11, 0.35)'; badgeLabel = '⏳ Busy';
+                            } else if (['switch off', 'no. not reachable', 'incorrect number', 'wrong number'].includes(sLower)) {
+                                badgeBg = 'rgba(234, 88, 12, 0.12)'; badgeColor = '#c2410c'; badgeBorder = 'rgba(234, 88, 12, 0.35)'; badgeLabel = '📴 ' + st;
+                            } else if (['new', 'uncalled'].includes(sLower)) {
                                 badgeBg = 'rgba(217, 119, 6, 0.12)'; badgeColor = '#b45309'; badgeBorder = 'rgba(217, 119, 6, 0.35)'; badgeLabel = '🔔 New';
+                            } else if (sLower.includes('kailash') || fLower.includes('kailash')) {
+                                badgeBg = 'rgba(14, 165, 233, 0.12)'; badgeColor = '#0369a1'; badgeBorder = 'rgba(14, 165, 233, 0.35)'; badgeLabel = '🏔️ Kailash Yatra';
                             }
 
                             const cleanPhone = phone.replace(/[^0-9]/g, '');
