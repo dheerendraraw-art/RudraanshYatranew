@@ -624,108 +624,117 @@
 
             <!-- PANE 4: BLOGS -->
             <div id="pane-blogs" class="admin-tab-content-pane" style="display: none;">
-                <div class="admin-form-grid">
 
-                    <!-- Write Blog Form -->
-                    <div class="admin-form-card">
-                        <h3 class="admin-form-title" id="blog-form-title"><i class="fa-solid fa-pen-nib"
-                                style="color: var(--color-gold); margin-right: 8px;"></i> Write a Himalayan Diary</h3>
-                        <form id="blog-form" onsubmit="submitBlogForm(event)">
-                            <div class="admin-form-control-wrap">
-                                <div class="admin-form-group">
-                                    <label for="blog-title">Article Title</label>
-                                    <input type="text" id="blog-title" class="admin-input"
-                                        placeholder="E.g., Trekking through Limpiyadhura Route" required>
-                                </div>
-                                <div class="admin-form-group">
-                                    <label for="blog-author">Author Name</label>
-                                    <input type="text" id="blog-author" class="admin-input"
-                                        placeholder="E.g., Yashpal Rawat" required>
-                                </div>
-                                <div class="admin-form-group">
-                                    <label>Header / Cover Image</label>
-                                    <div class="admin-file-zone">
-                                        <i class="fa-solid fa-cloud-arrow-up admin-file-icon"></i>
-                                        <p class="admin-file-text">Click to choose image or drag & drop (JPEG/PNG/WEBP)
-                                        </p>
-                                        <input type="file" id="blog-image" accept="image/*"
-                                            onchange="previewImage(this, 'blog-preview')" required>
+                <!-- Blog Stats Bar -->
+                <div class="blog-stats-bar">
+                    <div class="blog-stat-pill">
+                        <i class="fa-solid fa-newspaper" style="color:var(--color-gold);"></i>
+                        <span id="blog-stat-total">0</span>
+                        <span>Total Articles</span>
+                    </div>
+                    <div class="blog-stat-pill">
+                        <i class="fa-solid fa-pen-nib" style="color:#38bdf8;"></i>
+                        <span id="blog-stat-authors">0</span>
+                        <span>Authors</span>
+                    </div>
+                    <div class="blog-stat-pill">
+                        <i class="fa-solid fa-clock-rotate-left" style="color:#a78bfa;"></i>
+                        <span id="blog-stat-last">—</span>
+                        <span>Last Published</span>
+                    </div>
+                    <div class="blog-search-wrap">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="blog-search-input" placeholder="Search by title or author…" oninput="filterBlogsList()" />
+                    </div>
+                </div>
+
+                <div class="blog-layout-grid">
+
+                    <!-- LEFT: Write / Edit Form -->
+                    <div class="blog-form-panel">
+                        <div class="blog-form-panel-header">
+                            <div class="blog-form-panel-icon"><i class="fa-solid fa-pen-nib"></i></div>
+                            <div>
+                                <h3 class="blog-panel-title" id="blog-form-title">Write a Himalayan Diary</h3>
+                                <p class="blog-panel-subtitle" id="blog-panel-subtitle">Create and publish an article to the live website</p>
+                            </div>
+                        </div>
+
+                        <form id="blog-form" onsubmit="submitBlogForm(event)" autocomplete="off">
+                            <div class="blog-form-fields">
+
+                                <!-- Title + Author -->
+                                <div class="blog-field-row-2">
+                                    <div class="blog-form-group">
+                                        <label class="blog-field-label" for="blog-title">
+                                            <i class="fa-solid fa-heading" style="color:var(--color-gold);"></i>
+                                            Article Title <span class="req">*</span>
+                                        </label>
+                                        <input type="text" id="blog-title" class="blog-input" placeholder="E.g., Trekking through Limpiyadhura Route" required>
                                     </div>
-                                    <div id="blog-preview-container" class="admin-image-preview-box">
-                                        <img id="blog-preview" src="" alt="Blog Preview">
-                                        <button type="button" class="admin-image-preview-remove"
-                                            onclick="removePreview('blog-image', 'blog-preview-container')">&times;</button>
+                                    <div class="blog-form-group">
+                                        <label class="blog-field-label" for="blog-author">
+                                            <i class="fa-solid fa-user-pen" style="color:#38bdf8;"></i>
+                                            Author Name <span class="req">*</span>
+                                        </label>
+                                        <input type="text" id="blog-author" class="blog-input" placeholder="E.g., Yashpal Rawat" required>
                                     </div>
                                 </div>
-                                <div class="admin-form-group">
-                                    <label for="blog-content" style="display:flex; align-items:center; gap:8px; margin-bottom:10px; font-size:13px; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:1px;">
-                                        <i class="fa-solid fa-pen-to-square" style="color:var(--color-gold);"></i> Article Content
+
+                                <!-- Cover Image Upload -->
+                                <div class="blog-form-group">
+                                    <label class="blog-field-label">
+                                        <i class="fa-solid fa-image" style="color:#a78bfa;"></i>
+                                        Cover Image <span class="req" id="blog-img-req">*</span>
+                                        <span id="blog-img-optional-note" style="display:none;font-weight:400;color:#64748b;font-size:11px;margin-left:4px;">(keep blank to keep existing)</span>
                                     </label>
-                                    <!-- Modern Rich Editor Wrapper -->
-                                    <div class="rich-editor-wrap" style="border:1.5px solid rgba(212,175,55,0.5); border-radius:10px; overflow:visible; box-shadow:0 4px 24px rgba(0,0,0,0.18); background:#1a2234; position:relative;">
+                                    <div class="blog-upload-zone" id="blog-upload-zone" onclick="document.getElementById('blog-image').click()">
+                                        <i class="fa-solid fa-cloud-arrow-up" style="font-size:28px;color:rgba(212,175,55,0.5);display:block;margin-bottom:8px;"></i>
+                                        <p style="margin:0;font-size:13px;color:#64748b;font-weight:600;">Click to choose or drag &amp; drop image</p>
+                                        <p style="margin:4px 0 0;font-size:11px;color:#94a3b8;">JPEG / PNG / WEBP — max 5MB</p>
+                                        <input type="file" id="blog-image" accept="image/*" style="display:none;" onchange="handleBlogImageSelect(this)" required>
+                                    </div>
+                                    <div id="blog-preview-container" class="blog-img-preview-wrap" style="display:none;">
+                                        <img id="blog-preview" src="" alt="Cover Preview">
+                                        <button type="button" class="blog-img-remove-btn" onclick="removePreview('blog-image','blog-preview-container');document.getElementById('blog-upload-zone').style.display='flex';">
+                                            <i class="fa-solid fa-xmark"></i>
+                                        </button>
+                                        <div class="blog-img-preview-label">Cover Image</div>
+                                    </div>
+                                </div>
 
-                                        <!-- Toolbar Row 1: Text Formatting -->
-                                        <div class="rich-editor-toolbar-v2" style="display:flex; flex-wrap:wrap; align-items:center; gap:2px; padding:8px 10px; background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%); border-bottom:1px solid rgba(212,175,55,0.2); position:sticky; top:0; z-index:100; border-top-left-radius:9px; border-top-right-radius:9px;">
-
-                                            <!-- Group: Text Style -->
-                                            <div class="editor-btn-group" style="display:flex; gap:2px; background:rgba(255,255,255,0.04); border-radius:7px; padding:3px;">
-                                                <button type="button" onclick="execEditorCommand('bold')" title="Bold (Ctrl+B)" class="rte-btn" style="font-weight:800;">
-                                                    <i class="fa-solid fa-bold"></i>
-                                                </button>
-                                                <button type="button" onclick="execEditorCommand('italic')" title="Italic (Ctrl+I)" class="rte-btn" style="font-style:italic;">
-                                                    <i class="fa-solid fa-italic"></i>
-                                                </button>
-                                                <button type="button" onclick="execEditorCommand('underline')" title="Underline (Ctrl+U)" class="rte-btn" style="text-decoration:underline;">
-                                                    <i class="fa-solid fa-underline"></i>
-                                                </button>
-                                                <button type="button" onclick="execEditorCommand('strikeThrough')" title="Strikethrough" class="rte-btn">
-                                                    <i class="fa-solid fa-strikethrough"></i>
-                                                </button>
+                                <!-- Rich Text Editor -->
+                                <div class="blog-form-group">
+                                    <label class="blog-field-label">
+                                        <i class="fa-solid fa-pen-to-square" style="color:var(--color-gold);"></i>
+                                        Article Content <span class="req">*</span>
+                                    </label>
+                                    <div class="blog-rte-wrap">
+                                        <div class="blog-rte-toolbar">
+                                            <div class="blog-rte-btn-group">
+                                                <button type="button" onclick="execEditorCommand('bold')" title="Bold" class="blog-rte-btn"><i class="fa-solid fa-bold"></i></button>
+                                                <button type="button" onclick="execEditorCommand('italic')" title="Italic" class="blog-rte-btn" style="font-style:italic;"><i class="fa-solid fa-italic"></i></button>
+                                                <button type="button" onclick="execEditorCommand('underline')" title="Underline" class="blog-rte-btn"><i class="fa-solid fa-underline"></i></button>
+                                                <button type="button" onclick="execEditorCommand('strikeThrough')" title="Strikethrough" class="blog-rte-btn"><i class="fa-solid fa-strikethrough"></i></button>
                                             </div>
-
-                                            <div style="width:1px;height:28px;background:rgba(212,175,55,0.25);margin:0 4px;flex-shrink:0;"></div>
-
-                                            <!-- Group: Alignment -->
-                                            <div class="editor-btn-group" style="display:flex; gap:2px; background:rgba(255,255,255,0.04); border-radius:7px; padding:3px;">
-                                                <button type="button" onclick="execEditorCommand('justifyLeft')" title="Align Left" class="rte-btn">
-                                                    <i class="fa-solid fa-align-left"></i>
-                                                </button>
-                                                <button type="button" onclick="execEditorCommand('justifyCenter')" title="Align Center" class="rte-btn">
-                                                    <i class="fa-solid fa-align-center"></i>
-                                                </button>
-                                                <button type="button" onclick="execEditorCommand('justifyRight')" title="Align Right" class="rte-btn">
-                                                    <i class="fa-solid fa-align-right"></i>
-                                                </button>
+                                            <div class="blog-rte-divider"></div>
+                                            <div class="blog-rte-btn-group">
+                                                <button type="button" onclick="execEditorCommand('justifyLeft')" title="Align Left" class="blog-rte-btn"><i class="fa-solid fa-align-left"></i></button>
+                                                <button type="button" onclick="execEditorCommand('justifyCenter')" title="Center" class="blog-rte-btn"><i class="fa-solid fa-align-center"></i></button>
+                                                <button type="button" onclick="execEditorCommand('justifyRight')" title="Align Right" class="blog-rte-btn"><i class="fa-solid fa-align-right"></i></button>
                                             </div>
-
-                                            <div style="width:1px;height:28px;background:rgba(212,175,55,0.25);margin:0 4px;flex-shrink:0;"></div>
-
-                                            <!-- Group: Lists -->
-                                            <div class="editor-btn-group" style="display:flex; gap:2px; background:rgba(255,255,255,0.04); border-radius:7px; padding:3px;">
-                                                <button type="button" onclick="execEditorCommand('insertUnorderedList')" title="Bullet List" class="rte-btn">
-                                                    <i class="fa-solid fa-list-ul"></i>
-                                                </button>
-                                                <button type="button" onclick="execEditorCommand('insertOrderedList')" title="Numbered List" class="rte-btn">
-                                                    <i class="fa-solid fa-list-ol"></i>
-                                                </button>
+                                            <div class="blog-rte-divider"></div>
+                                            <div class="blog-rte-btn-group">
+                                                <button type="button" onclick="execEditorCommand('insertUnorderedList')" title="Bullet List" class="blog-rte-btn"><i class="fa-solid fa-list-ul"></i></button>
+                                                <button type="button" onclick="execEditorCommand('insertOrderedList')" title="Numbered List" class="blog-rte-btn"><i class="fa-solid fa-list-ol"></i></button>
                                             </div>
-
-                                            <div style="width:1px;height:28px;background:rgba(212,175,55,0.25);margin:0 4px;flex-shrink:0;"></div>
-
-                                            <!-- Group: Links -->
-                                            <div class="editor-btn-group" style="display:flex; gap:2px; background:rgba(255,255,255,0.04); border-radius:7px; padding:3px;">
-                                                <button type="button" onclick="execEditorCommand('createLink')" title="Insert Link" class="rte-btn">
-                                                    <i class="fa-solid fa-link"></i>
-                                                </button>
-                                                <button type="button" onclick="execEditorCommand('unlink')" title="Remove Link" class="rte-btn">
-                                                    <i class="fa-solid fa-link-slash"></i>
-                                                </button>
+                                            <div class="blog-rte-divider"></div>
+                                            <div class="blog-rte-btn-group">
+                                                <button type="button" onclick="execEditorCommand('createLink')" title="Insert Link" class="blog-rte-btn"><i class="fa-solid fa-link"></i></button>
+                                                <button type="button" onclick="execEditorCommand('unlink')" title="Remove Link" class="blog-rte-btn"><i class="fa-solid fa-link-slash"></i></button>
                                             </div>
-
-                                            <div style="width:1px;height:28px;background:rgba(212,175,55,0.25);margin:0 4px;flex-shrink:0;"></div>
-
-                                            <!-- Format Block Dropdown -->
-                                            <select onchange="execEditorCommand('formatBlock', this.value); this.value='';" class="rte-select" title="Paragraph Format">
+                                            <div class="blog-rte-divider"></div>
+                                            <select onchange="execEditorCommand('formatBlock',this.value);this.value='';" class="blog-rte-select" title="Paragraph Format">
                                                 <option value="" disabled selected>¶ Format</option>
                                                 <option value="p">Paragraph</option>
                                                 <option value="h2">Heading 2</option>
@@ -733,9 +742,7 @@
                                                 <option value="h4">Heading 4</option>
                                                 <option value="blockquote">Blockquote</option>
                                             </select>
-
-                                            <!-- Font Style Dropdown -->
-                                            <select onchange="execEditorCommand('fontName', this.value); this.value='';" class="rte-select" title="Font Family">
+                                            <select onchange="execEditorCommand('fontName',this.value);this.value='';" class="blog-rte-select" title="Font">
                                                 <option value="" disabled selected>Aa Font</option>
                                                 <option value="Plus Jakarta Sans">Jakarta Sans</option>
                                                 <option value="Cormorant Garamond">Cormorant</option>
@@ -743,114 +750,76 @@
                                                 <option value="Arial">Arial</option>
                                                 <option value="Courier New">Monospace</option>
                                             </select>
-
-                                            <!-- Font Size Dropdown -->
-                                            <select onchange="execEditorCommand('fontSize', this.value); this.value='';" class="rte-select" title="Font Size">
-                                                <option value="" disabled selected>Size</option>
-                                                <option value="1">XS</option>
-                                                <option value="2">S</option>
-                                                <option value="3">M</option>
-                                                <option value="4">L</option>
-                                                <option value="5">XL</option>
-                                                <option value="6">2XL</option>
-                                                <option value="7">3XL</option>
-                                            </select>
-
-                                            <!-- Undo/Redo -->
-                                            <div style="margin-left:auto; display:flex; gap:2px; background:rgba(255,255,255,0.04); border-radius:7px; padding:3px;">
-                                                <button type="button" onclick="execEditorCommand('undo')" title="Undo (Ctrl+Z)" class="rte-btn">
-                                                    <i class="fa-solid fa-rotate-left"></i>
-                                                </button>
-                                                <button type="button" onclick="execEditorCommand('redo')" title="Redo (Ctrl+Y)" class="rte-btn">
-                                                    <i class="fa-solid fa-rotate-right"></i>
-                                                </button>
+                                            <div style="margin-left:auto;display:flex;gap:2px;">
+                                                <button type="button" onclick="execEditorCommand('undo')" title="Undo" class="blog-rte-btn"><i class="fa-solid fa-rotate-left"></i></button>
+                                                <button type="button" onclick="execEditorCommand('redo')" title="Redo" class="blog-rte-btn"><i class="fa-solid fa-rotate-right"></i></button>
                                             </div>
                                         </div>
-
-                                        <!-- Content Editable Area -->
                                         <div id="blog-editor-rich"
                                              contenteditable="true"
-                                             class="rte-content-area"
-                                             data-placeholder="Begin writing your Himalayan story here... Share the journey, the peaks, the people."
-                                             oninput="updateWordCount()"
-                                             style="min-height:320px; max-height:480px; background:#fff; color:#1e293b; padding:20px 24px; overflow-y:auto; line-height:1.8; font-size:15px; font-family:'Plus Jakarta Sans',sans-serif; outline:none;">
-                                        </div>
-
-                                        <!-- Footer: word count + hint -->
-                                        <div style="display:flex; justify-content:space-between; align-items:center; padding:7px 14px; background:#0f172a; border-top:1px solid rgba(212,175,55,0.15); border-bottom-left-radius:9px; border-bottom-right-radius:9px;">
-                                            <span style="font-size:11px; color:#475569; font-style:italic;">
-                                                <i class="fa-regular fa-lightbulb" style="color:rgba(212,175,55,0.6); margin-right:4px;"></i>
-                                                Tip: Select text and click a formatting button to apply styles.
-                                            </span>
-                                            <span id="rte-word-count" style="font-size:11px; font-weight:700; color:rgba(212,175,55,0.8); letter-spacing:0.5px;">0 words</span>
+                                             class="blog-rte-content"
+                                             data-placeholder="Begin writing your Himalayan story… Share the journey, the peaks, the people."
+                                             oninput="updateWordCount()"></div>
+                                        <div class="blog-rte-footer">
+                                            <span class="blog-rte-tip"><i class="fa-regular fa-lightbulb" style="color:rgba(212,175,55,0.7);margin-right:4px;"></i>Select text then click a toolbar button.</span>
+                                            <span id="rte-word-count" class="blog-rte-wordcount">0 words</span>
                                         </div>
                                     </div>
                                     <textarea id="blog-content" name="content" style="display:none;"></textarea>
                                 </div>
 
-                                <!-- RTE Styles & Word Counter -->
-                                <style>
-                                    .rte-btn {
-                                        display: inline-flex; align-items: center; justify-content: center;
-                                        width: 32px; height: 32px; border: none; background: transparent;
-                                        color: #94a3b8; cursor: pointer; border-radius: 5px;
-                                        font-size: 13px; transition: all 0.15s ease;
-                                    }
-                                    .rte-btn:hover { background: rgba(212,175,55,0.18); color: #d4af37; transform: translateY(-1px); }
-                                    .rte-btn:active { background: rgba(212,175,55,0.35); transform: translateY(0); }
-                                    .rte-select {
-                                        background: rgba(255,255,255,0.06); color: #94a3b8;
-                                        border: 1px solid rgba(212,175,55,0.25); border-radius: 6px;
-                                        padding: 5px 8px; font-size: 12px; font-weight: 600; cursor: pointer;
-                                        outline: none; transition: all 0.15s ease;
-                                    }
-                                    .rte-select:hover { border-color: rgba(212,175,55,0.6); color: #d4af37; }
-                                    .rte-select option { background: #1e293b; color: #e2e8f0; }
-                                    .rte-content-area[data-placeholder]:empty:before {
-                                        content: attr(data-placeholder);
-                                        color: #94a3b8; pointer-events: none; display: block;
-                                        font-style: italic;
-                                    }
-                                    .rte-content-area:focus { box-shadow: inset 0 0 0 2px rgba(212,175,55,0.3); }
-                                    .rte-content-area h2 { font-size: 1.5em; font-weight: 700; margin: 0.8em 0 0.4em; color: #0f172a; }
-                                    .rte-content-area h3 { font-size: 1.2em; font-weight: 700; margin: 0.7em 0 0.3em; color: #1e293b; }
-                                    .rte-content-area h4 { font-size: 1em; font-weight: 700; margin: 0.6em 0 0.3em; color: #334155; }
-                                    .rte-content-area blockquote { border-left: 3px solid #d4af37; padding-left: 14px; margin: 12px 0; color: #475569; font-style: italic; }
-                                    .rte-content-area a { color: #2563eb; text-decoration: underline; }
-                                    .rich-editor-wrap:focus-within { border-color: rgba(212,175,55,0.85); box-shadow: 0 0 0 3px rgba(212,175,55,0.12); }
-                                </style>
-                                <script>
-                                    function updateWordCount() {
-                                        const el = document.getElementById('blog-editor-rich');
-                                        const text = el.innerText || '';
-                                        const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
-                                        document.getElementById('rte-word-count').textContent = words + ' word' + (words !== 1 ? 's' : '');
-                                    }
-                                </script>
-                                <div class="admin-form-group">
-                                    <label for="blog-slug">URL Slug (Optional)</label>
-                                    <input type="text" id="blog-slug" class="admin-input" placeholder="E.g., custom-slug-here (auto-generated if empty)">
+                                <!-- SEO Settings (collapsible) -->
+                                <details class="blog-seo-details">
+                                    <summary class="blog-seo-summary">
+                                        <i class="fa-solid fa-magnifying-glass" style="color:#34d399;"></i>
+                                        SEO Settings
+                                        <span style="font-weight:400;font-size:11px;color:#64748b;margin-left:6px;">(optional — auto-generated if blank)</span>
+                                    </summary>
+                                    <div class="blog-seo-body">
+                                        <div class="blog-form-group">
+                                            <label class="blog-field-label" for="blog-slug">
+                                                <i class="fa-solid fa-link" style="color:#94a3b8;font-size:11px;"></i> URL Slug
+                                            </label>
+                                            <input type="text" id="blog-slug" class="blog-input" placeholder="custom-slug-here  (auto-generated from title if empty)">
+                                        </div>
+                                        <div class="blog-form-group">
+                                            <label class="blog-field-label" for="blog-meta-desc">
+                                                <i class="fa-solid fa-align-left" style="color:#94a3b8;font-size:11px;"></i> Meta Description
+                                            </label>
+                                            <textarea id="blog-meta-desc" class="blog-input blog-textarea" rows="2" placeholder="Custom Google search snippet (auto-generated if empty)"></textarea>
+                                        </div>
+                                    </div>
+                                </details>
+
+                                <!-- Submit / Update -->
+                                <div class="blog-submit-row">
+                                    <button type="submit" id="btn-submit-blog" class="blog-publish-btn">
+                                        <i class="fa-solid fa-paper-plane"></i>
+                                        Publish Article
+                                    </button>
                                 </div>
-                                <div class="admin-form-group">
-                                    <label for="blog-meta-desc">Meta Description (Optional)</label>
-                                    <textarea id="blog-meta-desc" class="admin-textarea" rows="2" placeholder="Custom Google search result snippet (auto-generated if empty)"></textarea>
-                                </div>
-                                <button type="submit" id="btn-submit-blog" class="btn btn-primary"
-                                    style="width: 100%; border: none;">
-                                    Publish Article <i class="fa-solid fa-paper-plane" style="margin-left: 6px;"></i>
-                                </button>
+
                             </div>
                         </form>
                     </div>
 
-                    <!-- Existing Blogs List -->
-                    <div class="admin-form-card">
-                        <h3 class="admin-form-title"><i class="fa-solid fa-list-check"
-                                style="color: var(--color-gold); margin-right: 8px;"></i> Published Articles</h3>
-                        <div class="admin-items-list" id="blogs-list">
-                            <p style="text-align: center; color: var(--color-slate);">Loading published diaries...</p>
+                    <!-- RIGHT: Published Articles List -->
+                    <div class="blog-list-panel">
+                        <div class="blog-list-panel-header">
+                            <div class="blog-list-panel-icon"><i class="fa-solid fa-list-check"></i></div>
+                            <div>
+                                <h3 class="blog-panel-title">Published Articles</h3>
+                                <p class="blog-panel-subtitle" id="blog-list-count">Loading articles…</p>
+                            </div>
+                        </div>
+                        <div class="blog-articles-list" id="blogs-list">
+                            <div class="blog-list-loading">
+                                <i class="fa-solid fa-spinner fa-spin" style="color:var(--color-gold);font-size:20px;"></i>
+                                <p>Loading published articles…</p>
+                            </div>
                         </div>
                     </div>
+
                 </div>
             </div>
 
@@ -5191,6 +5160,45 @@
         };
 
         // 4. Fetch Blogs
+        window.filterBlogsList = function() {
+            const q = (document.getElementById('blog-search-input') ? document.getElementById('blog-search-input').value : '').toLowerCase().trim();
+            const cards = document.querySelectorAll('.blog-article-card');
+            let visible = 0;
+            cards.forEach(function(c) {
+                const title = (c.getAttribute('data-title') || '');
+                const author = (c.getAttribute('data-author') || '');
+                const matches = !q || title.includes(q) || author.includes(q);
+                c.style.display = matches ? '' : 'none';
+                if (matches) visible++;
+            });
+            const countEl = document.getElementById('blog-list-count');
+            if (countEl) countEl.textContent = visible + ' article' + (visible !== 1 ? 's' : '') + (q ? ' found' : ' published');
+        };
+
+        window.handleBlogImageSelect = function(input) {
+            if (input && input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById('blog-preview');
+                    const previewContainer = document.getElementById('blog-preview-container');
+                    const uploadZone = document.getElementById('blog-upload-zone');
+                    if (preview) preview.src = e.target.result;
+                    if (previewContainer) previewContainer.style.display = 'block';
+                    if (uploadZone) uploadZone.style.display = 'none';
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        };
+
+        window.updateWordCount = function() {
+            const el = document.getElementById('blog-editor-rich');
+            if (!el) return;
+            const text = el.innerText || '';
+            const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+            const counter = document.getElementById('rte-word-count');
+            if (counter) counter.textContent = words + ' word' + (words !== 1 ? 's' : '');
+        };
+
         async function fetchBlogs() {
             if (!supabaseAdmin) return;
             try {
@@ -5210,25 +5218,48 @@
                     return;
                 }
 
+                // Update stats bar
+                const uniqueAuthors = [...new Set(blogsData.map(b => b.author).filter(Boolean))];
+                const totalEl = document.getElementById('blog-stat-total');
+                const authEl = document.getElementById('blog-stat-authors');
+                const lastEl = document.getElementById('blog-stat-last');
+                const countEl = document.getElementById('blog-list-count');
+                if (totalEl) totalEl.textContent = blogsData.length;
+                if (authEl) authEl.textContent = uniqueAuthors.length;
+                if (lastEl && blogsData.length > 0) {
+                    lastEl.textContent = new Date(blogsData[0].created_at).toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' });
+                }
+                if (countEl) countEl.textContent = blogsData.length + ' article' + (blogsData.length !== 1 ? 's' : '') + ' published';
+
                 let html = '';
                 blogsData.forEach(item => {
-                    const createdStr = new Date(item.created_at).toLocaleDateString();
+                    const createdStr = new Date(item.created_at).toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' });
+                    const wordCount = item.content ? item.content.replace(/<[^>]*>/g,'').split(/\s+/).filter(Boolean).length : 0;
+                    const readMins = Math.max(1, Math.ceil(wordCount / 200));
                     const safeItem = JSON.stringify(item).replace(/"/g, '&quot;');
+                    const titleLc = (item.title || '').toLowerCase();
+                    const authorLc = (item.author || '').toLowerCase();
                     html += `
-                        <div class="admin-item-row" id="blog-row-${item.id}">
-                            <img class="admin-item-img" src="${item.image_url}" onerror="this.src='assets/images/adi-kailash-hero.webp'">
-                            <div class="admin-item-meta">
-                                <span class="admin-item-name">${item.title}</span>
-                                <div class="admin-item-sub">By ${item.author} | Published on ${createdStr}</div>
+                        <div class="blog-article-card" id="blog-row-${item.id}" data-title="${titleLc}" data-author="${authorLc}">
+                            <div class="blog-card-thumb-wrap">
+                                <img class="blog-card-thumb" src="${item.image_url || ''}" alt="${item.title}" onerror="this.src='assets/images/adi-kailash-hero.webp'">
                             </div>
-                            <div style="display: flex; gap: 8px; align-items: center;">
-                                <a href="/blog/${item.slug}" target="_blank" class="admin-btn-view" style="background-color: rgba(255,255,255,0.05); color: var(--color-gold); border: 1px solid var(--color-gold); width: 32px; height: 32px; border-radius: var(--border-radius-sm); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; text-decoration: none;" title="View Live Blog">
+                            <div class="blog-card-body">
+                                <div class="blog-card-title">${item.title}</div>
+                                <div class="blog-card-meta">
+                                    <span class="blog-card-chip"><i class="fa-solid fa-user-pen"></i> ${item.author || 'Unknown'}</span>
+                                    <span class="blog-card-chip"><i class="fa-regular fa-calendar"></i> ${createdStr}</span>
+                                    <span class="blog-card-chip"><i class="fa-regular fa-clock"></i> ${readMins} min read</span>
+                                </div>
+                            </div>
+                            <div class="blog-card-actions">
+                                <a href="/blog/${item.slug}" target="_blank" class="blog-action-btn blog-action-view" title="View Live Article">
                                     <i class="fa-solid fa-arrow-up-right-from-square"></i>
                                 </a>
-                                <button class="admin-btn-edit" onclick="startEditBlog(${safeItem})" style="background-color: var(--color-gold); color: #0f172a; border: none; width: 32px; height: 32px; border-radius: var(--border-radius-sm); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px;">
+                                <button class="blog-action-btn blog-action-edit" onclick="startEditBlog(${safeItem})" title="Edit Article">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </button>
-                                <button class="admin-btn-delete" onclick="deleteRecord('blogs', '${item.id}', fetchBlogs)">
+                                <button class="blog-action-btn blog-action-delete" onclick="deleteRecord('blogs', '${item.id}', fetchBlogs)" title="Delete Article">
                                     <i class="fa-solid fa-trash"></i>
                                 </button>
                             </div>
@@ -5335,7 +5366,10 @@
             editingBlogImageUrl = item.image_url;
 
             // Update form header
-            document.getElementById('blog-form-title').innerHTML = `<i class="fa-solid fa-pen-nib" style="color: var(--color-gold); margin-right: 8px;"></i> Edit Himalayan Diary`;
+            document.getElementById('blog-form-title').textContent = 'Edit Himalayan Diary';
+            var _ir = document.getElementById('blog-img-req'); if (_ir) _ir.style.display = 'none';
+            var _on = document.getElementById('blog-img-optional-note'); if (_on) _on.style.display = 'inline';
+            var _uz1 = document.getElementById('blog-upload-zone'); if (_uz1) _uz1.style.display = item.image_url ? 'none' : 'flex';
             
             // Populate fields
             document.getElementById('blog-title').value = item.title;
@@ -5386,7 +5420,10 @@
             editingBlogImageUrl = null;
 
             // Reset form header
-            document.getElementById('blog-form-title').innerHTML = `<i class="fa-solid fa-pen-nib" style="color: var(--color-gold); margin-right: 8px;"></i> Write a Himalayan Diary`;
+            document.getElementById('blog-form-title').textContent = 'Write a Himalayan Diary';
+            var _ir2 = document.getElementById('blog-img-req'); if (_ir2) _ir2.style.display = 'inline';
+            var _on2 = document.getElementById('blog-img-optional-note'); if (_on2) _on2.style.display = 'none';
+            var _uz2 = document.getElementById('blog-upload-zone'); if (_uz2) _uz2.style.display = 'flex';
 
             // Reset form
             document.getElementById('blog-form').reset();
@@ -5399,7 +5436,7 @@
 
             // Reset submit button text
             const btn = document.getElementById('btn-submit-blog');
-            btn.innerHTML = `Publish Article <i class="fa-solid fa-paper-plane" style="margin-left: 6px;"></i>`;
+            btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Publish Article`;
 
             // Remove cancel button
             const cancelBtn = document.getElementById('btn-cancel-blog-edit');
@@ -5559,7 +5596,7 @@
             } finally {
                 btn.disabled = false;
                 if (!editingBlogId) {
-                    btn.innerHTML = `Publish Article <i class="fa-solid fa-paper-plane" style="margin-left: 6px;"></i>`;
+                    btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Publish Article`;
                 }
             }
         }
