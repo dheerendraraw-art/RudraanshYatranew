@@ -15,7 +15,7 @@
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></noscript>
-    <link rel="stylesheet" href="/style.css?v=8.6">
+    <link rel="stylesheet" href="/style.css?v=8.7">
     <meta name="robots" content="noindex, nofollow">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
@@ -10653,18 +10653,19 @@
                     </div>
                 `;
 
-                let billedAmtHtml = isCancelled
-                    ? `<div style="display:flex;flex-direction:column;gap:2px;"><strong class="billing-net-amount" style="text-decoration:line-through;color:#94a3b8;font-size:13px;">₹${netAmount.toLocaleString('en-IN')}</strong><span style="font-size:10px;font-weight:700;color:#ef4444;background:rgba(239,68,68,0.1);padding:1px 6px;border-radius:4px;display:inline-block;width:max-content;">Cancelled</span></div>`
+                                let billedAmtInner = isCancelled
+                    ? `<strong class="billing-net-amount" style="text-decoration:line-through;color:#94a3b8;font-size:13px;">₹${netAmount.toLocaleString('en-IN')}</strong><span style="font-size:10px;font-weight:700;color:#ef4444;background:rgba(239,68,68,0.1);padding:1px 6px;border-radius:4px;display:inline-block;width:max-content;">Cancelled</span>`
                     : `<strong class="billing-net-amount">₹${netAmount.toLocaleString('en-IN')}</strong>`;
 
                 if (discount > 0 && !isCancelled) {
-                    billedAmtHtml += `
+                    billedAmtInner += `
                         <div class="billing-disc-wrap">
                             <span class="billing-base-val">Base: ₹${totalBilled.toLocaleString('en-IN')}</span><br>
                             <span class="billing-disc-val">Disc: -₹${discount.toLocaleString('en-IN')}</span>
                         </div>
                     `;
                 }
+                const billedAmtHtml = `<div class="billing-amt-wrap">${billedAmtInner}</div>`;
 
                 const outstandingDisplay = isCancelled
                     ? `<span class="amt-cleared" style="color:#94a3b8;font-size:12px;">₹0 <span style="font-size:10px;">(Cancelled)</span></span>`

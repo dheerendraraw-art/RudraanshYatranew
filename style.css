@@ -10777,6 +10777,14 @@ html, body { overflow-x: hidden; max-width: 100%; }
     font-weight: 800;
     display: inline-block;
 }
+.billing-amt-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+    gap: 2px;
+}
+
 .billing-customer-wrap {
     text-align: left;
 }
@@ -11726,6 +11734,14 @@ html, body { overflow-x: hidden; max-width: 100%; }
     }
 
     /* ── Row 4: Billed Amount (Net) ── */
+    #pane-billing .billing-amt-wrap {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-end !important;
+        text-align: right !important;
+        gap: 2px !important;
+    }
+
     #pane-billing .billing-net-amount {
         color: #f8fafc !important;
         font-size: 16px !important;
@@ -12825,6 +12841,25 @@ html, body { overflow-x: hidden; max-width: 100%; }
 }
 
 @media (max-width: 480px) {
+    /* Small Phone Billing Improvements (<= 480px) */
+    #pane-billing .billing-filters-bar {
+        padding: 10px !important;
+        gap: 8px !important;
+    }
+    #pane-billing .admin-table tbody tr.billing-card-row {
+        padding: 12px 14px !important;
+        border-radius: 14px !important;
+    }
+    #pane-billing .billing-customer-name {
+        font-size: 15px !important;
+    }
+    #pane-billing .billing-action-buttons-wrap {
+        gap: 6px !important;
+    }
+    #pane-billing .billing-action-buttons-wrap button {
+        font-size: 12px !important;
+    }
+
     /* Small Phone Booking Improvements (<= 480px) */
     #pane-bookings .bookings-filters-bar,
     body.user-role-admin #pane-bookings .bookings-filters-bar {
