@@ -587,19 +587,20 @@ button.nav-dropdown-toggle {
         position: fixed;
         top: 0;
         right: 0;
-        width: 300px;
+        width: min(86vw, 320px) !important;
         height: 100vh;
         background-color: var(--color-bg-card);
         border-left: 1px solid var(--glass-border);
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
-        padding: 100px 40px;
-        gap: 24px;
+        padding: 76px 22px 36px 22px !important;
+        gap: 16px !important;
         box-shadow: var(--shadow-lg);
         transition: var(--transition-smooth);
         z-index: 999;
         overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
     
     .nav-menu.active {
@@ -8195,19 +8196,30 @@ body.user-role-staff .admin-only-action {
 
     .admin-tab-nav {
         display: flex !important;
-        flex-wrap: wrap !important;
-        gap: 8px !important;
-        padding: 4px !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        gap: 6px !important;
+        padding: 6px 4px !important;
         margin-bottom: 16px !important;
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
+    }
+
+    .admin-tab-nav::-webkit-scrollbar {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
     }
 
     .admin-tab-btn {
-        flex: 1 1 auto !important;
+        flex: 0 0 auto !important;
+        white-space: nowrap !important;
         text-align: center !important;
         justify-content: center !important;
-        padding: 10px 14px !important;
-        font-size: 13px !important;
-        border-radius: 8px !important;
+        padding: 8px 15px !important;
+        font-size: 12.5px !important;
+        border-radius: 20px !important;
         background: rgba(255, 255, 255, 0.05) !important;
         border: 1.5px solid rgba(255, 255, 255, 0.1) !important;
         color: #94a3b8 !important;
@@ -10473,6 +10485,164 @@ html, body { overflow-x: hidden; max-width: 100%; }
     h3 { font-size: clamp(16px, 5vw, 22px) !important; }
     p, li { font-size: 14px !important; line-height: 1.7 !important; }
     .btn-primary, .btn-outline, .nav-btn { font-size: 13px !important; padding: 11px 20px !important; }
+}
+
+/* ── 31. iOS Safari Auto-Zoom Prevention (Input font-size >= 16px) ──────── */
+@media (max-width: 768px) {
+    input,
+    select,
+    textarea,
+    .form-control,
+    .sidebar-widget .inquiry-form .form-control,
+    .modal-box .form-control,
+    .admin-input,
+    .admin-select,
+    .admin-textarea {
+        font-size: 16px !important;
+    }
+}
+
+/* ── 32. Mobile Navigation Drawer Polish & Dimming Backdrop ──────────────── */
+body.menu-open::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 25, 47, 0.65);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 998;
+    pointer-events: auto;
+}
+
+/* ── 33. Global Mobile Bottom Action Bar (Sticky Dual CTA) ───────────────── */
+.ry-mobile-bottom-bar {
+    display: none;
+}
+@media (max-width: 768px) {
+    .ry-mobile-bottom-bar {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background: rgba(10, 25, 47, 0.96);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-top: 1.5px solid rgba(212, 175, 55, 0.35);
+        padding: 8px 12px;
+        gap: 10px;
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.45);
+        box-sizing: border-box;
+    }
+    .ry-mobile-bottom-bar .ry-mob-btn {
+        flex: 1;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 44px;
+        padding: 10px 14px;
+        border-radius: 8px;
+        font-size: 13.5px;
+        font-weight: 700;
+        text-decoration: none;
+        letter-spacing: 0.3px;
+        transition: transform 0.15s ease, filter 0.15s ease;
+        box-sizing: border-box;
+    }
+    .ry-mobile-bottom-bar .ry-mob-call {
+        background: linear-gradient(135deg, #1e293b, #0f172a);
+        color: #f8fafc;
+        border: 1px solid rgba(212, 175, 55, 0.5);
+    }
+    .ry-mobile-bottom-bar .ry-mob-call i {
+        color: #fbbf24;
+        font-size: 15px;
+    }
+    .ry-mobile-bottom-bar .ry-mob-whatsapp {
+        background: linear-gradient(135deg, #25d366, #128c7e);
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 3px 12px rgba(37, 211, 102, 0.35);
+    }
+    .ry-mobile-bottom-bar .ry-mob-whatsapp i {
+        font-size: 18px;
+    }
+    body.has-ry-mob-bar .whatsapp-floating,
+    body.has-ry-mob-bar .whatsapp-float {
+        display: none !important;
+    }
+    body.has-ry-mob-bar {
+        padding-bottom: 64px !important;
+    }
+}
+
+/* ── 34. Responsive Place & Temple Facts Tables ─────────────────────────── */
+@media (max-width: 640px) {
+    .place-facts-table {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+    .place-facts-table tbody {
+        display: table !important;
+        width: 100% !important;
+        min-width: 320px !important;
+    }
+    .place-facts-table td:first-child {
+        white-space: normal !important;
+        width: 42% !important;
+        min-width: 110px !important;
+        word-break: normal !important;
+    }
+    .place-facts-table td {
+        padding: 9px 12px !important;
+        font-size: 13px !important;
+    }
+    .refund-table {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        min-width: 440px !important;
+    }
+    .table-responsive-wrapper,
+    .comparison-table-wrap,
+    .refund-table-wrap {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        box-sizing: border-box !important;
+    }
+}
+
+/* ── 35. Touch Targets Standardization (Apple HIG / Google Guidelines) ──── */
+@media (max-width: 768px) {
+    .btn,
+    .nav-btn,
+    .tab-btn,
+    .filter-btn,
+    .faq-question,
+    .btn-primary,
+    .btn-outline {
+        min-height: 44px;
+        box-sizing: border-box;
+    }
+    .nav-menu > li > a,
+    .nav-menu > li > button {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        padding: 6px 0;
+    }
 }
 
 /* END GLOBAL MOBILE OPTIMISATION PASS */

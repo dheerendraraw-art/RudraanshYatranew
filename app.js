@@ -1524,4 +1524,40 @@ function initializeDiscountPopup() {
             });
         }
     }
+
+    // Mobile Sticky Action Bar Initialization
+    function initMobileBottomBar() {
+        if (document.getElementById('ry-mobile-bottom-bar')) return;
+        const path = window.location.pathname.toLowerCase();
+        if (path.includes('admin') || path.includes('lead-details') || path.includes('payment')) return;
+
+        let pageContext = 'Adi Kailash & Om Parvat Yatra';
+        const h1 = document.querySelector('h1');
+        if (h1 && h1.textContent.trim()) {
+            pageContext = h1.textContent.trim().replace(/\s+/g, ' ').slice(0, 60);
+        } else if (document.title) {
+            pageContext = document.title.split('|')[0].trim().slice(0, 60);
+        }
+
+        const waText = encodeURIComponent(`Namaste! I am visiting your website and inquiring about: ${pageContext}. Please share complete details.`);
+        const waUrl = `https://wa.me/917617617651?text=${waText}`;
+
+        const bar = document.createElement('div');
+        bar.id = 'ry-mobile-bottom-bar';
+        bar.className = 'ry-mobile-bottom-bar';
+        bar.innerHTML = `
+            <a href="tel:+917617617651" class="ry-mob-btn ry-mob-call" aria-label="Call Rudraansh Yatra Ground Team">
+                <i class="fa-solid fa-phone"></i>
+                <span>Call Now</span>
+            </a>
+            <a href="${waUrl}" class="ry-mob-btn ry-mob-whatsapp" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Ground Team">
+                <i class="fa-brands fa-whatsapp"></i>
+                <span>WhatsApp</span>
+            </a>
+        `;
+        document.body.appendChild(bar);
+        document.body.classList.add('has-ry-mob-bar');
+    }
+    initMobileBottomBar();
+
 });

@@ -394,9 +394,18 @@ app.get('/blog/:slug', async (req, res) => {
     const legacySlugs = {
         'due-to-china-denying-clearance-for-the-lipulekh-crossing-28-indian-businessmen-were-forced-to-return': 'china-denies-lipulekh-clearance-indian-traders-return',
         'ndia-tibet-border-trade-through-lipulekh-pass-finally-resumes-on-august-1-2026-after-a-seven-year-pause-heres-what-changed-since-traders-were-turned-back-in-july': 'india-tibet-border-trade-lipulekh-pass-resumes-august-2026',
-        'inner-line-permit-adi-kailash-2026-step-by-step': 'inner-line-permit-adi-kailash-2026-guide',
+        'inner-line-permit-adi-kailash-2026-guide': 'inner-line-permit-adi-kailash-2026-step-by-step',
         'adi-kailash-vs-mount-kailash-comparison-cost-difficulty-permits': 'adi-kailash-vs-kailash-mansarovar-real-difference',
-        'adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitude-ultra-marathon-guide': 'adi-kailash-parikrama-run-2-0-winners-results-gunji'
+        'adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitude-ultra-marathon-guide': 'adi-kailash-parikrama-run-2-0-winners-results-gunji',
+        'adi-kailash-ilp-suspended-oct-19-to-26-2026-for-parikrama-run': 'adi-kailash-parikrama-run-2-0-winners-results-gunji',
+        'is-adi-kailash-yatra-safe-for-senior-citizens-guide': 'adi-kailash-yatra-complete-guide-2026',
+        'adi-kailash-yatra-difficulty-level-can-beginners-do-it': 'adi-kailash-yatra-complete-guide-2026',
+        'adi-kailash-packing-list-essential-guide-for-yatris': 'adi-kailash-yatra-complete-guide-2026',
+        '5-things-you-need-to-do-before-planning-a-trip-to-adi-kailash': 'adi-kailash-yatra-complete-guide-2026',
+        'adi-kailash-yatra-for-solo-female-travellers-safety-guide': 'adi-kailash-yatra-complete-guide-2026',
+        'is-adi-kailash-yatra-closed-right-now-reopening-date-why-travellers-get-stuck-at-dharchula': 'adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates',
+        'how-to-reach-pithoragarh': 'how-to-reach-adi-kailash-from-delhi-kathgodam-pithoragarh-route-map',
+        'how-to-reach-pithoragarh-from-delhi-dehradun-2026-flight-update': 'how-to-reach-adi-kailash-from-delhi-kathgodam-pithoragarh-route-map'
     };
 
     const targetSlug = legacySlugs[cleanSlug] || cleanSlug;

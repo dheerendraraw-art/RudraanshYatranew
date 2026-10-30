@@ -2506,7 +2506,7 @@ const BLOG_ENHANCERS = {
                 )
                 .replace(
                     /Inner Line Permit \(ILP\)\s*\(ILP\)/,
-                    '<a href="/blog/inner-line-permit-adi-kailash-2026-guide" style="color: #7c3aed; text-decoration: underline;">Inner Line Permit (ILP)</a>'
+                    '<a href="/blog/inner-line-permit-adi-kailash-2026-step-by-step" style="color: #7c3aed; text-decoration: underline;">Inner Line Permit (ILP)</a>'
                 );
 
             // Inject altitude safety grid after section 2 (AMS section)
@@ -3312,7 +3312,7 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-suspended-due-to-weather-official-reopeni
   <strong>📚 Essential Guides for Rescheduling Pilgrims</strong>
   <div class="ry-sus-nav-pills">
     <a href="/blog/adi-kailash-ilp-suspended-oct-19-to-26-2026-for-parikrama-run" class="ry-sus-nav-pill" style="border: 1.5px solid #ef4444; color: #fca5a5;">🚨 Oct 19–26 ILP Suspension</a>
-    <a href="/blog/inner-line-permit-adi-kailash-2026-guide" class="ry-sus-nav-pill">📋 ILP Permit Guide</a>
+    <a href="/blog/inner-line-permit-adi-kailash-2026-step-by-step" class="ry-sus-nav-pill">📋 ILP Permit Guide</a>
     <a href="/blog/best-time-to-visit-adi-kailash-om-parvat-weather-season-guide" class="ry-sus-nav-pill">🗓️ Best Time to Visit</a>
     <a href="/blog/adi-kailash-yatra-cost-package-price-breakdown-budget-guide" class="ry-sus-nav-pill">💰 Cost & Budget Guide</a>
     <a href="/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates" class="ry-sus-nav-pill">📅 Full 2026 Status Update</a>
@@ -3337,7 +3337,7 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-suspended-due-to-weather-official-reopeni
   <p class="ry-sus-also">Also read:
     <a href="/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates">Full 2026 Monsoon Status & Reopening Updates</a> ·
     <a href="/blog/is-adi-kailash-yatra-safe-for-senior-citizens-guide">Senior Citizens Guide</a> ·
-    <a href="/blog/inner-line-permit-adi-kailash-2026-guide">ILP Permit Step-by-Step</a>
+    <a href="/blog/inner-line-permit-adi-kailash-2026-step-by-step">ILP Permit Step-by-Step</a>
   </p>
 </div>`;
 
@@ -3350,7 +3350,7 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-suspended-due-to-weather-official-reopeni
             // Interlink: ILP guide (first occurrence only, not inside <a> tags)
             .replace(
                 /Inner Line Permits?(?!\s*\(ILP\) are issued|\s*\(ILPs?\) will not)/,
-                '<a href="/blog/inner-line-permit-adi-kailash-2026-guide" style="color:#7c3aed;text-decoration:underline">Inner Line Permits</a>'
+                '<a href="/blog/inner-line-permit-adi-kailash-2026-step-by-step" style="color:#7c3aed;text-decoration:underline">Inner Line Permits</a>'
             )
             // Interlink: best time to visit on post-monsoon mention
             .replace(
@@ -4152,12 +4152,12 @@ BLOG_ENHANCERS['5-things-you-need-to-do-before-planning-a-trip-to-adi-kailash'] 
 <div class="ry-5t-nav">
   <strong>📚 Deep-Dive Guides for Each Checklist Step</strong>
   <div class="ry-5t-nav-pills">
-    <a href="/blog/inner-line-permit-adi-kailash-2026-guide" class="ry-5t-nav-pill">📋 ILP Permit Step-by-Step</a>
+    <a href="/blog/inner-line-permit-adi-kailash-2026-step-by-step" class="ry-5t-nav-pill">📋 ILP Permit Step-by-Step</a>
     <a href="/blog/adi-kailash-packing-list-essential-guide-for-yatris" class="ry-5t-nav-pill">🎒 Complete Packing List</a>
     <a href="/blog/best-time-to-visit-adi-kailash-om-parvat-weather-season-guide" class="ry-5t-nav-pill">🗓️ Best Month Guide</a>
     <a href="/blog/is-adi-kailash-yatra-safe-for-senior-citizens-guide" class="ry-5t-nav-pill">👴 Senior Citizens Guide</a>
     <a href="/blog/adi-kailash-yatra-difficulty-level-can-beginners-do-it" class="ry-5t-nav-pill">⛰️ Difficulty Level</a>
-    <a href="/blog/adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitude-ultra-marathon-guide" class="ry-5t-nav-pill">🏃‍♂️ Parikrama Run 2026</a>
+    <a href="/blog/adi-kailash-parikrama-run-2-0-winners-results-gunji" class="ry-5t-nav-pill">🏃‍♂️ Parikrama Run 2026</a>
   </div>
 </div>`;
 
@@ -4180,7 +4180,7 @@ BLOG_ENHANCERS['5-things-you-need-to-do-before-planning-a-trip-to-adi-kailash'] 
 
 <h2 id="step-ilp">Step 2: Get Your Inner Line Permit (ILP) and Government Medical Certificate</h2>
 
-<p>Because Adi Kailash lies within the <strong>Indo-Tibetan border restricted zone in Pithoragarh district</strong>, every Indian citizen must obtain an <a href="/blog/inner-line-permit-adi-kailash-2026-guide" style="color: var(--color-gold); font-weight: bold; text-decoration: underline;">Inner Line Permit (ILP)</a> before entering the Byas Valley — which includes Gunji, Nabhidhang, and Jyolingkong. The permit is issued by the <strong>Sub-Divisional Magistrate (SDM) Office, Dharchula</strong>, Pithoragarh, in coordination with the ITBP.</p>
+<p>Because Adi Kailash lies within the <strong>Indo-Tibetan border restricted zone in Pithoragarh district</strong>, every Indian citizen must obtain an <a href="/blog/inner-line-permit-adi-kailash-2026-step-by-step" style="color: var(--color-gold); font-weight: bold; text-decoration: underline;">Inner Line Permit (ILP)</a> before entering the Byas Valley — which includes Gunji, Nabhidhang, and Jyolingkong. The permit is issued by the <strong>Sub-Divisional Magistrate (SDM) Office, Dharchula</strong>, Pithoragarh, in coordination with the ITBP.</p>
 
 <p>To obtain the ILP, you need a <strong>government-certified high-altitude medical fitness certificate</strong> that verifies all of the following parameters:</p>
 
@@ -4299,7 +4299,7 @@ BLOG_ENHANCERS['5-things-you-need-to-do-before-planning-a-trip-to-adi-kailash'] 
   </table>
 </div>
 
-<p><em>Note for athletes and ultra-marathon participants: The Byas Valley also hosts the annual <a href="/blog/adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitude-ultra-marathon-guide" style="color: var(--color-gold); font-weight: bold; text-decoration: underline;">Adi Kailash Parikrama Run 2026</a> in October — Uttarakhand's only high-altitude ultra marathon at 4,750m. See our comprehensive runner's guide for training requirements and registration.</em>`;
+<p><em>Note for athletes and ultra-marathon participants: The Byas Valley also hosts the annual <a href="/blog/adi-kailash-parikrama-run-2-0-winners-results-gunji" style="color: var(--color-gold); font-weight: bold; text-decoration: underline;">Adi Kailash Parikrama Run 2026</a> in October — Uttarakhand's only high-altitude ultra marathon at 4,750m. See our comprehensive runner's guide for training requirements and registration.</em>`;
 
         const bottomCta = `
 <div class="ry-5t-bottom">
@@ -4316,7 +4316,7 @@ BLOG_ENHANCERS['5-things-you-need-to-do-before-planning-a-trip-to-adi-kailash'] 
     </a>
   </div>
   <p class="ry-5t-also">Also read:
-    <a href="/blog/inner-line-permit-adi-kailash-2026-guide">Inner Line Permit (ILP) — Full Step-by-Step Guide for 2026</a> ·
+    <a href="/blog/inner-line-permit-adi-kailash-2026-step-by-step">Inner Line Permit (ILP) — Full Step-by-Step Guide for 2026</a> ·
     <a href="/blog/adi-kailash-packing-list-essential-guide-for-yatris">Complete Adi Kailash Packing List</a> ·
     <a href="/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates">2026 Yatra Route Status &amp; Reopening</a> ·
     <a href="/blog/best-time-to-visit-adi-kailash-om-parvat-weather-season-guide">Best Time to Visit Adi Kailash &amp; Om Parvat</a>
@@ -4542,8 +4542,8 @@ BLOG_ENHANCERS['adi-kailash-yatra-difficulty-level-can-beginners-do-it'] = {
     <a href="/blog/5-things-you-need-to-do-before-planning-a-trip-to-adi-kailash" style="display: inline-flex; align-items: center; gap: 5px; background: #0a192f; color: #f5c842; border: 1.5px solid rgba(212,175,55,0.4); padding: 6px 14px; border-radius: 20px; font-size: 12.5px; font-weight: 700; text-decoration: none;">✅ 5 Things To Do First</a>
     <a href="/blog/best-time-to-visit-adi-kailash-om-parvat-weather-season-guide" style="display: inline-flex; align-items: center; gap: 5px; background: #0a192f; color: #f5c842; border: 1.5px solid rgba(212,175,55,0.4); padding: 6px 14px; border-radius: 20px; font-size: 12.5px; font-weight: 700; text-decoration: none;">🗓️ Best Time to Visit</a>
     <a href="/blog/is-adi-kailash-yatra-safe-for-senior-citizens-guide" style="display: inline-flex; align-items: center; gap: 5px; background: #0a192f; color: #f5c842; border: 1.5px solid rgba(212,175,55,0.4); padding: 6px 14px; border-radius: 20px; font-size: 12.5px; font-weight: 700; text-decoration: none;">👴 Senior Citizens Guide</a>
-    <a href="/blog/inner-line-permit-adi-kailash-2026-guide" style="display: inline-flex; align-items: center; gap: 5px; background: #0a192f; color: #f5c842; border: 1.5px solid rgba(212,175,55,0.4); padding: 6px 14px; border-radius: 20px; font-size: 12.5px; font-weight: 700; text-decoration: none;">📋 ILP Permit Guide</a>
-    <a href="/blog/adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitude-ultra-marathon-guide" style="display: inline-flex; align-items: center; gap: 5px; background: #0a192f; color: #f5c842; border: 1.5px solid rgba(212,175,55,0.4); padding: 6px 14px; border-radius: 20px; font-size: 12.5px; font-weight: 700; text-decoration: none;">🏃‍♂️ Parikrama Run 2026</a>
+    <a href="/blog/inner-line-permit-adi-kailash-2026-step-by-step" style="display: inline-flex; align-items: center; gap: 5px; background: #0a192f; color: #f5c842; border: 1.5px solid rgba(212,175,55,0.4); padding: 6px 14px; border-radius: 20px; font-size: 12.5px; font-weight: 700; text-decoration: none;">📋 ILP Permit Guide</a>
+    <a href="/blog/adi-kailash-parikrama-run-2-0-winners-results-gunji" style="display: inline-flex; align-items: center; gap: 5px; background: #0a192f; color: #f5c842; border: 1.5px solid rgba(212,175,55,0.4); padding: 6px 14px; border-radius: 20px; font-size: 12.5px; font-weight: 700; text-decoration: none;">🏃‍♂️ Parikrama Run 2026</a>
   </div>
 </div>`;
 
@@ -4699,7 +4699,7 @@ BLOG_ENHANCERS['adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitu
       "offers": {
         "@type": "Offer",
         "name": "Adi Kailash Marathon Logistics, ILP Permits & Homestay Package",
-        "url": "https://rudraanshyatra.com/blog/adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitude-ultra-marathon-guide",
+        "url": "https://rudraanshyatra.com/blog/adi-kailash-parikrama-run-2-0-winners-results-gunji",
         "priceCurrency": "INR",
         "price": "18000",
         "availability": "https://schema.org/InStock",
@@ -4732,7 +4732,7 @@ BLOG_ENHANCERS['adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitu
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://rudraanshyatra.com/blog/adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitude-ultra-marathon-guide"
+        "@id": "https://rudraanshyatra.com/blog/adi-kailash-parikrama-run-2-0-winners-results-gunji"
       },
       "about": [
         { "@type": "Thing", "name": "Adi Kailash Parikrama Run" },
@@ -5046,7 +5046,7 @@ BLOG_ENHANCERS['adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitu
                 // 1. ILP Interlink
                 .replace(
                     /Inner Line Permit \(ILP\)/i,
-                    '<a href="/blog/inner-line-permit-adi-kailash-2026-guide" style="color:#7c3aed;text-decoration:underline;font-weight:600;">Inner Line Permit (ILP)</a>'
+                    '<a href="/blog/inner-line-permit-adi-kailash-2026-step-by-step" style="color:#7c3aed;text-decoration:underline;font-weight:600;">Inner Line Permit (ILP)</a>'
                 )
                 // 2. Parvati Kund & Jolingkong Interlink
                 .replace(
@@ -5143,7 +5143,7 @@ BLOG_ENHANCERS['adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitu
   </div>
   <p style="color: #94a3b8; font-size: 12.5px; margin: 0; line-height: 1.6;">
     <strong style="color: #cbd5e1;">Related Yatra Guides:</strong>
-    <a href="/blog/inner-line-permit-adi-kailash-2026-guide" style="color: #93c5fd; text-decoration: underline;">ILP Permit Guide</a> ·
+    <a href="/blog/inner-line-permit-adi-kailash-2026-step-by-step" style="color: #93c5fd; text-decoration: underline;">ILP Permit Guide</a> ·
     <a href="/blog/adi-kailash-packing-list-essential-guide-for-yatris" style="color: #93c5fd; text-decoration: underline;">High-Altitude Packing List</a> ·
     <a href="/blog/best-time-to-visit-adi-kailash-om-parvat-weather-season-guide" style="color: #93c5fd; text-decoration: underline;">October Weather Guide</a> ·
     <a href="/blog/adi-kailash-yatra-difficulty-level-can-beginners-do-it" style="color: #93c5fd; text-decoration: underline;">Difficulty & Altitude Guide</a> ·
@@ -5281,7 +5281,7 @@ BLOG_ENHANCERS['how-to-reach-pithoragarh'] = {
             )
             .replace(
                 /\bpermits\b/,
-                'permits (<a href="/blog/inner-line-permit-adi-kailash-2026-guide" style="color:#7c3aed;text-decoration:underline;">full ILP guide here</a>)'
+                'permits (<a href="/blog/inner-line-permit-adi-kailash-2026-step-by-step" style="color:#7c3aed;text-decoration:underline;">full ILP guide here</a>)'
             );
 
         var css = '<style>' +
@@ -5391,7 +5391,7 @@ BLOG_ENHANCERS['how-to-reach-pithoragarh'] = {
             '<a href="tel:+917617617651" class="ry-pth-bottom-btn call">Call +91 76176 17651</a>' +
             '</div>' +
             '<p class="ry-pth-also">Also read: ' +
-            '<a href="/blog/inner-line-permit-adi-kailash-2026-guide">ILP Permit Guide</a> &middot; ' +
+            '<a href="/blog/inner-line-permit-adi-kailash-2026-step-by-step">ILP Permit Guide</a> &middot; ' +
             '<a href="/blog/adi-kailash-yatra-cost-package-price-breakdown-budget-guide">Yatra Cost Breakdown</a> &middot; ' +
             '<a href="/blog/how-to-reach-pithoragarh-from-delhi-dehradun-2026-flight-update">2026 Flight Update</a> &middot; ' +
             '<a href="/blog/5-things-you-need-to-do-before-planning-a-trip-to-adi-kailash">Pre-Yatra Checklist</a>' +
@@ -5540,7 +5540,7 @@ BLOG_ENHANCERS['adi-kailash-yatra-for-solo-female-travellers-safety-guide'] = {
         var enriched = paragraphsHtml
             .replace(
                 /ITBP checkpoints/,
-                'ITBP checkpoints (<a href="/blog/inner-line-permit-adi-kailash-2026-guide" style="color:#7c3aed;text-decoration:underline;">see full ILP guide</a>)'
+                'ITBP checkpoints (<a href="/blog/inner-line-permit-adi-kailash-2026-step-by-step" style="color:#7c3aed;text-decoration:underline;">see full ILP guide</a>)'
             )
             .replace(
                 /group departures?/i,
@@ -6095,10 +6095,10 @@ BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanak
             '<a href="/adi-kailash" style="display: inline-flex; align-items: center; gap: 6px; background: #d4af37; color: #0f172a; padding: 9px 16px; border-radius: 8px; font-weight: 700; font-size: 13.5px; text-decoration: none;">' +
             '<i class="fa-solid fa-map-location-dot"></i> Explore Adi Kailash Packages' +
             '</a>' +
-            '<a href="/blog/adi-kailash-vs-mount-kailash-comparison-cost-difficulty-permits" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.06); color: #e2e8f0; border: 1px solid rgba(212,175,55,0.35); padding: 9px 16px; border-radius: 8px; font-weight: 600; font-size: 13.5px; text-decoration: none;">' +
+            '<a href="/blog/adi-kailash-vs-kailash-mansarovar-real-difference" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.06); color: #e2e8f0; border: 1px solid rgba(212,175,55,0.35); padding: 9px 16px; border-radius: 8px; font-weight: 600; font-size: 13.5px; text-decoration: none;">' +
             '<i class="fa-solid fa-scale-balanced"></i> Adi Kailash vs Mount Kailash Guide' +
             '</a>' +
-            '<a href="/blog/inner-line-permit-adi-kailash-2026-guide" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.06); color: #e2e8f0; border: 1px solid rgba(212,175,55,0.35); padding: 9px 16px; border-radius: 8px; font-weight: 600; font-size: 13.5px; text-decoration: none;">' +
+            '<a href="/blog/inner-line-permit-adi-kailash-2026-step-by-step" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.06); color: #e2e8f0; border: 1px solid rgba(212,175,55,0.35); padding: 9px 16px; border-radius: 8px; font-weight: 600; font-size: 13.5px; text-decoration: none;">' +
             '<i class="fa-solid fa-id-card"></i> 2026 ILP Permit Process' +
             '</a>' +
             '</div>' +
@@ -6499,7 +6499,7 @@ BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanak
         This bulletin covers the <strong>September 14, 2026 administrative circular</strong> deferring permit reopening. If you need standard documentation guides, macro road status, or packing advice, consult our dedicated non-overlapping resources:
     </p>
     <div class="ry-nav-pills">
-        <a href="/blog/inner-line-permit-adi-kailash-2026-guide" class="ry-nav-pill">
+        <a href="/blog/inner-line-permit-adi-kailash-2026-step-by-step" class="ry-nav-pill">
             <span><i class="fa-solid fa-id-card" style="color: #fbbf24; margin-right: 6px;"></i> Complete ILP Documents &amp; Step-by-Step Guide</span>
             <i class="fa-solid fa-chevron-right" style="color: #fbbf24; font-size: 10px;"></i>
         </a>
@@ -7090,11 +7090,11 @@ BLOG_ENHANCERS['adi-kailash-ilp-suspended-oct-19-to-26-2026-for-parikrama-run'] 
         Understand the full October 2026 picture — from the Parikrama Run itself to winter closing dates and the ILP process:
     </p>
     <div class="ry-nav-pills">
-        <a href="/blog/adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitude-ultra-marathon-guide" class="ry-nav-pill">
+        <a href="/blog/adi-kailash-parikrama-run-2-0-winners-results-gunji" class="ry-nav-pill">
             <span><i class="fa-solid fa-person-running" style="color:#fbbf24; margin-right:6px;"></i> Parikrama Run 2026 — Full Runner's Guide</span>
             <i class="fa-solid fa-chevron-right" style="color:#fbbf24; font-size:10px;"></i>
         </a>
-        <a href="/blog/inner-line-permit-adi-kailash-2026-guide" class="ry-nav-pill">
+        <a href="/blog/inner-line-permit-adi-kailash-2026-step-by-step" class="ry-nav-pill">
             <span><i class="fa-solid fa-id-card" style="color:#fbbf24; margin-right:6px;"></i> ILP Step-by-Step Guide 2026</span>
             <i class="fa-solid fa-chevron-right" style="color:#fbbf24; font-size:10px;"></i>
         </a>
@@ -7140,7 +7140,7 @@ ${paragraphsHtml}
             <i class="fa-solid fa-chevron-down"></i>
         </h3>
         <p class="ry-faq-a">
-            <strong>Answer:</strong> The <a href="/blog/adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitude-ultra-marathon-guide" style="color:var(--color-gold); font-weight:600;">Adi Kailash Parikrama Run 2026</a> is a high-altitude ultra marathon held on October 24–25, 2026 in Gunji, Byas Valley, with routes from 5 km to 60 km reaching altitudes of 15,000 ft. The Gunji–Jolingkong stretch doubles as the race course, making simultaneous yatri vehicle traffic a safety risk. Authorities clear the route for the full event setup, race, and teardown period — October 19 to 26.
+            <strong>Answer:</strong> The <a href="/blog/adi-kailash-parikrama-run-2-0-winners-results-gunji" style="color:var(--color-gold); font-weight:600;">Adi Kailash Parikrama Run 2026</a> is a high-altitude ultra marathon held on October 24–25, 2026 in Gunji, Byas Valley, with routes from 5 km to 60 km reaching altitudes of 15,000 ft. The Gunji–Jolingkong stretch doubles as the race course, making simultaneous yatri vehicle traffic a safety risk. Authorities clear the route for the full event setup, race, and teardown period — October 19 to 26.
         </p>
     </div>
 
@@ -7150,7 +7150,7 @@ ${paragraphsHtml}
             <i class="fa-solid fa-chevron-down"></i>
         </h3>
         <p class="ry-faq-a">
-            <strong>Answer:</strong> No. Because ILP issuance is completely suspended October 19–26, you cannot combine both in one trip. The race window is effectively off-limits for fresh yatra bookings. Treat watching the Parikrama Run as a separate trip — see our <a href="/blog/adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitude-ultra-marathon-guide" style="color:var(--color-gold); font-weight:600;">complete runner's guide</a> for logistics.
+            <strong>Answer:</strong> No. Because ILP issuance is completely suspended October 19–26, you cannot combine both in one trip. The race window is effectively off-limits for fresh yatra bookings. Treat watching the Parikrama Run as a separate trip — see our <a href="/blog/adi-kailash-parikrama-run-2-0-winners-results-gunji" style="color:var(--color-gold); font-weight:600;">complete runner's guide</a> for logistics.
         </p>
     </div>
 
