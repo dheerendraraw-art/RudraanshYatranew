@@ -4731,7 +4731,15 @@
 
                 bookingsData = bData;
                 refreshActiveTabStats();
-                window.applyBookingsFilters();
+                if (typeof fetchBillingRecords === 'function' && (!billingRecords || billingRecords.length === 0)) {
+                    fetchBillingRecords().then(() => {
+                        window.applyBookingsFilters();
+                    }).catch(() => {
+                        window.applyBookingsFilters();
+                    });
+                } else {
+                    window.applyBookingsFilters();
+                }
             } catch (err) {
                 console.error(err);
                 const tbody = document.getElementById('bookings-table-body');
@@ -11635,21 +11643,37 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
             }
         };
 
-        window.openCreateBillForBooking = function(bookingId) {
+        window.openCreateBillForBooking = async function(bookingId) {
             const booking = bookingsData.find(b => b.id === bookingId);
             if (!booking) return;
 
             // Reuse exact synchronized booking ID
             const bookingNo = booking.booking_id || generateAutoBookingId(booking.name);
 
-            const existingBill = (billingRecords || []).find(b => 
+            // 1. Check in-memory billingRecords
+            let existingBill = (billingRecords || []).find(b => 
                 (b.booking_id && (b.booking_id === bookingNo || b.booking_id === booking.id)) ||
                 (b.booking_uuid && b.booking_uuid === booking.id)
             );
+
+            // 2. If not found in-memory, do a quick DB check to guarantee accuracy
+            if (!existingBill && supabaseAdmin) {
+                try {
+                    const { data: dbBill } = await supabaseAdmin
+                        .from('booking_bills')
+                        .select('id, booking_id')
+                        .eq('booking_id', bookingNo)
+                        .maybeSingle();
+                    if (dbBill) existingBill = dbBill;
+                } catch(e) {}
+            }
+
             if (existingBill) {
-                showAdminToast('Bill already generated for ' + bookingNo + '!', 'info');
+                showAdminToast('Bill already generated for ' + bookingNo + '! Opening in Billing...', 'info');
                 switchTab(null, 'pane-billing');
-                window.filterBillingByBookingId(bookingNo);
+                if (typeof window.filterBillingByBookingId === 'function') {
+                    window.filterBillingByBookingId(bookingNo);
+                }
                 return;
             }
             
@@ -11757,6 +11781,15 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
                 return;
             }
 
+            // Prevent double-clicking / duplicate submissions
+            const form = document.getElementById('create-bill-form');
+            const submitBtn = form ? form.querySelector('button[type="submit"]') : null;
+            if (submitBtn) {
+                if (submitBtn.disabled) return;
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving Bill...';
+            }
+
             const bookingId = document.getElementById('bill-booking-id').value.trim();
             const packageName = document.getElementById('bill-package-name').value.trim();
             const name = document.getElementById('bill-cust-name').value.trim();
@@ -11773,22 +11806,33 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
             const initialMode = document.getElementById('bill-init-mode').value;
             const initialType = document.getElementById('bill-init-type').value;
 
+            const resetBtn = () => {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fa-solid fa-file-invoice-dollar"></i> Create Bill &amp; Save';
+                }
+            };
+
             if (isNaN(ratePerPerson) || ratePerPerson <= 0) {
                 showAdminToast('Please enter a valid package cost per person', 'error');
+                resetBtn();
                 return;
             }
 
             if (discountPerPerson < 0) {
                 showAdminToast('Discount per person cannot be negative', 'error');
+                resetBtn();
                 return;
             }
             if (discountPerPerson > ratePerPerson) {
                 showAdminToast('Discount per person cannot exceed the package cost per person', 'error');
+                resetBtn();
                 return;
             }
 
             if (!pickupPoint) {
                 showAdminToast('Please select a pickup point', 'error');
+                resetBtn();
                 return;
             }
 
@@ -11843,30 +11887,105 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
             }
 
             try {
-                const { data, error } = await supabaseAdmin
+                // Check if a bill already exists for this booking ID (prevent duplicate key violation)
+                const { data: existingBill } = await supabaseAdmin
                     .from('booking_bills')
-                    .insert([newBill])
-                    .select()
-                    .single();
+                    .select('*')
+                    .eq('booking_id', bookingId)
+                    .maybeSingle();
 
-                if (error) throw error;
+                let billResult = null;
 
-                // Keep bookings table in sync with invoice tour date, travelers, and pickup point
+                if (existingBill) {
+                    // Update existing bill with merged payments & latest calculation
+                    let updatedPayments = Array.isArray(existingBill.payments_received) ? [...existingBill.payments_received] : [];
+                    if (initialPaid > 0) {
+                        const todayStr = new Date().toISOString().split('T')[0];
+                        const isDup = updatedPayments.some(p => Number(p.amountPaid) === Number(initialPaid) && p.date === todayStr);
+                        if (!isDup) {
+                            updatedPayments.push({
+                                receiptId: 'REC-' + Date.now() + Math.floor(Math.random() * 10),
+                                amountPaid: initialPaid,
+                                date: todayStr,
+                                paymentMode: initialMode || 'UPI',
+                                paymentType: initialType || 'Token Advance'
+                            });
+                        }
+                    }
+                    const totalPaidSoFar = updatedPayments.reduce((sum, p) => sum + (parseFloat(p.amountPaid) || 0), 0);
+                    const balRem = Math.max(0, netPackageAmount - totalPaidSoFar);
+                    let pStatus = 'Pending';
+                    if (totalPaidSoFar > 0) {
+                        pStatus = totalPaidSoFar >= netPackageAmount ? 'Fully Paid' : 'Partially Paid';
+                    }
+
+                    const updatePayload = {
+                        customer_name: name,
+                        customer_phone: phone,
+                        customer_email: email || '',
+                        group_size: groupSize,
+                        tour_start_date: tourStartDate,
+                        package_name: packageName,
+                        total_package_amount: totalPackageAmount,
+                        payments_received: updatedPayments,
+                        balance_remaining: balRem,
+                        payment_status: pStatus,
+                        pickup_point: pickupPoint,
+                        discount: discount
+                    };
+
+                    const { data: updatedData, error: updateErr } = await supabaseAdmin
+                        .from('booking_bills')
+                        .update(updatePayload)
+                        .eq('id', existingBill.id)
+                        .select()
+                        .single();
+
+                    if (updateErr) throw updateErr;
+                    billResult = updatedData;
+                    showAdminToast(`Bill for ${bookingId} updated successfully!`, 'success');
+                } else {
+                    // Standard Insert for new bill
+                    const { data: insertedData, error: insertErr } = await supabaseAdmin
+                        .from('booking_bills')
+                        .insert([newBill])
+                        .select()
+                        .single();
+
+                    if (insertErr) {
+                        // Gracefully catch duplicate key code 23505 if concurrent request occurred
+                        if (insertErr.code === '23505' || (insertErr.message && insertErr.message.includes('unique constraint'))) {
+                            console.warn('[Billing] Duplicate key caught on insert, falling back to update...');
+                            const { data: fallbackUpdated, error: fallbackErr } = await supabaseAdmin
+                                .from('booking_bills')
+                                .update(newBill)
+                                .eq('booking_id', bookingId)
+                                .select()
+                                .single();
+                            if (fallbackErr) throw fallbackErr;
+                            billResult = fallbackUpdated;
+                            showAdminToast(`Bill for ${bookingId} saved successfully!`, 'success');
+                        } else {
+                            throw insertErr;
+                        }
+                    } else {
+                        billResult = insertedData;
+                        showAdminToast('Billing record created successfully!', 'success');
+                    }
+                }
+
+                // Keep bookings table in sync with invoice tour date & travelers
                 if (bookingId) {
                     try {
                         const bkUpdate = {
                             travel_date: tourStartDate,
-                            travelers: String(groupSize),
-                            pickup_point: pickupPoint || null
+                            travelers: String(groupSize)
                         };
-                        const { error: bkErr } = await supabaseAdmin
+                        await supabaseAdmin
                             .from('bookings')
                             .update(bkUpdate)
                             .eq('booking_id', bookingId);
-                        if (bkErr && bkErr.message && bkErr.message.includes('pickup_point')) {
-                            delete bkUpdate.pickup_point;
-                            await supabaseAdmin.from('bookings').update(bkUpdate).eq('booking_id', bookingId);
-                        }
+
                         if (typeof fetchBookings === 'function') fetchBookings();
                     } catch (syncErr) {
                         console.warn('[Sync Bill -> Booking] Error syncing booking date:', syncErr);
@@ -11874,21 +11993,25 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
                 }
 
                 if (debugText) debugText.innerText = 'Success! Closing modal...';
-                showAdminToast('Billing record created successfully!', 'success');
                 setTimeout(() => {
                     closeCreateBillModal();
                     if (debugBox) debugBox.style.display = 'none';
+                    resetBtn();
                     fetchBillingRecords();
                     switchTab(null, 'pane-billing');
-                }, 1000);
+                    if (typeof window.filterBillingByBookingId === 'function') {
+                        window.filterBillingByBookingId(bookingId);
+                    }
+                }, 800);
             } catch (err) {
                 console.error(err);
+                resetBtn();
                 if (debugBox && debugText) {
                     debugBox.style.borderColor = '#ef4444';
                     debugBox.style.color = '#f87171';
-                    debugText.innerHTML = '<strong>Insertion Failed:</strong><br>' + (err.message || err.details || JSON.stringify(err));
+                    debugText.innerHTML = '<strong>Operation Failed:</strong><br>' + (err.message || err.details || JSON.stringify(err));
                 }
-                showAdminToast('Error creating billing record: ' + err.message, 'error');
+                showAdminToast('Error saving billing record: ' + err.message, 'error');
             }
         };
 
