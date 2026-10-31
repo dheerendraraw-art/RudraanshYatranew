@@ -633,6 +633,9 @@
 
                 <!-- Blog Stats Bar -->
                 <div class="blog-stats-bar">
+                    <button type="button" class="btn btn-primary blog-top-new-btn" id="btn-top-new-blog" onclick="startNewBlog()" style="background: linear-gradient(135deg, #d4af37, #b8860b); color: #0f172a; font-weight: 800; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-size: 13px; letter-spacing: 0.4px; box-shadow: 0 4px 14px rgba(212,175,55,0.35); white-space: nowrap;">
+                        <i class="fa-solid fa-plus" style="font-size: 14px;"></i> WRITE NEW BLOG
+                    </button>
                     <div class="blog-stat-pill">
                         <i class="fa-solid fa-newspaper" style="color:var(--color-gold);"></i>
                         <span id="blog-stat-total">0</span>
@@ -660,9 +663,28 @@
                     <div class="blog-form-panel">
                         <div class="blog-form-panel-header">
                             <div class="blog-form-panel-icon"><i class="fa-solid fa-pen-nib"></i></div>
-                            <div>
+                            <div style="flex:1;">
                                 <h3 class="blog-panel-title" id="blog-form-title">Write a Himalayan Diary</h3>
                                 <p class="blog-panel-subtitle" id="blog-panel-subtitle">Create and publish an article to the live website</p>
+                            </div>
+                            <button type="button" class="btn btn-outline blog-clear-btn" id="btn-blog-form-reset" onclick="startNewBlog()" title="Clear form and write a fresh article" style="background: rgba(15, 23, 42, 0.05); border: 1.5px solid rgba(212, 175, 55, 0.45); color: #0f172a; padding: 7px 14px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s; white-space: nowrap;">
+                                <i class="fa-solid fa-rotate-left" style="color: #d4af37;"></i> Blank / New Blog
+                            </button>
+                        </div>
+
+                        <!-- Saved Draft Banner (shown only when an unsaved draft is available) -->
+                        <div id="blog-draft-banner" style="display:none; background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid #16a34a; border-radius: 8px; padding: 11px 16px; margin-bottom: 20px; font-size: 13px; color: #166534; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <i class="fa-solid fa-file-pen" style="color:#16a34a; font-size:15px;"></i>
+                                <span>Unsaved draft available: <strong id="blog-draft-title-label"></strong></span>
+                            </div>
+                            <div style="display:flex; gap:8px;">
+                                <button type="button" onclick="restoreBlogDraft()" style="background:#16a34a; color:#ffffff; border:none; padding:6px 14px; border-radius:6px; font-size:12px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:5px;">
+                                    <i class="fa-solid fa-arrow-rotate-left"></i> Restore Draft
+                                </button>
+                                <button type="button" onclick="discardBlogDraft()" style="background:transparent; color:#64748b; border:1px solid #cbd5e1; padding:6px 14px; border-radius:6px; font-size:12px; font-weight:600; cursor:pointer;">
+                                    Discard Draft
+                                </button>
                             </div>
                         </div>
 
@@ -3795,6 +3817,14 @@
         }
 
         function initBlogDraftAutoSave() {
+            // One-time cleanup of legacy phantom draft if present
+            try {
+                const legacyDraft = localStorage.getItem('ry_blog_form_draft');
+                if (legacyDraft && legacyDraft.includes('Adi Kailash vs. Kailash Mansarovar')) {
+                    localStorage.removeItem('ry_blog_form_draft');
+                }
+            } catch(e) {}
+
             const titleEl = document.getElementById('blog-title');
             const authorEl = document.getElementById('blog-author');
             const richEditor = document.getElementById('blog-editor-rich');
@@ -3822,7 +3852,33 @@
             if (slugEl) slugEl.addEventListener('input', saveDraft);
             if (metaDescEl) metaDescEl.addEventListener('input', saveDraft);
 
-            restoreBlogDraft();
+            checkAndShowBlogDraftBanner();
+        }
+
+        function checkAndShowBlogDraftBanner() {
+            if (editingBlogId || document.getElementById('btn-cancel-blog-edit')) return;
+            try {
+                const saved = localStorage.getItem('ry_blog_form_draft');
+                const banner = document.getElementById('blog-draft-banner');
+                const label = document.getElementById('blog-draft-title-label');
+                if (!saved) {
+                    if (banner) banner.style.display = 'none';
+                    return;
+                }
+                const draft = JSON.parse(saved);
+                if (!draft || (!draft.title && (!draft.content || draft.content === '<br>' || draft.content === '<p><br></p>'))) {
+                    if (banner) banner.style.display = 'none';
+                    return;
+                }
+                if (banner && label) {
+                    const previewTitle = draft.title ? `"${draft.title.slice(0, 45)}${draft.title.length > 45 ? '...' : ''}"` : 'Untitled article';
+                    const timeStr = draft.timestamp ? new Date(draft.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+                    label.textContent = `${previewTitle} ${timeStr ? '(' + timeStr + ')' : ''}`;
+                    banner.style.display = 'flex';
+                }
+            } catch(e) {
+                console.warn('Failed to check draft banner:', e);
+            }
         }
 
         function restoreBlogDraft() {
@@ -3839,17 +3895,29 @@
                 const slugEl = document.getElementById('blog-slug');
                 const metaDescEl = document.getElementById('blog-meta-desc');
 
-                if (titleEl && !titleEl.value && draft.title) titleEl.value = draft.title;
-                if (authorEl && !authorEl.value && draft.author) authorEl.value = draft.author;
-                if (richEditor && (!richEditor.innerHTML || richEditor.innerHTML === '<br>' || richEditor.innerHTML === '<p><br></p>') && draft.content) {
+                if (titleEl && draft.title) titleEl.value = draft.title;
+                if (authorEl && draft.author) authorEl.value = draft.author;
+                if (richEditor && draft.content) {
                     richEditor.innerHTML = draft.content;
                     if (typeof updateWordCount === 'function') updateWordCount();
                 }
-                if (slugEl && !slugEl.value && draft.slug) slugEl.value = draft.slug;
-                if (metaDescEl && !metaDescEl.value && draft.meta_description) metaDescEl.value = draft.meta_description;
+                if (slugEl && draft.slug) slugEl.value = draft.slug;
+                if (metaDescEl && draft.meta_description) metaDescEl.value = draft.meta_description;
+
+                const banner = document.getElementById('blog-draft-banner');
+                if (banner) banner.style.display = 'none';
+
+                showAdminToast('Draft restored into editor.', 'success');
             } catch(e) {
                 console.warn('Failed to restore blog draft:', e);
             }
+        }
+
+        function discardBlogDraft() {
+            clearBlogDraft();
+            const banner = document.getElementById('blog-draft-banner');
+            if (banner) banner.style.display = 'none';
+            showAdminToast('Draft discarded.', 'info');
         }
 
         function clearBlogDraft() {
@@ -4048,6 +4116,16 @@
             }
             if (paneId === 'pane-blogs') {
                 if (window.fetchBlogs) window.fetchBlogs();
+                if (window.checkAndShowBlogDraftBanner) window.checkAndShowBlogDraftBanner();
+                // Ensure if form was left in edit mode or resurrecting ghost, reset to new blog if not editing
+                if (!editingBlogId && !document.getElementById('btn-cancel-blog-edit')) {
+                    const richEditor = document.getElementById('blog-editor-rich');
+                    const titleEl = document.getElementById('blog-title');
+                    // If fields were dirty with no user intention, ensure clean state
+                    if (titleEl && !titleEl.value && richEditor && (!richEditor.innerHTML || richEditor.innerHTML === '<br>' || richEditor.innerHTML === '<p><br></p>')) {
+                        // Form is clean
+                    }
+                }
             }
             if (paneId === 'pane-attendance') {
                 if (window.renderAttendanceHistory) window.renderAttendanceHistory();
@@ -5443,32 +5521,76 @@
             document.getElementById('blog-form').scrollIntoView({ behavior: 'smooth' });
         }
 
-        function cancelBlogEdit() {
+        function startNewBlog() {
             editingBlogId = null;
             editingBlogImageUrl = null;
 
             // Reset form header
-            document.getElementById('blog-form-title').textContent = 'Write a Himalayan Diary';
+            const titleEl = document.getElementById('blog-form-title');
+            if (titleEl) titleEl.textContent = 'Write a Himalayan Diary';
+            const subEl = document.getElementById('blog-panel-subtitle');
+            if (subEl) subEl.textContent = 'Create and publish an article to the live website';
+
             var _ir2 = document.getElementById('blog-img-req'); if (_ir2) _ir2.style.display = 'inline';
             var _on2 = document.getElementById('blog-img-optional-note'); if (_on2) _on2.style.display = 'none';
             var _uz2 = document.getElementById('blog-upload-zone'); if (_uz2) _uz2.style.display = 'flex';
 
-            // Reset form
-            document.getElementById('blog-form').reset();
+            // Reset form inputs
+            const form = document.getElementById('blog-form');
+            if (form) form.reset();
+
+            const blogTitle = document.getElementById('blog-title');
+            if (blogTitle) blogTitle.value = '';
+            const blogAuthor = document.getElementById('blog-author');
+            if (blogAuthor) blogAuthor.value = '';
+            const blogSlug = document.getElementById('blog-slug');
+            if (blogSlug) blogSlug.value = '';
+            const blogMeta = document.getElementById('blog-meta-desc');
+            if (blogMeta) blogMeta.value = '';
+            const blogContent = document.getElementById('blog-content');
+            if (blogContent) blogContent.value = '';
+
             const richEditor = document.getElementById('blog-editor-rich');
             if (richEditor) {
                 richEditor.innerHTML = '';
             }
-            removePreview('blog-image', 'blog-preview-container');
-            document.getElementById('blog-image').required = true;
+            if (typeof updateWordCount === 'function') updateWordCount();
+
+            if (typeof removePreview === 'function') {
+                removePreview('blog-image', 'blog-preview-container');
+            }
+            const imgInput = document.getElementById('blog-image');
+            if (imgInput) {
+                imgInput.value = '';
+                imgInput.required = true;
+            }
 
             // Reset submit button text
             const btn = document.getElementById('btn-submit-blog');
-            btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Publish Article`;
+            if (btn) {
+                btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Publish Article`;
+                btn.disabled = false;
+            }
 
             // Remove cancel button
             const cancelBtn = document.getElementById('btn-cancel-blog-edit');
             if (cancelBtn) cancelBtn.remove();
+
+            // Clear draft from localStorage & hide banner
+            clearBlogDraft();
+            const banner = document.getElementById('blog-draft-banner');
+            if (banner) banner.style.display = 'none';
+
+            // Scroll form into view & focus title
+            if (blogTitle) {
+                blogTitle.focus();
+                document.getElementById('blog-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            showAdminToast('Editor ready. Start writing a new blog post.', 'info');
+        }
+
+        function cancelBlogEdit() {
+            startNewBlog();
         }
 
         // Upload Logic: Blog Submit Form (Upload Cover + Save Row)

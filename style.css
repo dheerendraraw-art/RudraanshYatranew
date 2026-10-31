@@ -13250,6 +13250,27 @@ body.menu-open::before {
     }
 }
 
+@media (max-width: 768px) {
+    .blog-stats-bar {
+        padding: 12px !important;
+        gap: 10px !important;
+    }
+    .blog-top-new-btn {
+        width: 100% !important;
+        justify-content: center !important;
+        padding: 12px 18px !important;
+    }
+    .blog-form-panel-header {
+        flex-wrap: wrap !important;
+        gap: 10px !important;
+    }
+    .blog-clear-btn {
+        margin-left: 0 !important;
+        width: 100% !important;
+        justify-content: center !important;
+    }
+}
+
 /* Form Panel */
 .blog-form-panel {
     background: #ffffff;
