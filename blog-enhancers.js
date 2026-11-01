@@ -3380,7 +3380,7 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-suspended-due-to-weather-official-reopeni
 BLOG_ENHANCERS['when-does-adi-kailash-yatra-2026-close-for-winter'] = {
     meta: {
         title: 'When Does Adi Kailash Yatra 2026 Close for Winter? Closing Dates, Snowfall & Last Batch Guide | Rudraansh Yatra',
-        desc: 'Adi Kailash Yatra 2026 winter closing date is November 10, 2026. Get exact snowfall forecast, SDM Dharchula ILP deadlines, Byas Valley migration dates & last batch booking tips.',
+        desc: 'Official status on Adi Kailash Yatra 2026 winter closure. SDM Dharchula clarifies no specific closing date or permit deadline has been declared yet; permits remain weather-dependent.',
         dateModified: '2026-09-09T12:00:00+05:30'
     },
 
@@ -3396,7 +3396,7 @@ BLOG_ENHANCERS['when-does-adi-kailash-yatra-2026-close-for-winter'] = {
           "name": "When does the Adi Kailash Yatra close for winter in 2026?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The official operational closing date for the Adi Kailash and Om Parvat Yatra 2026 is November 10, 2026. After November 10, the Sub-Divisional Magistrate (SDM) Office in Dharchula and District Administration Pithoragarh halt all civilian Inner Line Permit (ILP) issuance, and ITBP checkpoints at Tawaghat and Chialekh restrict all civilian vehicle movement due to heavy winter snow."
+            "text": "The official operational closing date for the Adi Kailash and Om Parvat Yatra 2026 has NOT been fixed yet. As confirmed by the Sub-Divisional Magistrate (SDM) Office in Dharchula, the administration has not declared any specific deadline. The yatra typically concludes in early to mid-November depending on winter snowfall and weather clearance. Inner Line Permits (ILPs) continue to be processed and issued daily based on road condition reports until an official administrative notification is released."
           }
         },
         {
@@ -3404,7 +3404,7 @@ BLOG_ENHANCERS['when-does-adi-kailash-yatra-2026-close-for-winter'] = {
           "name": "What is the departure date for the last batch to Adi Kailash in 2026?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The final civilian 4x4 Bolero batches for the 2026 season depart Dharchula between November 3 and November 5, 2026. All pilgrims in these final batches complete their Parvati Sarovar and Om Parvat darshan and safely descend to Dharchula by November 8–10, 2026."
+            "text": "Late autumn civilian 4x4 Bolero batches continue to depart from Dharchula in early November on a rolling, weather-dependent basis. Yatris should connect directly with registered local ground operators like Rudraansh Yatra to join verified departure slots before high-altitude snowfall sets in."
           }
         },
         {
@@ -3428,7 +3428,7 @@ BLOG_ENHANCERS['when-does-adi-kailash-yatra-2026-close-for-winter'] = {
           "name": "What is the deadline for obtaining an Inner Line Permit (ILP) before winter closure?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The SDM Office in Dharchula stops issuing civilian Inner Line Permits for Adi Kailash on November 3, 2026 at 5:00 PM IST. Yatris must submit their Aadhaar cards, police clearances, and high-altitude medical fitness certificates at least 7 to 10 days in advance through registered operators like Rudraansh Yatra."
+            "text": "The SDM Office in Dharchula has confirmed that NO specific deadline or cutoff date has been set for Inner Line Permits. ILPs continue to be issued daily based on road viability and weather clearance until an official administrative closing order is issued. However, pilgrims are advised to submit their documents (Aadhaar, police verification, and MBBS fitness certificate) well in advance to avoid last-minute delays."
           }
         },
         {
@@ -3486,7 +3486,7 @@ BLOG_ENHANCERS['when-does-adi-kailash-yatra-2026-close-for-winter'] = {
         "@id": "https://rudraanshyatra.com/blog/when-does-adi-kailash-yatra-2026-close-for-winter"
       },
       "headline": "When Does Adi Kailash Yatra 2026 Close for Winter? Closing Dates, Snowfall & Last Batch Guide",
-      "description": "Adi Kailash Yatra 2026 winter closing date is November 10, 2026. Get exact snowfall forecast, SDM Dharchula ILP deadlines, Byas Valley migration dates & last batch booking tips.",
+      "description": "Official update on Adi Kailash Yatra 2026 winter closure. SDM Dharchula clarifies no specific deadline has been declared yet; permits remain active on daily weather clearance.",
       "image": {
         "@type": "ImageObject",
         "url": "https://rudraanshyatra.com/assets/images/adi-kailash-hero.webp",
@@ -3604,7 +3604,7 @@ BLOG_ENHANCERS['when-does-adi-kailash-yatra-2026-close-for-winter'] = {
             
             <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 16px;">
                 <span style="background: rgba(239, 68, 68, 0.22); border: 1.5px solid #ef4444; color: #fca5a5; font-size: 13px; font-weight: 800; padding: 6px 14px; border-radius: 30px; display: inline-flex; align-items: center; gap: 7px; text-transform: uppercase; letter-spacing: 0.5px;">
-                    <i class="fa-solid fa-snowflake" style="color: #ef4444;"></i> Official Winter Closing: November 10, 2026
+                    <i class="fa-solid fa-cloud-sun" style="color: #6ee7b7;"></i> Winter Closing: Subject to Weather & Official Notification (No Fixed Date Yet)
                 </span>
                 <span style="font-size: 13px; color: #cbd5e1; font-weight: 600;">
                     <i class="fa-solid fa-clock-rotate-left" style="color: #f59e0b;"></i> Byas Valley Seasonal Cycle
@@ -3616,26 +3616,26 @@ BLOG_ENHANCERS['when-does-adi-kailash-yatra-2026-close-for-winter'] = {
             </h3>
 
             <p class="ry-winter-tldr" style="font-size: 16px; line-height: 1.7; color: #f1f5f9; margin: 0 0 18px 0;">
-                The <strong>Adi Kailash and Om Parvat Yatra officially closes for the winter season on November 10, 2026</strong>. Final civilian 4x4 Bolero batches depart from Dharchula between <strong>November 3 and November 5, 2026</strong>, with the Sub-Divisional Magistrate (SDM) Office Dharchula ending all Inner Line Permit (ILP) issuance on <strong>November 3, 2026 at 5:00 PM IST</strong>. The route remains completely closed to all civilian tourists and pilgrims for 6 months until the official spring reopening between <strong>May 10 and May 15, 2027</strong>.
+                As clarified by the <strong>Sub-Divisional Magistrate (SDM) Office in Dharchula</strong>, <strong>no specific closing date or permit deadline has been declared yet</strong> for the 2026 Adi Kailash Yatra. Inner Line Permits (ILP) and civilian vehicle convoys continue to be processed and operated on a <strong>daily weather and road clearance basis</strong>. The annual winter closure typically takes effect in early to mid-November once heavy snowfall and sub-zero freezes naturally set in, followed by an official administrative order from the district authorities. Yatris planning autumn travel should coordinate in real-time with verified local operators.
             </p>
 
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin-bottom: 22px;">
                 <div style="background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 10px; padding: 12px 14px;">
-                    <div style="font-size: 12px; color: #94a3b8; font-weight: 700; text-transform: uppercase;">Closing Date</div>
-                    <div style="font-size: 16px; color: #f87171; font-weight: 800; margin-top: 3px;">November 10, 2026</div>
-                    <div style="font-size: 12px; color: #cbd5e1; margin-top: 2px;">Tawaghat ITBP Lockdown</div>
+                    <div style="font-size: 12px; color: #94a3b8; font-weight: 700; text-transform: uppercase;">Closing Status</div>
+                    <div style="font-size: 16px; color: #6ee7b7; font-weight: 800; margin-top: 3px;">No Fixed Date Yet</div>
+                    <div style="font-size: 12px; color: #cbd5e1; margin-top: 2px;">Subject to Snow & Govt Order</div>
                 </div>
 
                 <div style="background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 10px; padding: 12px 14px;">
-                    <div style="font-size: 12px; color: #94a3b8; font-weight: 700; text-transform: uppercase;">Last Batch Departure</div>
-                    <div style="font-size: 16px; color: #fbbf24; font-weight: 800; margin-top: 3px;">Nov 3 – Nov 5, 2026</div>
-                    <div style="font-size: 12px; color: #cbd5e1; margin-top: 2px;">From Dharchula / Kathgodam</div>
+                    <div style="font-size: 12px; color: #94a3b8; font-weight: 700; text-transform: uppercase;">Late Season Batches</div>
+                    <div style="font-size: 16px; color: #fbbf24; font-weight: 800; margin-top: 3px;">Departing Daily</div>
+                    <div style="font-size: 12px; color: #cbd5e1; margin-top: 2px;">Weather Permitting from Dharchula</div>
                 </div>
 
                 <div style="background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 10px; padding: 12px 14px;">
-                    <div style="font-size: 12px; color: #94a3b8; font-weight: 700; text-transform: uppercase;">SDM Permit Deadline</div>
-                    <div style="font-size: 16px; color: #6ee7b7; font-weight: 800; margin-top: 3px;">November 3, 2026</div>
-                    <div style="font-size: 12px; color: #cbd5e1; margin-top: 2px;">5:00 PM IST Portal Freeze</div>
+                    <div style="font-size: 12px; color: #94a3b8; font-weight: 700; text-transform: uppercase;">SDM Permit Status</div>
+                    <div style="font-size: 16px; color: #6ee7b7; font-weight: 800; margin-top: 3px;">Active (No Cutoff)</div>
+                    <div style="font-size: 12px; color: #cbd5e1; margin-top: 2px;">Issued Daily on Weather Clearance</div>
                 </div>
 
                 <div style="background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 10px; padding: 12px 14px;">
@@ -3691,11 +3691,11 @@ BLOG_ENHANCERS['when-does-adi-kailash-yatra-2026-close-for-winter'] = {
                         <td style="padding: 14px 16px;">100% crisp blue skies, perfect 'ॐ' symbol</td>
                     </tr>
                     <tr style="border-bottom: 1px solid #1e293b; background: rgba(249, 115, 22, 0.06);">
-                        <td style="padding: 14px 16px; font-weight: 700; color: #fdba74;">Final Batch Wind-Down</td>
-                        <td style="padding: 14px 16px;">Nov 1 – Nov 10, 2026</td>
+                        <td style="padding: 14px 16px; font-weight: 700; color: #fdba74;">Late Autumn Wind-Down</td>
+                        <td style="padding: 14px 16px;">Early November 2026</td>
                         <td style="padding: 14px 16px;">0°C to 5°C / -8°C to -15°C</td>
-                        <td style="padding: 14px 16px;">Morning black ice, last convoys</td>
-                        <td style="padding: 14px 16px; color: #fdba74; font-weight: 600;">Closes Nov 3 (5 PM)</td>
+                        <td style="padding: 14px 16px;">Morning black ice, monitored convoys</td>
+                        <td style="padding: 14px 16px; color: #6ee7b7; font-weight: 600;">Active (Weather Dependent)</td>
                         <td style="padding: 14px 16px;">Glacial frost, partial Parvati Sarovar freeze</td>
                     </tr>
                     <tr style="background: rgba(239, 68, 68, 0.08);">
