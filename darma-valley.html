@@ -16,7 +16,7 @@
     <!-- ===== End Google Analytics 4 ===== -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Darma Valley Exploration Guide 2026 | Rudraansh Yatra</title>
+    <title>Darma Valley Trek 2026 — Rung Villages, Panchachuli Base Camp &amp; ILP Guide | Rudraansh Yatra</title>
     <meta name="description"
         content="Explore the untouched beauty and cultural heritage of Darma Valley, Uttarakhand. View detailed 6-day itinerary starting from Pithoragarh and book now.">
     <!-- Google Search Site Name & Favicon -->
@@ -33,8 +33,8 @@
     <!-- Open Graph / Facebook / WhatsApp -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://rudraanshyatra.com/darma-valley">
-    <meta property="og:title" content="Darma Valley Exploration Guide 2026 | Rudraansh Yatra">
-    <meta property="og:description" content="Explore Kumaon's most isolated Darma Valley. Trek through Rung tribal villages, glacial meadows, and Panchachuli viewpoints. 6-day offbeat expedition from Dharchula with local homestays.">
+    <meta property="og:title" content="Darma Valley Trek 2026 — Rung Villages, Panchachuli Base Camp &amp; ILP Guide | Rudraansh Yatra">
+    <meta property="og:description" content="Explore Kumaon's most isolated valley: Darma Valley. 14 Rung tribal villages, Panchachuli I–V base camp views (6,904m), Dhauliganga River trails, and authentic heritage homestays. 5-day ILP-included package from Dharchula/Pithoragarh.">
     <meta property="og:image" content="https://rudraanshyatra.com/assets/images/Panchacholi.webp">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -43,8 +43,8 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@RudraanshYatra">
-    <meta name="twitter:title" content="Darma Valley Exploration Guide 2026 | Rudraansh Yatra">
-    <meta name="twitter:description" content="Journey into Darma Valley — Kumaon's most isolated frontier. Rung villages, glacial trails, Panchachuli views. 6 days from Pithoragarh.">
+    <meta name="twitter:title" content="Darma Valley Trek 2026 — Rung Villages, Panchachuli Base Camp &amp; ILP Guide | Rudraansh Yatra">
+    <meta name="twitter:description" content="Journey into Darma Valley — 14 Rung tribal villages, Panchachuli Base Camp (6,904m) views, Dhauliganga trail. 5-day ILP-inclusive package from Pithoragarh/Dharchula.">
     <meta name="twitter:image" content="https://rudraanshyatra.com/assets/images/Panchacholi.webp">
 
     <!-- Robots / Indexing -->
@@ -260,6 +260,84 @@
             border: none !important;
             box-shadow: none !important;
         }
+
+        
+        /* AEO Answer Box */
+        .aeo-answer-box { color: #ffffff; }
+
+        /* Trek facts table (shared with khaliya-top pattern) */
+        .trek-facts-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border: 1px solid rgba(10,25,47,0.08);
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 16px 0 24px 0;
+            background: #ffffff;
+            box-shadow: 0 4px 16px rgba(10, 25, 47, 0.04);
+        }
+        .trek-facts-table th {
+            background: linear-gradient(135deg, var(--color-primary, #0a1628), #11284d);
+            color: #ffffff;
+            font-family: var(--font-sans);
+            font-size: 13px;
+            font-weight: 700;
+            padding: 13px 18px;
+            text-align: left;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .trek-facts-table td {
+            padding: 12px 18px;
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            border-top: 1px solid rgba(10, 25, 47, 0.06);
+            line-height: 1.6;
+        }
+        .trek-facts-table tr:nth-child(even) { background: rgba(212, 175, 55, 0.035); }
+
+        /* FAQ Item Styling (matching khaliya pattern) */
+        .faq-item {
+            border: 1px solid rgba(10,25,47,0.08);
+            border-radius: 10px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            background: #ffffff;
+            transition: box-shadow 0.2s ease;
+        }
+        .faq-item:hover { box-shadow: 0 4px 14px rgba(212,175,55,0.1); }
+        .faq-question {
+            width: 100%;
+            background: var(--color-bg-card, #f8f5f0);
+            border: none;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            font-family: var(--font-sans);
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--color-primary);
+            text-align: left;
+            gap: 12px;
+            transition: background 0.2s ease;
+        }
+        .faq-question i { color: var(--color-gold); font-size: 13px; transition: transform 0.25s ease; flex-shrink: 0; }
+        .faq-answer {
+            padding: 16px 20px;
+            background: #ffffff;
+            font-size: 14.5px;
+            color: var(--color-text-secondary);
+            line-height: 1.75;
+            border-top: 1px solid rgba(10,25,47,0.06);
+            display: none;
+        }
+        .faq-item.open .faq-answer,
+        .faq-item.active .faq-answer { display: block !important; }
+        .faq-item.open .faq-question i,
+        .faq-item.active .faq-question i { transform: rotate(180deg); }
 
         /* Custom Language Selector Button & Dropdown */
         .lang-selector-wrap {
@@ -524,7 +602,7 @@
                     </li>
                 </ol>
             </nav>
-            <span class="hero-badge"><span></span> Cultural Exploration</span>
+            <span class="hero-badge" style="background: rgba(212,175,55,0.18); border: 1px solid var(--color-gold); color: var(--color-gold); padding: 6px 16px; border-radius: 50px; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; display: inline-block; margin-bottom: 12px;"><i class="fa-solid fa-compass"></i> Max Altitude 3,200m (10,498 ft) &middot; Panchachuli II 6,904m &middot; 5 Days from Dharchula</span>
             <h1 class="hero-title">Darma Valley Exploration</h1>
             <p class="hero-desc">Journey into one of Uttarakhand's most culturally rich and geographically isolated
                 valleys, experiencing local tribal culture and untouched landscapes.</p>
@@ -544,7 +622,7 @@
                         <span class="meta-badge location"><i class="fa-solid fa-route"></i> Delhi / Dehradun Start</span>
                     </div>
 
-                    <h2 class="section-title" style="text-align: left;">Discover the Untouched Frontier of Kumaon</h2>
+                    <h2 class="section-title" style="text-align: left;">Darma Valley — Kumaon's Most Remote Rung Tribal Frontier</h2>
                     <p style="color: var(--color-text-secondary); margin-bottom: 16px; font-size: 15.5px;">
                         Darma Valley, situated in the Pithoragarh district, is a hidden geographical gem bordering
                         Tibet. Carved by the Dhauliganga River, the valley is home to 14 remote border villages
@@ -568,7 +646,36 @@
                 <!-- Tab Contents -->
                 <!-- Tab A: Overview -->
                 <div id="tab-overview" class="tab-content active">
-                    <h3>Exploration Highlights</h3>
+                    <!-- AEO / AI Quick Answer Box -->
+                    <div id="darma-aeo-answer" style="background: linear-gradient(135deg, #0a1628 0%, #1a2a4a 100%); border: 1px solid rgba(212,175,55,0.4); border-radius: 12px; padding: 20px 24px; margin-bottom: 24px;">
+                        <div style="display:flex; align-items:center; gap:10px; margin-bottom: 14px;">
+                            <i class="fa-solid fa-circle-info" style="color:#d4af37; font-size:1.1rem;"></i>
+                            <span style="color:#d4af37; font-weight:700; font-size:0.85rem; letter-spacing:1px; text-transform:uppercase;">AI / AEO Quick Answer — Darma Valley</span>
+                        </div>
+                        <p style="color:#e8e4d9; font-size:1rem; line-height:1.6; margin-bottom:16px;">
+                            <strong style="color:#fff;">Darma Valley</strong> is a restricted high-altitude tribal valley in <strong style="color:#fff;">Pithoragarh, Uttarakhand</strong>, bordering Tibet. It is home to 14 <strong style="color:#fff;">Rung (Shauka) tribal villages</strong> at 2,400–3,200 m altitude, with spectacular close-up views of the <strong style="color:#fff;">Panchachuli massif</strong>. An <strong style="color:#fff;">Inner Line Permit (ILP)</strong> is mandatory. Best visited May–June or Sept–Nov.
+                        </p>
+                        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap:12px;">
+                            <div style="background:rgba(212,175,55,0.1); border-radius:8px; padding:12px; text-align:center;">
+                                <div style="font-size:1.4rem; font-weight:800; color:#d4af37;">3,200 m</div>
+                                <div style="font-size:0.75rem; color:#a0a0b0; margin-top:4px;">Max Road Altitude</div>
+                            </div>
+                            <div style="background:rgba(212,175,55,0.1); border-radius:8px; padding:12px; text-align:center;">
+                                <div style="font-size:1.4rem; font-weight:800; color:#d4af37;">14</div>
+                                <div style="font-size:0.75rem; color:#a0a0b0; margin-top:4px;">Rung Tribal Villages</div>
+                            </div>
+                            <div style="background:rgba(212,175,55,0.1); border-radius:8px; padding:12px; text-align:center;">
+                                <div style="font-size:1.4rem; font-weight:800; color:#d4af37;">6,904 m</div>
+                                <div style="font-size:0.75rem; color:#a0a0b0; margin-top:4px;">Panchachuli II Height</div>
+                            </div>
+                            <div style="background:rgba(212,175,55,0.1); border-radius:8px; padding:12px; text-align:center;">
+                                <div style="font-size:1.4rem; font-weight:800; color:#d4af37;">ILP</div>
+                                <div style="font-size:0.75rem; color:#a0a0b0; margin-top:4px;">Permit Required</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Darma Valley Quick Facts — Altitude, Route &amp; Season</h3>
                     <table class="trek-facts-table">
                         <thead>
                             <tr>
@@ -587,11 +694,11 @@
                             </tr>
                             <tr>
                                 <td><strong><i class="fa-solid fa-route"></i> Road Distance</strong></td>
-                                <td>~1,100 km (Delhi/Dehradun to Darma Valley round trip)</td>
+                                <td>~250 km Haldwani → Pithoragarh → Dharchula; + ~65 km Dharchula → Darma Valley (4x4 only)</td>
                             </tr>
                             <tr>
                                 <td><strong><i class="fa-solid fa-shoe-prints"></i> Trekking Distance</strong></td>
-                                <td>Minimal (mainly 4x4 travel; short exploratory walks around villages)</td>
+                                <td>2–6 km day walks in villages; optional Panchachuli Base Camp hike (~4 km one-way)</td>
                             </tr>
                             <tr>
                                 <td><strong><i class="fa-solid fa-gauge-simple-high"></i> Difficulty</strong></td>
@@ -599,7 +706,7 @@
                             </tr>
                             <tr>
                                 <td><strong><i class="fa-solid fa-sun"></i> Best Season</strong></td>
-                                <td>May to November</td>
+                                <td><strong>May–June</strong> (rhododendrons) &amp; <strong>Sept–Nov</strong> (clear skies, Panchachuli views). Valley closed Dec–April (snowfall).</td>
                             </tr>
                         </tbody>
                     </table>
@@ -747,29 +854,143 @@
 
                 <!-- Tab E: FAQ -->
                 <div id="tab-faq" class="tab-content">
-                    <h3>Frequently Asked Questions</h3>
+                    <h3>Darma Valley — Frequently Asked Questions (2026)</h3>
                     <div class="faq-accordion" style="margin-top: 20px;" itemscope itemtype="https://schema.org/FAQPage">
+
                         <div class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
                             <button class="faq-question">
-                                <span itemprop="name">How remote is Darma Valley?</span>
+                                <span itemprop="name">What is Darma Valley and why is it famous?</span>
                                 <i class="fa-solid fa-chevron-down"></i>
                             </button>
                             <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                                <p itemprop="text">Darma Valley is a remote frontier region bordering Tibet. It features 14 isolated villages with no commercial hotels; accommodation is provided in traditional, community-owned Rung homestays.</p>
+                                <p itemprop="text">Darma Valley (also Dhauliganga Valley) is a high-altitude tribal valley in Pithoragarh district, Uttarakhand, bordering Tibet. It is famous for 14 ancient Rung tribal villages (Daktu, Tidang, Sipu, Baun, etc.), close-up views of the Panchachuli massif (Panchachuli II at 6,904 m is visible from village paths), and some of India's most unspoiled Himalayan landscapes. It is also one of the last places where traditional Rung culture and Shauka trade routes remain intact.</p>
                             </div>
                         </div>
+
                         <div class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
                             <button class="faq-question">
-                                <span itemprop="name">Is there mobile network connectivity in Darma Valley?</span>
+                                <span itemprop="name">Do I need an Inner Line Permit (ILP) for Darma Valley?</span>
                                 <i class="fa-solid fa-chevron-down"></i>
                             </button>
                             <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                                <p itemprop="text">Mobile connectivity is extremely limited or non-existent in the upper villages of Darma Valley. BSNL network is occasionally available at specific spots.</p>
+                                <p itemprop="text">Yes. Darma Valley lies in a Protected/Restricted Zone near the India–Tibet border, so all Indian nationals require an Inner Line Permit (ILP). The ILP is issued by the SDM Office in Dharchula or the District Magistrate's office in Pithoragarh. Foreign nationals require a Protected Area Permit (PAP). Rudraansh Yatra's package price includes ILP processing — no separate hassle for you.</p>
                             </div>
                         </div>
+
+                        <div class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                            <button class="faq-question">
+                                <span itemprop="name">What is the best time to visit Darma Valley?</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </button>
+                            <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                <p itemprop="text">There are two ideal windows: <strong>May–June</strong> — rhododendrons bloom, snow still covers Panchachuli peaks for dramatic photos, the valley is green and lush. <strong>September–November</strong> — crystal-clear post-monsoon skies offer the best Panchachuli views, villages are active before winter migration. The valley is inaccessible December–April due to heavy snowfall and road closure.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                            <button class="faq-question">
+                                <span itemprop="name">How do I reach Darma Valley from Delhi?</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </button>
+                            <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                <p itemprop="text">Delhi → Kathgodam by overnight train (~300 km, 6 hrs) or road. Kathgodam → Pithoragarh by road (~155 km, 5–6 hrs). Pithoragarh → Dharchula via NH-9 (~80 km, 3 hrs). Dharchula → Darma Valley (Daktu/Tidang) by 4x4 Bolero only (~65 km, 4–5 hrs on mountain track). Rudraansh Yatra provides the dedicated 4x4 from Dharchula — it's included in the package.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                            <button class="faq-question">
+                                <span itemprop="name">How remote is Darma Valley? Is it safe?</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </button>
+                            <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                <p itemprop="text">Darma Valley is one of India's most remote valleys — 14 isolated villages with no commercial hotels, limited BSNL connectivity at certain spots, and a 4x4-only access road. Safety: the area is strategically sensitive (ITBP checkpoints on route) but safe for tourists with valid ILP. Our expert local guides and 4x4 vehicles ensure your safety throughout. Carry a basic first-aid kit and warm layers; the nearest hospital is in Dharchula.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                            <button class="faq-question">
+                                <span itemprop="name">What is the altitude of Darma Valley and Panchachuli Base Camp?</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </button>
+                            <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                <p itemprop="text">The main villages range from 2,400 m (Baun) to 3,200 m (Tidang/Daktu). Panchachuli Base Camp is at approximately 3,800–4,000 m and is a day-hike (~4 km one-way) from the upper villages. Panchachuli II summit stands at 6,904 m (22,651 ft) and is visible from village paths — one of the most dramatic base-camp approach views in Kumaon.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                            <button class="faq-question">
+                                <span itemprop="name">Who are the Rung people of Darma Valley?</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </button>
+                            <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                <p itemprop="text">The Rung (also called Shauka or Rang) are a semi-nomadic tribal community of Kumaon Himalayas who historically traded across the India–Tibet border via high-altitude passes like Lipu Lekh and Lampiya Dhura. They winter in lower Pithoragarh and Dharchula towns and migrate to their ancestral high-altitude villages (Darma, Byans, Chaudans valleys) in summer. Their homes feature distinctive wooden-carved facades, and their hospitality (homestays) is the heart of the Darma Valley tourism experience.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                            <button class="faq-question">
+                                <span itemprop="name">What is included in Rudraansh Yatra's Darma Valley package?</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </button>
+                            <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                <p itemprop="text">Our 5-day/4-night package at ₹24,999/person includes: Kathgodam pickup &amp; drop, all transfers by dedicated 4x4 Bolero (Dharchula ↔ Darma Valley), Inner Line Permit (ILP) processing, 4 nights in authentic Rung homestays, all meals (breakfast + dinner), expert local guide, and village trail walks. Excluded: personal insurance, porter fees, any additional activities not listed.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+                            <button class="faq-question">
+                                <span itemprop="name">Is Darma Valley suitable for beginners and families?</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </button>
+                            <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                <p itemprop="text">Yes — the main itinerary involves village walks of 2–6 km per day on gentle trails (Easy to Moderate difficulty). No technical trekking gear is required for the village circuit. The optional Panchachuli Base Camp hike (4 km one-way, ~600 m elevation gain) is Moderate and suitable for reasonably fit participants. Minimum recommended age is 8 years; older adults (60+) with good fitness have completed the tour comfortably. The 4x4 road to the valley requires no physical effort.</p>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
+
+            <!-- GEO / AIO Rich Context Entity Block — Darma Valley -->
+            <div style="margin-top: 32px; padding-top: 8px; border-top: 1px solid rgba(212,175,55,0.15);">
+                <h2 style="font-family: var(--font-serif); font-size: clamp(1.3rem, 2.5vw, 1.8rem); color: var(--color-primary); margin-bottom: 18px;"><i class="fa-solid fa-mountain" style="color: var(--color-gold); margin-right: 8px;"></i>Panchachuli Peaks — Heights Visible from Darma Valley</h2>
+                <table style="width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid rgba(10,25,47,0.08); border-radius: 12px; overflow: hidden; margin-bottom: 28px; background: #fff; box-shadow: 0 4px 16px rgba(10,25,47,0.04);">
+                    <thead>
+                        <tr>
+                            <th style="background: linear-gradient(135deg,#0a1628,#11284d); color:#fff; padding: 12px 16px; font-size: 12px; text-transform: uppercase; text-align: left;">Peak</th>
+                            <th style="background: linear-gradient(135deg,#0a1628,#11284d); color:#fff; padding: 12px 16px; font-size: 12px; text-transform: uppercase; text-align: left;">Height (m)</th>
+                            <th style="background: linear-gradient(135deg,#0a1628,#11284d); color:#fff; padding: 12px 16px; font-size: 12px; text-transform: uppercase; text-align: left;">Height (ft)</th>
+                            <th style="background: linear-gradient(135deg,#0a1628,#11284d); color:#fff; padding: 12px 16px; font-size: 12px; text-transform: uppercase; text-align: left;">Visibility</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td style="padding:11px 16px; font-weight:700; color:var(--color-primary); border-top:1px solid rgba(10,25,47,0.06);"><i class="fa-solid fa-mountain" style="color:var(--color-gold);margin-right:5px;"></i>Panchachuli II</td><td style="padding:11px 16px; border-top:1px solid rgba(10,25,47,0.06);"><strong>6,904 m</strong></td><td style="padding:11px 16px; border-top:1px solid rgba(10,25,47,0.06);">22,651 ft</td><td style="padding:11px 16px; border-top:1px solid rgba(10,25,47,0.06);color:#16a34a;font-weight:700;">✓ Excellent (North Face)</td></tr>
+                        <tr style="background:rgba(212,175,55,0.035);"><td style="padding:11px 16px; font-weight:700; color:var(--color-primary); border-top:1px solid rgba(10,25,47,0.06);"><i class="fa-solid fa-mountain" style="color:var(--color-gold);margin-right:5px;"></i>Panchachuli V</td><td style="padding:11px 16px; border-top:1px solid rgba(10,25,47,0.06);"><strong>6,437 m</strong></td><td style="padding:11px 16px; border-top:1px solid rgba(10,25,47,0.06);">21,119 ft</td><td style="padding:11px 16px; border-top:1px solid rgba(10,25,47,0.06);color:#16a34a;font-weight:700;">✓ Excellent</td></tr>
+                        <tr><td style="padding:11px 16px; font-weight:700; color:var(--color-primary); border-top:1px solid rgba(10,25,47,0.06);"><i class="fa-solid fa-mountain" style="color:var(--color-gold);margin-right:5px;"></i>Panchachuli I</td><td style="padding:11px 16px; border-top:1px solid rgba(10,25,47,0.06);"><strong>6,334 m</strong></td><td style="padding:11px 16px; border-top:1px solid rgba(10,25,47,0.06);">20,781 ft</td><td style="padding:11px 16px; border-top:1px solid rgba(10,25,47,0.06);color:#16a34a;font-weight:700;">✓ Clear from Daktu</td></tr>
+                        <tr style="background:rgba(212,175,55,0.035);"><td style="padding:11px 16px; font-weight:700; color:var(--color-primary); border-top:1px solid rgba(10,25,47,0.06);"><i class="fa-solid fa-mountain" style="color:var(--color-gold);margin-right:5px;"></i>Panchachuli IV</td><td style="padding:11px 16px; border-top:1px solid rgba(10,25,47,0.06);"><strong>6,334 m</strong></td><td style="padding:11px 16px; border-top:1px solid rgba(10,25,47,0.06);">20,781 ft</td><td style="padding:11px 16px; border-top:1px solid rgba(10,25,47,0.06);color:#ca8a04;font-weight:700;">~ Partial view</td></tr>
+                        <tr><td style="padding:11px 16px; font-weight:700; color:var(--color-primary); border-top:1px solid rgba(10,25,47,0.06);"><i class="fa-solid fa-mountain" style="color:var(--color-gold);margin-right:5px;"></i>Panchachuli III</td><td style="padding:11px 16px; border-top:1px solid rgba(10,25,47,0.06);"><strong>6,312 m</strong></td><td style="padding:11px 16px; border-top:1px solid rgba(10,25,47,0.06);">20,709 ft</td><td style="padding:11px 16px; border-top:1px solid rgba(10,25,47,0.06);color:#ca8a04;font-weight:700;">~ Partial view</td></tr>
+                    </tbody>
+                </table>
+
+                <h2 style="font-family: var(--font-serif); font-size: clamp(1.2rem, 2.5vw, 1.6rem); color: var(--color-primary); margin: 0 0 14px 0;"><i class="fa-solid fa-house" style="color: var(--color-gold); margin-right: 8px;"></i>Key Rung Tribal Villages in Darma Valley</h2>
+                <ul class="styled-list inclusion" style="margin-bottom: 24px;">
+                    <li><strong>Daktu / Duktu (3,100m / 10,171 ft):</strong> One of the highest Rung villages with traditional carved wooden balconies and grain storehouses. Primary homestay hub.</li>
+                    <li><strong>Tidang (3,200m / 10,498 ft):</strong> Highest motorable settlement in Darma Valley — last point accessible by 4x4. Beyond this, travel is by foot only.</li>
+                    <li><strong>Sipu (2,800m):</strong> Ancient stone temple complex and vibrant hand-loom weaving traditions; key cultural stop on the valley circuit.</li>
+                    <li><strong>Baun (2,400m):</strong> Gateway village to upper Darma; ITBP checkpost and ILP verification point for all visitors.</li>
+                    <li><strong>Nagling, Dugtu, Philam, Chhal:</strong> Additional Rung settlements along the Dhauliganga, each with unique seasonal festivals and architecture.</li>
+                </ul>
+
+                <h2 style="font-family: var(--font-serif); font-size: clamp(1.2rem, 2.5vw, 1.6rem); color: var(--color-primary); margin: 0 0 14px 0;"><i class="fa-solid fa-route" style="color: var(--color-gold); margin-right: 8px;"></i>How to Reach Darma Valley — Step-by-Step Route Guide</h2>
+                <div style="background: var(--color-bg-card, #f8f5f0); border-radius: 12px; border: 1px solid rgba(212,175,55,0.3); padding: 20px; margin-bottom: 20px;">
+                    <ol style="padding-left: 18px; margin: 0; color: var(--color-text-secondary);">
+                        <li style="margin-bottom: 10px; font-size: 14.5px; line-height: 1.7;"><strong>Delhi → Kathgodam / Haldwani:</strong> Overnight train (Ranikhet Express or Shatabdi) or Volvo AC bus. ~300 km, 8–9 hours.</li>
+                        <li style="margin-bottom: 10px; font-size: 14.5px; line-height: 1.7;"><strong>Haldwani → Pithoragarh (1,814m):</strong> ~220 km via Almora. 5–6 hours by car/bus. Pithoragarh is the district HQ and base for ILP applications (SDM office).</li>
+                        <li style="margin-bottom: 10px; font-size: 14.5px; line-height: 1.7;"><strong>Pithoragarh → Dharchula (890m):</strong> ~80 km on NH-9 along the Kali River gorge. 2–3 hours. ILP verification at SDM Dharchula.</li>
+                        <li style="margin-bottom: 10px; font-size: 14.5px; line-height: 1.7;"><strong>Dharchula → Darma Valley:</strong> ~65 km narrow mountain track — <strong>4x4 Bolero essential</strong>. 3–4 hours. Road follows Dhauliganga River gorge from 890m to 3,200m.</li>
+                        <li style="font-size: 14.5px; line-height: 1.7;"><strong>Nearest Airport:</strong> Pantnagar Airport (PGH), ~260 km from Pithoragarh. Seasonal helicopter services operate from Naini Saini airstrip, Pithoragarh.</li>
+                    </ol>
+                </div>
             </div>
 
             <!-- Right Column: Sidebar Booking Form -->
@@ -885,6 +1106,28 @@
 
 
     <!-- Cancellation & Refund Policy Section (inline, above footer) -->
+
+    <!-- Related Packages Navigation (GEO/AIO internal linking) -->
+    <div style="background: var(--color-bg-subtle, #f8f5f0); padding: 40px 0 48px;">
+        <div class="container">
+            <h2 style="font-family: var(--font-serif); font-size: clamp(1.3rem, 2.5vw, 1.7rem); color: var(--color-primary); text-align: center; margin-bottom: 20px;">Explore More Kumaon Himalayan Destinations</h2>
+            <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;">
+                <a href="/adi-kailash" style="display: inline-flex; align-items: center; gap: 8px; background: #ffffff; border: 1.5px solid rgba(212,175,55,0.4); border-radius: 30px; padding: 10px 18px; font-size: 13.5px; font-weight: 600; color: var(--color-primary); text-decoration: none; transition: all 0.2s ease;">
+                    <i class="fa-solid fa-om" style="color: var(--color-gold);"></i> Adi Kailash &amp; Om Parvat Yatra
+                </a>
+                <a href="/khaliya-top" style="display: inline-flex; align-items: center; gap: 8px; background: #ffffff; border: 1.5px solid rgba(212,175,55,0.4); border-radius: 30px; padding: 10px 18px; font-size: 13.5px; font-weight: 600; color: var(--color-primary); text-decoration: none; transition: all 0.2s ease;">
+                    <i class="fa-solid fa-mountain" style="color: var(--color-gold);"></i> Khaliya Top Trek (3,500m), Munsiyari
+                </a>
+                <a href="/panchachuli" style="display: inline-flex; align-items: center; gap: 8px; background: #ffffff; border: 1.5px solid rgba(212,175,55,0.4); border-radius: 30px; padding: 10px 18px; font-size: 13.5px; font-weight: 600; color: var(--color-primary); text-decoration: none; transition: all 0.2s ease;">
+                    <i class="fa-solid fa-snowflake" style="color: var(--color-gold);"></i> Panchachuli Base Camp Trek
+                </a>
+                <a href="/blogs" style="display: inline-flex; align-items: center; gap: 8px; background: #ffffff; border: 1.5px solid rgba(212,175,55,0.4); border-radius: 30px; padding: 10px 18px; font-size: 13.5px; font-weight: 600; color: var(--color-primary); text-decoration: none; transition: all 0.2s ease;">
+                    <i class="fa-solid fa-newspaper" style="color: var(--color-gold);"></i> Kumaon Travel Guides &amp; Blogs
+                </a>
+            </div>
+        </div>
+    </div>
+
     <section id="cancellation-policy" style="background:var(--color-bg-subtle,#f8f5f0);padding:72px 0 80px;">
         <div class="container" style="max-width:900px;">
 
