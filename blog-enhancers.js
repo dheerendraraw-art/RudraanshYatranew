@@ -3489,10 +3489,10 @@ BLOG_ENHANCERS['when-does-adi-kailash-yatra-2026-close-for-winter'] = {
       "description": "Official update on Adi Kailash Yatra 2026 winter closure. SDM Dharchula clarifies no specific deadline has been declared yet; permits remain active on daily weather clearance.",
       "image": {
         "@type": "ImageObject",
-        "url": "https://rudraanshyatra.com/assets/images/adi-kailash-hero.webp",
-        "width": 1200,
-        "height": 675,
-        "caption": "Adi Kailash Peak and Parvati Sarovar preparing for winter snowfall closure - Rudraansh Yatra"
+        "url": "https://rudraanshyatra.com/assets/images/adi-kailash-winter-closing.webp",
+        "width": 1024,
+        "height": 553,
+        "caption": "Shiva-Parvati Temple at Jolingkong beneath snow-capped Mount Adi Kailash before winter snowfall closure - Rudraansh Yatra"
       },
       "datePublished": "2026-09-09T12:00:00+05:30",
       "dateModified": "2026-09-09T12:00:00+05:30",

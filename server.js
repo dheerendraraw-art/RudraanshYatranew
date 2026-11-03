@@ -176,7 +176,7 @@ function renderBlogsHtml(blogs) {
                 id: 'adi-kailash-closing-date',
                 title: 'When Does Adi Kailash Yatra 2026 Close for Winter? Closing Dates, Snowfall & Last Batch Guide',
                 slug: 'when-does-adi-kailash-yatra-2026-close-for-winter',
-                image_url: 'assets/images/adi-kailash-hero.webp',
+                image_url: 'assets/images/adi-kailash-winter-closing.webp',
                 author: 'Dheerendra Rautela',
                 created_at: '2026-09-09T08:00:00.000Z',
                 content: 'Complete winter closing dates for Adi Kailash and Om Parvat Yatra 2026. Official closure schedule, ITBP checkpoint cutoff dates, transhumance migration (Kooch), and final autumn batch booking guidelines.'
