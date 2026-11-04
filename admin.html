@@ -304,6 +304,8 @@
                             <option value="Fully Paid">Fully Paid</option>
                             <option value="Fully Paid - Yatra Completed">✅ Fully Paid + Yatra Completed</option>
                             <option value="Cancelled">❌ Cancelled</option>
+                                <option value="Cancelled — Refund Pending">⏳ Cancelled — Refund Pending</option>
+                                <option value="Cancelled — Refunded">✅ Cancelled — Refunded</option>
                         </select>
                     </div>
                 </div>
@@ -1837,6 +1839,35 @@
                 <i class="fa-solid fa-circle-check"></i>
                 Marking as <strong>Yatra Completed</strong> will record completion and automatically update Payment Status in the <strong>Billing &amp; Payment</strong> tab to <strong>Fully Paid</strong>.
             </div>
+
+            <!-- CANCELLATION REFUND SECTION -->
+            <div id="yatra-status-cancel-note" style="display:none; border-radius:8px; padding:14px 16px; margin-bottom:18px; background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.3);">
+                <div style="color:#f87171; font-size:12px; font-weight:700; margin-bottom:12px; display:flex; align-items:center; gap:8px;">
+                    <i class="fa-solid fa-ban"></i> Cancellation & Refund Details
+                </div>
+                <div id="cancel-amt-collected" style="background:rgba(239,68,68,0.06); border-radius:6px; padding:10px 12px; margin-bottom:12px; font-size:12px; color:#fca5a5; line-height:1.6;">
+                    <i class="fa-solid fa-spinner fa-spin"></i> Loading collected amount...
+                </div>
+                <label style="font-size:12px; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:0.6px; display:block; margin-bottom:8px;">Was Amount Refunded?</label>
+                <div style="display:flex; gap:12px; margin-bottom:12px;">
+                    <label style="cursor:pointer; display:flex; align-items:center; gap:6px;">
+                        <input type="radio" name="cancel-refund-status" value="Refunded" id="cancel-refund-yes" onchange="toggleRefundAmountField()">
+                        <span style="color:#4ade80; font-size:13px; font-weight:600;">&#10003; Yes — Refunded</span>
+                    </label>
+                    <label style="cursor:pointer; display:flex; align-items:center; gap:6px;">
+                        <input type="radio" name="cancel-refund-status" value="Refund Pending" id="cancel-refund-no" checked onchange="toggleRefundAmountField()">
+                        <span style="color:#f87171; font-size:13px; font-weight:600;">&#8987; Refund Pending</span>
+                    </label>
+                </div>
+                <div id="cancel-refund-amount-wrap" style="display:none; margin-bottom:10px;">
+                    <label style="font-size:12px; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:0.6px; display:block; margin-bottom:6px;">Refund Amount (&#8377;)</label>
+                    <input type="number" id="cancel-refund-amount" min="0" placeholder="Enter amount refunded..." style="width:100%; background:#1e293b; color:#f8fafc; border:1.5px solid rgba(34,197,94,0.4); border-radius:6px; padding:9px 12px; font-size:14px; font-weight:600; outline:none; box-sizing:border-box;">
+                    <div style="font-size:11px; color:#64748b; margin-top:5px;"><i class="fa-solid fa-info-circle"></i> Enter the exact amount physically returned/transferred to the customer.</div>
+                </div>
+                <label style="font-size:12px; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:0.6px; display:block; margin-bottom:6px;">Cancellation Reason <span style="font-weight:400; text-transform:none; color:#64748b;">(optional)</span></label>
+                <textarea id="cancel-reason-text" rows="2" placeholder="e.g. Customer changed plans, Health issue..." style="width:100%; background:#1e293b; color:#f8fafc; border:1.5px solid rgba(100,116,139,0.4); border-radius:6px; padding:9px 12px; font-size:13px; outline:none; resize:vertical; box-sizing:border-box;"></textarea>
+            </div>
+
             <div style="display:flex; gap:10px; justify-content:flex-end;">
                 <button onclick="closeYatraStatusModal()" style="padding:9px 18px; background:#1e293b;
                         border:1px solid #334155; color:#94a3b8; border-radius:6px; cursor:pointer;
@@ -4328,11 +4359,22 @@
                 }, 0);
                 const totalOutstanding = Math.max(0, totalBilled - totalPaid);
 
+                const cancelledBills = billingRecords.filter(b => b.payment_status === 'Cancelled');
+                const totalPendingRefund = cancelledBills
+                    .filter(b => (b.refund_status || 'Refund Pending') === 'Refund Pending')
+                    .reduce((sum, b) => {
+                        const pmts = (b.payments_received || []).filter(p => (p.paymentType || '') !== 'Cancellation Refund');
+                        return sum + pmts.reduce((ps, p) => ps + (parseFloat(p.amountPaid) || 0), 0);
+                    }, 0);
+                const totalRefunded = cancelledBills
+                    .filter(b => b.refund_status === 'Refunded')
+                    .reduce((sum, b) => sum + (parseFloat(b.refund_amount) || 0), 0);
+
                 setCard(0, true, '<i class="fa-solid fa-indian-rupee-sign" style="color: var(--color-gold);"></i>', '₹' + totalBilled.toLocaleString('en-IN'), 'Total Billed (Net)');
                 setCard(1, true, '<i class="fa-solid fa-circle-check" style="color: #22c55e;"></i>', '₹' + totalPaid.toLocaleString('en-IN'), 'Total Collected');
                 setCard(2, true, '<i class="fa-solid fa-triangle-exclamation" style="color: #ef4444;"></i>', '₹' + totalOutstanding.toLocaleString('en-IN'), 'Outstanding Balance');
-                setCard(3, false);
-                setCard(4, false);
+                setCard(3, true, '<i class="fa-solid fa-clock-rotate-left" style="color: #f87171;"></i>', '₹' + totalPendingRefund.toLocaleString('en-IN'), 'Pending Refund<br><span style="font-size:10px;color:#94a3b8;font-weight:400;">' + cancelledBills.filter(b=>(b.refund_status||'Refund Pending')==='Refund Pending').length + ' booking(s)</span>');
+                setCard(4, true, '<i class="fa-solid fa-rotate-left" style="color: #a78bfa;"></i>', '₹' + totalRefunded.toLocaleString('en-IN'), 'Total Refunded');
                 setCard(5, false);
             }
             else if (paneId === 'pane-requests') {
@@ -10660,7 +10702,11 @@
 
                 // Special cross-filter: Fully Paid bills where booking is also Yatra Completed
                 const isCrossFilter = statusVal === 'Fully Paid - Yatra Completed';
-                if (statusVal && statusVal !== 'All' && !isCrossFilter) {
+                const isRefundPendingFilter = statusVal === 'Cancelled — Refund Pending';
+                const isRefundedFilter = statusVal === 'Cancelled — Refunded';
+                if (isRefundPendingFilter || isRefundedFilter) {
+                    query = query.eq('payment_status', 'Cancelled');
+                } else if (statusVal && statusVal !== 'All' && !isCrossFilter) {
                     query = query.eq('payment_status', statusVal);
                 } else if (isCrossFilter) {
                     query = query.eq('payment_status', 'Fully Paid');
@@ -10686,6 +10732,9 @@
                     );
                     result = result.filter(bill => completedIds.has(bill.booking_id));
                 }
+                // Refund sub-filters
+                if (isRefundPendingFilter) result = result.filter(b => (b.refund_status || 'Refund Pending') === 'Refund Pending');
+                if (isRefundedFilter) result = result.filter(b => b.refund_status === 'Refunded');
 
                 billingRecords = result;
                 window.billingRecords = result;
@@ -10797,8 +10846,21 @@
                 }
                 const billedAmtHtml = `<div class="billing-amt-wrap">${billedAmtInner}</div>`;
 
+                // Refund badge for cancelled bills
+                let refundBadgeHtml = '';
+                if (isCancelled) {
+                    const rStatus = bill.refund_status || 'Refund Pending';
+                    const rAmt = parseFloat(bill.refund_amount) || 0;
+                    const rColor = rStatus === 'Refunded' ? '#4ade80' : '#f87171';
+                    const rBg = rStatus === 'Refunded' ? 'rgba(74,222,128,0.1)' : 'rgba(248,113,113,0.12)';
+                    const rBorder = rStatus === 'Refunded' ? 'rgba(74,222,128,0.35)' : 'rgba(248,113,113,0.35)';
+                    const rIcon = rStatus === 'Refunded' ? 'fa-check-circle' : 'fa-clock';
+                    const colPmts = (bill.payments_received || []).filter(p => (p.paymentType || '') !== 'Cancellation Refund');
+                    const colAmt = colPmts.reduce((s, p) => s + (parseFloat(p.amountPaid) || 0), 0);
+                    refundBadgeHtml = `<div style="margin-top:5px;"><span style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:12px;background:${rBg};color:${rColor};border:1px solid ${rBorder};font-size:10.5px;font-weight:700;"><i class="fa-solid ${rIcon}" style="font-size:9px;"></i> ${rStatus}</span>${rStatus === 'Refunded' ? '<span style="font-size:10px;color:#4ade80;margin-left:4px;">&#8377;' + rAmt.toLocaleString('en-IN') + '</span>' : (colAmt > 0 ? '<span style="font-size:10px;color:#f87171;margin-left:4px;font-weight:700;">&#8377;' + colAmt.toLocaleString('en-IN') + ' due</span>' : '')}</div>`;
+                }
                 const outstandingDisplay = isCancelled
-                    ? `<span class="amt-cleared" style="color:#94a3b8;font-size:12px;">₹0 <span style="font-size:10px;">(Cancelled)</span></span>`
+                    ? `<div><span class="amt-cleared" style="color:#94a3b8;font-size:12px;">₹0 <span style="font-size:10px;">(Cancelled)</span></span>${refundBadgeHtml}</div>`
                     : `<strong class="${remaining > 0 ? 'amt-unpaid' : 'amt-cleared'}">₹${remaining.toLocaleString('en-IN')}</strong>`;
 
                 html += `
@@ -10813,9 +10875,13 @@
                         <td data-label="Yatra Status" style="white-space:nowrap;">${_getBillingYatraStatusBadge(bill.booking_id)}</td>
                         <td data-label="Actions" class="billing-actions-cell">
                             <div class="billing-action-buttons-wrap">
+                                ${isCancelled && (bill.refund_status || 'Refund Pending') === 'Refund Pending' ? `
+                                <button onclick="markRefundDone('${bill.id}', '${bill.booking_id}', '${bill.customer_name}')" class="btn btn-secondary billing-pay-btn" style="background:rgba(74,222,128,0.1);border-color:rgba(74,222,128,0.4);color:#4ade80;" title="Mark Refund as Done">
+                                    <i class="fa-solid fa-rotate-left"></i> MARK REFUNDED
+                                </button>` : !isCancelled ? `
                                 <button onclick="openAddPaymentModal('${bill.id}', '${bill.booking_id}', '${bill.customer_name}', ${remaining})" class="btn btn-secondary billing-pay-btn" title="Add Payment">
                                     <i class="fa-solid fa-plus-minus"></i> + ADD PAY
-                                </button>
+                                </button>` : ''}
                                 <button onclick="downloadBillPdf('${bill.id}')" class="btn btn-secondary billing-pdf-btn" title="Download PDF Bill">
                                     <i class="fa-solid fa-file-pdf"></i> PDF
                                 </button>
@@ -10846,6 +10912,60 @@
             </span>`;
         }
 
+
+        // Mark a cancelled booking's refund as done from the billing table
+        window.markRefundDone = async function(billId, bookingId, customerName) {
+            const collected = (() => {
+                const bill = (window.billingRecords || []).find(b => b.id === billId);
+                if (!bill) return 0;
+                const payments = (bill.payments_received || []).filter(p => (p.paymentType || '') !== 'Cancellation Refund');
+                return payments.reduce((s, p) => s + (parseFloat(p.amountPaid) || 0), 0);
+            })();
+
+            const refAmt = prompt(`Mark Refund as Done for ${customerName} (Booking: ${bookingId}).\nAmount collected: ₹${collected.toLocaleString('en-IN')}\n\nEnter refunded amount (press Cancel to abort):`, collected);
+            if (refAmt === null) return; // User cancelled
+
+            const refundAmount = parseFloat(refAmt) || 0;
+
+            try {
+                showAdminToast('Saving refund status...', 'info');
+                const { error } = await supabaseAdmin
+                    .from('booking_bills')
+                    .update({
+                        refund_status: 'Refunded',
+                        refund_amount: refundAmount,
+                        payments_received: (() => {
+                            const bill = (window.billingRecords || []).find(b => b.id === billId);
+                            const existing = bill ? (bill.payments_received || []) : [];
+                            return [...existing, {
+                                receiptId: 'RFD-' + Date.now(),
+                                amountPaid: -refundAmount,
+                                date: new Date().toISOString().split('T')[0],
+                                paymentMode: 'Refund',
+                                paymentType: 'Cancellation Refund',
+                                note: 'Refund marked done from Billing panel'
+                            }];
+                        })()
+                    })
+                    .eq('id', billId);
+
+                if (error) throw error;
+
+                // Update in-memory cache
+                if (window.billingRecords) {
+                    const cached = window.billingRecords.find(b => b.id === billId);
+                    if (cached) {
+                        cached.refund_status = 'Refunded';
+                        cached.refund_amount = refundAmount;
+                    }
+                }
+
+                showAdminToast(`✅ Refund of ₹${refundAmount.toLocaleString('en-IN')} marked as done for ${customerName}!`, 'success');
+                if (window.fetchBillingRecords) fetchBillingRecords();
+            } catch (err) {
+                showAdminToast('Error saving refund: ' + err.message, 'error');
+            }
+        };
         window.downloadBillPdf = async function(billId) {
             showAdminToast('Preparing Invoice PDF...', 'info');
             try {
@@ -11090,17 +11210,53 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
             if (refEl) refEl.textContent = 'Booking: ' + bookingId;
             const sel = document.getElementById('yatra-status-select');
             if (sel) sel.value = currentStatus || 'In Progress';
-            // Show/hide note
-            const noteEl = document.getElementById('yatra-status-complete-note');
-            if (noteEl) noteEl.style.display = (currentStatus === 'Yatra Completed') ? 'block' : 'none';
-            // Listen for dropdown change to show/hide note
-            if (sel) {
-                sel.onchange = function() {
-                    if (noteEl) noteEl.style.display = (this.value === 'Yatra Completed') ? 'block' : 'none';
-                };
+
+            // Reset refund fields
+            const refundNoRadio = document.getElementById('cancel-refund-no');
+            if (refundNoRadio) refundNoRadio.checked = true;
+            const refundAmtInput = document.getElementById('cancel-refund-amount');
+            if (refundAmtInput) refundAmtInput.value = '';
+            const cancelReasonEl = document.getElementById('cancel-reason-text');
+            if (cancelReasonEl) cancelReasonEl.value = '';
+            const refundAmtWrap = document.getElementById('cancel-refund-amount-wrap');
+            if (refundAmtWrap) refundAmtWrap.style.display = 'none';
+
+            // Populate collected amount info
+            const cancelAmtEl = document.getElementById('cancel-amt-collected');
+            if (cancelAmtEl) {
+                const bill = (window.billingRecords || []).find(br => br.booking_id === bookingId);
+                if (bill) {
+                    const payments = (bill.payments_received || []).filter(p => (p.paymentType || '') !== 'Cancellation Refund');
+                    const totalCollected = payments.reduce((s, p) => s + (parseFloat(p.amountPaid) || 0), 0);
+                    const netAmt = Math.max(0, parseFloat(bill.total_package_amount || 0) - parseFloat(bill.discount || 0));
+                    cancelAmtEl.innerHTML = `<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                        <div><span style="color:#94a3b8;">Billed (Net):</span> <strong style="color:#f8fafc;">&#8377;${netAmt.toLocaleString('en-IN')}</strong></div>
+                        <div><span style="color:#94a3b8;">Collected:</span> <strong style="color:${totalCollected > 0 ? '#fbbf24' : '#94a3b8'};">&#8377;${totalCollected.toLocaleString('en-IN')}</strong></div>
+                    </div>
+                    ${totalCollected > 0 ? '<div style="margin-top:6px;color:#fca5a5;font-size:11px;"><i class=\"fa-solid fa-exclamation-triangle\"></i> &#8377;' + totalCollected.toLocaleString('en-IN') + ' was collected — please confirm refund status below.</div>' : '<div style="margin-top:6px;color:#94a3b8;font-size:11px;">No amount collected yet. No refund required.</div>'}`;
+                    if (refundAmtInput && totalCollected > 0) refundAmtInput.value = totalCollected;
+                } else {
+                    cancelAmtEl.innerHTML = '<span style="color:#64748b;font-size:12px;">No billing invoice found for this booking.</span>';
+                }
             }
+
+            // Show/hide notes
+            const updateVisibility = (val) => {
+                const noteEl = document.getElementById('yatra-status-complete-note');
+                const cancelNoteEl = document.getElementById('yatra-status-cancel-note');
+                if (noteEl) noteEl.style.display = (val === 'Yatra Completed') ? 'block' : 'none';
+                if (cancelNoteEl) cancelNoteEl.style.display = (val === 'Cancelled') ? 'block' : 'none';
+            };
+            updateVisibility(currentStatus || 'In Progress');
+            if (sel) { sel.onchange = function() { updateVisibility(this.value); }; }
             const modal = document.getElementById('yatra-status-modal');
             if (modal) { modal.style.display = 'flex'; }
+        };
+
+        window.toggleRefundAmountField = function() {
+            const refundYes = document.getElementById('cancel-refund-yes');
+            const wrap = document.getElementById('cancel-refund-amount-wrap');
+            if (wrap) wrap.style.display = (refundYes && refundYes.checked) ? 'block' : 'none';
         };
 
         window.closeYatraStatusModal = function() {
@@ -11175,7 +11331,7 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
         }
 
         // Helper: automatically mark linked bill as Cancelled with 0 balance when Yatra is Cancelled
-        async function _syncBillingToCancelled(bookingId, targetBookingUuid) {
+        async function _syncBillingToCancelled(bookingId, targetBookingUuid, refundStatus, refundAmount, cancelReason) {
             try {
                 if (!bookingId) return false;
                 const { data: bills, error } = await supabaseAdmin
@@ -11185,29 +11341,45 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
 
                 if (error || !bills || bills.length === 0) return false;
 
+                const cancelledAt = new Date().toISOString();
                 let anyUpdated = false;
                 for (const bill of bills) {
+                    const updatePayload = {
+                        payment_status: 'Cancelled',
+                        balance_remaining: 0,
+                        refund_status: refundStatus || 'Refund Pending',
+                        refund_amount: parseFloat(refundAmount) || 0,
+                        cancelled_at: cancelledAt,
+                        cancel_reason: cancelReason || null
+                    };
+                    // If refunded, log a negative entry in payments_received
+                    if (refundStatus === 'Refunded' && parseFloat(refundAmount) > 0) {
+                        const existingPayments = Array.isArray(bill.payments_received) ? bill.payments_received : [];
+                        updatePayload.payments_received = [...existingPayments, {
+                            receiptId: 'RFD-' + Date.now() + Math.floor(Math.random() * 100),
+                            amountPaid: -(parseFloat(refundAmount)),
+                            date: new Date().toISOString().split('T')[0],
+                            paymentMode: 'Refund',
+                            paymentType: 'Cancellation Refund',
+                            note: cancelReason || 'Booking Cancelled — Refund Issued'
+                        }];
+                    }
+
                     const { error: upErr } = await supabaseAdmin
                         .from('booking_bills')
-                        .update({
-                            payment_status: 'Cancelled',
-                            balance_remaining: 0
-                        })
+                        .update(updatePayload)
                         .eq('id', bill.id);
 
                     if (!upErr) {
                         anyUpdated = true;
                         if (window.billingRecords && Array.isArray(window.billingRecords)) {
                             const cached = window.billingRecords.find(b => b.id === bill.id);
-                            if (cached) {
-                                cached.payment_status = 'Cancelled';
-                                cached.balance_remaining = 0;
-                            }
+                            if (cached) Object.assign(cached, updatePayload);
                         }
                     }
                 }
 
-                // Also update linked lead status to Cancelled if lead_id exists
+                // Also update linked lead status to Cancelled
                 try {
                     const bookingObj = (bookingsData || []).find(b => b.booking_id === bookingId || b.id === targetBookingUuid);
                     if (bookingObj && bookingObj.lead_id) {
@@ -11265,14 +11437,23 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
                 if (newStatus === 'Yatra Completed' && targetBookingId) {
                     billUpdated = await _syncBillingToFullyPaid(targetBookingId);
                 } else if (newStatus === 'Cancelled' && targetBookingId) {
-                    billUpdated = await _syncBillingToCancelled(targetBookingId, _yatraStatusTargetId);
+                    const rfYes = document.getElementById('cancel-refund-yes');
+                    const rfStatus = (rfYes && rfYes.checked) ? 'Refunded' : 'Refund Pending';
+                    const rfAmount = document.getElementById('cancel-refund-amount') ? (parseFloat(document.getElementById('cancel-refund-amount').value) || 0) : 0;
+                    const rfReason = document.getElementById('cancel-reason-text') ? (document.getElementById('cancel-reason-text').value || '').trim() : '';
+                    window._lastCancelRefundStatus = rfStatus;
+                    window._lastCancelRefundAmount = rfAmount;
+                    billUpdated = await _syncBillingToCancelled(targetBookingId, _yatraStatusTargetId, rfStatus, rfAmount, rfReason);
                 }
 
                 const statusColors = { 'In Progress': '🟡', 'Yatra Completed': '✅', 'Cancelled': '❌' };
                 if (newStatus === 'Yatra Completed' && billUpdated) {
                     showAdminToast(`🎉 Yatra Status set to "Yatra Completed" & Payment Status updated to "Fully Paid" in Billing & Payment!`, 'success');
                 } else if (newStatus === 'Cancelled' && billUpdated) {
-                    showAdminToast(`❌ Booking cancelled: Billing status set to "Cancelled" & Outstanding balance cleared to ₹0!`, 'info');
+                    const rSt = window._lastCancelRefundStatus || 'Refund Pending';
+                    const rAm = window._lastCancelRefundAmount || 0;
+                    const rfMsg = rSt === 'Refunded' ? `✅ Refund of ₹${rAm.toLocaleString('en-IN')} marked as issued.` : `⏳ Refund PENDING — ₹${rAm.toLocaleString('en-IN')} to reconcile.`;
+                    showAdminToast(`❌ Booking cancelled! ${rfMsg}`, rSt === 'Refunded' ? 'info' : 'warning');
                 } else {
                     showAdminToast(`${statusColors[newStatus] || '🔄'} Yatra Status updated to "${newStatus}" successfully!`, 'success');
                 }
