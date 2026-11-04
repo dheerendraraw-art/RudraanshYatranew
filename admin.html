@@ -188,6 +188,7 @@
                         <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap; flex: 1; min-width: 260px;">
                             <h3 class="admin-form-title" style="margin-bottom: 0; border-bottom: none;"><i
                                     class="fa-solid fa-calendar-check" style="color: var(--color-gold);"></i> Travel Booking Inquiries</h3>
+                            <button onclick="bulkMarkYatraCompleted()" class="btn btn-secondary" id="bulk-complete-btn" style="padding:8px 12px;font-size:12px;white-space:nowrap;background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.35);color:#4ade80;" title="Auto-mark past-date yatras as Completed"><i class="fa-solid fa-flag-checkered"></i> Bulk Complete</button>
                             <div class="bookings-search-wrap" style="position: relative; width: 280px; max-width: 100%; flex-grow: 1;">
                                 <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: rgba(212, 175, 55, 0.6); font-size: 13px;"></i>
                                 <input type="text" id="search-bookings-input" placeholder="Search name, phone, email, booking ID..." oninput="applyBookingsFilters()" style="background: #1e293b; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: var(--border-radius-sm, 6px); padding: 9px 12px 9px 34px; font-size: 13px; outline: none; width: 100%; font-weight: 500; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); transition: border-color 0.2s ease;">
@@ -564,6 +565,25 @@
                 <!-- Performance Highlights / Insights Cards -->
                 <div id="analytics-insights-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px;">
                     <!-- Dynamically rendered insights -->
+                </div>
+
+                <!-- Lead-to-Booking Conversion Rate Card -->
+                <div id="conv-rate-section" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:16px;">
+                    <div style="background:linear-gradient(135deg,rgba(99,102,241,0.12) 0%,rgba(99,102,241,0.04) 100%);border:1px solid rgba(99,102,241,0.25);border-radius:12px;padding:18px 20px;">
+                        <div style="font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.5px;font-weight:700;margin-bottom:8px;"><i class="fa-solid fa-arrow-trend-up" style="color:#a5b4fc;margin-right:5px;"></i>Lead → Booking Rate</div>
+                        <div id="analytics-conversion-rate" style="font-size:28px;font-weight:900;color:#a5b4fc;">—</div>
+                        <div id="analytics-conversion-detail" style="font-size:11px;color:#64748b;margin-top:4px;"></div>
+                    </div>
+                    <div style="background:linear-gradient(135deg,rgba(34,197,94,0.1) 0%,rgba(34,197,94,0.03) 100%);border:1px solid rgba(34,197,94,0.2);border-radius:12px;padding:18px 20px;">
+                        <div style="font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.5px;font-weight:700;margin-bottom:8px;"><i class="fa-solid fa-sack-dollar" style="color:#4ade80;margin-right:5px;"></i>Avg Revenue / Booking</div>
+                        <div id="analytics-avg-revenue" style="font-size:28px;font-weight:900;color:#4ade80;">—</div>
+                        <div id="analytics-avg-revenue-detail" style="font-size:11px;color:#64748b;margin-top:4px;"></div>
+                    </div>
+                    <div style="background:linear-gradient(135deg,rgba(245,158,11,0.1) 0%,rgba(245,158,11,0.03) 100%);border:1px solid rgba(245,158,11,0.2);border-radius:12px;padding:18px 20px;">
+                        <div style="font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.5px;font-weight:700;margin-bottom:8px;"><i class="fa-solid fa-calendar-check" style="color:#fbbf24;margin-right:5px;"></i>Yatras Completed</div>
+                        <div id="analytics-yatras-done" style="font-size:28px;font-weight:900;color:#fbbf24;">—</div>
+                        <div id="analytics-yatras-done-detail" style="font-size:11px;color:#64748b;margin-top:4px;"></div>
+                    </div>
                 </div>
 
                 <!-- Revenue Overview Chart -->
@@ -4097,6 +4117,38 @@
             }, 700);
         }
 
+        // ── Auto-refresh every 5 minutes ──────────────────────────────────────
+        window._autoRefreshInterval = null;
+        window._lastRefreshTime = Date.now();
+
+        function _startAutoRefresh() {
+            if (window._autoRefreshInterval) clearInterval(window._autoRefreshInterval);
+            window._autoRefreshInterval = setInterval(function() {
+                // Only refresh if tab is visible and user is logged in
+                if (document.hidden) return;
+                if (!supabaseAdmin) return;
+                window._lastRefreshTime = Date.now();
+                if (typeof fetchBookings === 'function') fetchBookings();
+                if (typeof fetchBillingRecords === 'function') fetchBillingRecords();
+                if (typeof fetchLeads === 'function') fetchLeads();
+                if (typeof fetchRemindersData === 'function') fetchRemindersData();
+                _updateLastRefreshedLabel();
+            }, 5 * 60 * 1000); // 5 minutes
+        }
+
+        function _updateLastRefreshedLabel() {
+            const el = document.getElementById('last-refreshed-label');
+            if (!el) return;
+            const diff = Math.round((Date.now() - window._lastRefreshTime) / 60000);
+            el.textContent = diff <= 0 ? 'Just updated' : diff === 1 ? 'Updated 1 min ago' : 'Updated ' + diff + ' mins ago';
+        }
+
+        // Start auto-refresh after login
+        _startAutoRefresh();
+        // Update the label every minute
+        setInterval(_updateLastRefreshedLabel, 60000);
+        // ──────────────────────────────────────────────────────────────────────
+
         // Tab Switch logic
         function switchTab(evt, paneId) {
             applyRolePermissions();
@@ -4722,6 +4774,28 @@
         };
 
         // 1. Fetch Bookings
+        
+        // ── Copy Booking ID ───────────────────────────────────────────────────
+        window.copyBookingId = function(id) {
+            if (!id) return;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(id).then(function() {
+                    showAdminToast('Booking ID copied: ' + id, 'success');
+                }).catch(function() {
+                    _fallbackCopy(id);
+                });
+            } else {
+                _fallbackCopy(id);
+            }
+        };
+        function _fallbackCopy(text) {
+            var ta = document.createElement('textarea');
+            ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+            document.body.appendChild(ta); ta.focus(); ta.select();
+            try { document.execCommand('copy'); showAdminToast('Copied: ' + text, 'success'); } catch(e) {}
+            document.body.removeChild(ta);
+        }
+        // ──────────────────────────────────────────────────────────────────────
         async function fetchBookings() {
             if (!supabaseAdmin) return;
             try {
@@ -5127,7 +5201,7 @@
                 html += `
                     <tr class="booking-card-row">
                         <td data-label="Booking ID">
-                            <strong class="booking-id-tag">${bookingId}</strong>
+                            <strong class="booking-id-tag" title="Click to copy Booking ID" onclick="copyBookingId('${bookingId}')" style="cursor:pointer;">${bookingId}</strong><button onclick="copyBookingId('${bookingId}')" style="background:none;border:none;cursor:pointer;color:#64748b;padding:0 3px;margin-left:2px;font-size:11px;" title="Copy Booking ID"><i class="fa-regular fa-copy"></i></button>
                         </td>
                         <td data-label="Pickup Point" class="mobile-detail-field">
                             <select ${currentUserRole === "staff" ? "disabled" : ""} onchange="updateBookingField('${item.id}', 'pickup_point', this.value)" class="booking-pickup-select">
@@ -5334,6 +5408,7 @@
                             <a href="https://wa.me/${waPhone}?text=Namaste%20${encodeURIComponent(item.name || 'Guest')}!%20This%20is%20Rudraansh%20Yatra." target="_blank" class="booking-quick-wa" style="background: rgba(37, 211, 102, 0.18); color: #25D366; border: 1px solid rgba(37, 211, 102, 0.35); padding: 3px 9px; border-radius: 12px; font-size: 11px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
                                 <i class="fa-brands fa-whatsapp"></i> Chat
                             </a>
+                             <button onclick="sendBillingWhatsApp('${bill.id}')" class="btn" style="background:rgba(37,211,102,0.15);border:1px solid rgba(37,211,102,0.4);color:#25D366;padding:5px 9px;font-size:11.5px;font-weight:700;border-radius:6px;cursor:pointer;display:inline-flex;align-items:center;gap:4px;margin-top:4px;" title="Send Payment Summary via WhatsApp"><i class="fa-brands fa-whatsapp"></i> Invoice</button>
                         </div>
                     </div>
                 ` : '<span style="color: #94a3b8;">—</span>';
@@ -7022,6 +7097,7 @@
                     }
                 }
             } catch (err) {
+                _updateConversionRateCards(leads, bookingsData || []);
                 _initRevenueChart();
                 console.error('Analytics error:', err);
             }
@@ -8646,6 +8722,7 @@
                             <a href="https://wa.me/${waPhone}?text=Namaste%20${encodeURIComponent(item.name || 'Guest')}!%20This%20is%20Rudraansh%20Yatra." target="_blank" style="background: rgba(37, 211, 102, 0.15); color: #25D366; border: 1px solid rgba(37, 211, 102, 0.3); padding: 2px 8px; border-radius: 12px; font-size: 11px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
                                 <i class="fa-brands fa-whatsapp"></i> Chat
                             </a>
+                             <button onclick="sendBillingWhatsApp('${bill.id}')" class="btn" style="background:rgba(37,211,102,0.15);border:1px solid rgba(37,211,102,0.4);color:#25D366;padding:5px 9px;font-size:11.5px;font-weight:700;border-radius:6px;cursor:pointer;display:inline-flex;align-items:center;gap:4px;margin-top:4px;" title="Send Payment Summary via WhatsApp"><i class="fa-brands fa-whatsapp"></i> Invoice</button>
                         </div>
                     </div>
                 ` : '—';
@@ -10802,6 +10879,43 @@
         let billingRecords = window.billingRecords || [];
         window.billingRecords = billingRecords;
 
+        
+        // ── WhatsApp Invoice Summary ────────────────────────────────────────────
+        window.sendBillingWhatsApp = function(billId) {
+            var bill = (billingRecords || []).find(function(b) { return b.id === billId; });
+            if (!bill) { showAdminToast("Bill not found", "error"); return; }
+            var phone = (bill.customer_phone || "").replace(/\D/g, "");
+            if (!phone) { showAdminToast("No phone number on this bill", "error"); return; }
+            if (phone.length === 10) phone = "91" + phone;
+            var payments = Array.isArray(bill.payments_received) ? bill.payments_received : [];
+            var totalPaid = payments.filter(function(p) { return parseFloat(p.amountPaid) > 0; })
+                .reduce(function(s, p) { return s + parseFloat(p.amountPaid); }, 0);
+            var balance = parseFloat(bill.balance_remaining) || 0;
+            var totalBilled = parseFloat(bill.total_package_amount) || 0;
+            var fmt = function(n) { return "\u20b9" + Math.round(n).toLocaleString("en-IN"); };
+            var dateStr = bill.tour_start_date ? new Date(bill.tour_start_date).toLocaleDateString("en-IN", {day:"numeric",month:"short",year:"numeric"}) : "TBD";
+            var lines = [
+                "Namaste " + (bill.customer_name || "Guest") + " ji! \ud83d\ude4f",
+                "",
+                "*Rudraansh Yatra — Payment Summary*",
+                "──────────────────",
+                "\ud83d\udccb *Booking ID:* " + (bill.booking_id || billId.slice(0,8)),
+                "\ud83c\udfd4 *Package:* " + (bill.package_name || "Yatra Package"),
+                "\ud83d\udcc5 *Tour Date:* " + dateStr,
+                "\ud83d\udc65 *Group Size:* " + (bill.group_size || 1) + " Pax",
+                "──────────────────",
+                "\ud83d\udcb0 *Total Package Amount:* " + fmt(totalBilled),
+                "\u2705 *Amount Paid:* " + fmt(totalPaid),
+                (balance > 0 ? "\u23f3 *Balance Due:* " + fmt(balance) : "\ud83c\udf89 *Fully Paid — Thank You!*"),
+                "──────────────────",
+                "For any queries, reply to this message.",
+                "Jai Mahadev! \ud83d\ude4f"
+            ];
+            var msg = lines.join("\n");
+            var url = "https://wa.me/" + phone + "?text=" + encodeURIComponent(msg);
+            window.open(url, "_blank");
+        };
+        // ─────────────────────────────────────────────────────────────────────────────────────
         window.fetchBillingRecords = async function() {
             if (!supabaseAdmin) return;
             try {
@@ -10917,6 +11031,7 @@
                             <a href="https://wa.me/${waPhone}?text=Namaste%20${encodeURIComponent(bill.customer_name)}!%20This%20is%20Rudraansh%20Yatra." target="_blank" class="billing-btn-chat">
                                 <i class="fa-brands fa-whatsapp"></i> Chat
                             </a>
+                             <button onclick="sendBillingWhatsApp('${bill.id}')" class="btn" style="background:rgba(37,211,102,0.15);border:1px solid rgba(37,211,102,0.4);color:#25D366;padding:5px 9px;font-size:11.5px;font-weight:700;border-radius:6px;cursor:pointer;display:inline-flex;align-items:center;gap:4px;margin-top:4px;" title="Send Payment Summary via WhatsApp"><i class="fa-brands fa-whatsapp"></i> Invoice</button>
                         </div>
                     </div>
                 `;
@@ -13260,6 +13375,55 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
             if (el) el.style.display = "none";
             window._cdmCallback = null;
         };
+
+        // ── Session Timeout Warning (30 min inactivity) ───────────────────────
+        (function() {
+            var TIMEOUT_MS = 30 * 60 * 1000; // 30 minutes
+            var WARN_MS = 5 * 60 * 1000;     // warn 5 min before
+            var _sessionTimer, _warnTimer, _warnShown = false;
+
+            function _resetSessionTimer() {
+                clearTimeout(_sessionTimer); clearTimeout(_warnTimer); _warnShown = false;
+                var warnBanner = document.getElementById('session-timeout-banner');
+                if (warnBanner) warnBanner.style.display = 'none';
+
+                _warnTimer = setTimeout(function() {
+                    if (_warnShown) return;
+                    _warnShown = true;
+                    var banner = document.getElementById('session-timeout-banner');
+                    if (!banner) {
+                        banner = document.createElement('div');
+                        banner.id = 'session-timeout-banner';
+                        banner.innerHTML = '<i class="fa-solid fa-clock" style="color:#fbbf24;"></i>'
+                            + ' <strong>Session expiring soon</strong> — You will be logged out in 5 minutes due to inactivity.'
+                            + ' <button onclick="_resetSessionTimer()" style="margin-left:10px;padding:3px 10px;background:rgba(212,175,55,0.2);border:1px solid rgba(212,175,55,0.5);color:#fbbf24;border-radius:4px;cursor:pointer;font-size:12px;font-weight:700;">Stay Logged In</button>'
+                            + ' <button onclick="document.getElementById('session-timeout-banner').style.display='none'" style="margin-left:6px;padding:3px 8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#94a3b8;border-radius:4px;cursor:pointer;font-size:11px;">Dismiss</button>';
+                        banner.style.cssText = 'position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:10100;background:rgba(15,27,56,0.97);border:1px solid rgba(212,175,55,0.5);border-radius:10px;padding:12px 18px;color:#e2e8f0;font-size:13px;box-shadow:0 8px 32px rgba(0,0,0,0.5);display:flex;align-items:center;gap:8px;max-width:90vw;';
+                        document.body.appendChild(banner);
+                    }
+                    banner.style.display = 'flex';
+                }, TIMEOUT_MS - WARN_MS);
+
+                _sessionTimer = setTimeout(function() {
+                    // Log out
+                    localStorage.removeItem('admin_logged_in');
+                    localStorage.removeItem('admin_role');
+                    localStorage.removeItem('admin_username');
+                    window.location.reload();
+                }, TIMEOUT_MS);
+            }
+
+            window._resetSessionTimer = _resetSessionTimer;
+
+            // Listen for user activity
+            var events = ['mousemove', 'keydown', 'click', 'touchstart', 'scroll'];
+            events.forEach(function(evt) {
+                document.addEventListener(evt, _resetSessionTimer, { passive: true });
+            });
+
+            _resetSessionTimer(); // start on page load
+        })();
+        // ──────────────────────────────────────────────────────────────────────
         // === end Styled Confirm Dialog ===
     </script>
 </body>
