@@ -12901,11 +12901,9 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
             if (!('Notification' in window) || Notification.permission !== 'granted') return;
 
             try {
-                // Fetch reminders using backend API via fetchWithAuth
-                const response = await fetchWithAuth('/api/admin/reminders');
-                if (!response.ok) return;
-                const reminders = await response.json();
-                if (!reminders || !Array.isArray(reminders)) return;
+                // Use allReminders (already fetched & staff-filtered by fetchRemindersData)
+                // This fixes the broken /api/admin/reminders endpoint
+                const reminders = allReminders || [];
 
                 const now = new Date();
                 const todayStr = now.toISOString().split('T')[0];
@@ -12921,9 +12919,6 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
                     notifiedIds = JSON.parse(sessionStorage.getItem('notified_reminders') || '[]');
                 } catch (e) {}
 
-                const loggedInUser = localStorage.getItem('admin_username') || '';
-                const loggedInUserUuid = localStorage.getItem('admin_uuid_mapping') || '';
-
                 const pendingAlerts = reminders.filter(r => {
                     if (r.status === 'Completed') return false;
                     if (notifiedIds.includes(r.id)) return false;
@@ -12935,14 +12930,7 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
                         if (dueTime > currentTimeStr) return false;
                     }
 
-                    // Filter by assignee
-                    const assignedTo = r.assigned_to ? r.assigned_to.toLowerCase() : '';
-                    const createdBy = r.created_by || '';
-
-                    const isAssignedToMe = loggedInUserUuid && (assignedTo === loggedInUserUuid.toLowerCase());
-                    const isCreatedByMe = createdBy === loggedInUser;
-
-                    return isAssignedToMe || (!assignedTo && isCreatedByMe);
+                    return true; // already staff-filtered by fetchRemindersData
                 });
 
                 if (pendingAlerts.length > 0) {
@@ -13268,6 +13256,19 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
                 });
                 staffSelect.innerHTML = staffHtml;
             }
+
+            // FIX 3: For staff users, auto-select self and lock the assignee dropdown
+            if (currentUserRole === 'staff' && staffSelect) {
+                const myUuid = currentUserUuidMapping || (typeof AGENT_UUIDS !== 'undefined' && AGENT_UUIDS[(currentUsername || '').toLowerCase()]) || '';
+                if (myUuid) staffSelect.value = myUuid;
+                staffSelect.disabled = true;
+                staffSelect.style.opacity = '0.65';
+                staffSelect.title = 'Staff can only assign reminders to themselves';
+            } else if (staffSelect) {
+                staffSelect.disabled = false;
+                staffSelect.style.opacity = '';
+                staffSelect.title = '';
+            }
         };
 
         window.closeReminderModal = function() {
@@ -13311,7 +13312,8 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
                 const priority = document.getElementById('reminder-priority').value;
                 const assignedTo = document.getElementById('reminder-assignee').value;
 
-                const payload = {
+                // FIX 4: Base payload without status (preserve on update)
+                const basePayload = {
                     lead_id: leadId || null,
                     lead_name: leadName || 'General Inquiry',
                     lead_phone: leadPhone || '',
@@ -13319,21 +13321,26 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
                     due_date: dueDate,
                     due_time: dueTime,
                     priority,
-                    assigned_to: assignedTo || null,
-                    status: 'Pending'
+                    assigned_to: assignedTo || null
                 };
 
                 if (id) {
+                    // Update: don't overwrite status to Pending
                     const { error } = await supabaseAdmin
                         .from('reminders')
-                        .update(payload)
+                        .update(basePayload)
                         .eq('id', id);
                     if (error) throw error;
                     showAdminToast('Reminder updated successfully!', 'success');
                 } else {
+                    // FIX 2: set created_by so staff OR-filter works
+                    const insertPayload = Object.assign({}, basePayload, {
+                        created_by: currentUsername || '',
+                        status: 'Pending'
+                    });
                     const { error } = await supabaseAdmin
                         .from('reminders')
-                        .insert([payload]);
+                        .insert([insertPayload]);
                     if (error) throw error;
                     showAdminToast('Follow-up reminder set successfully!', 'success');
                 }
