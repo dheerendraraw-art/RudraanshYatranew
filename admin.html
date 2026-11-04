@@ -136,6 +136,38 @@
                 </div>
             </div>
 
+            <!-- Staff Summary Stats Badges (Visible only for Staff role) -->
+            <div id="staff-stats-grid" style="display: none; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 22px;">
+                <div class="admin-stat-card" style="border: 1.5px solid rgba(212, 175, 55, 0.35); background: linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(15, 23, 42, 0.6) 100%);">
+                    <div class="admin-stat-icon" style="background: rgba(212, 175, 55, 0.15); color: var(--color-gold);"><i class="fa-solid fa-headset"></i></div>
+                    <div class="admin-stat-info">
+                        <span class="admin-stat-num" id="staff-stat-leads" style="color: var(--color-gold);">0</span>
+                        <span class="admin-stat-label">My Assigned Leads</span>
+                    </div>
+                </div>
+                <div class="admin-stat-card" style="border: 1.5px solid rgba(59, 130, 246, 0.35); background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(15, 23, 42, 0.6) 100%);">
+                    <div class="admin-stat-icon" style="background: rgba(59, 130, 246, 0.15); color: #60a5fa;"><i class="fa-solid fa-phone-volume"></i></div>
+                    <div class="admin-stat-info">
+                        <span class="admin-stat-num" id="staff-stat-followups" style="color: #60a5fa;">0</span>
+                        <span class="admin-stat-label">Follow-ups Due Today</span>
+                    </div>
+                </div>
+                <div class="admin-stat-card" style="border: 1.5px solid rgba(34, 197, 94, 0.35); background: linear-gradient(135deg, rgba(34, 197, 94, 0.08) 0%, rgba(15, 23, 42, 0.6) 100%);">
+                    <div class="admin-stat-icon" style="background: rgba(34, 197, 94, 0.15); color: #4ade80;"><i class="fa-solid fa-trophy"></i></div>
+                    <div class="admin-stat-info">
+                        <span class="admin-stat-num" id="staff-stat-bookings" style="color: #4ade80;">0</span>
+                        <span class="admin-stat-label">My Confirmed Bookings</span>
+                    </div>
+                </div>
+                <div class="admin-stat-card" style="border: 1.5px solid rgba(245, 158, 11, 0.35); background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(15, 23, 42, 0.6) 100%);">
+                    <div class="admin-stat-icon" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24;"><i class="fa-solid fa-sack-dollar"></i></div>
+                    <div class="admin-stat-info">
+                        <span class="admin-stat-num" id="staff-stat-incentive" style="color: #fbbf24;">₹0</span>
+                        <span class="admin-stat-label">Earned Incentive (3%)</span>
+                    </div>
+                </div>
+            </div>
+
             <!-- Tab Navigation Control -->
             <div class="admin-tab-nav">
                 <button class="admin-tab-btn active" onclick="switchTab(event, 'pane-bookings')" id="tab-bookings-btn">
@@ -936,7 +968,29 @@
                     </div>
                 </div>
 
-                <div class="admin-table-container">
+                
+                <!-- Quick Filter Pills for Staff & Admins -->
+                <div id="lead-quick-filter-pills" style="display: flex; gap: 8px; margin-bottom: 16px; overflow-x: auto; padding-bottom: 4px; flex-wrap: wrap;">
+                    <button type="button" class="lead-pill active" onclick="setLeadQuickFilter('all', this)" style="background: rgba(212,175,55,0.18); border: 1.5px solid var(--color-gold); color: #fbbf24; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                        <i class="fa-solid fa-list-check"></i> All Leads <span id="pill-count-all" style="background: rgba(255,255,255,0.1); padding: 1px 6px; border-radius: 10px; font-size: 11px;">0</span>
+                    </button>
+                    <button type="button" class="lead-pill" onclick="setLeadQuickFilter('due_today', this)" style="background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.35); color: #60a5fa; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                        <i class="fa-solid fa-bolt"></i> Due Today <span id="pill-count-today" style="background: rgba(59,130,246,0.2); padding: 1px 6px; border-radius: 10px; font-size: 11px;">0</span>
+                    </button>
+                    <button type="button" class="lead-pill" onclick="setLeadQuickFilter('overdue', this)" style="background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.35); color: #f87171; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                        <i class="fa-solid fa-clock-rotate-left"></i> Overdue <span id="pill-count-overdue" style="background: rgba(239,68,68,0.2); padding: 1px 6px; border-radius: 10px; font-size: 11px;">0</span>
+                    </button>
+                    <button type="button" class="lead-pill" onclick="setLeadQuickFilter('new', this)" style="background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.35); color: #fbbf24; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                        <i class="fa-solid fa-star"></i> New / Uncalled <span id="pill-count-new" style="background: rgba(245,158,11,0.2); padding: 1px 6px; border-radius: 10px; font-size: 11px;">0</span>
+                    </button>
+                    <button type="button" class="lead-pill" onclick="setLeadQuickFilter('connected', this)" style="background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.35); color: #34d399; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                        <i class="fa-solid fa-phone"></i> Connected <span id="pill-count-connected" style="background: rgba(16,185,129,0.2); padding: 1px 6px; border-radius: 10px; font-size: 11px;">0</span>
+                    </button>
+                    <button type="button" class="lead-pill" onclick="setLeadQuickFilter('won', this)" style="background: rgba(219,39,119,0.12); border: 1px solid rgba(219,39,119,0.35); color: #f472b6; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                        <i class="fa-solid fa-trophy"></i> Booked / Won <span id="pill-count-won" style="background: rgba(219,39,119,0.2); padding: 1px 6px; border-radius: 10px; font-size: 11px;">0</span>
+                    </button>
+                </div>
+<div class="admin-table-container">
                     <table class="admin-table">
                         <thead>
                             <tr>
@@ -4045,12 +4099,19 @@
             // Hide Stats summary grid & header for staff
             const statsGrid = document.querySelector('.admin-stats-grid');
             if (statsGrid) statsGrid.style.display = isStaff ? 'none' : 'grid';
+            const staffStatsGrid = document.getElementById('staff-stats-grid');
+            if (staffStatsGrid) staffStatsGrid.style.display = isStaff ? 'grid' : 'none';
+            if (isStaff && typeof window.updateStaffDashboardStats === 'function') {
+                window.updateStaffDashboardStats();
+            }
 
             const statsHeaderWrap = document.getElementById('stats-summary-header-wrap');
             if (statsHeaderWrap) statsHeaderWrap.style.display = isStaff ? 'none' : 'flex';
 
             // Action buttons to hide for Staff in Bookings and Leads
             const adminOnlyButtonIds = [
+                'sync-reviews-btn',
+                'bulk-complete-btn',
                 'export-bookings-btn',
                 'bookings-template-btn',
                 'import-bookings-btn',
@@ -5260,9 +5321,9 @@
                                 <button class="btn btn-primary booking-edit-btn" onclick="startEditBooking('${item.id}')" title="Edit Booking">
                                     <i class="fa-solid fa-pen"></i> Edit
                                 </button>
-                                <button class="admin-btn-delete booking-delete-btn" onclick="deleteRecord('bookings', '${item.id}', fetchBookings)" title="Delete Booking">
+                                ${currentUserRole !== 'staff' ? `<button class="admin-btn-delete booking-delete-btn" onclick="deleteRecord('bookings', '${item.id}', fetchBookings)" title="Delete Booking">
                                     <i class="fa-solid fa-trash"></i>
-                                </button>
+                                </button>` : ''}
                             </div>
                             <div class="booking-toggle-details-btn" onclick="toggleMobileBookingDetails(this)">
                                 <i class="fa-solid fa-chevron-down"></i> Show Details
@@ -5613,6 +5674,10 @@
 
         // Delete Row in DB Table
         async function deleteRecord(tableName, id, reloadCallback, confirmTitle, confirmMsg) {
+            if (currentUserRole === 'staff' && (tableName === 'bookings' || tableName === 'leads' || tableName === 'blogs')) {
+                showAdminToast('Permission denied: Only Administrators can delete records.', 'error');
+                return;
+            }
             var title = confirmTitle || 'Delete Record';
             var msg = confirmMsg || 'Are you sure you want to permanently delete this record? <strong style="color:#fca5a5;">This cannot be undone.</strong>';
             showConfirmModal(title, msg, async function() {
@@ -8084,6 +8149,8 @@
                 if (error) throw error;
 
                 currentLeads = data || [];
+                if (typeof window.updateLeadPillCounts === 'function') window.updateLeadPillCounts();
+                if (typeof window.updateStaffDashboardStats === 'function') window.updateStaffDashboardStats();
                 const restoredLeadsState = window.restoreLeadsFiltersState();
                 window.applyLeadsFilters(restoredLeadsState);
             } catch (err) {
@@ -8346,7 +8413,30 @@
                     (lead.phone || '').toLowerCase().includes(searchVal) ||
                     (lead.email || '').toLowerCase().includes(searchVal);
 
-                return matchSource && matchStatus && matchFinalStatus && matchAssignee && matchSearch;
+                // Quick Pill Filter check
+                let matchPill = true;
+                const pill = window.leadActivePillFilter || 'all';
+                const todayStr = new Date().toISOString().split('T')[0];
+                const now = new Date(); now.setHours(0,0,0,0);
+                const isWon = (leadStatus === 'won' || leadFinalStatus === 'booking confirmed');
+
+                if (pill === 'due_today') {
+                    matchPill = !isWon && (lead.follow_up_1 === todayStr || lead.follow_up_2 === todayStr);
+                } else if (pill === 'overdue') {
+                    const d1 = lead.follow_up_1 ? new Date(lead.follow_up_1) : null;
+                    const d2 = lead.follow_up_2 ? new Date(lead.follow_up_2) : null;
+                    const isToday = (lead.follow_up_1 === todayStr || lead.follow_up_2 === todayStr);
+                    const isOverdue = (d1 && d1 < now) || (d2 && d2 < now);
+                    matchPill = !isWon && isOverdue && !isToday;
+                } else if (pill === 'new') {
+                    matchPill = (leadStatus === 'new');
+                } else if (pill === 'connected') {
+                    matchPill = ['answered', 'busy', 'follow up required'].includes(leadStatus);
+                } else if (pill === 'won') {
+                    matchPill = isWon;
+                }
+
+                return matchSource && matchStatus && matchFinalStatus && matchAssignee && matchSearch && matchPill;
             });
 
             filteredLeads.sort((a, b) => {
@@ -8839,9 +8929,9 @@
                                     <button class="admin-btn-edit lead-card-edit-btn" onclick="event.stopPropagation(); startEditLead('${item.id}')" style="background-color: var(--color-gold); color: #0f172a; border: none; padding: 7px 12px; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700;" title="Edit Lead">
                                         <i class="fa-solid fa-pen-to-square"></i> Edit
                                     </button>
-                                    <button class="admin-btn-delete lead-card-del-btn" onclick="event.stopPropagation(); deleteRecord('leads', '${item.id}', fetchLeads)" style="border-radius: 6px; padding: 7px 10px; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; gap: 4px;" title="Delete Lead">
+                                    ${currentUserRole !== 'staff' ? `<button class="admin-btn-delete lead-card-del-btn" onclick="event.stopPropagation(); deleteRecord('leads', '${item.id}', fetchLeads)" style="border-radius: 6px; padding: 7px 10px; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; gap: 4px;" title="Delete Lead">
                                         <i class="fa-solid fa-trash"></i> Delete
-                                    </button>
+                                    </button>` : ''}
                                 </div>
                             </td>
                         </tr>
@@ -11879,6 +11969,8 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
             if (counterEl) counterEl.textContent = cleanMsg.length + ' chars';
 
             populateNewBookingAssigneeOptions(item.assigned_to || item.user_id || '');
+            const bkAssigneeEl = document.getElementById('new-booking-assignee');
+            if (bkAssigneeEl) bkAssigneeEl.disabled = (currentUserRole === 'staff');
         };
 
         window.updateBookingField = async function(bookingId, fieldName, value) {
