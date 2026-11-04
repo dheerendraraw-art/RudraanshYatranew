@@ -10934,15 +10934,47 @@
         };
 
         // Mark a cancelled booking's refund as done from the billing table
-        window.markRefundDone = async function(billId, bookingId, customerName) {
+        // B3 FIX: replaced prompt() with inline modal (mobile-safe)
+        window._markRefundContext = { billId: null, bookingId: null, customerName: null };
+
+        window.markRefundDone = function(billId, bookingId, customerName) {
             const bill = (window.billingRecords || []).find(b => b.id === billId);
             const refInfo = getBillRefundInfo(bill);
             const pending = refInfo.pendingAmount || refInfo.collected;
 
-            const refAmt = prompt(`Mark Refund as Done for ${customerName} (Booking: ${bookingId}).\nPending refund: ₹${pending.toLocaleString('en-IN')}\n\nEnter refunded amount (press Cancel to abort):`, pending);
-            if (refAmt === null) return; // User cancelled
+            // Store context for confirm handler
+            window._markRefundContext = { billId, bookingId, customerName, pending };
 
-            const refundAmount = parseFloat(refAmt) || 0;
+            // Populate modal
+            const infoEl = document.getElementById('mrm-info');
+            if (infoEl) {
+                infoEl.innerHTML = `<strong style="color:#f8fafc;">${customerName}</strong> &nbsp;·&nbsp; Booking: <strong style="color:#f59e0b;">${bookingId}</strong><br><span style="color:#94a3b8;font-size:12px;">Pending refund: </span><strong style="color:#fbbf24;">&#8377;${pending.toLocaleString('en-IN')}</strong>`;
+            }
+            const amtEl = document.getElementById('mrm-amount');
+            if (amtEl) amtEl.value = pending > 0 ? pending : '';
+            const noteEl = document.getElementById('mrm-note');
+            if (noteEl) noteEl.value = '';
+
+            const modal = document.getElementById('mark-refund-modal');
+            if (modal) modal.style.display = 'flex';
+        };
+
+        window.confirmMarkRefundDone = async function() {
+            const { billId, bookingId, customerName } = window._markRefundContext || {};
+            if (!billId) return;
+
+            const refundAmount = parseFloat(document.getElementById('mrm-amount').value) || 0;
+            const refundNote = (document.getElementById('mrm-note').value || '').trim();
+
+            if (refundAmount <= 0) {
+                showAdminToast('Please enter a valid refund amount.', 'error');
+                return;
+            }
+
+            const btn = document.getElementById('mrm-confirm-btn');
+            if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...'; }
+
+            const bill = (window.billingRecords || []).find(b => b.id === billId);
             const existingPayments = bill ? (Array.isArray(bill.payments_received) ? bill.payments_received : []) : [];
             const updatedPayments = [
                 ...existingPayments,
@@ -10952,7 +10984,7 @@
                     date: new Date().toISOString().split('T')[0],
                     paymentMode: 'Refund',
                     paymentType: 'Cancellation Refund',
-                    note: 'Advance Refunded — Booking Cancelled'
+                    note: refundNote || 'Advance Refunded — Booking Cancelled'
                 }
             ];
 
@@ -10978,11 +11010,18 @@
                 }
 
                 showAdminToast(`✅ Refund of ₹${refundAmount.toLocaleString('en-IN')} recorded for ${customerName}!`, 'success');
+                // Close modal and refresh
+                const modal = document.getElementById('mark-refund-modal');
+                if (modal) modal.style.display = 'none';
+                window._markRefundContext = { billId: null, bookingId: null, customerName: null };
                 if (window.fetchBillingRecords) fetchBillingRecords();
             } catch (err) {
                 showAdminToast('Error saving refund: ' + err.message, 'error');
+            } finally {
+                const btn = document.getElementById('mrm-confirm-btn');
+                if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-check-circle"></i> Confirm Refund Done'; }
             }
-        };
+        }; // end confirmMarkRefundDone
         window.downloadBillPdf = async function(billId) {
             showAdminToast('Preparing Invoice PDF...', 'info');
             try {
@@ -11024,7 +11063,10 @@
                 const discount = parseFloat(bill.discount || 0);
                 const netAmount = totalBilled - discount;
                 const payments = bill.payments_received || [];
-                const totalPaid = payments.reduce((sum, p) => sum + p.amountPaid, 0);
+                // B4 FIX: exclude negative refund entries from invoice totalPaid
+                const totalPaid = payments
+                    .filter(p => parseFloat(p.amountPaid) > 0)
+                    .reduce((sum, p) => sum + parseFloat(p.amountPaid || 0), 0);
                 const balanceDue = netAmount - totalPaid;
                 const tourDate = bill.tour_start_date ? new Date(bill.tour_start_date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : 'N/A';
                 const billDate = bill.created_at ? new Date(bill.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : new Date().toLocaleDateString('en-IN');
@@ -11138,6 +11180,35 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
   <div style="text-align:right;font-weight:700;color:#0b1f3a;">Authorised Signatory</div>
 </div>
 </div>
+
+    <!-- Mark Refund Done Modal (replaces prompt() — mobile-safe) -->
+    <div id="mark-refund-modal" style="display:none; position:fixed; inset:0; z-index:10001; align-items:center; justify-content:center; background:rgba(0,0,0,0.82); backdrop-filter:blur(6px);">
+        <div style="background: linear-gradient(145deg, #0f1f38 0%, #0d1526 100%); border: 1px solid rgba(239,68,68,0.4); border-radius: 16px; width: 92%; max-width: 420px; padding: 24px; box-shadow: 0 40px 80px rgba(0,0,0,0.6);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:12px;">
+                <h3 style="margin:0; color:#fff; font-size:16px; font-weight:700;">
+                    <i class="fa-solid fa-rotate-left" style="color:#4ade80; margin-right:8px;"></i> Mark Refund as Done
+                </h3>
+                <button type="button" onclick="document.getElementById('mark-refund-modal').style.display='none'" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); color:#fff; width:30px; height:30px; border-radius:6px; font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center;">&times;</button>
+            </div>
+            <div id="mrm-info" style="background:rgba(74,222,128,0.07); border:1px solid rgba(74,222,128,0.2); border-radius:8px; padding:12px; margin-bottom:16px; font-size:13px; color:#cbd5e1;"></div>
+            <div style="margin-bottom:16px;">
+                <label style="display:block; color:#94a3b8; font-size:11px; font-weight:700; text-transform:uppercase; margin-bottom:6px;">Refunded Amount (&#8377;) *</label>
+                <div style="display:flex; align-items:center; gap:0; border:1px solid rgba(212,175,55,0.35); border-radius:8px; overflow:hidden; background:#1e293b;">
+                    <span style="padding:10px 12px; color:#f59e0b; font-weight:700; font-size:15px; border-right:1px solid rgba(255,255,255,0.08);">&#8377;</span>
+                    <input type="number" id="mrm-amount" min="0" step="1" style="flex:1; padding:10px 12px; background:transparent; border:none; outline:none; color:#fff; font-size:15px; font-weight:600;" placeholder="Enter amount refunded">
+                </div>
+            </div>
+            <div style="margin-bottom:20px;">
+                <label style="display:block; color:#94a3b8; font-size:11px; font-weight:700; text-transform:uppercase; margin-bottom:6px;">Refund Note (optional)</label>
+                <input type="text" id="mrm-note" style="width:100%; box-sizing:border-box; padding:10px 12px; background:#1e293b; border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:#fff; font-size:13px; outline:none;" placeholder="e.g. Refunded via UPI on 03 Nov 2026">
+            </div>
+            <div style="display:flex; gap:10px;">
+                <button type="button" onclick="document.getElementById('mark-refund-modal').style.display='none'" style="flex:1; padding:11px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); color:#94a3b8; border-radius:8px; font-size:13px; font-weight:700; cursor:pointer;">Cancel</button>
+                <button type="button" id="mrm-confirm-btn" onclick="confirmMarkRefundDone()" style="flex:2; padding:11px; background:rgba(74,222,128,0.18); border:1px solid rgba(74,222,128,0.4); color:#4ade80; border-radius:8px; font-size:13px; font-weight:800; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:8px;"><i class="fa-solid fa-check-circle"></i> Confirm Refund Done</button>
+            </div>
+        </div>
+    </div>
+
 </body></html>`;
 
                 // Create full-screen in-page overlay (works on all mobile browsers — no popup permission needed)
@@ -11645,6 +11716,16 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
             const travelers = parseInt(document.getElementById('new-booking-travelers').value) || 1;
             const message = document.getElementById('new-booking-message').value.trim();
             const assignedTo = document.getElementById('new-booking-assignee').value || null;
+
+            // B2 FIX: JS validation guard — HTML required can be bypassed programmatically
+            if (!packageName || !name || !phone) {
+                showAdminToast('Package name, customer name & phone are required fields.', 'error');
+                return;
+            }
+            if (phone && !/^[0-9+-s()]{7,15}$/.test(phone)) {
+                showAdminToast('Please enter a valid phone number.', 'error');
+                return;
+            }
 
             const curBk = id ? (bookingsData || []).find(b => b.id === id) : null;
             let finalMessage = message;
@@ -12211,8 +12292,12 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
         window.openAddPaymentModal = function(id, bookingId, custName, maxAmount) {
             document.getElementById('add-payment-form').reset();
             document.getElementById('payment-bill-id').value = id;
-            document.getElementById('payment-modal-subtitle').innerText = `Add payment receipt for Booking ${bookingId} (${custName}). Remaining balance: ₹${maxAmount.toLocaleString()}`;
-            document.getElementById('pay-amount').value = maxAmount > 0 ? maxAmount : 0;
+            document.getElementById('payment-modal-subtitle').innerText = `Add payment receipt for Booking ${bookingId} (${custName}). Remaining balance: ₹${maxAmount.toLocaleString('en-IN')}`;
+            const payAmtEl = document.getElementById('pay-amount');
+            if (payAmtEl) {
+                payAmtEl.value = maxAmount > 0 ? maxAmount : 0;
+                payAmtEl.setAttribute('data-max', maxAmount > 0 ? maxAmount : 999999999);
+            }
             const modal = document.getElementById('add-payment-modal');
             if (modal) {
                 modal.classList.add('active');
@@ -12243,6 +12328,13 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
 
             if (isNaN(amountPaid) || amountPaid <= 0) {
                 showAdminToast('Please enter a valid payment amount', 'error');
+                return;
+            }
+            // B5 FIX: prevent over-payment beyond remaining balance
+            const payAmtInput = document.getElementById('pay-amount');
+            const maxAllowed = payAmtInput ? parseFloat(payAmtInput.getAttribute('data-max') || 999999999) : 999999999;
+            if (amountPaid > maxAllowed + 0.01) {
+                showAdminToast(`Amount ₹${amountPaid.toLocaleString('en-IN')} exceeds remaining balance of ₹${maxAllowed.toLocaleString('en-IN')}. Please enter the correct amount.`, 'error');
                 return;
             }
 
