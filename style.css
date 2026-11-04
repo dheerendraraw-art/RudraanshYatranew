@@ -13846,3 +13846,149 @@ body.menu-open::before {
     color: #64748b;
     font-size: 13.5px;
 }
+
+
+/* ==========================================================================
+   PHASE 2: MOBILE 1-TAP CALL OUTCOME, NOTE LOGGER & WA TEMPLATES
+   ========================================================================== */
+.lead-card-quick-status-wrap,
+.lead-card-quick-wa-wrap,
+.lead-card-quick-note-wrap {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    body:is(.user-role-admin, .user-role-staff) #pane-leads tr.lead-card-row.expanded .lead-card-quick-status-wrap,
+    body:is(.user-role-admin, .user-role-staff) #pane-leads tr.lead-card-row.show-all-details .lead-card-quick-status-wrap,
+    body:is(.user-role-admin, .user-role-staff) #pane-leads tr.lead-card-row.expanded .lead-card-quick-wa-wrap,
+    body:is(.user-role-admin, .user-role-staff) #pane-leads tr.lead-card-row.show-all-details .lead-card-quick-wa-wrap,
+    body:is(.user-role-admin, .user-role-staff) #pane-leads tr.lead-card-row.expanded .lead-card-quick-note-wrap,
+    body:is(.user-role-admin, .user-role-staff) #pane-leads tr.lead-card-row.show-all-details .lead-card-quick-note-wrap {
+        display: block !important;
+        width: 100% !important;
+        margin-top: 10px !important;
+        padding-top: 10px !important;
+        border-top: 1px dashed rgba(255, 255, 255, 0.12) !important;
+        text-align: left !important;
+    }
+
+    .lc-quick-status-title,
+    .lc-quick-wa-title,
+    .lc-quick-note-title {
+        display: block !important;
+        font-size: 11px !important;
+        font-weight: 800 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+        color: #94a3b8 !important;
+        margin-bottom: 6px !important;
+    }
+
+    .lc-quick-status-pills {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+    }
+
+    .lc-pill {
+        border-radius: 20px !important;
+        padding: 5px 11px !important;
+        font-size: 11.5px !important;
+        font-weight: 700 !important;
+        cursor: pointer !important;
+        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        background: rgba(15, 23, 42, 0.7) !important;
+        color: #cbd5e1 !important;
+        transition: all 0.15s ease !important;
+        -webkit-tap-highlight-color: transparent !important;
+    }
+    .lc-pill:active { transform: scale(0.96); }
+
+    .lc-pill.pill-answered { border-color: rgba(34, 197, 94, 0.35) !important; color: #4ade80 !important; }
+    .lc-pill.pill-answered.active { background: rgba(34, 197, 94, 0.25) !important; border-color: #22c55e !important; box-shadow: 0 0 10px rgba(34, 197, 94, 0.4) !important; }
+
+    .lc-pill.pill-busy { border-color: rgba(245, 158, 11, 0.35) !important; color: #fbbf24 !important; }
+    .lc-pill.pill-busy.active { background: rgba(245, 158, 11, 0.25) !important; border-color: #f59e0b !important; box-shadow: 0 0 10px rgba(245, 158, 11, 0.4) !important; }
+
+    .lc-pill.pill-followup { border-color: rgba(59, 130, 246, 0.35) !important; color: #60a5fa !important; }
+    .lc-pill.pill-followup.active { background: rgba(59, 130, 246, 0.25) !important; border-color: #3b82f6 !important; box-shadow: 0 0 10px rgba(59, 130, 246, 0.4) !important; }
+
+    .lc-pill.pill-notanswered { border-color: rgba(148, 163, 184, 0.35) !important; color: #94a3b8 !important; }
+    .lc-pill.pill-notanswered.active { background: rgba(148, 163, 184, 0.25) !important; border-color: #94a3b8 !important; }
+
+    .lc-pill.pill-unreachable { border-color: rgba(249, 115, 22, 0.35) !important; color: #fb923c !important; }
+    .lc-pill.pill-unreachable.active { background: rgba(249, 115, 22, 0.25) !important; border-color: #f97316 !important; }
+
+    .lc-pill.pill-switchoff { border-color: rgba(239, 68, 68, 0.35) !important; color: #f87171 !important; }
+    .lc-pill.pill-switchoff.active { background: rgba(239, 68, 68, 0.25) !important; border-color: #ef4444 !important; }
+
+    .lc-pill.pill-lost { border-color: rgba(100, 116, 139, 0.35) !important; color: #94a3b8 !important; }
+    .lc-pill.pill-lost.active { background: rgba(239, 68, 68, 0.35) !important; border-color: #ef4444 !important; color: #fff !important; }
+
+    .lc-quick-wa-btns {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 6px !important;
+    }
+
+    .lc-wa-btn {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        padding: 8px 12px !important;
+        background: rgba(37, 211, 102, 0.12) !important;
+        border: 1px solid rgba(37, 211, 102, 0.35) !important;
+        border-radius: 8px !important;
+        color: #25D366 !important;
+        font-size: 12px !important;
+        font-weight: 700 !important;
+        text-decoration: none !important;
+        transition: all 0.15s ease !important;
+    }
+    .lc-wa-btn:active { background: rgba(37, 211, 102, 0.25) !important; }
+
+    .lc-quick-note-row {
+        display: flex !important;
+        gap: 6px !important;
+        margin-bottom: 6px !important;
+    }
+
+    .lc-quick-note-input {
+        flex: 1 !important;
+        background: rgba(15, 23, 42, 0.8) !important;
+        border: 1px solid rgba(212, 175, 55, 0.4) !important;
+        border-radius: 8px !important;
+        padding: 8px 12px !important;
+        color: #ffffff !important;
+        font-size: 13px !important;
+        outline: none !important;
+    }
+    .lc-quick-note-input:focus { border-color: var(--color-gold) !important; }
+
+    .lc-quick-note-btn {
+        background: var(--color-gold) !important;
+        color: #0f172a !important;
+        border: none !important;
+        border-radius: 8px !important;
+        padding: 0 14px !important;
+        font-size: 12.5px !important;
+        font-weight: 800 !important;
+        cursor: pointer !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 4px !important;
+        white-space: nowrap !important;
+    }
+    .lc-quick-note-btn:active { transform: scale(0.97); }
+
+    .lc-quick-note-preview {
+        font-size: 11.5px !important;
+        color: #cbd5e1 !important;
+        background: rgba(0, 0, 0, 0.25) !important;
+        border-radius: 6px !important;
+        padding: 6px 10px !important;
+        line-height: 1.4 !important;
+        max-height: 80px !important;
+        overflow-y: auto !important;
+    }
+}

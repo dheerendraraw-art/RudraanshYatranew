@@ -8882,6 +8882,41 @@
                                     <button class="admin-btn-edit lead-card-edit-btn" onclick="event.stopPropagation(); startEditLead('${item.id}')" style="background-color: var(--color-gold); color: #0f172a; border: none; padding: 7px 12px; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700;" title="Edit Lead">
                                         <i class="fa-solid fa-pen-to-square"></i> Edit
                                     </button>
+                                    <!-- Phase 2: Quick Status Outcome Bar -->
+                                    <div class="lead-card-quick-status-wrap" onclick="event.stopPropagation();">
+                                        <span class="lc-quick-status-title"><i class="fa-solid fa-bolt" style="color:var(--color-gold);margin-right:4px;"></i> 1-Tap Call Outcome:</span>
+                                        <div class="lc-quick-status-pills">
+                                            <button type="button" class="lc-pill pill-answered ${item.status === 'Answered' ? 'active' : ''}" onclick="quickUpdateLeadStatus('${item.id}', 'Answered', this)">📞 Answered</button>
+                                            <button type="button" class="lc-pill pill-busy ${item.status === 'Busy' ? 'active' : ''}" onclick="quickUpdateLeadStatus('${item.id}', 'Busy', this)">⏳ Busy</button>
+                                            <button type="button" class="lc-pill pill-followup ${item.status === 'Follow up required' ? 'active' : ''}" onclick="quickUpdateLeadStatus('${item.id}', 'Follow up required', this)">🔁 Follow-up</button>
+                                            <button type="button" class="lc-pill pill-notanswered ${item.status === 'Not Answered' ? 'active' : ''}" onclick="quickUpdateLeadStatus('${item.id}', 'Not Answered', this)">🔇 No Answer</button>
+                                            <button type="button" class="lc-pill pill-unreachable ${item.status === 'No. not reachable' ? 'active' : ''}" onclick="quickUpdateLeadStatus('${item.id}', 'No. not reachable', this)">📴 Unreachable</button>
+                                            <button type="button" class="lc-pill pill-switchoff ${item.status === 'Switch Off' ? 'active' : ''}" onclick="quickUpdateLeadStatus('${item.id}', 'Switch Off', this)">🔴 Switch Off</button>
+                                            <button type="button" class="lc-pill pill-lost ${item.status === 'Lost' ? 'active' : ''}" onclick="quickUpdateLeadStatus('${item.id}', 'Lost', this)">❌ Lost</button>
+                                        </div>
+                                    </div>
+
+                                    ${leadPhoneClean ? `
+                                        <!-- Phase 2: WhatsApp Quick Message Templates -->
+                                        <div class="lead-card-quick-wa-wrap" onclick="event.stopPropagation();">
+                                            <span class="lc-quick-wa-title"><i class="fa-brands fa-whatsapp" style="color:#25D366;margin-right:4px;"></i> WhatsApp Quick Templates:</span>
+                                            <div class="lc-quick-wa-btns">
+                                                <a href="${waHrefIntro}" target="_blank" class="lc-wa-btn"><i class="fa-regular fa-comment-dots"></i> 1. Intro Greeting</a>
+                                                <a href="${waHrefPackage}" target="_blank" class="lc-wa-btn"><i class="fa-solid fa-mountain-sun"></i> 2. Package Details</a>
+                                                <a href="${waHrefFollowup}" target="_blank" class="lc-wa-btn"><i class="fa-solid fa-clock-rotate-left"></i> 3. Follow-up Check</a>
+                                            </div>
+                                        </div>
+                                    ` : ''}
+
+                                    <!-- Phase 2: Quick Inline Note/Remarks Box -->
+                                    <div class="lead-card-quick-note-wrap" onclick="event.stopPropagation();">
+                                        <span class="lc-quick-note-title"><i class="fa-solid fa-pen" style="color:var(--color-gold);margin-right:4px;"></i> Quick Call Note / Remark:</span>
+                                        <div class="lc-quick-note-row">
+                                            <input type="text" id="quick-note-${item.id}" class="lc-quick-note-input" placeholder="Type call note & tap Save..." onkeydown="if(event.key==='Enter'){event.preventDefault();saveQuickLeadRemark('${item.id}');}">
+                                            <button type="button" class="lc-quick-note-btn" onclick="saveQuickLeadRemark('${item.id}')"><i class="fa-solid fa-paper-plane"></i> Save</button>
+                                        </div>
+                                        <div id="quick-note-preview-${item.id}" class="lc-quick-note-preview">${item.remarks ? ('<i class="fa-solid fa-note-sticky" style="color:var(--color-gold);margin-right:4px;"></i> ' + item.remarks.replace(/</g,'&lt;').replace(/\n/g,'<br>')) : '<span style="color:#64748b;font-style:italic;">No remarks yet</span>'}</div>
+                                    </div>
                                 </div>
                             </td>
                         </tr>
@@ -8955,6 +8990,42 @@
                                     ${currentUserRole !== 'staff' ? `<button class="admin-btn-delete lead-card-del-btn" onclick="event.stopPropagation(); deleteRecord('leads', '${item.id}', fetchLeads)" style="border-radius: 6px; padding: 7px 10px; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; gap: 4px;" title="Delete Lead">
                                         <i class="fa-solid fa-trash"></i> Delete
                                     </button>` : ''}
+                                
+                                    <!-- Phase 2: Quick Status Outcome Bar -->
+                                    <div class="lead-card-quick-status-wrap" onclick="event.stopPropagation();">
+                                        <span class="lc-quick-status-title"><i class="fa-solid fa-bolt" style="color:var(--color-gold);margin-right:4px;"></i> 1-Tap Call Outcome:</span>
+                                        <div class="lc-quick-status-pills">
+                                            <button type="button" class="lc-pill pill-answered ${item.status === 'Answered' ? 'active' : ''}" onclick="quickUpdateLeadStatus('${item.id}', 'Answered', this)">📞 Answered</button>
+                                            <button type="button" class="lc-pill pill-busy ${item.status === 'Busy' ? 'active' : ''}" onclick="quickUpdateLeadStatus('${item.id}', 'Busy', this)">⏳ Busy</button>
+                                            <button type="button" class="lc-pill pill-followup ${item.status === 'Follow up required' ? 'active' : ''}" onclick="quickUpdateLeadStatus('${item.id}', 'Follow up required', this)">🔁 Follow-up</button>
+                                            <button type="button" class="lc-pill pill-notanswered ${item.status === 'Not Answered' ? 'active' : ''}" onclick="quickUpdateLeadStatus('${item.id}', 'Not Answered', this)">🔇 No Answer</button>
+                                            <button type="button" class="lc-pill pill-unreachable ${item.status === 'No. not reachable' ? 'active' : ''}" onclick="quickUpdateLeadStatus('${item.id}', 'No. not reachable', this)">📴 Unreachable</button>
+                                            <button type="button" class="lc-pill pill-switchoff ${item.status === 'Switch Off' ? 'active' : ''}" onclick="quickUpdateLeadStatus('${item.id}', 'Switch Off', this)">🔴 Switch Off</button>
+                                            <button type="button" class="lc-pill pill-lost ${item.status === 'Lost' ? 'active' : ''}" onclick="quickUpdateLeadStatus('${item.id}', 'Lost', this)">❌ Lost</button>
+                                        </div>
+                                    </div>
+
+                                    ${leadPhoneClean ? `
+                                        <!-- Phase 2: WhatsApp Quick Message Templates -->
+                                        <div class="lead-card-quick-wa-wrap" onclick="event.stopPropagation();">
+                                            <span class="lc-quick-wa-title"><i class="fa-brands fa-whatsapp" style="color:#25D366;margin-right:4px;"></i> WhatsApp Quick Templates:</span>
+                                            <div class="lc-quick-wa-btns">
+                                                <a href="${waHrefIntro}" target="_blank" class="lc-wa-btn"><i class="fa-regular fa-comment-dots"></i> 1. Intro Greeting</a>
+                                                <a href="${waHrefPackage}" target="_blank" class="lc-wa-btn"><i class="fa-solid fa-mountain-sun"></i> 2. Package Details</a>
+                                                <a href="${waHrefFollowup}" target="_blank" class="lc-wa-btn"><i class="fa-solid fa-clock-rotate-left"></i> 3. Follow-up Check</a>
+                                            </div>
+                                        </div>
+                                    ` : ''}
+
+                                    <!-- Phase 2: Quick Inline Note/Remarks Box -->
+                                    <div class="lead-card-quick-note-wrap" onclick="event.stopPropagation();">
+                                        <span class="lc-quick-note-title"><i class="fa-solid fa-pen" style="color:var(--color-gold);margin-right:4px;"></i> Quick Call Note / Remark:</span>
+                                        <div class="lc-quick-note-row">
+                                            <input type="text" id="quick-note-${item.id}" class="lc-quick-note-input" placeholder="Type call note & tap Save..." onkeydown="if(event.key==='Enter'){event.preventDefault();saveQuickLeadRemark('${item.id}');}">
+                                            <button type="button" class="lc-quick-note-btn" onclick="saveQuickLeadRemark('${item.id}')"><i class="fa-solid fa-paper-plane"></i> Save</button>
+                                        </div>
+                                        <div id="quick-note-preview-${item.id}" class="lc-quick-note-preview">${item.remarks ? ('<i class="fa-solid fa-note-sticky" style="color:var(--color-gold);margin-right:4px;"></i> ' + item.remarks.replace(/</g,'&lt;').replace(/\n/g,'<br>')) : '<span style="color:#64748b;font-style:italic;">No remarks yet</span>'}</div>
+                                    </div>
                                 </div>
                             </td>
                         </tr>
