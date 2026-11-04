@@ -4360,20 +4360,20 @@
                 const totalOutstanding = Math.max(0, totalBilled - totalPaid);
 
                 const cancelledBills = billingRecords.filter(b => b.payment_status === 'Cancelled');
-                const totalPendingRefund = cancelledBills
-                    .filter(b => (b.refund_status || 'Refund Pending') === 'Refund Pending')
-                    .reduce((sum, b) => {
-                        const pmts = (b.payments_received || []).filter(p => (p.paymentType || '') !== 'Cancellation Refund');
-                        return sum + pmts.reduce((ps, p) => ps + (parseFloat(p.amountPaid) || 0), 0);
-                    }, 0);
-                const totalRefunded = cancelledBills
-                    .filter(b => b.refund_status === 'Refunded')
-                    .reduce((sum, b) => sum + (parseFloat(b.refund_amount) || 0), 0);
+                let totalPendingRefund = 0;
+                let totalRefunded = 0;
+                let pendingCount = 0;
+                cancelledBills.forEach(b => {
+                    const rInfo = (typeof getBillRefundInfo === 'function') ? getBillRefundInfo(b) : { refunded: 0, pendingAmount: 0 };
+                    totalPendingRefund += rInfo.pendingAmount;
+                    totalRefunded += rInfo.refunded;
+                    if (rInfo.pendingAmount > 0) pendingCount++;
+                });
 
                 setCard(0, true, '<i class="fa-solid fa-indian-rupee-sign" style="color: var(--color-gold);"></i>', '₹' + totalBilled.toLocaleString('en-IN'), 'Total Billed (Net)');
                 setCard(1, true, '<i class="fa-solid fa-circle-check" style="color: #22c55e;"></i>', '₹' + totalPaid.toLocaleString('en-IN'), 'Total Collected');
                 setCard(2, true, '<i class="fa-solid fa-triangle-exclamation" style="color: #ef4444;"></i>', '₹' + totalOutstanding.toLocaleString('en-IN'), 'Outstanding Balance');
-                setCard(3, true, '<i class="fa-solid fa-clock-rotate-left" style="color: #f87171;"></i>', '₹' + totalPendingRefund.toLocaleString('en-IN'), 'Pending Refund<br><span style="font-size:10px;color:#94a3b8;font-weight:400;">' + cancelledBills.filter(b=>(b.refund_status||'Refund Pending')==='Refund Pending').length + ' booking(s)</span>');
+                setCard(3, true, '<i class="fa-solid fa-clock-rotate-left" style="color: #f87171;"></i>', '₹' + totalPendingRefund.toLocaleString('en-IN'), 'Pending Refund<br><span style="font-size:10px;color:#94a3b8;font-weight:400;">' + pendingCount + ' booking(s)</span>');
                 setCard(4, true, '<i class="fa-solid fa-rotate-left" style="color: #a78bfa;"></i>', '₹' + totalRefunded.toLocaleString('en-IN'), 'Total Refunded');
                 setCard(5, false);
             }
@@ -10733,8 +10733,8 @@
                     result = result.filter(bill => completedIds.has(bill.booking_id));
                 }
                 // Refund sub-filters
-                if (isRefundPendingFilter) result = result.filter(b => (b.refund_status || 'Refund Pending') === 'Refund Pending');
-                if (isRefundedFilter) result = result.filter(b => b.refund_status === 'Refunded');
+                if (isRefundPendingFilter) result = result.filter(b => (typeof getBillRefundInfo === 'function' ? getBillRefundInfo(b).status === 'Refund Pending' : false));
+                if (isRefundedFilter) result = result.filter(b => (typeof getBillRefundInfo === 'function' ? getBillRefundInfo(b).status === 'Refunded' : true));
 
                 billingRecords = result;
                 window.billingRecords = result;
@@ -10849,15 +10849,13 @@
                 // Refund badge for cancelled bills
                 let refundBadgeHtml = '';
                 if (isCancelled) {
-                    const rStatus = bill.refund_status || 'Refund Pending';
-                    const rAmt = parseFloat(bill.refund_amount) || 0;
-                    const rColor = rStatus === 'Refunded' ? '#4ade80' : '#f87171';
-                    const rBg = rStatus === 'Refunded' ? 'rgba(74,222,128,0.1)' : 'rgba(248,113,113,0.12)';
-                    const rBorder = rStatus === 'Refunded' ? 'rgba(74,222,128,0.35)' : 'rgba(248,113,113,0.35)';
-                    const rIcon = rStatus === 'Refunded' ? 'fa-check-circle' : 'fa-clock';
-                    const colPmts = (bill.payments_received || []).filter(p => (p.paymentType || '') !== 'Cancellation Refund');
-                    const colAmt = colPmts.reduce((s, p) => s + (parseFloat(p.amountPaid) || 0), 0);
-                    refundBadgeHtml = `<div style="margin-top:5px;"><span style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:12px;background:${rBg};color:${rColor};border:1px solid ${rBorder};font-size:10.5px;font-weight:700;"><i class="fa-solid ${rIcon}" style="font-size:9px;"></i> ${rStatus}</span>${rStatus === 'Refunded' ? '<span style="font-size:10px;color:#4ade80;margin-left:4px;">&#8377;' + rAmt.toLocaleString('en-IN') + '</span>' : (colAmt > 0 ? '<span style="font-size:10px;color:#f87171;margin-left:4px;font-weight:700;">&#8377;' + colAmt.toLocaleString('en-IN') + ' due</span>' : '')}</div>`;
+                    const rInfo = (typeof getBillRefundInfo === 'function') ? getBillRefundInfo(bill) : { status: 'Refunded', refunded: 0, pendingAmount: 0 };
+                    const isDone = rInfo.status === 'Refunded';
+                    const rColor = isDone ? '#4ade80' : '#f87171';
+                    const rBg = isDone ? 'rgba(74,222,128,0.1)' : 'rgba(248,113,113,0.12)';
+                    const rBorder = isDone ? 'rgba(74,222,128,0.35)' : 'rgba(248,113,113,0.35)';
+                    const rIcon = isDone ? 'fa-check-circle' : 'fa-clock';
+                    refundBadgeHtml = `<div style="margin-top:5px;"><span style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:12px;background:${rBg};color:${rColor};border:1px solid ${rBorder};font-size:10.5px;font-weight:700;"><i class="fa-solid ${rIcon}" style="font-size:9px;"></i> ${rInfo.status}</span>${isDone ? (rInfo.refunded > 0 ? '<span style="font-size:10px;color:#4ade80;margin-left:4px;font-weight:600;">&#8377;' + rInfo.refunded.toLocaleString('en-IN') + '</span>' : '') : '<span style="font-size:10px;color:#f87171;margin-left:4px;font-weight:700;">&#8377;' + rInfo.pendingAmount.toLocaleString('en-IN') + ' due</span>'}</div>`;
                 }
                 const outstandingDisplay = isCancelled
                     ? `<div><span class="amt-cleared" style="color:#94a3b8;font-size:12px;">₹0 <span style="font-size:10px;">(Cancelled)</span></span>${refundBadgeHtml}</div>`
@@ -10875,7 +10873,7 @@
                         <td data-label="Yatra Status" style="white-space:nowrap;">${_getBillingYatraStatusBadge(bill.booking_id)}</td>
                         <td data-label="Actions" class="billing-actions-cell">
                             <div class="billing-action-buttons-wrap">
-                                ${isCancelled && (bill.refund_status || 'Refund Pending') === 'Refund Pending' ? `
+                                ${isCancelled && (typeof getBillRefundInfo === 'function' ? getBillRefundInfo(bill).status === 'Refund Pending' : false) ? `
                                 <button onclick="markRefundDone('${bill.id}', '${bill.booking_id}', '${bill.customer_name}')" class="btn btn-secondary billing-pay-btn" style="background:rgba(74,222,128,0.1);border-color:rgba(74,222,128,0.4);color:#4ade80;" title="Mark Refund as Done">
                                     <i class="fa-solid fa-rotate-left"></i> MARK REFUNDED
                                 </button>` : !isCancelled ? `
@@ -10913,39 +10911,59 @@
         }
 
 
+        // Helper: compute refund status and amounts from payments_received
+        window.getBillRefundInfo = function(bill) {
+            if (!bill) return { collected: 0, refunded: 0, status: 'Refund Pending', pendingAmount: 0 };
+            const payments = Array.isArray(bill.payments_received) ? bill.payments_received : [];
+            const collected = payments
+                .filter(p => (p.paymentType || '') !== 'Cancellation Refund' && (p.paymentMode || '') !== 'Refund' && parseFloat(p.amountPaid) > 0)
+                .reduce((s, p) => s + parseFloat(p.amountPaid || 0), 0);
+            
+            const refundPayments = payments.filter(p => (p.paymentType || '') === 'Cancellation Refund' || (p.paymentMode || '') === 'Refund' || parseFloat(p.amountPaid) < 0);
+            const refunded = refundPayments.reduce((s, p) => s + Math.abs(parseFloat(p.amountPaid || 0)), 0);
+
+            const isRefunded = (collected === 0) || (refunded >= collected);
+            const pendingAmount = isRefunded ? 0 : Math.max(0, collected - refunded);
+
+            return {
+                collected,
+                refunded: isRefunded ? Math.max(refunded, collected) : refunded,
+                status: isRefunded ? 'Refunded' : 'Refund Pending',
+                pendingAmount
+            };
+        };
+
         // Mark a cancelled booking's refund as done from the billing table
         window.markRefundDone = async function(billId, bookingId, customerName) {
-            const collected = (() => {
-                const bill = (window.billingRecords || []).find(b => b.id === billId);
-                if (!bill) return 0;
-                const payments = (bill.payments_received || []).filter(p => (p.paymentType || '') !== 'Cancellation Refund');
-                return payments.reduce((s, p) => s + (parseFloat(p.amountPaid) || 0), 0);
-            })();
+            const bill = (window.billingRecords || []).find(b => b.id === billId);
+            const refInfo = getBillRefundInfo(bill);
+            const pending = refInfo.pendingAmount || refInfo.collected;
 
-            const refAmt = prompt(`Mark Refund as Done for ${customerName} (Booking: ${bookingId}).\nAmount collected: ₹${collected.toLocaleString('en-IN')}\n\nEnter refunded amount (press Cancel to abort):`, collected);
+            const refAmt = prompt(`Mark Refund as Done for ${customerName} (Booking: ${bookingId}).\nPending refund: ₹${pending.toLocaleString('en-IN')}\n\nEnter refunded amount (press Cancel to abort):`, pending);
             if (refAmt === null) return; // User cancelled
 
             const refundAmount = parseFloat(refAmt) || 0;
+            const existingPayments = bill ? (Array.isArray(bill.payments_received) ? bill.payments_received : []) : [];
+            const updatedPayments = [
+                ...existingPayments,
+                {
+                    receiptId: 'RFD-' + Date.now(),
+                    amountPaid: -refundAmount,
+                    date: new Date().toISOString().split('T')[0],
+                    paymentMode: 'Refund',
+                    paymentType: 'Cancellation Refund',
+                    note: 'Advance Refunded — Booking Cancelled'
+                }
+            ];
 
             try {
                 showAdminToast('Saving refund status...', 'info');
                 const { error } = await supabaseAdmin
                     .from('booking_bills')
                     .update({
-                        refund_status: 'Refunded',
-                        refund_amount: refundAmount,
-                        payments_received: (() => {
-                            const bill = (window.billingRecords || []).find(b => b.id === billId);
-                            const existing = bill ? (bill.payments_received || []) : [];
-                            return [...existing, {
-                                receiptId: 'RFD-' + Date.now(),
-                                amountPaid: -refundAmount,
-                                date: new Date().toISOString().split('T')[0],
-                                paymentMode: 'Refund',
-                                paymentType: 'Cancellation Refund',
-                                note: 'Refund marked done from Billing panel'
-                            }];
-                        })()
+                        payments_received: updatedPayments,
+                        balance_remaining: 0,
+                        payment_status: 'Cancelled'
                     })
                     .eq('id', billId);
 
@@ -10955,12 +10973,11 @@
                 if (window.billingRecords) {
                     const cached = window.billingRecords.find(b => b.id === billId);
                     if (cached) {
-                        cached.refund_status = 'Refunded';
-                        cached.refund_amount = refundAmount;
+                        cached.payments_received = updatedPayments;
                     }
                 }
 
-                showAdminToast(`✅ Refund of ₹${refundAmount.toLocaleString('en-IN')} marked as done for ${customerName}!`, 'success');
+                showAdminToast(`✅ Refund of ₹${refundAmount.toLocaleString('en-IN')} recorded for ${customerName}!`, 'success');
                 if (window.fetchBillingRecords) fetchBillingRecords();
             } catch (err) {
                 showAdminToast('Error saving refund: ' + err.message, 'error');
@@ -11341,29 +11358,24 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
 
                 if (error || !bills || bills.length === 0) return false;
 
-                const cancelledAt = new Date().toISOString();
                 let anyUpdated = false;
                 for (const bill of bills) {
-                    const updatePayload = {
-                        payment_status: 'Cancelled',
-                        balance_remaining: 0,
-                        refund_status: refundStatus || 'Refund Pending',
-                        refund_amount: parseFloat(refundAmount) || 0,
-                        cancelled_at: cancelledAt,
-                        cancel_reason: cancelReason || null
-                    };
-                    // If refunded, log a negative entry in payments_received
+                    let updatedPayments = Array.isArray(bill.payments_received) ? [...bill.payments_received] : [];
                     if (refundStatus === 'Refunded' && parseFloat(refundAmount) > 0) {
-                        const existingPayments = Array.isArray(bill.payments_received) ? bill.payments_received : [];
-                        updatePayload.payments_received = [...existingPayments, {
+                        updatedPayments.push({
                             receiptId: 'RFD-' + Date.now() + Math.floor(Math.random() * 100),
                             amountPaid: -(parseFloat(refundAmount)),
                             date: new Date().toISOString().split('T')[0],
                             paymentMode: 'Refund',
                             paymentType: 'Cancellation Refund',
                             note: cancelReason || 'Booking Cancelled — Refund Issued'
-                        }];
+                        });
                     }
+                    const updatePayload = {
+                        payment_status: 'Cancelled',
+                        balance_remaining: 0,
+                        payments_received: updatedPayments
+                    };
 
                     const { error: upErr } = await supabaseAdmin
                         .from('booking_bills')
