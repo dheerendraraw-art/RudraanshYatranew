@@ -285,9 +285,14 @@
                 <div class="billing-header-row" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
                     <h3 class="admin-form-title" style="margin-bottom: 0; border-bottom: none;"><i
                             class="fa-solid fa-file-invoice-dollar" style="color: var(--color-gold);"></i> Billing & Payment Tracker</h3>
-                    <button type="button" onclick="openCreateBillModal()" class="btn btn-primary billing-create-btn" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;">
-                        <i class="fa-solid fa-plus"></i> Create New Bill
-                    </button>
+                    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                        <button type="button" onclick="exportBillingCsv()" class="btn btn-secondary" style="padding:8px 14px;font-size:13px;cursor:pointer;border-radius:var(--border-radius-sm,4px);font-weight:600;" title="Export Billing to CSV">
+                            <i class="fa-solid fa-file-csv"></i> Export CSV
+                        </button>
+                        <button type="button" onclick="openCreateBillModal()" class="btn btn-primary billing-create-btn" style="background-color: var(--color-gold); border: none; padding: 8px 16px; font-size: 13px; cursor: pointer; border-radius: var(--border-radius-sm, 4px); color: #0f172a; font-weight: 600;">
+                            <i class="fa-solid fa-plus"></i> Create New Bill
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Filters Bar -->
@@ -559,6 +564,24 @@
                 <!-- Performance Highlights / Insights Cards -->
                 <div id="analytics-insights-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px;">
                     <!-- Dynamically rendered insights -->
+                </div>
+
+                <!-- Revenue Overview Chart -->
+                <div id="revenue-bar-chart-section" style="margin-top:28px;padding:22px;background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.07);border-radius:12px;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+                        <h4 style="margin:0;color:#fff;font-size:15px;font-weight:800;"><i class="fa-solid fa-chart-column" style="color:var(--color-gold);margin-right:8px;"></i>Monthly Revenue Overview</h4>
+                        <div style="display:flex;gap:8px;align-items:center;">
+                            <select id="rev-chart-year" onchange="renderRevenueChart()" style="background:#1e293b;color:#fff;border:1px solid rgba(212,175,55,0.3);border-radius:6px;padding:5px 10px;font-size:12px;"></select>
+                            <button onclick="renderRevenueChart()" class="btn btn-secondary" style="padding:5px 10px;font-size:12px;"><i class="fa-solid fa-rotate"></i></button>
+                        </div>
+                    </div>
+                    <div id="rev-chart-container" style="display:flex;align-items:flex-end;gap:6px;height:160px;overflow-x:auto;padding-bottom:6px;"></div>
+                    <div style="display:flex;gap:18px;margin-top:14px;flex-wrap:wrap;">
+                        <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;color:#94a3b8;"><span style="width:10px;height:10px;border-radius:2px;background:#22c55e;display:inline-block;"></span>Fully Paid</span>
+                        <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;color:#94a3b8;"><span style="width:10px;height:10px;border-radius:2px;background:#f59e0b;display:inline-block;"></span>Partially Paid</span>
+                        <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;color:#94a3b8;"><span style="width:10px;height:10px;border-radius:2px;background:#3b82f6;display:inline-block;"></span>Pending</span>
+                        <span id="rev-chart-total" style="margin-left:auto;font-size:12px;color:#fbbf24;font-weight:700;"></span>
+                    </div>
                 </div>
             </div>
 
@@ -4948,9 +4971,12 @@
                     }
                 }
 
+                const _phoneDigits = (item.phone || '').replace(/\D/g, '');
+                const _searchDigits = searchVal.replace(/\D/g, '');
                 const matchSearch = !searchVal ||
                     (item.name || '').toLowerCase().includes(searchVal) ||
                     (item.phone || '').toLowerCase().includes(searchVal) ||
+                    (_searchDigits.length >= 6 && _phoneDigits.slice(-10).includes(_searchDigits)) ||
                     (item.email || '').toLowerCase().includes(searchVal) ||
                     (item.package_name || '').toLowerCase().includes(searchVal) ||
                     (item.pickup_point || '').toLowerCase().includes(searchVal) ||
@@ -6321,6 +6347,67 @@
             }
         };
 
+        
+        // ── Monthly Revenue Bar Chart ─────────────────────────────────────────
+        window.renderRevenueChart = function() {
+            var yearSel = document.getElementById("rev-chart-year");
+            if (!yearSel) return;
+            var year = parseInt(yearSel.value) || new Date().getFullYear();
+            var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+            var paid = new Array(12).fill(0);
+            var partial = new Array(12).fill(0);
+            var pending = new Array(12).fill(0);
+            (billingRecords || []).forEach(function(b) {
+                var d = new Date(b.created_at || b.tour_start_date || "");
+                if (isNaN(d) || d.getFullYear() !== year) return;
+                var m = d.getMonth();
+                var amt = parseFloat(b.total_package_amount) || 0;
+                var st = (b.payment_status || "").toLowerCase();
+                if (st.indexOf("fully paid") !== -1) paid[m] += amt;
+                else if (st.indexOf("partial") !== -1) partial[m] += amt;
+                else pending[m] += amt;
+            });
+            var maxVal = Math.max.apply(null, months.map(function(_,i){ return paid[i]+partial[i]+pending[i]; }).concat([1]));
+            var container = document.getElementById("rev-chart-container");
+            if (!container) return;
+            var totalRev = paid.reduce(function(a,b){return a+b;},0) + partial.reduce(function(a,b){return a+b;},0);
+            var totalEl = document.getElementById("rev-chart-total");
+            if (totalEl) totalEl.textContent = "Total billed: ₹" + Math.round(totalRev).toLocaleString("en-IN");
+            var fmt = function(v) {
+                if (v >= 100000) return "₹" + (v/100000).toFixed(1) + "L";
+                if (v >= 1000) return "₹" + Math.round(v/1000) + "k";
+                return "₹" + Math.round(v);
+            };
+            container.innerHTML = months.map(function(mn, i) {
+                var total = paid[i] + partial[i] + pending[i];
+                if (total === 0) return '<div style="display:flex;flex-direction:column;align-items:center;gap:4px;min-width:38px;"><div style="width:28px;min-height:4px;background:rgba(255,255,255,0.04);border-radius:3px 3px 0 0;"></div><span style="font-size:9px;color:#475569;font-weight:600;">' + mn + '</span></div>';
+                var paidH = Math.round((paid[i]/maxVal)*130);
+                var partH = Math.round((partial[i]/maxVal)*130);
+                var pendH = Math.round((pending[i]/maxVal)*130);
+                var bars = "";
+                if (pendH > 0) bars += '<div style="width:100%;height:' + pendH + 'px;background:linear-gradient(to top,#1d4ed8,#3b82f6);' + (!paidH&&!partH?"border-radius:3px 3px 0 0;":"") + '"></div>';
+                if (partH > 0) bars += '<div style="width:100%;height:' + partH + 'px;background:linear-gradient(to top,#d97706,#f59e0b);"></div>';
+                if (paidH > 0) bars += '<div style="width:100%;height:' + paidH + 'px;background:linear-gradient(to top,#16a34a,#22c55e);border-radius:3px 3px 0 0;"></div>';
+                return '<div style="display:flex;flex-direction:column;align-items:center;gap:4px;min-width:38px;" title="' + mn + ': ' + fmt(total) + '">'
+                    + '<span style="font-size:9px;color:#94a3b8;font-weight:600;">' + fmt(total) + '</span>'
+                    + '<div style="display:flex;flex-direction:column-reverse;align-items:center;width:28px;gap:1px;">' + bars + '</div>'
+                    + '<span style="font-size:9px;color:#64748b;font-weight:700;">' + mn + '</span></div>';
+            }).join("");
+        };
+
+        window._initRevenueChart = function() {
+            var yearSel = document.getElementById("rev-chart-year");
+            if (!yearSel) return;
+            if (yearSel.options.length === 0) {
+                var curYear = new Date().getFullYear();
+                for (var y = curYear; y >= curYear - 3; y--) {
+                    var o = document.createElement("option");
+                    o.value = y; o.text = y; yearSel.add(o);
+                }
+            }
+            renderRevenueChart();
+        };
+        // ──────────────────────────────────────────────────────────────────────
         window.renderAnalyticsDashboard = async function() {
             try {
                 if (!supabaseAdmin) return;
@@ -6935,6 +7022,7 @@
                     }
                 }
             } catch (err) {
+                _initRevenueChart();
                 console.error('Analytics error:', err);
             }
         };
@@ -10905,6 +10993,7 @@
                                 <button onclick="downloadBillPdf('${bill.id}')" class="btn btn-secondary billing-pdf-btn" title="Download PDF Bill">
                                     <i class="fa-solid fa-file-pdf"></i> PDF
                                 </button>
+                                 ${!isCancelled ? `<button onclick="openEditBillModal('${bill.id}')" class="btn btn-secondary" style="background:rgba(99,102,241,0.15);border-color:rgba(99,102,241,0.4);color:#a5b4fc;padding:7px 10px;" title="Edit Bill"><i class="fa-solid fa-pen-to-square"></i></button>` : ''}
                             </div>
                         </td>
                     </tr>
@@ -12078,6 +12167,77 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
             }
         };
 
+        
+        // Open create-bill modal pre-filled with existing bill data for editing
+        window.openEditBillModal = async function(billId) {
+            const bill = (billingRecords || []).find(b => b.id === billId);
+            if (!bill) { showAdminToast('Bill not found', 'error'); return; }
+
+            document.getElementById('create-bill-form').reset();
+            const debugBox = document.getElementById('bill-debug-box');
+            if (debugBox) debugBox.style.display = 'none';
+
+            // Mark modal as "edit mode" using a hidden field
+            let editIdField = document.getElementById('bill-edit-id');
+            if (!editIdField) {
+                editIdField = document.createElement('input');
+                editIdField.type = 'hidden';
+                editIdField.id = 'bill-edit-id';
+                document.getElementById('create-bill-form').appendChild(editIdField);
+            }
+            editIdField.value = billId;
+
+            // Pre-fill all fields
+            document.getElementById('bill-booking-id').value = bill.booking_id || '';
+            document.getElementById('bill-cust-name').value = bill.customer_name || '';
+            document.getElementById('bill-cust-phone').value = bill.customer_phone || '';
+            document.getElementById('bill-cust-email').value = bill.customer_email || '';
+            document.getElementById('bill-group-size').value = bill.group_size || 1;
+
+            // Package
+            const pkgSelect = document.getElementById('bill-package-name');
+            const pkgValue = bill.package_name || '';
+            if (pkgSelect && pkgValue) {
+                let found = false;
+                for (let i = 0; i < pkgSelect.options.length; i++) {
+                    if (pkgSelect.options[i].value === pkgValue) { found = true; break; }
+                }
+                if (!found) {
+                    const o = document.createElement('option');
+                    o.value = pkgValue; o.text = pkgValue;
+                    pkgSelect.add(o);
+                }
+                pkgSelect.value = pkgValue;
+            }
+
+            // Travel date
+            if (bill.tour_start_date) {
+                try {
+                    document.getElementById('bill-start-date').value = new Date(bill.tour_start_date).toISOString().split('T')[0];
+                } catch(e) { document.getElementById('bill-start-date').value = bill.tour_start_date; }
+            }
+
+            // Rate per person and discount (reverse-calculate from total and group size)
+            const groupSize = bill.group_size || 1;
+            const discount = bill.discount || 0;
+            const totalAmt = bill.total_package_amount || 0;
+            // total = (rate - discount) * groupSize => rate = (totalAmt / groupSize) + discount
+            const ratePerPerson = groupSize > 0 ? Math.round(totalAmt / groupSize) + discount : 0;
+            document.getElementById('bill-rate-per-person').value = ratePerPerson || '';
+            document.getElementById('bill-discount-per-person').value = discount || 0;
+
+            recalculateBillAmounts();
+
+            // Update modal title to show Edit mode
+            const titleEl = document.querySelector('#create-bill-modal .cbm-title');
+            if (titleEl) titleEl.textContent = 'Edit Bill';
+            const subtitleEl = document.querySelector('#create-bill-modal .cbm-subtitle');
+            if (subtitleEl) subtitleEl.textContent = 'Update billing details for ' + (bill.customer_name || bill.booking_id);
+
+            const modal = document.getElementById('create-bill-modal');
+            if (modal) { modal.classList.add('active'); modal.style.display = 'flex'; }
+        };
+
         window.closeCreateBillModal = function() {
             const modal = document.getElementById('create-bill-modal');
             if (modal) {
@@ -12827,7 +12987,8 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
                                     <i class="${isCompleted ? 'fa-solid fa-rotate-left' : 'fa-solid fa-check'}"></i> ${isCompleted ? 'Reopen' : 'Done'}
                                 </button>
                                 ${!isCompleted ? `<button type="button" onclick="snoozeReminder('${r.id}', 1)" class="btn" style="min-height: 32px; background: rgba(59,130,246,0.2); color: #60a5fa; border: 1px solid rgba(59,130,246,0.4); padding: 6px 10px; font-size: 12px; cursor: pointer; border-radius: 4px; font-weight: 700;" title="Snooze +1 Day"><i class="fa-solid fa-clock-rotate-left"></i> +1D</button>` : ''}
-                                <button type="button" onclick="deleteReminder('${r.id}')" class="btn" style="min-height: 32px; background: rgba(239,68,68,0.2); color: #f87171; border: 1px solid rgba(239,68,68,0.4); padding: 6px 10px; font-size: 12px; cursor: pointer; border-radius: 4px; font-weight: 700;" title="Delete Reminder"><i class="fa-solid fa-trash"></i></button>
+                                <button type="button" onclick="openEditReminderModal(${JSON.stringify({id:r.id,note:r.note,due_date:r.due_date,due_time:r.due_time,priority:r.priority,assigned_to:r.assigned_to,lead_id:r.lead_id}).replace(/"/g,'&quot;')})" class="btn" style="min-height:32px;background:rgba(99,102,241,0.2);color:#a5b4fc;border:1px solid rgba(99,102,241,0.4);padding:6px 10px;font-size:12px;cursor:pointer;border-radius:4px;font-weight:700;" title="Edit Reminder"><i class="fa-solid fa-pen"></i></button>
+                                 <button type="button" onclick="deleteReminder('${r.id}')" class="btn" style="min-height: 32px; background: rgba(239,68,68,0.2); color: #f87171; border: 1px solid rgba(239,68,68,0.4); padding: 6px 10px; font-size: 12px; cursor: pointer; border-radius: 4px; font-weight: 700;" title="Delete Reminder"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </td>
                     </tr>
@@ -12835,6 +12996,31 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
             });
 
             tbody.innerHTML = html;
+        };
+
+        
+        // Open reminder modal pre-filled for editing an existing reminder
+        window.openEditReminderModal = async function(reminderObj) {
+            if (typeof reminderObj === 'string') {
+                try { reminderObj = JSON.parse(reminderObj.replace(/&quot;/g, '"')); } catch(e) { return; }
+            }
+            await openReminderModal(reminderObj.lead_id || null);
+            // Now pre-fill with existing values
+            document.getElementById('reminder-id').value = reminderObj.id || '';
+            document.getElementById('reminder-note').value = reminderObj.note || '';
+            document.getElementById('reminder-due-date').value = reminderObj.due_date || '';
+            document.getElementById('reminder-due-time').value = reminderObj.due_time || '10:00';
+            if (document.getElementById('reminder-priority')) {
+                document.getElementById('reminder-priority').value = reminderObj.priority || 'Medium';
+            }
+            if (document.getElementById('reminder-assignee') && reminderObj.assigned_to) {
+                document.getElementById('reminder-assignee').value = reminderObj.assigned_to;
+            }
+            // Update modal title
+            const modalTitle = document.querySelector('#reminder-modal h3, #reminder-modal .admin-form-title');
+            if (modalTitle) modalTitle.innerHTML = '<i class="fa-solid fa-pen" style="color:var(--color-gold);margin-right:6px;"></i> Edit Reminder';
+            const saveBtn = document.getElementById('btn-save-reminder');
+            if (saveBtn) saveBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Update Reminder';
         };
 
         window.openReminderModal = async function(prefillLeadId) {
