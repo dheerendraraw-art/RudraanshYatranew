@@ -4,6 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Phase 3: Mobile PWA & App Capabilities -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="RY Admin">
+    <link rel="apple-touch-icon" href="/assets/images/logo.png">
     <title>Admin Portal - Rudraansh Yatra</title>
     <link rel="icon" type="image/png" href="/assets/images/logo.png">
     <link rel="shortcut icon" type="image/png" href="/assets/images/logo.png">
@@ -4242,6 +4250,16 @@
             
             const targetPane = document.getElementById(paneId);
             if (targetPane) targetPane.style.display = 'block';
+            // Phase 3: Sync Mobile Bottom Navigation active pill
+            const btmNavBtns = document.querySelectorAll('.mob-bottom-nav-btn');
+            btmNavBtns.forEach(btn => {
+                const target = btn.getAttribute('data-target');
+                if (target === paneId) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
 
             // Dynamically change stats card header title
             const headerTitle = document.getElementById('stats-header-title');
@@ -8103,6 +8121,105 @@
                 showAdminToast('Failed to update lead: ' + err.message, 'error');
                 fetchLeads();
             }
+        };
+
+                // Phase 3: Mobile Dashboard Stats & Bottom Nav Synchronization
+        window.updateStaffDashboardStats = function() {
+            const leads = window.currentLeads || [];
+            const bookings = window.bookingsData || [];
+            const reminders = window.allReminders || [];
+            const todayStr = new Date().toISOString().split('T')[0];
+
+            const leadsCount = leads.length;
+            const followupsCount = leads.filter(l => (l.status === 'Follow up required' || (l.follow_up_1 && l.follow_up_1.includes(todayStr)))).length;
+            const bookingsCount = bookings.filter(b => (b.booking_status || '').toLowerCase() === 'confirmed' || (b.yatra_status || '').toLowerCase() === 'confirmed' || !b.booking_status).length;
+            
+            // Incentive calculation: 3% of confirmed booking amounts or count * 500
+            let totalConfirmedValue = 0;
+            bookings.forEach(b => {
+                const amt = parseFloat(b.total_amount || b.price || b.amount || 0);
+                if (amt > 0) totalConfirmedValue += amt;
+            });
+            const incentiveVal = totalConfirmedValue > 0 ? Math.round(totalConfirmedValue * 0.03) : (bookingsCount * 500);
+
+            // Update staff-stats-grid
+            const elLeads = document.getElementById('staff-stat-leads');
+            const elFollowups = document.getElementById('staff-stat-followups');
+            const elBookings = document.getElementById('staff-stat-bookings');
+            const elIncentive = document.getElementById('staff-stat-incentive');
+
+            if (elLeads) elLeads.innerText = leadsCount;
+            if (elFollowups) elFollowups.innerText = followupsCount;
+            if (elBookings) elBookings.innerText = bookingsCount;
+            if (elIncentive) elIncentive.innerText = '₹' + incentiveVal.toLocaleString('en-IN');
+
+            // Update bottom navigation badges
+            const badgeLeads = document.getElementById('mob-badge-leads');
+            const badgeBookings = document.getElementById('mob-badge-bookings');
+            const badgeReminders = document.getElementById('mob-badge-reminders');
+
+            if (badgeLeads) {
+                badgeLeads.innerText = leadsCount > 99 ? '99+' : leadsCount;
+                badgeLeads.style.display = leadsCount > 0 ? 'inline-block' : 'none';
+            }
+            if (badgeBookings) {
+                badgeBookings.innerText = bookingsCount > 99 ? '99+' : bookingsCount;
+                badgeBookings.style.display = bookingsCount > 0 ? 'inline-block' : 'none';
+            }
+            if (badgeReminders) {
+                const pendingRemCount = reminders.filter(r => r.status !== 'Completed').length;
+                badgeReminders.innerText = pendingRemCount > 99 ? '99+' : pendingRemCount;
+                badgeReminders.style.display = pendingRemCount > 0 ? 'inline-block' : 'none';
+            }
+
+            // Update Mobile Profile Sheet numbers
+            const msLeads = document.getElementById('mob-sheet-leads');
+            const msBookings = document.getElementById('mob-sheet-bookings');
+            const msIncentive = document.getElementById('mob-sheet-incentive');
+            const msName = document.getElementById('mob-profile-name');
+            const msRole = document.getElementById('mob-profile-role');
+            const msAvatar = document.getElementById('mob-profile-avatar');
+
+            const uname = (currentUsername || localStorage.getItem('admin_username') || 'Staff');
+            const role = (currentUserRole || localStorage.getItem('admin_role') || 'Staff');
+
+            if (msLeads) msLeads.innerText = leadsCount;
+            if (msBookings) msBookings.innerText = bookingsCount;
+            if (msIncentive) msIncentive.innerText = '₹' + incentiveVal.toLocaleString('en-IN');
+            if (msName) msName.innerText = uname.charAt(0).toUpperCase() + uname.slice(1);
+            if (msRole) msRole.innerText = role.toUpperCase() + ' Member';
+            if (msAvatar) msAvatar.innerText = uname.charAt(0).toUpperCase();
+        };
+
+        window.triggerMobileQuickSearch = function() {
+            const activePane = sessionStorage.getItem('admin_active_pane') || 'pane-leads';
+            let input = null;
+            if (activePane === 'pane-bookings') {
+                input = document.getElementById('search-bookings-input');
+            } else if (activePane === 'pane-reminders') {
+                input = document.getElementById('search-reminders-input');
+            } else {
+                input = document.getElementById('search-leads-input');
+            }
+            if (input) {
+                input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                input.focus();
+            }
+        };
+
+        window.openMobileProfileSheet = function() {
+            const sheet = document.getElementById('mobile-profile-sheet');
+            if (sheet) {
+                if (typeof window.updateStaffDashboardStats === 'function') {
+                    window.updateStaffDashboardStats();
+                }
+                sheet.classList.add('open');
+            }
+        };
+
+        window.closeMobileProfileSheet = function() {
+            const sheet = document.getElementById('mobile-profile-sheet');
+            if (sheet) sheet.classList.remove('open');
         };
 
         window.getLeadInitials = function(name) {
@@ -13591,7 +13708,7 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
                             + ' <strong>Session expiring soon</strong> — You will be logged out in 5 minutes due to inactivity.'
                             + ' <button onclick="_resetSessionTimer()" style="margin-left:10px;padding:3px 10px;background:rgba(212,175,55,0.2);border:1px solid rgba(212,175,55,0.5);color:#fbbf24;border-radius:4px;cursor:pointer;font-size:12px;font-weight:700;">Stay Logged In</button>'
                             + ' <button onclick="window._dismissTimeoutBanner()" style="margin-left:6px;padding:3px 8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#94a3b8;border-radius:4px;cursor:pointer;font-size:11px;">Dismiss</button>';
-                        banner.style.cssText = 'position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:10100;background:rgba(15,27,56,0.97);border:1px solid rgba(212,175,55,0.5);border-radius:10px;padding:12px 18px;color:#e2e8f0;font-size:13px;box-shadow:0 8px 32px rgba(0,0,0,0.5);display:flex;align-items:center;gap:8px;max-width:90vw;';
+                        banner.style.cssText = 'position:fixed;bottom:76px;left:50%;transform:translateX(-50%);z-index:10100;background:rgba(15,27,56,0.97);border:1px solid rgba(212,175,55,0.5);border-radius:10px;padding:12px 18px;color:#e2e8f0;font-size:13px;box-shadow:0 8px 32px rgba(0,0,0,0.5);display:flex;align-items:center;gap:8px;max-width:90vw;';
                         document.body.appendChild(banner);
                     }
                     banner.style.display = 'flex';
@@ -13624,6 +13741,73 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
         // ──────────────────────────────────────────────────────────────────────
         // === end Styled Confirm Dialog ===
     </script>
+    <!-- Phase 3: Mobile Sticky Bottom Navigation Bar (Thumb Zone) -->
+    <nav id="mobile-bottom-nav" class="mobile-bottom-nav" aria-label="Mobile Navigation">
+        <button type="button" class="mob-bottom-nav-btn active" data-target="pane-leads" onclick="switchTab(null, 'pane-leads')">
+            <i class="fa-solid fa-headset"></i>
+            <span>Leads</span>
+            <span class="mob-nav-badge" id="mob-badge-leads" style="display:none;">0</span>
+        </button>
+        <button type="button" class="mob-bottom-nav-btn" data-target="pane-bookings" onclick="switchTab(null, 'pane-bookings')">
+            <i class="fa-solid fa-calendar-check"></i>
+            <span>Bookings</span>
+            <span class="mob-nav-badge" id="mob-badge-bookings" style="display:none;">0</span>
+        </button>
+        <button type="button" class="mob-bottom-nav-btn" data-target="pane-reminders" onclick="switchTab(null, 'pane-reminders')">
+            <i class="fa-solid fa-bell"></i>
+            <span>Reminders</span>
+            <span class="mob-nav-badge" id="mob-badge-reminders" style="display:none;">0</span>
+        </button>
+        <button type="button" class="mob-bottom-nav-btn" onclick="window.triggerMobileQuickSearch()">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>Search</span>
+        </button>
+        <button type="button" class="mob-bottom-nav-btn" onclick="window.openMobileProfileSheet()">
+            <i class="fa-solid fa-circle-user"></i>
+            <span>Account</span>
+        </button>
+    </nav>
+
+    <!-- Phase 3: Mobile Account / Profile Bottom Sheet -->
+    <div id="mobile-profile-sheet" onclick="if(event.target===this) window.closeMobileProfileSheet()">
+        <div class="mob-profile-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <div style="width:42px; height:42px; border-radius:50%; background:linear-gradient(135deg, #d4af37, #b8860b); color:#0f172a; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:16px;" id="mob-profile-avatar">S</div>
+                    <div>
+                        <strong style="color:#ffffff; font-size:16px; display:block;" id="mob-profile-name">Staff User</strong>
+                        <span style="color:#94a3b8; font-size:12px; text-transform:capitalize;" id="mob-profile-role">Staff Member</span>
+                    </div>
+                </div>
+                <button type="button" onclick="window.closeMobileProfileSheet()" style="background:rgba(255,255,255,0.08); border:none; color:#cbd5e1; width:30px; height:30px; border-radius:8px; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center;">&times;</button>
+            </div>
+            
+            <div style="background:rgba(0,0,0,0.3); border-radius:12px; padding:12px 14px; margin-bottom:16px; border:1px solid rgba(212,175,55,0.25);">
+                <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                    <span style="color:#94a3b8; font-size:12.5px;">My Assigned Leads:</span>
+                    <strong style="color:var(--color-gold); font-size:13.5px;" id="mob-sheet-leads">0</strong>
+                </div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                    <span style="color:#94a3b8; font-size:12.5px;">Confirmed Bookings:</span>
+                    <strong style="color:#4ade80; font-size:13.5px;" id="mob-sheet-bookings">0</strong>
+                </div>
+                <div style="display:flex; justify-content:space-between;">
+                    <span style="color:#94a3b8; font-size:12.5px;">Earned Incentive (3%):</span>
+                    <strong style="color:#fbbf24; font-size:13.5px;" id="mob-sheet-incentive">₹0</strong>
+                </div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:8px;">
+                <button type="button" onclick="window.location.reload()" style="background:rgba(59,130,246,0.15); border:1px solid rgba(59,130,246,0.35); color:#60a5fa; padding:11px; border-radius:8px; font-weight:700; font-size:13px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px;">
+                    <i class="fa-solid fa-arrows-rotate"></i> Refresh Portal Data
+                </button>
+                <button type="button" onclick="logout()" style="background:rgba(239,68,68,0.18); border:1px solid rgba(239,68,68,0.4); color:#f87171; padding:11px; border-radius:8px; font-weight:700; font-size:13px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px;">
+                    <i class="fa-solid fa-right-from-bracket"></i> Log Out
+                </button>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>

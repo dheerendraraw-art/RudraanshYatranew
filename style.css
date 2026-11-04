@@ -13992,3 +13992,136 @@ body.menu-open::before {
         overflow-y: auto !important;
     }
 }
+
+
+/* ==========================================================================
+   PHASE 3: MOBILE STICKY BOTTOM NAVIGATION BAR & TOUCH ERGONOMICS
+   ========================================================================== */
+.mobile-bottom-nav {
+    display: none;
+}
+
+#mobile-profile-sheet {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    /* Prevent iOS auto-zoom on input focus */
+    #pane-leads input,
+    #pane-leads select,
+    #pane-leads textarea,
+    #pane-bookings input,
+    #pane-bookings select,
+    #pane-bookings textarea,
+    .admin-input,
+    .admin-select,
+    .admin-textarea {
+        font-size: 16px !important;
+    }
+    
+    /* Ensure page has bottom padding so content isn't covered by bottom nav */
+    body {
+        padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
+    }
+
+    /* Floating Bottom Navigation Bar */
+    .mobile-bottom-nav {
+        display: flex !important;
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 9999 !important;
+        background: rgba(15, 23, 42, 0.95) !important;
+        backdrop-filter: blur(14px) !important;
+        -webkit-backdrop-filter: blur(14px) !important;
+        border-top: 1px solid rgba(212, 175, 55, 0.35) !important;
+        padding: 6px 6px calc(6px + env(safe-area-inset-bottom, 0px)) !important;
+        justify-content: space-around !important;
+        align-items: center !important;
+        box-shadow: 0 -4px 25px rgba(0, 0, 0, 0.55) !important;
+    }
+
+    .mob-bottom-nav-btn {
+        flex: 1 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 3px !important;
+        background: transparent !important;
+        border: none !important;
+        color: #94a3b8 !important;
+        padding: 5px 2px !important;
+        font-size: 10px !important;
+        font-weight: 700 !important;
+        cursor: pointer !important;
+        position: relative !important;
+        transition: all 0.2s ease !important;
+        -webkit-tap-highlight-color: transparent !important;
+    }
+
+    .mob-bottom-nav-btn i {
+        font-size: 18px !important;
+        transition: transform 0.2s ease, color 0.2s ease !important;
+    }
+
+    .mob-bottom-nav-btn.active {
+        color: var(--color-gold) !important;
+    }
+
+    .mob-bottom-nav-btn.active i {
+        color: var(--color-gold) !important;
+        transform: translateY(-2px) scale(1.1) !important;
+    }
+
+    .mob-bottom-nav-btn:active {
+        transform: scale(0.92) !important;
+    }
+
+    .mob-nav-badge {
+        position: absolute !important;
+        top: 2px !important;
+        right: 18% !important;
+        background: #ef4444 !important;
+        color: #ffffff !important;
+        font-size: 9px !important;
+        font-weight: 800 !important;
+        padding: 1px 5px !important;
+        border-radius: 10px !important;
+        min-width: 14px !important;
+        text-align: center !important;
+        line-height: 1.2 !important;
+        border: 1px solid rgba(15, 23, 42, 0.8) !important;
+    }
+
+    /* Mobile Profile / Account Sheet */
+    #mobile-profile-sheet.open {
+        display: flex !important;
+        position: fixed !important;
+        inset: 0 !important;
+        z-index: 10001 !important;
+        background: rgba(0, 0, 0, 0.75) !important;
+        backdrop-filter: blur(4px) !important;
+        -webkit-backdrop-filter: blur(4px) !important;
+        align-items: flex-end !important;
+        justify-content: center !important;
+    }
+
+    .mob-profile-card {
+        background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%) !important;
+        border: 1px solid rgba(212, 175, 55, 0.4) !important;
+        border-bottom: none !important;
+        border-radius: 20px 20px 0 0 !important;
+        width: 100% !important;
+        max-width: 500px !important;
+        padding: 22px 20px calc(24px + env(safe-area-inset-bottom, 0px)) !important;
+        box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.6) !important;
+        animation: slideUpMobile 0.22s ease-out !important;
+    }
+
+    @keyframes slideUpMobile {
+        from { transform: translateY(100%); }
+        to { transform: translateY(0); }
+    }
+}
