@@ -12404,33 +12404,68 @@ body.menu-open::before {
 
 /* ==================================================
    ADMIN USER MOBILE OPTIMIZATION (<= 768px & <= 480px)
-   Strictly scoped to body.user-role-admin for Bookings & Leads
+   Strictly scoped to body:is(.user-role-admin, .user-role-staff) for Bookings & Leads
    ================================================== */
 @media (max-width: 768px) {
+
+    /* Staff Summary Stats Grid Mobile Compression (2x2 layout) */
+    #staff-stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
+        margin-bottom: 14px !important;
+    }
+    #staff-stats-grid .admin-stat-card {
+        padding: 10px 12px !important;
+        border-radius: 12px !important;
+        gap: 10px !important;
+        min-height: 62px !important;
+        display: flex !important;
+        align-items: center !important;
+    }
+    #staff-stats-grid .admin-stat-icon {
+        width: 36px !important;
+        height: 36px !important;
+        font-size: 15px !important;
+        border-radius: 8px !important;
+        flex-shrink: 0 !important;
+    }
+    #staff-stats-grid .admin-stat-num {
+        font-size: 18px !important;
+        font-weight: 800 !important;
+        line-height: 1.2 !important;
+        display: block !important;
+    }
+    #staff-stats-grid .admin-stat-label {
+        font-size: 11px !important;
+        line-height: 1.2 !important;
+        color: #94a3b8 !important;
+        display: block !important;
+    }
+
     /* --------------------------------------------------
        ADMIN LEADS MANAGER (MOBILE)
        -------------------------------------------------- */
-    body.user-role-admin #pane-leads .leads-header-wrapper {
+    body:is(.user-role-admin, .user-role-staff) #pane-leads .leads-header-wrapper {
         flex-direction: column !important;
         align-items: stretch !important;
         gap: 12px !important;
         margin-bottom: 16px !important;
     }
 
-    body.user-role-admin #pane-leads .leads-controls-bar {
+    body:is(.user-role-admin, .user-role-staff) #pane-leads .leads-controls-bar {
         flex-direction: column !important;
         align-items: stretch !important;
         gap: 10px !important;
         width: 100% !important;
     }
 
-    body.user-role-admin #pane-leads .leads-search-wrap,
-    body.user-role-admin #pane-leads .leads-status-wrap {
+    body:is(.user-role-admin, .user-role-staff) #pane-leads .leads-search-wrap,
+    body:is(.user-role-admin, .user-role-staff) #pane-leads .leads-status-wrap {
         width: 100% !important;
         max-width: 100% !important;
     }
 
-    body.user-role-admin #pane-leads #search-leads-input {
+    body:is(.user-role-admin, .user-role-staff) #pane-leads #search-leads-input {
         width: 100% !important;
         padding: 10px 12px 10px 36px !important;
         font-size: 14px !important;
@@ -12438,7 +12473,7 @@ body.menu-open::before {
         box-sizing: border-box !important;
     }
 
-    body.user-role-admin #pane-leads #top-filter-lead-status {
+    body:is(.user-role-admin, .user-role-staff) #pane-leads #top-filter-lead-status {
         width: 100% !important;
         padding: 10px 12px !important;
         font-size: 13.5px !important;
@@ -12447,14 +12482,14 @@ body.menu-open::before {
     }
 
     /* Admin Leads Action Toolbar */
-    body.user-role-admin #pane-leads #leads-action-buttons-wrap {
+    body:is(.user-role-admin, .user-role-staff) #pane-leads #leads-action-buttons-wrap {
         display: grid !important;
         grid-template-columns: repeat(2, 1fr) !important;
         gap: 8px !important;
         width: 100% !important;
     }
 
-    body.user-role-admin #pane-leads #add-lead-btn {
+    body:is(.user-role-admin, .user-role-staff) #pane-leads #add-lead-btn {
         grid-column: 1 / -1 !important;
         width: 100% !important;
         min-height: 44px !important;
@@ -12467,7 +12502,7 @@ body.menu-open::before {
         box-shadow: 0 4px 12px rgba(212, 175, 55, 0.35) !important;
     }
 
-    body.user-role-admin #pane-leads #sync-sheet-leads-btn {
+    body:is(.user-role-admin, .user-role-staff) #pane-leads #sync-sheet-leads-btn {
         grid-column: 1 / -1 !important;
         width: 100% !important;
         min-height: 40px !important;
@@ -12477,7 +12512,7 @@ body.menu-open::before {
         align-items: center !important;
     }
 
-    body.user-role-admin #pane-leads #leads-action-buttons-wrap button {
+    body:is(.user-role-admin, .user-role-staff) #pane-leads #leads-action-buttons-wrap button {
         min-height: 38px !important;
         font-size: 12px !important;
         padding: 6px 10px !important;
@@ -12489,7 +12524,7 @@ body.menu-open::before {
     }
 
     /* Admin Leads Card Container */
-    body.user-role-admin #pane-leads .admin-table-container {
+    body:is(.user-role-admin, .user-role-staff) #pane-leads .admin-table-container {
         border: none !important;
         background: transparent !important;
         box-shadow: none !important;
@@ -12497,17 +12532,17 @@ body.menu-open::before {
         padding: 0 !important;
     }
 
-    body.user-role-admin #pane-leads .admin-table {
+    body:is(.user-role-admin, .user-role-staff) #pane-leads .admin-table {
         display: block !important;
         width: 100% !important;
         min-width: unset !important;
     }
 
-    body.user-role-admin #pane-leads .admin-table thead {
+    body:is(.user-role-admin, .user-role-staff) #pane-leads .admin-table thead {
         display: none !important;
     }
 
-    body.user-role-admin #pane-leads .admin-table tbody {
+    body:is(.user-role-admin, .user-role-staff) #pane-leads .admin-table tbody {
         display: flex !important;
         flex-direction: column !important;
         gap: 12px !important;
@@ -12515,7 +12550,7 @@ body.menu-open::before {
     }
 
     /* Admin Leads Card Row */
-    body.user-role-admin #pane-leads tr.lead-card-row {
+    body:is(.user-role-admin, .user-role-staff) #pane-leads tr.lead-card-row {
         display: block !important;
         background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%) !important;
         border: 1.5px solid rgba(212, 175, 55, 0.45) !important;
@@ -12529,31 +12564,31 @@ body.menu-open::before {
         transition: transform 0.15s ease, box-shadow 0.15s ease !important;
     }
 
-    body.user-role-admin #pane-leads tr.lead-card-row:active {
+    body:is(.user-role-admin, .user-role-staff) #pane-leads tr.lead-card-row:active {
         transform: scale(0.995);
     }
 
     /* Quick Contact Chips on Mobile Header */
-    body.user-role-admin #pane-leads .lead-quick-contact-chips {
+    body:is(.user-role-admin, .user-role-staff) #pane-leads .lead-quick-contact-chips {
         display: inline-flex !important;
         gap: 5px !important;
         align-items: center !important;
     }
 
-    body.user-role-admin #pane-leads .lead-quick-call-chip,
-    body.user-role-admin #pane-leads .lead-quick-wa-chip {
+    body:is(.user-role-admin, .user-role-staff) #pane-leads .lead-quick-call-chip,
+    body:is(.user-role-admin, .user-role-staff) #pane-leads .lead-quick-wa-chip {
         min-height: 26px !important;
         padding: 3px 9px !important;
         font-size: 11px !important;
     }
 
     /* Hide duplicate status cell on mobile (status is already in the card header) */
-    body.user-role-admin #pane-leads tr.lead-card-row td.lead-duplicate-status-td {
+    body:is(.user-role-admin, .user-role-staff) #pane-leads tr.lead-card-row td.lead-duplicate-status-td {
         display: none !important;
     }
 
     /* Expanded Detail Fields for Admin Leads */
-    body.user-role-admin #pane-leads tr.lead-card-row.expanded .mobile-detail-field {
+    body:is(.user-role-admin, .user-role-staff) #pane-leads tr.lead-card-row.expanded .mobile-detail-field {
         display: flex !important;
         justify-content: space-between !important;
         align-items: center !important;
@@ -12565,7 +12600,7 @@ body.menu-open::before {
         text-align: right !important;
     }
 
-    body.user-role-admin #pane-leads tr.lead-card-row.expanded .mobile-detail-field::before {
+    body:is(.user-role-admin, .user-role-staff) #pane-leads tr.lead-card-row.expanded .mobile-detail-field::before {
         content: attr(data-label);
         font-weight: 800 !important;
         color: var(--color-gold) !important;
@@ -12578,7 +12613,7 @@ body.menu-open::before {
     }
 
     /* Touch-friendly staff assignee dropdown */
-    body.user-role-admin #pane-leads tr.lead-card-row td select {
+    body:is(.user-role-admin, .user-role-staff) #pane-leads tr.lead-card-row td select {
         color: #ffffff !important;
         background: #1e293b !important;
         border: 1.5px solid rgba(212, 175, 55, 0.6) !important;
@@ -12591,18 +12626,18 @@ body.menu-open::before {
     }
 
     /* Admin Action Buttons Row inside Expanded Lead */
-    body.user-role-admin #pane-leads tr.lead-card-row td.lead-card-actions-cell {
+    body:is(.user-role-admin, .user-role-staff) #pane-leads tr.lead-card-row td.lead-card-actions-cell {
         border-top: 1px dashed rgba(212, 175, 55, 0.3) !important;
         border-bottom: none !important;
         padding-top: 12px !important;
         padding-bottom: 2px !important;
     }
 
-    body.user-role-admin #pane-leads tr.lead-card-row td.lead-card-actions-cell::before {
+    body:is(.user-role-admin, .user-role-staff) #pane-leads tr.lead-card-row td.lead-card-actions-cell::before {
         display: none !important;
     }
 
-    body.user-role-admin #pane-leads .lead-admin-actions-wrap {
+    body:is(.user-role-admin, .user-role-staff) #pane-leads .lead-admin-actions-wrap {
         display: flex !important;
         width: 100% !important;
         gap: 8px !important;
@@ -12610,21 +12645,21 @@ body.menu-open::before {
         justify-content: space-between !important;
     }
 
-    body.user-role-admin #pane-leads .lead-admin-actions-wrap .lead-open-details-btn {
+    body:is(.user-role-admin, .user-role-staff) #pane-leads .lead-admin-actions-wrap .lead-open-details-btn {
         flex: 1.2 !important;
         min-height: 40px !important;
         justify-content: center !important;
         font-size: 12.5px !important;
     }
 
-    body.user-role-admin #pane-leads .lead-admin-actions-wrap .lead-card-edit-btn {
+    body:is(.user-role-admin, .user-role-staff) #pane-leads .lead-admin-actions-wrap .lead-card-edit-btn {
         flex: 1 !important;
         min-height: 40px !important;
         justify-content: center !important;
         font-size: 12.5px !important;
     }
 
-    body.user-role-admin #pane-leads .lead-admin-actions-wrap .lead-card-del-btn {
+    body:is(.user-role-admin, .user-role-staff) #pane-leads .lead-admin-actions-wrap .lead-card-del-btn {
         flex: 0.8 !important;
         min-height: 40px !important;
         justify-content: center !important;
@@ -12634,32 +12669,32 @@ body.menu-open::before {
     /* --------------------------------------------------
        ADMIN BOOKINGS MANAGER (MOBILE <= 768px)
        -------------------------------------------------- */
-    body.user-role-admin #pane-bookings .bookings-header-wrapper {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .bookings-header-wrapper {
         margin-bottom: 16px !important;
     }
 
-    body.user-role-admin #pane-bookings .bookings-top-row {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .bookings-top-row {
         flex-direction: column !important;
         align-items: stretch !important;
         gap: 10px !important;
         margin-bottom: 10px !important;
     }
 
-    body.user-role-admin #pane-bookings .bookings-search-wrap {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .bookings-search-wrap {
         width: 100% !important;
     }
 
-    body.user-role-admin #pane-bookings #search-bookings-input {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings #search-bookings-input {
         min-height: 42px !important;
         font-size: 14px !important;
         box-sizing: border-box !important;
     }
 
-    body.user-role-admin #pane-bookings .bookings-primary-btn-wrap {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .bookings-primary-btn-wrap {
         width: 100% !important;
     }
 
-    body.user-role-admin #pane-bookings #add-booking-btn {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings #add-booking-btn {
         width: 100% !important;
         min-height: 44px !important;
         justify-content: center !important;
@@ -12668,7 +12703,7 @@ body.menu-open::before {
     }
 
     /* Filter Bar — 2x2 Grid */
-    body.user-role-admin #pane-bookings .bookings-filters-bar {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .bookings-filters-bar {
         display: grid !important;
         grid-template-columns: 1fr 1fr !important;
         align-items: start !important;
@@ -12676,15 +12711,15 @@ body.menu-open::before {
         gap: 8px !important;
     }
 
-    body.user-role-admin #pane-bookings .booking-filter-item {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .booking-filter-item {
         width: 100% !important;
         flex-direction: column !important;
         align-items: flex-start !important;
         gap: 4px !important;
     }
 
-    body.user-role-admin #pane-bookings .booking-filter-item input,
-    body.user-role-admin #pane-bookings .booking-filter-item select {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .booking-filter-item input,
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .booking-filter-item select {
         width: 100% !important;
         min-width: 100% !important;
         min-height: 40px !important;
@@ -12694,7 +12729,7 @@ body.menu-open::before {
         box-sizing: border-box !important;
     }
 
-    body.user-role-admin #pane-bookings #bookings-action-buttons-wrap {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings #bookings-action-buttons-wrap {
         width: 100% !important;
         display: grid !important;
         grid-template-columns: repeat(3, 1fr) !important;
@@ -12702,7 +12737,7 @@ body.menu-open::before {
         margin-top: 4px !important;
     }
 
-    body.user-role-admin #pane-bookings #bookings-action-buttons-wrap button {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings #bookings-action-buttons-wrap button {
         width: 100% !important;
         min-height: 38px !important;
         justify-content: center !important;
@@ -12712,7 +12747,7 @@ body.menu-open::before {
     }
 
     /* Booking Card Row */
-    body.user-role-admin #pane-bookings .admin-table tbody tr.booking-card-row {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .admin-table tbody tr.booking-card-row {
         background: linear-gradient(145deg, #1a2744 0%, #0f172a 100%) !important;
         border: 1.5px solid rgba(212, 175, 55, 0.45) !important;
         border-left: 5px solid var(--color-gold) !important;
@@ -12726,7 +12761,7 @@ body.menu-open::before {
         gap: 0 !important;
     }
 
-    body.user-role-admin #pane-bookings .admin-table tbody tr.booking-card-row td {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .admin-table tbody tr.booking-card-row td {
         display: flex !important;
         justify-content: space-between !important;
         align-items: center !important;
@@ -12741,7 +12776,7 @@ body.menu-open::before {
         flex-wrap: wrap !important;
     }
 
-    body.user-role-admin #pane-bookings .admin-table tbody tr.booking-card-row td::before {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .admin-table tbody tr.booking-card-row td::before {
         content: attr(data-label);
         font-weight: 700 !important;
         color: #94a3b8 !important;
@@ -12756,16 +12791,16 @@ body.menu-open::before {
     }
 
     /* Booking ID */
-    body.user-role-admin #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Booking ID"] {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Booking ID"] {
         border-bottom: 1px solid rgba(212, 175, 55, 0.25) !important;
         padding-bottom: 10px !important;
     }
 
-    body.user-role-admin #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Booking ID"]::before {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Booking ID"]::before {
         display: none !important;
     }
 
-    body.user-role-admin #pane-bookings .booking-id-tag {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .booking-id-tag {
         font-family: 'Courier New', monospace !important;
         font-size: 12px !important;
         font-weight: 800 !important;
@@ -12778,14 +12813,14 @@ body.menu-open::before {
     }
 
     /* Client name */
-    body.user-role-admin #pane-bookings .booking-client-name {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .booking-client-name {
         color: #f5c842 !important;
         font-size: 16px !important;
         font-weight: 800 !important;
     }
 
     /* Phone / Contact */
-    body.user-role-admin #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Phone / Contact"] {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Phone / Contact"] {
         flex-direction: column !important;
         align-items: flex-start !important;
         gap: 6px !important;
@@ -12793,25 +12828,25 @@ body.menu-open::before {
         min-height: unset !important;
     }
 
-    body.user-role-admin #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Phone / Contact"]::before {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Phone / Contact"]::before {
         display: none !important;
     }
 
-    body.user-role-admin #pane-bookings .booking-phone-wrap {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .booking-phone-wrap {
         display: flex !important;
         flex-direction: column !important;
         gap: 6px !important;
         width: 100% !important;
     }
 
-    body.user-role-admin #pane-bookings .booking-phone-link {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .booking-phone-link {
         font-size: 14px !important;
         font-weight: 800 !important;
         color: #f5c842 !important;
     }
 
-    body.user-role-admin #pane-bookings .booking-quick-call,
-    body.user-role-admin #pane-bookings .booking-quick-wa {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .booking-quick-call,
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .booking-quick-wa {
         min-height: 40px !important;
         flex: 1 !important;
         justify-content: center !important;
@@ -12819,15 +12854,15 @@ body.menu-open::before {
         font-weight: 700 !important;
     }
 
-    body.user-role-admin #pane-bookings .booking-email-text {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .booking-email-text {
         color: #94a3b8 !important;
         font-size: 12px !important;
         text-align: left !important;
     }
 
     /* Special Notes — full width and readable */
-    body.user-role-admin #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Special Notes"],
-    body.user-role-admin #pane-bookings .admin-table tbody tr.booking-card-row td.booking-notes-cell {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Special Notes"],
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .admin-table tbody tr.booking-card-row td.booking-notes-cell {
         flex-direction: column !important;
         align-items: flex-start !important;
         padding: 10px 12px !important;
@@ -12842,14 +12877,14 @@ body.menu-open::before {
         box-sizing: border-box !important;
     }
 
-    body.user-role-admin #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Special Notes"]::before {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Special Notes"]::before {
         color: var(--color-gold) !important;
         font-size: 10.5px !important;
         font-weight: 800 !important;
         margin-bottom: 6px !important;
     }
 
-    body.user-role-admin #pane-bookings .booking-notes-text {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .booking-notes-text {
         color: #e2e8f0 !important;
         font-size: 13px !important;
         text-align: left !important;
@@ -12860,7 +12895,7 @@ body.menu-open::before {
         word-break: break-word !important;
     }
 
-    body.user-role-admin #pane-bookings .booking-notes-text .ry-client-note {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .booking-notes-text .ry-client-note {
         color: #e2e8f0 !important;
         font-size: 13px !important;
         display: block !important;
@@ -12868,7 +12903,7 @@ body.menu-open::before {
         white-space: pre-wrap !important;
     }
 
-    body.user-role-admin #pane-bookings .booking-notes-text .ry-last-update-badge {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .booking-notes-text .ry-last-update-badge {
         background: rgba(56, 189, 248, 0.12) !important;
         border: 1px solid rgba(56, 189, 248, 0.35) !important;
         border-radius: 8px !important;
@@ -12881,7 +12916,7 @@ body.menu-open::before {
         box-sizing: border-box !important;
     }
 
-    body.user-role-admin #pane-bookings .booking-notes-text .ry-last-update-badge span {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .booking-notes-text .ry-last-update-badge span {
         color: #e0f2fe !important;
         font-size: 12px !important;
         line-height: 1.5 !important;
@@ -12890,7 +12925,7 @@ body.menu-open::before {
     }
 
     /* Pickup */
-    body.user-role-admin #pane-bookings .booking-pickup-select {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .booking-pickup-select {
         max-width: 60% !important;
         font-size: 13px !important;
         padding: 6px 8px !important;
@@ -12898,7 +12933,7 @@ body.menu-open::before {
     }
 
     /* Assignee */
-    body.user-role-admin #pane-bookings .booking-assignee-select {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .booking-assignee-select {
         max-width: 60% !important;
         font-size: 13px !important;
         padding: 6px 8px !important;
@@ -12906,13 +12941,13 @@ body.menu-open::before {
     }
 
     /* Yatra Status */
-    body.user-role-admin #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Yatra Status"] {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Yatra Status"] {
         flex-wrap: wrap !important;
         min-height: unset !important;
         padding: 10px 0 !important;
     }
 
-    body.user-role-admin #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Yatra Status"] > div {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .admin-table tbody tr.booking-card-row td[data-label="Yatra Status"] > div {
         display: flex !important;
         flex-direction: row !important;
         flex-wrap: wrap !important;
@@ -12923,7 +12958,7 @@ body.menu-open::before {
     }
 
     /* Actions */
-    body.user-role-admin #pane-bookings .admin-table tbody tr.booking-card-row td.booking-actions-cell {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .admin-table tbody tr.booking-card-row td.booking-actions-cell {
         border-bottom: none !important;
         padding-top: 12px !important;
         padding-bottom: 2px !important;
@@ -12933,18 +12968,18 @@ body.menu-open::before {
         min-height: unset !important;
     }
 
-    body.user-role-admin #pane-bookings .admin-table tbody tr.booking-card-row td.booking-actions-cell::before {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .admin-table tbody tr.booking-card-row td.booking-actions-cell::before {
         display: none !important;
     }
 
-    body.user-role-admin #pane-bookings .booking-action-buttons-wrap {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .booking-action-buttons-wrap {
         width: 100% !important;
         display: flex !important;
         align-items: center !important;
         gap: 8px !important;
     }
 
-    body.user-role-admin #pane-bookings .booking-action-buttons-wrap button {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .booking-action-buttons-wrap button {
         min-height: 44px !important;
         font-size: 13px !important;
         justify-content: center !important;
@@ -12952,22 +12987,22 @@ body.menu-open::before {
         font-weight: 700 !important;
     }
 
-    body.user-role-admin #pane-bookings .booking-action-buttons-wrap .booking-bill-btn {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .booking-action-buttons-wrap .booking-bill-btn {
         flex: 2 !important;
         font-size: 12.5px !important;
     }
 
-    body.user-role-admin #pane-bookings .booking-action-buttons-wrap .booking-edit-btn {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .booking-action-buttons-wrap .booking-edit-btn {
         flex: 1.2 !important;
     }
 
-    body.user-role-admin #pane-bookings .booking-action-buttons-wrap .booking-delete-btn {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .booking-action-buttons-wrap .booking-delete-btn {
         flex: 0 0 44px !important;
         width: 44px !important;
         min-width: 44px !important;
     }
 
-    body.user-role-admin #pane-bookings .booking-toggle-details-btn {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .booking-toggle-details-btn {
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
@@ -13032,54 +13067,54 @@ body.menu-open::before {
 
     /* Small Phone Booking Improvements (<= 480px) */
     #pane-bookings .bookings-filters-bar,
-    body.user-role-admin #pane-bookings .bookings-filters-bar {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .bookings-filters-bar {
         grid-template-columns: 1fr !important;
         gap: 8px !important;
     }
 
     #pane-bookings .booking-action-buttons-wrap,
-    body.user-role-admin #pane-bookings .booking-action-buttons-wrap {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .booking-action-buttons-wrap {
         flex-wrap: wrap !important;
     }
 
     #pane-bookings .booking-action-buttons-wrap .booking-bill-btn,
-    body.user-role-admin #pane-bookings .booking-action-buttons-wrap .booking-bill-btn {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .booking-action-buttons-wrap .booking-bill-btn {
         flex: 1 1 100% !important;
         width: 100% !important;
     }
 
     #pane-bookings .booking-action-buttons-wrap .booking-edit-btn,
-    body.user-role-admin #pane-bookings .booking-action-buttons-wrap .booking-edit-btn {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .booking-action-buttons-wrap .booking-edit-btn {
         flex: 1 !important;
     }
 
     #pane-bookings .booking-action-buttons-wrap .booking-delete-btn,
-    body.user-role-admin #pane-bookings .booking-action-buttons-wrap .booking-delete-btn {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .booking-action-buttons-wrap .booking-delete-btn {
         flex: 0 0 44px !important;
     }
 
-    body.user-role-admin #pane-leads #leads-action-buttons-wrap {
+    body:is(.user-role-admin, .user-role-staff) #pane-leads #leads-action-buttons-wrap {
         grid-template-columns: 1fr 1fr !important;
         gap: 6px !important;
     }
 
-    body.user-role-admin #pane-leads #leads-action-buttons-wrap button {
+    body:is(.user-role-admin, .user-role-staff) #pane-leads #leads-action-buttons-wrap button {
         padding: 7px 4px !important;
         font-size: 11.5px !important;
     }
 
-    body.user-role-admin #pane-bookings #bookings-action-buttons-wrap {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings #bookings-action-buttons-wrap {
         grid-template-columns: 1fr 1fr 1fr !important;
         gap: 4px !important;
     }
 
-    body.user-role-admin #pane-bookings #bookings-action-buttons-wrap button {
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings #bookings-action-buttons-wrap button {
         padding: 7px 2px !important;
         font-size: 11px !important;
     }
 
-    body.user-role-admin #pane-leads .lead-chat-name,
-    body.user-role-admin #pane-bookings .booking-client-name {
+    body:is(.user-role-admin, .user-role-staff) #pane-leads .lead-chat-name,
+    body:is(.user-role-admin, .user-role-staff) #pane-bookings .booking-client-name {
         font-size: 14px !important;
     }
 }
