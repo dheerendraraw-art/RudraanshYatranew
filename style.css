@@ -15065,3 +15065,183 @@ body.menu-open::before {
         display: flex !important;
     }
 }
+
+
+/* ── PHASE 7: OFFLINE MODE & SKELETON LOADING ── */
+
+/* Sticky Mobile Offline Status Banner */
+.mobile-offline-banner {
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    margin: -10px -10px 14px -10px;
+    border-radius: 12px;
+    font-size: 12.5px;
+    font-weight: 700;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+    animation: slideDownBanner 0.25s ease-out;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+@keyframes slideDownBanner {
+    from { transform: translateY(-100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.mobile-offline-banner.status-offline {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.95), rgba(185, 28, 28, 0.95));
+    border: 1.5px solid #f87171;
+    color: #ffffff;
+}
+
+.mobile-offline-banner.status-online {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.95), rgba(21, 128, 61, 0.95));
+    border: 1.5px solid #4ade80;
+    color: #ffffff;
+}
+
+.mob-offline-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+}
+
+.mob-offline-icon {
+    font-size: 15px;
+    animation: pulseIcon 1.8s infinite ease-in-out;
+}
+
+@keyframes pulseIcon {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.9); }
+}
+
+.mob-offline-queue-badge {
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 2px 7px;
+    border-radius: 10px;
+    font-size: 10.5px;
+    font-weight: 800;
+    color: #ffffff;
+    white-space: nowrap;
+}
+
+.mob-offline-sync-btn {
+    background: #ffffff;
+    color: #0f172a;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 7px;
+    font-size: 11.5px;
+    font-weight: 800;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    transition: transform 0.15s ease;
+}
+
+.mob-offline-sync-btn:active {
+    transform: scale(0.95);
+}
+
+/* Skeleton Loading Cards for Mobile Lead Stream */
+.mobile-skeleton-lead-row td {
+    padding: 0 !important;
+    border: none !important;
+}
+
+.skeleton-lead-card {
+    background: #0f172a;
+    border: 1.5px solid rgba(212, 175, 55, 0.2);
+    border-radius: 14px;
+    padding: 14px;
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+.sk-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sk-circle {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+    background-size: 200% 100%;
+    animation: skeletonShimmer 1.4s infinite ease-in-out;
+    flex-shrink: 0;
+}
+
+.sk-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+}
+
+.sk-line {
+    height: 12px;
+    border-radius: 6px;
+    background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+    background-size: 200% 100%;
+    animation: skeletonShimmer 1.4s infinite ease-in-out;
+}
+
+.sk-w40 { width: 40%; }
+.sk-w50 { width: 50%; }
+.sk-w60 { width: 60%; }
+.sk-w80 { width: 80%; }
+
+.sk-badge {
+    width: 65px;
+    height: 22px;
+    border-radius: 12px;
+    background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+    background-size: 200% 100%;
+    animation: skeletonShimmer 1.4s infinite ease-in-out;
+}
+
+.sk-body {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 8px;
+}
+
+.sk-footer {
+    display: flex;
+    gap: 8px;
+}
+
+.sk-btn {
+    height: 30px;
+    flex: 1;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+    background-size: 200% 100%;
+    animation: skeletonShimmer 1.4s infinite ease-in-out;
+}
+
+@keyframes skeletonShimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}

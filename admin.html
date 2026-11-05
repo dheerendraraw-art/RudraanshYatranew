@@ -938,6 +938,18 @@
 
             <!-- PANE 6: LEADS MANAGER -->
             <div id="pane-leads" class="admin-tab-content-pane" style="display: none;">
+                <!-- Phase 7: Mobile Offline Status & Pending Sync Banner -->
+                <div id="mobile-offline-banner" class="mobile-offline-banner" style="display: none;">
+                    <div class="mob-offline-content">
+                        <i class="fa-solid fa-cloud-slash mob-offline-icon" id="mob-offline-icon"></i>
+                        <span id="mob-offline-text">Offline Mode</span>
+                        <span id="mob-offline-queue-badge" class="mob-offline-queue-badge" style="display: none;">0 pending</span>
+                    </div>
+                    <button type="button" id="mob-offline-sync-btn" class="mob-offline-sync-btn" onclick="syncPendingOfflineUpdates(true)" style="display: none;">
+                        <i class="fa-solid fa-rotate"></i> Sync
+                    </button>
+                </div>
+
                 <!-- Phase 5: Call Return Outcome Prompt Banner -->
                 <div id="mobile-call-return-banner" class="call-return-prompt-banner" style="display: none;">
                     <div class="cr-banner-content">
@@ -3509,6 +3521,27 @@
         let galleryData = [];
 
         document.addEventListener('DOMContentLoaded', () => {
+            // Phase 7: Register Service Worker for offline capabilities & fast caching
+            if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+                navigator.serviceWorker.register('/sw.js').then((reg) => {
+                    console.log('RY Service Worker active, scope:', reg.scope);
+                }).catch((err) => {
+                    console.warn('RY Service Worker registration note:', err);
+                });
+            }
+
+            // Phase 7: Listen for Online / Offline connection changes
+            window.addEventListener('online', () => {
+                if (window.updateNetworkStatusUI) window.updateNetworkStatusUI(true);
+                if (window.syncPendingOfflineUpdates) window.syncPendingOfflineUpdates();
+            });
+            window.addEventListener('offline', () => {
+                if (window.updateNetworkStatusUI) window.updateNetworkStatusUI(false);
+            });
+            if (!navigator.onLine && window.updateNetworkStatusUI) {
+                window.updateNetworkStatusUI(false);
+            }
+
             const token = localStorage.getItem('admin_token');
             const isVerified = localStorage.getItem('admin_verified') === 'true';
             const loginTime = localStorage.getItem('admin_login_time');
@@ -8184,6 +8217,254 @@
             else if (val === 'Lost lead') el.classList.add('final-lost');
         };
 
+        // Phase 7: IndexedDB Local Offline Cache & Sync Queue
+        const DB_NAME = 'RudraanshYatraOfflineDB';
+        const DB_VERSION = 1;
+
+        function openOfflineDB() {
+            return new Promise((resolve, reject) => {
+                if (!('indexedDB' in window)) return reject(new Error('IndexedDB not supported'));
+                const req = indexedDB.open(DB_NAME, DB_VERSION);
+                req.onupgradeneeded = (e) => {
+                    const db = e.target.result;
+                    if (!db.objectStoreNames.contains('leads')) {
+                        db.createObjectStore('leads', { keyPath: 'id' });
+                    }
+                    if (!db.objectStoreNames.contains('offline_queue')) {
+                        db.createObjectStore('offline_queue', { keyPath: 'queue_id', autoIncrement: true });
+                    }
+                    if (!db.objectStoreNames.contains('meta')) {
+                        db.createObjectStore('meta', { keyPath: 'key' });
+                    }
+                };
+                req.onsuccess = () => resolve(req.result);
+                req.onerror = () => reject(req.error);
+            });
+        }
+
+        window.saveLeadsToLocalDB = async function(leadsList) {
+            if (!leadsList || !Array.isArray(leadsList) || leadsList.length === 0) return;
+            try {
+                const db = await openOfflineDB();
+                const tx = db.transaction(['leads', 'meta'], 'readwrite');
+                const leadStore = tx.objectStore('leads');
+                const metaStore = tx.objectStore('meta');
+
+                leadStore.clear();
+                leadsList.forEach(lead => {
+                    if (lead && lead.id) leadStore.put(lead);
+                });
+
+                metaStore.put({
+                    key: 'last_leads_sync',
+                    timestamp: Date.now(),
+                    count: leadsList.length,
+                    timeString: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                });
+
+                await new Promise(r => tx.oncomplete = r);
+            } catch(e) {
+                console.warn('IndexedDB saveLeads error:', e);
+            }
+        };
+
+        window.getLeadsFromLocalDB = async function() {
+            try {
+                const db = await openOfflineDB();
+                const tx = db.transaction(['leads', 'meta'], 'readonly');
+                const leadStore = tx.objectStore('leads');
+                const metaStore = tx.objectStore('meta');
+
+                const leads = await new Promise((res, rej) => {
+                    const req = leadStore.getAll();
+                    req.onsuccess = () => res(req.result || []);
+                    req.onerror = () => rej(req.error);
+                });
+
+                const meta = await new Promise((res) => {
+                    const req = metaStore.get('last_leads_sync');
+                    req.onsuccess = () => res(req.result || null);
+                    req.onerror = () => res(null);
+                });
+
+                return { leads, meta };
+            } catch(e) {
+                console.warn('IndexedDB getLeads error:', e);
+                return { leads: [], meta: null };
+            }
+        };
+
+        window.queueOfflineMutation = async function(table, recordId, payload, actionDesc) {
+            try {
+                const db = await openOfflineDB();
+                const tx = db.transaction(['offline_queue', 'leads'], 'readwrite');
+                const qStore = tx.objectStore('offline_queue');
+                const lStore = tx.objectStore('leads');
+
+                qStore.add({
+                    table,
+                    recordId,
+                    payload,
+                    actionDesc: actionDesc || 'Update',
+                    queuedAt: Date.now()
+                });
+
+                if (table === 'leads') {
+                    const getReq = lStore.get(recordId);
+                    getReq.onsuccess = () => {
+                        if (getReq.result) {
+                            const updated = { ...getReq.result, ...payload };
+                            lStore.put(updated);
+                        }
+                    };
+                }
+
+                await new Promise(r => tx.oncomplete = r);
+                window.updateOfflineQueueBadge();
+            } catch(e) {
+                console.warn('IndexedDB queueOfflineMutation error:', e);
+            }
+        };
+
+        window.getOfflineQueue = async function() {
+            try {
+                const db = await openOfflineDB();
+                const tx = db.transaction('offline_queue', 'readonly');
+                const qStore = tx.objectStore('offline_queue');
+                return await new Promise((res) => {
+                    const req = qStore.getAll();
+                    req.onsuccess = () => res(req.result || []);
+                    req.onerror = () => res([]);
+                });
+            } catch(e) {
+                return [];
+            }
+        };
+
+        window.syncPendingOfflineUpdates = async function(isManual = false) {
+            if (!navigator.onLine) {
+                if (isManual) showAdminToast('Still offline. Cannot sync until internet restores.', 'warning');
+                return;
+            }
+
+            try {
+                const queue = await window.getOfflineQueue();
+                if (queue.length === 0) {
+                    if (isManual) showAdminToast('All records are already synced with server!', 'info');
+                    return;
+                }
+
+                const syncBtn = document.getElementById('mob-offline-sync-btn');
+                if (syncBtn) syncBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Syncing...';
+
+                let syncedCount = 0;
+                const db = await openOfflineDB();
+
+                for (const item of queue) {
+                    try {
+                        const { error } = await supabaseAdmin
+                            .from(item.table)
+                            .update(item.payload)
+                            .eq('id', item.recordId);
+
+                        if (!error) {
+                            const tx = db.transaction('offline_queue', 'readwrite');
+                            tx.objectStore('offline_queue').delete(item.queue_id);
+                            await new Promise(r => tx.oncomplete = r);
+                            syncedCount++;
+                        }
+                    } catch(subErr) {
+                        console.warn('Sync item failed:', subErr);
+                    }
+                }
+
+                if (syncedCount > 0) {
+                    showAdminToast(`✓ ${syncedCount} offline change(s) successfully synced to server!`, 'success');
+                    window.triggerHaptic(50);
+                    if (typeof window.fetchLeads === 'function') window.fetchLeads();
+                }
+
+                await window.updateOfflineQueueBadge();
+            } catch(err) {
+                console.error('Error during offline sync:', err);
+            }
+        };
+
+        window.updateOfflineQueueBadge = async function() {
+            const queue = await window.getOfflineQueue();
+            const count = queue.length;
+            const badge = document.getElementById('mob-offline-queue-badge');
+            const syncBtn = document.getElementById('mob-offline-sync-btn');
+            if (badge) {
+                badge.innerText = `${count} pending sync`;
+                badge.style.display = count > 0 ? 'inline-block' : 'none';
+            }
+            if (syncBtn) {
+                syncBtn.style.display = (navigator.onLine && count > 0) ? 'inline-flex' : 'none';
+                syncBtn.innerHTML = '<i class="fa-solid fa-rotate"></i> Sync (' + count + ')';
+            }
+        };
+
+        window.updateNetworkStatusUI = function(isOnline) {
+            const banner = document.getElementById('mobile-offline-banner');
+            const text = document.getElementById('mob-offline-text');
+            const icon = document.getElementById('mob-offline-icon');
+            if (!banner) return;
+
+            if (!isOnline) {
+                banner.className = 'mobile-offline-banner status-offline';
+                banner.style.display = 'flex';
+                if (icon) icon.className = 'fa-solid fa-cloud-slash mob-offline-icon';
+                if (text) text.innerText = '⚡ Offline Mode — Working with saved leads';
+                window.updateOfflineQueueBadge();
+            } else {
+                banner.className = 'mobile-offline-banner status-online';
+                banner.style.display = 'flex';
+                if (icon) icon.className = 'fa-solid fa-cloud-arrow-up mob-offline-icon';
+                if (text) text.innerText = '✓ Connected — Syncing latest data...';
+                setTimeout(() => {
+                    if (navigator.onLine) {
+                        banner.style.display = 'none';
+                    }
+                }, 3200);
+            }
+        };
+
+        // Phase 7: Mobile Skeleton Loading Placeholder Cards
+        window.renderLeadsSkeleton = function(count = 4) {
+            const tbody = document.getElementById('leads-table-body');
+            if (!tbody) return;
+            let sHtml = '';
+            for (let i = 0; i < count; i++) {
+                sHtml += `
+                    <tr class="mobile-skeleton-lead-row">
+                        <td colspan="15">
+                            <div class="skeleton-lead-card">
+                                <div class="sk-header">
+                                    <div class="sk-circle"></div>
+                                    <div class="sk-lines">
+                                        <div class="sk-line sk-w60"></div>
+                                        <div class="sk-line sk-w40"></div>
+                                    </div>
+                                    <div class="sk-badge"></div>
+                                </div>
+                                <div class="sk-body">
+                                    <div class="sk-line sk-w80"></div>
+                                    <div class="sk-line sk-w50"></div>
+                                </div>
+                                <div class="sk-footer">
+                                    <div class="sk-btn"></div>
+                                    <div class="sk-btn"></div>
+                                    <div class="sk-btn"></div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }
+            tbody.innerHTML = sHtml;
+        };
+
         // Inline field updates helper with optimistic UI updates
         window.updateLeadField = async function(leadId, fieldName, value) {
             if ((fieldName === 'phone' || fieldName === 'email') && currentUserRole !== 'admin') {
@@ -8244,6 +8525,17 @@
                     updateData['remarks'] = updatedRemarks;
                     if (leadObj) leadObj.remarks = updatedRemarks;
                     if (filteredObj) filteredObj.remarks = updatedRemarks;
+                }
+
+                // Phase 7: Offline check before network call
+                if (!navigator.onLine) {
+                    if (window.queueOfflineMutation) {
+                        await window.queueOfflineMutation('leads', leadId, updateData, fieldName);
+                    }
+                    showAdminToast('⚡ Saved offline. Will sync automatically when connected.', 'warning');
+                    if (window.triggerHaptic) window.triggerHaptic(40);
+                    refreshActiveTabStats();
+                    return;
                 }
 
                 const { error } = await supabaseAdmin
@@ -8317,7 +8609,16 @@
                 showAdminToast('Lead updated successfully!', 'success');
                 refreshActiveTabStats();
             } catch (err) {
-                console.error(err);
+                console.error('updateLeadField error:', err);
+                const isNetErr = !navigator.onLine || (err.message && (err.message.includes('fetch') || err.message.includes('Network') || err.message.includes('Failed')));
+                if (isNetErr && window.queueOfflineMutation) {
+                    await window.queueOfflineMutation('leads', leadId, updateData, fieldName);
+                    showAdminToast('⚡ Connection lost: Saved offline. Will sync when back online.', 'warning');
+                    if (window.triggerHaptic) window.triggerHaptic(40);
+                    refreshActiveTabStats();
+                    if (window.updateNetworkStatusUI) window.updateNetworkStatusUI(false);
+                    return;
+                }
                 if (leadObj) leadObj[fieldName] = oldValue;
                 if (filteredObj) filteredObj[fieldName] = oldValue;
                 showAdminToast('Failed to update lead: ' + err.message, 'error');
@@ -8459,6 +8760,27 @@
         window.fetchLeads = async function() {
             if (!supabaseAdmin) return;
             applyRolePermissions();
+
+            // Phase 7: Offline check — load from device storage if offline
+            if (!navigator.onLine && window.getLeadsFromLocalDB) {
+                const { leads: cachedLeads, meta } = await window.getLeadsFromLocalDB();
+                if (cachedLeads && cachedLeads.length > 0) {
+                    currentLeads = cachedLeads;
+                    if (typeof window.updateLeadPillCounts === 'function') window.updateLeadPillCounts();
+                    if (typeof window.updateStaffDashboardStats === 'function') window.updateStaffDashboardStats();
+                    const restoredState = window.restoreLeadsFiltersState();
+                    window.applyLeadsFilters(restoredState);
+                    showAdminToast(`⚡ Offline: Loaded ${cachedLeads.length} leads from device storage (updated ${meta?.timeString || 'earlier'})`, 'info');
+                    if (window.updateNetworkStatusUI) window.updateNetworkStatusUI(false);
+                    return;
+                }
+            }
+
+            // Phase 7: Render skeleton loading cards while waiting for query
+            if (window.innerWidth <= 768 || currentUserRole === 'staff') {
+                if (typeof window.renderLeadsSkeleton === 'function') window.renderLeadsSkeleton(4);
+            }
+
             try {
                 let query = supabaseAdmin
                     .from('leads')
@@ -8476,12 +8798,32 @@
                 if (error) throw error;
 
                 currentLeads = data || [];
+
+                // Phase 7: Save leads into IndexedDB for offline access
+                if (window.saveLeadsToLocalDB) window.saveLeadsToLocalDB(currentLeads);
+
                 if (typeof window.updateLeadPillCounts === 'function') window.updateLeadPillCounts();
                 if (typeof window.updateStaffDashboardStats === 'function') window.updateStaffDashboardStats();
                 const restoredLeadsState = window.restoreLeadsFiltersState();
                 window.applyLeadsFilters(restoredLeadsState);
             } catch (err) {
-                console.error(err);
+                console.error('fetchLeads error:', err);
+
+                // Phase 7: Fallback to IndexedDB cache on network/fetch failure
+                if (window.getLeadsFromLocalDB) {
+                    const { leads: cachedLeads, meta } = await window.getLeadsFromLocalDB();
+                    if (cachedLeads && cachedLeads.length > 0) {
+                        currentLeads = cachedLeads;
+                        if (typeof window.updateLeadPillCounts === 'function') window.updateLeadPillCounts();
+                        if (typeof window.updateStaffDashboardStats === 'function') window.updateStaffDashboardStats();
+                        const restoredState = window.restoreLeadsFiltersState();
+                        window.applyLeadsFilters(restoredState);
+                        showAdminToast(`⚡ Network issue: Showing ${cachedLeads.length} cached leads (${meta?.timeString || 'offline'})`, 'warning');
+                        if (window.updateNetworkStatusUI) window.updateNetworkStatusUI(false);
+                        return;
+                    }
+                }
+
                 const tbody = document.getElementById('leads-table-body');
                 if (tbody) {
                     tbody.innerHTML = `<tr><td colspan="15" style="text-align: center; color: red;">Failed to fetch leads. Error: ${err.message}</td></tr>`;
