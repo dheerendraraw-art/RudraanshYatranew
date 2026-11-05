@@ -1782,6 +1782,8 @@
     <!-- Add/Edit Lead Modal -->
     <div class="modal-overlay" id="lead-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 10000; justify-content: center; align-items: center; overflow-y: auto;">
         <div class="modal-box" style="background: #111827; border: 2px solid var(--color-gold); max-width: 550px; width: 90%; padding: 24px; border-radius: var(--border-radius-md); position: relative; margin: 40px auto;">
+            <!-- Phase 9: Mobile Bottom Sheet Pull Handle -->
+            <div class="modal-sheet-handle"></div>
             <button type="button" class="modal-close" onclick="closeLeadModal()" style="position: absolute; top: 12px; right: 16px; font-size: 24px; background: none; border: none; color: var(--color-text-secondary); cursor: pointer;">&times;</button>
             <h3 id="lead-modal-title" style="font-family: var(--font-serif); color: white; margin-bottom: 20px; font-size: 20px;">Add New Lead</h3>
             
@@ -3538,6 +3540,9 @@
         let galleryData = [];
 
         document.addEventListener('DOMContentLoaded', () => {
+            // Phase 9: Initialize text size preference
+            if (typeof window.initFontScale === 'function') window.initFontScale();
+
             // Phase 7: Register Service Worker for offline capabilities & fast caching
             if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
                 navigator.serviceWorker.register('/sw.js').then((reg) => {
@@ -4420,7 +4425,13 @@
             }
             
             const targetPane = document.getElementById(paneId);
-            if (targetPane) targetPane.style.display = 'block';
+            if (targetPane) {
+                targetPane.style.display = 'block';
+                // Phase 9: Smooth tab transition animation
+                targetPane.classList.remove('pane-fade-in');
+                void targetPane.offsetWidth;
+                targetPane.classList.add('pane-fade-in');
+            }
             // Phase 3: Sync Mobile Bottom Navigation active pill
             const btmNavBtns = document.querySelectorAll('.mob-bottom-nav-btn');
             btmNavBtns.forEach(btn => {
@@ -8828,6 +8839,32 @@
                 input.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 input.focus();
             }
+        };
+
+        // Phase 9: Font Scale Accessibility Controller
+        window.setFontScale = function(scale) {
+            window.triggerHaptic(30);
+            const valid = ['sm', 'md', 'lg'].includes(scale) ? scale : 'md';
+            document.body.classList.remove('font-scale-sm', 'font-scale-md', 'font-scale-lg');
+            document.body.classList.add('font-scale-' + valid);
+            try {
+                localStorage.setItem('ry_font_scale', valid);
+            } catch(e) {}
+
+            ['sm', 'md', 'lg'].forEach(s => {
+                const btn = document.getElementById('btn-scale-' + s);
+                if (btn) {
+                    if (s === valid) btn.classList.add('active');
+                    else btn.classList.remove('active');
+                }
+            });
+        };
+
+        window.initFontScale = function() {
+            try {
+                const saved = localStorage.getItem('ry_font_scale') || 'md';
+                window.setFontScale(saved);
+            } catch(e) {}
         };
 
         window.openMobileProfileSheet = function() {
@@ -15431,6 +15468,16 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
                 <div class="mlb-text">
                     <strong id="mob-rank-text">Team Ranking: #1 Contributor</strong>
                     <span id="mob-rank-sub">Leading team bookings this month</span>
+                </div>
+            </div>
+
+            <!-- Phase 9: Font Size Accessibility Controls -->
+            <div class="mob-font-control-box">
+                <span class="mfc-label"><i class="fa-solid fa-text-height" style="color: var(--color-gold);"></i> Text Display Size:</span>
+                <div class="mfc-btn-group">
+                    <button type="button" class="mfc-btn" onclick="setFontScale('sm')" id="btn-scale-sm" title="Compact Text">A- Small</button>
+                    <button type="button" class="mfc-btn active" onclick="setFontScale('md')" id="btn-scale-md" title="Standard Text">Standard</button>
+                    <button type="button" class="mfc-btn" onclick="setFontScale('lg')" id="btn-scale-lg" title="Large Text for Outdoor Sunlight">A+ Large</button>
                 </div>
             </div>
 
