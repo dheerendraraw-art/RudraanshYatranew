@@ -938,6 +938,18 @@
 
             <!-- PANE 6: LEADS MANAGER -->
             <div id="pane-leads" class="admin-tab-content-pane" style="display: none;">
+                <!-- Phase 5: Call Return Outcome Prompt Banner -->
+                <div id="mobile-call-return-banner" class="call-return-prompt-banner" style="display: none;">
+                    <div class="cr-banner-content">
+                        <div class="cr-banner-icon"><i class="fa-solid fa-phone-volume"></i></div>
+                        <div class="cr-banner-text">
+                            <strong>Call with <span id="cr-lead-name">Client</span> finished?</strong>
+                            <span>Tap outcome status below to log it!</span>
+                        </div>
+                    </div>
+                    <button type="button" class="cr-dismiss-btn" onclick="dismissCallReturnBanner()" title="Dismiss">&times;</button>
+                </div>
+
                 <!-- Phase 4: Pull to Refresh Visual Indicator -->
                 <div id="mobile-ptr-indicator" class="mobile-ptr-indicator" style="display: none;">
                     <div class="ptr-content">
@@ -4406,6 +4418,12 @@
                 if (typeof window.initPullToRefresh === 'function') {
                     window.initPullToRefresh();
                 }
+                if (typeof window.initCallReturnDetection === 'function') {
+                    window.initCallReturnDetection();
+                }
+                if (typeof window.initSwipeGestures === 'function') {
+                    window.initSwipeGestures();
+                }
                 if (typeof window.applyLeadsFilters === 'function') {
                     window.applyLeadsFilters();
                 }
@@ -5446,6 +5464,9 @@
                 tbody.insertAdjacentHTML('beforeend', html);
             } else {
                 tbody.innerHTML = html;
+            }
+            if (typeof window.initSwipeGestures === 'function') {
+                window.initSwipeGestures();
             }
         };
 
@@ -8847,7 +8868,317 @@
             }
         };
 
+        // Phase 5: Haptic Feedback Trigger Helper
+        window.triggerHaptic = function(ms = 35) {
+            if (navigator && navigator.vibrate) {
+                try { navigator.vibrate(ms); } catch(e) {}
+            }
+        };
+
+        // Phase 5: 1-Tap Copy Phone Number with Toast & Haptics
+        window.copyLeadPhone = function(phone, evt) {
+            if (evt) evt.stopPropagation();
+            if (!phone) return;
+            window.triggerHaptic(35);
+            const clean = phone.replace(/[^0-9+]/g, '');
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(clean).then(() => {
+                    showAdminToast(`📋 Copied ${clean} to clipboard!`, 'success');
+                }).catch(() => {
+                    window.fallbackCopyText(clean);
+                });
+            } else {
+                window.fallbackCopyText(clean);
+            }
+        };
+
+        window.fallbackCopyText = function(text) {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            try {
+                document.execCommand('copy');
+                showAdminToast(`📋 Copied ${text} to clipboard!`, 'success');
+            } catch(e) {
+                showAdminToast(`Phone: ${text}`, 'info');
+            }
+            ta.remove();
+        };
+
+        // Phase 5: Track Dialed Lead & Auto-Prompt Outcome on Return
+        window.lastDialedLead = null;
+        window.trackDialedLead = function(leadId, clientName, phoneClean) {
+            window.triggerHaptic(40);
+            window.lastDialedLead = {
+                id: leadId,
+                name: clientName || 'Client',
+                phone: phoneClean,
+                timestamp: Date.now()
+            };
+            try {
+                sessionStorage.setItem('ry_last_dialed_lead', JSON.stringify(window.lastDialedLead));
+            } catch(e) {}
+        };
+
+        window.initCallReturnDetection = function() {
+            if (window._callReturnBound) return;
+            window._callReturnBound = true;
+
+            const checkReturn = () => {
+                let stored = window.lastDialedLead;
+                if (!stored) {
+                    try {
+                        const raw = sessionStorage.getItem('ry_last_dialed_lead');
+                        if (raw) stored = JSON.parse(raw);
+                    } catch(e) {}
+                }
+                if (!stored || !stored.timestamp) return;
+
+                const elapsed = Date.now() - stored.timestamp;
+                if (elapsed > 4000 && elapsed < 15 * 60 * 1000) {
+                    window.showCallReturnBanner(stored);
+                }
+            };
+
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden) checkReturn();
+            });
+            window.addEventListener('pageshow', checkReturn);
+        };
+
+        window.showCallReturnBanner = function(leadInfo) {
+            const banner = document.getElementById('mobile-call-return-banner');
+            const nameEl = document.getElementById('cr-lead-name');
+            if (!banner) return;
+            if (nameEl) nameEl.innerText = leadInfo.name;
+            banner.style.display = 'flex';
+            banner.classList.add('visible');
+            window.triggerHaptic(45);
+
+            // Highlight target card
+            const tr = document.querySelector(`tr.lead-card-row`);
+            if (tr) {
+                tr.classList.add('show-all-details', 'expanded');
+                tr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        };
+
+        window.dismissCallReturnBanner = function() {
+            const banner = document.getElementById('mobile-call-return-banner');
+            if (banner) {
+                banner.classList.remove('visible');
+                setTimeout(() => { banner.style.display = 'none'; }, 250);
+            }
+            window.lastDialedLead = null;
+            try { sessionStorage.removeItem('ry_last_dialed_lead'); } catch(e) {}
+        };
+
+        // Phase 5: Voice-to-Text Speech Recognition for Quick Remarks 🎙️
+        window.activeSpeechRecognizer = null;
+        window.toggleVoiceRemarkInput = function(leadId, btnEl) {
+            window.triggerHaptic(30);
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                showAdminToast('🎙️ Voice input works in Google Chrome / Android. Type manually or open in Chrome.', 'warning');
+                return;
+            }
+
+            const input = document.getElementById(`quick-note-${leadId}`);
+            if (!input) return;
+
+            if (window.activeSpeechRecognizer) {
+                try { window.activeSpeechRecognizer.stop(); } catch(e) {}
+                window.activeSpeechRecognizer = null;
+                if (btnEl) btnEl.classList.remove('listening');
+                showAdminToast('Microphone stopped.', 'info');
+                return;
+            }
+
+            try {
+                const recognition = new SpeechRecognition();
+                recognition.lang = 'hi-IN'; // Mixed Hindi + English voice recognition
+                recognition.interimResults = false;
+                recognition.maxAlternatives = 1;
+
+                recognition.onstart = function() {
+                    window.activeSpeechRecognizer = recognition;
+                    if (btnEl) btnEl.classList.add('listening');
+                    showAdminToast('🎙️ Listening... Speak your call remark now', 'info');
+                };
+
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    if (transcript) {
+                        const prev = input.value.trim();
+                        input.value = prev ? `${prev} ${transcript}` : transcript;
+                        window.triggerHaptic(40);
+                        showAdminToast(`🎙️ Added: "${transcript}"`, 'success');
+                    }
+                };
+
+                recognition.onerror = function(err) {
+                    if (btnEl) btnEl.classList.remove('listening');
+                    window.activeSpeechRecognizer = null;
+                    if (err.error !== 'no-speech') {
+                        showAdminToast('Voice input: ' + err.error, 'warning');
+                    }
+                };
+
+                recognition.onend = function() {
+                    if (btnEl) btnEl.classList.remove('listening');
+                    window.activeSpeechRecognizer = null;
+                };
+
+                recognition.start();
+            } catch(err) {
+                showAdminToast('Microphone error: ' + err.message, 'error');
+            }
+        };
+
+        // Phase 5: Smart Follow-Up Quick-Picker
+        window.quickSetLeadFollowUp = async function(leadId, dateType, btnEl) {
+            window.triggerHaptic(35);
+            if (btnEl && btnEl.parentElement) {
+                const pills = btnEl.parentElement.querySelectorAll('.lc-fu-pill');
+                pills.forEach(p => p.classList.remove('active'));
+                btnEl.classList.add('active');
+            }
+
+            const targetDate = new Date();
+            if (dateType === 'tomorrow') {
+                targetDate.setDate(targetDate.getDate() + 1);
+            } else if (dateType === 'in_3_days') {
+                targetDate.setDate(targetDate.getDate() + 3);
+            } else if (dateType === 'next_week') {
+                targetDate.setDate(targetDate.getDate() + 7);
+            }
+
+            const isoDate = targetDate.toISOString().split('T')[0];
+            const friendly = targetDate.toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
+
+            await window.updateLeadField(leadId, 'follow_up_1', isoDate);
+
+            // Auto-advance New leads to 'Follow up required'
+            const leadObj = (window.currentLeads || []).find(l => l.id === leadId);
+            if (leadObj && (leadObj.status === 'New' || !leadObj.status)) {
+                await window.updateLeadField(leadId, 'status', 'Follow up required');
+            }
+
+            if (typeof window.updateLeadPillCounts === 'function') window.updateLeadPillCounts();
+            if (typeof window.updateStaffDashboardStats === 'function') window.updateStaffDashboardStats();
+            showAdminToast(`📅 Follow-up set to ${friendly}!`, 'success');
+        };
+
+        window.promptCustomFollowUpDate = async function(leadId, btnEl) {
+            window.triggerHaptic(30);
+            const leadObj = (window.currentLeads || []).find(l => l.id === leadId);
+            const existing = leadObj && leadObj.follow_up_1 ? leadObj.follow_up_1 : new Date().toISOString().split('T')[0];
+            const chosen = prompt('Enter follow-up date (YYYY-MM-DD):', existing);
+            if (chosen && /^\d{4}-\d{2}-\d{2}$/.test(chosen.trim())) {
+                await window.updateLeadField(leadId, 'follow_up_1', chosen.trim());
+                showAdminToast(`📅 Follow-up set to ${chosen.trim()}`, 'success');
+                if (typeof window.updateLeadPillCounts === 'function') window.updateLeadPillCounts();
+            } else if (chosen) {
+                showAdminToast('Invalid date format. Use YYYY-MM-DD.', 'error');
+            }
+        };
+
+        // Phase 5: Swipe Gestures on Mobile Lead Cards
+        window.initSwipeGestures = function() {
+            const tbody = document.getElementById('leads-table-body');
+            if (!tbody || tbody.dataset.swipeBound) return;
+            tbody.dataset.swipeBound = 'true';
+
+            let startX = 0;
+            let startY = 0;
+            let currentX = 0;
+            let isHorizontalSwipe = false;
+            let activeCard = null;
+
+            tbody.addEventListener('touchstart', (e) => {
+                if (window.innerWidth > 768) return;
+                const card = e.target.closest('.lead-card-row');
+                if (!card) return;
+
+                const tag = (e.target.tagName || '').toUpperCase();
+                if (tag === 'INPUT' || tag === 'BUTTON' || tag === 'SELECT' || tag === 'A' || e.target.closest('a') || e.target.closest('button')) {
+                    return;
+                }
+
+                activeCard = card;
+                startX = e.touches[0].pageX;
+                startY = e.touches[0].pageY;
+                currentX = startX;
+                isHorizontalSwipe = false;
+                activeCard.style.transition = 'none';
+            }, { passive: true });
+
+            tbody.addEventListener('touchmove', (e) => {
+                if (!activeCard) return;
+                currentX = e.touches[0].pageX;
+                const currentY = e.touches[0].pageY;
+                const dx = currentX - startX;
+                const dy = currentY - startY;
+
+                if (!isHorizontalSwipe) {
+                    if (Math.abs(dx) > 14 && Math.abs(dx) > Math.abs(dy)) {
+                        isHorizontalSwipe = true;
+                    } else if (Math.abs(dy) > 14) {
+                        activeCard = null;
+                        return;
+                    }
+                }
+
+                if (isHorizontalSwipe) {
+                    const dampedDx = dx * 0.45;
+                    activeCard.style.transform = `translateX(${dampedDx}px)`;
+                    if (dx > 45) {
+                        activeCard.style.boxShadow = '0 4px 18px rgba(34, 197, 94, 0.45)';
+                    } else if (dx < -45) {
+                        activeCard.style.boxShadow = '0 4px 18px rgba(212, 175, 55, 0.45)';
+                    } else {
+                        activeCard.style.boxShadow = '';
+                    }
+                }
+            }, { passive: true });
+
+            tbody.addEventListener('touchend', () => {
+                if (!activeCard) return;
+                const dx = currentX - startX;
+                activeCard.style.transition = 'transform 0.25s ease, box-shadow 0.25s ease';
+                activeCard.style.boxShadow = '';
+
+                if (isHorizontalSwipe && dx > 75) {
+                    // Swipe Right: 1-Tap Call Lead
+                    window.triggerHaptic(45);
+                    activeCard.style.transform = 'translateX(0)';
+                    const callBtn = activeCard.querySelector('.lead-quick-call-chip');
+                    if (callBtn) {
+                        callBtn.click();
+                    } else {
+                        showAdminToast('No phone number on this lead.', 'warning');
+                    }
+                } else if (isHorizontalSwipe && dx < -75) {
+                    // Swipe Left: Toggle Card Details
+                    window.triggerHaptic(45);
+                    activeCard.style.transform = 'translateX(0)';
+                    activeCard.classList.toggle('show-all-details');
+                    activeCard.classList.toggle('expanded');
+                } else {
+                    activeCard.style.transform = 'translateX(0)';
+                }
+
+                activeCard = null;
+                isHorizontalSwipe = false;
+            });
+        };
+
         window.quickUpdateLeadStatus = async function(leadId, newStatus, btnEl) {
+            window.triggerHaptic(40);
+            if (window.dismissCallReturnBanner) window.dismissCallReturnBanner();
             if (btnEl && btnEl.parentElement) {
                 const pills = btnEl.parentElement.querySelectorAll('.lc-pill');
                 pills.forEach(p => p.classList.remove('active'));
@@ -9425,10 +9756,10 @@
                                             ${priorityBadgeHtml}
                                         </div>
                                         <div class="lead-chat-sub-row" style="display: flex !important; align-items: center !important; gap: 8px !important; flex-wrap: wrap !important;">
-                                            <span class="lead-chat-phone" style="color: #ffffff !important; font-size: 12.5px !important; font-weight: 700 !important; white-space: nowrap !important; display: inline-flex !important; align-items: center !important; gap: 3px;"><i class="fa-solid fa-phone" style="font-size: 10px; color: #f5c842;"></i>${leadPhoneVal || 'No Phone'}</span>
+                                            <span class="lead-chat-phone clickable-phone" onclick="copyLeadPhone('${leadPhoneClean || leadPhoneVal}', event)" title="Tap to copy number" style="color: #ffffff !important; font-size: 12.5px !important; font-weight: 700 !important; white-space: nowrap !important; display: inline-flex !important; align-items: center !important; gap: 3px; cursor: pointer;"><i class="fa-solid fa-phone" style="font-size: 10px; color: #f5c842;"></i>${leadPhoneVal || 'No Phone'}<i class="fa-regular fa-copy" style="font-size: 9px; opacity: 0.6; margin-left: 2px;"></i></span>
                                             ${leadPhoneClean ? `
                                                 <span class="lead-quick-contact-chips" style="display: inline-flex; gap: 5px; align-items: center;" onclick="event.stopPropagation();">
-                                                    <a href="tel:${leadPhoneClean}" class="lead-quick-call-chip" title="Call Lead" style="background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); border-radius: 12px; padding: 3px 9px; font-size: 11px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
+                                                    <a href="tel:${leadPhoneClean}" onclick="trackDialedLead('${item.id}', '${(item.name || 'Client').replace(/'/g, "\\'")}', '${leadPhoneClean}')" class="lead-quick-call-chip" title="Call Lead" style="background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); border-radius: 12px; padding: 3px 9px; font-size: 11px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
                                                         <i class="fa-solid fa-phone" style="font-size: 9px;"></i> Call
                                                     </a>
                                                     <a href="${waHref}" target="_blank" class="lead-quick-wa-chip" title="WhatsApp Lead" style="background: rgba(37, 211, 102, 0.2); color: #25D366; border: 1px solid rgba(37, 211, 102, 0.4); border-radius: 12px; padding: 3px 9px; font-size: 11px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
@@ -9495,11 +9826,26 @@
                                         </div>
                                     ` : ''}
 
-                                    <!-- Phase 2: Quick Inline Note/Remarks Box -->
+                                    <!-- Phase 5: Quick Follow-up Date Scheduler -->
+                                    <div class="lead-card-quick-fu-wrap" onclick="event.stopPropagation();">
+                                        <span class="lc-quick-fu-title"><i class="fa-solid fa-calendar-check" style="color:var(--color-gold);margin-right:4px;"></i> 1-Tap Schedule Follow-up:</span>
+                                        <div class="lc-quick-fu-pills">
+                                            <button type="button" class="lc-fu-pill ${isToday ? 'active' : ''}" onclick="quickSetLeadFollowUp('${item.id}', 'today', this)">⚡ Today</button>
+                                            <button type="button" class="lc-fu-pill" onclick="quickSetLeadFollowUp('${item.id}', 'tomorrow', this)">📅 Tomorrow</button>
+                                            <button type="button" class="lc-fu-pill" onclick="quickSetLeadFollowUp('${item.id}', 'in_3_days', this)">⏳ In 3 Days</button>
+                                            <button type="button" class="lc-fu-pill" onclick="quickSetLeadFollowUp('${item.id}', 'next_week', this)">🗓️ Next Week</button>
+                                            <button type="button" class="lc-fu-pill" onclick="promptCustomFollowUpDate('${item.id}', this)">✏️ Custom</button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Phase 2 & 5: Quick Call Note with Voice-to-Text 🎙️ -->
                                     <div class="lead-card-quick-note-wrap" onclick="event.stopPropagation();">
                                         <span class="lc-quick-note-title"><i class="fa-solid fa-pen" style="color:var(--color-gold);margin-right:4px;"></i> Quick Call Note / Remark:</span>
                                         <div class="lc-quick-note-row">
-                                            <input type="text" id="quick-note-${item.id}" class="lc-quick-note-input" placeholder="Type call note & tap Save..." onkeydown="if(event.key==='Enter'){event.preventDefault();saveQuickLeadRemark('${item.id}');}">
+                                            <input type="text" id="quick-note-${item.id}" class="lc-quick-note-input" placeholder="Type or speak note (Hindi/English)..." onkeydown="if(event.key==='Enter'){event.preventDefault();saveQuickLeadRemark('${item.id}');}">
+                                            <button type="button" class="lc-voice-note-btn" id="voice-btn-${item.id}" onclick="toggleVoiceRemarkInput('${item.id}', this)" title="Speak Call Note 🎙️">
+                                                <i class="fa-solid fa-microphone"></i>
+                                            </button>
                                             <button type="button" class="lc-quick-note-btn" onclick="saveQuickLeadRemark('${item.id}')"><i class="fa-solid fa-paper-plane"></i> Save</button>
                                         </div>
                                         <div id="quick-note-preview-${item.id}" class="lc-quick-note-preview">${item.remarks ? ('<i class="fa-solid fa-note-sticky" style="color:var(--color-gold);margin-right:4px;"></i> ' + item.remarks.replace(/</g,'&lt;').replace(/\n/g,'<br>')) : '<span style="color:#64748b;font-style:italic;">No remarks yet</span>'}</div>
@@ -9520,10 +9866,10 @@
                                             ${priorityBadgeHtml}
                                         </div>
                                         <div class="lead-chat-sub-row" style="display: flex !important; align-items: center !important; gap: 8px !important; flex-wrap: wrap !important;">
-                                            <span class="lead-chat-phone" style="color: #ffffff !important; font-size: 12.5px !important; font-weight: 700 !important; white-space: nowrap !important; display: inline-flex !important; align-items: center !important; gap: 3px;"><i class="fa-solid fa-phone" style="font-size: 10px; color: #f5c842;"></i>${leadPhoneVal || 'No Phone'}</span>
+                                            <span class="lead-chat-phone clickable-phone" onclick="copyLeadPhone('${leadPhoneClean || leadPhoneVal}', event)" title="Tap to copy number" style="color: #ffffff !important; font-size: 12.5px !important; font-weight: 700 !important; white-space: nowrap !important; display: inline-flex !important; align-items: center !important; gap: 3px; cursor: pointer;"><i class="fa-solid fa-phone" style="font-size: 10px; color: #f5c842;"></i>${leadPhoneVal || 'No Phone'}<i class="fa-regular fa-copy" style="font-size: 9px; opacity: 0.6; margin-left: 2px;"></i></span>
                                             ${leadPhoneClean ? `
                                                 <span class="lead-quick-contact-chips" style="display: inline-flex; gap: 4px; align-items: center;" onclick="event.stopPropagation();">
-                                                    <a href="tel:${leadPhoneClean}" class="lead-quick-call-chip" title="Call Lead" style="background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); border-radius: 12px; padding: 2px 7px; font-size: 10.5px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 3px;">
+                                                    <a href="tel:${leadPhoneClean}" onclick="trackDialedLead('${item.id}', '${(item.name || 'Client').replace(/'/g, "\\'")}', '${leadPhoneClean}')" class="lead-quick-call-chip" title="Call Lead" style="background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); border-radius: 12px; padding: 2px 7px; font-size: 10.5px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 3px;">
                                                         <i class="fa-solid fa-phone" style="font-size: 9px;"></i> Call
                                                     </a>
                                                     <a href="${waHref}" target="_blank" class="lead-quick-wa-chip" title="WhatsApp Lead" style="background: rgba(37, 211, 102, 0.2); color: #25D366; border: 1px solid rgba(37, 211, 102, 0.4); border-radius: 12px; padding: 2px 7px; font-size: 10.5px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 3px;">
@@ -9605,11 +9951,26 @@
                                         </div>
                                     ` : ''}
 
-                                    <!-- Phase 2: Quick Inline Note/Remarks Box -->
+                                    <!-- Phase 5: Quick Follow-up Date Scheduler -->
+                                    <div class="lead-card-quick-fu-wrap" onclick="event.stopPropagation();">
+                                        <span class="lc-quick-fu-title"><i class="fa-solid fa-calendar-check" style="color:var(--color-gold);margin-right:4px;"></i> 1-Tap Schedule Follow-up:</span>
+                                        <div class="lc-quick-fu-pills">
+                                            <button type="button" class="lc-fu-pill ${isToday ? 'active' : ''}" onclick="quickSetLeadFollowUp('${item.id}', 'today', this)">⚡ Today</button>
+                                            <button type="button" class="lc-fu-pill" onclick="quickSetLeadFollowUp('${item.id}', 'tomorrow', this)">📅 Tomorrow</button>
+                                            <button type="button" class="lc-fu-pill" onclick="quickSetLeadFollowUp('${item.id}', 'in_3_days', this)">⏳ In 3 Days</button>
+                                            <button type="button" class="lc-fu-pill" onclick="quickSetLeadFollowUp('${item.id}', 'next_week', this)">🗓️ Next Week</button>
+                                            <button type="button" class="lc-fu-pill" onclick="promptCustomFollowUpDate('${item.id}', this)">✏️ Custom</button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Phase 2 & 5: Quick Call Note with Voice-to-Text 🎙️ -->
                                     <div class="lead-card-quick-note-wrap" onclick="event.stopPropagation();">
                                         <span class="lc-quick-note-title"><i class="fa-solid fa-pen" style="color:var(--color-gold);margin-right:4px;"></i> Quick Call Note / Remark:</span>
                                         <div class="lc-quick-note-row">
-                                            <input type="text" id="quick-note-${item.id}" class="lc-quick-note-input" placeholder="Type call note & tap Save..." onkeydown="if(event.key==='Enter'){event.preventDefault();saveQuickLeadRemark('${item.id}');}">
+                                            <input type="text" id="quick-note-${item.id}" class="lc-quick-note-input" placeholder="Type or speak note (Hindi/English)..." onkeydown="if(event.key==='Enter'){event.preventDefault();saveQuickLeadRemark('${item.id}');}">
+                                            <button type="button" class="lc-voice-note-btn" id="voice-btn-${item.id}" onclick="toggleVoiceRemarkInput('${item.id}', this)" title="Speak Call Note 🎙️">
+                                                <i class="fa-solid fa-microphone"></i>
+                                            </button>
                                             <button type="button" class="lc-quick-note-btn" onclick="saveQuickLeadRemark('${item.id}')"><i class="fa-solid fa-paper-plane"></i> Save</button>
                                         </div>
                                         <div id="quick-note-preview-${item.id}" class="lc-quick-note-preview">${item.remarks ? ('<i class="fa-solid fa-note-sticky" style="color:var(--color-gold);margin-right:4px;"></i> ' + item.remarks.replace(/</g,'&lt;').replace(/\n/g,'<br>')) : '<span style="color:#64748b;font-style:italic;">No remarks yet</span>'}</div>
