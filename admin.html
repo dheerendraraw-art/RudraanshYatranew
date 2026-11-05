@@ -3562,7 +3562,7 @@
 
             // Phase 7: Register Service Worker for offline capabilities & fast caching
             if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
-                navigator.serviceWorker.register('/sw.js').then((reg) => {
+                navigator.serviceWorker.register('/sw.js').then((reg) => { reg.update();
                     console.log('RY Service Worker active, scope:', reg.scope);
                 }).catch((err) => {
                     console.warn('RY Service Worker registration note:', err);
@@ -5310,7 +5310,7 @@
             applyBookingsFilters();
         };
 
-        window.applyBookingsFilters = function(appendOnly = false) {
+        window.applyBookingsFilters = function() {
             const searchVal = document.getElementById('search-bookings-input') ? document.getElementById('search-bookings-input').value.trim().toLowerCase() : '';
             const filterAssignee = document.getElementById('filter-booking-assignee') ? document.getElementById('filter-booking-assignee').value : '';
             const filterTravelDate = document.getElementById('filter-booking-travel-date') ? document.getElementById('filter-booking-travel-date').value : '';
@@ -5566,11 +5566,7 @@
                     </tr>
                 `;
             });
-            if (appendOnly) {
-                tbody.insertAdjacentHTML('beforeend', html);
-            } else {
-                tbody.innerHTML = html;
-            }
+            tbody.innerHTML = html;
             if (typeof window.initSwipeGestures === 'function') {
                 window.initSwipeGestures();
             }

@@ -1,5 +1,5 @@
 // Rudraansh Yatra Staff & Admin Portal - Service Worker (Phase 7)
-const CACHE_NAME = 'ry-admin-cache-v2';
+const CACHE_NAME = 'ry-admin-cache-v5';
 
 const STATIC_SHELL_ASSETS = [
     '/',
@@ -47,7 +47,7 @@ self.addEventListener('fetch', (event) => {
     // Supabase API requests: Try network; if offline, return structured offline response
     if (url.hostname.includes('supabase.co') || url.pathname.startsWith('/api/')) {
         event.respondWith(
-            fetch(req).catch(() => {
+            fetch(req, { cache: "no-cache" }).catch(() => {
                 return new Response(JSON.stringify({ error: 'Offline', offline: true }), {
                     status: 503,
                     headers: { 'Content-Type': 'application/json' }
