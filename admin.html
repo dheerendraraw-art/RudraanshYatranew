@@ -5310,7 +5310,7 @@
             applyBookingsFilters();
         };
 
-        window.applyBookingsFilters = function() {
+        window.applyBookingsFilters = function(appendOnly = false) {
             const searchVal = document.getElementById('search-bookings-input') ? document.getElementById('search-bookings-input').value.trim().toLowerCase() : '';
             const filterAssignee = document.getElementById('filter-booking-assignee') ? document.getElementById('filter-booking-assignee').value : '';
             const filterTravelDate = document.getElementById('filter-booking-travel-date') ? document.getElementById('filter-booking-travel-date').value : '';
