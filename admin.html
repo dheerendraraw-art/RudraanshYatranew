@@ -3571,6 +3571,13 @@
             currentUsername = userData.username;
             currentUserUuidMapping = userData.uuid_mapping || '';
             
+            if (currentUserRole === 'staff') {
+                try {
+                    sessionStorage.removeItem('admin_leads_state');
+                    localStorage.removeItem('admin_leads_state');
+                } catch(e) {}
+            }
+            
             localStorage.setItem('admin_verified', 'true');
             localStorage.setItem('admin_token', tokenStr);
             localStorage.setItem('admin_role', currentUserRole);
@@ -4320,6 +4327,11 @@
                 if (window.renderAttendanceHistory) window.renderAttendanceHistory();
                 if (window.loadStaffAttendanceDefaults) window.loadStaffAttendanceDefaults();
                 else if (window.recalcAttendanceOutputs) window.recalcAttendanceOutputs();
+            }
+            if (paneId === 'pane-leads') {
+                if (typeof window.applyLeadsFilters === 'function') {
+                    window.applyLeadsFilters();
+                }
             }
 
             // Update dynamic stats
@@ -8240,8 +8252,9 @@
                         return;
                     }
                 }
-                // Use 'show-all-details' — the class name CSS is listening for
+                // Toggle both classes so all mobile card CSS rules apply cleanly
                 rowEl.classList.toggle('show-all-details');
+                rowEl.classList.toggle('expanded');
                 // Visual feedback: highlight the border briefly on expand
                 if (rowEl.classList.contains('show-all-details')) {
                     rowEl.style.borderLeftColor = '#f5c842';
@@ -8457,7 +8470,7 @@
                 if (statusSelect && state.status !== undefined) statusSelect.value = state.status;
                 if (topStatusSelect && state.status !== undefined) topStatusSelect.value = state.status;
                 if (finalStatusSelect && state.finalStatus !== undefined) finalStatusSelect.value = state.finalStatus;
-                if (assigneeSelect && state.assignee !== undefined) assigneeSelect.value = state.assignee;
+                if (currentUserRole !== 'staff' && assigneeSelect && state.assignee !== undefined) assigneeSelect.value = state.assignee;
                 if (searchInput && state.searchVal !== undefined) searchInput.value = state.searchVal;
                 if (state.currentPage) leadsCurrentPage = state.currentPage;
                 if (state.pageSize) leadsPageSize = state.pageSize;
@@ -8524,7 +8537,10 @@
                 const leadAssignee = (lead.assigned_to || '').trim().toLowerCase();
                 const filterAssignee = (assignee || '').trim().toLowerCase();
                 let matchAssignee = false;
-                if (!filterAssignee) {
+                if (currentUserRole === 'staff') {
+                    // Supabase query already filtered strictly by assigned staff UUID
+                    matchAssignee = true;
+                } else if (!filterAssignee) {
                     matchAssignee = true;
                 } else if (filterAssignee === 'unassigned') {
                     matchAssignee = !leadAssignee || leadAssignee === 'unassigned' || leadAssignee === 'null';
@@ -8615,11 +8631,127 @@
             if (assigneeSelect) assigneeSelect.value = '';
             if (searchInput) searchInput.value = '';
 
+            window.leadActivePillFilter = 'all';
+            const quickPills = document.querySelectorAll('#lead-quick-filter-pills .lead-pill');
+            quickPills.forEach((p, idx) => {
+                if (idx === 0) p.classList.add('active');
+                else p.classList.remove('active');
+            });
+
             try {
                 sessionStorage.removeItem('admin_leads_state');
                 localStorage.removeItem('admin_leads_state');
             } catch(e) {}
             window.applyLeadsFilters();
+        };
+
+        window.leadActivePillFilter = 'all';
+
+        window.setLeadQuickFilter = function(pillType, btnEl) {
+            window.leadActivePillFilter = pillType || 'all';
+            const container = document.getElementById('lead-quick-filter-pills');
+            if (container) {
+                const pills = container.querySelectorAll('.lead-pill');
+                pills.forEach(p => p.classList.remove('active'));
+            }
+            if (btnEl) btnEl.classList.add('active');
+            window.applyLeadsFilters(false);
+        };
+
+        window.updateLeadPillCounts = function() {
+            const leads = window.currentLeads || [];
+            const todayStr = new Date().toISOString().split('T')[0];
+            const now = new Date(); now.setHours(0,0,0,0);
+
+            let cntAll = leads.length;
+            let cntToday = 0;
+            let cntOverdue = 0;
+            let cntNew = 0;
+            let cntConnected = 0;
+            let cntWon = 0;
+
+            leads.forEach(l => {
+                const st = (l.status || '').trim();
+                const stLower = st.toLowerCase();
+                const fst = (l.final_status || '').trim().toLowerCase();
+                const isWon = (stLower === 'won' || fst === 'booking confirmed');
+
+                if (isWon) {
+                    cntWon++;
+                }
+                if (stLower === 'new') {
+                    cntNew++;
+                }
+                if (['answered', 'busy', 'follow up required', 'contacted'].includes(stLower)) {
+                    cntConnected++;
+                }
+
+                const d1 = l.follow_up_1 ? new Date(l.follow_up_1) : null;
+                const d2 = l.follow_up_2 ? new Date(l.follow_up_2) : null;
+                const isToday = (l.follow_up_1 === todayStr || l.follow_up_2 === todayStr);
+                const isOverdue = (d1 && d1 < now) || (d2 && d2 < now);
+
+                if (!isWon && isToday) {
+                    cntToday++;
+                }
+                if (!isWon && isOverdue && !isToday) {
+                    cntOverdue++;
+                }
+            });
+
+            const elAll = document.getElementById('pill-count-all');
+            const elToday = document.getElementById('pill-count-today');
+            const elOverdue = document.getElementById('pill-count-overdue');
+            const elNew = document.getElementById('pill-count-new');
+            const elConn = document.getElementById('pill-count-connected');
+            const elWon = document.getElementById('pill-count-won');
+
+            if (elAll) elAll.innerText = cntAll;
+            if (elToday) elToday.innerText = cntToday;
+            if (elOverdue) elOverdue.innerText = cntOverdue;
+            if (elNew) elNew.innerText = cntNew;
+            if (elConn) elConn.innerText = cntConnected;
+            if (elWon) elWon.innerText = cntWon;
+        };
+
+        window.quickUpdateLeadStatus = async function(leadId, newStatus, btnEl) {
+            if (btnEl && btnEl.parentElement) {
+                const pills = btnEl.parentElement.querySelectorAll('.lc-pill');
+                pills.forEach(p => p.classList.remove('active'));
+                btnEl.classList.add('active');
+            }
+            await window.updateLeadField(leadId, 'status', newStatus);
+            if (typeof window.updateLeadPillCounts === 'function') window.updateLeadPillCounts();
+            if (typeof window.updateStaffDashboardStats === 'function') window.updateStaffDashboardStats();
+            showAdminToast(`Outcome set to: ${newStatus}`, 'success');
+        };
+
+        window.saveQuickLeadRemark = async function(leadId) {
+            const input = document.getElementById(`quick-note-${leadId}`);
+            if (!input) return;
+            const noteText = input.value.trim();
+            if (!noteText) {
+                showAdminToast('Please type a note first.', 'warning');
+                return;
+            }
+
+            const leadObj = (window.currentLeads || []).find(l => l.id === leadId);
+            const existing = leadObj && leadObj.remarks ? leadObj.remarks.trim() : '';
+            const staffName = currentUsername ? (currentUsername.charAt(0).toUpperCase() + currentUsername.slice(1)) : 'Staff';
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
+            const timeStr = now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true });
+            const entry = `[${dateStr} ${timeStr} - ${staffName}]: ${noteText}`;
+            const combined = existing ? `${existing}\n${entry}` : entry;
+
+            await window.updateLeadField(leadId, 'remarks', combined);
+
+            const preview = document.getElementById(`quick-note-preview-${leadId}`);
+            if (preview) {
+                preview.innerHTML = `<i class="fa-solid fa-note-sticky" style="color:var(--color-gold);margin-right:4px;"></i> ${combined.replace(/</g, '&lt;').replace(/\n/g, '<br>')}`;
+            }
+            input.value = '';
+            showAdminToast('Call remark saved!', 'success');
         };
 
         window.populateAssigneeFilter = function() {
@@ -8925,6 +9057,12 @@
                 const staffDisplayName = (currentUsername ? (currentUsername.charAt(0).toUpperCase() + currentUsername.slice(1)) : 'Team');
                 const waGreeting = encodeURIComponent('Namaste ' + (item.name || 'Ji') + '! This is ' + staffDisplayName + ' from Rudraansh Yatra regarding your ' + (destVal || 'Yatra') + ' inquiry.');
                 const waHref = 'https://wa.me/' + waPhone + '?text=' + waGreeting;
+
+                const destClean = (destVal && destVal !== '—') ? destVal : 'our Sacred Yatra';
+                const clientName = item.name ? item.name.trim() : 'Ji';
+                const waHrefIntro = 'https://wa.me/' + waPhone + '?text=' + encodeURIComponent('Namaste ' + clientName + '! 🙏\nThis is ' + staffDisplayName + ' from *Rudraansh Yatra*.\nThank you for inquiring about ' + destClean + '! May I share the detailed itinerary and package options with you?');
+                const waHrefPackage = 'https://wa.me/' + waPhone + '?text=' + encodeURIComponent('Namaste ' + clientName + '! 🏔️\nHere are the details for your inquiry regarding *' + destClean + '*:\n• Best travel dates & seasons\n• Helicopter & VIP Darshan options\n• 3-star/4-star stays & all meals included\n\nPlease let me know when is a convenient time to speak on call.');
+                const waHrefFollowup = 'https://wa.me/' + waPhone + '?text=' + encodeURIComponent('Namaste ' + clientName + '! 🌸\nFollowing up on our earlier discussion regarding *' + destClean + '*. We have limited slots available for upcoming batches. Would you like us to reserve your tentative dates?');
                 
                 const leadPhoneHtml = leadPhoneClean ? `
                     <div style="display: flex; flex-direction: column; gap: 3px; text-align: left;">
