@@ -1798,7 +1798,8 @@
                     </div>
                     <div class="admin-form-group">
                         <label for="lead-phone" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Phone Number *</label>
-                        <input type="tel" id="lead-phone" class="admin-input" required style="width: 100%; background: rgba(255,255,255,0.05); border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
+                        <input type="tel" id="lead-phone" class="admin-input" required oninput="checkDuplicatePhoneInput(this.value)" style="width: 100%; background: rgba(255,255,255,0.05); border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
+                        <div id="lead-phone-dup-warning" style="display: none; color: #fbbf24; font-size: 11.5px; font-weight: 700; margin-top: 4px; line-height: 1.3;"></div>
                     </div>
                 </div>
 
@@ -1814,10 +1815,26 @@
                     </div>
                 </div>
 
-                <!-- Travel Destination (Always Visible) -->
+                <!-- Phase 10: Travel Destination with Sacred Yatra Autocomplete -->
                 <div class="admin-form-group" style="margin-bottom: 12px;">
                     <label for="lead-destination" style="display: block; color: var(--color-text-secondary); margin-bottom: 4px; font-size: 13px;">Travel Destination</label>
-                    <input type="text" id="lead-destination" class="admin-input" placeholder="E.g. Adi Kailash, Om Parvat" style="width: 100%; background: rgba(255,255,255,0.05); border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
+                    <input type="text" id="lead-destination" class="admin-input" list="sacred-destinations-list" placeholder="Select or type Yatra destination..." style="width: 100%; background: rgba(255,255,255,0.05); border: 1.5px solid var(--color-gold); border-radius: 4px; padding: 8px; color: white;">
+                    <datalist id="sacred-destinations-list">
+                        <option value="Adi Kailash & Om Parvat Yatra">
+                        <option value="Kedarnath Dham Yatra">
+                        <option value="Badrinath Dham Yatra">
+                        <option value="Chardham Yatra (All 4 Dhams)">
+                        <option value="Do Dham Yatra (Kedarnath & Badrinath)">
+                        <option value="Kailash Mansarovar Yatra">
+                        <option value="Amarnath Yatra">
+                        <option value="Tungnath & Chopta Trek">
+                        <option value="Yamunotri Dham">
+                        <option value="Gangotri Dham">
+                        <option value="Hemkund Sahib & Valley of Flowers">
+                        <option value="Rishikesh & Haridwar Spiritual Tour">
+                        <option value="Kedarnath VIP Helicopter Darshan">
+                        <option value="Chardham Helicopter Package">
+                    </datalist>
                 </div>
 
                 <!-- Group 3: Status & Travel Date (Always Visible) -->
@@ -9960,6 +9977,138 @@
             }
         };
 
+        // Phase 10: Suggested Quick Remark Autofill
+        window.applySuggestedRemark = async function(leadId, suggestionText) {
+            window.triggerHaptic(35);
+            const input = document.getElementById(`quick-note-${leadId}`);
+            if (input) input.value = suggestionText;
+            await window.saveQuickLeadRemark(leadId);
+        };
+
+        // Phase 10: Duplicate Phone Detector
+        window.checkDuplicatePhoneInput = function(phoneVal) {
+            const warnEl = document.getElementById('lead-phone-dup-warning');
+            if (!warnEl) return;
+            const clean = (phoneVal || '').replace(/[^0-9]/g, '');
+            if (clean.length !== 10) {
+                warnEl.style.display = 'none';
+                return;
+            }
+            const currentId = document.getElementById('lead-id') ? document.getElementById('lead-id').value : '';
+            const existing = (window.currentLeads || []).find(l => {
+                const lPhone = (l.phone || '').replace(/[^0-9]/g, '');
+                return lPhone === clean && l.id !== currentId;
+            });
+
+            if (existing) {
+                warnEl.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Note: Phone already belongs to client "<strong>${existing.name || 'Client'}</strong>" (${existing.status || 'New'})`;
+                warnEl.style.display = 'block';
+            } else {
+                warnEl.style.display = 'none';
+            }
+        };
+
+        // Phase 10: Editable WhatsApp Composer Drawer Engine
+        window.activeComposerLead = null;
+        window.openWhatsAppComposer = function(leadId, templateType, phone) {
+            window.triggerHaptic(30);
+            const lead = (window.currentLeads || []).find(l => l.id === leadId) || {};
+            const staffDisplayName = (currentUsername ? (currentUsername.charAt(0).toUpperCase() + currentUsername.slice(1)) : 'Team');
+            const clientName = lead.name ? lead.name.trim() : 'Ji';
+            const destVal = lead.travel_destination || lead.destination;
+            const destClean = (destVal && destVal !== '—') ? destVal : 'our Sacred Yatra';
+
+            window.activeComposerLead = {
+                leadId,
+                clientName,
+                destClean,
+                phone,
+                staffDisplayName
+            };
+
+            const modal = document.getElementById('wa-composer-modal');
+            const nameEl = document.getElementById('wac-client-name');
+            const phoneEl = document.getElementById('wac-client-phone');
+
+            if (nameEl) nameEl.innerText = 'Send to ' + clientName;
+            if (phoneEl) phoneEl.innerText = '+91 ' + phone;
+
+            window.switchWhatsAppTemplate(templateType || 'intro');
+
+            if (modal) {
+                modal.style.display = 'flex';
+            }
+        };
+
+        window.switchWhatsAppTemplate = function(type) {
+            const data = window.activeComposerLead || {};
+            const clientName = data.clientName || 'Ji';
+            const staffDisplayName = data.staffDisplayName || 'Team';
+            const destClean = data.destClean || 'our Sacred Yatra';
+
+            ['intro', 'package', 'followup'].forEach(t => {
+                const pill = document.getElementById('wac-pill-' + t);
+                if (pill) {
+                    if (t === type) pill.classList.add('active');
+                    else pill.classList.remove('active');
+                }
+            });
+
+            let text = '';
+            if (type === 'intro') {
+                text = `Namaste ${clientName}! 🙏\nThis is ${staffDisplayName} from *Rudraansh Yatra*.\nThank you for inquiring about ${destClean}! May I share the detailed itinerary and package options with you?`;
+            } else if (type === 'package') {
+                text = `Namaste ${clientName}! 🏔️\nHere are the details for your inquiry regarding *${destClean}*:\n• Best travel dates & seasons\n• Helicopter & VIP Darshan options\n• 3-star/4-star stays & all meals included\n\nPlease let me know when is a convenient time to speak on call.`;
+            } else if (type === 'followup') {
+                text = `Namaste ${clientName}! 🌸\nFollowing up on our earlier discussion regarding *${destClean}*. We have limited slots available for upcoming batches. Would you like us to reserve your tentative dates?`;
+            }
+
+            const textarea = document.getElementById('wac-message-text');
+            if (textarea) textarea.value = text;
+        };
+
+        window.closeWhatsAppComposer = function() {
+            const modal = document.getElementById('wa-composer-modal');
+            if (modal) modal.style.display = 'none';
+            window.activeComposerLead = null;
+        };
+
+        window.sendCustomWhatsApp = function() {
+            const data = window.activeComposerLead;
+            if (!data || !data.phone) {
+                window.closeWhatsAppComposer();
+                return;
+            }
+            const textarea = document.getElementById('wac-message-text');
+            const msg = textarea ? textarea.value.trim() : '';
+            const waPhone = data.phone.length === 10 ? '91' + data.phone : data.phone;
+            const waUrl = 'https://wa.me/' + waPhone + '?text=' + encodeURIComponent(msg);
+
+            if (data.leadId && supabaseAdmin) {
+                supabaseAdmin.from('lead_history').insert([{
+                    lead_id: data.leadId,
+                    action: `💬 WhatsApp message sent to ${data.clientName} by ${data.staffDisplayName}`
+                }]).catch(() => {});
+            }
+
+            window.open(waUrl, '_blank');
+            window.closeWhatsAppComposer();
+            showAdminToast('Opening WhatsApp...', 'success');
+        };
+
+        window.copyWhatsAppMessage = function() {
+            const textarea = document.getElementById('wac-message-text');
+            if (!textarea) return;
+            navigator.clipboard.writeText(textarea.value).then(() => {
+                showAdminToast('Message copied to clipboard!', 'info');
+                window.triggerHaptic(30);
+            }).catch(() => {
+                textarea.select();
+                document.execCommand('copy');
+                showAdminToast('Message copied!', 'info');
+            });
+        };
+
         window.saveQuickLeadRemark = async function(leadId) {
             const input = document.getElementById(`quick-note-${leadId}`);
             if (!input) return;
@@ -10344,6 +10493,9 @@
                 ` : '—';
 
                 const initials = getLeadInitials(item.name);
+                // Phase 10: Duplicate phone check across active leads
+                const isDupPhone = leadPhoneClean && leadPhoneClean.length === 10 && currentLeads.some(other => other.id !== item.id && (other.phone || '').replace(/[^0-9]/g, '') === leadPhoneClean);
+                const dupPhoneBadgeHtml = isDupPhone ? '<span class="lead-dup-badge" title="Phone number found in multiple leads"><i class="fa-solid fa-clone"></i> Duplicate</span>' : '';
 
                 // Phase 4: Priority Badge Calculation
                 const todayStr = new Date().toISOString().split('T')[0];
@@ -10390,7 +10542,7 @@
                                     <div class="lead-chat-main-info" style="flex: 1 !important; min-width: 0 !important; display: flex !important; flex-direction: column !important; gap: 3px !important; text-align: left !important;">
                                         <div class="lead-chat-title-row" style="display: flex !important; align-items: center !important; width: 100% !important; gap: 6px !important; flex-wrap: wrap !important;">
                                             <strong class="lead-chat-name" style="color: #f5c842 !important; font-size: 15px !important; font-weight: 800 !important; cursor: pointer; display: inline-flex !important; align-items: center !important; gap: 5px !important; flex: 1 !important; white-space: normal !important; word-break: break-word !important; overflow: visible !important;" onclick="event.stopPropagation(); startEditLead('${item.id}')"><i class="fa-solid fa-user" style="font-size: 11px; color: #f5c842; flex-shrink: 0;"></i>${item.name || 'Anonymous'}</strong>
-                                            ${priorityBadgeHtml}
+                                            ${priorityBadgeHtml} ${dupPhoneBadgeHtml}
                                         </div>
                                         <div class="lead-chat-sub-row" style="display: flex !important; align-items: center !important; gap: 8px !important; flex-wrap: wrap !important;">
                                             <span class="lead-chat-phone clickable-phone" onclick="copyLeadPhone('${leadPhoneClean || leadPhoneVal}', event)" title="Tap to copy number" style="color: #ffffff !important; font-size: 12.5px !important; font-weight: 700 !important; white-space: nowrap !important; display: inline-flex !important; align-items: center !important; gap: 3px; cursor: pointer;"><i class="fa-solid fa-phone" style="font-size: 10px; color: #f5c842;"></i>${leadPhoneVal || 'No Phone'}<i class="fa-regular fa-copy" style="font-size: 9px; opacity: 0.6; margin-left: 2px;"></i></span>
@@ -10456,9 +10608,9 @@
                                         <div class="lead-card-quick-wa-wrap" onclick="event.stopPropagation();">
                                             <span class="lc-quick-wa-title"><i class="fa-brands fa-whatsapp" style="color:#25D366;margin-right:4px;"></i> WhatsApp Quick Templates:</span>
                                             <div class="lc-quick-wa-btns">
-                                                <a href="${waHrefIntro}" target="_blank" class="lc-wa-btn"><i class="fa-regular fa-comment-dots"></i> 1. Intro Greeting</a>
-                                                <a href="${waHrefPackage}" target="_blank" class="lc-wa-btn"><i class="fa-solid fa-mountain-sun"></i> 2. Package Details</a>
-                                                <a href="${waHrefFollowup}" target="_blank" class="lc-wa-btn"><i class="fa-solid fa-clock-rotate-left"></i> 3. Follow-up Check</a>
+                                                <button type="button" onclick="openWhatsAppComposer('${item.id}', 'intro', '${waPhone}')" class="lc-wa-btn"><i class="fa-regular fa-comment-dots"></i> 1. Intro Greeting</button>
+                                                <button type="button" onclick="openWhatsAppComposer('${item.id}', 'package', '${waPhone}')" class="lc-wa-btn"><i class="fa-solid fa-mountain-sun"></i> 2. Package Details</button>
+                                                <button type="button" onclick="openWhatsAppComposer('${item.id}', 'followup', '${waPhone}')" class="lc-wa-btn"><i class="fa-solid fa-clock-rotate-left"></i> 3. Follow-up Check</button>
                                             </div>
                                         </div>
                                     ` : ''}
@@ -10485,6 +10637,13 @@
                                             </button>
                                             <button type="button" class="lc-quick-note-btn" onclick="saveQuickLeadRemark('${item.id}')"><i class="fa-solid fa-paper-plane"></i> Save</button>
                                         </div>
+                                        <!-- Phase 10: Suggested Remark Autofill Chips -->
+                                        <div class="lc-suggested-remarks-row" onclick="event.stopPropagation();">
+                                            <button type="button" class="lc-sug-chip" onclick="applySuggestedRemark('${item.id}', 'Spoke with client, shared itinerary on WhatsApp')"><i class="fa-solid fa-phone"></i> Spoke & Shared</button>
+                                            <button type="button" class="lc-sug-chip" onclick="applySuggestedRemark('${item.id}', 'Call not picked up, scheduled callback')"><i class="fa-solid fa-clock"></i> Callback</button>
+                                            <button type="button" class="lc-sug-chip" onclick="applySuggestedRemark('${item.id}', 'Interested in VIP Darshan & Heli package')"><i class="fa-solid fa-helicopter"></i> VIP / Heli</button>
+                                            <button type="button" class="lc-sug-chip" onclick="applySuggestedRemark('${item.id}', 'Dates confirmed, processing advance booking')"><i class="fa-solid fa-check"></i> Booking</button>
+                                        </div>
                                         <div id="quick-note-preview-${item.id}" class="lc-quick-note-preview">${item.remarks ? ('<i class="fa-solid fa-note-sticky" style="color:var(--color-gold);margin-right:4px;"></i> ' + item.remarks.replace(/</g,'&lt;').replace(/\n/g,'<br>')) : '<span style="color:#64748b;font-style:italic;">No remarks yet</span>'}</div>
                                     </div>
                                 </div>
@@ -10500,7 +10659,7 @@
                                     <div class="lead-chat-main-info" style="flex: 1 !important; min-width: 0 !important; display: flex !important; flex-direction: column !important; gap: 3px !important; text-align: left !important;">
                                         <div class="lead-chat-title-row" style="display: flex !important; align-items: center !important; width: 100% !important; gap: 6px !important; flex-wrap: wrap !important;">
                                             <strong class="lead-chat-name" style="color: #f5c842 !important; font-size: 15px !important; font-weight: 800 !important; cursor: pointer; display: inline-flex !important; align-items: center !important; gap: 5px !important; flex: 1 !important; white-space: normal !important; word-break: break-word !important; overflow: visible !important;" onclick="event.stopPropagation(); startEditLead('${item.id}')"><i class="fa-solid fa-user" style="font-size: 11px; color: #f5c842; flex-shrink: 0;"></i>${item.name || 'Anonymous'}</strong>
-                                            ${priorityBadgeHtml}
+                                            ${priorityBadgeHtml} ${dupPhoneBadgeHtml}
                                         </div>
                                         <div class="lead-chat-sub-row" style="display: flex !important; align-items: center !important; gap: 8px !important; flex-wrap: wrap !important;">
                                             <span class="lead-chat-phone clickable-phone" onclick="copyLeadPhone('${leadPhoneClean || leadPhoneVal}', event)" title="Tap to copy number" style="color: #ffffff !important; font-size: 12.5px !important; font-weight: 700 !important; white-space: nowrap !important; display: inline-flex !important; align-items: center !important; gap: 3px; cursor: pointer;"><i class="fa-solid fa-phone" style="font-size: 10px; color: #f5c842;"></i>${leadPhoneVal || 'No Phone'}<i class="fa-regular fa-copy" style="font-size: 9px; opacity: 0.6; margin-left: 2px;"></i></span>
@@ -10581,9 +10740,9 @@
                                         <div class="lead-card-quick-wa-wrap" onclick="event.stopPropagation();">
                                             <span class="lc-quick-wa-title"><i class="fa-brands fa-whatsapp" style="color:#25D366;margin-right:4px;"></i> WhatsApp Quick Templates:</span>
                                             <div class="lc-quick-wa-btns">
-                                                <a href="${waHrefIntro}" target="_blank" class="lc-wa-btn"><i class="fa-regular fa-comment-dots"></i> 1. Intro Greeting</a>
-                                                <a href="${waHrefPackage}" target="_blank" class="lc-wa-btn"><i class="fa-solid fa-mountain-sun"></i> 2. Package Details</a>
-                                                <a href="${waHrefFollowup}" target="_blank" class="lc-wa-btn"><i class="fa-solid fa-clock-rotate-left"></i> 3. Follow-up Check</a>
+                                                <button type="button" onclick="openWhatsAppComposer('${item.id}', 'intro', '${waPhone}')" class="lc-wa-btn"><i class="fa-regular fa-comment-dots"></i> 1. Intro Greeting</button>
+                                                <button type="button" onclick="openWhatsAppComposer('${item.id}', 'package', '${waPhone}')" class="lc-wa-btn"><i class="fa-solid fa-mountain-sun"></i> 2. Package Details</button>
+                                                <button type="button" onclick="openWhatsAppComposer('${item.id}', 'followup', '${waPhone}')" class="lc-wa-btn"><i class="fa-solid fa-clock-rotate-left"></i> 3. Follow-up Check</button>
                                             </div>
                                         </div>
                                     ` : ''}
@@ -10609,6 +10768,13 @@
                                                 <i class="fa-solid fa-microphone"></i>
                                             </button>
                                             <button type="button" class="lc-quick-note-btn" onclick="saveQuickLeadRemark('${item.id}')"><i class="fa-solid fa-paper-plane"></i> Save</button>
+                                        </div>
+                                        <!-- Phase 10: Suggested Remark Autofill Chips -->
+                                        <div class="lc-suggested-remarks-row" onclick="event.stopPropagation();">
+                                            <button type="button" class="lc-sug-chip" onclick="applySuggestedRemark('${item.id}', 'Spoke with client, shared itinerary on WhatsApp')"><i class="fa-solid fa-phone"></i> Spoke & Shared</button>
+                                            <button type="button" class="lc-sug-chip" onclick="applySuggestedRemark('${item.id}', 'Call not picked up, scheduled callback')"><i class="fa-solid fa-clock"></i> Callback</button>
+                                            <button type="button" class="lc-sug-chip" onclick="applySuggestedRemark('${item.id}', 'Interested in VIP Darshan & Heli package')"><i class="fa-solid fa-helicopter"></i> VIP / Heli</button>
+                                            <button type="button" class="lc-sug-chip" onclick="applySuggestedRemark('${item.id}', 'Dates confirmed, processing advance booking')"><i class="fa-solid fa-check"></i> Booking</button>
                                         </div>
                                         <div id="quick-note-preview-${item.id}" class="lc-quick-note-preview">${item.remarks ? ('<i class="fa-solid fa-note-sticky" style="color:var(--color-gold);margin-right:4px;"></i> ' + item.remarks.replace(/</g,'&lt;').replace(/\n/g,'<br>')) : '<span style="color:#64748b;font-style:italic;">No remarks yet</span>'}</div>
                                     </div>
@@ -13246,6 +13412,36 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
                 </button>
                 <button type="button" class="mb-action-dismiss-btn" onclick="dismissMorningBriefing()">
                     Dismiss
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Phase 10: Editable WhatsApp Message Composer Drawer -->
+    <div id="wa-composer-modal" class="wa-composer-backdrop" style="display: none;" onclick="if(event.target===this)closeWhatsAppComposer()">
+        <div class="wa-composer-card">
+            <div class="modal-sheet-handle"></div>
+            <div class="wac-header">
+                <div class="wac-title-wrap">
+                    <i class="fa-brands fa-whatsapp" style="color: #25D366; font-size: 22px;"></i>
+                    <div>
+                        <strong style="color: #ffffff; font-size: 14.5px;" id="wac-client-name">Send WhatsApp</strong>
+                        <span style="color: #94a3b8; font-size: 11px; display: block;" id="wac-client-phone">+91 00000 00000</span>
+                    </div>
+                </div>
+                <button type="button" class="wac-close-btn" onclick="closeWhatsAppComposer()">&times;</button>
+            </div>
+            <div class="wac-template-chips">
+                <button type="button" class="wac-pill-btn active" id="wac-pill-intro" onclick="switchWhatsAppTemplate('intro')">1. Greeting</button>
+                <button type="button" class="wac-pill-btn" id="wac-pill-package" onclick="switchWhatsAppTemplate('package')">2. Itinerary</button>
+                <button type="button" class="wac-pill-btn" id="wac-pill-followup" onclick="switchWhatsAppTemplate('followup')">3. Follow-up</button>
+            </div>
+            <textarea id="wac-message-text" class="wac-textarea" rows="6" placeholder="Customize message before sending..."></textarea>
+            <div class="wac-actions">
+                <button type="button" class="wac-send-btn" onclick="sendCustomWhatsApp()">
+                    <i class="fa-brands fa-whatsapp"></i> Open & Send in WhatsApp
+                </button>
+                <button type="button" class="wac-copy-btn" onclick="copyWhatsAppMessage()">
+                    <i class="fa-regular fa-copy"></i> Copy
                 </button>
             </div>
         </div>

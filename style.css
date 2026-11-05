@@ -15730,3 +15730,181 @@ body.font-scale-sm .my-day-chip-num { font-size: 15px !important; }
     border: 1.5px solid #525252 !important;
     font-weight: 800 !important;
 }
+
+
+/* ── PHASE 10: SMART AUTOMATION & AI HELPERS ── */
+
+/* Suggested Remarks Autofill Chips */
+.lc-suggested-remarks-row {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin: 6px 0;
+}
+
+.lc-sug-chip {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #cbd5e1;
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+}
+
+.lc-sug-chip:active {
+    background: rgba(212, 175, 55, 0.25);
+    border-color: var(--color-gold);
+    color: #ffffff;
+    transform: scale(0.96);
+}
+
+/* Duplicate Lead Warning Badge */
+.lead-dup-badge {
+    background: rgba(245, 158, 11, 0.2);
+    border: 1px solid #f59e0b;
+    color: #fbbf24;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 2px 6px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    vertical-align: middle;
+}
+
+/* Editable WhatsApp Composer Modal & Drawer */
+.wa-composer-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 10003;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0;
+    animation: fadeInModal 0.2s ease-out;
+}
+
+.wa-composer-card {
+    background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+    border: 1.5px solid #25D366;
+    border-bottom: none;
+    border-radius: 20px 20px 0 0;
+    padding: 16px 18px calc(24px + env(safe-area-inset-bottom, 0px));
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.7);
+    animation: slideUpModalDrawer 0.25s ease-out;
+}
+
+.wac-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wac-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.wac-close-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: none;
+    color: #94a3b8;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wac-template-chips {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+}
+
+.wac-pill-btn {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #94a3b8;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 11.5px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+}
+
+.wac-pill-btn.active {
+    background: rgba(37, 211, 102, 0.2);
+    border-color: #25D366;
+    color: #4ade80;
+}
+
+.wac-textarea {
+    background: #0f172a;
+    border: 1.5px solid rgba(37, 211, 102, 0.4);
+    border-radius: 10px;
+    padding: 10px 12px;
+    color: #ffffff;
+    font-size: 13.5px;
+    line-height: 1.45;
+    resize: vertical;
+    font-family: inherit;
+    outline: none;
+    min-height: 120px;
+}
+
+.wac-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.wac-send-btn {
+    flex: 1;
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    color: #ffffff;
+    border: none;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+}
+
+.wac-copy-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #e2e8f0;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
