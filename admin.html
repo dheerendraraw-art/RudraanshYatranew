@@ -938,6 +938,61 @@
 
             <!-- PANE 6: LEADS MANAGER -->
             <div id="pane-leads" class="admin-tab-content-pane" style="display: none;">
+                <!-- Phase 4: Pull to Refresh Visual Indicator -->
+                <div id="mobile-ptr-indicator" class="mobile-ptr-indicator" style="display: none;">
+                    <div class="ptr-content">
+                        <i class="fa-solid fa-arrows-rotate ptr-icon" id="ptr-icon"></i>
+                        <span id="ptr-label">Pull down to refresh...</span>
+                    </div>
+                </div>
+
+                <!-- Phase 4: My Day Daily Action Hub for Staff & Mobile Users -->
+                <div id="staff-my-day-banner" class="staff-my-day-card">
+                    <div class="my-day-header">
+                        <div class="my-day-greeting-wrap">
+                            <span class="my-day-badge"><i class="fa-solid fa-sun" style="color: #fbbf24;"></i> DAILY ACTION HUB</span>
+                            <h4 class="my-day-greeting" id="my-day-greeting-text">Namaste, Staff Member! 🙏</h4>
+                            <p class="my-day-subtitle">Here is your prioritized follow-up plan for today:</p>
+                        </div>
+                        <button type="button" class="my-day-refresh-btn" onclick="triggerManualRefresh()" title="Refresh Leads Now">
+                            <i class="fa-solid fa-arrows-rotate"></i> Refresh
+                        </button>
+                    </div>
+                    <div class="my-day-chips-grid">
+                        <div class="my-day-chip chip-overdue" onclick="setLeadQuickFilter('overdue')">
+                            <div class="my-day-chip-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                            <div class="my-day-chip-data">
+                                <span class="my-day-chip-num" id="my-day-count-overdue">0</span>
+                                <span class="my-day-chip-lbl">Overdue</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-right my-day-chip-arrow"></i>
+                        </div>
+                        <div class="my-day-chip chip-today" onclick="setLeadQuickFilter('due_today')">
+                            <div class="my-day-chip-icon"><i class="fa-solid fa-bolt"></i></div>
+                            <div class="my-day-chip-data">
+                                <span class="my-day-chip-num" id="my-day-count-today">0</span>
+                                <span class="my-day-chip-lbl">Due Today</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-right my-day-chip-arrow"></i>
+                        </div>
+                        <div class="my-day-chip chip-new" onclick="setLeadQuickFilter('new')">
+                            <div class="my-day-chip-icon"><i class="fa-solid fa-star"></i></div>
+                            <div class="my-day-chip-data">
+                                <span class="my-day-chip-num" id="my-day-count-new">0</span>
+                                <span class="my-day-chip-lbl">New Leads</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-right my-day-chip-arrow"></i>
+                        </div>
+                        <div class="my-day-chip chip-total" onclick="setLeadQuickFilter('all')">
+                            <div class="my-day-chip-icon"><i class="fa-solid fa-list-check"></i></div>
+                            <div class="my-day-chip-data">
+                                <span class="my-day-chip-num" id="my-day-count-total">0</span>
+                                <span class="my-day-chip-lbl">All Assigned</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-right my-day-chip-arrow"></i>
+                        </div>
+                    </div>
+                </div>
                 <div class="leads-header-wrapper" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
                     <div class="leads-controls-bar" style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; flex-grow: 1;">
                         <h3 class="admin-form-title" style="margin-bottom: 0; border-bottom: none;"><i
@@ -997,6 +1052,10 @@
                     <button type="button" class="lead-pill" onclick="setLeadQuickFilter('won', this)" style="background: rgba(219,39,119,0.12); border: 1px solid rgba(219,39,119,0.35); color: #f472b6; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
                         <i class="fa-solid fa-trophy"></i> Booked / Won <span id="pill-count-won" style="background: rgba(219,39,119,0.2); padding: 1px 6px; border-radius: 10px; font-size: 11px;">0</span>
                     </button>
+                    <!-- Phase 4: Mobile Sort Switcher Pill -->
+                    <button type="button" id="lead-sort-toggle-pill" class="lead-pill lead-sort-pill" onclick="toggleLeadMobileSort()" style="background: rgba(212,175,55,0.14); border: 1.5px solid var(--color-gold); color: #fbbf24; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; margin-left: auto;">
+                        <i class="fa-solid fa-arrow-down-wide-short"></i> <span id="lead-sort-label">⚡ Sort: Priority</span>
+                    </button>
                 </div>
 <div class="admin-table-container">
                     <table class="admin-table">
@@ -1038,6 +1097,19 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+                <!-- Phase 4: Mobile Continuous Feed / Load More Leads -->
+                <div id="mobile-leads-load-more-wrap" class="mobile-load-more-box">
+                    <div id="mobile-leads-count-text" class="mob-leads-count-text">Showing 0 of 0 leads</div>
+                    <div class="mob-load-more-btn-group">
+                        <button type="button" id="mobile-load-more-btn" onclick="loadMoreLeadsMobile()" class="mob-load-more-action-btn">
+                            <i class="fa-solid fa-angles-down"></i> Load More Leads (20)
+                        </button>
+                        <button type="button" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="mob-back-to-top-btn" title="Back to top">
+                            <i class="fa-solid fa-arrow-up"></i> Top
+                        </button>
+                    </div>
+                    <div id="mobile-scroll-sentinel" style="height: 10px; width: 100%;"></div>
                 </div>
                 <!-- Pagination & Page Size controls -->
                 <div id="leads-pagination-wrap" style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px; padding: 12px 16px; background: rgba(30, 41, 59, 0.5); border-radius: 8px; border: 1.5px solid rgba(212, 175, 55, 0.15); flex-wrap: wrap; gap: 12px; color: white;">
@@ -3572,6 +3644,8 @@
             currentUserUuidMapping = userData.uuid_mapping || '';
             
             if (currentUserRole === 'staff') {
+                leadsSortField = 'priority';
+                leadsSortDir = 'desc';
                 try {
                     sessionStorage.removeItem('admin_leads_state');
                     localStorage.removeItem('admin_leads_state');
@@ -4329,6 +4403,9 @@
                 else if (window.recalcAttendanceOutputs) window.recalcAttendanceOutputs();
             }
             if (paneId === 'pane-leads') {
+                if (typeof window.initPullToRefresh === 'function') {
+                    window.initPullToRefresh();
+                }
                 if (typeof window.applyLeadsFilters === 'function') {
                     window.applyLeadsFilters();
                 }
@@ -5365,7 +5442,11 @@
                     </tr>
                 `;
             });
-            tbody.innerHTML = html;
+            if (appendOnly) {
+                tbody.insertAdjacentHTML('beforeend', html);
+            } else {
+                tbody.innerHTML = html;
+            }
         };
 
         window.toggleMobileBookingDetails = function(btn) {
@@ -8579,7 +8660,43 @@
                 return matchSource && matchStatus && matchFinalStatus && matchAssignee && matchSearch && matchPill;
             });
 
+            // Phase 4: Smart Lead Prioritization Scoring
+            window.getLeadPriorityScore = function(lead) {
+                const todayStr = new Date().toISOString().split('T')[0];
+                const now = new Date(); now.setHours(0,0,0,0);
+                const st = (lead.status || '').trim().toLowerCase();
+                const fst = (lead.final_status || '').trim().toLowerCase();
+                const isWon = (st === 'won' || fst === 'booking confirmed');
+                const isLost = ['lost', 'lost lead', 'cancelled', 'not interested', 'booked elsewhere'].includes(fst) || st === 'lost';
+
+                if (isWon) return 20;
+                if (isLost) return 10;
+
+                const d1 = lead.follow_up_1 ? new Date(lead.follow_up_1) : null;
+                const d2 = lead.follow_up_2 ? new Date(lead.follow_up_2) : null;
+                const isToday = (lead.follow_up_1 === todayStr || lead.follow_up_2 === todayStr);
+                const isOverdue = (d1 && d1 < now) || (d2 && d2 < now);
+
+                if (isOverdue && !isToday) return 100; // Overdue top urgency
+                if (isToday) return 90; // Due today
+                if (st === 'new') return 80; // Fresh uncalled lead
+                if (st === 'follow up required') return 75;
+                if (['answered', 'busy'].includes(st)) return 60;
+                return 50;
+            };
+
             filteredLeads.sort((a, b) => {
+                if (leadsSortField === 'priority') {
+                    const scoreA = window.getLeadPriorityScore(a);
+                    const scoreB = window.getLeadPriorityScore(b);
+                    if (scoreA !== scoreB) {
+                        return leadsSortDir === 'asc' ? (scoreA - scoreB) : (scoreB - scoreA);
+                    }
+                    const timeA = new Date(a.created_at || 0).getTime() || 0;
+                    const timeB = new Date(b.created_at || 0).getTime() || 0;
+                    return timeB - timeA;
+                }
+
                 let valA = a[leadsSortField] || '';
                 let valB = b[leadsSortField] || '';
                 if (leadsSortField === 'created_at') {
@@ -8712,6 +8829,22 @@
             if (elNew) elNew.innerText = cntNew;
             if (elConn) elConn.innerText = cntConnected;
             if (elWon) elWon.innerText = cntWon;
+
+            // Phase 4: Sync My Day Action Hub Banner
+            const mdOverdue = document.getElementById('my-day-count-overdue');
+            const mdToday = document.getElementById('my-day-count-today');
+            const mdNew = document.getElementById('my-day-count-new');
+            const mdTotal = document.getElementById('my-day-count-total');
+            const mdGreeting = document.getElementById('my-day-greeting-text');
+
+            if (mdOverdue) mdOverdue.innerText = cntOverdue;
+            if (mdToday) mdToday.innerText = cntToday;
+            if (mdNew) mdNew.innerText = cntNew;
+            if (mdTotal) mdTotal.innerText = cntAll;
+            if (mdGreeting) {
+                const sName = currentUsername ? (currentUsername.charAt(0).toUpperCase() + currentUsername.slice(1)) : 'Team';
+                mdGreeting.innerText = 'Namaste, ' + sName + ' Ji! 🙏';
+            }
         };
 
         window.quickUpdateLeadStatus = async function(leadId, newStatus, btnEl) {
@@ -8724,6 +8857,139 @@
             if (typeof window.updateLeadPillCounts === 'function') window.updateLeadPillCounts();
             if (typeof window.updateStaffDashboardStats === 'function') window.updateStaffDashboardStats();
             showAdminToast(`Outcome set to: ${newStatus}`, 'success');
+        };
+
+        // Phase 4: Mobile Infinite Load More Handler
+        window.loadMoreLeadsMobile = function() {
+            const totalLeads = (window.filteredLeads || []).length;
+            const totalPages = Math.ceil(totalLeads / leadsPageSize) || 1;
+            if (leadsCurrentPage < totalPages) {
+                leadsCurrentPage++;
+                window.renderLeadsTableOnly(true);
+            }
+        };
+
+        // Phase 4: Mobile Priority Sort Toggle
+        window.toggleLeadMobileSort = function() {
+            const labelEl = document.getElementById('lead-sort-label');
+            if (leadsSortField === 'priority') {
+                leadsSortField = 'created_at';
+                leadsSortDir = 'desc';
+                if (labelEl) labelEl.innerText = '🕒 Sort: Newest';
+                showAdminToast('Sorted by: Newest Date', 'info');
+            } else if (leadsSortField === 'created_at') {
+                leadsSortField = 'name';
+                leadsSortDir = 'asc';
+                if (labelEl) labelEl.innerText = '🔤 Sort: Name (A-Z)';
+                showAdminToast('Sorted by: Name (A-Z)', 'info');
+            } else {
+                leadsSortField = 'priority';
+                leadsSortDir = 'desc';
+                if (labelEl) labelEl.innerText = '⚡ Sort: Priority';
+                showAdminToast('Sorted by: Urgent Priority First', 'success');
+            }
+            window.applyLeadsFilters(false);
+        };
+
+        // Phase 4: Manual Refresh from Banner
+        window.triggerManualRefresh = async function() {
+            showAdminToast('Refreshing leads...', 'info');
+            if (typeof window.fetchLeads === 'function') {
+                await window.fetchLeads();
+                showAdminToast('Leads refreshed!', 'success');
+            }
+        };
+
+        // Phase 4: Pull-to-Refresh Gesture Initializer
+        window.initPullToRefresh = function() {
+            const pane = document.getElementById('pane-leads');
+            const indicator = document.getElementById('mobile-ptr-indicator');
+            const icon = document.getElementById('ptr-icon');
+            const label = document.getElementById('ptr-label');
+            if (!pane || !indicator || pane.dataset.ptrBound) return;
+            pane.dataset.ptrBound = 'true';
+
+            let startY = 0;
+            let currentY = 0;
+            let isPulling = false;
+            let isRefreshing = false;
+
+            pane.addEventListener('touchstart', (e) => {
+                if (window.scrollY <= 10 && !isRefreshing && e.touches.length === 1) {
+                    startY = e.touches[0].pageY;
+                    currentY = startY;
+                    isPulling = true;
+                } else {
+                    isPulling = false;
+                }
+            }, { passive: true });
+
+            pane.addEventListener('touchmove', (e) => {
+                if (!isPulling || isRefreshing) return;
+                currentY = e.touches[0].pageY;
+                const diff = currentY - startY;
+                if (diff > 12 && window.scrollY <= 10) {
+                    const pullDistance = Math.min(diff * 0.42, 75);
+                    indicator.style.display = 'flex';
+                    indicator.style.height = pullDistance + 'px';
+                    indicator.style.opacity = Math.min(pullDistance / 45, 1);
+                    if (pullDistance >= 50) {
+                        if (label) label.innerText = 'Release to refresh!';
+                        if (icon) icon.style.transform = 'rotate(' + (diff * 2) + 'deg)';
+                    } else {
+                        if (label) label.innerText = 'Pull down to refresh...';
+                        if (icon) icon.style.transform = 'rotate(' + diff + 'deg)';
+                    }
+                }
+            }, { passive: true });
+
+            pane.addEventListener('touchend', async () => {
+                if (!isPulling || isRefreshing) return;
+                isPulling = false;
+                const diff = currentY - startY;
+                const pullDistance = Math.min(diff * 0.42, 75);
+                if (pullDistance >= 50 && window.scrollY <= 10) {
+                    isRefreshing = true;
+                    if (navigator.vibrate) try { navigator.vibrate(35); } catch(e) {}
+                    indicator.classList.add('refreshing');
+                    if (label) label.innerText = 'Refreshing leads...';
+                    if (icon) icon.className = 'fa-solid fa-arrows-rotate fa-spin ptr-icon';
+                    try {
+                        if (typeof window.fetchLeads === 'function') {
+                            await window.fetchLeads();
+                        }
+                    } catch(e) {}
+                    if (label) label.innerText = '✓ Leads updated!';
+                    if (icon) icon.className = 'fa-solid fa-circle-check ptr-icon';
+                    setTimeout(() => {
+                        indicator.style.height = '0px';
+                        indicator.style.opacity = '0';
+                        setTimeout(() => {
+                            indicator.style.display = 'none';
+                            indicator.classList.remove('refreshing');
+                            if (icon) icon.className = 'fa-solid fa-arrows-rotate ptr-icon';
+                            isRefreshing = false;
+                        }, 250);
+                    }, 500);
+                } else {
+                    indicator.style.height = '0px';
+                    indicator.style.opacity = '0';
+                    setTimeout(() => {
+                        indicator.style.display = 'none';
+                    }, 200);
+                }
+            });
+
+            // Auto-scroll infinite load trigger using IntersectionObserver
+            const sentinel = document.getElementById('mobile-scroll-sentinel');
+            if (sentinel && window.IntersectionObserver) {
+                const observer = new IntersectionObserver((entries) => {
+                    if (entries[0].isIntersecting && (window.innerWidth <= 768 || currentUserRole === 'staff')) {
+                        if (window.loadMoreLeadsMobile) window.loadMoreLeadsMobile();
+                    }
+                }, { rootMargin: '250px' });
+                observer.observe(sentinel);
+            }
         };
 
         window.saveQuickLeadRemark = async function(leadId) {
@@ -8779,7 +9045,7 @@
             }
         };
 
-        window.renderLeadsTableOnly = function() {
+        window.renderLeadsTableOnly = function(appendOnly = false) {
             const tbody = document.getElementById('leads-table-body');
             if (!tbody) return;
 
@@ -8793,8 +9059,10 @@
                 leadsCurrentPage = 1;
             }
 
-            const startIndex = (leadsCurrentPage - 1) * leadsPageSize;
-            const endIndex = Math.min(startIndex + leadsPageSize, totalLeads);
+            // For infinite load on mobile: if appendOnly is true, slice only the next batch
+            // If appendOnly is false, render from 0 to current rendered depth
+            const startIndex = appendOnly ? ((leadsCurrentPage - 1) * leadsPageSize) : 0;
+            const endIndex = Math.min(leadsCurrentPage * leadsPageSize, totalLeads);
             const leadsToRender = filteredLeads.slice(startIndex, endIndex);
 
             // Update Pagination UI
@@ -8970,7 +9238,34 @@
                 }
             }
 
-            if (leadsToRender.length === 0) {
+            // Update Phase 4 Mobile Load More Feed UI
+            const mobCountText = document.getElementById('mobile-leads-count-text');
+            const mobLoadBtn = document.getElementById('mobile-load-more-btn');
+            const mobWrap = document.getElementById('mobile-leads-load-more-wrap');
+
+            if (mobWrap) {
+                if (window.innerWidth <= 768 || currentUserRole === 'staff') {
+                    mobWrap.style.display = totalLeads > 0 ? 'flex' : 'none';
+                    if (mobCountText) {
+                        mobCountText.innerText = 'Showing ' + Math.min(endIndex, totalLeads) + ' of ' + totalLeads + ' leads';
+                    }
+                    if (mobLoadBtn) {
+                        if (endIndex >= totalLeads) {
+                            mobLoadBtn.disabled = true;
+                            mobLoadBtn.innerHTML = '<i class="fa-solid fa-check"></i> All leads loaded';
+                            mobLoadBtn.style.opacity = '0.5';
+                        } else {
+                            mobLoadBtn.disabled = false;
+                            mobLoadBtn.innerHTML = '<i class="fa-solid fa-angles-down"></i> Load More (' + Math.min(leadsPageSize, totalLeads - endIndex) + ')';
+                            mobLoadBtn.style.opacity = '1';
+                        }
+                    }
+                } else {
+                    mobWrap.style.display = 'none';
+                }
+            }
+
+            if (totalLeads === 0) {
                 const colCount = currentUserRole === 'staff' ? 11 : 16;
                 tbody.innerHTML = `<tr><td colspan="${colCount}" style="text-align: center; color: var(--color-slate);">No leads registered yet.</td></tr>`;
                 return;
@@ -9082,15 +9377,52 @@
 
                 const initials = getLeadInitials(item.name);
 
+                // Phase 4: Priority Badge Calculation
+                const todayStr = new Date().toISOString().split('T')[0];
+                const now = new Date(); now.setHours(0,0,0,0);
+                const leadStatusLower = (item.status || '').trim().toLowerCase();
+                const leadFinalLower = (item.final_status || '').trim().toLowerCase();
+                const isWon = (leadStatusLower === 'won' || leadFinalLower === 'booking confirmed');
+                const isLost = ['lost', 'lost lead', 'cancelled', 'not interested', 'booked elsewhere'].includes(leadFinalLower) || leadStatusLower === 'lost';
+
+                const d1 = item.follow_up_1 ? new Date(item.follow_up_1) : null;
+                const d2 = item.follow_up_2 ? new Date(item.follow_up_2) : null;
+                const isToday = (item.follow_up_1 === todayStr || item.follow_up_2 === todayStr);
+                const isOverdue = (d1 && d1 < now) || (d2 && d2 < now);
+
+                let priorityBadgeHtml = '';
+                let priorityBorderColor = 'var(--color-gold)';
+
+                if (!isWon && isOverdue && !isToday) {
+                    priorityBadgeHtml = '<span class="lead-priority-badge badge-overdue" title="Follow-up Overdue"><i class="fa-solid fa-clock-rotate-left"></i> Overdue</span>';
+                    priorityBorderColor = '#ef4444';
+                } else if (!isWon && isToday) {
+                    priorityBadgeHtml = '<span class="lead-priority-badge badge-today" title="Follow-up Due Today"><i class="fa-solid fa-bolt"></i> Today</span>';
+                    priorityBorderColor = '#3b82f6';
+                } else if (leadStatusLower === 'new') {
+                    priorityBadgeHtml = '<span class="lead-priority-badge badge-new" title="New Uncalled Lead"><i class="fa-solid fa-star"></i> New</span>';
+                    priorityBorderColor = '#f59e0b';
+                } else if (isWon) {
+                    priorityBadgeHtml = '<span class="lead-priority-badge badge-won" title="Booking Confirmed"><i class="fa-solid fa-trophy"></i> Won</span>';
+                    priorityBorderColor = '#db2777';
+                } else if (isLost) {
+                    priorityBadgeHtml = '<span class="lead-priority-badge badge-lost" title="Lost Lead"><i class="fa-solid fa-circle-xmark"></i> Lost</span>';
+                    priorityBorderColor = '#64748b';
+                } else if (['answered', 'busy', 'follow up required'].includes(leadStatusLower)) {
+                    priorityBadgeHtml = '<span class="lead-priority-badge badge-connected" title="Active Follow-up"><i class="fa-solid fa-phone"></i> In Touch</span>';
+                    priorityBorderColor = '#10b981';
+                }
+
                 if (currentUserRole === 'staff') {
                     html += `
-                        <tr class="lead-card-row" onclick="toggleMobileLeadRow(this, event)" style="background: #0f172a !important; border: 1.5px solid rgba(212, 175, 55, 0.4) !important; border-left: 4px solid var(--color-gold) !important; border-radius: 14px !important; margin-bottom: 12px !important; box-shadow: 0 4px 16px rgba(0,0,0,0.4) !important;">
+                        <tr class="lead-card-row" onclick="toggleMobileLeadRow(this, event)" style="background: #0f172a !important; border: 1.5px solid rgba(212, 175, 55, 0.4) !important; border-left: 5px solid ${priorityBorderColor} !important; border-radius: 14px !important; margin-bottom: 12px !important; box-shadow: 0 4px 16px rgba(0,0,0,0.4) !important;">
                             <td data-label="Name" class="lead-card-name-td" style="background: transparent !important; border: none !important; padding: 12px 14px !important;">
                                 <div class="lead-chat-item-header" style="background: transparent !important; display: flex !important; align-items: center !important; gap: 12px !important; width: 100% !important;">
                                     <div class="lead-chat-avatar" style="background: linear-gradient(135deg, #d4af37, #b8860b) !important; color: #0f172a !important; font-weight: 800 !important; font-size: 14px !important; width: 42px !important; height: 42px !important; border-radius: 50% !important; display: flex !important; align-items: center !important; justify-content: center !important; flex-shrink: 0 !important; box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;">${initials}</div>
                                     <div class="lead-chat-main-info" style="flex: 1 !important; min-width: 0 !important; display: flex !important; flex-direction: column !important; gap: 3px !important; text-align: left !important;">
-                                        <div class="lead-chat-title-row" style="display: flex !important; align-items: center !important; width: 100% !important; gap: 6px !important;">
+                                        <div class="lead-chat-title-row" style="display: flex !important; align-items: center !important; width: 100% !important; gap: 6px !important; flex-wrap: wrap !important;">
                                             <strong class="lead-chat-name" style="color: #f5c842 !important; font-size: 15px !important; font-weight: 800 !important; cursor: pointer; display: inline-flex !important; align-items: center !important; gap: 5px !important; flex: 1 !important; white-space: normal !important; word-break: break-word !important; overflow: visible !important;" onclick="event.stopPropagation(); startEditLead('${item.id}')"><i class="fa-solid fa-user" style="font-size: 11px; color: #f5c842; flex-shrink: 0;"></i>${item.name || 'Anonymous'}</strong>
+                                            ${priorityBadgeHtml}
                                         </div>
                                         <div class="lead-chat-sub-row" style="display: flex !important; align-items: center !important; gap: 8px !important; flex-wrap: wrap !important;">
                                             <span class="lead-chat-phone" style="color: #ffffff !important; font-size: 12.5px !important; font-weight: 700 !important; white-space: nowrap !important; display: inline-flex !important; align-items: center !important; gap: 3px;"><i class="fa-solid fa-phone" style="font-size: 10px; color: #f5c842;"></i>${leadPhoneVal || 'No Phone'}</span>
@@ -9178,13 +9510,14 @@
                     `;
                 } else {
                     html += `
-                        <tr class="lead-card-row" onclick="toggleMobileLeadRow(this, event)" style="background: #0f172a !important; border: 1.5px solid rgba(212, 175, 55, 0.4) !important; border-left: 4px solid var(--color-gold) !important; border-radius: 14px !important; margin-bottom: 12px !important; box-shadow: 0 4px 16px rgba(0,0,0,0.4) !important;">
+                        <tr class="lead-card-row" onclick="toggleMobileLeadRow(this, event)" style="background: #0f172a !important; border: 1.5px solid rgba(212, 175, 55, 0.4) !important; border-left: 5px solid ${priorityBorderColor} !important; border-radius: 14px !important; margin-bottom: 12px !important; box-shadow: 0 4px 16px rgba(0,0,0,0.4) !important;">
                             <td data-label="Name" class="lead-card-name-td" style="background: transparent !important; border: none !important; padding: 12px 14px !important;">
                                 <div class="lead-chat-item-header" style="background: transparent !important; display: flex !important; align-items: center !important; gap: 12px !important; width: 100% !important;">
                                     <div class="lead-chat-avatar" style="background: linear-gradient(135deg, #d4af37, #b8860b) !important; color: #0f172a !important; font-weight: 800 !important; font-size: 14px !important; width: 42px !important; height: 42px !important; border-radius: 50% !important; display: flex !important; align-items: center !important; justify-content: center !important; flex-shrink: 0 !important; box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;">${initials}</div>
                                     <div class="lead-chat-main-info" style="flex: 1 !important; min-width: 0 !important; display: flex !important; flex-direction: column !important; gap: 3px !important; text-align: left !important;">
-                                        <div class="lead-chat-title-row" style="display: flex !important; align-items: center !important; width: 100% !important; gap: 6px !important;">
+                                        <div class="lead-chat-title-row" style="display: flex !important; align-items: center !important; width: 100% !important; gap: 6px !important; flex-wrap: wrap !important;">
                                             <strong class="lead-chat-name" style="color: #f5c842 !important; font-size: 15px !important; font-weight: 800 !important; cursor: pointer; display: inline-flex !important; align-items: center !important; gap: 5px !important; flex: 1 !important; white-space: normal !important; word-break: break-word !important; overflow: visible !important;" onclick="event.stopPropagation(); startEditLead('${item.id}')"><i class="fa-solid fa-user" style="font-size: 11px; color: #f5c842; flex-shrink: 0;"></i>${item.name || 'Anonymous'}</strong>
+                                            ${priorityBadgeHtml}
                                         </div>
                                         <div class="lead-chat-sub-row" style="display: flex !important; align-items: center !important; gap: 8px !important; flex-wrap: wrap !important;">
                                             <span class="lead-chat-phone" style="color: #ffffff !important; font-size: 12.5px !important; font-weight: 700 !important; white-space: nowrap !important; display: inline-flex !important; align-items: center !important; gap: 3px;"><i class="fa-solid fa-phone" style="font-size: 10px; color: #f5c842;"></i>${leadPhoneVal || 'No Phone'}</span>

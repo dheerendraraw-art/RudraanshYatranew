@@ -14125,3 +14125,339 @@ body.menu-open::before {
         to { transform: translateY(0); }
     }
 }
+
+
+/* ── PHASE 4: MOBILE STAFF UX (My Day Hub, Pull to Refresh, Badges, Infinite Load) ── */
+.mobile-ptr-indicator {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    height: 0;
+    opacity: 0;
+    transition: height 0.15s ease, opacity 0.15s ease;
+    background: rgba(15, 23, 42, 0.95);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    border: 1px dashed rgba(212, 175, 55, 0.4);
+}
+
+.ptr-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-gold);
+}
+
+.ptr-icon {
+    font-size: 15px;
+    color: var(--color-gold);
+    transition: transform 0.1s linear;
+}
+
+/* Staff My Day Daily Action Hub Card */
+.staff-my-day-card {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    border: 1.5px solid rgba(212, 175, 55, 0.35);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+}
+
+.my-day-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+}
+
+.my-day-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10.5px;
+    font-weight: 800;
+    color: #fbbf24;
+    background: rgba(245, 158, 11, 0.15);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    padding: 2px 8px;
+    border-radius: 10px;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.my-day-greeting {
+    margin: 4px 0 2px 0;
+    font-size: 18px;
+    font-weight: 800;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.my-day-subtitle {
+    margin: 0;
+    font-size: 12.5px;
+    color: #94a3b8;
+}
+
+.my-day-refresh-btn {
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid var(--color-gold);
+    color: var(--color-gold);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+
+.my-day-refresh-btn:active {
+    transform: scale(0.95);
+    background: var(--color-gold);
+    color: #0f172a;
+}
+
+.my-day-chips-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.my-day-chip {
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.my-day-chip:active {
+    transform: scale(0.96);
+}
+
+.my-day-chip.chip-overdue {
+    border-color: rgba(239, 68, 68, 0.35);
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.12) 0%, rgba(15, 23, 42, 0.8) 100%);
+}
+
+.my-day-chip.chip-overdue .my-day-chip-icon {
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+}
+
+.my-day-chip.chip-today {
+    border-color: rgba(59, 130, 246, 0.35);
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.12) 0%, rgba(15, 23, 42, 0.8) 100%);
+}
+
+.my-day-chip.chip-today .my-day-chip-icon {
+    background: rgba(59, 130, 246, 0.2);
+    color: #60a5fa;
+}
+
+.my-day-chip.chip-new {
+    border-color: rgba(245, 158, 11, 0.35);
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(15, 23, 42, 0.8) 100%);
+}
+
+.my-day-chip.chip-new .my-day-chip-icon {
+    background: rgba(245, 158, 11, 0.2);
+    color: #fbbf24;
+}
+
+.my-day-chip.chip-total {
+    border-color: rgba(212, 175, 55, 0.35);
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.12) 0%, rgba(15, 23, 42, 0.8) 100%);
+}
+
+.my-day-chip.chip-total .my-day-chip-icon {
+    background: rgba(212, 175, 55, 0.2);
+    color: #fbbf24;
+}
+
+.my-day-chip-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.my-day-chip-data {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.my-day-chip-num {
+    font-size: 18px;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.1;
+}
+
+.my-day-chip-lbl {
+    font-size: 10.5px;
+    font-weight: 600;
+    color: #94a3b8;
+    white-space: nowrap;
+}
+
+.my-day-chip-arrow {
+    margin-left: auto;
+    font-size: 10px;
+    color: #64748b;
+    opacity: 0.6;
+}
+
+/* Priority Lead Badges */
+.lead-priority-badge {
+    font-size: 10px !important;
+    font-weight: 800 !important;
+    padding: 2px 7px !important;
+    border-radius: 8px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 3px !important;
+    white-space: nowrap !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.3px !important;
+}
+
+.lead-priority-badge.badge-overdue {
+    background: rgba(239, 68, 68, 0.22) !important;
+    color: #f87171 !important;
+    border: 1px solid rgba(239, 68, 68, 0.5) !important;
+}
+
+.lead-priority-badge.badge-today {
+    background: rgba(59, 130, 246, 0.22) !important;
+    color: #60a5fa !important;
+    border: 1px solid rgba(59, 130, 246, 0.5) !important;
+}
+
+.lead-priority-badge.badge-new {
+    background: rgba(245, 158, 11, 0.22) !important;
+    color: #fbbf24 !important;
+    border: 1px solid rgba(245, 158, 11, 0.5) !important;
+}
+
+.lead-priority-badge.badge-won {
+    background: rgba(219, 39, 119, 0.22) !important;
+    color: #f472b6 !important;
+    border: 1px solid rgba(219, 39, 119, 0.5) !important;
+}
+
+.lead-priority-badge.badge-lost {
+    background: rgba(100, 116, 139, 0.22) !important;
+    color: #94a3b8 !important;
+    border: 1px solid rgba(100, 116, 139, 0.5) !important;
+}
+
+.lead-priority-badge.badge-connected {
+    background: rgba(16, 185, 129, 0.2) !important;
+    color: #34d399 !important;
+    border: 1px solid rgba(16, 185, 129, 0.45) !important;
+}
+
+/* Mobile Continuous Feed & Load More Box */
+.mobile-load-more-box {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 8px 30px;
+}
+
+.mob-leads-count-text {
+    font-size: 12.5px;
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+.mob-load-more-btn-group {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    max-width: 450px;
+}
+
+.mob-load-more-action-btn {
+    flex: 1;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.08));
+    border: 1.5px solid var(--color-gold);
+    color: #fbbf24;
+    padding: 11px 18px;
+    border-radius: 10px;
+    font-size: 13.5px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease;
+}
+
+.mob-load-more-action-btn:active {
+    transform: scale(0.97);
+    background: var(--color-gold);
+    color: #0f172a;
+}
+
+.mob-back-to-top-btn {
+    background: #1e293b;
+    border: 1.5px solid rgba(212, 175, 55, 0.4);
+    color: var(--color-gold);
+    padding: 11px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+/* Media query adjustments for Phase 4 on Mobile */
+@media (max-width: 768px) {
+    .my-day-chips-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
+    }
+
+    .my-day-greeting {
+        font-size: 16px !important;
+    }
+
+    .mobile-load-more-box {
+        display: flex !important;
+    }
+
+    #leads-pagination-wrap {
+        display: none !important;
+    }
+}
