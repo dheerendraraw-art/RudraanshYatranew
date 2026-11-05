@@ -1149,6 +1149,29 @@
             </div>
             <!-- PANE: FOLLOW-UP REMINDERS -->
             <div id="pane-reminders" class="admin-tab-content-pane" style="display: none;">
+                <!-- Phase 6: Push Notification Permission Prompt Card -->
+                <div id="notif-permission-box" class="notif-permission-box">
+                    <div class="np-icon"><i class="fa-solid fa-bell"></i></div>
+                    <div class="np-text">
+                        <strong>Never miss a client follow-up!</strong>
+                        <span>Enable instant phone push notifications for scheduled calls.</span>
+                    </div>
+                    <button type="button" class="np-enable-btn" onclick="requestPushNotificationPermission()">
+                        <i class="fa-solid fa-bell"></i> Enable Alerts
+                    </button>
+                </div>
+
+                <!-- Phase 6: Today's Reminders Mobile Carousel -->
+                <div id="mobile-reminders-section" class="mobile-reminders-section">
+                    <div class="mob-rem-sec-header">
+                        <h4><i class="fa-solid fa-fire" style="color: #ef4444;"></i> Today & Urgent Reminders</h4>
+                        <span id="mob-rem-count-pill" class="mob-rem-pill">0</span>
+                    </div>
+                    <div id="mobile-reminders-carousel" class="mobile-reminders-carousel">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
                     <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap; flex-grow: 1;">
                         <h3 class="admin-form-title" style="margin-bottom: 0; border-bottom: none;"><i
@@ -3716,6 +3739,11 @@
             if (typeof startReminderChecker === 'function') {
                 startReminderChecker();
             }
+
+            // Phase 6: Morning Briefing Check
+            if (typeof window.checkAndShowMorningBriefing === 'function') {
+                window.checkAndShowMorningBriefing();
+            }
         }
 
         let loggedInUserDetail = null;
@@ -5542,6 +5570,66 @@
                 `;
             });
             tbody.innerHTML = html;
+
+            // Phase 6: Render Mobile Reminders Carousel for Today & Overdue
+            const mobCarousel = document.getElementById('mobile-reminders-carousel');
+            const mobCountPill = document.getElementById('mob-rem-count-pill');
+            const pBox = document.getElementById('notif-permission-box');
+
+            if (pBox && 'Notification' in window && Notification.permission === 'granted') {
+                pBox.style.display = 'none';
+            }
+
+            if (mobCarousel) {
+                const urgentReminders = allReminders.filter(r => r.due_date <= todayStr && r.status !== 'Completed');
+                if (mobCountPill) mobCountPill.innerText = urgentReminders.length;
+                const mobNavBadge = document.getElementById('mob-badge-reminders');
+                if (mobNavBadge) {
+                    const pendingCount = allReminders.filter(r => r.status !== 'Completed').length;
+                    mobNavBadge.innerText = pendingCount > 99 ? '99+' : pendingCount;
+                    mobNavBadge.style.display = pendingCount > 0 ? 'inline-block' : 'none';
+                }
+
+                if (urgentReminders.length === 0) {
+                    mobCarousel.innerHTML = '<div class="mob-rem-empty"><i class="fa-solid fa-circle-check" style="color:#4ade80;"></i> All caught up! No urgent follow-ups pending right now.</div>';
+                } else {
+                    let cHtml = '';
+                    urgentReminders.forEach(r => {
+                        const isOver = r.due_date < todayStr;
+                        const cPhone = (r.lead_phone || '').replace(/[^0-9+]/g, '');
+                        const tel = cPhone.startsWith('+') ? cPhone : '+91' + cPhone.replace(/^91/, '');
+                        const wa = cPhone ? 'https://wa.me/' + (cPhone.length === 10 ? '91' + cPhone : cPhone) : '';
+
+                        cHtml += `
+                            <div class="mob-rem-card ${isOver ? 'card-overdue' : 'card-today'}">
+                                <div class="mrc-top-row">
+                                    <span class="mrc-badge ${isOver ? 'badge-overdue' : 'badge-today'}">
+                                        ${isOver ? '<i class="fa-solid fa-triangle-exclamation" style="color:#f87171;margin-right:3px;"></i> Overdue' : '<i class="fa-solid fa-bell" style="color:#fbbf24;margin-right:3px;"></i> Due Today'} • ${r.due_time || '10:00'}
+                                    </span>
+                                    <span class="mrc-priority">${r.priority === 'High' ? '<i class="fa-solid fa-fire" style="color:#ef4444;"></i> High' : '<i class="fa-solid fa-bolt" style="color:#94a3b8;"></i> Normal'}</span>
+                                </div>
+                                <div class="mrc-lead-row">
+                                    <strong class="mrc-lead-name">${r.lead_name || 'General Inquiry'}</strong>
+                                    ${r.lead_id ? `<a href="lead-details.html?id=${r.lead_id}" class="mrc-lead-link" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : ''}
+                                </div>
+                                <p class="mrc-note">${r.note}</p>
+                                <div class="mrc-actions-row">
+                                    ${cPhone ? `
+                                        <a href="tel:${tel}" class="mrc-chip-call" onclick="trackDialedLead('${r.lead_id || ''}', '${(r.lead_name || 'Client').replace(/'/g, "\\'")}', '${cPhone}')"><i class="fa-solid fa-phone"></i> Call</a>
+                                        ${wa ? `<a href="${wa}" target="_blank" class="mrc-chip-wa"><i class="fa-brands fa-whatsapp"></i> Chat</a>` : ''}
+                                    ` : ''}
+                                    <div class="mrc-btn-grp">
+                                        <button type="button" class="mrc-btn-done" onclick="toggleReminderStatus('${r.id}', 'Pending')"><i class="fa-solid fa-check"></i> Done</button>
+                                        <button type="button" class="mrc-btn-snooze" onclick="snoozeReminder('${r.id}', '1h')" title="Snooze 1 Hour"><i class="fa-solid fa-clock"></i> 1h</button>
+                                        <button type="button" class="mrc-btn-snooze" onclick="snoozeReminder('${r.id}', '1d')" title="Snooze 1 Day"><i class="fa-solid fa-calendar-plus"></i> +1D</button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    mobCarousel.innerHTML = cHtml;
+                }
+            }
         };
 
         // 3. Fetch Discount Registrations
@@ -12583,6 +12671,36 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
             </div>
         </div>
     </div>
+    <!-- Phase 6: Daily Morning Briefing Modal for Staff -->
+    <div id="morning-briefing-modal" class="morning-briefing-backdrop" style="display: none;" onclick="if(event.target===this)dismissMorningBriefing()">
+        <div class="morning-briefing-card">
+            <div class="mb-sun-icon"><i class="fa-solid fa-sun"></i></div>
+            <h3 class="mb-greeting" id="mb-greeting-text">🌅 Good morning, Team! ✨</h3>
+            <p class="mb-tagline">Here is your follow-up mission plan for today:</p>
+            <div class="mb-stats-row">
+                <div class="mb-stat-box box-today" onclick="startBriefingMission('due_today')">
+                    <span class="mb-stat-num" id="mb-count-today">0</span>
+                    <span class="mb-stat-lbl">Due Today</span>
+                </div>
+                <div class="mb-stat-box box-overdue" onclick="startBriefingMission('overdue')">
+                    <span class="mb-stat-num" id="mb-count-overdue">0</span>
+                    <span class="mb-stat-lbl">Overdue</span>
+                </div>
+                <div class="mb-stat-box box-new" onclick="startBriefingMission('new')">
+                    <span class="mb-stat-num" id="mb-count-new">0</span>
+                    <span class="mb-stat-lbl">New Leads</span>
+                </div>
+            </div>
+            <div class="mb-actions-row">
+                <button type="button" class="mb-action-start-btn" onclick="startBriefingMission('due_today')">
+                    <i class="fa-solid fa-bolt"></i> Start Today's Follow-ups
+                </button>
+                <button type="button" class="mb-action-dismiss-btn" onclick="dismissMorningBriefing()">
+                    Dismiss
+                </button>
+            </div>
+        </div>
+    </div>
 </body></html>`;
 
                 // Create full-screen in-page overlay (works on all mobile browsers — no popup permission needed)
@@ -13977,6 +14095,7 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
                 });
 
                 if (pendingAlerts.length > 0) {
+                    if (window.playReminderChime) window.playReminderChime();
                     pendingAlerts.forEach(r => {
                         const title = `⏰ Follow-up: ${r.lead_name || 'Client'}`;
                         const options = {
@@ -14417,21 +14536,147 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
             }
         };
 
-        window.snoozeReminder = async function(id, daysToAdd) {
+        // Phase 6: Web Audio API Synthetic Chime Alert
+        window.playReminderChime = function() {
+            try {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                if (!AudioCtx) return;
+                const ctx = new AudioCtx();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(587.33, ctx.currentTime); // D5
+                osc.frequency.setValueAtTime(880, ctx.currentTime + 0.12); // A5
+                gain.gain.setValueAtTime(0.18, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.45);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.45);
+            } catch(e) {}
+        };
+
+        // Phase 6: Push Notification Permission Request
+        window.requestPushNotificationPermission = async function() {
+            window.triggerHaptic(35);
+            if (!('Notification' in window)) {
+                showAdminToast('Browser notifications not supported on this browser.', 'warning');
+                return;
+            }
+            try {
+                const perm = await Notification.requestPermission();
+                if (perm === 'granted') {
+                    showAdminToast('🔔 Push notifications enabled! Alerts will appear for due calls.', 'success');
+                    const pBox = document.getElementById('notif-permission-box');
+                    if (pBox) pBox.style.display = 'none';
+                    window.playReminderChime();
+                    new Notification('🔔 RY Follow-up Alerts Active', {
+                        body: 'You will receive alerts when your follow-up reminders are due!',
+                        icon: '/assets/images/logo.png'
+                    });
+                } else {
+                    showAdminToast('Notification permission dismissed or blocked in browser settings.', 'warning');
+                }
+            } catch(e) {
+                console.error(e);
+            }
+        };
+
+        // Phase 6: Morning Briefing Logic
+        window.checkAndShowMorningBriefing = function() {
+            if (sessionStorage.getItem('ry_briefing_seen')) return;
+            sessionStorage.setItem('ry_briefing_seen', 'true');
+
+            setTimeout(() => {
+                const leads = window.currentLeads || [];
+                const todayStr = new Date().toISOString().split('T')[0];
+                const now = new Date(); now.setHours(0,0,0,0);
+
+                const overdue = leads.filter(l => {
+                    const d1 = l.follow_up_1 ? new Date(l.follow_up_1) : null;
+                    const d2 = l.follow_up_2 ? new Date(l.follow_up_2) : null;
+                    const isToday = (l.follow_up_1 === todayStr || l.follow_up_2 === todayStr);
+                    const isWon = (l.status || '').toLowerCase() === 'won';
+                    return !isWon && ((d1 && d1 < now) || (d2 && d2 < now)) && !isToday;
+                }).length;
+
+                const dueToday = leads.filter(l => {
+                    const isWon = (l.status || '').toLowerCase() === 'won';
+                    return !isWon && (l.follow_up_1 === todayStr || l.follow_up_2 === todayStr);
+                }).length;
+
+                const newLeads = leads.filter(l => (l.status || '').toLowerCase() === 'new').length;
+
+                if (overdue === 0 && dueToday === 0 && newLeads === 0) return;
+
+                const sName = currentUsername ? (currentUsername.charAt(0).toUpperCase() + currentUsername.slice(1)) : 'Team';
+                const hr = new Date().getHours();
+                const greeting = hr < 12 ? '🌅 Good morning' : (hr < 17 ? '☀️ Good afternoon' : '🌆 Good evening');
+
+                const modal = document.getElementById('morning-briefing-modal');
+                const gText = document.getElementById('mb-greeting-text');
+                const numOverdue = document.getElementById('mb-count-overdue');
+                const numToday = document.getElementById('mb-count-today');
+                const numNew = document.getElementById('mb-count-new');
+
+                if (gText) gText.innerText = `${greeting}, ${sName} Ji! ✨`;
+                if (numOverdue) numOverdue.innerText = overdue;
+                if (numToday) numToday.innerText = dueToday;
+                if (numNew) numNew.innerText = newLeads;
+
+                if (modal) {
+                    modal.style.display = 'flex';
+                    window.triggerHaptic(40);
+                }
+            }, 800);
+        };
+
+        window.dismissMorningBriefing = function() {
+            const modal = document.getElementById('morning-briefing-modal');
+            if (modal) modal.style.display = 'none';
+        };
+
+        window.startBriefingMission = function(filterType) {
+            window.dismissMorningBriefing();
+            switchTab(null, 'pane-leads');
+            if (typeof window.setLeadQuickFilter === 'function') {
+                window.setLeadQuickFilter(filterType);
+            }
+        };
+
+        // Phase 6: Flexible Snooze (15m, 1h, 1d, 3d)
+        window.snoozeReminder = async function(id, option) {
+            window.triggerHaptic(35);
             try {
                 const item = allReminders.find(r => r.id === id || r.id == id);
                 if (!item) return;
-                const currDate = new Date(item.due_date || new Date());
-                currDate.setDate(currDate.getDate() + (parseInt(daysToAdd) || 1));
-                const newDateStr = currDate.toISOString().split('T')[0];
+
+                const updatePayload = { status: 'Pending' };
+                let msg = '';
+
+                if (option === '15m' || option === '1h') {
+                    const now = new Date();
+                    now.setMinutes(now.getMinutes() + (option === '15m' ? 15 : 60));
+                    const hrs = String(now.getHours()).padStart(2, '0');
+                    const mins = String(now.getMinutes()).padStart(2, '0');
+                    updatePayload.due_time = `${hrs}:${mins}`;
+                    updatePayload.due_date = now.toISOString().split('T')[0];
+                    msg = '⏰ Snoozed until ' + updatePayload.due_time;
+                } else {
+                    const days = parseInt(option) || 1;
+                    const target = new Date(item.due_date || new Date());
+                    target.setDate(target.getDate() + days);
+                    updatePayload.due_date = target.toISOString().split('T')[0];
+                    msg = '📅 Snoozed to ' + updatePayload.due_date;
+                }
 
                 const { error } = await supabaseAdmin
                     .from('reminders')
-                    .update({ due_date: newDateStr, status: 'Pending' })
+                    .update(updatePayload)
                     .eq('id', id);
 
                 if (error) throw error;
-                showAdminToast(`Reminder snoozed to ${newDateStr}`, 'info');
+                showAdminToast(msg, 'success');
                 await fetchRemindersData();
             } catch (err) {
                 console.error(err);
