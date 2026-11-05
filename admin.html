@@ -4034,6 +4034,7 @@
             try { sessionStorage.clear(); } catch(e) {}
             window.location.reload();
         }
+        window.logout = logoutAdmin;
 
         let reauthCallback = null;
 
@@ -6580,6 +6581,119 @@
                 showAdminToast('Failed to export bookings: ' + err.message, 'error');
             }
         });
+
+        // Bulk Mark Yatra Completed for Past Travel Dates
+        window.bulkMarkYatraCompleted = async function() {
+            if (currentUserRole !== 'admin') {
+                showAdminToast('Only administrators can perform bulk complete.', 'error');
+                return;
+            }
+            const bookings = window.bookingsData || [];
+            if (bookings.length === 0) {
+                showAdminToast('No bookings available to check.', 'info');
+                return;
+            }
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            const eligible = bookings.filter(b => {
+                if (!b.travel_date) return false;
+                const d = new Date(b.travel_date);
+                const isPast = d < today;
+                const status = (b.yatra_status || 'In Progress').toLowerCase();
+                return isPast && status !== 'yatra completed' && status !== 'cancelled';
+            });
+
+            if (eligible.length === 0) {
+                showAdminToast('All past-date bookings are already marked as Yatra Completed!', 'info');
+                return;
+            }
+
+            const msg = `Found <strong>${eligible.length}</strong> past-date booking(s) currently marked as "In Progress". Mark them all as "Yatra Completed"?`;
+            
+            const doBulk = async () => {
+                const btn = document.getElementById('bulk-complete-btn');
+                if (btn) btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
+
+                let count = 0;
+                const nowIso = new Date().toISOString();
+
+                for (const b of eligible) {
+                    try {
+                        const { error } = await supabaseAdmin
+                            .from('bookings')
+                            .update({ yatra_status: 'Yatra Completed', completed_at: nowIso })
+                            .eq('id', b.id);
+                        if (!error) count++;
+                    } catch(e) {
+                        console.warn('Bulk complete error:', e);
+                    }
+                }
+
+                if (btn) btn.innerHTML = '<i class="fa-solid fa-flag-checkered"></i> Bulk Complete';
+                showAdminToast(`🎉 Successfully marked ${count} booking(s) as Yatra Completed!`, 'success');
+                if (typeof fetchBookings === 'function') await fetchBookings();
+            };
+
+            if (typeof window.showConfirmModal === 'function') {
+                window.showConfirmModal('Bulk Complete Yatras', msg, doBulk, 'Mark Completed');
+            } else if (confirm(`Mark ${eligible.length} past-date booking(s) as Yatra Completed?`)) {
+                doBulk();
+            }
+        };
+
+        // Export Billing Records to CSV
+        window.exportBillingCsv = function() {
+            if (currentUserRole !== 'admin') {
+                showAdminToast('Unauthorized: Only administrators can export billing records.', 'error');
+                return;
+            }
+            const bills = window.billingRecords || [];
+            if (bills.length === 0) {
+                showAdminToast('No billing records to export.', 'warning');
+                return;
+            }
+            try {
+                const headers = ['Invoice Number', 'Booking ID', 'Client Name', 'Client Phone', 'Client Email', 'Destination', 'Travel Date', 'Package Total', 'Discount', 'Net Amount', 'Paid Amount', 'Balance Remaining', 'Payment Status', 'Created At'];
+                const rows = bills.map(b => {
+                    const payments = b.payments_received || [];
+                    const paid = payments.reduce((sum, p) => sum + (parseFloat(p.amountPaid) || 0), 0);
+                    const net = Math.max(0, (parseFloat(b.total_package_amount) || 0) - (parseFloat(b.discount) || 0));
+                    return [
+                        `"${(b.invoice_number || '').replace(/"/g, '""')}"`,
+                        `"${(b.booking_id || '').replace(/"/g, '""')}"`,
+                        `"${(b.client_name || '').replace(/"/g, '""')}"`,
+                        `"${(b.client_phone || '').replace(/"/g, '""')}"`,
+                        `"${(b.client_email || '').replace(/"/g, '""')}"`,
+                        `"${(b.travel_destination || '').replace(/"/g, '""')}"`,
+                        `"${(b.travel_date || '').replace(/"/g, '""')}"`,
+                        parseFloat(b.total_package_amount) || 0,
+                        parseFloat(b.discount) || 0,
+                        net,
+                        paid,
+                        parseFloat(b.balance_remaining) || 0,
+                        `"${(b.payment_status || 'Pending').replace(/"/g, '""')}"`,
+                        `"${(b.created_at || '').replace(/"/g, '""')}"`
+                    ].join(',');
+                });
+
+                const csvContent = '\uFEFF' + headers.join(',') + '\n' + rows.join('\n');
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `billing_export_${new Date().toISOString().split('T')[0]}.csv`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                showAdminToast('Billing records exported successfully!', 'success');
+            } catch (err) {
+                console.error('Export billing CSV error:', err);
+                showAdminToast('Failed to export billing CSV: ' + err.message, 'error');
+            }
+        };
 
         window.downloadBookingsTemplate = function() {
             if (currentUserRole !== 'admin') {
