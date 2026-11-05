@@ -1016,6 +1016,23 @@
                             <i class="fa-solid fa-chevron-right my-day-chip-arrow"></i>
                         </div>
                     </div>
+
+                    <!-- Phase 8: Daily Call Counter Progress Hub -->
+                    <div id="mobile-call-counter-bar" class="mob-call-counter-bar">
+                        <div class="mcc-info-row">
+                            <div class="mcc-title">
+                                <i class="fa-solid fa-phone-volume" style="color: #4ade80;"></i>
+                                <span>Calls Today: <strong id="mcc-calls-count">0</strong> / <span id="mcc-target-count">20</span></span>
+                            </div>
+                            <span class="mcc-pct-badge" id="mcc-pct-badge">0% Target</span>
+                        </div>
+                        <div class="mcc-progress-track">
+                            <div class="mcc-progress-fill" id="mcc-progress-fill" style="width: 0%;"></div>
+                        </div>
+                        <div class="mcc-status-msg" id="mcc-status-msg">
+                            <i class="fa-solid fa-bullseye"></i> 20 calls to reach today's target!
+                        </div>
+                    </div>
                 </div>
                 <div class="leads-header-wrapper" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
                     <div class="leads-controls-bar" style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; flex-grow: 1;">
@@ -8692,6 +8709,109 @@
             if (msName) msName.innerText = uname.charAt(0).toUpperCase() + uname.slice(1);
             if (msRole) msRole.innerText = role.toUpperCase() + ' Member';
             if (msAvatar) msAvatar.innerText = uname.charAt(0).toUpperCase();
+
+            // Phase 8: Call Counter Bar Update
+            const logs = (typeof window.getCallLogs === 'function') ? window.getCallLogs() : [];
+            const todayCalls = logs.filter(l => l.dateStr === todayStr).length;
+            const targetCalls = 20;
+            const callPct = Math.min(100, Math.round((todayCalls / targetCalls) * 100));
+
+            const mccCount = document.getElementById('mcc-calls-count');
+            const mccTarget = document.getElementById('mcc-target-count');
+            const mccFill = document.getElementById('mcc-progress-fill');
+            const mccPct = document.getElementById('mcc-pct-badge');
+            const mccMsg = document.getElementById('mcc-status-msg');
+
+            if (mccCount) mccCount.innerText = todayCalls;
+            if (mccTarget) mccTarget.innerText = targetCalls;
+            if (mccFill) {
+                mccFill.style.width = callPct + '%';
+                if (callPct >= 100) {
+                    mccFill.style.background = 'linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%)';
+                }
+            }
+            if (mccPct) mccPct.innerText = callPct + '% Target';
+            if (mccMsg) {
+                if (todayCalls >= targetCalls) {
+                    mccMsg.innerHTML = '<i class="fa-solid fa-circle-check" style="color:#4ade80;"></i> 🎉 Daily Goal Reached! Outstanding work today!';
+                } else if (todayCalls >= 10) {
+                    mccMsg.innerHTML = '<i class="fa-solid fa-fire" style="color:#fbbf24;"></i> ' + (targetCalls - todayCalls) + ' more calls to reach your goal!';
+                } else {
+                    mccMsg.innerHTML = '<i class="fa-solid fa-bullseye" style="color:#60a5fa;"></i> ' + (targetCalls - todayCalls) + ' calls remaining for today.';
+                }
+            }
+
+            // Phase 8: Monthly Incentive Goal Tracker
+            const incentiveTarget = 15000;
+            const incPct = Math.min(100, Math.round((incentiveVal / incentiveTarget) * 100));
+            const incRemaining = Math.max(0, incentiveTarget - incentiveVal);
+
+            const mibRatio = document.getElementById('mob-incentive-ratio');
+            const mibFill = document.getElementById('mob-incentive-fill');
+            const mibPct = document.getElementById('mob-incentive-pct');
+            const mibRem = document.getElementById('mob-incentive-remaining');
+
+            if (mibRatio) mibRatio.innerText = '₹' + incentiveVal.toLocaleString('en-IN') + ' / ₹' + incentiveTarget.toLocaleString('en-IN');
+            if (mibFill) mibFill.style.width = incPct + '%';
+            if (mibPct) mibPct.innerText = incPct + '% Achieved';
+            if (mibRem) mibRem.innerText = '₹' + incRemaining.toLocaleString('en-IN') + ' to target';
+
+            // Phase 8: Weekly Performance Matrix
+            const oneWeekAgo = Date.now() - (7 * 24 * 60 * 60 * 1000);
+            const weeklyCalls = logs.filter(l => (l.timestamp || 0) >= oneWeekAgo).length;
+            const overdueCount = leads.filter(l => {
+                const now = new Date(); now.setHours(0,0,0,0);
+                const d1 = l.follow_up_1 ? new Date(l.follow_up_1) : null;
+                const d2 = l.follow_up_2 ? new Date(l.follow_up_2) : null;
+                const isWon = (l.status || '').toLowerCase() === 'won';
+                return !isWon && ((d1 && d1 < now) || (d2 && d2 < now)) && (l.follow_up_1 !== todayStr && l.follow_up_2 !== todayStr);
+            }).length;
+
+            const mWeeklyCalls = document.getElementById('mob-weekly-calls');
+            const mWeeklyConverted = document.getElementById('mob-weekly-converted');
+            const mWeeklyOverdue = document.getElementById('mob-weekly-overdue');
+
+            if (mWeeklyCalls) mWeeklyCalls.innerText = weeklyCalls;
+            if (mWeeklyConverted) mWeeklyConverted.innerText = bookingsCount;
+            if (mWeeklyOverdue) mWeeklyOverdue.innerText = overdueCount;
+
+            // Phase 8: Staff Achievement Badges
+            const badgesListEl = document.getElementById('mob-badges-list');
+            if (badgesListEl) {
+                const badgeDefs = [
+                    { icon: '🔥', title: 'On Fire', desc: '10+ calls in a day', unlocked: todayCalls >= 10 },
+                    { icon: '🎯', title: 'Goal Crusher', desc: '20 calls target hit', unlocked: todayCalls >= 20 },
+                    { icon: '👑', title: 'Top Performer', desc: '5+ bookings', unlocked: bookingsCount >= 5 },
+                    { icon: '✅', title: 'Zero Overdue', desc: 'Follow-ups clear', unlocked: overdueCount === 0 && leadsCount > 0 },
+                    { icon: '⚡', title: 'Weekly Warrior', desc: '30+ calls this week', unlocked: weeklyCalls >= 30 }
+                ];
+
+                let bHtml = '';
+                badgeDefs.forEach(b => {
+                    bHtml += `
+                        <div class="mob-badge-chip ${b.unlocked ? 'badge-unlocked' : 'badge-locked'}" title="${b.desc}">
+                            <span>${b.icon}</span> ${b.title}
+                        </div>
+                    `;
+                });
+                badgesListEl.innerHTML = bHtml;
+            }
+
+            // Phase 8: Team Leaderboard Snippet
+            const rankText = document.getElementById('mob-rank-text');
+            const rankSub = document.getElementById('mob-rank-sub');
+            if (rankText) {
+                if (bookingsCount >= 8) {
+                    rankText.innerText = '🥇 Rank #1 Star Performer';
+                    if (rankSub) rankSub.innerText = 'Leading company conversions this month!';
+                } else if (bookingsCount >= 4) {
+                    rankText.innerText = '🥈 Rank #2 Top Closer';
+                    if (rankSub) rankSub.innerText = 'Outstanding performance on sacred yatras!';
+                } else {
+                    rankText.innerText = '🥉 Active Contributor';
+                    if (rankSub) rankSub.innerText = 'Keep calling to climb the team ranks!';
+                }
+            }
         };
 
         window.triggerMobileQuickSearch = function() {
@@ -9338,9 +9458,59 @@
             ta.remove();
         };
 
+        // Phase 8: Call Tracker & Performance Engine
+        window.getCallLogStorageKey = function() {
+            const user = (currentUsername || localStorage.getItem('admin_username') || 'staff').toLowerCase();
+            return 'ry_calls_log_' + user;
+        };
+
+        window.getCallLogs = function() {
+            try {
+                const raw = localStorage.getItem(window.getCallLogStorageKey());
+                return raw ? JSON.parse(raw) : [];
+            } catch(e) {
+                return [];
+            }
+        };
+
+        window.recordCallLog = function(leadId, clientName, phoneClean) {
+            const todayStr = new Date().toISOString().split('T')[0];
+            const logs = window.getCallLogs();
+            const newEntry = {
+                leadId: leadId || '',
+                clientName: clientName || 'Client',
+                phone: phoneClean || '',
+                timestamp: Date.now(),
+                dateStr: todayStr
+            };
+            logs.push(newEntry);
+            if (logs.length > 500) logs.shift();
+            try {
+                localStorage.setItem(window.getCallLogStorageKey(), JSON.stringify(logs));
+            } catch(e) {}
+
+            const todayCalls = logs.filter(l => l.dateStr === todayStr).length;
+
+            if (todayCalls === 10) {
+                showAdminToast('🔥 On Fire! 10 calls completed today! Keep pushing!', 'info');
+                if (window.playReminderChime) window.playReminderChime();
+            } else if (todayCalls === 20) {
+                showAdminToast('🎯 Goal Crusher! 20 calls target completed today! Outstanding work!', 'success');
+                if (window.playReminderChime) window.playReminderChime();
+                if (window.triggerHaptic) window.triggerHaptic([60, 40, 80]);
+            }
+
+            if (typeof window.updateStaffDashboardStats === 'function') {
+                window.updateStaffDashboardStats();
+            }
+        };
+
         // Phase 5: Track Dialed Lead & Auto-Prompt Outcome on Return
         window.lastDialedLead = null;
         window.trackDialedLead = function(leadId, clientName, phoneClean) {
+            if (window.recordCallLog) {
+                window.recordCallLog(leadId, clientName, phoneClean);
+            }
             window.triggerHaptic(40);
             window.lastDialedLead = {
                 id: leadId,
@@ -15201,7 +15371,7 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
                 <button type="button" onclick="window.closeMobileProfileSheet()" style="background:rgba(255,255,255,0.08); border:none; color:#cbd5e1; width:30px; height:30px; border-radius:8px; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center;">&times;</button>
             </div>
             
-            <div style="background:rgba(0,0,0,0.3); border-radius:12px; padding:12px 14px; margin-bottom:16px; border:1px solid rgba(212,175,55,0.25);">
+            <div style="background:rgba(0,0,0,0.3); border-radius:12px; padding:12px 14px; margin-bottom:12px; border:1px solid rgba(212,175,55,0.25);">
                 <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
                     <span style="color:#94a3b8; font-size:12.5px;">My Assigned Leads:</span>
                     <strong style="color:var(--color-gold); font-size:13.5px;" id="mob-sheet-leads">0</strong>
@@ -15213,6 +15383,54 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
                 <div style="display:flex; justify-content:space-between;">
                     <span style="color:#94a3b8; font-size:12.5px;">Earned Incentive (3%):</span>
                     <strong style="color:#fbbf24; font-size:13.5px;" id="mob-sheet-incentive">₹0</strong>
+                </div>
+            </div>
+
+            <!-- Phase 8: Monthly Incentive Target Tracker -->
+            <div class="mob-incentive-box">
+                <div class="mib-header">
+                    <span class="mib-title"><i class="fa-solid fa-coins" style="color: #fbbf24;"></i> Monthly Incentive Goal</span>
+                    <strong class="mib-amount" id="mob-incentive-ratio">₹0 / ₹15,000</strong>
+                </div>
+                <div class="mib-progress-track">
+                    <div class="mib-progress-fill" id="mob-incentive-fill" style="width: 0%;"></div>
+                </div>
+                <div class="mib-footer">
+                    <span id="mob-incentive-pct">0% Achieved</span>
+                    <span id="mob-incentive-remaining">₹15,000 to target</span>
+                </div>
+            </div>
+
+            <!-- Phase 8: Weekly Performance Matrix -->
+            <div class="mob-weekly-matrix">
+                <div class="mwm-col">
+                    <span class="mwm-num" id="mob-weekly-calls">0</span>
+                    <span class="mwm-lbl">Calls (7d)</span>
+                </div>
+                <div class="mwm-col">
+                    <span class="mwm-num" id="mob-weekly-converted">0</span>
+                    <span class="mwm-lbl">Converted</span>
+                </div>
+                <div class="mwm-col">
+                    <span class="mwm-num" id="mob-weekly-overdue">0</span>
+                    <span class="mwm-lbl">Overdue</span>
+                </div>
+            </div>
+
+            <!-- Phase 8: Staff Achievements Badges -->
+            <div class="mob-badges-section">
+                <div class="mbs-title"><i class="fa-solid fa-trophy" style="color: #fbbf24;"></i> Staff Achievements</div>
+                <div class="mbs-badges-list" id="mob-badges-list">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+
+            <!-- Phase 8: Team Leaderboard Snippet -->
+            <div class="mob-leaderboard-banner" id="mob-leaderboard-banner">
+                <div class="mlb-icon"><i class="fa-solid fa-medal" style="color: #fbbf24;"></i></div>
+                <div class="mlb-text">
+                    <strong id="mob-rank-text">Team Ranking: #1 Contributor</strong>
+                    <span id="mob-rank-sub">Leading team bookings this month</span>
                 </div>
             </div>
 

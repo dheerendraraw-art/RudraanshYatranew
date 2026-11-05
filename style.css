@@ -15245,3 +15245,249 @@ body.menu-open::before {
     0% { background-position: -200% 0; }
     100% { background-position: 200% 0; }
 }
+
+
+/* ── PHASE 8: STAFF PERFORMANCE & MOTIVATION DASHBOARD ── */
+
+/* Daily Call Counter Progress Bar inside My Day */
+.mob-call-counter-bar {
+    background: rgba(15, 23, 42, 0.75);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-top: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+.mcc-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mcc-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #e2e8f0;
+    font-weight: 700;
+}
+
+.mcc-title strong {
+    color: #4ade80;
+    font-size: 15px;
+}
+
+.mcc-pct-badge {
+    background: rgba(212, 175, 55, 0.2);
+    border: 1px solid rgba(212, 175, 55, 0.45);
+    color: var(--color-gold);
+    font-size: 11px;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 12px;
+}
+
+.mcc-progress-track {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.mcc-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+    border-radius: 6px;
+    transition: width 0.4s ease-out;
+}
+
+.mcc-status-msg {
+    font-size: 11.5px;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+}
+
+/* Monthly Incentive Goal Box on Account Sheet */
+.mob-incentive-box {
+    background: rgba(0, 0, 0, 0.35);
+    border: 1.5px solid rgba(251, 191, 36, 0.35);
+    border-radius: 14px;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mib-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mib-title {
+    font-size: 12.5px;
+    color: #cbd5e1;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.mib-amount {
+    color: #fbbf24;
+    font-size: 13.5px;
+    font-weight: 800;
+}
+
+.mib-progress-track {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.mib-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #d4af37 0%, #fbbf24 100%);
+    border-radius: 6px;
+    transition: width 0.4s ease-out;
+    box-shadow: 0 0 8px rgba(251, 191, 36, 0.5);
+}
+
+.mib-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+/* Weekly Performance Matrix */
+.mob-weekly-matrix {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.mwm-col {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 10px 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.mwm-num {
+    font-size: 18px;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.2;
+}
+
+.mwm-lbl {
+    font-size: 10px;
+    color: #94a3b8;
+    font-weight: 700;
+    margin-top: 2px;
+}
+
+/* Staff Achievements Badges */
+.mob-badges-section {
+    margin-bottom: 12px;
+}
+
+.mbs-title {
+    font-size: 12px;
+    font-weight: 800;
+    color: #e2e8f0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.mbs-badges-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.mob-badge-chip {
+    padding: 5px 9px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: transform 0.15s ease;
+}
+
+.mob-badge-chip.badge-unlocked {
+    background: rgba(245, 158, 11, 0.18);
+    border: 1.5px solid #fbbf24;
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.25);
+}
+
+.mob-badge-chip.badge-locked {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px dashed rgba(255, 255, 255, 0.15);
+    color: #64748b;
+    opacity: 0.7;
+}
+
+/* Team Leaderboard Banner */
+.mob-leaderboard-banner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+    border: 1.5px solid rgba(212, 175, 55, 0.35);
+    border-radius: 12px;
+    padding: 10px 14px;
+    margin-bottom: 14px;
+}
+
+.mlb-icon {
+    font-size: 20px;
+}
+
+.mlb-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.mlb-text strong {
+    font-size: 12.5px;
+    color: #ffffff;
+}
+
+.mlb-text span {
+    font-size: 11px;
+    color: #94a3b8;
+}
+
+/* Allow scrolling in mobile profile card */
+.mob-profile-card {
+    max-height: 88vh !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+}
