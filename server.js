@@ -1478,6 +1478,7 @@ app.post('/api/admin/login', adminLoginLimiter, async (req, res) => {
 
     try {
         let userRecord = null;
+        let dbConnError = null;
 
         if (supabase) {
             try {
@@ -1489,10 +1490,16 @@ app.post('/api/admin/login', adminLoginLimiter, async (req, res) => {
 
                 if (!error && data) {
                     userRecord = data;
+                } else if (error) {
+                    dbConnError = error.message || 'Database query error';
+                    console.warn('Supabase credentials query error:', dbConnError);
                 }
             } catch (dbErr) {
+                dbConnError = dbErr.message;
                 console.warn('Supabase credentials fetch failed, falling back to static map:', dbErr.message);
             }
+        } else {
+            dbConnError = 'Supabase client not initialized';
         }
 
         if (!userRecord) {
@@ -1500,11 +1507,22 @@ app.post('/api/admin/login', adminLoginLimiter, async (req, res) => {
         }
 
         if (!userRecord) {
+            if (dbConnError) {
+                return res.status(503).json({ error: 'Database unreachable (' + dbConnError + '). Please verify your Supabase project status.' });
+            }
             return res.status(400).json({ error: 'Invalid Username or Passcode.' });
         }
 
         let isMatch = false;
         const storedPass = (userRecord.passcode || '').toString();
+
+        if (!storedPass) {
+            return res.status(503).json({
+                error: dbConnError
+                    ? 'Database unreachable and fallback passcode environment variables are not configured on the server.'
+                    : 'Account passcode is not configured on the server.'
+            });
+        }
 
         if (storedPass.startsWith('$2a$') || storedPass.startsWith('$2b$')) {
             isMatch = (await bcrypt.compare(cleanPasscode, storedPass)) || (await bcrypt.compare(rawPasscode, storedPass));
