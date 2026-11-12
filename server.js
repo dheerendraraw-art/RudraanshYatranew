@@ -2246,6 +2246,20 @@ app.get('/api/analytics/monthly-incentives', authenticateToken, async (req, res)
             });
         }
 
+        // Canonical staff key lookup so UUIDs and usernames for the same staff member combine cleanly
+        const canonicalStaffMap = {
+            'c380f706-58c2-4f0d-a74e-cd3691b62dd5': 'admin', '8de78fbd-2bfe-48c8-a83b-0d971d68cb92': 'admin',
+            '00000000-0000-0000-0000-000000000001': 'seema', 'a4a9bac7-3ba2-48b5-81c3-b362c6275647': 'seema',
+            '00000000-0000-0000-0000-000000000002': 'geetika', '1e06f20b-51e9-4d5c-8c65-565393a13f7e': 'geetika',
+            '00000000-0000-0000-0000-000000000003': 'sneha', '4edec443-bafe-430f-bdd7-0526585d4c76': 'sneha',
+            '00000000-0000-0000-0000-000000000004': 'simran', 'e22366e8-7e52-434a-b4c0-98caba13f187': 'simran',
+            '00000000-0000-0000-0000-000000000005': 'mansi', '4bdd728f-cab9-4e14-88ac-8705eb6d8f90': 'mansi'
+        };
+        const getCanonicalKey = (raw) => {
+            const k = (raw || 'unassigned').toString().toLowerCase().trim();
+            return canonicalStaffMap[k] || k;
+        };
+
         // Compute per-(staff, month) total bookings & sales for threshold check (from Nov 2026: >= 4 bookings AND >= ₹1,10,000 sales)
         const staffMonthTotals = {};
         yearBookings.forEach(booking => {
@@ -2257,7 +2271,7 @@ app.get('/api/analytics/monthly-incentives', authenticateToken, async (req, res)
                 payment_status: ''
             };
             if (billingInfo.payment_status === 'Cancelled') return;
-            const sKey = (booking.assigned_to || booking.user_id || 'unassigned').toLowerCase().trim();
+            const sKey = getCanonicalKey(booking.assigned_to || booking.user_id);
             const qKey = sKey + '|' + m;
             if (!staffMonthTotals[qKey]) staffMonthTotals[qKey] = { count: 0, sales: 0 };
             staffMonthTotals[qKey].count += 1;
@@ -2286,7 +2300,7 @@ app.get('/api/analytics/monthly-incentives', authenticateToken, async (req, res)
             };
             if (billingInfo.payment_status === 'Cancelled') return;
 
-            const sKey = (booking.assigned_to || booking.user_id || 'unassigned').toLowerCase().trim();
+            const sKey = getCanonicalKey(booking.assigned_to || booking.user_id);
             const q = staffMonthTotals[sKey + '|' + m] || { count: 0, sales: 0 };
             const requiresThreshold = (yr > 2026 || (yr === 2026 && m >= 10)); // Nov 2026 onwards
             const qualified = !requiresThreshold || (q.count >= 4 && q.sales >= 110000);

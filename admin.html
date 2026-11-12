@@ -4613,6 +4613,26 @@
             return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
         };
 
+        window.getCanonicalStaffKey = function(rawAssign) {
+            const raw = (rawAssign || '').toString().trim();
+            if (!raw) return 'unassigned';
+            const lower = raw.toLowerCase();
+            if (usersMap && usersMap[raw]) return usersMap[raw].toLowerCase().trim();
+            if (usersMap) {
+                for (const [k, v] of Object.entries(usersMap)) {
+                    if (k.toLowerCase() === lower && v) return v.toLowerCase().trim();
+                }
+            }
+            if (typeof AGENT_UUIDS !== 'undefined') {
+                for (const [uname, uuid] of Object.entries(AGENT_UUIDS)) {
+                    if (uname.toLowerCase() === lower || (uuid && uuid.toLowerCase() === lower)) {
+                        return uname.toLowerCase().trim();
+                    }
+                }
+            }
+            return lower;
+        };
+
         window.computeStaffIncentiveSummary = function(staffId, staffUname) {
             const staffIdLower = (staffId || '').toLowerCase().trim();
             const unameLower = (staffUname || '').toLowerCase().trim();
@@ -4679,14 +4699,18 @@
         window.computeTeamIncentiveSummary = function() {
             const staffKeys = new Map();
             Object.entries(usersMap || {}).forEach(([id, name]) => {
-                if (id) staffKeys.set(id.toLowerCase(), { id, name: name || id });
+                if (!id) return;
+                const canon = window.getCanonicalStaffKey(id);
+                if (!staffKeys.has(canon)) {
+                    staffKeys.set(canon, { id, name: name || id });
+                }
             });
             (bookingsData || []).forEach(b => {
                 const assign = (b.assigned_to || b.user_id || '').trim();
                 if (!assign) return;
-                const k = assign.toLowerCase();
-                if (!staffKeys.has(k)) {
-                    staffKeys.set(k, { id: assign, name: usersMap[assign] || assign });
+                const canon = window.getCanonicalStaffKey(assign);
+                if (!staffKeys.has(canon)) {
+                    staffKeys.set(canon, { id: assign, name: usersMap[assign] || canon });
                 }
             });
 
@@ -7687,7 +7711,7 @@
                     const d = new Date(dateStr);
                     if (isNaN(d.getFullYear())) return;
                     const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
-                    const sKey = (b.assigned_to || b.user_id || 'unassigned').toLowerCase().trim();
+                    const sKey = window.getCanonicalStaffKey(b.assigned_to || b.user_id);
                     const qKey = sKey + '|' + key;
                     if (!staffMonthQual[qKey]) staffMonthQual[qKey] = { count: 0, sales: 0 };
                     staffMonthQual[qKey].count += 1;
@@ -7721,7 +7745,7 @@
 
                         const info = window.getBookingIncentiveInfo(b);
                         if (info.cancelled) return;
-                        const sKey = (b.assigned_to || b.user_id || 'unassigned').toLowerCase().trim();
+                        const sKey = window.getCanonicalStaffKey(b.assigned_to || b.user_id);
                         const q = staffMonthQual[sKey + '|' + key] || { count: 0, sales: 0 };
                         const reqThresh = key >= window.INCENTIVE_THRESHOLD_START_YM;
                         if (!reqThresh || (q.count >= window.INCENTIVE_MIN_BOOKINGS && q.sales >= window.INCENTIVE_MIN_SALES)) {
@@ -8062,9 +8086,9 @@
                 (bookingsData || []).forEach(b => {
                     const info = window.getBookingIncentiveInfo(b);
                     if (info.cancelled) return;
-                    const key = (b.assigned_to || b.user_id || 'unassigned').toLowerCase();
+                    const sKey = window.getCanonicalStaffKey(b.assigned_to || b.user_id);
                     const ym = window.getBookingMonthKey(b);
-                    const qKey = key + '|' + ym;
+                    const qKey = sKey + '|' + ym;
                     if (!leaderMonthQual[qKey]) leaderMonthQual[qKey] = { count: 0, sales: 0 };
                     leaderMonthQual[qKey].count += 1;
                     leaderMonthQual[qKey].sales += info.net;
@@ -8086,7 +8110,7 @@
                         const info = window.getBookingIncentiveInfo(b);
                         if (info.cancelled) return;
                         const ym = window.getBookingMonthKey(b);
-                        const q = leaderMonthQual[key + '|' + ym] || { count: 0, sales: 0 };
+                        const q = leaderMonthQual[window.getCanonicalStaffKey(b.assigned_to || b.user_id) + '|' + ym] || { count: 0, sales: 0 };
                         const reqThresh = ym >= window.INCENTIVE_THRESHOLD_START_YM;
                         if (!reqThresh || (q.count >= window.INCENTIVE_MIN_BOOKINGS && q.sales >= window.INCENTIVE_MIN_SALES)) {
                             staffMap[matchKey].incentive += Math.round(info.net * window.INCENTIVE_RATE);
