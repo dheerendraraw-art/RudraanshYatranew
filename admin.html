@@ -4620,10 +4620,21 @@
             return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
         };
 
+        const STAFF_CRED_ID_TO_UNAME = {
+            '8de78fbd-2bfe-48c8-a83b-0d971d68cb92': 'admin',
+            'c380f706-58c2-4f0d-a74e-cd3691b62dd5': 'admin',
+            'a4a9bac7-3ba2-48b5-81c3-b362c6275647': 'seema',
+            '1e06f20b-51e9-4d5c-8c65-565393a13f7e': 'geetika',
+            '4edec443-bafe-430f-bdd7-0526585d4c76': 'sneha',
+            'e22366e8-7e52-434a-b4c0-98caba13f187': 'simran',
+            '4bdd728f-cab9-4e14-88ac-8705eb6d8f90': 'mansi'
+        };
+
         window.getCanonicalStaffKey = function(rawAssign) {
             const raw = (rawAssign || '').toString().trim();
             if (!raw) return 'unassigned';
             const lower = raw.toLowerCase();
+            if (STAFF_CRED_ID_TO_UNAME[lower]) return STAFF_CRED_ID_TO_UNAME[lower];
             if (usersMap && usersMap[raw]) return usersMap[raw].toLowerCase().trim();
             if (usersMap) {
                 for (const [k, v] of Object.entries(usersMap)) {
@@ -4643,11 +4654,14 @@
         window.computeStaffIncentiveSummary = function(staffId, staffUname) {
             const staffIdLower = (staffId || '').toLowerCase().trim();
             const unameLower = (staffUname || '').toLowerCase().trim();
+            const targetCanon = window.getCanonicalStaffKey(unameLower || staffIdLower);
 
             const staffBookings = (bookingsData || []).filter(b => {
-                const assign = (b.assigned_to || b.user_id || '').toLowerCase().trim();
-                if (!assign) return false;
-                return assign === staffIdLower || assign === unameLower || (usersMap[assign] && usersMap[assign].toLowerCase() === unameLower);
+                const rawAssign = (b.assigned_to || b.user_id || '').trim();
+                if (!rawAssign) return false;
+                const assignLower = rawAssign.toLowerCase();
+                if (assignLower === staffIdLower || assignLower === unameLower) return true;
+                return window.getCanonicalStaffKey(rawAssign) === targetCanon;
             });
 
             const monthBuckets = {};
@@ -7248,7 +7262,7 @@
                             if (cat.name === 'Booking Confirmed' && (myIncentive > 0 || myPending > 0)) {
                                 incValHtml = `<div style="display:flex;flex-direction:column;gap:2px;">
                                     <strong style="color: #22c55e; font-size: 14px; font-weight: 800;">₹${myIncentive.toLocaleString('en-IN')}</strong>
-                                    ${myPending > 0 ? `<span style="color:#d97706;font-size:11px;font-weight:700;" title="Will unlock once Yatra Status is set to Yatra Completed">+₹${myPending.toLocaleString('en-IN')} in progress</span>` : ''}
+                                    ${myPending > 0 ? `<span style="color:#d97706;font-size:11px;font-weight:700;" title="Will unlock once Yatra Status is set to Yatra Completed">+₹${myPending.toLocaleString('en-IN')} shown</span>` : ''}
                                 </div>`;
                             }
 
@@ -7445,7 +7459,7 @@
                                     <td data-label="Earned Incentive (3%)">
                                         <div style="display:flex;flex-direction:column;gap:2px;">
                                             <strong style="color: #22c55e; font-size: 14px; font-weight: 800;">₹${incVal.toLocaleString('en-IN')}</strong>
-                                            ${pendingInc > 0 ? `<span style="color:#d97706;font-size:11px;font-weight:700;" title="Will unlock when Yatra Status is set to Yatra Completed">+₹${pendingInc.toLocaleString('en-IN')} in progress</span>` : ''}
+                                            ${pendingInc > 0 ? `<span style="color:#d97706;font-size:11px;font-weight:700;" title="Will unlock when Yatra Status is set to Yatra Completed">+₹${pendingInc.toLocaleString('en-IN')} shown</span>` : ''}
                                         </div>
                                     </td>
                                     <td data-label="Contact Rate">
@@ -8880,7 +8894,7 @@
 
             const leadsCount = leads.length;
             const followupsCount = leads.filter(l => (l.status === 'Follow up required' || (l.follow_up_1 && l.follow_up_1.includes(todayStr)))).length;
-            const bookingsCount = bookings.filter(b => (b.booking_status || '').toLowerCase() === 'confirmed' || (b.yatra_status || '').toLowerCase() === 'confirmed' || !b.booking_status).length;
+            const bookingsCount = bookings.filter(b => (b.yatra_status || '').toLowerCase() !== 'cancelled' && ((b.booking_status || '').toLowerCase() === 'confirmed' || (b.yatra_status || '').toLowerCase() === 'confirmed' || !b.booking_status)).length;
             
             // Incentive calculation: 3% earned ONLY after Yatra Completed AND monthly target (4+ bookings & ₹1,10,000+ sales from Nov 2026); till then shown as pending/projected
             const myIncSummary = (typeof window.computeStaffIncentiveSummary === 'function')

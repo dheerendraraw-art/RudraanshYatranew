@@ -2215,40 +2215,6 @@ app.get('/api/analytics/monthly-incentives', authenticateToken, async (req, res)
         const { staff_id, year = new Date().getFullYear() } = req.query;
         const yr = parseInt(year);
 
-        let bQuery = supabase.from('bookings').select('*');
-        if (staff_id) {
-            bQuery = bQuery.or(`assigned_to.eq.${staff_id},user_id.eq.${staff_id}`);
-        }
-
-        const { data: allBookings, error: bErr } = await bQuery;
-        if (bErr) throw bErr;
-
-        // Enrich all bookings for the specified year (keep non-cancelled to evaluate monthly qualification)
-        const yearBookings = (allBookings || [])
-            .map(enrichBookingYatraStatus)
-            .filter(b => {
-                if (b.yatra_status === 'Cancelled') return false;
-                const dateStr = b.completed_at || b.travel_date || b.created_at;
-                if (!dateStr) return false;
-                return new Date(dateStr).getFullYear() === yr;
-            });
-
-        // Cross-reference billing to get net amounts across all year bookings
-        const bookingIds = (yearBookings || []).map(b => b.booking_id).filter(Boolean);
-        let billMap = {};
-        if (bookingIds.length > 0) {
-            const { data: bills } = await supabase
-                .from('booking_bills')
-                .select('booking_id, total_package_amount, discount, payment_status')
-                .in('booking_id', bookingIds);
-            (bills || []).forEach(b => {
-                billMap[b.booking_id] = {
-                    net: Math.max(0, parseFloat(b.total_package_amount || 0) - parseFloat(b.discount || 0)),
-                    payment_status: b.payment_status || ''
-                };
-            });
-        }
-
         // Canonical staff key lookup so UUIDs and usernames for the same staff member combine cleanly
         const canonicalStaffMap = {
             'c380f706-58c2-4f0d-a74e-cd3691b62dd5': 'admin', '8de78fbd-2bfe-48c8-a83b-0d971d68cb92': 'admin',
@@ -2263,16 +2229,53 @@ app.get('/api/analytics/monthly-incentives', authenticateToken, async (req, res)
             return canonicalStaffMap[k] || k;
         };
 
+        const { data: allBookings, error: bErr } = await supabase.from('bookings').select('*');
+        if (bErr) throw bErr;
+
+        const targetStaffCanon = staff_id ? getCanonicalKey(staff_id) : null;
+
+        // Enrich all bookings for the specified year (keep non-cancelled to evaluate monthly qualification)
+        const yearBookings = (allBookings || [])
+            .map(enrichBookingYatraStatus)
+            .filter(b => {
+                if (b.yatra_status === 'Cancelled') return false;
+                if (targetStaffCanon && getCanonicalKey(b.assigned_to || b.user_id) !== targetStaffCanon) return false;
+                const dateStr = b.completed_at || b.travel_date || b.created_at;
+                if (!dateStr) return false;
+                return new Date(dateStr).getFullYear() === yr;
+            });
+
+        // Cross-reference billing by booking_id OR booking_uuid
+        let billMap = {};
+        let billUuidMap = {};
+        if (yearBookings.length > 0) {
+            const { data: bills } = await supabase
+                .from('booking_bills')
+                .select('booking_id, booking_uuid, total_package_amount, discount, payment_status');
+            (bills || []).forEach(b => {
+                const entry = {
+                    net: Math.max(0, parseFloat(b.total_package_amount || 0) - parseFloat(b.discount || 0)),
+                    payment_status: b.payment_status || ''
+                };
+                if (b.booking_id) billMap[b.booking_id] = entry;
+                if (b.booking_uuid) billUuidMap[b.booking_uuid] = entry;
+            });
+        }
+
+        const getBillForBooking = (booking) => {
+            return billMap[booking.booking_id] || billMap[booking.id] || billUuidMap[booking.id] || {
+                net: Math.max(0, parseFloat(booking.total_package_amount || booking.total_amount || booking.amount || 0)),
+                payment_status: ''
+            };
+        };
+
         // Compute per-(staff, month) total bookings & sales for threshold check (from Nov 2026: >= 4 bookings AND >= ₹1,10,000 sales)
         const staffMonthTotals = {};
         yearBookings.forEach(booking => {
             const dateStr = booking.completed_at || booking.travel_date || booking.created_at;
             const m = new Date(dateStr).getMonth();
             if (m < 0 || m > 11) return;
-            const billingInfo = billMap[booking.booking_id] || {
-                net: Math.max(0, parseFloat(booking.total_package_amount || booking.total_amount || booking.amount || 0)),
-                payment_status: ''
-            };
+            const billingInfo = getBillForBooking(booking);
             if (billingInfo.payment_status === 'Cancelled') return;
             const sKey = getCanonicalKey(booking.assigned_to || booking.user_id);
             const qKey = sKey + '|' + m;
@@ -2297,10 +2300,7 @@ app.get('/api/analytics/monthly-incentives', authenticateToken, async (req, res)
             if (!dateStr) return;
             const m = new Date(dateStr).getMonth(); // 0-indexed
             if (m < 0 || m > 11) return;
-            const billingInfo = billMap[booking.booking_id] || { 
-                net: Math.max(0, parseFloat(booking.total_package_amount || booking.total_amount || booking.amount || 0)), 
-                payment_status: '' 
-            };
+            const billingInfo = getBillForBooking(booking);
             if (billingInfo.payment_status === 'Cancelled') return;
 
             const sKey = getCanonicalKey(booking.assigned_to || booking.user_id);
