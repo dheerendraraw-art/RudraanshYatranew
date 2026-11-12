@@ -3723,7 +3723,11 @@
                     }
                 } else {
                     const errData = await response.json().catch(() => ({}));
-                    if (errData && errData.error) errorMessage = errData.error;
+                    if (errData && errData.error) {
+                        errorMessage = errData.error;
+                    } else if (response.status >= 500) {
+                        errorMessage = `Server error (${response.status}). Please try again in a moment.`;
+                    }
                 }
             } catch (apiErr) {
                 console.warn('Backend API unreachable:', apiErr.message);
@@ -4082,6 +4086,7 @@
                 let userData = null;
                 let loginSuccess = false;
                 let backendReachable = false;
+                let reauthErrMsg = '';
 
                 try {
                     const response = await fetch('/api/admin/login', {
@@ -4101,15 +4106,17 @@
                         }
                     } else {
                         const errData = await response.json().catch(() => ({}));
-                        console.warn('Backend login rejected during reauth:', errData.error || response.status);
+                        reauthErrMsg = (errData && errData.error) ? errData.error : `Server error (${response.status})`;
+                        console.warn('Backend login rejected during reauth:', reauthErrMsg);
                     }
                 } catch(apiErr) {
+                    reauthErrMsg = 'Authentication server unreachable. Please check your connection.';
                     console.warn('Backend login attempt during re-auth failed:', apiErr);
                 }
 
                 // If authentication failed, reject reauth
                 if (!loginSuccess) {
-                    showAdminToast('Incorrect passcode or server unreachable. Please try again.', 'error');
+                    showAdminToast(typeof reauthErrMsg !== 'undefined' && reauthErrMsg ? reauthErrMsg : 'Incorrect passcode or server unreachable. Please try again.', 'error');
                     passEl.value = '';
                     passEl.focus();
                     if (btn) {

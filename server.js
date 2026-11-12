@@ -27,8 +27,9 @@ const { getBlogEnhancement } = require('./blog-enhancers');
 // Rate limiter for admin login — max 10 attempts per IP per 15 minutes
 const adminLoginLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
-    max: 10,
-    message: { error: 'Too many login attempts. Please try again in 15 minutes.' },
+    max: 15,
+    skipSuccessfulRequests: true,
+    message: { error: 'Too many failed login attempts. Please try again in 15 minutes.' },
     standardHeaders: true,
     legacyHeaders: false,
 });
@@ -41,6 +42,8 @@ const upload = multer({
 });
 
 const app = express();
+// Trust reverse proxy (Hostinger / CDN) so rate-limiter uses real client IP instead of sharing one bucket
+app.set('trust proxy', 1);
 app.use(compression({ level: 6 }));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
@@ -1486,10 +1489,10 @@ app.post('/api/admin/login', adminLoginLimiter, async (req, res) => {
                     .from('staff_credentials')
                     .select('*')
                     .ilike('username', cleanUsername)
-                    .maybeSingle();
+                    .limit(1);
 
-                if (!error && data) {
-                    userRecord = data;
+                if (!error && Array.isArray(data) && data.length > 0) {
+                    userRecord = data[0];
                 } else if (error) {
                     dbConnError = error.message || 'Database query error';
                     console.warn('Supabase credentials query error:', dbConnError);
@@ -2908,7 +2911,7 @@ app.post('/api/admin/credentials', authenticateToken, requireAdmin, async (req, 
     try {
         const credentialData = { ...req.body };
         if (credentialData.passcode) {
-            credentialData.passcode = await bcrypt.hash(credentialData.passcode, 12);
+            credentialData.passcode = await bcrypt.hash(credentialData.passcode.toString().trim(), 12);
         }
         const { error } = await supabase.from('staff_credentials').insert([credentialData]);
         if (error) throw error;
@@ -2938,7 +2941,7 @@ app.put('/api/admin/credentials/:id', authenticateToken, async (req, res) => {
         } else {
             const isAlreadyHashed = updates.passcode.startsWith('$2a$') || updates.passcode.startsWith('$2b$');
             if (!isAlreadyHashed) {
-                updates.passcode = await bcrypt.hash(updates.passcode, 12);
+                updates.passcode = await bcrypt.hash(updates.passcode.toString().trim(), 12);
             }
         }
 
