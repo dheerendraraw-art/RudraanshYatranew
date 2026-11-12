@@ -2220,18 +2220,18 @@ app.get('/api/analytics/monthly-incentives', authenticateToken, async (req, res)
         const { data: allBookings, error: bErr } = await bQuery;
         if (bErr) throw bErr;
 
-        // Filter completed bookings for the specified year
-        const bookings = (allBookings || [])
+        // Enrich all bookings for the specified year (keep non-cancelled to evaluate monthly qualification)
+        const yearBookings = (allBookings || [])
             .map(enrichBookingYatraStatus)
             .filter(b => {
-                if (b.yatra_status !== 'Yatra Completed') return false;
-                const dateStr = b.completed_at || b.travel_date;
+                if (b.yatra_status === 'Cancelled') return false;
+                const dateStr = b.completed_at || b.travel_date || b.created_at;
                 if (!dateStr) return false;
                 return new Date(dateStr).getFullYear() === yr;
             });
 
-        // Cross-reference billing to get net amounts
-        const bookingIds = (bookings || []).map(b => b.booking_id).filter(Boolean);
+        // Cross-reference billing to get net amounts across all year bookings
+        const bookingIds = (yearBookings || []).map(b => b.booking_id).filter(Boolean);
         let billMap = {};
         if (bookingIds.length > 0) {
             const { data: bills } = await supabase
@@ -2246,6 +2246,24 @@ app.get('/api/analytics/monthly-incentives', authenticateToken, async (req, res)
             });
         }
 
+        // Compute per-(staff, month) total bookings & sales for threshold check (from Nov 2026: >= 4 bookings AND >= ₹1,10,000 sales)
+        const staffMonthTotals = {};
+        yearBookings.forEach(booking => {
+            const dateStr = booking.completed_at || booking.travel_date || booking.created_at;
+            const m = new Date(dateStr).getMonth();
+            if (m < 0 || m > 11) return;
+            const billingInfo = billMap[booking.booking_id] || {
+                net: Math.max(0, parseFloat(booking.total_package_amount || booking.total_amount || booking.amount || 0)),
+                payment_status: ''
+            };
+            if (billingInfo.payment_status === 'Cancelled') return;
+            const sKey = (booking.assigned_to || booking.user_id || 'unassigned').toLowerCase().trim();
+            const qKey = sKey + '|' + m;
+            if (!staffMonthTotals[qKey]) staffMonthTotals[qKey] = { count: 0, sales: 0 };
+            staffMonthTotals[qKey].count += 1;
+            staffMonthTotals[qKey].sales += billingInfo.net;
+        });
+
         // Build 12-month structure
         const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         const monthlyData = Array.from({ length: 12 }, (_, i) => ({
@@ -2253,23 +2271,37 @@ app.get('/api/analytics/monthly-incentives', authenticateToken, async (req, res)
             month_name: MONTHS[i],
             yatras_completed: 0,
             net_revenue: 0,
-            incentive_earned: 0
+            incentive_earned: 0,
+            incentive_pending: 0
         }));
 
-        (bookings || []).forEach(booking => {
-            const dateStr = booking.completed_at || booking.travel_date;
+        yearBookings.forEach(booking => {
+            const dateStr = booking.completed_at || booking.travel_date || booking.created_at;
             if (!dateStr) return;
             const m = new Date(dateStr).getMonth(); // 0-indexed
             if (m < 0 || m > 11) return;
             const billingInfo = billMap[booking.booking_id] || { 
-                net: parseFloat(booking.total_package_amount || booking.amount || 0), 
+                net: Math.max(0, parseFloat(booking.total_package_amount || booking.total_amount || booking.amount || 0)), 
                 payment_status: '' 
             };
-            monthlyData[m].yatras_completed += 1;
-            monthlyData[m].net_revenue      += billingInfo.net;
-            // Incentive is earned once booking status is "Yatra Completed" (excluding cancelled bills)
-            if (billingInfo.payment_status !== 'Cancelled') {
-                monthlyData[m].incentive_earned += Math.round(billingInfo.net * 0.03);
+            if (billingInfo.payment_status === 'Cancelled') return;
+
+            const sKey = (booking.assigned_to || booking.user_id || 'unassigned').toLowerCase().trim();
+            const q = staffMonthTotals[sKey + '|' + m] || { count: 0, sales: 0 };
+            const requiresThreshold = (yr > 2026 || (yr === 2026 && m >= 10)); // Nov 2026 onwards
+            const qualified = !requiresThreshold || (q.count >= 4 && q.sales >= 110000);
+            const incAmt = Math.round(billingInfo.net * 0.03);
+
+            if (booking.yatra_status === 'Yatra Completed') {
+                monthlyData[m].yatras_completed += 1;
+                monthlyData[m].net_revenue      += billingInfo.net;
+                if (qualified) {
+                    monthlyData[m].incentive_earned += incAmt;
+                } else {
+                    monthlyData[m].incentive_pending += incAmt;
+                }
+            } else {
+                monthlyData[m].incentive_pending += incAmt;
             }
         });
 

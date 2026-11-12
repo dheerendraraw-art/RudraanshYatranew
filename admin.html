@@ -171,7 +171,7 @@
                     <div class="admin-stat-icon" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24;"><i class="fa-solid fa-sack-dollar"></i></div>
                     <div class="admin-stat-info">
                         <span class="admin-stat-num" id="staff-stat-incentive" style="color: #fbbf24;">₹0</span>
-                        <span class="admin-stat-label">Earned Incentive (3%)</span>
+                        <span class="admin-stat-label" id="staff-stat-incentive-label">Earned Incentive (3%)</span>
                     </div>
                 </div>
             </div>
@@ -4572,65 +4572,143 @@
             }
         };
 
-        // Earned incentive is strictly given ONLY after yatra_status is "Yatra Completed"
-        window.computeIncentiveForStaff = function(staffId, staffUname) {
-            let totalBilledNet = 0;
-            const staffIdLower = (staffId || '').toLowerCase().trim();
-            const unameLower = (staffUname || '').toLowerCase().trim();
+        // Incentive policy constants: From Nov 2026 ('2026-11'), 3% applies only if monthly bookings >= 4 AND monthly sales >= ₹1,10,000, and unlocked only on "Yatra Completed".
+        window.INCENTIVE_THRESHOLD_START_YM = '2026-11';
+        window.INCENTIVE_MIN_BOOKINGS = 4;
+        window.INCENTIVE_MIN_SALES = 110000;
+        window.INCENTIVE_RATE = 0.03;
 
-            const staffBookings = (bookingsData || []).filter(b => {
-                if ((b.yatra_status || '') !== 'Yatra Completed') return false;
-                const assign = (b.assigned_to || b.user_id || '').toLowerCase().trim();
-                return assign === staffIdLower || assign === unameLower || (usersMap[assign] && usersMap[assign].toLowerCase() === unameLower);
-            });
-
-            staffBookings.forEach(b => {
-                const bill = (billingRecords || []).find(br => 
-                    (br.booking_id && (br.booking_id === b.booking_id || br.booking_id === b.id)) ||
-                    (br.booking_uuid && br.booking_uuid === b.id)
-                );
-                if (bill) {
-                    if (bill.payment_status === 'Cancelled') return;
-                    const gross = parseFloat(bill.total_package_amount || 0);
-                    const disc = parseFloat(bill.discount || 0);
-                    totalBilledNet += Math.max(0, gross - disc);
-                } else {
-                    totalBilledNet += parseFloat(b.total_package_amount || b.amount || 0);
-                }
-            });
-
-            return Math.round(totalBilledNet * 0.03);
+        window.getBookingIncentiveInfo = function(b) {
+            const ys = b.yatra_status || 'In Progress';
+            if (ys === 'Cancelled') return { net: 0, cancelled: true, completed: false };
+            const bill = (billingRecords || []).find(br =>
+                (br.booking_id && (br.booking_id === b.booking_id || br.booking_id === b.id)) ||
+                (br.booking_uuid && br.booking_uuid === b.id)
+            );
+            if (bill && bill.payment_status === 'Cancelled') {
+                return { net: 0, cancelled: true, completed: false };
+            }
+            let net = 0;
+            if (bill) {
+                const gross = parseFloat(bill.total_package_amount || 0);
+                const disc = parseFloat(bill.discount || 0);
+                net = Math.max(0, gross - disc);
+            } else {
+                net = Math.max(0, parseFloat(b.total_package_amount || b.total_amount || b.price || b.amount || 0));
+            }
+            return { net, cancelled: false, completed: ys === 'Yatra Completed' };
         };
 
-        // Pipeline / upcoming incentive for bookings that are still "In Progress"
-        window.computePendingIncentiveForStaff = function(staffId, staffUname) {
-            let totalBilledNet = 0;
+        window.getBookingMonthKey = function(b) {
+            const dStr = b.completed_at || b.travel_date || b.created_at;
+            if (!dStr) {
+                const now = new Date();
+                return now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
+            }
+            const d = new Date(dStr);
+            if (isNaN(d.getTime())) {
+                const now = new Date();
+                return now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
+            }
+            return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+        };
+
+        window.computeStaffIncentiveSummary = function(staffId, staffUname) {
             const staffIdLower = (staffId || '').toLowerCase().trim();
             const unameLower = (staffUname || '').toLowerCase().trim();
 
             const staffBookings = (bookingsData || []).filter(b => {
-                const ys = b.yatra_status || 'In Progress';
-                if (ys !== 'In Progress') return false;
                 const assign = (b.assigned_to || b.user_id || '').toLowerCase().trim();
+                if (!assign) return false;
                 return assign === staffIdLower || assign === unameLower || (usersMap[assign] && usersMap[assign].toLowerCase() === unameLower);
             });
 
+            const monthBuckets = {};
             staffBookings.forEach(b => {
-                const bill = (billingRecords || []).find(br => 
-                    (br.booking_id && (br.booking_id === b.booking_id || br.booking_id === b.id)) ||
-                    (br.booking_uuid && br.booking_uuid === b.id)
-                );
-                if (bill) {
-                    if (bill.payment_status === 'Cancelled') return;
-                    const gross = parseFloat(bill.total_package_amount || 0);
-                    const disc = parseFloat(bill.discount || 0);
-                    totalBilledNet += Math.max(0, gross - disc);
+                const info = window.getBookingIncentiveInfo(b);
+                if (info.cancelled) return;
+                const ym = window.getBookingMonthKey(b);
+                if (!monthBuckets[ym]) {
+                    monthBuckets[ym] = { totalCount: 0, totalSales: 0, completedSales: 0, inProgressSales: 0 };
+                }
+                monthBuckets[ym].totalCount += 1;
+                monthBuckets[ym].totalSales += info.net;
+                if (info.completed) {
+                    monthBuckets[ym].completedSales += info.net;
                 } else {
-                    totalBilledNet += parseFloat(b.total_package_amount || b.amount || 0);
+                    monthBuckets[ym].inProgressSales += info.net;
                 }
             });
 
-            return Math.round(totalBilledNet * 0.03);
+            let earned = 0;
+            let pending = 0;
+            let projectedTotal = 0;
+
+            Object.entries(monthBuckets).forEach(([ym, m]) => {
+                const requiresThreshold = ym >= window.INCENTIVE_THRESHOLD_START_YM;
+                const qualified = !requiresThreshold || (m.totalCount >= window.INCENTIVE_MIN_BOOKINGS && m.totalSales >= window.INCENTIVE_MIN_SALES);
+                const totalMonthInc = Math.round((m.completedSales + m.inProgressSales) * window.INCENTIVE_RATE);
+                projectedTotal += totalMonthInc;
+
+                if (qualified) {
+                    earned += Math.round(m.completedSales * window.INCENTIVE_RATE);
+                    pending += Math.round(m.inProgressSales * window.INCENTIVE_RATE);
+                } else {
+                    // Threshold not met: earned incentive is strictly 0, full 3% is shown as pending/locked
+                    pending += totalMonthInc;
+                }
+            });
+
+            const now = new Date();
+            const curYm = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
+            const curBucket = monthBuckets[curYm] || { totalCount: 0, totalSales: 0, completedSales: 0, inProgressSales: 0 };
+            const currentMonthQualified = curBucket.totalCount >= window.INCENTIVE_MIN_BOOKINGS && curBucket.totalSales >= window.INCENTIVE_MIN_SALES;
+
+            return {
+                earned,
+                pending,
+                projectedTotal,
+                currentMonthBookings: curBucket.totalCount,
+                currentMonthSales: curBucket.totalSales,
+                currentMonthQualified,
+                bookingsNeeded: Math.max(0, window.INCENTIVE_MIN_BOOKINGS - curBucket.totalCount),
+                salesNeeded: Math.max(0, window.INCENTIVE_MIN_SALES - curBucket.totalSales)
+            };
+        };
+
+        window.computeTeamIncentiveSummary = function() {
+            const staffKeys = new Map();
+            Object.entries(usersMap || {}).forEach(([id, name]) => {
+                if (id) staffKeys.set(id.toLowerCase(), { id, name: name || id });
+            });
+            (bookingsData || []).forEach(b => {
+                const assign = (b.assigned_to || b.user_id || '').trim();
+                if (!assign) return;
+                const k = assign.toLowerCase();
+                if (!staffKeys.has(k)) {
+                    staffKeys.set(k, { id: assign, name: usersMap[assign] || assign });
+                }
+            });
+
+            let totalTeamIncentive = 0;
+            let totalPendingTeamIncentive = 0;
+            staffKeys.forEach(({ id, name }) => {
+                const s = window.computeStaffIncentiveSummary(id, name);
+                totalTeamIncentive += s.earned;
+                totalPendingTeamIncentive += s.pending;
+            });
+
+            return { earned: totalTeamIncentive, pending: totalPendingTeamIncentive };
+        };
+
+        // Earned incentive is strictly given ONLY after yatra_status is "Yatra Completed" AND monthly target (4+ bookings & ₹1,10,000+ sales from Nov 2026) is met
+        window.computeIncentiveForStaff = function(staffId, staffUname) {
+            return window.computeStaffIncentiveSummary(staffId, staffUname).earned;
+        };
+
+        // Pipeline / shown incentive (In Progress bookings or locked until monthly target of 4+ bookings & ₹1,10,000+ sales is reached)
+        window.computePendingIncentiveForStaff = function(staffId, staffUname) {
+            return window.computeStaffIncentiveSummary(staffId, staffUname).pending;
         };
 
         window.updateDynamicStats = function(paneId) {
@@ -4854,36 +4932,16 @@
                     setCard(2, true, '<i class="fa-solid fa-hourglass-half" style="color: #eab308;"></i>', pending, 'My Pending Outreach');
                     setCard(3, true, '<i class="fa-solid fa-trophy" style="color: #ec4899;"></i>', converted, 'My Converted Bookings');
                     setCard(4, true, '<i class="fa-solid fa-chart-line" style="color: var(--color-gold);"></i>', contactRate, 'My Contact Rate');
-                    const incLabel = myPending > 0 ? `My Earned Incentive (3%)<br><span style="font-size:10.5px;color:#f59e0b;font-weight:600;">+₹${myPending.toLocaleString('en-IN')} in progress</span>` : 'My Earned Incentive (3%)';
+                    const mySummary = window.computeStaffIncentiveSummary(currentUserUuidMapping, currentUsername);
+                    const subText = myPending > 0
+                        ? `+₹${myPending.toLocaleString('en-IN')} shown (${mySummary.currentMonthBookings}/4 bkgs • ₹${mySummary.currentMonthSales.toLocaleString('en-IN')}/₹1.1L)`
+                        : `${mySummary.currentMonthBookings}/4 bkgs • ₹${mySummary.currentMonthSales.toLocaleString('en-IN')}/₹1.1L`;
+                    const incLabel = `My Earned Incentive (3%)<br><span style="font-size:10.5px;color:#f59e0b;font-weight:600;">${subText}</span>`;
                     setCard(5, true, '<i class="fa-solid fa-hand-holding-dollar" style="color: #22c55e;"></i>', '₹' + myIncentive.toLocaleString('en-IN'), incLabel);
                 } else {
-                    let totalTeamIncentive = 0;
-                    let totalPendingTeamIncentive = 0;
-                    (bookingsData || []).forEach(b => {
-                        const ys = b.yatra_status || 'In Progress';
-                        if (ys === 'Cancelled') return;
-                        const bill = (billingRecords || []).find(br => 
-                            (br.booking_id && (br.booking_id === b.booking_id || br.booking_id === b.id)) ||
-                            (br.booking_uuid && br.booking_uuid === b.id)
-                        );
-                        let net = 0;
-                        if (bill) {
-                            if (bill.payment_status === 'Cancelled') return;
-                            const gross = parseFloat(bill.total_package_amount || 0);
-                            const disc = parseFloat(bill.discount || 0);
-                            net = Math.max(0, gross - disc);
-                        } else {
-                            net = parseFloat(b.total_package_amount || b.amount || 0);
-                        }
-
-                        if (ys === 'Yatra Completed') {
-                            totalTeamIncentive += net;
-                        } else if (ys === 'In Progress') {
-                            totalPendingTeamIncentive += net;
-                        }
-                    });
-                    totalTeamIncentive = Math.round(totalTeamIncentive * 0.03);
-                    totalPendingTeamIncentive = Math.round(totalPendingTeamIncentive * 0.03);
+                    const teamSummary = window.computeTeamIncentiveSummary();
+                    const totalTeamIncentive = teamSummary.earned;
+                    const totalPendingTeamIncentive = teamSummary.pending;
 
                     setCard(0, true, '<i class="fa-solid fa-users" style="color: #3b82f6;"></i>', total, 'Total Leads');
                     setCard(1, true, '<i class="fa-solid fa-phone-volume" style="color: #22c55e;"></i>', answered, 'Connected Calls');
@@ -7517,48 +7575,29 @@
                 const insightsBox = document.getElementById('analytics-insights-container');
                 if (insightsBox) {
                     if (currentUserRole === 'staff') {
-                        const myIncentive = computeIncentiveForStaff(currentUserUuidMapping, currentUsername);
-                        const myPending = computePendingIncentiveForStaff(currentUserUuidMapping, currentUsername);
+                        const mySummary = window.computeStaffIncentiveSummary(currentUserUuidMapping, currentUsername);
+                        const myIncentive = mySummary.earned;
+                        const myPending = mySummary.pending;
+                        const qualBadge = mySummary.currentMonthQualified
+                            ? '<span style="color:#16a34a;font-weight:700;">✅ Monthly Target Met (4+ bookings & ₹1,10,000+ sales)</span>'
+                            : `<span style="color:#b45309;font-weight:700;">⏳ This Month: ${mySummary.currentMonthBookings}/4 bookings & ₹${mySummary.currentMonthSales.toLocaleString('en-IN')}/₹1,10,000 sales</span>`;
                         insightsBox.innerHTML = `
                             <div style="background: #ffffff; border: 1.5px solid rgba(212, 175, 55, 0.35); box-shadow: 0 4px 15px rgba(0,0,0,0.04); border-radius: 12px; padding: 20px;">
                                 <h4 style="margin: 0 0 12px 0; color: #b45309; font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px;">
                                     <i class="fa-solid fa-lightbulb"></i> My Performance Checklist & Incentive Summary
                                 </h4>
                                 <ul style="margin: 0; padding-left: 20px; color: #334155; font-size: 14px; line-height: 1.7;">
-                                    <li><strong>🎉 Earned Incentive (3%):</strong> You have earned <strong style="color: #22c55e;">₹${myIncentive.toLocaleString('en-IN')}</strong> on your completed yatras! ${myPending > 0 ? `<span style="color:#b45309;font-weight:600;">(Plus <strong style="color:#d97706;">₹${myPending.toLocaleString('en-IN')}</strong> in progress which unlocks upon Yatra Completion).</span>` : ''}</li>
+                                    <li><strong>🎉 Earned Incentive (3%):</strong> You have earned <strong style="color: #22c55e;">₹${myIncentive.toLocaleString('en-IN')}</strong>! ${myPending > 0 ? `<span style="color:#b45309;font-weight:600;">(Shown: <strong style="color:#d97706;">₹${myPending.toLocaleString('en-IN')}</strong> — unlocks once monthly target &amp; Yatra Completion are met).</span>` : ''}</li>
+                                    <li><strong>🎯 Monthly Eligibility Rule:</strong> Minimum <strong>4 bookings</strong> AND <strong>₹1,10,000</strong> sales in the month required for 3% incentive (otherwise ₹0). Current status: ${qualBadge}</li>
                                     <li><strong>Uncalled Queue (${pendingCount} Leads):</strong> Priority outreach is recommended for uncontacted leads in your queue.</li>
-                                    <li><strong>Yatra Completion:</strong> 3% incentive is earned and unlocked once the booking status is changed to <code>Yatra Completed</code>.</li>
+                                    <li><strong>Yatra Completion:</strong> 3% incentive is given only after the booking status is marked <code>Yatra Completed</code>.</li>
                                 </ul>
                             </div>
                         `;
                     } else {
-                        let totalTeamIncentive = 0;
-                        let totalPendingTeamIncentive = 0;
-                        (bookingsData || []).forEach(b => {
-                            const ys = b.yatra_status || 'In Progress';
-                            if (ys === 'Cancelled') return;
-                            const bill = (billingRecords || []).find(br => 
-                                (br.booking_id && (br.booking_id === b.booking_id || br.booking_id === b.id)) ||
-                                (br.booking_uuid && br.booking_uuid === b.id)
-                            );
-                            let net = 0;
-                            if (bill) {
-                                if (bill.payment_status === 'Cancelled') return;
-                                const gross = parseFloat(bill.total_package_amount || 0);
-                                const disc = parseFloat(bill.discount || 0);
-                                net = Math.max(0, gross - disc);
-                            } else {
-                                net = parseFloat(b.total_package_amount || b.amount || 0);
-                            }
-
-                            if (ys === 'Yatra Completed') {
-                                totalTeamIncentive += net;
-                            } else if (ys === 'In Progress') {
-                                totalPendingTeamIncentive += net;
-                            }
-                        });
-                        totalTeamIncentive = Math.round(totalTeamIncentive * 0.03);
-                        totalPendingTeamIncentive = Math.round(totalPendingTeamIncentive * 0.03);
+                        const teamSummary = window.computeTeamIncentiveSummary();
+                        const totalTeamIncentive = teamSummary.earned;
+                        const totalPendingTeamIncentive = teamSummary.pending;
 
                         insightsBox.innerHTML = `
                             <div style="background: #ffffff; border: 1.5px solid rgba(212, 175, 55, 0.35); box-shadow: 0 4px 15px rgba(0,0,0,0.04); border-radius: 12px; padding: 20px;">
@@ -7638,6 +7677,23 @@
                 const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
                 const buckets = {}; // 'YYYY-MM' -> { label, completed, incentive, total }
 
+                // Group all non-cancelled bookings by (staff, month) for >= 2026-11 eligibility check
+                const staffMonthQual = {};
+                bookings.forEach(b => {
+                    const info = window.getBookingIncentiveInfo(b);
+                    if (info.cancelled) return;
+                    const dateStr = b.completed_at || b.travel_date || b.created_at;
+                    if (!dateStr) return;
+                    const d = new Date(dateStr);
+                    if (isNaN(d.getFullYear())) return;
+                    const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+                    const sKey = (b.assigned_to || b.user_id || 'unassigned').toLowerCase().trim();
+                    const qKey = sKey + '|' + key;
+                    if (!staffMonthQual[qKey]) staffMonthQual[qKey] = { count: 0, sales: 0 };
+                    staffMonthQual[qKey].count += 1;
+                    staffMonthQual[qKey].sales += info.net;
+                });
+
                 bookings
                     .filter(b => {
                         if (b.yatra_status !== 'Yatra Completed') return false;
@@ -7662,19 +7718,14 @@
                         }
                         buckets[key].completed++;
                         buckets[key].total++;
-                        // Add incentive from linked bill
-                        const bill = bills.find(br =>
-                            (br.booking_id && (br.booking_id === b.booking_id || br.booking_id === b.id)) ||
-                            (br.booking_uuid && br.booking_uuid === b.id)
-                        );
-                        if (bill) {
-                            if (bill.payment_status !== 'Cancelled') {
-                                const net = Math.max(0, parseFloat(bill.total_package_amount||0) - parseFloat(bill.discount||0));
-                                buckets[key].incentive += Math.round(net * 0.03);
-                            }
-                        } else {
-                            const net = parseFloat(b.total_package_amount || b.amount || 0);
-                            buckets[key].incentive += Math.round(net * 0.03);
+
+                        const info = window.getBookingIncentiveInfo(b);
+                        if (info.cancelled) return;
+                        const sKey = (b.assigned_to || b.user_id || 'unassigned').toLowerCase().trim();
+                        const q = staffMonthQual[sKey + '|' + key] || { count: 0, sales: 0 };
+                        const reqThresh = key >= window.INCENTIVE_THRESHOLD_START_YM;
+                        if (!reqThresh || (q.count >= window.INCENTIVE_MIN_BOOKINGS && q.sales >= window.INCENTIVE_MIN_SALES)) {
+                            buckets[key].incentive += Math.round(info.net * window.INCENTIVE_RATE);
                         }
                     });
 
@@ -8006,6 +8057,19 @@
                     if (name) staffMap[id] = { name, yatraCompleted: 0, incentive: 0, leads: 0, converted: 0 };
                 });
 
+                // Build monthly qualification map across all non-cancelled bookings
+                const leaderMonthQual = {};
+                (bookingsData || []).forEach(b => {
+                    const info = window.getBookingIncentiveInfo(b);
+                    if (info.cancelled) return;
+                    const key = (b.assigned_to || b.user_id || 'unassigned').toLowerCase();
+                    const ym = window.getBookingMonthKey(b);
+                    const qKey = key + '|' + ym;
+                    if (!leaderMonthQual[qKey]) leaderMonthQual[qKey] = { count: 0, sales: 0 };
+                    leaderMonthQual[qKey].count += 1;
+                    leaderMonthQual[qKey].sales += info.net;
+                });
+
                 // Yatras Completed + Incentive (from bookingsData + billingRecords)
                 (bookingsData || [])
                     .filter(b => {
@@ -8018,19 +8082,14 @@
                         const matchKey = Object.keys(staffMap).find(k => k.toLowerCase() === key) || key;
                         if (!staffMap[matchKey]) staffMap[matchKey] = { name: usersMap[matchKey] || matchKey, yatraCompleted: 0, incentive: 0, leads: 0, converted: 0 };
                         staffMap[matchKey].yatraCompleted++;
-                        // Add incentive from bill
-                        const bill = (billingRecords || []).find(br =>
-                            (br.booking_id && br.booking_id === b.booking_id) ||
-                            (br.booking_uuid && br.booking_uuid === b.id)
-                        );
-                        if (bill) {
-                            if (bill.payment_status !== 'Cancelled') {
-                                const net = Math.max(0, parseFloat(bill.total_package_amount || 0) - parseFloat(bill.discount || 0));
-                                staffMap[matchKey].incentive += Math.round(net * 0.03);
-                            }
-                        } else {
-                            const net = parseFloat(b.total_package_amount || b.amount || 0);
-                            staffMap[matchKey].incentive += Math.round(net * 0.03);
+
+                        const info = window.getBookingIncentiveInfo(b);
+                        if (info.cancelled) return;
+                        const ym = window.getBookingMonthKey(b);
+                        const q = leaderMonthQual[key + '|' + ym] || { count: 0, sales: 0 };
+                        const reqThresh = ym >= window.INCENTIVE_THRESHOLD_START_YM;
+                        if (!reqThresh || (q.count >= window.INCENTIVE_MIN_BOOKINGS && q.sales >= window.INCENTIVE_MIN_SALES)) {
+                            staffMap[matchKey].incentive += Math.round(info.net * window.INCENTIVE_RATE);
                         }
                     });
 
@@ -8792,24 +8851,31 @@
             const followupsCount = leads.filter(l => (l.status === 'Follow up required' || (l.follow_up_1 && l.follow_up_1.includes(todayStr)))).length;
             const bookingsCount = bookings.filter(b => (b.booking_status || '').toLowerCase() === 'confirmed' || (b.yatra_status || '').toLowerCase() === 'confirmed' || !b.booking_status).length;
             
-            // Incentive calculation: 3% of confirmed booking amounts or count * 500
-            let totalConfirmedValue = 0;
-            bookings.forEach(b => {
-                const amt = parseFloat(b.total_amount || b.price || b.amount || 0);
-                if (amt > 0) totalConfirmedValue += amt;
-            });
-            const incentiveVal = totalConfirmedValue > 0 ? Math.round(totalConfirmedValue * 0.03) : (bookingsCount * 500);
+            // Incentive calculation: 3% earned ONLY after Yatra Completed AND monthly target (4+ bookings & ₹1,10,000+ sales from Nov 2026); till then shown as pending/projected
+            const myIncSummary = (typeof window.computeStaffIncentiveSummary === 'function')
+                ? window.computeStaffIncentiveSummary(currentUserUuidMapping, currentUsername)
+                : { earned: 0, pending: 0, currentMonthBookings: 0, currentMonthSales: 0, currentMonthQualified: false };
+            const incentiveVal = myIncSummary.earned;
+            const pendingIncentiveVal = myIncSummary.pending;
 
             // Update staff-stats-grid
             const elLeads = document.getElementById('staff-stat-leads');
             const elFollowups = document.getElementById('staff-stat-followups');
             const elBookings = document.getElementById('staff-stat-bookings');
             const elIncentive = document.getElementById('staff-stat-incentive');
+            const elIncentiveLbl = document.getElementById('staff-stat-incentive-label');
 
             if (elLeads) elLeads.innerText = leadsCount;
             if (elFollowups) elFollowups.innerText = followupsCount;
             if (elBookings) elBookings.innerText = bookingsCount;
             if (elIncentive) elIncentive.innerText = '₹' + incentiveVal.toLocaleString('en-IN');
+            if (elIncentiveLbl) {
+                if (pendingIncentiveVal > 0) {
+                    elIncentiveLbl.innerHTML = `Earned Incentive (3%)<br><span style="font-size:10px;color:#fbbf24;font-weight:700;">+₹${pendingIncentiveVal.toLocaleString('en-IN')} shown (${myIncSummary.currentMonthBookings}/4 bkgs • ₹${myIncSummary.currentMonthSales.toLocaleString('en-IN')}/₹1.1L)</span>`;
+                } else {
+                    elIncentiveLbl.innerText = 'Earned Incentive (3%)';
+                }
+            }
 
             // Update bottom navigation badges
             const badgeLeads = document.getElementById('mob-badge-leads');
@@ -8843,7 +8909,7 @@
 
             if (msLeads) msLeads.innerText = leadsCount;
             if (msBookings) msBookings.innerText = bookingsCount;
-            if (msIncentive) msIncentive.innerText = '₹' + incentiveVal.toLocaleString('en-IN');
+            if (msIncentive) msIncentive.innerHTML = '₹' + incentiveVal.toLocaleString('en-IN') + (pendingIncentiveVal > 0 ? ' <span style="font-size:11px;color:#94a3b8;font-weight:600;">(+₹' + pendingIncentiveVal.toLocaleString('en-IN') + ' shown)</span>' : '');
             if (msName) msName.innerText = uname.charAt(0).toUpperCase() + uname.slice(1);
             if (msRole) msRole.innerText = role.toUpperCase() + ' Member';
             if (msAvatar) msAvatar.innerText = uname.charAt(0).toUpperCase();
