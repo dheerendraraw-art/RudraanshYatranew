@@ -28,6 +28,394 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
+<style>
+/* ==========================================================================
+   PHASE 1 MODERNIZATION: SPOTLIGHT SEARCH & 360° DRAWER STYLES
+   ========================================================================== */
+.admin-spotlight-pill {
+    background: rgba(30, 41, 59, 0.85);
+    border: 1.5px solid rgba(212, 175, 55, 0.45);
+    color: #f1f5f9;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+.admin-spotlight-pill:hover {
+    background: rgba(212, 175, 55, 0.18);
+    border-color: var(--color-gold);
+    color: #f5c842;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25);
+}
+.admin-spotlight-pill kbd {
+    background: #0f172a;
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    color: var(--color-gold);
+    font-size: 10px;
+    font-family: monospace;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+#spotlight-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.82);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 99999;
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 8vh;
+    animation: spotlightFadeIn 0.2s ease-out;
+}
+@keyframes spotlightFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.spotlight-card {
+    background: #0f172a;
+    border: 1.5px solid var(--color-gold);
+    border-radius: 16px;
+    width: 720px;
+    max-width: 95vw;
+    max-height: 82vh;
+    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.85), 0 0 35px rgba(212, 175, 55, 0.25);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: spotlightSlideDown 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes spotlightSlideDown {
+    from { transform: translateY(-20px) scale(0.97); opacity: 0; }
+    to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.spotlight-input-wrap {
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+    gap: 12px;
+    background: #1e293b;
+}
+.spotlight-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: var(--font-sans);
+}
+.spotlight-input::placeholder {
+    color: #64748b;
+    font-weight: 500;
+}
+.spotlight-esc-badge {
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #94a3b8;
+    font-size: 11px;
+    font-family: monospace;
+    padding: 3px 8px;
+    border-radius: 6px;
+}
+
+.spotlight-filter-bar {
+    display: flex;
+    gap: 8px;
+    padding: 10px 20px;
+    background: rgba(15, 23, 42, 0.7);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    overflow-x: auto;
+}
+.spotlight-tab-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    color: #94a3b8;
+    padding: 4px 12px;
+    border-radius: 14px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+}
+.spotlight-tab-btn.active {
+    background: rgba(212, 175, 55, 0.2);
+    border-color: var(--color-gold);
+    color: #f5c842;
+}
+
+.spotlight-results-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 16px;
+    max-height: 52vh;
+}
+.spotlight-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-bottom: 6px;
+    transition: all 0.15s ease;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(30, 41, 59, 0.5);
+}
+.spotlight-item:hover, .spotlight-item.highlighted {
+    background: rgba(30, 41, 59, 0.95);
+    border-color: rgba(212, 175, 55, 0.5);
+    transform: translateX(3px);
+}
+.spotlight-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background: #0a0f1d;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: 11.5px;
+    color: #64748b;
+}
+
+/* --- 360° Customer Drawer Styles --- */
+#customer-360-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(4px);
+    z-index: 99990;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+#customer-360-backdrop.open {
+    display: block;
+    opacity: 1;
+}
+
+#customer-360-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 620px;
+    max-width: 95vw;
+    background: #0f172a;
+    border-left: 2px solid var(--color-gold);
+    box-shadow: -10px 0 45px rgba(0, 0, 0, 0.85);
+    z-index: 99995;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    color: #e2e8f0;
+}
+#customer-360-drawer.open {
+    transform: translateX(0);
+}
+
+@media (max-width: 768px) {
+    #customer-360-drawer {
+        top: auto;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        max-width: 100%;
+        max-height: 90vh;
+        border-left: none;
+        border-top: 2px solid var(--color-gold);
+        border-radius: 20px 20px 0 0;
+        transform: translateY(100%);
+    }
+    #customer-360-drawer.open {
+        transform: translateY(0);
+    }
+}
+
+.c360-header {
+    background: linear-gradient(180deg, #1e293b, #0f172a);
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+.c360-avatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #d4af37, #b8860b);
+    color: #0f172a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    font-weight: 800;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+}
+
+.c360-macros-bar {
+    background: rgba(30, 41, 59, 0.7);
+    padding: 10px 16px;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    align-items: center;
+}
+.c360-macro-btn {
+    background: #0f172a;
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    color: #f5c842;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 11.5px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+.c360-macro-btn:hover {
+    background: rgba(212, 175, 55, 0.2);
+    border-color: var(--color-gold);
+    transform: translateY(-1px);
+}
+.c360-macro-btn.macro-busy {
+    border-color: rgba(59, 130, 246, 0.4);
+    color: #60a5fa;
+}
+.c360-macro-btn.macro-busy:hover {
+    background: rgba(59, 130, 246, 0.2);
+}
+.c360-macro-btn.macro-won {
+    border-color: rgba(34, 197, 94, 0.4);
+    color: #4ade80;
+}
+.c360-macro-btn.macro-won:hover {
+    background: rgba(34, 197, 94, 0.2);
+}
+.c360-macro-btn.macro-lost {
+    border-color: rgba(239, 68, 68, 0.4);
+    color: #f87171;
+}
+.c360-macro-btn.macro-lost:hover {
+    background: rgba(239, 68, 68, 0.2);
+}
+
+.c360-tabs-nav {
+    display: flex;
+    background: #0a0f1d;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.c360-tab-btn {
+    flex: 1;
+    padding: 12px;
+    text-align: center;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: #94a3b8;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+.c360-tab-btn.active {
+    color: var(--color-gold);
+    border-bottom-color: var(--color-gold);
+    background: rgba(212, 175, 55, 0.06);
+}
+
+.c360-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 18px 20px;
+}
+
+.c360-timeline {
+    position: relative;
+    padding-left: 28px;
+}
+.c360-timeline::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 6px;
+    bottom: 6px;
+    width: 2px;
+    background: rgba(212, 175, 55, 0.3);
+}
+.c360-timeline-item {
+    position: relative;
+    margin-bottom: 16px;
+}
+.c360-timeline-dot {
+    position: absolute;
+    left: -28px;
+    top: 3px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #1e293b;
+    border: 2px solid var(--color-gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: var(--color-gold);
+}
+.c360-timeline-card {
+    background: #1e293b;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 10px 14px;
+}
+
+.macro-chip-btn {
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    color: #f5c842;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 10.5px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    transition: all 0.15s ease;
+}
+.macro-chip-btn:hover {
+    background: rgba(212, 175, 55, 0.3);
+    border-color: var(--color-gold);
+}
+</style>
+
 </head>
 
 <body style="background-color: var(--color-bg-base); font-family: var(--font-sans);">
@@ -73,6 +461,11 @@
                 <span>Rudraansh Yatra <strong style="color: var(--color-gold);">Admin Portal</strong></span>
             </div>
             <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                <button type="button" class="admin-spotlight-pill" onclick="window.openSpotlightSearch()" title="Spotlight Quick Search across Leads, Bookings & Bills (Ctrl + K)">
+                    <i class="fa-solid fa-magnifying-glass" style="color: var(--color-gold);"></i>
+                    <span>Quick Search...</span>
+                    <kbd>Ctrl K</kbd>
+                </button>
                 <button class="btn btn-secondary" onclick="syncGoogleReviews()" id="sync-reviews-btn" style="border: 1px solid var(--color-gold); background: #1e293b; padding: 6px 12px; font-size: 12px; cursor: pointer; border-radius: 4px; color: var(--color-gold); font-weight: 600; display: inline-flex; align-items: center; gap: 6px;" title="Refresh Google Reviews & Rating live from Google Places API">
                     <i class="fa-solid fa-arrows-rotate" id="sync-reviews-icon"></i> <span>Sync Google Reviews</span>
                 </button>
@@ -13667,6 +14060,214 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
             </div>
         </div>
     </div>
+
+    <!-- PHASE 1: SPOTLIGHT QUICK SEARCH MODAL (Ctrl + K) -->
+    <div id="spotlight-overlay" onclick="if(event.target===this) window.closeSpotlightSearch()">
+        <div class="spotlight-card" role="dialog" aria-modal="true" aria-label="Spotlight Quick Search">
+            <div class="spotlight-input-wrap">
+                <i class="fa-solid fa-magnifying-glass spotlight-search-icon"></i>
+                <input type="text" id="spotlight-input" class="spotlight-input" placeholder="Search travelers, phone numbers, destinations, booking IDs, invoices... (Press Esc to close)" autocomplete="off" oninput="window.onSpotlightInput(this.value)" onkeydown="window.handleSpotlightKeydown(event)">
+                <span class="spotlight-esc-badge">ESC</span>
+            </div>
+            <div class="spotlight-filter-bar">
+                <button type="button" class="spotlight-tab-btn active" data-tab="all" onclick="window.selectSpotlightTab('all')">All Results</button>
+                <button type="button" class="spotlight-tab-btn" data-tab="leads" onclick="window.selectSpotlightTab('leads')"><i class="fa-solid fa-headset"></i> Leads</button>
+                <button type="button" class="spotlight-tab-btn" data-tab="bookings" onclick="window.selectSpotlightTab('bookings')"><i class="fa-solid fa-calendar-check"></i> Bookings</button>
+                <button type="button" class="spotlight-tab-btn" data-tab="bills" onclick="window.selectSpotlightTab('bills')"><i class="fa-solid fa-file-invoice-dollar"></i> Billing</button>
+                <button type="button" class="spotlight-tab-btn" data-tab="reminders" onclick="window.selectSpotlightTab('reminders')"><i class="fa-solid fa-bell"></i> Reminders</button>
+            </div>
+            <div class="spotlight-results-list" id="spotlight-results">
+                <div style="text-align: center; color: #64748b; padding: 36px 20px;">
+                    <i class="fa-solid fa-magnifying-glass" style="font-size: 28px; margin-bottom: 10px; opacity: 0.5;"></i>
+                    <p style="margin: 0; font-size: 13.5px; font-weight: 600;">Type at least 2 characters to search across all data...</p>
+                    <span style="font-size: 11.5px; color: #475569; display: block; margin-top: 4px;">Search by customer name, 10-digit phone number, Yatra destination, or invoice ID</span>
+                </div>
+            </div>
+            <div class="spotlight-footer">
+                <div><i class="fa-solid fa-keyboard" style="color: var(--color-gold); margin-right: 4px;"></i> Use <kbd style="background: #1e293b; padding: 1px 5px; border-radius: 3px; color: var(--color-gold);">↑</kbd> <kbd style="background: #1e293b; padding: 1px 5px; border-radius: 3px; color: var(--color-gold);">↓</kbd> to navigate, <kbd style="background: #1e293b; padding: 1px 5px; border-radius: 3px; color: var(--color-gold);">Enter</kbd> to open</div>
+                <div id="spotlight-count-text">0 results</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PHASE 1: UNIFIED 360° CUSTOMER JOURNEY DRAWER -->
+    <div id="customer-360-backdrop" onclick="window.closeCustomer360Drawer()"></div>
+    <div id="customer-360-drawer" role="dialog" aria-modal="true" aria-label="Customer 360 Profile">
+        <!-- Drawer Header -->
+        <div class="c360-header">
+            <div style="display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1;">
+                <div class="c360-avatar" id="c360-avatar">RY</div>
+                <div style="min-width: 0; flex: 1;">
+                    <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                        <h3 id="c360-name" style="margin: 0; font-size: 17px; font-weight: 800; color: #f5c842; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Client Name</h3>
+                        <span id="c360-status-badge" style="background: rgba(212, 175, 55, 0.2); color: #f5c842; border: 1px solid rgba(212, 175, 55, 0.4); font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 700;">New</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px; margin-top: 3px; font-size: 12px; color: #94a3b8; flex-wrap: wrap;">
+                        <span id="c360-phone-wrap" style="color: #ffffff; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; cursor: pointer;" onclick="window.copyLeadPhone(document.getElementById('c360-phone').innerText, event)" title="Click to copy number">
+                            <i class="fa-solid fa-phone" style="color: var(--color-gold); font-size: 10px;"></i> <span id="c360-phone">—</span>
+                        </span>
+                        <span id="c360-dest-badge" style="color: var(--color-gold); font-weight: 600;"><i class="fa-solid fa-mountain" style="font-size: 10px;"></i> <span id="c360-dest">Adi Kailash</span></span>
+                    </div>
+                </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 6px;">
+                <button type="button" class="btn btn-secondary" onclick="window.openC360FullPage()" style="border: 1px solid rgba(255,255,255,0.2); background: rgba(30,41,59,0.8); color: #cbd5e1; padding: 6px 10px; font-size: 11px; border-radius: 6px; font-weight: 700; cursor: pointer;" title="Open standalone full page (lead-details.html)">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Full Page
+                </button>
+                <button type="button" onclick="window.closeCustomer360Drawer()" style="background: transparent; border: none; color: #94a3b8; font-size: 20px; cursor: pointer; padding: 4px 8px; border-radius: 6px;" title="Close Drawer (Esc)">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- 1-Tap Action Macros Bar -->
+        <div class="c360-macros-bar">
+            <span style="font-size: 10.5px; text-transform: uppercase; letter-spacing: 1px; color: #64748b; font-weight: 800; margin-right: 4px;"><i class="fa-solid fa-bolt" style="color: var(--color-gold);"></i> 1-Tap Macros:</span>
+            <button type="button" class="c360-macro-btn" onclick="window.executeLeadMacro('itinerary_24h')" title="Send itinerary on WhatsApp, set status to Follow-up Required, and schedule follow-up tomorrow 11 AM">
+                <i class="fa-brands fa-whatsapp" style="color: #25D366;"></i> Send Itinerary + 24h
+            </button>
+            <button type="button" class="c360-macro-btn macro-busy" onclick="window.executeLeadMacro('rnr_3h')" title="Send 'Tried calling you' WhatsApp ping, mark Not Reachable, and retry in 3 hours">
+                <i class="fa-solid fa-phone-slash"></i> Not Reachable (3h Retry)
+            </button>
+            <button type="button" class="c360-macro-btn macro-won" onclick="window.executeLeadMacro('advance_won')" title="Advance token received: mark Won, booking confirmed, and copy to bookings table">
+                <i class="fa-solid fa-trophy"></i> Advance Paid (Won)
+            </button>
+            <button type="button" class="c360-macro-btn macro-lost" onclick="window.executeLeadMacro('cold_lost')" title="Mark lead as Lost / Not Interested">
+                <i class="fa-solid fa-circle-xmark"></i> Lost / Cold
+            </button>
+        </div>
+
+        <!-- Drawer Navigation Tabs -->
+        <div class="c360-tabs-nav">
+            <button type="button" class="c360-tab-btn active" data-pane="c360-pane-details" onclick="window.switchC360Tab('c360-pane-details')">
+                <i class="fa-solid fa-sliders"></i> Details & Edit
+            </button>
+            <button type="button" class="c360-tab-btn" data-pane="c360-pane-timeline" onclick="window.switchC360Tab('c360-pane-timeline')">
+                <i class="fa-solid fa-timeline"></i> Activity Timeline (<span id="c360-history-count">0</span>)
+            </button>
+            <button type="button" class="c360-tab-btn" data-pane="c360-pane-linked" onclick="window.switchC360Tab('c360-pane-linked')">
+                <i class="fa-solid fa-receipt"></i> Linked Bookings & Bills (<span id="c360-linked-count">0</span>)
+            </button>
+        </div>
+
+        <!-- Drawer Body Panes -->
+        <div class="c360-body">
+            <!-- Pane 1: Details & Quick Edit -->
+            <div id="c360-pane-details" class="c360-pane" style="display: block;">
+                <!-- Quick Contact Bar -->
+                <div style="background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 12px 14px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;">
+                    <div style="display: flex; gap: 8px;">
+                        <a id="c360-btn-call" href="#" class="btn btn-primary" style="background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); padding: 7px 14px; font-size: 12px; font-weight: 700; text-decoration: none; border-radius: 8px; display: inline-flex; align-items: center; gap: 6px;">
+                            <i class="fa-solid fa-phone"></i> Call Lead
+                        </a>
+                        <a id="c360-btn-wa" href="#" target="_blank" class="btn btn-primary" style="background: rgba(37, 211, 102, 0.2); color: #25D366; border: 1px solid rgba(37, 211, 102, 0.4); padding: 7px 14px; font-size: 12px; font-weight: 700; text-decoration: none; border-radius: 8px; display: inline-flex; align-items: center; gap: 6px;">
+                            <i class="fa-brands fa-whatsapp"></i> WhatsApp Chat
+                        </a>
+                    </div>
+                    <span id="c360-created-at" style="font-size: 11px; color: #94a3b8; font-family: monospace;">Created: —</span>
+                </div>
+
+                <!-- Form Fields Grid -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
+                    <div>
+                        <label style="display: block; font-size: 11px; text-transform: uppercase; color: #94a3b8; font-weight: 700; margin-bottom: 4px;">Call / Lead Status</label>
+                        <select id="c360-field-status" onchange="window.saveC360Field('status', this.value)" style="width: 100%; background: #1e293b; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 6px; padding: 7px 10px; font-size: 12.5px; font-weight: 600;">
+                            <option value="New">✨ New</option>
+                            <option value="Answered">📞 Answered</option>
+                            <option value="Busy">⏳ Busy</option>
+                            <option value="Incorrect Number">🚫 Incorrect Number</option>
+                            <option value="Follow up required">🔁 Follow up required</option>
+                            <option value="Not Answered">🔇 Not Answered</option>
+                            <option value="No. not reachable">📴 No. not reachable</option>
+                            <option value="Lost">❌ Lost</option>
+                            <option value="Switch Off">🔴 Switch Off</option>
+                            <option value="Kailash Mansarovar Yatra">🏔️ Kailash Mansarovar Yatra</option>
+                            <option value="Postpone">⏳ Postpone</option>
+                            <option value="Won">🏆 Won</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display: block; font-size: 11px; text-transform: uppercase; color: #94a3b8; font-weight: 700; margin-bottom: 4px;">Final Status</label>
+                        <select id="c360-field-finalstatus" onchange="window.saveC360Field('final_status', this.value)" style="width: 100%; background: #1e293b; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 6px; padding: 7px 10px; font-size: 12.5px; font-weight: 600;">
+                            <option value="">🔘 None</option>
+                            <option value="Booking confirmed">🎉 Booking confirmed</option>
+                            <option value="Booked elsewhere">❌ Booked elsewhere</option>
+                            <option value="Postpone">⏳ Postpone</option>
+                            <option value="Follow Up">📞 Follow Up</option>
+                            <option value="Kailash Mansarovar Yatra">🏔️ Kailash Mansarovar Yatra</option>
+                            <option value="Not Interested">🚫 Not Interested</option>
+                            <option value="Lost lead">❌ Lost lead</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display: block; font-size: 11px; text-transform: uppercase; color: #94a3b8; font-weight: 700; margin-bottom: 4px;">Assigned Staff</label>
+                        <select id="c360-field-assignee" onchange="window.saveC360Field('assigned_to', this.value)" style="width: 100%; background: #1e293b; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 6px; padding: 7px 10px; font-size: 12.5px; font-weight: 600;">
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display: block; font-size: 11px; text-transform: uppercase; color: #94a3b8; font-weight: 700; margin-bottom: 4px;">Travelers Count</label>
+                        <input type="number" id="c360-field-travelers" onchange="window.saveC360Field('travelers', this.value)" min="1" max="100" style="width: 100%; background: #1e293b; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 6px; padding: 7px 10px; font-size: 12.5px; font-weight: 600; box-sizing: border-box;">
+                    </div>
+                    <div>
+                        <label style="display: block; font-size: 11px; text-transform: uppercase; color: #94a3b8; font-weight: 700; margin-bottom: 4px;">Follow-up Date 1</label>
+                        <input type="date" id="c360-field-fu1" onchange="window.saveC360Field('follow_up_1', this.value)" style="width: 100%; background: #1e293b; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 6px; padding: 7px 10px; font-size: 12px; font-weight: 600; box-sizing: border-box;">
+                    </div>
+                    <div>
+                        <label style="display: block; font-size: 11px; text-transform: uppercase; color: #94a3b8; font-weight: 700; margin-bottom: 4px;">Follow-up Date 2</label>
+                        <input type="date" id="c360-field-fu2" onchange="window.saveC360Field('follow_up_2', this.value)" style="width: 100%; background: #1e293b; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 6px; padding: 7px 10px; font-size: 12px; font-weight: 600; box-sizing: border-box;">
+                    </div>
+                </div>
+
+                <!-- Destination & Source -->
+                <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 10px 12px; margin-bottom: 14px; font-size: 12px; display: flex; justify-content: space-between;">
+                    <div><span style="color: #94a3b8;">Destination:</span> <strong id="c360-info-dest" style="color: var(--color-gold);">—</strong></div>
+                    <div><span style="color: #94a3b8;">Source:</span> <strong id="c360-info-source" style="color: #38bdf8;">Website</strong></div>
+                    <div><span style="color: #94a3b8;">Email:</span> <strong id="c360-info-email" style="color: #e2e8f0;">—</strong></div>
+                </div>
+
+                <!-- Remarks / Call Notes -->
+                <div style="margin-bottom: 16px;">
+                    <label style="display: block; font-size: 11px; text-transform: uppercase; color: #94a3b8; font-weight: 700; margin-bottom: 4px;">Staff Remarks & Call Notes</label>
+                    <textarea id="c360-field-remarks" rows="4" style="width: 100%; background: #1e293b; color: white; border: 1.5px solid rgba(212, 175, 55, 0.4); border-radius: 8px; padding: 10px 12px; font-size: 13px; font-family: var(--font-sans); box-sizing: border-box; resize: vertical;" placeholder="Add discussion notes, travel preferences, medical requirements, or call outcome..."></textarea>
+                    <div style="display: flex; justify-content: flex-end; margin-top: 6px;">
+                        <button type="button" onclick="window.saveC360Remarks()" class="btn btn-primary" style="background: var(--color-gold); color: #0f172a; font-weight: 800; font-size: 12px; padding: 6px 14px; border-radius: 6px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                            <i class="fa-solid fa-floppy-disk"></i> Save Remarks
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pane 2: Activity Timeline -->
+            <div id="c360-pane-timeline" class="c360-pane" style="display: none;">
+                <!-- Quick Timeline Note Logger -->
+                <div style="background: #1e293b; border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 10px; padding: 12px 14px; margin-bottom: 18px;">
+                    <label style="display: block; font-size: 11px; text-transform: uppercase; color: var(--color-gold); font-weight: 800; margin-bottom: 6px;"><i class="fa-solid fa-pen"></i> Log New Activity / Call Note</label>
+                    <div style="display: flex; gap: 8px;">
+                        <input type="text" id="c360-quick-log-input" placeholder="e.g. Spoke for 5 mins, agreed on ₹45,000 kathgodam package..." style="flex: 1; background: #0f172a; color: white; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 6px; padding: 7px 10px; font-size: 12.5px;">
+                        <button type="button" onclick="window.postC360QuickNote()" style="background: var(--color-gold); color: #0f172a; border: none; border-radius: 6px; padding: 0 14px; font-size: 12px; font-weight: 800; cursor: pointer; white-space: nowrap;">
+                            <i class="fa-solid fa-plus"></i> Post Note
+                        </button>
+                    </div>
+                </div>
+
+                <div id="c360-timeline-container" class="c360-timeline">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+
+            <!-- Pane 3: Linked Bookings & Payments -->
+            <div id="c360-pane-linked" class="c360-pane" style="display: none;">
+                <div id="c360-linked-bookings-list" style="margin-bottom: 20px;">
+                    <!-- Populated dynamically -->
+                </div>
+                <div id="c360-linked-bills-list">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body></html>`;
 
                 // Create full-screen in-page overlay (works on all mobile browsers — no popup permission needed)
@@ -15783,6 +16384,832 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
         })();
         // ──────────────────────────────────────────────────────────────────────
         // === end Styled Confirm Dialog ===
+    
+// ==========================================================================
+// PHASE 1 MODERNIZATION ENGINE: SPOTLIGHT SEARCH, 360° DRAWER & 1-TAP MACROS
+// ==========================================================================
+let spotlightCurrentTab = 'all';
+let spotlightQuery = '';
+let spotlightSelectedIndex = 0;
+let spotlightResults = [];
+let active360Lead = null;
+
+// --- Spotlight Quick Search Controller ---
+window.openSpotlightSearch = function() {
+    const overlay = document.getElementById('spotlight-overlay');
+    const input = document.getElementById('spotlight-input');
+    if (!overlay || !input) return;
+    overlay.style.display = 'flex';
+    input.value = '';
+    spotlightQuery = '';
+    spotlightSelectedIndex = 0;
+    window.renderSpotlightResults();
+    setTimeout(function() { input.focus(); }, 60);
+};
+
+window.closeSpotlightSearch = function() {
+    const overlay = document.getElementById('spotlight-overlay');
+    if (overlay) overlay.style.display = 'none';
+};
+
+window.toggleSpotlightSearch = function() {
+    const overlay = document.getElementById('spotlight-overlay');
+    if (overlay && overlay.style.display === 'flex') {
+        window.closeSpotlightSearch();
+    } else {
+        window.openSpotlightSearch();
+    }
+};
+
+// Connect mobile bottom bar search button to Spotlight Search
+window.triggerMobileQuickSearch = function() {
+    window.openSpotlightSearch();
+};
+
+window.selectSpotlightTab = function(tab) {
+    spotlightCurrentTab = tab;
+    document.querySelectorAll('.spotlight-tab-btn').forEach(function(btn) {
+        if (btn.getAttribute('data-tab') === tab) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+    spotlightSelectedIndex = 0;
+    window.renderSpotlightResults();
+};
+
+window.onSpotlightInput = function(val) {
+    spotlightQuery = (val || '').trim();
+    spotlightSelectedIndex = 0;
+    window.renderSpotlightResults();
+};
+
+function collectSpotlightMatches(q, tab) {
+    if (!q || q.length < 2) return [];
+    const qClean = q.toLowerCase();
+    const qDigits = q.replace(/[^0-9]/g, '');
+    const matches = [];
+
+    // 1. Leads Search
+    if (tab === 'all' || tab === 'leads') {
+        (currentLeads || []).forEach(function(lead) {
+            const name = (lead.name || '').toLowerCase();
+            const phone = (lead.phone || '').replace(/[^0-9]/g, '');
+            const rawPhone = (lead.phone || '').toLowerCase();
+            const dest = (lead.destination || lead.remarks || '').toLowerCase();
+            const assignee = (usersMap && usersMap[lead.assigned_to] ? usersMap[lead.assigned_to] : '').toLowerCase();
+
+            if (name.includes(qClean) || (qDigits.length >= 3 && phone.includes(qDigits)) || rawPhone.includes(qClean) || dest.includes(qClean) || assignee.includes(qClean)) {
+                matches.push({
+                    type: 'lead',
+                    id: lead.id,
+                    title: lead.name || 'Anonymous Traveler',
+                    subtitle: (lead.phone || 'No Phone') + ' • ' + (lead.destination || 'Pilgrimage Inquiry') + ' • ' + (lead.travelers || 1) + ' Pax',
+                    badge: lead.status || 'New',
+                    badgeColor: '#f5c842',
+                    icon: 'fa-solid fa-headset',
+                    data: lead
+                });
+            }
+        });
+    }
+
+    // 2. Bookings Search
+    if (tab === 'all' || tab === 'bookings') {
+        (window.bookingsData || []).forEach(function(b) {
+            const cName = (b.customer_name || b.name || '').toLowerCase();
+            const bId = (b.booking_id || b.id || '').toString().toLowerCase();
+            const yatra = (b.destination || b.yatra_destination || b.package_title || '').toLowerCase();
+            const bPhone = (b.phone || b.customer_phone || '').replace(/[^0-9]/g, '');
+            const travelDate = (b.travel_date || b.batch_date || '').toString();
+
+            if (cName.includes(qClean) || bId.includes(qClean) || yatra.includes(qClean) || (qDigits.length >= 3 && bPhone.includes(qDigits)) || travelDate.includes(qClean)) {
+                matches.push({
+                    type: 'booking',
+                    id: b.id,
+                    title: b.customer_name || b.name || ('Booking #' + (b.booking_id || b.id)),
+                    subtitle: 'Yatra: ' + (b.destination || b.yatra_destination || 'Adi Kailash') + ' • Batch: ' + (travelDate || 'Upcoming') + ' • ' + (b.passengers_count || b.travelers || 1) + ' Pax',
+                    badge: b.yatra_status || b.status || 'Confirmed',
+                    badgeColor: '#38bdf8',
+                    icon: 'fa-solid fa-calendar-check',
+                    data: b
+                });
+            }
+        });
+    }
+
+    // 3. Billing & Invoices Search
+    if (tab === 'all' || tab === 'bills') {
+        (window.billingRecords || []).forEach(function(bill) {
+            const billNum = (bill.bill_number || bill.id || '').toString().toLowerCase();
+            const cust = (bill.customer_name || '').toLowerCase();
+            const amt = (bill.total_amount || bill.amount || '').toString();
+            const status = (bill.payment_status || '').toLowerCase();
+
+            if (billNum.includes(qClean) || cust.includes(qClean) || amt.includes(qClean) || status.includes(qClean)) {
+                matches.push({
+                    type: 'bill',
+                    id: bill.id,
+                    title: 'Invoice #' + (bill.bill_number || bill.id.substring(0, 8)),
+                    subtitle: (bill.customer_name || 'Client') + ' • ₹' + Number(bill.total_amount || 0).toLocaleString('en-IN'),
+                    badge: bill.payment_status || 'Pending',
+                    badgeColor: bill.payment_status === 'Paid' ? '#4ade80' : '#fbbf24',
+                    icon: 'fa-solid fa-file-invoice-dollar',
+                    data: bill
+                });
+            }
+        });
+    }
+
+    // 4. Reminders Search
+    if (tab === 'all' || tab === 'reminders') {
+        (window.allReminders || []).forEach(function(rem) {
+            const title = (rem.title || rem.client_name || '').toLowerCase();
+            const desc = (rem.description || '').toLowerCase();
+            const due = (rem.due_date || '').toString();
+
+            if (title.includes(qClean) || desc.includes(qClean) || due.includes(qClean)) {
+                matches.push({
+                    type: 'reminder',
+                    id: rem.id,
+                    title: rem.title || 'Follow-up Reminder',
+                    subtitle: 'Due: ' + (rem.due_date || 'Today') + ' • ' + (rem.description || ''),
+                    badge: rem.status || 'Pending',
+                    badgeColor: '#f43f5e',
+                    icon: 'fa-solid fa-bell',
+                    data: rem
+                });
+            }
+        });
+    }
+
+    return matches.slice(0, 30);
+}
+
+window.renderSpotlightResults = function() {
+    const container = document.getElementById('spotlight-results');
+    const countText = document.getElementById('spotlight-count-text');
+    if (!container) return;
+
+    if (!spotlightQuery || spotlightQuery.length < 2) {
+        container.innerHTML = '<div style="text-align: center; color: #64748b; padding: 36px 20px;">' +
+            '<i class="fa-solid fa-magnifying-glass" style="font-size: 28px; margin-bottom: 10px; opacity: 0.5;"></i>' +
+            '<p style="margin: 0; font-size: 13.5px; font-weight: 600;">Type at least 2 characters to search across all data...</p>' +
+            '<span style="font-size: 11.5px; color: #475569; display: block; margin-top: 4px;">Search by customer name, 10-digit phone, Yatra destination, or invoice number</span>' +
+            '</div>';
+        if (countText) countText.innerText = '0 results';
+        return;
+    }
+
+    spotlightResults = collectSpotlightMatches(spotlightQuery, spotlightCurrentTab);
+    if (countText) countText.innerText = spotlightResults.length + (spotlightResults.length === 1 ? ' match' : ' matches');
+
+    if (spotlightResults.length === 0) {
+        container.innerHTML = '<div style="text-align: center; color: #94a3b8; padding: 40px 20px;">' +
+            '<i class="fa-solid fa-face-frown" style="font-size: 28px; color: #f59e0b; margin-bottom: 10px;"></i>' +
+            '<p style="margin: 0; font-size: 14px; font-weight: 700; color: #e2e8f0;">No results found for "' + spotlightQuery + '"</p>' +
+            '<span style="font-size: 12px; color: #64748b; display: block; margin-top: 4px;">Try searching by phone number or partial name</span>' +
+            '</div>';
+        return;
+    }
+
+    let html = '';
+    spotlightResults.forEach(function(item, idx) {
+        const isSelected = idx === spotlightSelectedIndex;
+        const typeLabel = item.type === 'lead' ? 'Lead' : (item.type === 'booking' ? 'Booking' : (item.type === 'bill' ? 'Invoice' : 'Reminder'));
+        const typeColor = item.type === 'lead' ? '#f5c842' : (item.type === 'booking' ? '#38bdf8' : (item.type === 'bill' ? '#4ade80' : '#f43f5e'));
+
+        html += '<div class="spotlight-item ' + (isSelected ? 'highlighted' : '') + '" onclick="window.openSpotlightItem(' + idx + ')">' +
+            '<div style="display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1;">' +
+                '<div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(15, 23, 42, 0.9); border: 1px solid ' + typeColor + '; display: flex; align-items: center; justify-content: center; color: ' + typeColor + '; font-size: 14px; flex-shrink: 0;">' +
+                    '<i class="' + item.icon + '"></i>' +
+                '</div>' +
+                '<div style="min-width: 0; flex: 1; text-align: left;">' +
+                    '<div style="display: flex; align-items: center; gap: 8px;">' +
+                        '<strong style="color: #ffffff; font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">' + item.title + '</strong>' +
+                        '<span style="font-size: 9.5px; text-transform: uppercase; font-weight: 800; background: rgba(255,255,255,0.08); color: ' + typeColor + '; border: 1px solid ' + typeColor + '; padding: 1px 6px; border-radius: 4px;">' + typeLabel + '</span>' +
+                    '</div>' +
+                    '<div style="font-size: 11.5px; color: #94a3b8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px;">' +
+                        item.subtitle +
+                    '</div>' +
+                '</div>' +
+            '</div>' +
+            '<div style="margin-left: 12px; display: flex; align-items: center; gap: 8px; flex-shrink: 0;">' +
+                '<span style="background: rgba(255,255,255,0.06); color: ' + item.badgeColor + '; border: 1px solid ' + item.badgeColor + '; font-size: 10.5px; padding: 2px 7px; border-radius: 8px; font-weight: 700;">' + item.badge + '</span>' +
+                '<i class="fa-solid fa-arrow-right" style="color: #64748b; font-size: 12px;"></i>' +
+            '</div>' +
+        '</div>';
+    });
+    container.innerHTML = html;
+};
+
+window.handleSpotlightKeydown = function(e) {
+    if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (spotlightResults.length > 0) {
+            spotlightSelectedIndex = (spotlightSelectedIndex + 1) % spotlightResults.length;
+            window.renderSpotlightResults();
+            ensureSpotlightItemVisible();
+        }
+    } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (spotlightResults.length > 0) {
+            spotlightSelectedIndex = (spotlightSelectedIndex - 1 + spotlightResults.length) % spotlightResults.length;
+            window.renderSpotlightResults();
+            ensureSpotlightItemVisible();
+        }
+    } else if (e.key === 'Enter') {
+        e.preventDefault();
+        if (spotlightResults[spotlightSelectedIndex]) {
+            window.openSpotlightItem(spotlightSelectedIndex);
+        }
+    } else if (e.key === 'Escape') {
+        window.closeSpotlightSearch();
+    }
+};
+
+function ensureSpotlightItemVisible() {
+    const container = document.getElementById('spotlight-results');
+    const highlighted = container ? container.querySelector('.spotlight-item.highlighted') : null;
+    if (highlighted) {
+        highlighted.scrollIntoView({ block: 'nearest' });
+    }
+}
+
+window.openSpotlightItem = function(idx) {
+    const item = spotlightResults[idx];
+    if (!item) return;
+    window.closeSpotlightSearch();
+
+    if (item.type === 'lead') {
+        window.openCustomer360Drawer(item.id);
+    } else if (item.type === 'booking') {
+        if (typeof switchTab === 'function') switchTab(null, 'pane-bookings');
+        setTimeout(function() {
+            const row = document.getElementById('booking-row-' + item.id) || document.querySelector('[data-booking-id="' + item.id + '"]');
+            if (row) {
+                row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                row.style.outline = '2px solid var(--color-gold)';
+                row.style.background = 'rgba(212, 175, 55, 0.2)';
+                setTimeout(function() { row.style.outline = ''; row.style.background = ''; }, 3000);
+            }
+        }, 350);
+    } else if (item.type === 'bill') {
+        if (typeof switchTab === 'function') switchTab(null, 'pane-billing');
+        setTimeout(function() {
+            const billEl = document.getElementById('bill-row-' + item.id);
+            if (billEl) {
+                billEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                billEl.style.outline = '2px solid var(--color-gold)';
+                setTimeout(function() { billEl.style.outline = ''; }, 3000);
+            }
+        }, 350);
+    } else if (item.type === 'reminder') {
+        if (typeof switchTab === 'function') switchTab(null, 'pane-reminders');
+    }
+};
+
+// Global Keyboard Shortcut: Ctrl + K or Cmd + K
+document.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        window.toggleSpotlightSearch();
+    } else if (e.key === 'Escape') {
+        const spOverlay = document.getElementById('spotlight-overlay');
+        if (spOverlay && spOverlay.style.display === 'flex') {
+            window.closeSpotlightSearch();
+            return;
+        }
+        const c360 = document.getElementById('customer-360-drawer');
+        if (c360 && c360.classList.contains('open')) {
+            window.closeCustomer360Drawer();
+        }
+    }
+});
+
+
+// --- Unified 360° Customer Drawer Controller ---
+window.openCustomer360Drawer = async function(leadId) {
+    if (!leadId) return;
+    const lead = (currentLeads || []).find(function(l) { return l.id === leadId; });
+    if (!lead) {
+        window.location.href = 'lead-details.html?id=' + leadId;
+        return;
+    }
+
+    active360Lead = lead;
+    const drawer = document.getElementById('customer-360-drawer');
+    const backdrop = document.getElementById('customer-360-backdrop');
+    if (!drawer || !backdrop) return;
+
+    // Populate Header
+    const avatarEl = document.getElementById('c360-avatar');
+    if (avatarEl && typeof getLeadInitials === 'function') avatarEl.innerText = getLeadInitials(lead.name);
+
+    const nameEl = document.getElementById('c360-name');
+    if (nameEl) nameEl.innerText = lead.name || 'Anonymous Traveler';
+
+    const phoneClean = (lead.phone || '').replace(/[^0-9]/g, '');
+    const phoneEl = document.getElementById('c360-phone');
+    if (phoneEl) phoneEl.innerText = lead.phone || 'No Phone';
+
+    const destEl = document.getElementById('c360-dest');
+    const destVal = lead.destination || (lead.remarks && lead.remarks.match(/Destination:\s*([^|\n]+)/i) ? lead.remarks.match(/Destination:\s*([^|\n]+)/i)[1].trim() : 'Adi Kailash');
+    if (destEl) destEl.innerText = destVal;
+
+    const badgeEl = document.getElementById('c360-status-badge');
+    if (badgeEl) badgeEl.innerText = lead.status || 'New';
+
+    // Quick Contact Buttons
+    const callBtn = document.getElementById('c360-btn-call');
+    if (callBtn) {
+        if (phoneClean) {
+            callBtn.href = 'tel:' + phoneClean;
+            callBtn.style.display = 'inline-flex';
+        } else {
+            callBtn.style.display = 'none';
+        }
+    }
+
+    const waBtn = document.getElementById('c360-btn-wa');
+    if (waBtn) {
+        if (phoneClean) {
+            const waText = encodeURIComponent('Namaste ' + (lead.name || 'Ji') + '! 🙏 Greetings from Rudraansh Yatra. Thank you for your inquiry for ' + destVal + '. How may we assist you with the batch dates and itinerary?');
+            waBtn.href = 'https://api.whatsapp.com/send?phone=91' + phoneClean.slice(-10) + '&text=' + waText;
+            waBtn.style.display = 'inline-flex';
+        } else {
+            waBtn.style.display = 'none';
+        }
+    }
+
+    const createdEl = document.getElementById('c360-created-at');
+    if (createdEl && typeof formatDateTimeISO === 'function') createdEl.innerText = 'Created: ' + formatDateTimeISO(lead.created_at);
+
+    // Populate Form Fields
+    const statusEl = document.getElementById('c360-field-status');
+    if (statusEl) statusEl.value = lead.status || 'New';
+
+    const finalStatusEl = document.getElementById('c360-field-finalstatus');
+    if (finalStatusEl) finalStatusEl.value = lead.final_status || '';
+
+    // Populate Assignee Select
+    const assigneeEl = document.getElementById('c360-field-assignee');
+    if (assigneeEl) {
+        let opts = '<option value="" style="background: #111827; color: white;">Unassigned</option>';
+        (usersList || []).forEach(function(u) {
+            const isSelected = lead.assigned_to === u.id ? 'selected' : '';
+            const dName = usersMap[u.id] || u.email;
+            opts += '<option value="' + u.id + '" ' + isSelected + ' style="background: #111827; color: white;">' + dName + '</option>';
+        });
+        assigneeEl.innerHTML = opts;
+    }
+
+    const travEl = document.getElementById('c360-field-travelers');
+    if (travEl) travEl.value = lead.travelers || 1;
+
+    const fu1El = document.getElementById('c360-field-fu1');
+    if (fu1El) fu1El.value = lead.follow_up_1 || '';
+
+    const fu2El = document.getElementById('c360-field-fu2');
+    if (fu2El) fu2El.value = lead.follow_up_2 || '';
+
+    const remEl = document.getElementById('c360-field-remarks');
+    if (remEl) remEl.value = lead.remarks || '';
+
+    const infoDest = document.getElementById('c360-info-dest');
+    if (infoDest) infoDest.innerText = destVal;
+
+    const infoSource = document.getElementById('c360-info-source');
+    if (infoSource) infoSource.innerText = lead.source || 'Website';
+
+    const infoEmail = document.getElementById('c360-info-email');
+    if (infoEmail) infoEmail.innerText = lead.email || '—';
+
+    // Reset to Details tab on open
+    window.switchC360Tab('c360-pane-details');
+
+    // Open Drawer
+    backdrop.classList.add('open');
+    drawer.classList.add('open');
+
+    // Asynchronously load Timeline History and Linked Bookings
+    loadC360Timeline(lead.id);
+    loadC360LinkedRecords(lead);
+};
+
+window.closeCustomer360Drawer = function() {
+    const drawer = document.getElementById('customer-360-drawer');
+    const backdrop = document.getElementById('customer-360-backdrop');
+    if (drawer) drawer.classList.remove('open');
+    if (backdrop) backdrop.classList.remove('open');
+    active360Lead = null;
+};
+
+window.switchC360Tab = function(paneId) {
+    document.querySelectorAll('.c360-tab-btn').forEach(function(btn) {
+        if (btn.getAttribute('data-pane') === paneId) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+
+    document.querySelectorAll('.c360-pane').forEach(function(p) {
+        p.style.display = p.id === paneId ? 'block' : 'none';
+    });
+};
+
+window.openC360FullPage = function() {
+    if (active360Lead && active360Lead.id) {
+        window.location.href = 'lead-details.html?id=' + active360Lead.id;
+    }
+};
+
+window.saveC360Field = async function(field, val) {
+    if (!active360Lead || !active360Lead.id) return;
+    const leadId = active360Lead.id;
+    const updates = {};
+    updates[field] = val;
+
+    await updateLeadFieldDirect(leadId, updates);
+    active360Lead[field] = val;
+
+    if (field === 'status') {
+        const bEl = document.getElementById('c360-status-badge');
+        if (bEl) bEl.innerText = val;
+    }
+
+    await logLeadHistoryDirect(leadId, 'Field Update', 'Updated ' + field + ' to "' + val + '"');
+    showAdminToast('Saved ' + field + ' successfully.', 'success');
+    refreshLeadViewsAfterUpdate(leadId);
+    loadC360Timeline(leadId);
+};
+
+window.saveC360Remarks = async function() {
+    if (!active360Lead || !active360Lead.id) return;
+    const remEl = document.getElementById('c360-field-remarks');
+    const newRemarks = remEl ? remEl.value.trim() : '';
+
+    await updateLeadFieldDirect(active360Lead.id, { remarks: newRemarks });
+    active360Lead.remarks = newRemarks;
+    await logLeadHistoryDirect(active360Lead.id, 'Note', 'Remarks updated: ' + newRemarks.substring(0, 80));
+    showAdminToast('Remarks saved successfully!', 'success');
+    refreshLeadViewsAfterUpdate(active360Lead.id);
+    loadC360Timeline(active360Lead.id);
+};
+
+window.postC360QuickNote = async function() {
+    if (!active360Lead || !active360Lead.id) return;
+    const input = document.getElementById('c360-quick-log-input');
+    const noteText = input ? input.value.trim() : '';
+    if (!noteText) return;
+
+    const existingRem = active360Lead.remarks || '';
+    const timestampStr = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', dateStyle: 'short', timeStyle: 'short' });
+    const appendedRem = existingRem ? (existingRem + ' | [' + timestampStr + '] ' + noteText) : ('[' + timestampStr + '] ' + noteText);
+
+    await updateLeadFieldDirect(active360Lead.id, { remarks: appendedRem });
+    active360Lead.remarks = appendedRem;
+
+    const remEl = document.getElementById('c360-field-remarks');
+    if (remEl) remEl.value = appendedRem;
+
+    await logLeadHistoryDirect(active360Lead.id, 'Call Note', noteText);
+    input.value = '';
+    showAdminToast('Activity note posted!', 'success');
+    refreshLeadViewsAfterUpdate(active360Lead.id);
+    loadC360Timeline(active360Lead.id);
+};
+
+async function loadC360Timeline(leadId) {
+    const container = document.getElementById('c360-timeline-container');
+    const countSpan = document.getElementById('c360-history-count');
+    if (!container) return;
+
+    container.innerHTML = '<div style="text-align: center; color: #94a3b8; padding: 20px;"><i class="fa-solid fa-spinner fa-spin"></i> Loading timeline...</div>';
+
+    try {
+        const token = localStorage.getItem('admin_token');
+        const res = await fetch('/api/admin/leads-history?lead_id=' + leadId, {
+            headers: { 'Authorization': 'Bearer ' + token }
+        });
+        const logs = await res.json();
+        const historyList = Array.isArray(logs) ? logs : [];
+
+        if (countSpan) countSpan.innerText = historyList.length;
+
+        if (historyList.length === 0) {
+            container.innerHTML = '<div style="text-align: center; color: #64748b; padding: 30px 10px;">' +
+                '<i class="fa-solid fa-clock-rotate-left" style="font-size: 24px; opacity: 0.5; margin-bottom: 8px;"></i>' +
+                '<p style="margin: 0; font-size: 13px;">No past timeline activity recorded yet.</p>' +
+                '<span style="font-size: 11px; color: #475569;">Notes, calls, and status updates will appear here automatically.</span>' +
+                '</div>';
+            return;
+        }
+
+        let html = '';
+        historyList.forEach(function(log) {
+            const timeStr = typeof formatDateTimeISO === 'function' ? formatDateTimeISO(log.created_at) : (log.created_at || '').split('T')[0];
+            const author = log.created_by || log.author || 'Staff';
+            const actType = (log.activity_type || log.type || 'Activity').toLowerCase();
+
+            let dotIcon = 'fa-solid fa-pen';
+            let dotColor = '#38bdf8';
+            if (actType.includes('macro')) { dotIcon = 'fa-solid fa-bolt'; dotColor = '#f5c842'; }
+            else if (actType.includes('call')) { dotIcon = 'fa-solid fa-phone'; dotColor = '#4ade80'; }
+            else if (actType.includes('status')) { dotIcon = 'fa-solid fa-arrows-rotate'; dotColor = '#fbbf24'; }
+            else if (actType.includes('field')) { dotIcon = 'fa-solid fa-sliders'; dotColor = '#a855f7'; }
+
+            html += '<div class="c360-timeline-item">' +
+                '<div class="c360-timeline-dot" style="border-color: ' + dotColor + '; color: ' + dotColor + ';">' +
+                    '<i class="' + dotIcon + '"></i>' +
+                '</div>' +
+                '<div class="c360-timeline-card">' +
+                    '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">' +
+                        '<strong style="color: ' + dotColor + '; font-size: 11.5px; text-transform: uppercase;">' + (log.activity_type || 'Update') + '</strong>' +
+                        '<span style="font-size: 10px; color: #64748b; font-family: monospace;">' + timeStr + '</span>' +
+                    '</div>' +
+                    '<p style="margin: 0; font-size: 12.5px; color: #e2e8f0; line-height: 1.4;">' + (log.description || log.notes || 'Activity recorded') + '</p>' +
+                    '<span style="font-size: 10.5px; color: #94a3b8; display: block; margin-top: 4px;"><i class="fa-solid fa-user" style="font-size: 9px; margin-right: 3px;"></i> ' + author + '</span>' +
+                '</div>' +
+            '</div>';
+        });
+        container.innerHTML = html;
+    } catch(e) {
+        console.warn('Failed to load timeline:', e);
+        container.innerHTML = '<div style="color: #f87171; font-size: 12px; padding: 10px;">Failed to load activity logs.</div>';
+    }
+}
+
+function loadC360LinkedRecords(lead) {
+    const bookingsContainer = document.getElementById('c360-linked-bookings-list');
+    const billsContainer = document.getElementById('c360-linked-bills-list');
+    const countSpan = document.getElementById('c360-linked-count');
+    if (!bookingsContainer || !billsContainer) return;
+
+    const leadPhone = (lead.phone || '').replace(/[^0-9]/g, '');
+    let linkedCount = 0;
+
+    // 1. Linked Bookings
+    const matchedBookings = (window.bookingsData || []).filter(function(b) {
+        if (b.lead_id && b.lead_id === lead.id) return true;
+        const bPhone = (b.phone || b.customer_phone || '').replace(/[^0-9]/g, '');
+        return leadPhone && bPhone && leadPhone.slice(-10) === bPhone.slice(-10);
+    });
+
+    if (matchedBookings.length > 0) {
+        linkedCount += matchedBookings.length;
+        let bHtml = '<h4 style="font-size: 12px; text-transform: uppercase; color: var(--color-gold); margin: 0 0 10px 0;"><i class="fa-solid fa-calendar-check"></i> Linked Bookings</h4>';
+        matchedBookings.forEach(function(b) {
+            bHtml += '<div style="background: #1e293b; border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 8px; padding: 12px; margin-bottom: 8px;">' +
+                '<div style="display: flex; justify-content: space-between; align-items: center;">' +
+                    '<strong style="color: #38bdf8; font-size: 13.5px;">Booking #' + (b.booking_id || b.id.substring(0, 8)) + '</strong>' +
+                    '<span style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4); font-size: 10.5px; padding: 2px 7px; border-radius: 8px; font-weight: 700;">' + (b.yatra_status || b.status || 'Confirmed') + '</span>' +
+                '</div>' +
+                '<div style="font-size: 12px; color: #cbd5e1; margin-top: 4px;">' +
+                    'Yatra: <strong>' + (b.destination || b.yatra_destination || 'Adi Kailash') + '</strong> • Batch: <strong>' + (b.travel_date || b.batch_date || 'Upcoming') + '</strong> • Pax: <strong>' + (b.passengers_count || b.travelers || 1) + '</strong>' +
+                '</div>' +
+            '</div>';
+        });
+        bookingsContainer.innerHTML = bHtml;
+    } else {
+        bookingsContainer.innerHTML = '<div style="font-size: 12px; color: #64748b; margin-bottom: 14px;"><i class="fa-solid fa-info-circle"></i> No confirmed bookings found for this traveler yet.</div>';
+    }
+
+    // 2. Linked Billing & Payments
+    const matchedBills = (window.billingRecords || []).filter(function(bill) {
+        if (bill.lead_id && bill.lead_id === lead.id) return true;
+        const bPhone = (bill.phone || bill.customer_phone || '').replace(/[^0-9]/g, '');
+        return leadPhone && bPhone && leadPhone.slice(-10) === bPhone.slice(-10);
+    });
+
+    if (matchedBills.length > 0) {
+        linkedCount += matchedBills.length;
+        let billHtml = '<h4 style="font-size: 12px; text-transform: uppercase; color: #4ade80; margin: 0 0 10px 0;"><i class="fa-solid fa-file-invoice-dollar"></i> Linked Invoices & Receipts</h4>';
+        matchedBills.forEach(function(bill) {
+            billHtml += '<div style="background: #1e293b; border: 1px solid rgba(74, 222, 128, 0.3); border-radius: 8px; padding: 12px; margin-bottom: 8px;">' +
+                '<div style="display: flex; justify-content: space-between; align-items: center;">' +
+                    '<strong style="color: #ffffff; font-size: 13.5px;">Invoice #' + (bill.bill_number || bill.id.substring(0, 8)) + '</strong>' +
+                    '<span style="background: rgba(74, 222, 128, 0.15); color: #4ade80; border: 1px solid rgba(74, 222, 128, 0.4); font-size: 10.5px; padding: 2px 7px; border-radius: 8px; font-weight: 700;">' + (bill.payment_status || 'Paid') + '</span>' +
+                '</div>' +
+                '<div style="font-size: 12px; color: #cbd5e1; margin-top: 4px;">' +
+                    'Total Amount: <strong style="color: var(--color-gold);">₹' + Number(bill.total_amount || 0).toLocaleString('en-IN') + '</strong> • Date: ' + (bill.created_at ? bill.created_at.split('T')[0] : '—') +
+                '</div>' +
+            '</div>';
+        });
+        billsContainer.innerHTML = billHtml;
+    } else {
+        billsContainer.innerHTML = '<div style="font-size: 12px; color: #64748b;"><i class="fa-solid fa-info-circle"></i> No payment bills linked yet.</div>';
+    }
+
+    if (countSpan) countSpan.innerText = linkedCount;
+}
+
+// --- 1-Tap Action Macros Engine ---
+window.executeLeadMacro = async function(macroType, optionalLeadId) {
+    const lead = optionalLeadId ? (currentLeads || []).find(function(l) { return l.id === optionalLeadId; }) : active360Lead;
+    if (!lead || !lead.id) {
+        showAdminToast('No active lead selected for macro.', 'error');
+        return;
+    }
+
+    const leadId = lead.id;
+    const phoneClean = (lead.phone || '').replace(/[^0-9]/g, '');
+    const clientName = lead.name || 'Pilgrim';
+    const dest = lead.destination || 'Adi Kailash & Om Parvat';
+
+    if (macroType === 'itinerary_24h') {
+        const waText = encodeURIComponent('Namaste ' + clientName + ' ji! 🙏 Greetings from Rudraansh Yatra.\n\nHere is our complete sacred itinerary & package guide for *' + dest + '*.\n\nKey inclusions: All 4x4 Bolero transportation from Kathgodam/Dharchula, inner line permits, mountain homestays/camps, all satvik meals, and expert local guides.\n\nPlease feel free to call us for any question. When are you planning to travel?');
+        if (phoneClean) {
+            window.open('https://api.whatsapp.com/send?phone=91' + phoneClean.slice(-10) + '&text=' + waText, '_blank');
+        }
+
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        const tomorrowStr = tomorrow.toISOString().split('T')[0];
+
+        const existingRemarks = lead.remarks || '';
+        const updatedRemarks = existingRemarks ? (existingRemarks + ' | [Macro] Sent ' + dest + ' itinerary & set follow-up for ' + tomorrowStr) : ('[Macro] Sent ' + dest + ' itinerary & set follow-up for ' + tomorrowStr);
+
+        await updateLeadFieldDirect(leadId, {
+            status: 'Follow up required',
+            follow_up_1: tomorrowStr,
+            remarks: updatedRemarks
+        });
+
+        lead.status = 'Follow up required';
+        lead.follow_up_1 = tomorrowStr;
+        lead.remarks = updatedRemarks;
+
+        await logLeadHistoryDirect(leadId, 'Macro', 'Sent ' + dest + ' itinerary via WhatsApp & scheduled 24h follow-up for ' + tomorrowStr);
+
+        showAdminToast('⚡ Macro: Sent ' + dest + ' itinerary & set follow-up for tomorrow!', 'success');
+        refreshLeadViewsAfterUpdate(leadId);
+        if (active360Lead && active360Lead.id === leadId) {
+            window.openCustomer360Drawer(leadId);
+        }
+
+    } else if (macroType === 'rnr_3h') {
+        const waText = encodeURIComponent('Namaste ' + clientName + ' ji! 🙏 Rudraansh Yatra tried reaching you regarding your *' + dest + '* inquiry, but couldn\'t connect.\n\nPlease let us know what time is convenient for a quick 2-minute call. Dhanyawad!');
+        if (phoneClean) {
+            window.open('https://api.whatsapp.com/send?phone=91' + phoneClean.slice(-10) + '&text=' + waText, '_blank');
+        }
+
+        const todayStr = new Date().toISOString().split('T')[0];
+        const existingRemarks = lead.remarks || '';
+        const updatedRemarks = existingRemarks ? (existingRemarks + ' | [Macro] Call not reachable. Sent WhatsApp ping & set retry') : ('[Macro] Call not reachable. Sent WhatsApp ping & set retry');
+
+        await updateLeadFieldDirect(leadId, {
+            status: 'No. not reachable',
+            follow_up_1: todayStr,
+            remarks: updatedRemarks
+        });
+
+        lead.status = 'No. not reachable';
+        lead.follow_up_1 = todayStr;
+        lead.remarks = updatedRemarks;
+
+        await logLeadHistoryDirect(leadId, 'Macro', 'Call not reachable. Sent WhatsApp check-in ping & set 3h retry');
+        showAdminToast('📞 Macro: Marked Not Reachable & sent WhatsApp ping!', 'info');
+        refreshLeadViewsAfterUpdate(leadId);
+        if (active360Lead && active360Lead.id === leadId) {
+            window.openCustomer360Drawer(leadId);
+        }
+
+    } else if (macroType === 'advance_won') {
+        showConfirmModal(
+            'Confirm Advance Payment for "' + clientName + '"? This will mark the lead as "Won", update final status to "Booking confirmed", and copy details to Bookings table.',
+            async function() {
+                const existingRemarks = lead.remarks || '';
+                const updatedRemarks = existingRemarks ? (existingRemarks + ' | [Macro] Advance token received! Booking confirmed') : ('[Macro] Advance token received! Booking confirmed');
+
+                await updateLeadFieldDirect(leadId, {
+                    status: 'Won',
+                    final_status: 'Booking confirmed',
+                    remarks: updatedRemarks
+                });
+
+                lead.status = 'Won';
+                lead.final_status = 'Booking confirmed';
+                lead.remarks = updatedRemarks;
+
+                await logLeadHistoryDirect(leadId, 'Macro', 'Advance payment confirmed! Marked Won.');
+
+                if (typeof copyLeadToBooking === 'function') {
+                    await copyLeadToBooking(lead);
+                }
+
+                showAdminToast('🎉 Congratulations! "' + clientName + '" marked as confirmed booking!', 'success');
+                refreshLeadViewsAfterUpdate(leadId);
+                if (active360Lead && active360Lead.id === leadId) {
+                    window.openCustomer360Drawer(leadId);
+                }
+            }
+        );
+
+    } else if (macroType === 'cold_lost') {
+        showConfirmModal(
+            'Mark "' + clientName + '" as Lost / Cold?',
+            async function() {
+                const existingRemarks = lead.remarks || '';
+                const updatedRemarks = existingRemarks ? (existingRemarks + ' | [Macro] Closed as Lost / Not Interested') : ('[Macro] Closed as Lost / Not Interested');
+
+                await updateLeadFieldDirect(leadId, {
+                    status: 'Lost',
+                    final_status: 'Not Interested',
+                    remarks: updatedRemarks
+                });
+
+                lead.status = 'Lost';
+                lead.final_status = 'Not Interested';
+                lead.remarks = updatedRemarks;
+
+                await logLeadHistoryDirect(leadId, 'Macro', 'Lead closed as Lost / Not Interested');
+                showAdminToast('Marked lead as Lost.', 'info');
+                refreshLeadViewsAfterUpdate(leadId);
+                if (active360Lead && active360Lead.id === leadId) {
+                    window.openCustomer360Drawer(leadId);
+                }
+            }
+        );
+    }
+};
+
+// Helper to update lead fields directly via API and Supabase
+async function updateLeadFieldDirect(leadId, fields) {
+    try {
+        if (typeof supabaseAdmin !== 'undefined') {
+            await supabaseAdmin.from('leads').update(fields).eq('id', leadId);
+        } else {
+            const token = localStorage.getItem('admin_token');
+            await fetch('/api/admin/leads/' + leadId, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+                body: JSON.stringify(fields)
+            });
+        }
+    } catch(err) {
+        console.error('Error updating lead fields direct:', err);
+    }
+}
+
+// Helper to log lead activity history directly
+async function logLeadHistoryDirect(leadId, activityType, desc) {
+    try {
+        const author = currentUsername || 'Staff';
+        const token = localStorage.getItem('admin_token');
+        await fetch('/api/admin/leads-history', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify({
+                lead_id: leadId,
+                activity_type: activityType,
+                description: desc,
+                created_by: author
+            })
+        });
+    } catch(err) {
+        console.warn('Failed to log lead history:', err);
+    }
+}
+
+// Refresh leads view in place after an update without reloading page
+function refreshLeadViewsAfterUpdate(leadId) {
+    if (typeof applyLeadsFilters === 'function') {
+        applyLeadsFilters();
+    } else if (typeof renderLeadsTableOnly === 'function') {
+        renderLeadsTableOnly();
+    }
+}
+
+// Intercept startEditLead to open 360° Drawer without page navigation
+const _origStartEditLead = window.startEditLead;
+window.startEditLead = function(itemOrIdOrIndex) {
+    let leadId = null;
+    if (typeof itemOrIdOrIndex === 'object' && itemOrIdOrIndex.id) {
+        leadId = itemOrIdOrIndex.id;
+    } else if (typeof itemOrIdOrIndex === 'string' && isNaN(Number(itemOrIdOrIndex))) {
+        leadId = itemOrIdOrIndex;
+    } else {
+        const num = Number(itemOrIdOrIndex);
+        const it = (filteredLeads && filteredLeads[num]) || (currentLeads && currentLeads[num]);
+        if (it && it.id) leadId = it.id;
+    }
+
+    if (leadId) {
+        window.openCustomer360Drawer(leadId);
+    } else if (typeof _origStartEditLead === 'function') {
+        _origStartEditLead(itemOrIdOrIndex);
+    }
+};
+
     </script>
     <!-- Phase 3: Mobile Sticky Bottom Navigation Bar (Thumb Zone) -->
     <nav id="mobile-bottom-nav" class="mobile-bottom-nav" aria-label="Mobile Navigation">
