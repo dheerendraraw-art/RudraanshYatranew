@@ -1538,6 +1538,24 @@ app.post('/api/admin/login', adminLoginLimiter, async (req, res) => {
                       (rawPasscode === storedPass.trim());
         }
 
+        // Resilient Fallback: If DB hash didn't match, verify against environment-configured fallback passcodes
+        if (!isMatch && fallbackCredentials[cleanUsername]) {
+            const fallbackPass = (fallbackCredentials[cleanUsername].passcode || '').toString().trim();
+            if (fallbackPass && (cleanPasscode === fallbackPass || rawPasscode === fallbackPass || cleanPasscode.toLowerCase() === fallbackPass.toLowerCase())) {
+                isMatch = true;
+                // Auto-sync Supabase with the valid bcrypt hash of the environment passcode
+                if (supabase && userRecord.id) {
+                    try {
+                        const syncHash = await bcrypt.hash(cleanPasscode, 12);
+                        await supabase.from('staff_credentials').update({ passcode: syncHash }).eq('id', userRecord.id);
+                        console.log(`[Auth] Resynchronized Supabase password hash for ${cleanUsername}`);
+                    } catch (syncErr) {
+                        console.warn('[Auth] Failed to sync password hash:', syncErr.message);
+                    }
+                }
+            }
+        }
+
         if (!isMatch) {
             return res.status(400).json({ error: 'Invalid Username or Passcode.' });
         }
