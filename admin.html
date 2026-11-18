@@ -416,6 +416,592 @@
 }
 </style>
 
+
+<style id="ry-phase2-modern">
+/* ============================================================
+   PHASE 2 UI MODERNIZATION — Rudraansh Yatra Admin Portal
+   Overlay stylesheet: safe overrides on top of existing CSS
+   ============================================================ */
+
+/* ── Design Tokens ── */
+:root {
+  --ry-gold:       #d4af37;
+  --ry-gold-soft:  rgba(212,175,55,0.18);
+  --ry-gold-glow:  0 0 18px rgba(212,175,55,0.35);
+  --ry-navy:       #0f172a;
+  --ry-card-bg:    #111827;
+  --ry-card-alt:   #0d1526;
+  --ry-border:     rgba(212,175,55,0.22);
+  --ry-shadow-sm:  0 2px 10px rgba(0,0,0,0.35);
+  --ry-shadow-md:  0 6px 24px rgba(0,0,0,0.45);
+  --ry-shadow-lg:  0 16px 48px rgba(0,0,0,0.6);
+  --ry-radius-sm:  8px;
+  --ry-radius-md:  14px;
+  --ry-radius-lg:  20px;
+  --ry-transition: 200ms cubic-bezier(0.4,0,0.2,1);
+}
+
+/* ── Smooth scroll globally ── */
+html { scroll-behavior: smooth; }
+
+/* ═══════════════════════════════════════════════════════════
+   NAVBAR — Glassmorphism + gradient gold accent
+   ═══════════════════════════════════════════════════════════ */
+.admin-navbar {
+  background: linear-gradient(135deg, #0a1628 0%, #0f172a 50%, #0d1f3c 100%) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-bottom: 2px solid transparent !important;
+  border-image: linear-gradient(90deg, transparent 0%, var(--ry-gold) 30%, #f5c842 70%, transparent 100%) 1 !important;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.5), 0 1px 0 rgba(212,175,55,0.15) !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 1000 !important;
+  transition: box-shadow var(--ry-transition) !important;
+}
+
+/* Logo animated gradient text */
+.admin-logo span {
+  background: linear-gradient(135deg, #f1f5f9 0%, var(--ry-gold) 50%, #f1f5f9 100%) !important;
+  background-size: 200% auto !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  animation: ry-logo-shimmer 4s linear infinite !important;
+}
+@keyframes ry-logo-shimmer {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* User badge — enhanced pill */
+#user-badge {
+  background: linear-gradient(135deg, rgba(212,175,55,0.15) 0%, rgba(212,175,55,0.08) 100%) !important;
+  border: 1.5px solid rgba(212,175,55,0.4) !important;
+  border-radius: 24px !important;
+  font-size: 12.5px !important;
+  padding: 6px 14px !important;
+  box-shadow: 0 2px 8px rgba(212,175,55,0.15), inset 0 1px 0 rgba(255,255,255,0.05) !important;
+  letter-spacing: 0.3px !important;
+}
+
+/* Logout button — modern outline */
+.admin-logout-btn {
+  border-radius: 24px !important;
+  border: 1.5px solid rgba(255,255,255,0.18) !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.3px !important;
+  transition: all var(--ry-transition) !important;
+  backdrop-filter: blur(4px) !important;
+}
+.admin-logout-btn:hover {
+  background: var(--ry-gold) !important;
+  color: var(--ry-navy) !important;
+  border-color: var(--ry-gold) !important;
+  box-shadow: var(--ry-gold-glow) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   STAT CARDS — gradient accent borders, hover lift
+   ═══════════════════════════════════════════════════════════ */
+.admin-stat-card {
+  position: relative !important;
+  overflow: hidden !important;
+  border-radius: var(--ry-radius-md) !important;
+  border: 1px solid rgba(212,175,55,0.18) !important;
+  background: linear-gradient(135deg, #111827 0%, #0d1526 100%) !important;
+  box-shadow: var(--ry-shadow-sm) !important;
+  transition: transform var(--ry-transition), box-shadow var(--ry-transition), border-color var(--ry-transition) !important;
+}
+/* Shimmer left accent bar */
+.admin-stat-card::before {
+  content: '' !important;
+  position: absolute !important;
+  left: 0 !important; top: 0 !important; bottom: 0 !important;
+  width: 4px !important;
+  background: linear-gradient(180deg, var(--ry-gold) 0%, #f5c842 50%, #b8860b 100%) !important;
+  border-radius: 4px 0 0 4px !important;
+  opacity: 0.9 !important;
+}
+/* Subtle shimmer overlay */
+.admin-stat-card::after {
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 60%) !important;
+  pointer-events: none !important;
+}
+.admin-stat-card:hover {
+  transform: translateY(-4px) scale(1.01) !important;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.5), 0 0 20px rgba(212,175,55,0.2) !important;
+  border-color: rgba(212,175,55,0.45) !important;
+}
+/* Stat number — counter animation ready */
+.admin-stat-num {
+  font-size: 30px !important;
+  font-weight: 800 !important;
+  color: #f1f5f9 !important;
+  letter-spacing: -1px !important;
+  line-height: 1 !important;
+}
+.admin-stat-label {
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.8px !important;
+  color: #64748b !important;
+  margin-top: 4px !important;
+}
+.admin-stat-icon {
+  width: 48px !important;
+  height: 48px !important;
+  border-radius: 12px !important;
+  background: linear-gradient(135deg, rgba(212,175,55,0.2) 0%, rgba(212,175,55,0.08) 100%) !important;
+  color: var(--ry-gold) !important;
+  font-size: 20px !important;
+  flex-shrink: 0 !important;
+  box-shadow: 0 4px 12px rgba(212,175,55,0.15) !important;
+}
+
+/* Active stat card glow */
+.admin-stat-card.active-stat-card {
+  border-color: rgba(212,175,55,0.65) !important;
+  box-shadow: 0 0 24px rgba(212,175,55,0.3), var(--ry-shadow-sm) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TAB NAV — gradient active state + gold underline glow
+   ═══════════════════════════════════════════════════════════ */
+.admin-tab-nav {
+  background: linear-gradient(135deg, #0d1526 0%, #111827 100%) !important;
+  border: 1px solid var(--ry-border) !important;
+  border-radius: var(--ry-radius-md) !important;
+  padding: 6px 8px !important;
+  gap: 4px !important;
+  box-shadow: var(--ry-shadow-sm), inset 0 1px 0 rgba(255,255,255,0.03) !important;
+  scrollbar-width: none !important;
+}
+.admin-tab-nav::-webkit-scrollbar { display: none !important; }
+
+.admin-tab-btn {
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  letter-spacing: 0.2px !important;
+  padding: 10px 16px !important;
+  transition: all var(--ry-transition) !important;
+  position: relative !important;
+  color: #64748b !important;
+  white-space: nowrap !important;
+}
+.admin-tab-btn:hover {
+  background: rgba(212,175,55,0.1) !important;
+  color: #f1f5f9 !important;
+}
+.admin-tab-btn.active {
+  background: linear-gradient(135deg, rgba(212,175,55,0.22) 0%, rgba(212,175,55,0.1) 100%) !important;
+  color: var(--ry-gold) !important;
+  box-shadow: 0 2px 12px rgba(212,175,55,0.2), inset 0 1px 0 rgba(212,175,55,0.15) !important;
+}
+/* Gold underline accent */
+.admin-tab-btn.active::after {
+  content: '' !important;
+  position: absolute !important;
+  bottom: 4px !important;
+  left: 20% !important; right: 20% !important;
+  height: 2.5px !important;
+  background: linear-gradient(90deg, transparent, var(--ry-gold), transparent) !important;
+  border-radius: 2px !important;
+  opacity: 0.9 !important;
+}
+
+/* Reminders count badge — enhanced */
+#reminders-count-badge {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+  border-radius: 10px !important;
+  font-size: 9.5px !important;
+  font-weight: 800 !important;
+  box-shadow: 0 2px 6px rgba(239,68,68,0.5) !important;
+  animation: ry-pulse-badge 2s ease-in-out infinite !important;
+}
+@keyframes ry-pulse-badge {
+  0%, 100% { box-shadow: 0 2px 6px rgba(239,68,68,0.5); }
+  50%       { box-shadow: 0 2px 10px rgba(239,68,68,0.8); }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TABLES — hover accent, alternating rows, smooth entry
+   ═══════════════════════════════════════════════════════════ */
+.admin-table-container {
+  border-radius: var(--ry-radius-md) !important;
+  overflow: hidden !important;
+  border: 1px solid var(--ry-border) !important;
+  box-shadow: var(--ry-shadow-md) !important;
+}
+.admin-table thead th {
+  background: linear-gradient(135deg, #0a1628 0%, #0f1f38 100%) !important;
+  color: var(--ry-gold) !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+  padding: 14px 16px !important;
+  border-bottom: 1px solid var(--ry-border) !important;
+  white-space: nowrap !important;
+}
+.admin-table tbody tr {
+  transition: background var(--ry-transition), transform var(--ry-transition) !important;
+  border-bottom: 1px solid rgba(255,255,255,0.04) !important;
+  animation: ry-row-enter 0.3s ease-out both !important;
+}
+@keyframes ry-row-enter {
+  from { opacity: 0; transform: translateX(-6px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.admin-table tbody tr:nth-child(odd) {
+  background: rgba(255,255,255,0.015) !important;
+}
+.admin-table tbody tr:hover {
+  background: rgba(212,175,55,0.07) !important;
+  transform: scale(1.0015) !important;
+  box-shadow: inset 3px 0 0 var(--ry-gold) !important;
+}
+.admin-table tbody td {
+  padding: 13px 16px !important;
+  font-size: 13px !important;
+  color: #cbd5e1 !important;
+  vertical-align: middle !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   BUTTONS — gradient primary, modern secondary
+   ═══════════════════════════════════════════════════════════ */
+.btn-primary {
+  background: linear-gradient(135deg, #d4af37 0%, #f5c842 50%, #b8860b 100%) !important;
+  color: #0f172a !important;
+  border: none !important;
+  font-weight: 700 !important;
+  border-radius: 10px !important;
+  transition: all var(--ry-transition) !important;
+  box-shadow: 0 4px 14px rgba(212,175,55,0.35) !important;
+  letter-spacing: 0.3px !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+.btn-primary::before {
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%) !important;
+  pointer-events: none !important;
+}
+.btn-primary:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 24px rgba(212,175,55,0.5) !important;
+  filter: brightness(1.08) !important;
+}
+.btn-primary:active {
+  transform: translateY(0) !important;
+  box-shadow: 0 2px 8px rgba(212,175,55,0.3) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LEAD STATUS BADGES — color-coded pills
+   ═══════════════════════════════════════════════════════════ */
+.ry-status-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  padding: 3px 10px !important;
+  border-radius: 20px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.3px !important;
+  white-space: nowrap !important;
+}
+.ry-status-new       { background: rgba(212,175,55,0.15); color: var(--ry-gold); border: 1px solid rgba(212,175,55,0.3); }
+.ry-status-won       { background: rgba(34,197,94,0.12);  color: #22c55e; border: 1px solid rgba(34,197,94,0.3); }
+.ry-status-lost      { background: rgba(239,68,68,0.12);  color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
+.ry-status-followup  { background: rgba(59,130,246,0.12); color: #60a5fa; border: 1px solid rgba(59,130,246,0.3); }
+.ry-status-pending   { background: rgba(245,158,11,0.12); color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); }
+.ry-status-completed { background: rgba(34,197,94,0.1);   color: #4ade80; border: 1px solid rgba(34,197,94,0.25); }
+.ry-status-cancelled { background: rgba(239,68,68,0.08);  color: #f87171; border: 1px solid rgba(239,68,68,0.2); }
+
+/* Yatra status coloring on booking rows */
+tr[data-yatra-status="Yatra Completed"] {
+  background: rgba(34,197,94,0.04) !important;
+}
+tr[data-yatra-status="Cancelled"] {
+  background: rgba(239,68,68,0.04) !important;
+  opacity: 0.85 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MOBILE BOTTOM NAV — glassmorphism + glow active
+   ═══════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .mobile-bottom-nav {
+    background: rgba(10,22,40,0.92) !important;
+    backdrop-filter: blur(24px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+    border-top: 1px solid rgba(212,175,55,0.3) !important;
+    box-shadow: 0 -8px 32px rgba(0,0,0,0.6), 0 -1px 0 rgba(212,175,55,0.1) !important;
+  }
+  .mob-bottom-nav-btn {
+    border-radius: 12px !important;
+    padding: 6px 4px !important;
+    transition: all var(--ry-transition) !important;
+    position: relative !important;
+  }
+  .mob-bottom-nav-btn i {
+    font-size: 20px !important;
+    transition: all var(--ry-transition) !important;
+  }
+  .mob-bottom-nav-btn span {
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.3px !important;
+  }
+  .mob-bottom-nav-btn.active {
+    color: var(--ry-gold) !important;
+    background: rgba(212,175,55,0.1) !important;
+  }
+  .mob-bottom-nav-btn.active i {
+    color: var(--ry-gold) !important;
+    transform: translateY(-3px) scale(1.15) !important;
+    filter: drop-shadow(0 0 6px rgba(212,175,55,0.7)) !important;
+  }
+  /* Active dot indicator */
+  .mob-bottom-nav-btn.active::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 4px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 4px !important;
+    height: 4px !important;
+    background: var(--ry-gold) !important;
+    border-radius: 50% !important;
+    box-shadow: 0 0 6px rgba(212,175,55,0.8) !important;
+  }
+
+  /* Mobile lead cards */
+  .lead-card-row {
+    border-radius: 12px !important;
+    margin-bottom: 2px !important;
+    transition: background var(--ry-transition) !important;
+  }
+  .lead-card-row:hover, .lead-card-row:active {
+    background: rgba(212,175,55,0.06) !important;
+  }
+
+  /* Mobile section header */
+  .admin-navbar {
+    padding: 12px 16px !important;
+    min-height: 58px !important;
+  }
+  .admin-logo span {
+    font-size: 15px !important;
+  }
+  .admin-logo img {
+    height: 34px !important;
+  }
+
+  /* Better mobile filter bar */
+  .bookings-filters-bar,
+  .leads-filter-bar {
+    border-radius: 12px !important;
+    padding: 10px 12px !important;
+    gap: 8px !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MODALS — frosted glass backdrop + refined box
+   ═══════════════════════════════════════════════════════════ */
+.modal-overlay {
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+}
+.modal-box {
+  border-radius: var(--ry-radius-md) !important;
+  box-shadow: var(--ry-shadow-lg), 0 0 0 1px rgba(212,175,55,0.15) !important;
+  animation: ry-modal-enter 0.25s cubic-bezier(0.16,1,0.3,1) !important;
+}
+@keyframes ry-modal-enter {
+  from { opacity: 0; transform: scale(0.96) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+.modal-sheet-handle {
+  width: 36px !important;
+  height: 4px !important;
+  background: rgba(212,175,55,0.4) !important;
+  border-radius: 4px !important;
+  margin: 0 auto 16px !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FORM INPUTS — refined dark inputs
+   ═══════════════════════════════════════════════════════════ */
+.admin-input, .admin-select, .admin-textarea {
+  border-radius: 8px !important;
+  transition: border-color var(--ry-transition), box-shadow var(--ry-transition) !important;
+}
+.admin-input:focus, .admin-select:focus, .admin-textarea:focus {
+  border-color: var(--ry-gold) !important;
+  box-shadow: 0 0 0 3px rgba(212,175,55,0.15), 0 2px 8px rgba(0,0,0,0.3) !important;
+  outline: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   STAFF GREETING STRIP
+   ═══════════════════════════════════════════════════════════ */
+#ry-greeting-strip {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 10px 16px !important;
+  background: linear-gradient(90deg, rgba(212,175,55,0.08) 0%, rgba(15,23,42,0.6) 100%) !important;
+  border-bottom: 1px solid rgba(212,175,55,0.15) !important;
+  font-size: 12.5px !important;
+  color: #94a3b8 !important;
+  font-weight: 500 !important;
+}
+#ry-greeting-strip strong { color: var(--ry-gold) !important; font-weight: 700 !important; }
+#ry-greeting-strip .ry-today-date {
+  font-size: 11.5px !important;
+  color: #64748b !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.3px !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   QUICK FILTER PILLS — enhanced
+   ═══════════════════════════════════════════════════════════ */
+.booking-qf-pill {
+  transition: all var(--ry-transition) !important;
+  font-weight: 700 !important;
+}
+.booking-qf-pill:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+}
+.booking-qf-pill.active {
+  box-shadow: 0 4px 14px rgba(212,175,55,0.3) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION TITLES — gold icon accent
+   ═══════════════════════════════════════════════════════════ */
+.admin-form-title {
+  font-size: 17px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.3px !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SCROLLBAR STYLING
+   ═══════════════════════════════════════════════════════════ */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); }
+::-webkit-scrollbar-thumb {
+  background: rgba(212,175,55,0.3);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(212,175,55,0.55); }
+
+/* ═══════════════════════════════════════════════════════════
+   TOAST NOTIFICATIONS — enhanced
+   ═══════════════════════════════════════════════════════════ */
+#toast-container {
+  bottom: calc(80px + env(safe-area-inset-bottom, 0px)) !important;
+}
+@media (min-width: 769px) {
+  #toast-container {
+    bottom: 30px !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LOGIN SCREEN — modern card
+   ═══════════════════════════════════════════════════════════ */
+.admin-lock-card {
+  border-radius: var(--ry-radius-lg) !important;
+  box-shadow: var(--ry-shadow-lg), 0 0 60px rgba(212,175,55,0.1) !important;
+  animation: ry-card-enter 0.4s cubic-bezier(0.16,1,0.3,1) !important;
+}
+@keyframes ry-card-enter {
+  from { opacity: 0; transform: translateY(20px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.admin-lock-title {
+  background: linear-gradient(135deg, #f1f5f9 0%, var(--ry-gold) 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MICRO-INTERACTION: Button ripple
+   ═══════════════════════════════════════════════════════════ */
+.ry-ripple {
+  position: absolute !important;
+  border-radius: 50% !important;
+  transform: scale(0) !important;
+  animation: ry-ripple-anim 0.5s ease-out !important;
+  background: rgba(255,255,255,0.3) !important;
+  pointer-events: none !important;
+}
+@keyframes ry-ripple-anim {
+  to { transform: scale(4); opacity: 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   STAFF ANALYTICS — card beautification  
+   ═══════════════════════════════════════════════════════════ */
+.staff-performance-card {
+  border-radius: var(--ry-radius-md) !important;
+  transition: transform var(--ry-transition), box-shadow var(--ry-transition) !important;
+}
+.staff-performance-card:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.5) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   360° DRAWER — enhanced header
+   ═══════════════════════════════════════════════════════════ */
+#customer-360-drawer {
+  box-shadow: -20px 0 60px rgba(0,0,0,0.6) !important;
+}
+#c360-drawer-header {
+  background: linear-gradient(135deg, #0a1628 0%, #0f172a 100%) !important;
+  border-bottom: 1px solid rgba(212,175,55,0.2) !important;
+}
+.c360-tab-btn.active {
+  color: var(--ry-gold) !important;
+  border-bottom-color: var(--ry-gold) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   INCENTIVE PROGRESS BAR — visual flair
+   ═══════════════════════════════════════════════════════════ */
+.ry-incentive-bar-wrap {
+  background: rgba(255,255,255,0.05) !important;
+  border-radius: 10px !important;
+  overflow: hidden !important;
+  height: 8px !important;
+}
+.ry-incentive-bar-fill {
+  height: 100% !important;
+  border-radius: 10px !important;
+  background: linear-gradient(90deg, #d4af37, #f5c842) !important;
+  transition: width 0.8s cubic-bezier(0.4,0,0.2,1) !important;
+  box-shadow: 0 0 8px rgba(212,175,55,0.5) !important;
+}
+</style>
 </head>
 
 <body style="background-color: var(--color-bg-base); font-family: var(--font-sans);">
@@ -477,6 +1063,14 @@
                 </button>
             </div>
         </nav>
+        <!-- Phase 2: Staff Greeting Strip -->
+        <div id="ry-greeting-strip" style="display:none;">
+            <div>
+                👋 Welcome back, <strong id="ry-greeting-name">Staff</strong>
+                <span style="margin-left:12px; font-size:11px; color:#64748b;" id="ry-greeting-sub"></span>
+            </div>
+            <div class="ry-today-date" id="ry-today-date"></div>
+        </div>
 
         <div class="admin-dashboard-container">
 
@@ -14268,6 +14862,140 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
         </div>
     </div>
 
+<script>
+
+// ═══════════════════════════════════════════════════════════
+// PHASE 2 MICRO-INTERACTIONS & UI ENHANCEMENTS
+// ═══════════════════════════════════════════════════════════
+(function() {
+  'use strict';
+
+  // ── Button ripple effect ──
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('button, .btn, .admin-tab-btn, .mob-bottom-nav-btn, .booking-qf-pill');
+    if (!btn) return;
+    var style = window.getComputedStyle(btn);
+    if (style.position === 'static') btn.style.position = 'relative';
+    btn.style.overflow = 'hidden';
+    var rect = btn.getBoundingClientRect();
+    var size = Math.max(rect.width, rect.height);
+    var ripple = document.createElement('span');
+    ripple.classList.add('ry-ripple');
+    ripple.style.width  = ripple.style.height = size + 'px';
+    ripple.style.left   = (e.clientX - rect.left - size/2) + 'px';
+    ripple.style.top    = (e.clientY - rect.top  - size/2) + 'px';
+    btn.appendChild(ripple);
+    setTimeout(function() { ripple.remove(); }, 550);
+  });
+
+  // ── Stat counter animation ──
+  function animateCounter(el, target) {
+    var start = 0;
+    var duration = 800;
+    var startTime = null;
+    var prefix = '';
+    var suffix = '';
+    var num = parseFloat(String(target).replace(/[^0-9.]/g, ''));
+    if (isNaN(num)) return;
+    if (String(target).includes('₹')) prefix = '₹';
+    if (String(target).includes('%')) suffix = '%';
+    function step(ts) {
+      if (!startTime) startTime = ts;
+      var progress = Math.min((ts - startTime) / duration, 1);
+      var ease = 1 - Math.pow(1 - progress, 3);
+      var current = Math.floor(ease * num);
+      el.textContent = prefix + current.toLocaleString('en-IN') + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = prefix + num.toLocaleString('en-IN') + suffix;
+    }
+    requestAnimationFrame(step);
+  }
+
+  // Observe stat nums for counter animation
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var el = entry.target;
+          var val = el.dataset.ryTarget;
+          if (val) { animateCounter(el, val); io.unobserve(el); }
+        }
+      });
+    }, { threshold: 0.4 });
+    document.querySelectorAll('.admin-stat-num').forEach(function(el) {
+      if (!el.querySelector('i')) {
+        el.dataset.ryTarget = el.textContent.trim();
+        io.observe(el);
+      }
+    });
+  }
+
+  // ── Staff Greeting Strip ──
+  function updateGreetingStrip() {
+    var strip = document.getElementById('ry-greeting-strip');
+    var nameEl = document.getElementById('ry-greeting-name');
+    var subEl  = document.getElementById('ry-greeting-sub');
+    var dateEl = document.getElementById('ry-today-date');
+    if (!strip) return;
+    var user = (window.currentUser && window.currentUser.username) ||
+               (window.loggedInUser) || '';
+    if (user) {
+      strip.style.display = 'flex';
+      if (nameEl) nameEl.textContent = user.charAt(0).toUpperCase() + user.slice(1);
+    }
+    var now = new Date();
+    var hour = now.getHours();
+    var greet = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+    if (subEl) subEl.textContent = greet + '!';
+    if (dateEl) {
+      dateEl.textContent = now.toLocaleDateString('en-IN', {
+        weekday: 'short', day: 'numeric', month: 'short', year: 'numeric'
+      });
+    }
+  }
+
+  // Run after login
+  document.addEventListener('ry:login-success', updateGreetingStrip);
+  // Also try after a short delay (dashboard init)
+  setTimeout(updateGreetingStrip, 1500);
+
+  // ── Add data-yatra-status attrs to booking rows for CSS targeting ──
+  function tagBookingRows() {
+    document.querySelectorAll('#bookings-table-body tr').forEach(function(tr) {
+      var cells = tr.querySelectorAll('td');
+      cells.forEach(function(td) {
+        var txt = td.textContent.trim();
+        if (txt === 'Yatra Completed' || txt === 'Cancelled' || txt === 'In Progress') {
+          tr.dataset.yatraStatus = txt;
+        }
+      });
+    });
+  }
+  // Re-tag on any MutationObserver change in the bookings tbody
+  var bookingsTbody = document.getElementById('bookings-table-body');
+  if (bookingsTbody && 'MutationObserver' in window) {
+    new MutationObserver(tagBookingRows).observe(bookingsTbody, { childList: true });
+  }
+  tagBookingRows();
+
+  // ── Re-animate stat counters when dashboard data loads ──
+  var statsGrid = document.getElementById('dashboard-stats-grid');
+  if (statsGrid && 'MutationObserver' in window) {
+    new MutationObserver(function() {
+      statsGrid.querySelectorAll('.admin-stat-num').forEach(function(el) {
+        if (!el.querySelector('i') && !el.dataset.ryAnimated) {
+          el.dataset.ryAnimated = '1';
+          el.dataset.ryTarget = el.textContent.trim();
+          animateCounter(el, el.dataset.ryTarget);
+        }
+      });
+    }).observe(statsGrid, { subtree: true, childList: true, characterData: true });
+  }
+
+  console.log('[RY Phase 2] UI Modernization loaded ✨');
+})();
+
+</script>
 </body></html>`;
 
                 // Create full-screen in-page overlay (works on all mobile browsers — no popup permission needed)
