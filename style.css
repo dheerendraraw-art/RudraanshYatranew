@@ -3618,7 +3618,7 @@ footer h3::after, footer h4::after {
 
     /* Prevent input/select fields from overlapping in responsive table cards */
     .admin-table tbody tr td input,
-    .admin-table tbody tr td select {
+    .admin-table tbody tr td select:not(.lead-chat-status-tag):not(.status-select) {
         max-width: 65% !important;
         text-align: left !important;
     }
@@ -8005,16 +8005,16 @@ html, body {
     }
 
     .lead-chat-name {
-        display: inline-flex !important;
-        align-items: center !important;
-        gap: 5px !important;
+        display: block !important;
         font-size: 15px !important;
         font-weight: 800 !important;
         color: #f5c842 !important;
         flex: 1 !important;
-        white-space: normal !important;
-        word-break: break-word !important;
-        overflow: visible !important;
+        min-width: 0 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        line-height: 1.25 !important;
     }
 
     .lead-chat-time {
@@ -8296,16 +8296,16 @@ body.user-role-staff .admin-only-action {
     }
 
     .lead-chat-name {
-        display: inline-flex !important;
-        align-items: center !important;
-        gap: 5px !important;
+        display: block !important;
         font-size: 15px !important;
         font-weight: 800 !important;
         color: #f5c842 !important;
         flex: 1 !important;
-        white-space: normal !important;
-        word-break: break-word !important;
-        overflow: visible !important;
+        min-width: 0 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        line-height: 1.25 !important;
     }
 
     #pane-leads tr.lead-card-row td.lead-card-name-td::before {
@@ -10101,16 +10101,16 @@ input[type="date"].form-control::-webkit-calendar-picker-indicator {
     }
 
     .lead-chat-name {
-        display: inline-flex !important;
-        align-items: center !important;
-        gap: 5px !important;
+        display: block !important;
         font-size: 15px !important;
         font-weight: 800 !important;
         color: #f5c842 !important;
         flex: 1 !important;
-        white-space: normal !important;
-        word-break: break-word !important;
-        overflow: visible !important;
+        min-width: 0 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        line-height: 1.25 !important;
     }
 
     /* Sub row: phone | time | status — same horizontal row */

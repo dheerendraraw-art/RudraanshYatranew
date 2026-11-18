@@ -23,7 +23,7 @@
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></noscript>
-    <link rel="stylesheet" href="/style.css?v=8.8">
+    <link rel="stylesheet" href="/style.css?v=8.9">
     <meta name="robots" content="noindex, nofollow">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
@@ -851,6 +851,52 @@ tr[data-yatra-status="Cancelled"] {
     gap: 6px !important;
     flex-wrap: wrap !important;
     min-width: 0 !important;
+  }
+
+  /* Mobile Lead Card Name & Header Polish */
+  .lead-chat-item-header {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+    width: 100% !important;
+  }
+  .lead-chat-title-row {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    gap: 6px !important;
+    overflow: hidden !important;
+  }
+  .lead-chat-name {
+    display: block !important;
+    font-size: 15px !important;
+    font-weight: 800 !important;
+    color: #f5c842 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    line-height: 1.25 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+    cursor: pointer !important;
+  }
+  .lead-chat-expand-chevron {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-top: 3px !important;
+    flex-shrink: 0 !important;
+    padding: 2px !important;
+  }
+  .lead-chat-status-tag, select.lead-chat-status-tag {
+    max-width: none !important;
+    width: auto !important;
+    min-width: auto !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
   }
 }
 
@@ -10123,11 +10169,13 @@ tr[data-yatra-status="Cancelled"] {
 
         window.getLeadInitials = function(name) {
             if (!name) return 'Y';
-            const parts = name.trim().split(/\s+/);
+            const clean = (name || '').toString().normalize('NFKC').replace(/[^a-zA-Z0-9\s]/g, '').trim();
+            if (!clean) return 'Y';
+            const parts = clean.split(/\s+/).filter(Boolean);
             if (parts.length >= 2) {
-                return (parts[0][0] + parts[1][0]).toUpperCase();
+                return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
             }
-            return name.slice(0, 2).toUpperCase();
+            return clean.slice(0, 2).toUpperCase();
         };
 
         window.toggleMobileLeadRow = function(rowEl, evt) {
@@ -11714,7 +11762,8 @@ tr[data-yatra-status="Cancelled"] {
                     </div>
                 ` : '—';
 
-                const initials = getLeadInitials(item.name);
+                const cleanLeadName = (item.name || 'Anonymous').toString().normalize('NFKC').trim() || 'Anonymous';
+                const initials = getLeadInitials(cleanLeadName);
                 // Phase 10: Duplicate phone check across active leads
                 const isDupPhone = leadPhoneClean && leadPhoneClean.length === 10 && currentLeads.some(other => other.id !== item.id && (other.phone || '').replace(/[^0-9]/g, '') === leadPhoneClean);
                 const dupPhoneBadgeHtml = isDupPhone ? '<span class="lead-dup-badge" title="Phone number found in multiple leads"><i class="fa-solid fa-clone"></i> Duplicate</span>' : '';
@@ -11759,12 +11808,14 @@ tr[data-yatra-status="Cancelled"] {
                     html += `
                         <tr class="lead-card-row" onclick="toggleMobileLeadRow(this, event)" style="background: #0f172a !important; border: 1.5px solid rgba(212, 175, 55, 0.4) !important; border-left: 5px solid ${priorityBorderColor} !important; border-radius: 14px !important; margin-bottom: 12px !important; box-shadow: 0 4px 16px rgba(0,0,0,0.4) !important;">
                             <td data-label="Name" class="lead-card-name-td" style="background: transparent !important; border: none !important; padding: 12px 14px !important;">
-                                <div class="lead-chat-item-header" style="background: transparent !important; display: flex !important; align-items: center !important; gap: 12px !important; width: 100% !important;">
+                                <div class="lead-chat-item-header" style="background: transparent !important; display: flex !important; align-items: flex-start !important; gap: 12px !important; width: 100% !important;">
                                     <div class="lead-chat-avatar" style="background: linear-gradient(135deg, #d4af37, #b8860b) !important; color: #0f172a !important; font-weight: 800 !important; font-size: 14px !important; width: 42px !important; height: 42px !important; border-radius: 50% !important; display: flex !important; align-items: center !important; justify-content: center !important; flex-shrink: 0 !important; box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;">${initials}</div>
-                                    <div class="lead-chat-main-info" style="flex: 1 !important; min-width: 0 !important; display: flex !important; flex-direction: column !important; gap: 3px !important; text-align: left !important;">
-                                        <div class="lead-chat-title-row" style="display: flex !important; align-items: center !important; width: 100% !important; gap: 6px !important; flex-wrap: wrap !important;">
-                                            <strong class="lead-chat-name" style="color: #f5c842 !important; font-size: 15px !important; font-weight: 800 !important; cursor: pointer; display: inline-flex !important; align-items: center !important; gap: 5px !important; flex: 1 !important; white-space: normal !important; word-break: break-word !important; overflow: visible !important;" onclick="event.stopPropagation(); startEditLead('${item.id}')"><i class="fa-solid fa-user" style="font-size: 11px; color: #f5c842; flex-shrink: 0;"></i>${item.name || 'Anonymous'}</strong>
-                                            ${priorityBadgeHtml} ${dupPhoneBadgeHtml}
+                                    <div class="lead-chat-main-info" style="flex: 1 !important; min-width: 0 !important; display: flex !important; flex-direction: column !important; gap: 4px !important; text-align: left !important;">
+                                        <div class="lead-chat-title-row" style="display: flex !important; align-items: center !important; justify-content: space-between !important; width: 100% !important; gap: 6px !important;">
+                                            <strong class="lead-chat-name" style="color: #f5c842 !important; font-size: 15px !important; font-weight: 800 !important; cursor: pointer; display: block !important; flex: 1 !important; min-width: 0 !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; line-height: 1.25 !important; margin: 0 !important;" onclick="event.stopPropagation(); startEditLead('${item.id}')" title="${cleanLeadName}">${cleanLeadName}</strong>
+                                            <div style="display: inline-flex; align-items: center; gap: 4px; flex-shrink: 0;">
+                                                ${priorityBadgeHtml} ${dupPhoneBadgeHtml}
+                                            </div>
                                         </div>
                                         <div class="lead-chat-sub-row" style="display: flex !important; align-items: center !important; gap: 8px !important; flex-wrap: wrap !important;">
                                             <span class="lead-chat-phone clickable-phone" onclick="copyLeadPhone('${leadPhoneClean || leadPhoneVal}', event)" title="Tap to copy number" style="color: #ffffff !important; font-size: 12.5px !important; font-weight: 700 !important; white-space: nowrap !important; display: inline-flex !important; align-items: center !important; gap: 3px; cursor: pointer;"><i class="fa-solid fa-phone" style="font-size: 10px; color: #f5c842;"></i>${leadPhoneVal || 'No Phone'}<i class="fa-regular fa-copy" style="font-size: 9px; opacity: 0.6; margin-left: 2px;"></i></span>
@@ -11784,7 +11835,7 @@ tr[data-yatra-status="Cancelled"] {
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="lead-chat-expand-chevron" style="display: flex !important; align-items: center !important; justify-content: center !important;">
+                                    <div class="lead-chat-expand-chevron" style="display: flex !important; align-items: center !important; justify-content: center !important; margin-top: 3px !important; flex-shrink: 0 !important;">
                                         <i class="fa-solid fa-chevron-down" style="color: #f5c842 !important; font-size: 14px !important;"></i>
                                     </div>
                                 </div>
@@ -11876,12 +11927,14 @@ tr[data-yatra-status="Cancelled"] {
                     html += `
                         <tr class="lead-card-row" onclick="toggleMobileLeadRow(this, event)" style="background: #0f172a !important; border: 1.5px solid rgba(212, 175, 55, 0.4) !important; border-left: 5px solid ${priorityBorderColor} !important; border-radius: 14px !important; margin-bottom: 12px !important; box-shadow: 0 4px 16px rgba(0,0,0,0.4) !important;">
                             <td data-label="Name" class="lead-card-name-td" style="background: transparent !important; border: none !important; padding: 12px 14px !important;">
-                                <div class="lead-chat-item-header" style="background: transparent !important; display: flex !important; align-items: center !important; gap: 12px !important; width: 100% !important;">
+                                <div class="lead-chat-item-header" style="background: transparent !important; display: flex !important; align-items: flex-start !important; gap: 12px !important; width: 100% !important;">
                                     <div class="lead-chat-avatar" style="background: linear-gradient(135deg, #d4af37, #b8860b) !important; color: #0f172a !important; font-weight: 800 !important; font-size: 14px !important; width: 42px !important; height: 42px !important; border-radius: 50% !important; display: flex !important; align-items: center !important; justify-content: center !important; flex-shrink: 0 !important; box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;">${initials}</div>
-                                    <div class="lead-chat-main-info" style="flex: 1 !important; min-width: 0 !important; display: flex !important; flex-direction: column !important; gap: 3px !important; text-align: left !important;">
-                                        <div class="lead-chat-title-row" style="display: flex !important; align-items: center !important; width: 100% !important; gap: 6px !important; flex-wrap: wrap !important;">
-                                            <strong class="lead-chat-name" style="color: #f5c842 !important; font-size: 15px !important; font-weight: 800 !important; cursor: pointer; display: inline-flex !important; align-items: center !important; gap: 5px !important; flex: 1 !important; white-space: normal !important; word-break: break-word !important; overflow: visible !important;" onclick="event.stopPropagation(); startEditLead('${item.id}')"><i class="fa-solid fa-user" style="font-size: 11px; color: #f5c842; flex-shrink: 0;"></i>${item.name || 'Anonymous'}</strong>
-                                            ${priorityBadgeHtml} ${dupPhoneBadgeHtml}
+                                    <div class="lead-chat-main-info" style="flex: 1 !important; min-width: 0 !important; display: flex !important; flex-direction: column !important; gap: 4px !important; text-align: left !important;">
+                                        <div class="lead-chat-title-row" style="display: flex !important; align-items: center !important; justify-content: space-between !important; width: 100% !important; gap: 6px !important;">
+                                            <strong class="lead-chat-name" style="color: #f5c842 !important; font-size: 15px !important; font-weight: 800 !important; cursor: pointer; display: block !important; flex: 1 !important; min-width: 0 !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; line-height: 1.25 !important; margin: 0 !important;" onclick="event.stopPropagation(); startEditLead('${item.id}')" title="${cleanLeadName}">${cleanLeadName}</strong>
+                                            <div style="display: inline-flex; align-items: center; gap: 4px; flex-shrink: 0;">
+                                                ${priorityBadgeHtml} ${dupPhoneBadgeHtml}
+                                            </div>
                                         </div>
                                         <div class="lead-chat-sub-row" style="display: flex !important; align-items: center !important; gap: 8px !important; flex-wrap: wrap !important;">
                                             <span class="lead-chat-phone clickable-phone" onclick="copyLeadPhone('${leadPhoneClean || leadPhoneVal}', event)" title="Tap to copy number" style="color: #ffffff !important; font-size: 12.5px !important; font-weight: 700 !important; white-space: nowrap !important; display: inline-flex !important; align-items: center !important; gap: 3px; cursor: pointer;"><i class="fa-solid fa-phone" style="font-size: 10px; color: #f5c842;"></i>${leadPhoneVal || 'No Phone'}<i class="fa-regular fa-copy" style="font-size: 9px; opacity: 0.6; margin-left: 2px;"></i></span>
@@ -11901,7 +11954,7 @@ tr[data-yatra-status="Cancelled"] {
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="lead-chat-expand-chevron" style="display: flex !important; align-items: center !important; justify-content: center !important;">
+                                    <div class="lead-chat-expand-chevron" style="display: flex !important; align-items: center !important; justify-content: center !important; margin-top: 3px !important; flex-shrink: 0 !important;">
                                         <i class="fa-solid fa-chevron-down" style="color: #f5c842 !important; font-size: 14px !important;"></i>
                                     </div>
                                 </div>
