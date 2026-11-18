@@ -11446,16 +11446,8 @@ body.menu-open::before {
     }
 
     #pane-bookings .booking-notes-text .ry-last-update-badge {
-        background: rgba(56, 189, 248, 0.12) !important;
-        border: 1px solid rgba(56, 189, 248, 0.35) !important;
-        border-radius: 8px !important;
-        padding: 6px 10px !important;
-        margin-top: 6px !important;
-        display: flex !important;
-        align-items: flex-start !important;
-        gap: 6px !important;
-        width: 100% !important;
-        box-sizing: border-box !important;
+        display: none !important;
+        visibility: hidden !important;
     }
 
     #pane-bookings .booking-notes-text .ry-last-update-badge span {
@@ -12944,16 +12936,8 @@ body.menu-open::before {
     }
 
     body:is(.user-role-admin, .user-role-staff) #pane-bookings .booking-notes-text .ry-last-update-badge {
-        background: rgba(56, 189, 248, 0.12) !important;
-        border: 1px solid rgba(56, 189, 248, 0.35) !important;
-        border-radius: 8px !important;
-        padding: 6px 10px !important;
-        margin-top: 6px !important;
-        display: flex !important;
-        align-items: flex-start !important;
-        gap: 6px !important;
-        width: 100% !important;
-        box-sizing: border-box !important;
+        display: none !important;
+        visibility: hidden !important;
     }
 
     body:is(.user-role-admin, .user-role-staff) #pane-bookings .booking-notes-text .ry-last-update-badge span {
