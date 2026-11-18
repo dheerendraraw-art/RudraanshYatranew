@@ -3923,6 +3923,15 @@ footer h3::after, footer h4::after {
     background-size: 12px !important;
 }
 
+.status-switchoff {
+    background: rgba(239, 68, 68, 0.15) !important;
+    color: #f87171 !important;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f87171' stroke-width='3'%3e%3cpath d='M6 9l6 6 6-6'/%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 10px center !important;
+    background-size: 12px !important;
+}
+
 .final-select {
     appearance: none;
     -webkit-appearance: none;
@@ -8041,24 +8050,43 @@ html, body {
         font-size: 12.5px !important;
     }
 
-    .lead-chat-status-tag {
-        font-size: 10.5px !important;
-        font-weight: 700 !important;
-        padding: 2px 7px !important;
-        border-radius: 10px !important;
-        background: rgba(212, 175, 55, 0.15) !important;
-        color: var(--color-gold) !important;
-        border: 1px solid rgba(212, 175, 55, 0.3) !important;
-        white-space: nowrap !important;
+    .lead-chat-meta-row {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        width: 100% !important;
+        gap: 8px !important;
+        margin-top: 5px !important;
     }
 
+    .lead-chat-status-tag,
     select.lead-chat-status-tag {
+        font-size: 11px !important;
+        font-weight: 700 !important;
+        padding: 3px 24px 3px 10px !important;
+        border-radius: 14px !important;
+        height: 26px !important;
+        min-height: 26px !important;
+        max-height: 26px !important;
+        line-height: 18px !important;
+        width: auto !important;
+        min-width: 110px !important;
+        max-width: none !important;
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
         cursor: pointer !important;
         outline: none !important;
         appearance: none !important;
         -webkit-appearance: none !important;
-        display: inline-block !important;
+        -moz-appearance: none !important;
+        display: inline-flex !important;
+        align-items: center !important;
         margin: 0 !important;
+        border: 1px solid rgba(212, 175, 55, 0.45) !important;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3) !important;
+        background-repeat: no-repeat !important;
+        background-position: right 7px center !important;
+        background-size: 10px !important;
     }
 
     .lead-chat-expand-chevron {
@@ -8580,7 +8608,7 @@ body.user-role-staff .admin-only-action {
     }
 
     /* Leads card: assigned staff select box */
-    .admin-table tbody tr.lead-card-row td select {
+    .admin-table tbody tr.lead-card-row td:not(.lead-card-name-td) select {
         color: #ffffff !important;
         background: #1f2937 !important;
         border: 1.5px solid rgba(212, 175, 55, 0.6) !important;
@@ -12625,7 +12653,7 @@ body.menu-open::before {
     }
 
     /* Touch-friendly staff assignee dropdown */
-    body:is(.user-role-admin, .user-role-staff) #pane-leads tr.lead-card-row td select {
+    body:is(.user-role-admin, .user-role-staff) #pane-leads tr.lead-card-row td:not(.lead-card-name-td) select {
         color: #ffffff !important;
         background: #1e293b !important;
         border: 1.5px solid rgba(212, 175, 55, 0.6) !important;

@@ -23,7 +23,7 @@
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></noscript>
-    <link rel="stylesheet" href="/style.css?v=8.10">
+    <link rel="stylesheet" href="/style.css?v=8.11">
     <meta name="robots" content="noindex, nofollow">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
@@ -891,12 +891,43 @@ tr[data-yatra-status="Cancelled"] {
     flex-shrink: 0 !important;
     padding: 2px !important;
   }
-  .lead-chat-status-tag, select.lead-chat-status-tag {
-    max-width: none !important;
+  .lead-chat-meta-row {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    gap: 8px !important;
+    margin-top: 5px !important;
+  }
+  .lead-chat-status-tag,
+  select.lead-chat-status-tag,
+  #pane-leads select.lead-chat-status-tag {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    padding: 3px 24px 3px 10px !important;
+    border-radius: 14px !important;
+    height: 26px !important;
+    min-height: 26px !important;
+    max-height: 26px !important;
+    line-height: 18px !important;
     width: auto !important;
-    min-width: auto !important;
+    min-width: 110px !important;
+    max-width: none !important;
     white-space: nowrap !important;
     flex-shrink: 0 !important;
+    cursor: pointer !important;
+    outline: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    margin: 0 !important;
+    border: 1px solid rgba(212, 175, 55, 0.45) !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3) !important;
+    background-repeat: no-repeat !important;
+    background-position: right 7px center !important;
+    background-size: 10px !important;
   }
 }
 
@@ -11838,8 +11869,8 @@ body.user-role-staff .admin-only-action {
                                                 ${priorityBadgeHtml} ${dupPhoneBadgeHtml}
                                             </div>
                                         </div>
-                                        <div class="lead-chat-sub-row" style="display: flex !important; align-items: center !important; gap: 8px !important; flex-wrap: wrap !important;">
-                                            <span class="lead-chat-phone clickable-phone" onclick="copyLeadPhone('${leadPhoneClean || leadPhoneVal}', event)" title="Tap to copy number" style="color: #ffffff !important; font-size: 12.5px !important; font-weight: 700 !important; white-space: nowrap !important; display: inline-flex !important; align-items: center !important; gap: 3px; cursor: pointer;"><i class="fa-solid fa-phone" style="font-size: 10px; color: #f5c842;"></i>${leadPhoneVal || 'No Phone'}<i class="fa-regular fa-copy" style="font-size: 9px; opacity: 0.6; margin-left: 2px;"></i></span>
+                                        <div class="lead-chat-sub-row" style="display: flex !important; align-items: center !important; gap: 8px !important; flex-wrap: wrap !important; margin-top: 2px !important;">
+                                            <span class="lead-chat-phone clickable-phone" onclick="copyLeadPhone('${leadPhoneClean || leadPhoneVal}', event)" title="Tap to copy number" style="color: #ffffff !important; font-size: 12.5px !important; font-weight: 700 !important; white-space: nowrap !important; display: inline-flex !important; align-items: center !important; gap: 4px; cursor: pointer;"><i class="fa-solid fa-phone" style="font-size: 10px; color: #f5c842;"></i>${leadPhoneVal || 'No Phone'}<i class="fa-regular fa-copy" style="font-size: 9px; opacity: 0.6; margin-left: 2px;"></i></span>
                                             ${leadPhoneClean ? `
                                                 <span class="lead-quick-contact-chips" style="display: inline-flex !important; gap: 5px !important; align-items: center !important; flex-shrink: 0 !important; white-space: nowrap !important;" onclick="event.stopPropagation();">
                                                     <a href="tel:${leadPhoneClean}" onclick="trackDialedLead('${item.id}', '${(item.name || 'Client').replace(/'/g, "\\'")}', '${leadPhoneClean}')" class="lead-quick-call-chip" title="Call Lead" style="background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); border-radius: 12px; padding: 3px 9px; font-size: 11px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap !important; flex-shrink: 0 !important;">
@@ -11850,10 +11881,12 @@ body.user-role-staff .admin-only-action {
                                                     </a>
                                                 </span>
                                             ` : ''}
-                                            <span class="lead-chat-time" style="color: #94a3b8 !important; font-size: 10.5px !important; font-weight: 600 !important; white-space: nowrap !important; margin-left: auto !important;">${createdStr}</span>
-                                            <select onclick="event.stopPropagation();" onpointerdown="event.stopPropagation();" ontouchstart="event.stopPropagation();" onchange="updateLeadField('${item.id}', 'status', this.value); updateSelectStyle(this)" class="lead-chat-status-tag status-select ${statusClass}">
+                                        </div>
+                                        <div class="lead-chat-meta-row" style="display: flex !important; align-items: center !important; justify-content: space-between !important; width: 100% !important; gap: 8px !important; margin-top: 5px !important;">
+                                            <select onclick="event.stopPropagation();" onpointerdown="event.stopPropagation();" ontouchstart="event.stopPropagation();" onchange="updateLeadField('${item.id}', 'status', this.value); updateSelectStyle(this)" class="lead-chat-status-tag status-select ${statusClass}" title="Update Lead Status">
                                                 ${statusOptions}
                                             </select>
+                                            <span class="lead-chat-time" style="color: #94a3b8 !important; font-size: 11px !important; font-weight: 600 !important; font-family: monospace !important; white-space: nowrap !important; margin-left: auto !important;">${createdStr}</span>
                                         </div>
                                     </div>
                                     <div class="lead-chat-expand-chevron" style="display: flex !important; align-items: center !important; justify-content: center !important; margin-top: 3px !important; flex-shrink: 0 !important;">
@@ -11957,22 +11990,24 @@ body.user-role-staff .admin-only-action {
                                                 ${priorityBadgeHtml} ${dupPhoneBadgeHtml}
                                             </div>
                                         </div>
-                                        <div class="lead-chat-sub-row" style="display: flex !important; align-items: center !important; gap: 8px !important; flex-wrap: wrap !important;">
-                                            <span class="lead-chat-phone clickable-phone" onclick="copyLeadPhone('${leadPhoneClean || leadPhoneVal}', event)" title="Tap to copy number" style="color: #ffffff !important; font-size: 12.5px !important; font-weight: 700 !important; white-space: nowrap !important; display: inline-flex !important; align-items: center !important; gap: 3px; cursor: pointer;"><i class="fa-solid fa-phone" style="font-size: 10px; color: #f5c842;"></i>${leadPhoneVal || 'No Phone'}<i class="fa-regular fa-copy" style="font-size: 9px; opacity: 0.6; margin-left: 2px;"></i></span>
+                                        <div class="lead-chat-sub-row" style="display: flex !important; align-items: center !important; gap: 8px !important; flex-wrap: wrap !important; margin-top: 2px !important;">
+                                            <span class="lead-chat-phone clickable-phone" onclick="copyLeadPhone('${leadPhoneClean || leadPhoneVal}', event)" title="Tap to copy number" style="color: #ffffff !important; font-size: 12.5px !important; font-weight: 700 !important; white-space: nowrap !important; display: inline-flex !important; align-items: center !important; gap: 4px; cursor: pointer;"><i class="fa-solid fa-phone" style="font-size: 10px; color: #f5c842;"></i>${leadPhoneVal || 'No Phone'}<i class="fa-regular fa-copy" style="font-size: 9px; opacity: 0.6; margin-left: 2px;"></i></span>
                                             ${leadPhoneClean ? `
-                                                <span class="lead-quick-contact-chips" style="display: inline-flex !important; gap: 4px !important; align-items: center !important; flex-shrink: 0 !important; white-space: nowrap !important;" onclick="event.stopPropagation();">
-                                                    <a href="tel:${leadPhoneClean}" onclick="trackDialedLead('${item.id}', '${(item.name || 'Client').replace(/'/g, "\\'")}', '${leadPhoneClean}')" class="lead-quick-call-chip" title="Call Lead" style="background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); border-radius: 12px; padding: 2px 7px; font-size: 10.5px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 3px; white-space: nowrap !important; flex-shrink: 0 !important;">
+                                                <span class="lead-quick-contact-chips" style="display: inline-flex !important; gap: 5px !important; align-items: center !important; flex-shrink: 0 !important; white-space: nowrap !important;" onclick="event.stopPropagation();">
+                                                    <a href="tel:${leadPhoneClean}" onclick="trackDialedLead('${item.id}', '${(item.name || 'Client').replace(/'/g, "\\'")}', '${leadPhoneClean}')" class="lead-quick-call-chip" title="Call Lead" style="background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); border-radius: 12px; padding: 3px 9px; font-size: 11px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap !important; flex-shrink: 0 !important;">
                                                         <i class="fa-solid fa-phone" style="font-size: 9px;"></i> Call
                                                     </a>
-                                                    <a href="${waHref}" target="_blank" class="lead-quick-wa-chip" title="WhatsApp Lead" style="background: rgba(37, 211, 102, 0.2); color: #25D366; border: 1px solid rgba(37, 211, 102, 0.4); border-radius: 12px; padding: 2px 7px; font-size: 10.5px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 3px; white-space: nowrap !important; flex-shrink: 0 !important;">
-                                                        <i class="fa-brands fa-whatsapp" style="font-size: 11px;"></i> WhatsApp
+                                                    <a href="${waHref}" target="_blank" class="lead-quick-wa-chip" title="WhatsApp Lead" style="background: rgba(37, 211, 102, 0.2); color: #25D366; border: 1px solid rgba(37, 211, 102, 0.4); border-radius: 12px; padding: 3px 9px; font-size: 11px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap !important; flex-shrink: 0 !important;">
+                                                        <i class="fa-brands fa-whatsapp" style="font-size: 12px;"></i> WhatsApp
                                                     </a>
                                                 </span>
                                             ` : ''}
-                                            <span class="lead-chat-time" style="color: #94a3b8 !important; font-size: 10.5px !important; font-weight: 600 !important; white-space: nowrap !important; margin-left: auto !important;">${createdStr}</span>
-                                            <select onclick="event.stopPropagation();" onpointerdown="event.stopPropagation();" ontouchstart="event.stopPropagation();" onchange="updateLeadField('${item.id}', 'status', this.value); updateSelectStyle(this)" class="lead-chat-status-tag status-select ${statusClass}">
+                                        </div>
+                                        <div class="lead-chat-meta-row" style="display: flex !important; align-items: center !important; justify-content: space-between !important; width: 100% !important; gap: 8px !important; margin-top: 5px !important;">
+                                            <select onclick="event.stopPropagation();" onpointerdown="event.stopPropagation();" ontouchstart="event.stopPropagation();" onchange="updateLeadField('${item.id}', 'status', this.value); updateSelectStyle(this)" class="lead-chat-status-tag status-select ${statusClass}" title="Update Lead Status">
                                                 ${statusOptions}
                                             </select>
+                                            <span class="lead-chat-time" style="color: #94a3b8 !important; font-size: 11px !important; font-weight: 600 !important; font-family: monospace !important; white-space: nowrap !important; margin-left: auto !important;">${createdStr}</span>
                                         </div>
                                     </div>
                                     <div class="lead-chat-expand-chevron" style="display: flex !important; align-items: center !important; justify-content: center !important; margin-top: 3px !important; flex-shrink: 0 !important;">
