@@ -23,7 +23,7 @@
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></noscript>
-    <link rel="stylesheet" href="/style.css?v=8.9">
+    <link rel="stylesheet" href="/style.css?v=8.10">
     <meta name="robots" content="noindex, nofollow">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
@@ -1068,6 +1068,21 @@ tr[data-yatra-status="Cancelled"] {
   transition: width 0.8s cubic-bezier(0.4,0,0.2,1) !important;
   box-shadow: 0 0 8px rgba(212,175,55,0.5) !important;
 }
+
+/* Staff Role Restrictions: Strictly hide Sync Google Reviews button & admin actions */
+body.user-role-staff #sync-reviews-btn,
+body:not(.user-role-admin) #sync-reviews-btn,
+body.user-role-staff .admin-only-action {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  height: 0 !important;
+  width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
 </style>
 
 </head>
@@ -1120,7 +1135,7 @@ tr[data-yatra-status="Cancelled"] {
                     <span>Quick Search...</span>
                     <kbd>Ctrl K</kbd>
                 </button>
-                <button class="btn btn-secondary" onclick="syncGoogleReviews()" id="sync-reviews-btn" style="border: 1px solid var(--color-gold); background: #1e293b; padding: 6px 12px; font-size: 12px; cursor: pointer; border-radius: 4px; color: var(--color-gold); font-weight: 600; display: inline-flex; align-items: center; gap: 6px;" title="Refresh Google Reviews & Rating live from Google Places API">
+                <button class="btn btn-secondary admin-only-action" onclick="syncGoogleReviews()" id="sync-reviews-btn" style="border: 1px solid var(--color-gold); background: #1e293b; padding: 6px 12px; font-size: 12px; cursor: pointer; border-radius: 4px; color: var(--color-gold); font-weight: 600; display: none; align-items: center; gap: 6px;" title="Refresh Google Reviews & Rating live from Google Places API">
                     <i class="fa-solid fa-arrows-rotate" id="sync-reviews-icon"></i> <span>Sync Google Reviews</span>
                 </button>
                 <span id="user-badge" style="color: var(--color-gold); font-size: 13px; font-weight: 600; background: rgba(212, 175, 55, 0.1); padding: 6px 12px; border-radius: 4px; border: 1px solid rgba(212, 175, 55, 0.2); display: inline-flex; align-items: center;">
@@ -5380,7 +5395,13 @@ tr[data-yatra-status="Cancelled"] {
             ];
             adminOnlyButtonIds.forEach(id => {
                 const el = document.getElementById(id);
-                if (el) el.style.display = isStaff ? 'none' : 'inline-flex';
+                if (el) {
+                    if (isStaff) {
+                        el.style.setProperty('display', 'none', 'important');
+                    } else {
+                        el.style.display = 'inline-flex';
+                    }
+                }
             });
 
             const filterBookingAssignee = document.getElementById('filter-booking-assignee');
@@ -16942,6 +16963,17 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
         };
 
         window.syncGoogleReviews = async function() {
+            const role = (localStorage.getItem('admin_role') || currentUserRole || 'admin').toString().toLowerCase().trim();
+            const uname = (localStorage.getItem('admin_username') || currentUsername || 'admin').toString().toLowerCase().trim();
+            if (role === 'staff' || (role !== 'admin' && uname !== 'admin')) {
+                if (typeof showAdminToast === 'function') {
+                    showAdminToast('Access restricted: Only administrator can sync Google Reviews.', 'warning');
+                } else {
+                    alert('Access restricted: Only administrator can sync Google Reviews.');
+                }
+                return;
+            }
+
             const btn = document.getElementById('sync-reviews-btn');
             const icon = document.getElementById('sync-reviews-icon');
             if (icon) icon.classList.add('fa-spin');
