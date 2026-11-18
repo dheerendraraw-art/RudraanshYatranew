@@ -538,7 +538,7 @@ html { scroll-behavior: smooth; }
   box-shadow: 0 12px 32px rgba(0,0,0,0.5), 0 0 20px rgba(212,175,55,0.2) !important;
   border-color: rgba(212,175,55,0.45) !important;
 }
-/* Stat number — counter animation ready */
+/* Stat number */
 .admin-stat-num {
   font-size: 30px !important;
   font-weight: 800 !important;
@@ -944,21 +944,6 @@ tr[data-yatra-status="Cancelled"] {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   MICRO-INTERACTION: Button ripple
-   ═══════════════════════════════════════════════════════════ */
-.ry-ripple {
-  position: absolute !important;
-  border-radius: 50% !important;
-  transform: scale(0) !important;
-  animation: ry-ripple-anim 0.5s ease-out !important;
-  background: rgba(255,255,255,0.3) !important;
-  pointer-events: none !important;
-}
-@keyframes ry-ripple-anim {
-  to { transform: scale(4); opacity: 0; }
-}
-
-/* ═══════════════════════════════════════════════════════════
    STAFF ANALYTICS — card beautification  
    ═══════════════════════════════════════════════════════════ */
 .staff-performance-card {
@@ -1002,6 +987,7 @@ tr[data-yatra-status="Cancelled"] {
   box-shadow: 0 0 8px rgba(212,175,55,0.5) !important;
 }
 </style>
+
 </head>
 
 <body style="background-color: var(--color-bg-base); font-family: var(--font-sans);">
@@ -1063,14 +1049,6 @@ tr[data-yatra-status="Cancelled"] {
                 </button>
             </div>
         </nav>
-        <!-- Phase 2: Staff Greeting Strip -->
-        <div id="ry-greeting-strip" style="display:none;">
-            <div>
-                👋 Welcome back, <strong id="ry-greeting-name">Staff</strong>
-                <span style="margin-left:12px; font-size:11px; color:#64748b;" id="ry-greeting-sub"></span>
-            </div>
-            <div class="ry-today-date" id="ry-today-date"></div>
-        </div>
 
         <div class="admin-dashboard-container">
 
@@ -14862,140 +14840,6 @@ th { background: #0b1f3a; color: #fff; text-align: left; padding: 10px 12px; fon
         </div>
     </div>
 
-<script>
-
-// ═══════════════════════════════════════════════════════════
-// PHASE 2 MICRO-INTERACTIONS & UI ENHANCEMENTS
-// ═══════════════════════════════════════════════════════════
-(function() {
-  'use strict';
-
-  // ── Button ripple effect ──
-  document.addEventListener('click', function(e) {
-    var btn = e.target.closest('button, .btn, .admin-tab-btn, .mob-bottom-nav-btn, .booking-qf-pill');
-    if (!btn) return;
-    var style = window.getComputedStyle(btn);
-    if (style.position === 'static') btn.style.position = 'relative';
-    btn.style.overflow = 'hidden';
-    var rect = btn.getBoundingClientRect();
-    var size = Math.max(rect.width, rect.height);
-    var ripple = document.createElement('span');
-    ripple.classList.add('ry-ripple');
-    ripple.style.width  = ripple.style.height = size + 'px';
-    ripple.style.left   = (e.clientX - rect.left - size/2) + 'px';
-    ripple.style.top    = (e.clientY - rect.top  - size/2) + 'px';
-    btn.appendChild(ripple);
-    setTimeout(function() { ripple.remove(); }, 550);
-  });
-
-  // ── Stat counter animation ──
-  function animateCounter(el, target) {
-    var start = 0;
-    var duration = 800;
-    var startTime = null;
-    var prefix = '';
-    var suffix = '';
-    var num = parseFloat(String(target).replace(/[^0-9.]/g, ''));
-    if (isNaN(num)) return;
-    if (String(target).includes('₹')) prefix = '₹';
-    if (String(target).includes('%')) suffix = '%';
-    function step(ts) {
-      if (!startTime) startTime = ts;
-      var progress = Math.min((ts - startTime) / duration, 1);
-      var ease = 1 - Math.pow(1 - progress, 3);
-      var current = Math.floor(ease * num);
-      el.textContent = prefix + current.toLocaleString('en-IN') + suffix;
-      if (progress < 1) requestAnimationFrame(step);
-      else el.textContent = prefix + num.toLocaleString('en-IN') + suffix;
-    }
-    requestAnimationFrame(step);
-  }
-
-  // Observe stat nums for counter animation
-  if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          var el = entry.target;
-          var val = el.dataset.ryTarget;
-          if (val) { animateCounter(el, val); io.unobserve(el); }
-        }
-      });
-    }, { threshold: 0.4 });
-    document.querySelectorAll('.admin-stat-num').forEach(function(el) {
-      if (!el.querySelector('i')) {
-        el.dataset.ryTarget = el.textContent.trim();
-        io.observe(el);
-      }
-    });
-  }
-
-  // ── Staff Greeting Strip ──
-  function updateGreetingStrip() {
-    var strip = document.getElementById('ry-greeting-strip');
-    var nameEl = document.getElementById('ry-greeting-name');
-    var subEl  = document.getElementById('ry-greeting-sub');
-    var dateEl = document.getElementById('ry-today-date');
-    if (!strip) return;
-    var user = (window.currentUser && window.currentUser.username) ||
-               (window.loggedInUser) || '';
-    if (user) {
-      strip.style.display = 'flex';
-      if (nameEl) nameEl.textContent = user.charAt(0).toUpperCase() + user.slice(1);
-    }
-    var now = new Date();
-    var hour = now.getHours();
-    var greet = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
-    if (subEl) subEl.textContent = greet + '!';
-    if (dateEl) {
-      dateEl.textContent = now.toLocaleDateString('en-IN', {
-        weekday: 'short', day: 'numeric', month: 'short', year: 'numeric'
-      });
-    }
-  }
-
-  // Run after login
-  document.addEventListener('ry:login-success', updateGreetingStrip);
-  // Also try after a short delay (dashboard init)
-  setTimeout(updateGreetingStrip, 1500);
-
-  // ── Add data-yatra-status attrs to booking rows for CSS targeting ──
-  function tagBookingRows() {
-    document.querySelectorAll('#bookings-table-body tr').forEach(function(tr) {
-      var cells = tr.querySelectorAll('td');
-      cells.forEach(function(td) {
-        var txt = td.textContent.trim();
-        if (txt === 'Yatra Completed' || txt === 'Cancelled' || txt === 'In Progress') {
-          tr.dataset.yatraStatus = txt;
-        }
-      });
-    });
-  }
-  // Re-tag on any MutationObserver change in the bookings tbody
-  var bookingsTbody = document.getElementById('bookings-table-body');
-  if (bookingsTbody && 'MutationObserver' in window) {
-    new MutationObserver(tagBookingRows).observe(bookingsTbody, { childList: true });
-  }
-  tagBookingRows();
-
-  // ── Re-animate stat counters when dashboard data loads ──
-  var statsGrid = document.getElementById('dashboard-stats-grid');
-  if (statsGrid && 'MutationObserver' in window) {
-    new MutationObserver(function() {
-      statsGrid.querySelectorAll('.admin-stat-num').forEach(function(el) {
-        if (!el.querySelector('i') && !el.dataset.ryAnimated) {
-          el.dataset.ryAnimated = '1';
-          el.dataset.ryTarget = el.textContent.trim();
-          animateCounter(el, el.dataset.ryTarget);
-        }
-      });
-    }).observe(statsGrid, { subtree: true, childList: true, characterData: true });
-  }
-
-  console.log('[RY Phase 2] UI Modernization loaded ✨');
-})();
-
-</script>
 </body></html>`;
 
                 // Create full-screen in-page overlay (works on all mobile browsers — no popup permission needed)
@@ -17938,7 +17782,73 @@ window.startEditLead = function(itemOrIdOrIndex) {
     }
 };
 
-    </script>
+    
+
+// ═══════════════════════════════════════════════════════════
+// PHASE 2 MICRO-INTERACTIONS & UI ENHANCEMENTS
+// ═══════════════════════════════════════════════════════════
+(function() {
+  'use strict';
+
+  function initPhase2UI() {
+    // ── Staff Greeting Strip ──
+    try {
+      var strip = document.getElementById('ry-greeting-strip');
+      var nameEl = document.getElementById('ry-greeting-name');
+      var subEl  = document.getElementById('ry-greeting-sub');
+      var dateEl = document.getElementById('ry-today-date');
+      if (strip) {
+        var u = (window.currentUser && window.currentUser.username) ||
+                (window.currentUsername) ||
+                localStorage.getItem('admin_username') || '';
+        if (u) {
+          strip.style.display = 'flex';
+          if (nameEl) nameEl.textContent = u.charAt(0).toUpperCase() + u.slice(1);
+        }
+        var now = new Date();
+        var hr = now.getHours();
+        var greet = hr < 12 ? 'Good morning' : hr < 17 ? 'Good afternoon' : 'Good evening';
+        if (subEl) subEl.textContent = greet + '!';
+        if (dateEl) {
+          dateEl.textContent = now.toLocaleDateString('en-IN', {
+            weekday: 'short', day: 'numeric', month: 'short', year: 'numeric'
+          });
+        }
+      }
+    } catch(e) { console.warn('Greeting strip error:', e); }
+
+    // ── Tag booking rows with data-yatra-status ──
+    try {
+      var tagRows = function() {
+        document.querySelectorAll('#bookings-table-body tr').forEach(function(tr) {
+          var cells = tr.querySelectorAll('td');
+          cells.forEach(function(td) {
+            var txt = td.textContent.trim();
+            if (txt === 'Yatra Completed' || txt === 'Cancelled' || txt === 'In Progress') {
+              tr.dataset.yatraStatus = txt;
+            }
+          });
+        });
+      };
+      var bTbody = document.getElementById('bookings-table-body');
+      if (bTbody && 'MutationObserver' in window) {
+        new MutationObserver(tagRows).observe(bTbody, { childList: true });
+      }
+      tagRows();
+    } catch(e) {}
+  }
+
+  // Hook into dashboard load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPhase2UI);
+  } else {
+    setTimeout(initPhase2UI, 500);
+  }
+
+  console.log('[RY Phase 2] UI Modernization loaded safely ✨');
+})();
+
+</script>
     <!-- Phase 3: Mobile Sticky Bottom Navigation Bar (Thumb Zone) -->
     <nav id="mobile-bottom-nav" class="mobile-bottom-nav" aria-label="Mobile Navigation">
         <button type="button" class="mob-bottom-nav-btn active" data-target="pane-leads" onclick="switchTab(null, 'pane-leads')">
