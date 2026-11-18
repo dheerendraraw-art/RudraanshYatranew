@@ -12573,13 +12573,23 @@ body.menu-open::before {
         display: inline-flex !important;
         gap: 5px !important;
         align-items: center !important;
+        flex-shrink: 0 !important;
+        white-space: nowrap !important;
     }
 
     body:is(.user-role-admin, .user-role-staff) #pane-leads .lead-quick-call-chip,
     body:is(.user-role-admin, .user-role-staff) #pane-leads .lead-quick-wa-chip {
         min-height: 26px !important;
+        height: 26px !important;
         padding: 3px 9px !important;
         font-size: 11px !important;
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        line-height: 1 !important;
+        border-radius: 13px !important;
     }
 
     /* Hide duplicate status cell on mobile (status is already in the card header) */
@@ -15593,13 +15603,29 @@ body.menu-open::before {
         min-width: 50px;
     }
 
+    .lead-quick-contact-chips {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+        flex-shrink: 0 !important;
+        white-space: nowrap !important;
+    }
+
     .lead-quick-call-chip,
     .lead-quick-wa-chip {
-        min-height: 36px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 6px 12px !important;
+        min-height: 28px !important;
+        height: 28px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 4px 10px !important;
+        border-radius: 14px !important;
+        font-size: 11px !important;
+        font-weight: 700 !important;
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
+        line-height: 1 !important;
+        box-sizing: border-box !important;
     }
 
     .lc-outcome-btn {

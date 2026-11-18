@@ -23,7 +23,7 @@
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></noscript>
-    <link rel="stylesheet" href="/style.css?v=8.7">
+    <link rel="stylesheet" href="/style.css?v=8.8">
     <meta name="robots" content="noindex, nofollow">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
@@ -651,7 +651,8 @@ html { scroll-behavior: smooth; }
   border-bottom: 1px solid var(--ry-border) !important;
   white-space: nowrap !important;
 }
-.admin-table tbody tr {
+/* Table row styles — EXCLUDING lead-card-row (mobile cards) */
+.admin-table tbody tr:not(.lead-card-row) {
   transition: background var(--ry-transition), transform var(--ry-transition) !important;
   border-bottom: 1px solid rgba(255,255,255,0.04) !important;
   animation: ry-row-enter 0.3s ease-out both !important;
@@ -660,15 +661,16 @@ html { scroll-behavior: smooth; }
   from { opacity: 0; transform: translateX(-6px); }
   to   { opacity: 1; transform: translateX(0); }
 }
-.admin-table tbody tr:nth-child(odd) {
+.admin-table tbody tr:not(.lead-card-row):nth-child(odd) {
   background: rgba(255,255,255,0.015) !important;
 }
-.admin-table tbody tr:hover {
+.admin-table tbody tr:not(.lead-card-row):hover {
   background: rgba(212,175,55,0.07) !important;
   transform: scale(1.0015) !important;
   box-shadow: inset 3px 0 0 var(--ry-gold) !important;
 }
-.admin-table tbody td {
+/* td padding — ONLY for non-mobile-card cells */
+.admin-table tbody tr:not(.lead-card-row) td {
   padding: 13px 16px !important;
   font-size: 13px !important;
   color: #cbd5e1 !important;
@@ -815,6 +817,40 @@ tr[data-yatra-status="Cancelled"] {
     border-radius: 12px !important;
     padding: 10px 12px !important;
     gap: 8px !important;
+  }
+
+  /* Quick Contact Action Chips (Call / WhatsApp) — Never crush, wrap or distort */
+  .lead-quick-contact-chips {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+  }
+  .lead-quick-call-chip,
+  .lead-quick-wa-chip {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    box-sizing: border-box !important;
+    min-height: 26px !important;
+    height: 26px !important;
+    padding: 3px 9px !important;
+    border-radius: 13px !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
+    line-height: 1 !important;
+  }
+  .lead-chat-sub-row {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    flex-wrap: wrap !important;
+    min-width: 0 !important;
   }
 }
 
@@ -11733,11 +11769,11 @@ tr[data-yatra-status="Cancelled"] {
                                         <div class="lead-chat-sub-row" style="display: flex !important; align-items: center !important; gap: 8px !important; flex-wrap: wrap !important;">
                                             <span class="lead-chat-phone clickable-phone" onclick="copyLeadPhone('${leadPhoneClean || leadPhoneVal}', event)" title="Tap to copy number" style="color: #ffffff !important; font-size: 12.5px !important; font-weight: 700 !important; white-space: nowrap !important; display: inline-flex !important; align-items: center !important; gap: 3px; cursor: pointer;"><i class="fa-solid fa-phone" style="font-size: 10px; color: #f5c842;"></i>${leadPhoneVal || 'No Phone'}<i class="fa-regular fa-copy" style="font-size: 9px; opacity: 0.6; margin-left: 2px;"></i></span>
                                             ${leadPhoneClean ? `
-                                                <span class="lead-quick-contact-chips" style="display: inline-flex; gap: 5px; align-items: center;" onclick="event.stopPropagation();">
-                                                    <a href="tel:${leadPhoneClean}" onclick="trackDialedLead('${item.id}', '${(item.name || 'Client').replace(/'/g, "\\'")}', '${leadPhoneClean}')" class="lead-quick-call-chip" title="Call Lead" style="background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); border-radius: 12px; padding: 3px 9px; font-size: 11px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
+                                                <span class="lead-quick-contact-chips" style="display: inline-flex !important; gap: 5px !important; align-items: center !important; flex-shrink: 0 !important; white-space: nowrap !important;" onclick="event.stopPropagation();">
+                                                    <a href="tel:${leadPhoneClean}" onclick="trackDialedLead('${item.id}', '${(item.name || 'Client').replace(/'/g, "\\'")}', '${leadPhoneClean}')" class="lead-quick-call-chip" title="Call Lead" style="background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); border-radius: 12px; padding: 3px 9px; font-size: 11px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap !important; flex-shrink: 0 !important;">
                                                         <i class="fa-solid fa-phone" style="font-size: 9px;"></i> Call
                                                     </a>
-                                                    <a href="${waHref}" target="_blank" class="lead-quick-wa-chip" title="WhatsApp Lead" style="background: rgba(37, 211, 102, 0.2); color: #25D366; border: 1px solid rgba(37, 211, 102, 0.4); border-radius: 12px; padding: 3px 9px; font-size: 11px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
+                                                    <a href="${waHref}" target="_blank" class="lead-quick-wa-chip" title="WhatsApp Lead" style="background: rgba(37, 211, 102, 0.2); color: #25D366; border: 1px solid rgba(37, 211, 102, 0.4); border-radius: 12px; padding: 3px 9px; font-size: 11px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap !important; flex-shrink: 0 !important;">
                                                         <i class="fa-brands fa-whatsapp" style="font-size: 12px;"></i> WhatsApp
                                                     </a>
                                                 </span>
@@ -11850,12 +11886,12 @@ tr[data-yatra-status="Cancelled"] {
                                         <div class="lead-chat-sub-row" style="display: flex !important; align-items: center !important; gap: 8px !important; flex-wrap: wrap !important;">
                                             <span class="lead-chat-phone clickable-phone" onclick="copyLeadPhone('${leadPhoneClean || leadPhoneVal}', event)" title="Tap to copy number" style="color: #ffffff !important; font-size: 12.5px !important; font-weight: 700 !important; white-space: nowrap !important; display: inline-flex !important; align-items: center !important; gap: 3px; cursor: pointer;"><i class="fa-solid fa-phone" style="font-size: 10px; color: #f5c842;"></i>${leadPhoneVal || 'No Phone'}<i class="fa-regular fa-copy" style="font-size: 9px; opacity: 0.6; margin-left: 2px;"></i></span>
                                             ${leadPhoneClean ? `
-                                                <span class="lead-quick-contact-chips" style="display: inline-flex; gap: 4px; align-items: center;" onclick="event.stopPropagation();">
-                                                    <a href="tel:${leadPhoneClean}" onclick="trackDialedLead('${item.id}', '${(item.name || 'Client').replace(/'/g, "\\'")}', '${leadPhoneClean}')" class="lead-quick-call-chip" title="Call Lead" style="background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); border-radius: 12px; padding: 2px 7px; font-size: 10.5px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 3px;">
+                                                <span class="lead-quick-contact-chips" style="display: inline-flex !important; gap: 4px !important; align-items: center !important; flex-shrink: 0 !important; white-space: nowrap !important;" onclick="event.stopPropagation();">
+                                                    <a href="tel:${leadPhoneClean}" onclick="trackDialedLead('${item.id}', '${(item.name || 'Client').replace(/'/g, "\\'")}', '${leadPhoneClean}')" class="lead-quick-call-chip" title="Call Lead" style="background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); border-radius: 12px; padding: 2px 7px; font-size: 10.5px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 3px; white-space: nowrap !important; flex-shrink: 0 !important;">
                                                         <i class="fa-solid fa-phone" style="font-size: 9px;"></i> Call
                                                     </a>
-                                                    <a href="${waHref}" target="_blank" class="lead-quick-wa-chip" title="WhatsApp Lead" style="background: rgba(37, 211, 102, 0.2); color: #25D366; border: 1px solid rgba(37, 211, 102, 0.4); border-radius: 12px; padding: 2px 7px; font-size: 10.5px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 3px;">
-                                                        <i class="fa-brands fa-whatsapp" style="font-size: 11px;"></i> Chat
+                                                    <a href="${waHref}" target="_blank" class="lead-quick-wa-chip" title="WhatsApp Lead" style="background: rgba(37, 211, 102, 0.2); color: #25D366; border: 1px solid rgba(37, 211, 102, 0.4); border-radius: 12px; padding: 2px 7px; font-size: 10.5px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 3px; white-space: nowrap !important; flex-shrink: 0 !important;">
+                                                        <i class="fa-brands fa-whatsapp" style="font-size: 11px;"></i> WhatsApp
                                                     </a>
                                                 </span>
                                             ` : ''}
