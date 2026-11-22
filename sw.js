@@ -1,5 +1,5 @@
 // Rudraansh Yatra Staff & Admin Portal - Service Worker (Phase 7)
-const CACHE_NAME = 'ry-admin-cache-v14';
+const CACHE_NAME = 'ry-admin-cache-v15';
 
 const STATIC_SHELL_ASSETS = [
     '/',
