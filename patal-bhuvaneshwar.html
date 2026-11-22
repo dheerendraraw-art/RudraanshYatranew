@@ -58,245 +58,230 @@
 
     <!-- Structured Data Schema Graph (AIO / AEO / GEO / SEO) -->
     <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      "@context": "https://schema.org",
-      "@graph": [
+      "@type": [
+        "LocalBusiness",
+        "TouristAttraction",
+        "HinduTemple"
+      ],
+      "@id": "https://rudraanshyatra.com/patal-bhuvaneshwar#attraction",
+      "name": "Patal Bhuvaneshwar Cave Temple",
+      "alternateName": [
+        "Patal Bhuvaneshwar",
+        "Patal Bhuvaneshwar Mandir Gangolihat",
+        "Pātāl Bhuvaneśvar"
+      ],
+      "url": "https://rudraanshyatra.com/patal-bhuvaneshwar",
+      "image": "https://rudraanshyatra.com/assets/images/patal-bhuvaneshwar-new.webp",
+      "sameAs": [
+        "https://en.wikipedia.org/wiki/Patal_Bhuvaneshwar"
+      ],
+      "description": "Patal Bhuvaneshwar is an ancient subterranean limestone cave temple dedicated to Lord Shiva, situated at an elevation of 1,350 metres in Gangolihat tehsil of Pithoragarh district, Uttarakhand. Descending 90 feet into the earth via iron chains, the 160-metre-long cavern enshrines naturally sculpted calcite stalactites and stalagmites representing 33 crore (330 million) Hindu deities.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Village Bhuvneshwar, Post Office Gangolihat",
+        "addressLocality": "Gangolihat",
+        "addressRegion": "Uttarakhand",
+        "postalCode": "262522",
+        "addressCountry": "IN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 29.6918,
+        "longitude": 80.0894
+      },
+      "hasMap": "https://maps.google.com/?q=29.6918,80.0894",
+      "touristType": [
+        "Spiritual Pilgrims",
+        "Heritage Travellers",
+        "Devotees of Lord Shiva",
+        "Speleology & Geology Enthusiasts"
+      ],
+      "isAccessibleForFree": false,
+      "publicAccess": true,
+      "openingHoursSpecification": [
         {
-          "@type": ["LocalBusiness", "TouristAttraction", "HinduTemple"],
-          "@id": "https://rudraanshyatra.com/patal-bhuvaneshwar#attraction",
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+          ],
+          "opens": "07:00",
+          "closes": "18:00"
+        }
+      ],
+      "containedInPlace": {
+        "@type": "AdministrativeArea",
+        "name": "Pithoragarh District, Kumaon, Uttarakhand"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://rudraanshyatra.com/patal-bhuvaneshwar#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://rudraanshyatra.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Destinations",
+          "item": "https://rudraanshyatra.com/adi-kailash"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
           "name": "Patal Bhuvaneshwar Cave Temple",
-          "alternateName": ["Patal Bhuvaneshwar", "Patal Bhuvaneshwar Mandir Gangolihat", "Pātāl Bhuvaneśvar"],
-          "url": "https://rudraanshyatra.com/patal-bhuvaneshwar",
-          "image": "https://rudraanshyatra.com/assets/images/patal-bhuvaneshwar-new.webp",
-          "sameAs": [
-            "https://en.wikipedia.org/wiki/Patal_Bhuvaneshwar"
-          ],
-          "description": "Patal Bhuvaneshwar is an ancient subterranean limestone cave temple dedicated to Lord Shiva, situated at an elevation of 1,350 metres in Gangolihat tehsil of Pithoragarh district, Uttarakhand. Descending 90 feet into the earth via iron chains, the 160-metre-long cavern enshrines naturally sculpted calcite stalactites and stalagmites representing 33 crore (330 million) Hindu deities.",
-          "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "Village Bhuvneshwar, Post Office Gangolihat",
-            "addressLocality": "Gangolihat",
-            "addressRegion": "Uttarakhand",
-            "postalCode": "262522",
-            "addressCountry": "IN"
-          },
-          "geo": {
-            "@type": "GeoCoordinates",
-            "latitude": 29.6918,
-            "longitude": 80.0894
-          },
-          "hasMap": "https://maps.google.com/?q=29.6918,80.0894",
-          "touristType": [
-            "Spiritual Pilgrims",
-            "Heritage Travellers",
-            "Devotees of Lord Shiva",
-            "Speleology & Geology Enthusiasts"
-          ],
-          "isAccessibleForFree": false,
-          "publicAccess": true,
-          "openingHoursSpecification": [
-            {
-              "@type": "OpeningHoursSpecification",
-              "dayOfWeek": [
-                "Monday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-                "Friday",
-                "Saturday",
-                "Sunday"
-              ],
-              "opens": "07:00",
-              "closes": "18:00"
-            }
-          ],
-          "containedInPlace": {
-            "@type": "AdministrativeArea",
-            "name": "Pithoragarh District, Kumaon, Uttarakhand"
-          },
-          "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.9",
-            "reviewCount": "128",
-            "bestRating": "5",
-            "worstRating": "1"
-          },
-          "review": [
-            {
-              "@type": "Review",
-              "author": {"@type": "Person", "name": "Suresh Tiwari"},
-              "reviewRating": {"@type": "Rating", "ratingValue": "5", "bestRating": "5"},
-              "reviewBody": "Patal Bhuvaneshwar cave is unlike anything on earth. Descending 90 feet into the earth via iron chains to see naturally formed Shiva lingams and 33 crore deities carved by nature itself is a spiritually overwhelming experience. The priests explain each chamber beautifully.",
-              "datePublished": "2026-05-22"
-            },
-            {
-              "@type": "Review",
-              "author": {"@type": "Person", "name": "Anita Rawat"},
-              "reviewRating": {"@type": "Rating", "ratingValue": "5", "bestRating": "5"},
-              "reviewBody": "Patal Bhuvaneshwar cave temple is the most unique pilgrimage site in Kumaon. The stalactites and stalagmites naturally form the sacred symbols of Hinduism over millions of years. Rudraansh Yatra included this in our Adi Kailash package.",
-              "datePublished": "2026-04-18"
-            }
-          ]
-        },
+          "item": "https://rudraanshyatra.com/patal-bhuvaneshwar"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://rudraanshyatra.com/patal-bhuvaneshwar#faq",
+      "mainEntity": [
         {
-          "@type": "BreadcrumbList",
-          "@id": "https://rudraanshyatra.com/patal-bhuvaneshwar#breadcrumb",
-          "itemListElement": [
-            {
-              "@type": "ListItem",
-              "position": 1,
-              "name": "Home",
-              "item": "https://rudraanshyatra.com/"
-            },
-            {
-              "@type": "ListItem",
-              "position": 2,
-              "name": "Destinations",
-              "item": "https://rudraanshyatra.com/adi-kailash"
-            },
-            {
-              "@type": "ListItem",
-              "position": 3,
-              "name": "Patal Bhuvaneshwar Cave Temple",
-              "item": "https://rudraanshyatra.com/patal-bhuvaneshwar"
-            }
-          ]
-        },
-        {
-          "@type": "FAQPage",
-          "@id": "https://rudraanshyatra.com/patal-bhuvaneshwar#faq",
-          "mainEntity": [
-            {
-              "@type": "Question",
-              "name": "What is Patal Bhuvaneshwar and what is its spiritual significance?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Patal Bhuvaneshwar is an ancient subterranean limestone cave temple located 14 km from Gangolihat in Pithoragarh district, Uttarakhand. Descending 90 feet into the earth, it contains naturally formed stalactite and stalagmite rock structures that, according to the Skanda Purana, embody Lord Shiva and all 33 crore (330 million) deities of the Hindu pantheon."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "How deep is the Patal Bhuvaneshwar cave and how do pilgrims descend?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "The cave descends approximately 90 feet (27 metres) vertically through a narrow tunnel inclined at roughly 45 to 60 degrees. Pilgrims descend backward holding heavy-duty, industrial stainless-steel chains firmly anchored into the limestone rock walls on both sides. The cavern inside is 160 metres long and fully illuminated with electric lighting."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "What are the visiting hours and entry ticket prices for Patal Bhuvaneshwar in 2026?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Patal Bhuvaneshwar is open daily from 7:00 AM to 6:00 PM (last entry allowed around 5:00 PM). The Archaeological Survey of India (ASI) entry ticket is ₹50 per person for Indian nationals. Local registered priest-guides charge a modest coordination fee of ₹50 to ₹100 per group to escort and explain each rock formation inside the cavern."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "Is an Inner Line Permit (ILP) required to visit Patal Bhuvaneshwar?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "No. An Inner Line Permit (ILP) is NOT required to visit Patal Bhuvaneshwar or Gangolihat. Permits are only mandatory when proceeding further north toward the Indo-Tibet border regions like Gunji, Nabi, Adi Kailash, and Om Parvat."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "Can senior citizens, children, and people with health conditions visit the cave?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Senior citizens and children above 7 years with normal knee strength, balance, and general mobility can comfortably descend using the chains. However, persons with acute claustrophobia, severe asthma, heart ailments, or severe knee arthritis are advised to perform Darshan at the tranquil surface temple and refrain from entering the subterranean shaft."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "What divine rock formations can be seen inside Patal Bhuvaneshwar?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Inside the cavern, visitors see awe-inspiring natural calcite stalactites including: the multi-headed Sheshnag holding the earth, Lord Ganesha's severed head beneath a 108-petaled dripping lotus, the Four Yuga pillars (Satya, Treta, Dvapara, and Kali Yuga), Kamdhenu cow udders, Kalpavriksha tree, stone miniatures of Kedarnath, Badrinath and Amarnath, and Shiva's matted locks (Jata)."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "What is the distance from Pithoragarh, Kathgodam, and Delhi to Patal Bhuvaneshwar?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Patal Bhuvaneshwar is 14 km (30 minutes) from Gangolihat, 75 km (2.5 hours) from Pithoragarh town, 195 km (6.5 hours) from Kathgodam Railway Station, and approximately 470 km (12 to 13 hours) from Delhi NCR via Moradabad and Almora."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "What is the best time of year to visit Patal Bhuvaneshwar?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "The best time to visit is from September to June. Autumn (September to November) offers crystal-clear Himalayan views, spring (March to April) has pleasant mountain weather, and summer (May to June) provides cool respite. Even during monsoon, the subterranean cave remains completely dry inside, though mountain road caution is recommended."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "What should pilgrims wear and carry during the chain descent?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Wear comfortable trousers or track pants that allow flexible movement. Footwear must be deposited outside the temple gate; thick cotton socks are strongly recommended for good grip on the smooth limestone steps. Mobile phones and cameras are prohibited inside the cave cavern to preserve its sacred heritage."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "How can I combine Patal Bhuvaneshwar with the Adi Kailash & Om Parvat Yatra?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Rudraansh Yatra operates dedicated 4-Day (ex-Pithoragarh) and 7-Day (ex-Kathgodam/Delhi) circuits that combine Adi Kailash and Om Parvat with a complete day dedicated to Patal Bhuvaneshwar Cave and Maa Haat Kalika Temple in Gangolihat, including 4x4 Bolero transport, permits, homestays, and local guides."
-              }
-            }
-          ]
-        },
-        {
-          "@type": "TravelAgency",
-          "@id": "https://rudraanshyatra.com/#organization",
-          "name": "Rudraansh Yatra",
-          "url": "https://rudraanshyatra.com",
-          "logo": "https://rudraanshyatra.com/assets/images/logo.png",
-          "telephone": "+917617617651",
-          "email": "info@rudraanshyatra.com",
-          "priceRange": "₹₹₹",
-          "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "1st Floor Above Maniram Punetha & Sons, Simalgair Bazaar",
-            "addressLocality": "Pithoragarh",
-            "addressRegion": "Uttarakhand",
-            "postalCode": "262501",
-            "addressCountry": "IN"
+          "@type": "Question",
+          "name": "What is Patal Bhuvaneshwar and what is its spiritual significance?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Patal Bhuvaneshwar is an ancient subterranean limestone cave temple located 14 km from Gangolihat in Pithoragarh district, Uttarakhand. Descending 90 feet into the earth, it contains naturally formed stalactite and stalagmite rock structures that, according to the Skanda Purana, embody Lord Shiva and all 33 crore (330 million) deities of the Hindu pantheon."
           }
         },
         {
-          "@type": "WebPage",
-          "@id": "https://rudraanshyatra.com/patal-bhuvaneshwar#webpage",
-          "url": "https://rudraanshyatra.com/patal-bhuvaneshwar",
-          "name": "Patal Bhuvaneshwar Cave Temple Gangolihat — Timings, History & Yatra Guide 2026",
-          "isPartOf": {
-            "@type": "WebSite",
-            "@id": "https://rudraanshyatra.com/#website",
-            "name": "Rudraansh Yatra",
-            "url": "https://rudraanshyatra.com"
-          },
-          "author": {
-            "@type": "Person",
-            "name": "Dheerendra Rautela",
-            "jobTitle": "Himalayan Expedition Guide & Founder"
-          },
-          "publisher": {
-            "@id": "https://rudraanshyatra.com/#organization"
-          },
-          "speakable": {
-            "@type": "SpeakableSpecification",
-            "cssSelector": [
-              "#aeo-executive-answer",
-              ".place-section h2",
-              ".hero-title"
-            ]
+          "@type": "Question",
+          "name": "How deep is the Patal Bhuvaneshwar cave and how do pilgrims descend?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The cave descends approximately 90 feet (27 metres) vertically through a narrow tunnel inclined at roughly 45 to 60 degrees. Pilgrims descend backward holding heavy-duty, industrial stainless-steel chains firmly anchored into the limestone rock walls on both sides. The cavern inside is 160 metres long and fully illuminated with electric lighting."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the visiting hours and entry ticket prices for Patal Bhuvaneshwar in 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Patal Bhuvaneshwar is open daily from 7:00 AM to 6:00 PM (last entry allowed around 5:00 PM). The Archaeological Survey of India (ASI) entry ticket is ₹50 per person for Indian nationals. Local registered priest-guides charge a modest coordination fee of ₹50 to ₹100 per group to escort and explain each rock formation inside the cavern."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is an Inner Line Permit (ILP) required to visit Patal Bhuvaneshwar?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. An Inner Line Permit (ILP) is NOT required to visit Patal Bhuvaneshwar or Gangolihat. Permits are only mandatory when proceeding further north toward the Indo-Tibet border regions like Gunji, Nabi, Adi Kailash, and Om Parvat."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can senior citizens, children, and people with health conditions visit the cave?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Senior citizens and children above 7 years with normal knee strength, balance, and general mobility can comfortably descend using the chains. However, persons with acute claustrophobia, severe asthma, heart ailments, or severe knee arthritis are advised to perform Darshan at the tranquil surface temple and refrain from entering the subterranean shaft."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What divine rock formations can be seen inside Patal Bhuvaneshwar?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Inside the cavern, visitors see awe-inspiring natural calcite stalactites including: the multi-headed Sheshnag holding the earth, Lord Ganesha's severed head beneath a 108-petaled dripping lotus, the Four Yuga pillars (Satya, Treta, Dvapara, and Kali Yuga), Kamdhenu cow udders, Kalpavriksha tree, stone miniatures of Kedarnath, Badrinath and Amarnath, and Shiva's matted locks (Jata)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the distance from Pithoragarh, Kathgodam, and Delhi to Patal Bhuvaneshwar?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Patal Bhuvaneshwar is 14 km (30 minutes) from Gangolihat, 75 km (2.5 hours) from Pithoragarh town, 195 km (6.5 hours) from Kathgodam Railway Station, and approximately 470 km (12 to 13 hours) from Delhi NCR via Moradabad and Almora."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the best time of year to visit Patal Bhuvaneshwar?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The best time to visit is from September to June. Autumn (September to November) offers crystal-clear Himalayan views, spring (March to April) has pleasant mountain weather, and summer (May to June) provides cool respite. Even during monsoon, the subterranean cave remains completely dry inside, though mountain road caution is recommended."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What should pilgrims wear and carry during the chain descent?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Wear comfortable trousers or track pants that allow flexible movement. Footwear must be deposited outside the temple gate; thick cotton socks are strongly recommended for good grip on the smooth limestone steps. Mobile phones and cameras are prohibited inside the cave cavern to preserve its sacred heritage."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can I combine Patal Bhuvaneshwar with the Adi Kailash & Om Parvat Yatra?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Rudraansh Yatra operates dedicated 4-Day (ex-Pithoragarh) and 7-Day (ex-Kathgodam/Delhi) circuits that combine Adi Kailash and Om Parvat with a complete day dedicated to Patal Bhuvaneshwar Cave and Maa Haat Kalika Temple in Gangolihat, including 4x4 Bolero transport, permits, homestays, and local guides."
           }
         }
       ]
+    },
+    {
+      "@type": "TravelAgency",
+      "@id": "https://rudraanshyatra.com/#organization",
+      "name": "Rudraansh Yatra",
+      "url": "https://rudraanshyatra.com",
+      "logo": "https://rudraanshyatra.com/assets/images/logo.png",
+      "telephone": "+917617617651",
+      "email": "info@rudraanshyatra.com",
+      "priceRange": "₹₹₹",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "1st Floor Above Maniram Punetha & Sons, Simalgair Bazaar",
+        "addressLocality": "Pithoragarh",
+        "addressRegion": "Uttarakhand",
+        "postalCode": "262501",
+        "addressCountry": "IN"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://rudraanshyatra.com/patal-bhuvaneshwar#webpage",
+      "url": "https://rudraanshyatra.com/patal-bhuvaneshwar",
+      "name": "Patal Bhuvaneshwar Cave Temple Gangolihat — Timings, History & Yatra Guide 2026",
+      "isPartOf": {
+        "@type": "WebSite",
+        "@id": "https://rudraanshyatra.com/#website",
+        "name": "Rudraansh Yatra",
+        "url": "https://rudraanshyatra.com"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Dheerendra Rautela",
+        "jobTitle": "Himalayan Expedition Guide & Founder"
+      },
+      "publisher": {
+        "@id": "https://rudraanshyatra.com/#organization"
+      },
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+          "#aeo-executive-answer",
+          ".place-section h2",
+          ".hero-title"
+        ]
+      }
     }
-    </script>
+  ]
+}
+</script>
 
     <!-- Google Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
