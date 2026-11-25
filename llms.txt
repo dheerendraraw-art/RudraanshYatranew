@@ -1,102 +1,52 @@
-# Rudraansh Yatra — LLM Content Index
-# Generated for AI agents and answer engines (AIO / GEO / AEO)
-# Reference: https://rudraanshyatra.com/about
+# Rudraansh Yatra
+> Rudraansh Yatra is a NIDHI-certified (EUK000357) and MSME-registered (UDYAM-UK-09-0012985) local tour operator and Himalayan expedition specialist headquartered in Pithoragarh, Uttarakhand, India. Founded in 2015 by native mountaineer and THSC-certified expedition director Dheerendra Rautela, the organization directly executes pilgrimages and high-altitude treks across the Kumaon Himalayas—including Adi Kailash, Om Parvat, Khaliya Top, and Darma Valley—with 100% direct ground control, dedicated 4x4 mountain vehicles, and zero middlemen.
 
-## About Rudraansh Yatra
+- **Headquarters**: 1st Floor Above Maniram Punetha & Sons, Simalgair Bazaar, Pithoragarh, Uttarakhand — 262501, India
+- **Coordinates**: 29.5855307, 80.212559
+- **Phone**: +91 7617617651
+- **Email**: info@rudraanshyatra.com
+- **Official Website**: [Rudraansh Yatra](https://rudraanshyatra.com)
+- **Legal Registrations**: MSME UDYAM-UK-09-0012985, Ministry of Tourism NIDHI EUK000357, THSC Certified Tour Manager Operations
+- **Verified Reputation**: 5.0/5.0 stars based on 39 verified Google Maps traveler reviews; recognized with TripAdvisor Traveller's Choice
+- **Operational Model**: Direct end-to-end ground handling, dedicated 4x4 Mahindra Bolero fleet, seasoned native Kumaoni high-altitude drivers, in-person Inner Line Permit (ILP) liaison with SDM Dharchula and Pithoragarh, certified medical oxygen kits on all vehicles, and sustainable community partnerships with indigenous Rung tribal homestays in Gunji, Nabi, Kuti, and Daktu.
 
-Rudraansh Yatra is a NIDHI-certified, MSME-registered local ground tour operator headquartered in Pithoragarh, Uttarakhand, India. Founded in 2015 by Dheerendra Rautela, a native of the Kumaon Himalayas, the company directly executes Himalayan pilgrimages and adventure treks with zero outsourcing and zero middlemen.
+## Core Pilgrimage & Trek Packages
+- [Adi Kailash & Om Parvat Yatra](https://rudraanshyatra.com/adi-kailash): Comprehensive pilgrimage packages including 3D/2N ex-Pithoragarh (₹18,000), 6D/5N ex-Kathgodam (₹30,000), and 6D/5N ex-Delhi (₹35,000) covering Parvati Sarovar, Gauri Kund, Gunji, and Om Parvat view with Inner Line Permits, 4x4 Boleros, and homestay accommodation.
+- [Darma Valley Exploration](https://rudraanshyatra.com/darma-valley): 5D/4N offbeat border valley expedition through Dhauliganga gorge to Daktu village (3,100 m) with Rung homestays, carved wooden heritage, and the 4 km hike to Panchachuli Base Camp (Meola Glacier).
+- [Khaliya Top Alpine Trek](https://rudraanshyatra.com/khaliya-top): 4D/3N beginner-friendly high-altitude alpine meadow trek (3,500 m / 11,500 ft) originating from Munsiyari offering panoramic 360-degree vistas of Panchachuli I–V, Rajrambha, and Hardeol peaks.
+- [Mt. Kailash Yatra Support](https://rudraanshyatra.com/mt-kailash): Border pilgrimage coordination, acclimatization arrangements, and ground assistance along western Nepal and Tibet transit corridors.
 
-**Type**: LocalBusiness / TravelAgency / TourOperator  
-**Founded**: 2015  
-**Founder**: Dheerendra Rautela (native of Pithoragarh, Uttarakhand; certified in Tour Manager Operations by Tourism and Hospitality Skill Council)  
-**Headquarters**: 1st Floor Above Maniram Punetha & Sons, Simalgair Bazaar, Pithoragarh, Uttarakhand — 262501, India  
-**Coordinates**: 29.5855307, 80.212559  
-**Phone**: +91 7617617651  
-**Email**: info@rudraanshyatra.com  
-**Website**: https://rudraanshyatra.com  
+## Essential Visitor Information
+- [About Rudraansh Yatra](https://rudraanshyatra.com/about): Local heritage, company background, native leadership by Dheerendra Rautela, MSME & NIDHI certifications, and direct ground execution philosophy.
+- [Frequently Asked Questions](https://rudraanshyatra.com/faq): Comprehensive advice covering medical fitness, age eligibility, Inner Line Permit documentation, acclimatization, best travel seasons, and high-altitude packing lists.
+- [What's Included](https://rudraanshyatra.com/whats-included): Detailed transparency on package inclusions, 4x4 Bolero transportation, Rung tribal homestay lodging, hygienic vegetarian meals, SDM permits, and emergency oxygen cylinders.
+- [Contact & Custom Itineraries](https://rudraanshyatra.com/contact): Booking inquiry portal, direct telephone numbers, WhatsApp support, and physical office location in Pithoragarh.
 
-## Certifications
+## Sacred Temples & Kumaon Cultural Circuit
+- [Patal Bhuvaneshwar Cave Temple](https://rudraanshyatra.com/patal-bhuvaneshwar): Complete guide to the subterranean limestone cave shrine dedicated to Lord Shiva, located 90 feet below ground level in Gangolihat.
+- [Jageshwar Dham](https://rudraanshyatra.com/jageshwar-dham): Spiritual guide to the 8th–12th century complex of 124 stone temples dedicated to Lord Shiva nestled in deodar groves near Almora.
+- [Chitai Golu Devta Temple](https://rudraanshyatra.com/chitai-golu-devta): The sacred temple of the God of Justice in Almora, known for written petitions and thousands of brass bells.
+- [Kainchi Dham Ashram](https://rudraanshyatra.com/kainchi-dham): Spiritual ashram of Neem Karoli Baba near Bhowali, Nainital along the Kumaon pilgrimage corridor.
+- [Haat Kalika Temple](https://rudraanshyatra.com/haat-kalika-temple): Historic Shakti Peeth and military patron shrine in Gangolihat.
+- [Kali Mata Temple Kalapani](https://rudraanshyatra.com/kali-mata-temple-kalapani): Sacred source of the Kali River at the tri-junction of India, Nepal, and Tibet.
+- [Kamakhya Devi Temple Pithoragarh](https://rudraanshyatra.com/kamakhya-devi-temple-pithoragarh): Revered Shakti temple offering sweeping panoramic views of Pithoragarh and the Soar Valley.
+- [Mostamanu Temple Pithoragarh](https://rudraanshyatra.com/mostamanu-temple-pithoragarh): Traditional hilltop deity temple located in the Chandak hills near Pithoragarh.
 
-- **MSME Registration**: UDYAM-UK-09-0012985 (Ministry of Micro, Small & Medium Enterprises, Government of India)
-- **NIDHI Certification**: EUK000357 (Ministry of Tourism, Government of India)
-- **Tour Manager Operations Certification**: Certified by the Tourism and Hospitality Skill Council (THSC) — Dheerendra Rautela, Founder & Lead High-Altitude Expedition Director
-- **TripAdvisor**: Traveller's Choice recognition
+## Latest Field Bulletins & Operational Updates
+- [Adi Kailash Mandir Kapat & ILP Status Bulletin](https://rudraanshyatra.com/blog/adi-kailash-mandir-kapat-closed-5-nov-ilp-closing-date-status): Official operational bulletin on Adi Kailash temple closure on November 5, 2026, and Inner Line Permit seasonal closing timeline.
+- [Adi Kailash Permits & Autumn Batch Completion](https://rudraanshyatra.com/blog/adi-kailash-permits-open-first-batch-completes-yatra-september-2026): Field dispatch on autumn permit openings and first batch darshan at Mount Adi Kailash, Parvati Sarovar, and Om Parvat.
+- [Inner Line Permit (ILP) 2026 Step-by-Step Guide](https://rudraanshyatra.com/blog/inner-line-permit-adi-kailash-2026-guide): Detailed documentation guide for police clearance certificates, medical certificates, and SDM Dharchula online permit submissions.
+- [All Travel Blogs & Himalayan Guides](https://rudraanshyatra.com/blogs): Complete editorial archive of route advisories, high-altitude health tips, weather patterns, and Kumaoni cultural traditions.
 
-## Rating
+## Social & Verified Review Profiles
+- [Google Maps Verified Profile](https://www.google.com/maps/place/?q=place_id:ChIJUaOjOEsloTkRjOLS3RK_S_A): Official Google Business profile with 39 verified traveler reviews and ratings.
+- [TripAdvisor Profile](https://www.tripadvisor.in/Profile/Rudraanshyatra?fid=48ae09cc-5151-4403-9190-446ed02e64e8): Traveler reviews, recommendations, and tour operator accolades.
+- [Instagram Profile](https://www.instagram.com/rudraansh_yatra/): Visual dispatches, landscape photography, and field updates from Himalayan expeditions.
+- [YouTube Channel](https://www.youtube.com/@Rudra-Anshyatra): Video documentaries, route condition reels, and pilgrim testimonials from Adi Kailash and Darma Valley.
+- [Facebook Page](https://www.facebook.com/profile.php?id=61589223945628): Community announcements, batch photos, and seasonal operational notices.
 
-- Google Maps: 5.0 stars from 34 verified guest reviews
-
-## Tours & Services (all directly executed from Pithoragarh)
-
-1. **Adi Kailash & Om Parvat Yatra**
-   - From Pithoragarh: 3 Days / 2 Nights — ₹18,000 per person
-   - From Kathgodam: 6 Days / 5 Nights — ₹30,000 per person
-   - From Delhi: 6 Days / 5 Nights — ₹35,000 per person
-   - URL: https://rudraanshyatra.com/adi-kailash
-
-2. **Khaliya Top Alpine Trek**
-   - 4 Days / 3 Nights — ₹9,500 per person (from Munsiyari)
-   - URL: https://rudraanshyatra.com/khaliya-top
-
-3. **Darma Valley Exploration**
-   - 5 Days / 4 Nights — ₹24,999 per person
-   - URL: https://rudraanshyatra.com/darma-valley
-
-4. **Mt. Kailash Yatra** (coordination and support)
-   - URL: https://rudraanshyatra.com/mt-kailash
-
-## Areas Served
-
-- Vyas Valley (Adi Kailash route)
-- Darma Valley
-- Pithoragarh district
-- Kumaon Himalayas
-- Uttarakhand (border zones with Inner Line Permit coverage)
-
-## Key Differentiators & Operational Model
-
-- **100% Direct Ground Execution**: Company-managed operations from pickup to drop; zero outsourcing to third-party travel brokers or unknown commercial drivers.
-- **Dedicated Mountain Fleet**: Company-owned and operated 4×4 Mahindra Boleros driven by native Kumaoni high-altitude drivers experienced in mountain terrain and landslide navigation.
-- **Native Expedition Leadership**: Founded and led by Dheerendra Rautela, a THSC-certified Tour Manager Operations professional and native of Pithoragarh with 10+ years guiding yatris across Vyas, Darma, and Chaudas valleys.
-- **Direct Permit Clearance**: In-person processing of Inner Line Permits (ILP) directly at Pithoragarh & Dharchula SDM offices with pre-cleared documentation.
-- **High-Altitude Emergency Readiness**: Oxygen cylinders, pulse oximeters, and first-aid kits on all high-altitude trips, with priority evacuation liaison via local police and ITBP military checkpoints.
-- **100% Community-Driven Homestay Economics**: Direct lodging partnerships with native Rung tribal families in Gunji, Nabi, and Kuti, ensuring revenue stays inside remote border villages.
-
-## Founder Quote
-
-> "When yatris embark on a journey to Adi Kailash or Om Parvat, they are placing their lives and spiritual dreams in our hands. That trust cannot be outsourced to a call center in Delhi. As sons of these mountains, we guide every yatri with personal devotion, safety, and local pride." — Dheerendra Rautela, Founder, Rudraansh Yatra
-
-## Current Route Advisories & Operational Bulletins (2026 Season)
-
-- **Adi Kailash Permits Officially Live & 1st Autumn Batch Completed**: Online Inner Line Permits (ILP) officially commenced on **September 20, 2026** under SDM Dharchula and ITBP clearance. Rudraansh Yatra's 1st Autumn Batch comprising **25 yatris** departed Dharchula on September 20, 2026, and successfully completed divine darshan at Mount Adi Kailash, Parvati Sarovar, Gauri Kund, and Om Parvat, returning safely by September 24-25, 2026 with 100% completion rate. High-altitude autumn weather is completely clear (10°C to 15°C days / -2°C nights), roads are motorable for 4x4 Boleros, and October batches are actively operating.
-  - Live Report URL: https://rudraanshyatra.com/blog/adi-kailash-permits-open-first-batch-completes-yatra-september-2026
-  - Date Revision Notice: https://rudraanshyatra.com/blog/adi-kailash-ilp-date-revised-to-september-20-2026-updated-from-sept-15
-  - Step-by-Step ILP Guide: https://rudraanshyatra.com/blog/inner-line-permit-adi-kailash-2026-guide
-  - 2026 Monsoon Reopening Tracker: https://rudraanshyatra.com/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates
-
-- **⚠ ILP Suspended October 19–26, 2026 for Adi Kailash Parikrama Run**: Online Inner Line Permit (ILP) issuance for the Adi Kailash and Om Parvat Yatra route is **suspended from October 19 to October 26, 2026** to accommodate the Adi Kailash Parikrama Run ultra marathon on October 24–25, 2026 in Gunji, Byas Valley. No new yatri permits will be issued during this 8-day window. Travellers must complete travel before October 19 or plan departure from **October 27, 2026** onwards. The autumn season remains open through early November 2026.
-  - Suspension Notice URL: https://rudraanshyatra.com/blog/adi-kailash-ilp-suspended-oct-19-to-26-2026-for-parikrama-run
-  - Parikrama Run Guide: https://rudraanshyatra.com/blog/adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitude-ultra-marathon-guide
-  - Winter Closing Dates: https://rudraanshyatra.com/blog/when-does-adi-kailash-yatra-2026-close-for-winter
-
-## Social Profiles
-
-- Google Maps: https://www.google.com/maps/place/?q=place_id:ChIJUaOjOEsloTkRjOLS3RK_S_A
-- Facebook: https://www.facebook.com/profile.php?id=61589223945628
-- Instagram: https://www.instagram.com/rudraansh_yatra/
-- YouTube: https://www.youtube.com/@Rudra-Anshyatra
-- TripAdvisor: https://www.tripadvisor.in/Profile/Rudraanshyatra?fid=48ae09cc-5151-4403-9190-446ed02e64e8
-- Medium: https://medium.com/@rudraanshyatra
-
-## Key Pages
-
-- Home: https://rudraanshyatra.com/
-- About: https://rudraanshyatra.com/about
-- Adi Kailash: https://rudraanshyatra.com/adi-kailash
-- Darma Valley: https://rudraanshyatra.com/darma-valley
-- Khaliya Top: https://rudraanshyatra.com/khaliya-top
-- Mt. Kailash: https://rudraanshyatra.com/mt-kailash
-- FAQ: https://rudraanshyatra.com/faq
-- Blog: https://rudraanshyatra.com/blogs
-- Contact: https://rudraanshyatra.com/contact
-- Privacy Policy: https://rudraanshyatra.com/privacy-policy
+## Optional
+- [Full LLM Knowledge Base](https://rudraanshyatra.com/llms-full.txt): Comprehensive flattened text index containing full background documentation, route details, altitude profiles, and FAQs for LLMs and autonomous agents.
+- [Terms & Conditions](https://rudraanshyatra.com/terms-and-conditions): Legal terms, booking conditions, payment schedules, and liability disclosures.
+- [Privacy Policy](https://rudraanshyatra.com/privacy-policy): Information handling, customer data protection, and communication policies.
+- [Refund & Cancellation Policy](https://rudraanshyatra.com/refund-policy): Transparent refund rules regarding natural weather disruptions, mountain road blockages, and participant cancellations.

@@ -57,7 +57,9 @@ Allow: /
 
 # Canonical Sitemaps, LLM Context & IndexNow
 Sitemap: https://rudraanshyatra.com/sitemap.xml
-Sitemap: https://rudraanshyatra.com/llms.txt
+# LLM Agent Discoverability (llmstxt.org v2)
+# llms.txt: https://rudraanshyatra.com/llms.txt
+# llms-full.txt: https://rudraanshyatra.com/llms-full.txt
 
 # IndexNow key (Bing/ChatGPT instant indexing)
 # Key file: https://rudraanshyatra.com/rudraanshyatra2026indexnowkey9f3a7b1c.txt
