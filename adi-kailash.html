@@ -35,7 +35,7 @@
     
     <!-- Preload Hero Image -->
     <link rel="preload" as="image" href="assets/images/adi-kailash-hero.webp" type="image/webp">
-    <link rel="stylesheet" href="style.css?v=8.3">
+    <link rel="stylesheet" href="style.css?v=8.5">
     <!-- Font Awesome Icons -->
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></noscript>
@@ -56,7 +56,7 @@
         }
 
         .hero {
-            background-image: linear-gradient(to bottom, rgba(10, 25, 47, 0.45), rgba(10, 25, 47, 0.92)), url('assets/images/adi-kailash-hero.webp') !important;
+            background-image: linear-gradient(to bottom, rgba(10, 25, 47, 0.72), rgba(10, 25, 47, 0.92)), url('assets/images/adi-kailash-hero.webp') !important;
             background-size: cover;
             background-position: center;
             display: flex;
@@ -139,9 +139,9 @@
         }
 
         .hero-badge {
-            background: rgba(212, 175, 55, 0.18) !important;
+            background: rgba(10, 25, 47, 0.88) !important;
             border: 1px solid var(--color-gold) !important;
-            color: var(--color-gold) !important;
+            color: #FDE047 !important;
             padding: 7px 18px;
             border-radius: 50px;
             font-size: 12.5px;
@@ -192,7 +192,7 @@
         }
 
         .hero-pill-btn {
-            background: rgba(255, 255, 255, 0.12);
+            background: rgba(10, 25, 47, 0.84);
             border: 1px solid rgba(255, 255, 255, 0.25);
             color: #FFFFFF;
             padding: 8px 16px;
@@ -216,7 +216,7 @@
         }
 
         .hero-pill-btn strong {
-            color: var(--color-gold);
+            color: #FDE047;
         }
 
         .hero-pill-btn:hover strong {
@@ -1104,7 +1104,7 @@
         }
 
         .dates-table thead th {
-            background: linear-gradient(135deg, #B8860B 0%, #D4AF37 100%);
+            background: linear-gradient(135deg, #5E4306 0%, #78580A 100%);
             color: #FFFFFF;
             font-size: 11.5px;
             font-weight: 800;
@@ -1216,7 +1216,7 @@
         }
 
         .status-pill.available {
-            background: #0284C7;
+            background: #0369A1;
             color: #FFFFFF;
         }
 
@@ -1229,7 +1229,7 @@
         .dates-chip-wrap {
             display: flex;
             flex-wrap: wrap;
-            gap: 5px 6px;
+            gap: 7px 8px;
             align-items: center;
         }
 
@@ -1237,7 +1237,8 @@
             background: #F1F5F9;
             border: 1px solid #CBD5E1;
             color: #0F172A;
-            padding: 3.5px 8px;
+            padding: 6px 10px;
+            min-height: 30px;
             border-radius: 5px;
             font-size: 12px;
             font-weight: 700;
@@ -1276,9 +1277,11 @@
             display: inline-flex;
             align-items: center;
             gap: 5px;
-            background: #25D366;
+            background: #127035;
+            min-height: 36px;
+            padding: 8px 12px;
             color: #FFFFFF;
-            padding: 5.5px 11px;
+            min-height: 36px; padding: 8px 12px;
             border-radius: 5px;
             font-size: 11.5px;
             font-weight: 700;
@@ -1288,7 +1291,7 @@
         }
 
         .btn-book-batch:hover {
-            background: #1EBE5D;
+            background: #0F5C2C;
             color: #FFFFFF;
             transform: translateY(-1px);
         }
@@ -1309,7 +1312,7 @@
         }
 
         .dates-soldout-strip .soldout-tag {
-            background: #EF4444;
+            background: #B91C1C;
             color: #FFFFFF;
             font-size: 10px;
             font-weight: 800;
@@ -2150,7 +2153,7 @@
     <div class="top-bar">
         <div class="container">
             <div class="top-info">
-                <span><i class="fa-solid fa-phone"></i> <a href="tel:+917617617651">+91 7617617651</a></span>
+                <span><i class="fa-solid fa-phone"></i> <a href="tel:+917617617651" aria-label="Call +91 7617617651">+91 7617617651</a></span>
                 <span><i class="fa-solid fa-location-dot"></i> Simalgair Bazaar, Pithoragarh, Uttarakhand</span>
             </div>
             <div class="top-socials">
@@ -2208,7 +2211,7 @@
                                 <li><a href="adi-kailash-from-kathgodam">From Kathgodam</a></li>
                                 <li><a href="adi-kailash-from-delhi">From Delhi</a></li>
                                 <li class="sub-divider"></li>
-                                <li><a href="adi-kailash-patal-bhuvaneshwar" style="color:var(--color-gold);font-weight:600;"><i class="fa-solid fa-gopuram" style="margin-right:4px;"></i>With Patal Bhuvaneshwar</a></li>
+                                <li><a href="adi-kailash-patal-bhuvaneshwar" style="color:var(--color-gold-dark);font-weight:700;"><i class="fa-solid fa-gopuram" style="margin-right:4px;"></i>With Patal Bhuvaneshwar</a></li>
                             </ul>
                         </li>
                         <li><a href="khaliya-top">Khaliya Top Trek</a></li>
@@ -2259,8 +2262,8 @@
                 <a href="adi-kailash-from-pithoragarh" class="hero-pill-btn"><i class="fa-solid fa-location-dot"></i> Pithoragarh: <strong>₹18,000</strong> (3D)</a>
                 <a href="adi-kailash-from-kathgodam" class="hero-pill-btn"><i class="fa-solid fa-train"></i> Kathgodam: <strong>₹30,000</strong> (6D)</a>
                 <a href="adi-kailash-from-delhi" class="hero-pill-btn"><i class="fa-solid fa-city"></i> Delhi NCR: <strong>₹35,000</strong> (6D)</a>
-                <a href="adi-kailash-patal-bhuvaneshwar" class="hero-pill-btn" style="background:rgba(212,175,55,0.15);border-color:var(--color-gold);"><i class="fa-solid fa-gopuram" style="color:var(--color-gold);"></i> + Patal Bhuvaneshwar: <strong>₹22,000</strong> (4D)</a>
-                <a href="#fixed-departure-dates" class="hero-pill-btn" style="background:rgba(212,175,55,0.22);border-color:var(--color-gold);"><i class="fa-solid fa-calendar-check" style="color:var(--color-gold);"></i> <strong>Fixed Batches 2027</strong></a>
+                <a href="adi-kailash-patal-bhuvaneshwar" class="hero-pill-btn" style="background:rgba(10,25,47,0.88);border-color:var(--color-gold);"><i class="fa-solid fa-gopuram" style="color:var(--color-gold);"></i> + Patal Bhuvaneshwar: <strong>₹22,000</strong> (4D)</a>
+                <a href="#fixed-departure-dates" class="hero-pill-btn" style="background:rgba(10,25,47,0.88);border-color:var(--color-gold);"><i class="fa-solid fa-calendar-check" style="color:var(--color-gold);"></i> <strong>Fixed Batches 2027</strong></a>
             </div>
         </div>
     </section>
@@ -2316,7 +2319,7 @@
                 <!-- Choose Starting Route Box -->
                 <div class="route-selector-box">
                     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-                        <span style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--color-gold);"><i class="fa-solid fa-compass"></i> Step 1: Choose Your Starting Location</span>
+                        <span style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--color-gold-dark);"><i class="fa-solid fa-compass"></i> Step 1: Choose Your Starting Location</span>
                         <span style="font-size:12px;color:var(--color-text-secondary);font-weight:600;">All routes include both darshans</span>
                     </div>
                     <div class="route-cards-grid">
@@ -2413,7 +2416,7 @@
                                         </td>
                                         <td class="col-status"><span class="status-pill available">Available</span></td>
                                         <td class="col-action">
-                                            <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20book%20the%20Adi%20Kailash%20September%202026%20batch%20(from%20Delhi/Kathgodam)." class="btn-book-batch" target="_blank" rel="noopener">
+                                            <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20book%20the%20Adi%20Kailash%20September%202026%20batch%20(from%20Delhi/Kathgodam)." class="btn-book-batch" target="_blank" rel="noopener" aria-label="Book Batch — September 2026">
                                                 <i class="fa-brands fa-whatsapp"></i> Book Batch
                                             </a>
                                         </td>
@@ -2438,7 +2441,7 @@
                                         </td>
                                         <td class="col-status"><span class="status-pill available">Available</span></td>
                                         <td class="col-action">
-                                            <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20book%20the%20Adi%20Kailash%20October%202026%20batch%20(from%20Delhi/Kathgodam)." class="btn-book-batch" target="_blank" rel="noopener">
+                                            <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20book%20the%20Adi%20Kailash%20October%202026%20batch%20(from%20Delhi/Kathgodam)." class="btn-book-batch" target="_blank" rel="noopener" aria-label="Book Batch — October 2026">
                                                 <i class="fa-brands fa-whatsapp"></i> Book Batch
                                             </a>
                                         </td>
@@ -2459,7 +2462,7 @@
                                         </td>
                                         <td class="col-status"><span class="status-pill limited">Limited Seats</span></td>
                                         <td class="col-action">
-                                            <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20book%20the%20Adi%20Kailash%20November%202026%20closing%20batch%20(from%20Delhi/Kathgodam)." class="btn-book-batch" target="_blank" rel="noopener">
+                                            <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20book%20the%20Adi%20Kailash%20November%202026%20closing%20batch%20(from%20Delhi/Kathgodam)." class="btn-book-batch" target="_blank" rel="noopener" aria-label="Book Batch — November 2026 Closing Batch">
                                                 <i class="fa-brands fa-whatsapp"></i> Book Batch
                                             </a>
                                         </td>
@@ -2515,7 +2518,7 @@
                                         <!-- Places Viewed Enroute Photo Cards Section -->
                     <div class="places-view-section">
                         <div style="margin-bottom: 20px;">
-                            <span style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.2px; color: var(--color-gold); display: block; margin-bottom: 4px;">Sacred Sightseeing &amp; Holy Temples</span>
+                            <span style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.2px; color: var(--color-gold-dark); display: block; margin-bottom: 4px;">Sacred Sightseeing &amp; Holy Temples</span>
                             <h4 style="font-family: var(--font-serif); font-size: 22px; color: var(--color-primary); margin: 0;">Places You Will Visit Enroute</h4>
                             <p style="color: var(--color-text-secondary); font-size: 14.5px; margin-top: 6px;">Discover all the revered temples, divine Himalayan viewpoints, and heritage shrines included during your pilgrimage.</p>
                         </div>
@@ -2732,10 +2735,10 @@
                     <div style="background:rgba(212,175,55,.07);border-left:4px solid var(--color-gold);padding:14px 18px;border-radius:0 8px 8px 0;margin-top:20px;">
                         <strong style="color:var(--color-primary);display:block;margin-bottom:4px;"><i class="fa-solid fa-book-open"></i> Essential Yatra Guides from Our Team:</strong>
                         <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:6px;font-size:13.5px;">
-                            <a href="/blog/adi-kailash-yatra-complete-guide-2026" style="color:var(--color-gold);font-weight:700;text-decoration:underline;">Complete 2026 Guide</a> &bull;
-                            <a href="/blog/om-parvat-darshan-complete-guide-2026" style="color:var(--color-gold);font-weight:700;text-decoration:underline;">Om Parvat Darshan Guide</a> &bull;
-                            <a href="/blog/inner-line-permit-adi-kailash-2026-step-by-step" style="color:var(--color-gold);font-weight:700;text-decoration:underline;">ILP Permit Step-by-Step</a> &bull;
-                            <a href="/blog/adi-kailash-yatra-complete-guide-2026" style="color:var(--color-gold);font-weight:700;text-decoration:underline;">Senior Citizen Guide</a>
+                            <a href="/blog/adi-kailash-yatra-complete-guide-2026" style="color:var(--color-gold-dark);font-weight:700;text-decoration:underline;display:inline-flex;align-items:center;min-height:32px;padding:4px 0;">Complete 2026 Guide</a> &bull;
+                            <a href="/blog/om-parvat-darshan-complete-guide-2026" style="color:var(--color-gold-dark);font-weight:700;text-decoration:underline;display:inline-flex;align-items:center;min-height:32px;padding:4px 0;">Om Parvat Darshan Guide</a> &bull;
+                            <a href="/blog/inner-line-permit-adi-kailash-2026-step-by-step" style="color:var(--color-gold-dark);font-weight:700;text-decoration:underline;display:inline-flex;align-items:center;min-height:32px;padding:4px 0;">ILP Permit Step-by-Step</a> &bull;
+                            <a href="/blog/adi-kailash-yatra-complete-guide-2026" style="color:var(--color-gold-dark);font-weight:700;text-decoration:underline;display:inline-flex;align-items:center;min-height:32px;padding:4px 0;">Senior Citizen Guide</a>
                         </div>
                     </div>
                 </div>
@@ -2754,13 +2757,13 @@
 
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:24px;">
                         <div style="background:#FAF8F5;border:1.5px solid #EFEBE4;border-radius:12px;padding:18px;">
-                            <div style="font-size:11px;font-weight:800;text-transform:uppercase;color:var(--color-gold);letter-spacing:.8px;margin-bottom:6px;"><i class="fa-solid fa-city"></i> Option A</div>
+                            <div style="font-size:11px;font-weight:800;text-transform:uppercase;color:var(--color-gold-dark);letter-spacing:.8px;margin-bottom:6px;"><i class="fa-solid fa-city"></i> Option A</div>
                             <h4 style="font-size:16px;color:var(--color-primary);margin:0 0 8px 0;">From Delhi NCR (6D/5N) &bull; ₹35,000</h4>
                             <p style="font-size:13px;color:var(--color-text-secondary);line-height:1.5;margin:0 0 10px 0;">Doorstep AC vehicle pickup across Delhi, Noida, Gurgaon, Ghaziabad &amp; Faridabad. Direct transit without changing vehicles.</p>
                             <span style="font-size:12px;color:var(--color-gold-dark);font-weight:700;">Includes Jageshwar, Chitai Golu &amp; Kainchi Dham on return.</span>
                         </div>
                         <div style="background:#FAF8F5;border:1.5px solid #EFEBE4;border-radius:12px;padding:18px;">
-                            <div style="font-size:11px;font-weight:800;text-transform:uppercase;color:var(--color-gold);letter-spacing:.8px;margin-bottom:6px;"><i class="fa-solid fa-train"></i> Option B</div>
+                            <div style="font-size:11px;font-weight:800;text-transform:uppercase;color:var(--color-gold-dark);letter-spacing:.8px;margin-bottom:6px;"><i class="fa-solid fa-train"></i> Option B</div>
                             <h4 style="font-size:16px;color:var(--color-primary);margin:0 0 8px 0;">From Kathgodam (6D/5N) &bull; ₹30,000</h4>
                             <p style="font-size:13px;color:var(--color-text-secondary);line-height:1.5;margin:0 0 10px 0;">Ideal for train travellers arriving at Kathgodam Railway Station. Morning station pickup &amp; transfer in comfort.</p>
                             <span style="font-size:12px;color:var(--color-gold-dark);font-weight:700;">Includes Jageshwar, Chitai Golu &amp; Kainchi Dham on return.</span>
@@ -3088,7 +3091,7 @@
 
                     <div style="background:rgba(212,175,55,.07);border-left:4px solid var(--color-gold);padding:14px 18px;border-radius:0 8px 8px 0;margin-top:16px;">
                         <strong style="color:var(--color-primary);display:block;margin-bottom:4px;"><i class="fa-solid fa-circle-info"></i> How to Submit:</strong>
-                        <p style="margin:0;font-size:13.5px;color:var(--color-text-secondary);">Simply send high-resolution digital scans to our WhatsApp at <a href="tel:+917617617651" style="color:var(--color-gold);font-weight:700;">+91 7617617651</a> or email <a href="mailto:info@rudraanshyatra.com" style="color:var(--color-gold);font-weight:700;">info@rudraanshyatra.com</a>. We take care of the rest.</p>
+                        <p style="margin:0;font-size:13.5px;color:var(--color-text-secondary);">Simply send high-resolution digital scans to our WhatsApp at <a href="tel:+917617617651" aria-label="Call +91 7617617651" style="color:var(--color-gold);font-weight:700;">+91 7617617651</a> or email <a href="mailto:info@rudraanshyatra.com" style="color:var(--color-gold);font-weight:700;">info@rudraanshyatra.com</a>. We take care of the rest.</p>
                     </div>
                 </div>
 
@@ -3242,7 +3245,7 @@
                             </div>
 
                             <div class="price-details-row">
-                                <span style="font-size:10.5px;font-weight:700;letter-spacing:1px;color:rgba(244,241,234,0.7);text-transform:uppercase;" id="selected-route-label">Delhi NCR Package</span>
+                                <span style="font-size:10.5px;font-weight:700;letter-spacing:1px;color:rgba(244,241,234,0.92);text-transform:uppercase;" id="selected-route-label">Delhi NCR Package</span>
                                 <div style="text-align:right;">
                                     <div class="price-val" id="selected-route-price" style="line-height:1.1;margin-bottom:2px;">₹35,000</div>
                                     <div class="price-duration" id="selected-route-duration" style="font-size:11.5px;justify-content:flex-end;">
@@ -3250,7 +3253,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="price-tax-note" style="margin-top:8px;font-size:10.5px;text-align:center;color:rgba(244,241,234,0.6);border-top:1px solid rgba(255,255,255,0.08);padding-top:6px;">
+                            <div class="price-tax-note" style="margin-top:8px;font-size:10.5px;text-align:center;color:rgba(244,241,234,0.9);border-top:1px solid rgba(255,255,255,0.08);padding-top:6px;">
                                 <i class="fa-solid fa-shield-check" style="color:var(--color-gold);"></i> 100% Permits, 4x4 Bolero &amp; Homestays Included
                             </div>
                         </div>
@@ -3259,7 +3262,7 @@
                             <span style="font-size:11.5px;color:#F4F1EA;line-height:1.3;">
                                 <i class="fa-solid fa-calendar-check" style="color:var(--color-gold);margin-right:4px;"></i> <strong>2026 Fixed Batches:</strong> Sept, Oct &amp; Nov
                             </span>
-                            <a href="#fixed-departure-dates" style="font-size:11px;font-weight:700;color:var(--color-gold);text-decoration:underline;white-space:nowrap;">View Dates &rarr;</a>
+                            <a href="#fixed-departure-dates" style="font-size:11.5px;font-weight:700;color:#FDE047;text-decoration:underline;white-space:nowrap;display:inline-flex;align-items:center;min-height:32px;padding:6px 4px;">View Dates &rarr;</a>
                         </div>
 
                         <h4 style="margin-bottom:12px;color:var(--color-text-light);font-size:14px;text-transform:uppercase;letter-spacing:.5px;">Book or Inquire</h4>
@@ -3365,7 +3368,7 @@
             <h2>Ready to Embark on the Sacred Adi Kailash Yatra?</h2>
             <p>Speak directly with our local pilgrimage team in Pithoragarh. We will arrange your permits, private 4x4 Boleros, and authentic homestays.</p>
             <div class="btn-container">
-                <a href="tel:+917617617651" class="btn btn-secondary"><i class="fa-solid fa-phone"></i> Call +91 7617617651</a>
+                <a href="tel:+917617617651" aria-label="Call +91 7617617651" class="btn btn-secondary"><i class="fa-solid fa-phone"></i> Call +91 7617617651</a>
                 <a href="https://wa.me/917617617651?text=Namaste!%20I%20am%20interested%20in%20booking%20the%20Adi%20Kailash%20%26%20Om%20Parvat%20Yatra%202026." class="btn btn-whatsapp" target="_blank"><i class="fa-brands fa-whatsapp"></i> WhatsApp Us Now</a>
             </div>
         </div>
@@ -3409,7 +3412,7 @@
         <div class="container" style="max-width:900px;">
 
             <div style="text-align:center;margin-bottom:40px;">
-                <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(212,175,55,0.12);border:1px solid rgba(212,175,55,0.35);color:#b8962e;border-radius:50px;padding:6px 18px;font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px;">
+                <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(212,175,55,0.12);border:1px solid rgba(212,175,55,0.35);color:#78580A;border-radius:50px;padding:6px 18px;font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px;">
                     <i class="fa-solid fa-rotate-left"></i> Cancellation &amp; Refund Policy
                 </div>
                 <h2 style="font-family:var(--font-serif,'Cormorant Garamond',serif);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:600;color:var(--color-primary,#0a1628);margin-bottom:10px;">
@@ -3468,9 +3471,9 @@
                 #cancellation-policy .crp-table tr:last-child td { border-bottom: none; }
                 #cancellation-policy .crp-table tr:nth-child(odd) td { background: #fafaf8; }
                 #cancellation-policy .crp-badge { display:inline-block;padding:3px 10px;border-radius:12px;font-size:12.5px;font-weight:700; }
-                #cancellation-policy .crp-badge.green { background:rgba(22,163,74,.1);color:#16a34a; }
-                #cancellation-policy .crp-badge.amber { background:rgba(217,119,6,.1);color:#b45309; }
-                #cancellation-policy .crp-badge.red   { background:rgba(220,38,38,.1);color:#dc2626; }
+                #cancellation-policy .crp-badge.green { background:rgba(22,163,74,.12);color: #166534; }
+                #cancellation-policy .crp-badge.amber { background:rgba(217,119,6,.1);color: #92400E; }
+                #cancellation-policy .crp-badge.red   { background:rgba(220,38,38,.1);color: #991B1B; }
                 #cancellation-policy .crp-list {
                     padding: 0;
                     margin: 0;
@@ -3534,7 +3537,7 @@
                     text-decoration: none;
                     white-space: nowrap;
                 }
-                #cancellation-policy .crp-btn.wa  { background:#22c55e;color:#fff; }
+                #cancellation-policy .crp-btn.wa  { background:#127035;color:#fff; }
                 #cancellation-policy .crp-btn.pol { background:rgba(212,175,55,0.15);border:1px solid rgba(212,175,55,0.4);color:#d4af37; }
                 @media(max-width:680px){
                     #cancellation-policy .crp-card { padding:20px 16px; }
@@ -3629,7 +3632,7 @@
                     <h3 class="crp-h3"><i class="fa-solid fa-person-circle-question"></i> No-Show Policy</h3>
                     <ul class="crp-list">
                         <li><i class="fa-solid fa-circle-xmark" style="color:#dc2626"></i><span>Failure to arrive at the assembly point on departure day <em>without</em> written cancellation: treated as &lt;7 days cancellation — <strong>no refund</strong>.</span></li>
-                        <li><i class="fa-solid fa-phone"></i><span>Genuine emergency (medical, road blockage)? Call us immediately at <a href="tel:+917617617651" style="color:#d4af37;font-weight:600;">+91 7617617651</a> — we assess case-by-case.</span></li>
+                        <li><i class="fa-solid fa-phone"></i><span>Genuine emergency (medical, road blockage)? Call us immediately at <a href="tel:+917617617651" aria-label="Call +91 7617617651" style="color:#78580A;font-weight:700;">+91 7617617651</a> — we assess case-by-case.</span></li>
                     </ul>
                 </div>
             </div>
@@ -3642,7 +3645,7 @@
                     <p>Contact us before cancelling — a date change is often a better option and may cost nothing.</p>
                 </div>
                 <div class="crp-cta-btns">
-                    <a href="https://wa.me/917617617651?text=Hi!%20I%20have%20a%20question%20about%20cancellation%20or%20rescheduling%20my%20booking." target="_blank" rel="noopener" class="crp-btn wa">
+                    <a href="https://wa.me/917617617651?text=Hi!%20I%20have%20a%20question%20about%20cancellation%20or%20rescheduling%20my%20booking." target="_blank" rel="noopener" class="crp-btn wa" aria-label="WhatsApp Us about cancellation and refund policy">
                         <i class="fa-brands fa-whatsapp"></i> WhatsApp Us
                     </a>
                     <a href="/refund-policy" class="crp-btn pol">
@@ -3713,7 +3716,7 @@
                     </li>
                     <li>
                         <i class="fa-solid fa-phone"></i>
-                        <span><a href="tel:+917617617651" style="color:inherit;text-decoration:none;">+91 7617617651</a></span>
+                        <span><a href="tel:+917617617651" aria-label="Call +91 7617617651" style="color:inherit;text-decoration:none;">+91 7617617651</a></span>
                     </li>
                     <li>
                         <i class="fa-solid fa-envelope"></i>
@@ -3733,7 +3736,7 @@
     <!-- Custom Itinerary Modal -->
     <div class="modal-overlay" id="custom-trip-modal">
         <div class="modal-box">
-            <button class="modal-close" id="modal-close-btn">&times;</button>
+            <button class="modal-close" id="modal-close-btn" aria-label="Close enquiry form">&times;</button>
             <h3 class="modal-title">Unlock Special Yatra Discounts</h3>
             <p class="modal-subtitle">Share details to get up to 10% direct discount on your Kumaon booking.</p>
             
@@ -3768,7 +3771,7 @@
 
                 <div class="modal-btn-grid">
                     <button type="button" class="btn btn-secondary" id="submit-email-btn"><i class="fa-solid fa-envelope"></i> Share via Email</button>
-                    <button type="button" class="btn btn-primary" id="submit-wa-btn" style="background-color: #25D366; color: white;"><i class="fa-brands fa-whatsapp"></i> Share via WhatsApp</button>
+                    <button type="button" class="btn btn-primary" id="submit-wa-btn" style="background-color: #127035; color: white;"><i class="fa-brands fa-whatsapp"></i> Share via WhatsApp</button>
                 </div>
             </form>
         </div>

@@ -132,12 +132,12 @@
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"></noscript>
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></noscript>
     <link rel="preload" as="image" href="assets/images/patal-bhuvaneshwar-new.webp" type="image/webp">
-    <link rel="stylesheet" href="style.css?v=8.3">
+    <link rel="stylesheet" href="style.css?v=8.5">
 
     <style>
         .tour-grid{display:grid;grid-template-columns:2.1fr 0.9fr;gap:40px}
         @media(max-width:992px){.tour-grid{grid-template-columns:1fr}}
-        .hero{background-image:linear-gradient(to bottom,rgba(10,25,47,.45),rgba(10,25,47,.85)),url('assets/images/patal-bhuvaneshwar-new.webp');background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:120px 0 80px}
+        .hero{background-image:linear-gradient(to bottom, rgba(10, 25, 47, 0.75),rgba(10,25,47,.85)),url('assets/images/patal-bhuvaneshwar-new.webp');background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:120px 0 80px}
         .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:100px;background:linear-gradient(to top,var(--color-bg-base),transparent);pointer-events:none}
         .hero-content{text-align:center;max-width:850px;padding:0 20px;z-index:2;animation:fadeInUp 1s cubic-bezier(.16,1,.3,1)}
         @keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
@@ -266,7 +266,7 @@
                                     <li><a href="adi-kailash-from-kathgodam">From Kathgodam</a></li>
                                     <li><a href="adi-kailash-from-delhi">From Delhi</a></li>
                                     <li class="sub-divider"></li>
-                                    <li><a href="adi-kailash-patal-bhuvaneshwar" style="color:var(--color-gold);font-weight:700;"><i class="fa-solid fa-gopuram" style="margin-right:4px;"></i>With Patal Bhuvaneshwar</a></li>
+                                    <li><a href="adi-kailash-patal-bhuvaneshwar" style="color:var(--color-gold-dark);font-weight:700;"><i class="fa-solid fa-gopuram" style="margin-right:4px;"></i>With Patal Bhuvaneshwar</a></li>
                                 </ul>
                             </li>
                             <li><a href="khaliya-top">Khaliya Top Trek</a></li>
@@ -324,7 +324,7 @@
                 <div class="route-switcher-card">
                     <div class="route-head">
                         <span><i class="fa-solid fa-train"></i> From Kathgodam</span>
-                        <span style="font-size:11px;color:var(--color-gold);font-weight:700;">Full Circuit</span>
+                        <span style="font-size:11px;color:var(--color-gold-dark);font-weight:700;">Full Circuit</span>
                     </div>
                     <div class="route-price">₹34,000 <span style="font-size:12px;font-weight:400;color:var(--color-text-secondary);">/ person</span></div>
                     <div class="route-duration"><i class="fa-regular fa-clock"></i> 7 Days / 6 Nights &bull; Includes Jageshwar &amp; Kainchi Dham</div>
@@ -332,7 +332,7 @@
                 <div class="route-switcher-card">
                     <div class="route-head">
                         <span><i class="fa-solid fa-city"></i> From Delhi NCR</span>
-                        <span style="font-size:11px;color:var(--color-gold);font-weight:700;">Door-to-Door</span>
+                        <span style="font-size:11px;color:var(--color-gold-dark);font-weight:700;">Door-to-Door</span>
                     </div>
                     <div class="route-price">₹39,000 <span style="font-size:12px;font-weight:400;color:var(--color-text-secondary);">/ person</span></div>
                     <div class="route-duration"><i class="fa-regular fa-clock"></i> 7 Days / 6 Nights &bull; Complete Delhi round-trip</div>
@@ -704,7 +704,7 @@
                                class="btn btn-whatsapp" target="_blank" style="width:100%;text-align:center;padding:12px;font-size:13.5px;border-radius:8px;">
                                 <i class="fa-brands fa-whatsapp"></i> Book via WhatsApp
                             </a>
-                            <a href="tel:+917617617651" class="btn btn-secondary" style="width:100%;text-align:center;padding:12px;font-size:13.5px;border-radius:8px;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);">
+                            <a href="tel:+917617617651" aria-label="Call +91 7617617651" class="btn btn-secondary" style="width:100%;text-align:center;padding:12px;font-size:13.5px;border-radius:8px;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);">
                                 <i class="fa-solid fa-phone"></i> Call +91 7617617651
                             </a>
                         </div>
@@ -749,7 +749,7 @@
                     <li><a href="adi-kailash-from-pithoragarh">From Pithoragarh &#8377;18K</a></li>
                     <li><a href="adi-kailash-from-kathgodam">From Kathgodam &#8377;30K</a></li>
                     <li><a href="adi-kailash-from-delhi">From Delhi &#8377;35K</a></li>
-                    <li><a href="adi-kailash-patal-bhuvaneshwar" style="color:var(--color-gold);font-weight:700;">With Patal Bhuvaneshwar &#8377;22K</a></li>
+                    <li><a href="adi-kailash-patal-bhuvaneshwar" style="color:#FDE047;font-weight:700;">With Patal Bhuvaneshwar &#8377;22K</a></li>
                     <li><a href="khaliya-top">Khaliya Top Trek</a></li>
                     <li><a href="mt-kailash">Mt. Kailash Yatra</a></li>
                 </ul>
@@ -774,7 +774,7 @@
                     </li>
                     <li>
                         <i class="fa-solid fa-phone" style="color:var(--color-gold);"></i>
-                        <a href="tel:+917617617651" style="color:inherit;text-decoration:none;">+91 7617617651</a>
+                        <a href="tel:+917617617651" aria-label="Call +91 7617617651" style="color:inherit;text-decoration:none;">+91 7617617651</a>
                     </li>
                     <li>
                         <i class="fa-solid fa-envelope" style="color:var(--color-gold);"></i>
@@ -785,7 +785,7 @@
         </div>
         <div class="footer-bottom">
             <div class="container">
-                <p>&copy; 2026 Rudraansh Yatra. All Rights Reserved. | <a href="privacy-policy" style="text-decoration:underline;color:var(--color-gold);">Privacy</a> | <a href="terms-and-conditions" style="text-decoration:underline;color:var(--color-gold);">Terms</a> | <a href="refund-policy" style="text-decoration:underline;color:var(--color-gold);">Refund</a></p>
+                <p>&copy; 2026 Rudraansh Yatra. All Rights Reserved. | <a href="privacy-policy" style="text-decoration: underline; color: var(--color-gold-dark); font-weight: 600;">Privacy</a> | <a href="terms-and-conditions" style="text-decoration: underline; color: var(--color-gold-dark); font-weight: 600;">Terms</a> | <a href="refund-policy" style="text-decoration: underline; color: var(--color-gold-dark); font-weight: 600;">Refund</a></p>
             </div>
         </div>
     </footer>

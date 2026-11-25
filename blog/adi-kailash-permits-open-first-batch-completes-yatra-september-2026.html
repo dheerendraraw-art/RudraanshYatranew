@@ -252,7 +252,7 @@
     
     <!-- Preload LCP Hero Banner -->
     <link rel="preload" as="image" href="/assets/images/om-parvat-group.webp" fetchpriority="high">
-    <link rel="stylesheet" href="/style.css?v=8.4">
+    <link rel="stylesheet" href="/style.css?v=8.5">
 
     <style>
         /* ═══════════════════════════════════════════════════════════
@@ -298,8 +298,8 @@
             font-size: 12.5px;
             color: var(--color-text-secondary);
         }
-        .breadcrumbs-list a { color: var(--color-text-secondary); text-decoration: none; }
-        .breadcrumbs-list a:hover { color: var(--color-gold); }
+        .breadcrumbs-list a { color: var(--color-primary); text-decoration: none; }
+        .breadcrumbs-list a:hover { color: var(--color-gold-dark); }
         .breadcrumb-sep { color: var(--color-text-secondary); font-size: 10px; }
         .breadcrumbs-list [aria-current="page"] span {
             color: var(--color-primary);
@@ -426,7 +426,7 @@
             line-height: 1.35;
         }
         .ry-live-intro {
-            color: #e2e8f0;
+            color: #e2e8f0 !important;
             font-size: 15px;
             line-height: 1.65;
             margin-bottom: 20px;
@@ -486,11 +486,7 @@
             text-decoration: none;
             transition: all 0.2s ease;
         }
-        .ry-cta-btn.wa {
-            background: #22c55e;
-            color: #ffffff;
-            border: 1px solid #22c55e;
-        }
+        .ry-cta-btn.wa { background: #127035; color: #ffffff; margin-right: 10px; }
         .ry-cta-btn.wa:hover {
             background: #16a34a;
             transform: translateY(-1px);
@@ -832,7 +828,7 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            background: #25d366;
+            background: #127035;
             color: #ffffff;
             padding: 10px 14px;
             border-radius: 8px;
@@ -965,11 +961,9 @@
                 line-height: 1.35 !important;
                 margin-bottom: 10px !important;
             }
-            .ry-live-intro {
-                font-size: 14px !important;
+            .ry-live-intro { font-size: 14px !important;
                 line-height: 1.65 !important;
-                margin-bottom: 16px !important;
-            }
+                margin-bottom: 16px !important; color: #e2e8f0 !important; }
 
             /* ─── KPI Grid: 2 columns on mobile ─────────── */
             .ry-kpi-grid {
@@ -1569,13 +1563,13 @@
                             <h4 style="margin: 0 0 6px 0; font-size: 16px; color: var(--color-primary);">From Kathgodam (6D / 5N)</h4>
                             <div style="font-size: 20px; font-weight: 800; color: var(--color-primary); margin-bottom: 8px;">₹30,000 <span style="font-size: 12px; color: #64748b; font-weight: normal;">/ person</span></div>
                             <p style="font-size: 13px; color: #64748b; margin-bottom: 12px;">Kathgodam &bull; Pithoragarh &bull; Dharchula &bull; Nabi &bull; Om Parvat &bull; Adi Kailash</p>
-                            <a href="/adi-kailash" style="font-size: 13px; font-weight: 700; color: #d4af37; text-decoration: none;">View Itinerary &rarr;</a>
+                            <a href="/adi-kailash" style="font-size: 13px; font-weight: 700; color: #78580A; text-decoration: underline;">View Itinerary &rarr;</a>
                         </div>
                         <div style="background: #ffffff; border: 1px solid var(--glass-border); border-radius: 8px; padding: 16px;">
                             <h4 style="margin: 0 0 6px 0; font-size: 16px; color: var(--color-primary);">From Delhi NCR (7D / 6N)</h4>
                             <div style="font-size: 20px; font-weight: 800; color: var(--color-primary); margin-bottom: 8px;">₹35,000 <span style="font-size: 12px; color: #64748b; font-weight: normal;">/ person</span></div>
                             <p style="font-size: 13px; color: #64748b; margin-bottom: 12px;">Delhi Pickup &bull; Kainchi Dham &bull; Pithoragarh &bull; Complete Vyas Valley Yatra</p>
-                            <a href="/adi-kailash" style="font-size: 13px; font-weight: 700; color: #d4af37; text-decoration: none;">View Itinerary &rarr;</a>
+                            <a href="/adi-kailash" style="font-size: 13px; font-weight: 700; color: #78580A; text-decoration: underline;">View Itinerary &rarr;</a>
                         </div>
                     </div>
                 </div>
@@ -1728,7 +1722,7 @@
     <!-- Custom Trip Modal -->
     <div class="modal-overlay" id="custom-trip-modal">
         <div class="modal-box">
-            <button class="modal-close" id="modal-close-btn">&times;</button>
+            <button class="modal-close" id="modal-close-btn" aria-label="Close enquiry form">&times;</button>
             <h3 class="modal-title">Unlock Special Yatra Discounts</h3>
             <p class="modal-subtitle">Share details to get up to 10% direct discount on your Kumaon booking.</p>
             
@@ -1762,7 +1756,7 @@
 
                 <div class="modal-btn-grid" style="display: flex; gap: 10px; margin-top: 15px;">
                     <button type="button" class="btn btn-secondary" id="submit-email-btn" style="flex: 1;"><i class="fa-solid fa-envelope"></i> Share Email</button>
-                    <button type="button" class="btn btn-primary" id="submit-wa-btn" style="flex: 1; background-color: #25D366; color: white;"><i class="fa-brands fa-whatsapp"></i> WhatsApp</button>
+                    <button type="button" class="btn btn-primary" id="submit-wa-btn" style="flex: 1; background-color: #127035; color: white;"><i class="fa-brands fa-whatsapp"></i> WhatsApp</button>
                 </div>
             </form>
         </div>

@@ -81,9 +81,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="../style.css?v=8.2">
+    <link rel="stylesheet" href="../style.css?v=8.5">
     <style>
-        .blog-hero{padding:80px 0 60px;background:linear-gradient(to bottom,rgba(10,25,47,.55),rgba(10,25,47,.92)),url('../assets/images/adi-kailash-hero.webp') center/cover;text-align:center}
+        .blog-hero{padding:80px 0 60px;background:linear-gradient(to bottom,rgba(10,25,47,.82),rgba(10,25,47,.94)),url('../assets/images/adi-kailash-hero.webp') center/cover;text-align:center}
         .blog-container{width:100%;max-width:820px;margin:0 auto;padding:0 20px;box-sizing:border-box}
         .blog-body{padding:50px 0;width:100%;max-width:100%;box-sizing:border-box;overflow-x:hidden}
         .blog-body h2{font-family:var(--font-serif);font-size:clamp(22px,3vw,30px);color:var(--color-primary);margin:40px 0 14px;border-bottom:2px solid rgba(212,175,55,.2);padding-bottom:10px}
@@ -91,7 +91,7 @@
         .blog-body p{color:var(--color-text-secondary);font-size:16px;line-height:1.85;margin-bottom:18px}
         .blog-body ul,.blog-body ol{color:var(--color-text-secondary);font-size:15.5px;line-height:1.8;padding-left:22px;margin-bottom:18px}
         .blog-body li{margin-bottom:7px}
-        .blog-body a{color:var(--color-gold);font-weight:600;text-decoration:underline}
+        .blog-body a{color:var(--color-gold-dark);font-weight:600;text-decoration:underline}
         .blog-body strong{color:var(--color-primary)}
         .info-box{background:linear-gradient(135deg,rgba(212,175,55,.07),rgba(10,25,47,.03));border-left:4px solid var(--color-gold);border-radius:0 10px 10px 0;padding:16px 20px;margin:24px 0}
         .info-box strong{color:var(--color-primary);display:block;margin-bottom:6px}
@@ -242,7 +242,7 @@
                 font-size: 13px; font-weight: 700; text-decoration: none;
                 font-family: var(--font-sans); transition: all 0.18s; border: none; cursor: pointer;
             }
-            .mob-wa-btn.wa { background: #25d366; color: #fff; }
+            .mob-wa-btn.wa { background: #127035; color: #fff; }
             .mob-wa-btn.wa:active { background: #1da552; transform: scale(0.98); }
             .mob-wa-btn.call { background: var(--color-primary); color: #fff; }
             .mob-wa-btn.call:active { background: #172A45; transform: scale(0.98); }
@@ -259,7 +259,6 @@
         .ry-cost-box,
         .ry-vs-card,
         .ry-season-banner,
-        .ry-highlight-box,
         .ry-flight-summary,
         .ry-cld-banner,
         .ry-cld-bottom,
@@ -279,10 +278,9 @@
         .ry-cost-box h1, .ry-cost-box h2, .ry-cost-box h3, .ry-cost-box h4,
         .ry-vs-card h1, .ry-vs-card h2, .ry-vs-card h3, .ry-vs-card h4,
         .ry-season-banner h1, .ry-season-banner h2, .ry-season-banner h3, .ry-season-banner h4,
-        .ry-highlight-box h1, .ry-highlight-box h2, .ry-highlight-box h3, .ry-highlight-box h4,
         .ry-flight-summary h1, .ry-flight-summary h2, .ry-flight-summary h3, .ry-flight-summary h4,
         .ry-cld-banner h1, .ry-cld-banner h2, .ry-cld-banner h3, .ry-cld-banner h4,
-        .ry-compare-head, .ry-cost-title, .ry-highlight-title {
+        .ry-compare-head, .ry-cost-title {
             color: #fbbf24 !important;
             font-family: var(--font-sans, 'Plus Jakarta Sans', system-ui, sans-serif) !important;
             margin-top: 0 !important;
@@ -294,23 +292,20 @@
         .ry-cost-box p,
         .ry-vs-card p,
         .ry-season-banner p,
-        .ry-highlight-box p,
         .ry-flight-summary p,
         .ry-cld-banner-desc,
         .ry-cld-bottom-desc {
             color: #cbd5e1 !important;
         }
 
-        .ry-route-summary ul, .ry-cost-box ul, .ry-vs-card ul, .ry-season-banner ul, .ry-highlight-box ul,
-        .ry-flight-summary ul, .ry-vs-points {
+        .ry-route-summary ul, .ry-cost-box ul, .ry-vs-card ul, .ry-season-banner ul, .ry-flight-summary ul, .ry-vs-points {
             list-style: none !important;
             list-style-type: none !important;
             margin: 10px 0 0 0 !important;
             padding: 0 !important;
         }
 
-        .ry-route-summary li, .ry-cost-box li, .ry-vs-card li, .ry-season-banner li, .ry-highlight-box li,
-        .ry-flight-summary li, .ry-vs-points li {
+        .ry-route-summary li, .ry-cost-box li, .ry-vs-card li, .ry-season-banner li, .ry-flight-summary li, .ry-vs-points li {
             list-style: none !important;
             list-style-type: none !important;
             color: #e2e8f0 !important;
@@ -322,12 +317,12 @@
         }
 
         .ry-route-summary li strong, .ry-cost-box li strong, .ry-vs-card li strong, 
-        .ry-season-banner li strong, .ry-highlight-box li strong, .ry-flight-summary li strong, .ry-vs-points li strong {
+        .ry-season-banner li strong, .ry-flight-summary li strong, .ry-vs-points li strong {
             color: #ffffff !important;
             font-weight: 700 !important;
         }
 
-        .ry-route-summary a, .ry-cost-box a, .ry-vs-card a, .ry-season-banner a, .ry-highlight-box a, .ry-flight-summary a {
+        .ry-route-summary a, .ry-cost-box a, .ry-vs-card a, .ry-season-banner a, .ry-flight-summary a {
             color: #93c5fd !important;
             text-decoration: underline;
         }
@@ -358,6 +353,7 @@
             word-break: break-word !important;
             box-sizing: border-box !important;
         }
+    .blog-hero .hero-desc{color:#ffffff;}
     </style>
 </head>
 <body>
@@ -380,7 +376,7 @@
             <span class="hero-badge"><span></span> Updated August 2026</span>
             <h1 class="hero-title" style="font-size:clamp(24px,4vw,42px);">Adi Kailash Yatra Complete Guide 2027</h1>
             <p class="hero-desc" style="max-width:600px;margin:12px auto 0;">Route &bull; Cost &bull; Inner Line Permit &bull; Itinerary &bull; Best Season &bull; Packing List</p>
-            <p style="color:rgba(255,255,255,.75);font-size:13px;margin-top:14px;"><i class="fa-solid fa-user" style="color:var(--color-gold);margin-right:4px;"></i> By <strong style="color:#ffffff;">Dheerendra Rautela</strong> (Lead Guide, Rudraansh Yatra) &bull; <i class="fa-solid fa-calendar-days" style="color:var(--color-gold);margin:0 4px;"></i> Published: August 2026 &bull; <i class="fa-solid fa-clock" style="color:var(--color-gold);margin:0 4px;"></i> 12 min read</p>
+            <p style="color:rgba(255,255,255,.94);font-size:13px;margin-top:14px;"><i class="fa-solid fa-user" style="color:var(--color-gold);margin-right:4px;"></i> By <strong style="color:#ffffff;">Dheerendra Rautela</strong> (Lead Guide, Rudraansh Yatra) &bull; <i class="fa-solid fa-calendar-days" style="color:var(--color-gold);margin:0 4px;"></i> Published: August 2026 &bull; <i class="fa-solid fa-clock" style="color:var(--color-gold);margin:0 4px;"></i> 12 min read</p>
         </div>
     </section>
 
@@ -388,7 +384,7 @@
         <div class="blog-container">
             <p>The <strong>Adi Kailash Yatra</strong> — also called <strong>Chhota Kailash Yatra</strong> — is one of the most spiritually powerful pilgrimages in the Indian Himalayas. Every year, thousands of devotees make their way to the remote <strong>Vyas Valley</strong> in Pithoragarh, Uttarakhand to receive darshan of Adi Kailash (base camp at Jyolingkong, 4,570m; peak 5,945m) and the miraculous <strong>Om Parvat</strong> (viewed from Nabidhang viewpoint, 4,246m; peak 5,590m).</p>
             <p>This guide covers everything you need to plan a successful Adi Kailash Yatra in 2027. Written by <strong>Rudraansh Yatra</strong> — a direct local ground operator based in Pithoragarh, operating this route since 2015.</p>
-            <div class="info-box"><strong>&#128205; We Are the Ground Operator</strong>No middlemen. Direct pricing from Pithoragarh. Choose your starting point: <a href="/adi-kailash-from-pithoragarh">Pithoragarh (Rs.18,000 - 3D)</a>, <a href="/adi-kailash-from-kathgodam">Kathgodam (Rs.30,000 - 6D)</a>, or <a href="/adi-kailash-from-delhi">Delhi (Rs.35,000 - 6D)</a>.</div>
+            <div class="info-box"><strong>&#128205; We Are the Ground Operator</strong>No middlemen. Direct pricing from Pithoragarh. Choose your starting point:<div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;"><a href="/adi-kailash-from-pithoragarh" style="display:inline-flex;align-items:center;min-height:36px;padding:6px 12px;border-radius:8px;border:1px solid rgba(120,88,10,0.35);background:rgba(212,175,55,0.12);color:var(--color-gold-dark);text-decoration:underline;">Pithoragarh (Rs.18,000 - 3D)</a><a href="/adi-kailash-from-kathgodam" style="display:inline-flex;align-items:center;min-height:36px;padding:6px 12px;border-radius:8px;border:1px solid rgba(120,88,10,0.35);background:rgba(212,175,55,0.12);color:var(--color-gold-dark);text-decoration:underline;">Kathgodam (Rs.30,000 - 6D)</a><a href="/adi-kailash-from-delhi" style="display:inline-flex;align-items:center;min-height:36px;padding:6px 12px;border-radius:8px;border:1px solid rgba(120,88,10,0.35);background:rgba(212,175,55,0.12);color:var(--color-gold-dark);text-decoration:underline;">Delhi (Rs.35,000 - 6D)</a></div></div>
 
             <h2>What is Adi Kailash?</h2>
             <p>Adi Kailash (literally "first Kailash") is a sacred Himalayan peak in the Vyas Valley of Pithoragarh district, revered as the earthly replica of <strong>Mt. Kailash in Tibet</strong> — the abode of Lord Shiva. The sacred lake at its base, <strong>Parvati Sarovar (Gauri Kund)</strong>, mirrors the holy Mansarovar.</p>
@@ -412,9 +408,9 @@
 
             <h2>Adi Kailash Yatra Cost 2026 — All 3 Packages</h2>
             <div class="pkg-row">
-                <div class="pkg-mini-card"><div style="font-size:11px;font-weight:700;color:var(--color-gold);text-transform:uppercase;">Local Start</div><strong>From Pithoragarh</strong><div class="price">Rs.18,000</div><div style="font-size:12px;color:var(--color-text-secondary);">3 Days / 2 Nights</div><a href="/adi-kailash-from-pithoragarh">View Package</a></div>
-                <div class="pkg-mini-card" style="border-color:var(--color-gold);"><div style="font-size:11px;font-weight:700;color:var(--color-gold);text-transform:uppercase;">Train Friendly</div><strong>From Kathgodam</strong><div class="price">Rs.30,000</div><div style="font-size:12px;color:var(--color-text-secondary);">6 Days / 5 Nights</div><a href="/adi-kailash-from-kathgodam">View Package</a></div>
-                <div class="pkg-mini-card"><div style="font-size:11px;font-weight:700;color:var(--color-gold);text-transform:uppercase;">Door-to-Door</div><strong>From Delhi NCR</strong><div class="price">Rs.35,000</div><div style="font-size:12px;color:var(--color-text-secondary);">6 Days / 5 Nights</div><a href="/adi-kailash-from-delhi">View Package</a></div>
+                <div class="pkg-mini-card"><div style="font-size:11px;font-weight:700;color:var(--color-gold-dark);text-transform:uppercase;">Local Start</div><strong>From Pithoragarh</strong><div class="price">Rs.18,000</div><div style="font-size:12px;color:var(--color-text-secondary);">3 Days / 2 Nights</div><a href="/adi-kailash-from-pithoragarh" aria-label="View Package - From Pithoragarh">View Package</a></div>
+                <div class="pkg-mini-card" style="border-color:var(--color-gold);"><div style="font-size:11px;font-weight:700;color:var(--color-gold-dark);text-transform:uppercase;">Train Friendly</div><strong>From Kathgodam</strong><div class="price">Rs.30,000</div><div style="font-size:12px;color:var(--color-text-secondary);">6 Days / 5 Nights</div><a href="/adi-kailash-from-kathgodam" aria-label="View Package - From Kathgodam">View Package</a></div>
+                <div class="pkg-mini-card"><div style="font-size:11px;font-weight:700;color:var(--color-gold-dark);text-transform:uppercase;">Door-to-Door</div><strong>From Delhi NCR</strong><div class="price">Rs.35,000</div><div style="font-size:12px;color:var(--color-text-secondary);">6 Days / 5 Nights</div><a href="/adi-kailash-from-delhi" aria-label="View Package - From Delhi NCR">View Package</a></div>
             </div>
             <p>All packages include: ILP processing, 4x4 Bolero in Vyas Valley, Bhotiya homestay, all meals, local guide, oxygen cylinder, and first-aid. See the <a href="/adi-kailash">full package comparison on our hub page</a>.</p>
 

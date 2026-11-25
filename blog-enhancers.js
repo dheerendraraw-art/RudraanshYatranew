@@ -137,8 +137,7 @@ const BLOG_ENHANCERS = {
 .ry-route-summary,
 .ry-cost-box,
 .ry-vs-card,
-.ry-season-banner,
-.ry-highlight-box {
+.ry-season-banner {
     color: #ffffff !important;
 }
 
@@ -147,8 +146,7 @@ const BLOG_ENHANCERS = {
 .ry-cost-box h1, .ry-cost-box h2, .ry-cost-box h3, .ry-cost-box h4,
 .ry-vs-card h1, .ry-vs-card h2, .ry-vs-card h3, .ry-vs-card h4,
 .ry-season-banner h1, .ry-season-banner h2, .ry-season-banner h3, .ry-season-banner h4,
-.ry-highlight-box h1, .ry-highlight-box h2, .ry-highlight-box h3, .ry-highlight-box h4,
-.ry-cost-title, .ry-highlight-title {
+.ry-cost-title {
     color: #fbbf24 !important;
     font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
     margin-top: 0 !important;
@@ -162,22 +160,20 @@ const BLOG_ENHANCERS = {
 .ry-cost-box p,
 .ry-vs-card p,
 .ry-season-banner p,
-.ry-highlight-box p {
+{
     color: #cbd5e1 !important;
     margin-bottom: 0 !important;
 }
 
 /* Lists & List Items inside dark widgets (Disable forced black bullets & black text) */
-.ry-route-summary ul, .ry-cost-box ul, .ry-vs-card ul, .ry-season-banner ul, .ry-highlight-box ul,
-.ry-vs-points {
+.ry-route-summary ul, .ry-cost-box ul, .ry-vs-card ul, .ry-season-banner ul, .ry-vs-points {
     list-style: none !important;
     list-style-type: none !important;
     margin: 10px 0 0 0 !important;
     padding: 0 !important;
 }
 
-.ry-route-summary li, .ry-cost-box li, .ry-vs-card li, .ry-season-banner li, .ry-highlight-box li,
-.ry-vs-points li {
+.ry-route-summary li, .ry-cost-box li, .ry-vs-card li, .ry-season-banner li, .ry-vs-points li {
     list-style: none !important;
     list-style-type: none !important;
     display: flex !important;
@@ -192,7 +188,7 @@ const BLOG_ENHANCERS = {
 }
 
 .ry-route-summary li strong, .ry-cost-box li strong, .ry-vs-card li strong, 
-.ry-season-banner li strong, .ry-highlight-box li strong, .ry-vs-points li strong {
+.ry-season-banner li strong, .ry-vs-points li strong {
     color: #ffffff !important;
     font-weight: 700 !important;
 }
@@ -255,31 +251,31 @@ const BLOG_ENHANCERS = {
 
 .ry-cost-box { background: linear-gradient(135deg, #0b1329 0%, #1e293b 100%); border: 2px solid #d4af37; border-radius: 14px; padding: 22px; margin-bottom: 30px; color: #fff; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
 .ry-cost-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 14px; border-bottom: 1px solid rgba(212,175,55,0.3); padding-bottom: 12px; }
-.ry-cost-title { font-size: 19px; font-weight: 700; color: #fbbf24; margin: 0; }
-.ry-cost-badge { background: #22c55e; color: #fff; font-size: 13px; font-weight: 700; padding: 5px 12px; border-radius: 20px; }
+.ry-cost-title { font-size: 19px; font-weight: 700; color: #fde047; margin: 0; }
+.ry-cost-badge { background: #127035; color: #fff; font-size: 13px; font-weight: 700; padding: 5px 12px; border-radius: 20px; }
 .ry-cost-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 18px; }
 .ry-cost-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 14px; text-align: center; }
-.ry-cost-card .label { font-size: 12.5px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
-.ry-cost-card .price { font-size: 22px; font-weight: 800; color: #38bdf8; margin-bottom: 4px; }
+.ry-cost-card .label { font-size: 12.5px; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+.ry-cost-card .price { font-size: 22px; font-weight: 800; color: #7dd3fc; margin-bottom: 4px; }
 .ry-cost-card .sub { font-size: 12px; color: #cbd5e1; }
 .ry-cost-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 .ry-cost-btn { flex: 1; min-width: 200px; padding: 12px 18px; border-radius: 8px; font-weight: 700; font-size: 14px; text-align: center; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
-.ry-cost-btn.wa { background: #22c55e; color: #fff; }
-.ry-cost-btn.call { background: #d4af37; color: #0f172a; }
+.ry-cost-btn.wa { background: #127035 !important; color: #ffffff !important; }
+.ry-cost-btn.call { background: #d4af37 !important; color: #0f172a !important; }
 .ry-table-wrap { overflow-x: auto; margin: 24px 0; border-radius: 10px; border: 1px solid #e2e8f0; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
 .ry-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14.5px; }
-.ry-table th { background: #0f172a; color: #fbbf24; padding: 14px 16px; font-weight: 700; border-bottom: 2px solid #d4af37; }
+.ry-table th { background: #0f172a; color: #fde047; padding: 14px 16px; font-weight: 700; border-bottom: 2px solid #d4af37; }
 .ry-table td { padding: 12px 16px; border-bottom: 1px solid #f1f5f9; color: #334155; }
 .ry-table tr:nth-child(even) { background: #f8fafc; }
 .ry-table tr:hover { background: #f1f5f9; }
-.ry-highlight-box { background: #eff6ff; border-left: 4px solid #3b82f6; border-radius: 0 10px 10px 0; padding: 18px 20px; margin: 24px 0; color: #1e3a8a; }
-.ry-highlight-title { font-weight: 700; font-size: 16px; margin-bottom: 6px; color: #1e40af; display: flex; align-items: center; gap: 8px; }
+.ry-highlight-box p { color: #1e293b !important; } .ry-highlight-box strong { color: #0f172a !important; } .ry-highlight-box { background: #eff6ff; border-left: 4px solid #3b82f6; border-radius: 0 10px 10px 0; padding: 18px 20px; margin: 24px 0; color: #1e3a8a !important; }
+.ry-highlight-title { font-weight: 700; font-size: 16px; margin-bottom: 6px; color: #1e3a8a !important; display: flex; align-items: center; gap: 8px; }
 .ry-faq-item { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px 20px; margin-bottom: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
 .ry-faq-q { font-weight: 700; font-size: 15.5px; color: #0f172a; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 10px; }
 .ry-faq-q i { color: #d4af37; margin-top: 4px; }
 .ry-faq-a { font-size: 14px; color: #475569; line-height: 1.65; margin: 0; padding-left: 24px; }
 @media (max-width: 680px) {
-  .ry-cost-box, .ry-vs-card, .ry-season-banner, .ry-highlight-box, .ry-route-summary { padding: 16px 14px; border-radius: 12px; margin: 18px 0; }
+  .ry-cost-box, .ry-vs-card, .ry-season-banner, .ry-route-summary { padding: 16px 14px; border-radius: 12px; margin: 18px 0; }
   .ry-cost-head { flex-direction: column; align-items: flex-start; gap: 8px; }
   .ry-cost-title { font-size: 16px; }
   .ry-cost-grid { grid-template-columns: 1fr; gap: 10px; }
@@ -300,7 +296,7 @@ const BLOG_ENHANCERS = {
   .ry-faq-a { font-size: 13px; padding-left: 0; margin-top: 6px; }
 }
 @media (max-width: 380px) {
-  .ry-cost-box, .ry-vs-card, .ry-season-banner, .ry-highlight-box { padding: 12px 10px; }
+  .ry-cost-box, .ry-vs-card, .ry-season-banner { padding: 12px 10px; }
   .ry-cost-card .price { font-size: 17px; }
   .ry-cost-btn { font-size: 12.5px; padding: 10px 12px; }
   .ry-table th, .ry-table td { padding: 8px 10px; font-size: 12px; }
@@ -401,7 +397,7 @@ const BLOG_ENHANCERS = {
 <div class="ry-cost-box" style="margin-top:35px;border-style:dashed;">
     <div class="ry-cost-head">
         <h4 class="ry-cost-title">🏔️ Customize Your 2026 Adi Kailash Budget</h4>
-        <span class="ry-cost-badge" style="background:#3b82f6;">Group &amp; Senior Citizen Discounts Available</span>
+        <span class="ry-cost-badge" style="background:#1D4ED8;">Group &amp; Senior Citizen Discounts Available</span>
     </div>
     <p style="font-size:14px;color:#cbd5e1;line-height:1.6;margin-bottom:16px;">
         Whether you are planning a solo spiritual retreat, a family yatra with senior citizens, or a group adventure, Rudraansh Yatra organizes fully customized, transparently priced departures with no hidden surprises.
@@ -550,9 +546,9 @@ const BLOG_ENHANCERS = {
 .ry-route-summary { background: linear-gradient(135deg, #091e3a 0%, #172554 100%); border: 2px solid #60a5fa; border-radius: 14px; padding: 22px; margin-bottom: 30px; color: #fff; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
 .ry-route-steps { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
 .ry-route-step { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 10px 14px; font-size: 13px; font-weight: 700; color: #93c5fd; text-align: center; flex: 1; min-width: 110px; }
-.ry-route-step .num { font-size: 11px; color: #fbbf24; text-transform: uppercase; margin-bottom: 2px; }
+.ry-route-step .num { font-size: 11px; color: #fde047; text-transform: uppercase; margin-bottom: 2px; }
 .ry-route-step .name { font-size: 14px; color: #fff; }
-.ry-route-arrow { color: #fbbf24; font-size: 16px; }
+.ry-route-arrow { color: #fde047; font-size: 16px; }
 @media (max-width: 768px) {
   .ry-route-steps { flex-direction: column; align-items: stretch; }
   .ry-route-arrow { text-align: center; transform: rotate(90deg); margin: 2px 0; }
@@ -561,18 +557,18 @@ const BLOG_ENHANCERS = {
 <div class="ry-route-summary">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
         <h3 style="margin:0 !important;color:#fbbf24 !important;font-size:18px !important;font-weight:700 !important;font-family:var(--font-sans), sans-serif !important;">🗺️ Delhi to Adi Kailash Complete Route At-a-Glance</h3>
-        <span style="background:#22c55e;color:#fff;font-size:12px;font-weight:700;padding:4px 10px;border-radius:12px;">Total Distance: ~680 km</span>
+        <span style="background:#127035;color:#fff;font-size:12px;font-weight:700;padding:4px 10px;border-radius:12px;">Total Distance: ~680 km</span>
     </div>
     <div class="ry-route-steps">
-        <div class="ry-route-step"><div class="num">Leg 1</div><div class="name">Delhi 🚆</div><div style="font-size:11px;color:#94a3b8;">Overnight Train</div></div>
+        <div class="ry-route-step"><div class="num">Leg 1</div><div class="name">Delhi 🚆</div><div style="font-size:11px;color: #cbd5e1;">Overnight Train</div></div>
         <div class="ry-route-arrow">➔</div>
-        <div class="ry-route-step"><div class="num">Leg 2</div><div class="name">Kathgodam 🚗</div><div style="font-size:11px;color:#94a3b8;">NH9 Mountain Road</div></div>
+        <div class="ry-route-step"><div class="num">Leg 2</div><div class="name">Kathgodam 🚗</div><div style="font-size:11px;color: #cbd5e1;">NH9 Mountain Road</div></div>
         <div class="ry-route-arrow">➔</div>
-        <div class="ry-route-step"><div class="num">Leg 3</div><div class="name">Dharchula 📋</div><div style="font-size:11px;color:#94a3b8;">ILP Verification</div></div>
+        <div class="ry-route-step"><div class="num">Leg 3</div><div class="name">Dharchula 📋</div><div style="font-size:11px;color: #cbd5e1;">ILP Verification</div></div>
         <div class="ry-route-arrow">➔</div>
-        <div class="ry-route-step"><div class="num">Leg 4</div><div class="name">Gunji 🛞</div><div style="font-size:11px;color:#94a3b8;">4x4 High Pass</div></div>
+        <div class="ry-route-step"><div class="num">Leg 4</div><div class="name">Gunji 🛞</div><div style="font-size:11px;color: #cbd5e1;">4x4 High Pass</div></div>
         <div class="ry-route-arrow">➔</div>
-        <div class="ry-route-step" style="border-color:#fbbf24;background:rgba(251,191,36,0.15);"><div class="num" style="color:#fbbf24;">Darshan</div><div class="name" style="color:#fbbf24;">Adi Kailash 🏔️</div><div style="font-size:11px;color:#fbbf24;">4,570m Altitude</div></div>
+        <div class="ry-route-step" style="border-color: #fde047;background:rgba(251,191,36,0.15);"><div class="num" style="color: #fde047;">Darshan</div><div class="name" style="color: #fde047;">Adi Kailash 🏔️</div><div style="font-size:11px;color: #fde047;">4,570m Altitude</div></div>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;">
         <a href="https://wa.me/917617617651?text=Hi%20Rudraansh%20Yatra,%20please%20send%20the%20complete%20Delhi/Kathgodam%20route%20itinerary%20and%204x4%20pickup%20details." target="_blank" rel="noopener" class="ry-cost-btn wa" style="flex:1;">
@@ -658,10 +654,10 @@ const BLOG_ENHANCERS = {
             }
 
             const bottomCta = `
-<div class="ry-cost-box" style="margin-top:35px;background:#0f172a;border-color:#38bdf8;">
+<div class="ry-cost-box" style="margin-top:35px;background:#0f172a;border-color: #7dd3fc;">
     <div class="ry-cost-head">
-        <h4 class="ry-cost-title" style="color:#38bdf8;">🚆 Need Kathgodam Station or Pantnagar Airport Pickup?</h4>
-        <span class="ry-cost-badge" style="background:#0284c7;">Hassle-Free Door-to-Darshan</span>
+        <h4 class="ry-cost-title" style="color: #7dd3fc;">🚆 Need Kathgodam Station or Pantnagar Airport Pickup?</h4>
+        <span class="ry-cost-badge" style="background:#0369A1;">Hassle-Free Door-to-Darshan</span>
     </div>
     <p style="font-size:14px;color:#cbd5e1;line-height:1.6;margin-bottom:16px;">
         Skip the stress of negotiating multiple shared mountain taxis. Our driver meets you directly at Kathgodam Railway Station or Pantnagar Airport with pre-arranged permits and transfers you directly to the sacred Himalayas.
@@ -767,10 +763,10 @@ const BLOG_ENHANCERS = {
 .ry-season-banner { background: linear-gradient(135deg, #064e3b 0%, #065f46 100%); border: 2px solid #34d399; border-radius: 14px; padding: 22px; margin-bottom: 30px; color: #fff; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
 .ry-season-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 16px 0; }
 .ry-season-col { background: rgba(255,255,255,0.08); border-radius: 8px; padding: 12px 14px; text-align: center; border: 1px solid rgba(255,255,255,0.15); }
-.ry-season-col.prime { border-color: #fbbf24; background: rgba(251,191,36,0.12); }
+.ry-season-col.prime { border-color: #fde047; background: rgba(251,191,36,0.12); }
 .ry-season-col.closed { border-color: #f87171; background: rgba(248,113,113,0.12); }
 .ry-season-tag { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
-.ry-season-col.prime .ry-season-tag { color: #fbbf24; }
+.ry-season-col.prime .ry-season-tag { color: #fde047; }
 .ry-season-col.closed .ry-season-tag { color: #fca5a5; }
 .ry-season-months { font-size: 15px; font-weight: 800; color: #fff; margin-bottom: 2px; }
 .ry-season-status { font-size: 12px; color: #cbd5e1; }
@@ -778,7 +774,7 @@ const BLOG_ENHANCERS = {
 <div class="ry-season-banner">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
         <h3 style="margin:0 !important;color:#fbbf24 !important;font-size:19px !important;font-weight:800 !important;font-family:var(--font-sans), sans-serif !important;">☀️ 2026 Yatra Season &amp; Weather Windows</h3>
-        <span style="background:#22c55e;color:#fff;font-size:12px;font-weight:700;padding:4px 10px;border-radius:12px;">Official BRO &amp; SDM Calendar</span>
+        <span style="background:#127035;color:#fff;font-size:12px;font-weight:700;padding:4px 10px;border-radius:12px;">Official BRO &amp; SDM Calendar</span>
     </div>
     <div class="ry-season-grid">
         <div class="ry-season-col prime">
@@ -829,14 +825,14 @@ const BLOG_ENHANCERS = {
                 <td><strong>May</strong></td>
                 <td>12°C / 2°C</td>
                 <td>6°C / -2°C</td>
-                <td><span style="color:#16a34a;font-weight:700;">OPEN</span> (Post-snow opening)</td>
+                <td><span style="color:#166534;font-weight:700;">OPEN</span> (Post-snow opening)</td>
                 <td>Prismatic white snow blanket; crisp OM formation</td>
             </tr>
             <tr>
                 <td><strong>June</strong></td>
                 <td>18°C / 6°C</td>
                 <td>10°C / 2°C</td>
-                <td><span style="color:#16a34a;font-weight:700;">OPEN</span> (Peak Season)</td>
+                <td><span style="color:#166534;font-weight:700;">OPEN</span> (Peak Season)</td>
                 <td>Parvati Sarovar thawed; clearest morning reflections</td>
             </tr>
             <tr>
@@ -850,21 +846,21 @@ const BLOG_ENHANCERS = {
                 <td><strong>September</strong></td>
                 <td>14°C / 2°C</td>
                 <td>7°C / -3°C</td>
-                <td><span style="color:#16a34a;font-weight:700;">REOPENS ~Sept 15</span></td>
+                <td><span style="color:#166534;font-weight:700;">REOPENS ~Sept 15</span></td>
                 <td>Air washed crystal-clean; gushing fresh waterfalls</td>
             </tr>
             <tr>
                 <td><strong>October</strong></td>
                 <td>10°C / -3°C</td>
                 <td>4°C / -8°C</td>
-                <td><span style="color:#16a34a;font-weight:700;">OPEN</span> (Golden Autumn)</td>
+                <td><span style="color:#166534;font-weight:700;">OPEN</span> (Golden Autumn)</td>
                 <td>Pristine blue skies; deep night stargazing</td>
             </tr>
             <tr>
                 <td><strong>November</strong></td>
                 <td>4°C / -10°C</td>
                 <td>-2°C / -16°C</td>
-                <td><span style="color:#ea580c;font-weight:700;">CLOSING ~Nov 15</span></td>
+                <td><span style="color:#9A3412;font-weight:700;">CLOSING ~Nov 15</span></td>
                 <td>Sub-zero freeze; early winter snow shutdown</td>
             </tr>
         </tbody>
@@ -882,7 +878,7 @@ const BLOG_ENHANCERS = {
 <div class="ry-cost-box" style="margin-top:35px;background:#064e3b;border-color:#34d399;">
     <div class="ry-cost-head">
         <h4 class="ry-cost-title" style="color:#34d399;">📅 Lock In Your Ideal Season Departure for 2026</h4>
-        <span class="ry-cost-badge" style="background:#10b981;">Limited Homestay Capacity in Gunji</span>
+        <span class="ry-cost-badge" style="background:#047857;">Limited Homestay Capacity in Gunji</span>
     </div>
     <p style="font-size:14px;color:#cbd5e1;line-height:1.6;margin-bottom:16px;">
         Because the Vyas Valley has limited homestay capacity (~250 beds per night across Gunji and Nabi), May–June and September–October departures fill up quickly. Secure your slot early with zero cancellation risk.
@@ -1356,7 +1352,7 @@ const BLOG_ENHANCERS = {
 .ry-schedule-table tr:nth-child(even) td { background: #f8fafc; }
 .ry-schedule-table tr:hover td { background: #eef2ff; }
 .ry-day-active { color: #1e40af; font-weight: 700; }
-.ry-day-none { color: #94a3b8; font-style: italic; }
+.ry-day-none { color: #cbd5e1; font-style: italic; }
 .ry-route-badge {
     display: inline-block;
     background: #e0f2fe;
@@ -1920,15 +1916,15 @@ const BLOG_ENHANCERS = {
             const ilpSummaryBanner = `
 <style>
 .ry-ilp-summary { background: linear-gradient(135deg, #091e3a 0%, #172554 100%); border: 2px solid #38bdf8; border-radius: 14px; padding: 24px; margin-bottom: 30px; color: #fff; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
-.ry-ilp-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4); padding: 4px 12px; border-radius: 50px; font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
+.ry-ilp-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(56, 189, 248, 0.2); color: #7dd3fc; border: 1px solid rgba(56, 189, 248, 0.4); padding: 4px 12px; border-radius: 50px; font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
 .ry-ilp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 18px 0; }
 .ry-ilp-item { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 12px 14px; text-align: left; }
-.ry-ilp-item .label { font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; margin-bottom: 4px; }
+.ry-ilp-item .label { font-size: 11px; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; margin-bottom: 4px; }
 .ry-ilp-item .val { font-size: 14px; color: #f8fafc; font-weight: 700; }
-.ry-ilp-item .sub { font-size: 11px; color: #38bdf8; margin-top: 2px; }
+.ry-ilp-item .sub { font-size: 11px; color: #7dd3fc; margin-top: 2px; }
 .ry-ilp-btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
 .ry-ilp-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 20px; border-radius: 8px; font-size: 13.5px; font-weight: 700; text-decoration: none; transition: all 0.2s ease; cursor: pointer; flex: 1; min-width: 220px; }
-.ry-ilp-btn.wa { background: #25d366; color: #000; }
+.ry-ilp-btn.wa { background: #127035; color: #ffffff; }
 .ry-ilp-btn.wa:hover { background: #20bd5a; transform: translateY(-1px); }
 .ry-ilp-btn.call { background: #f59e0b; color: #000; }
 .ry-ilp-btn.call:hover { background: #d97706; transform: translateY(-1px); }
@@ -2008,11 +2004,11 @@ const BLOG_ENHANCERS = {
 <style>
 .ry-ilp-table-wrap { overflow-x: auto; margin: 26px 0; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 4px 15px rgba(0,0,0,0.25); }
 .ry-ilp-table { width: 100%; border-collapse: collapse; background: #0b1322; font-size: 13.5px; text-align: left; }
-.ry-ilp-table th { background: #162238; color: #38bdf8; padding: 14px 16px; font-weight: 700; border-bottom: 2px solid rgba(56,189,248,0.3); font-size: 13.5px; }
+.ry-ilp-table th { background: #162238; color: #7dd3fc; padding: 14px 16px; font-weight: 700; border-bottom: 2px solid rgba(56,189,248,0.3); font-size: 13.5px; }
 .ry-ilp-table td { padding: 13px 16px; border-bottom: 1px solid rgba(255,255,255,0.06); color: #cbd5e1; }
 .ry-ilp-table tr:hover { background: rgba(56,189,248,0.04); }
 .ry-badge-diy { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
-.ry-badge-pro { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+.ry-badge-pro { background: rgba(34, 197, 94, 0.15); color: #86efac; border: 1px solid rgba(34, 197, 94, 0.3); padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
 </style>
 <div class="ry-ilp-table-wrap">
     <table class="ry-ilp-table">
@@ -2064,9 +2060,9 @@ const BLOG_ENHANCERS = {
 .ry-flow-title { color: #facc15; font-size: 16.5px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
 .ry-check-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
 .ry-check-card { background: rgba(255,255,255,0.04); border-left: 3px solid #38bdf8; border-radius: 6px; padding: 12px 14px; }
-.ry-check-card .c-num { font-size: 11px; font-weight: 700; color: #38bdf8; text-transform: uppercase; }
+.ry-check-card .c-num { font-size: 11px; font-weight: 700; color: #7dd3fc; text-transform: uppercase; }
 .ry-check-card .c-name { font-size: 14px; font-weight: 700; color: #f8fafc; margin: 2px 0; }
-.ry-check-card .c-desc { font-size: 12px; color: #94a3b8; line-height: 1.4; }
+.ry-check-card .c-desc { font-size: 12px; color: #cbd5e1; line-height: 1.4; }
 </style>
 <div class="ry-flow-wrap">
     <div class="ry-flow-title"><i class="fa-solid fa-map-location-dot"></i> ITBP &amp; Security Checkpoints on the Route</div>
@@ -2306,8 +2302,8 @@ const BLOG_ENHANCERS = {
 .ry-alt-card.risk .alt-m { color: #dc2626; }
 .ry-alt-card .alt-note { font-size: 12px; color: #475569; line-height: 1.4; }
 .ry-alt-card .alt-badge { display: inline-block; font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-bottom: 6px; }
-.ry-alt-card.safe .alt-badge { background: rgba(34,197,94,0.2); color: #4ade80; }
-.ry-alt-card.caution .alt-badge { background: rgba(251,191,36,0.2); color: #fbbf24; }
+.ry-alt-card.safe .alt-badge { background: rgba(34,197,94,0.2); color: #86efac; }
+.ry-alt-card.caution .alt-badge { background: rgba(251,191,36,0.2); color: #fde047; }
 .ry-alt-card.risk .alt-badge { background: rgba(239,68,68,0.2); color: #f87171; }
 /* Month table */
 .ry-month-table-wrap { overflow-x: auto; margin: 22px 0; border-radius: 10px; border: 1px solid rgba(255,255,255,0.08); }
@@ -2315,15 +2311,15 @@ const BLOG_ENHANCERS = {
 .ry-month-table th { background: #0f2010; color: #86efac; padding: 12px 14px; font-weight: 700; border-bottom: 1px solid rgba(34,197,94,0.2); text-align: left; }
 .ry-month-table td { padding: 11px 14px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #cbd5e1; }
 .ry-month-table tr:hover { background: rgba(34,197,94,0.04); }
-.ry-tag-best { background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.3); padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
-.ry-tag-ok { background: rgba(251,191,36,0.15); color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+.ry-tag-best { background: rgba(34,197,94,0.15); color: #86efac; border: 1px solid rgba(34,197,94,0.3); padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+.ry-tag-ok { background: rgba(251,191,36,0.15); color: #fde047; border: 1px solid rgba(251,191,36,0.3); padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
 .ry-tag-avoid { background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.3); padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
 /* Medical checklist */
 .ry-med-box { background: #0b1322; border: 1px solid #1e40af; border-radius: 12px; padding: 20px 22px; margin: 22px 0; }
 .ry-med-title { color: #93c5fd; font-size: 16px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
 .ry-med-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
 .ry-med-item { display: flex; align-items: flex-start; gap: 8px; background: rgba(255,255,255,0.03); border-radius: 7px; padding: 10px 12px; font-size: 13px; color: #e2e8f0; }
-.ry-med-check { color: #4ade80; font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+.ry-med-check { color: #86efac; font-size: 14px; flex-shrink: 0; margin-top: 1px; }
 /* CTA bottom */
 .ry-snr-cta-bottom { background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%); border: 2px solid #818cf8; border-radius: 14px; padding: 26px; margin: 36px 0 20px 0; text-align: center; color: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
 .ry-snr-cta-title { font-size: 20px; font-weight: 800; color: #facc15; margin-bottom: 8px; font-family: var(--font-sans), sans-serif; }
@@ -2953,7 +2949,7 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopeni
                         <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">Early yatris & photography groups</td>
                     </tr>
                     <tr style="background-color: #f8fafc;">
-                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0; font-weight: 600; color: #c5a059;">October (PEAK MONTH)</td>
+                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0; font-weight: 600; color: #78580A;">October (PEAK MONTH)</td>
                         <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">8°C / -3°C</td>
                         <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">Fully firm, smooth 4x4 tracks</td>
                         <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">💎 100% Crystal-Clear Sharp Views</td>
@@ -3002,7 +2998,7 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopeni
                         <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">ITBP Sector HQ Pithoragarh</td>
                     </tr>
                     <tr style="background-color: #f8fafc;">
-                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0; font-weight: 600; color: #c5a059;">Rudraansh Yatra Ground Operations</td>
+                        <td style="padding: 11px 14px; border: 1px solid #e2e8f0; font-weight: 600; color: #78580A;">Rudraansh Yatra Ground Operations</td>
                         <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">Native registered ground operator, 100% permit facilitation, 4x4 convoys</td>
                         <td style="padding: 11px 14px; border: 1px solid #e2e8f0;">Simalgair Bazaar, Pithoragarh</td>
                         <td style="padding: 11px 14px; border: 1px solid #e2e8f0;"><strong>+91 76176 17651</strong></td>
@@ -3021,7 +3017,7 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopeni
                 Avoid middleman commissions and SDM permit delays. Book directly with <strong>Rudraansh Yatra</strong> — native Kumaoni team with 100% on-ground permit assistance, experienced 4x4 drivers, and authentic Gunji/Nabi homestay arrangements.
             </p>
             <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-                <a href="https://wa.me/917617617651?text=Hello%20Rudraansh%20Yatra,%20I%20want%20to%20book/reschedule%20my%20Adi%20Kailash%20Post-Monsoon%202026%20Yatra." target="_blank" rel="noopener" style="background: #25D366; color: #ffffff; padding: 12px 24px; border-radius: 6px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(37,211,102,0.3);">
+                <a href="https://wa.me/917617617651?text=Hello%20Rudraansh%20Yatra,%20I%20want%20to%20book/reschedule%20my%20Adi%20Kailash%20Post-Monsoon%202026%20Yatra." target="_blank" rel="noopener" style="background: #127035; color: #ffffff; padding: 12px 24px; border-radius: 6px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(37,211,102,0.3);">
                     <i class="fa-brands fa-whatsapp"></i> Reserve via WhatsApp
                 </a>
                 <a href="tel:+917617617651" style="background: var(--color-gold, #c5a059); color: #0B1F3A; padding: 12px 24px; border-radius: 6px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
@@ -3241,17 +3237,17 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-suspended-due-to-weather-official-reopeni
 .ry-sus-btn.wa { background: #22c55e; color: #fff; box-shadow: 0 4px 14px rgba(34,197,94,0.35); }
 .ry-sus-btn.pkg { background: #d4af37; color: #0f172a; box-shadow: 0 4px 14px rgba(212,175,55,0.3); }
 .ry-sus-nav { background: rgba(15,23,42,0.5); border: 1px solid rgba(212,175,55,0.25); border-radius: 10px; padding: 14px 16px; margin-bottom: 28px; font-size: 13.5px; color: #cbd5e1; }
-.ry-sus-nav strong { color: #fbbf24; display: block; margin-bottom: 8px; }
+.ry-sus-nav strong { color: #fde047; display: block; margin-bottom: 8px; }
 .ry-sus-nav-pills { display: flex; flex-wrap: wrap; gap: 7px; }
 .ry-sus-nav-pill { color: #93c5fd; text-decoration: none; background: rgba(147,197,253,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(147,197,253,0.2); white-space: nowrap; }
 .ry-sus-bottom { background: #0f172a; border: 2px dashed rgba(212,175,55,0.5); border-radius: 12px; padding: 22px 24px; margin: 32px 0 8px 0; color: #fff; }
-.ry-sus-bottom-title { font-size: 15px; font-weight: 700; color: #fbbf24; margin-bottom: 8px; }
+.ry-sus-bottom-title { font-size: 15px; font-weight: 700; color: #fde047; margin-bottom: 8px; }
 .ry-sus-bottom-desc { font-size: 14px; color: #e2e8f0; line-height: 1.65; margin-bottom: 16px; }
 .ry-sus-bottom-btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
 .ry-sus-bottom-btn { padding: 10px 18px; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 13.5px; display: inline-flex; align-items: center; gap: 7px; }
 .ry-sus-bottom-btn.wa { background: #22c55e; color: #fff; }
 .ry-sus-bottom-btn.call { background: transparent; border: 1.5px solid #d4af37; color: #d4af37; }
-.ry-sus-also { margin-top: 14px; font-size: 13px; color: #94a3b8; }
+.ry-sus-also { margin-top: 14px; font-size: 13px; color: #cbd5e1; }
 .ry-sus-also a { color: #93c5fd; }
 @media (max-width: 680px) {
   .ry-sus-banner { padding: 16px 14px; border-radius: 10px; margin-bottom: 20px; }
@@ -3287,7 +3283,7 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-suspended-due-to-weather-official-reopeni
     ⚠️ <strong>Date Revised:</strong> ILP issuance has been updated from September 15 to <strong>September 20, 2026</strong> by SDM Dharchula. <a href="/blog/adi-kailash-ilp-date-revised-to-september-20-2026-updated-from-sept-15" style="color: #fca5a5; text-decoration: underline; font-weight: 700;">Read official revision notice →</a>
   </div>
   <p class="ry-sus-banner-desc">
-    The <strong>SDM Dharchula officially froze all Inner Line Permits</strong> on July 3, 2026 following monsoon landslide damage to the Dharchula–Gunji highway. No pilgrim movement is permitted until BRO completes road clearance. The official ILP restart date is <strong style="color:#fbbf24">September 20, 2026</strong> (revised from September 15 — <a href="/blog/adi-kailash-ilp-date-revised-to-september-20-2026-updated-from-sept-15" style="color:#fbbf24;text-decoration:underline;">see official notice</a>).
+    The <strong>SDM Dharchula officially froze all Inner Line Permits</strong> on July 3, 2026 following monsoon landslide damage to the Dharchula–Gunji highway. No pilgrim movement is permitted until BRO completes road clearance. The official ILP restart date is <strong style="color:#fbbf24">September 20, 2026</strong> (revised from September 15 — <a href="/blog/adi-kailash-ilp-date-revised-to-september-20-2026-updated-from-sept-15" style="color: #fde047;text-decoration:underline;">see official notice</a>).
   </p>
   <ul class="ry-sus-timeline" style="list-style:none; margin:0; padding:0;">
     <li>Jul 3, 2026 — SDM Dharchula suspends all ILP issuances</li>
@@ -3295,7 +3291,7 @@ BLOG_ENHANCERS['adi-kailash-yatra-2026-suspended-due-to-weather-official-reopeni
     <li>Sep 14, 2026 — SDM revises ILP date from Sept 15 to Sept 20 (Sobla stretch rainfall)</li>
     <li>Sep 20, 2026 — Official ILP processing restarts (confirmed revised date)</li>
     <li>Sep 22–Oct 18 — Optimal post-monsoon travel window</li>
-    <li>Oct 19–Oct 26 — ILP suspended for Adi Kailash Parikrama Run (<a href="/blog/adi-kailash-ilp-suspended-oct-19-to-26-2026-for-parikrama-run" style="color:#fbbf24;text-decoration:underline;">see notice</a>)</li>
+    <li>Oct 19–Oct 26 — ILP suspended for Adi Kailash Parikrama Run (<a href="/blog/adi-kailash-ilp-suspended-oct-19-to-26-2026-for-parikrama-run" style="color: #fde047;text-decoration:underline;">see notice</a>)</li>
     <li>Oct 27–Nov 10 — Autumn second-batch & final pre-winter darshan window</li>
   </ul>
   <div class="ry-sus-btn-row">
@@ -3621,38 +3617,38 @@ BLOG_ENHANCERS['when-does-adi-kailash-yatra-2026-close-for-winter'] = {
 
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin-bottom: 22px;">
                 <div style="background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 10px; padding: 12px 14px;">
-                    <div style="font-size: 12px; color: #94a3b8; font-weight: 700; text-transform: uppercase;">Closing Status</div>
+                    <div style="font-size: 12px; color: #cbd5e1; font-weight: 700; text-transform: uppercase;">Closing Status</div>
                     <div style="font-size: 16px; color: #6ee7b7; font-weight: 800; margin-top: 3px;">No Fixed Date Yet</div>
                     <div style="font-size: 12px; color: #cbd5e1; margin-top: 2px;">Subject to Snow & Govt Order</div>
                 </div>
 
                 <div style="background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 10px; padding: 12px 14px;">
-                    <div style="font-size: 12px; color: #94a3b8; font-weight: 700; text-transform: uppercase;">Late Season Batches</div>
-                    <div style="font-size: 16px; color: #fbbf24; font-weight: 800; margin-top: 3px;">Departing Daily</div>
+                    <div style="font-size: 12px; color: #cbd5e1; font-weight: 700; text-transform: uppercase;">Late Season Batches</div>
+                    <div style="font-size: 16px; color: #fde047; font-weight: 800; margin-top: 3px;">Departing Daily</div>
                     <div style="font-size: 12px; color: #cbd5e1; margin-top: 2px;">Weather Permitting from Dharchula</div>
                 </div>
 
                 <div style="background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 10px; padding: 12px 14px;">
-                    <div style="font-size: 12px; color: #94a3b8; font-weight: 700; text-transform: uppercase;">SDM Permit Status</div>
+                    <div style="font-size: 12px; color: #cbd5e1; font-weight: 700; text-transform: uppercase;">SDM Permit Status</div>
                     <div style="font-size: 16px; color: #6ee7b7; font-weight: 800; margin-top: 3px;">Active (No Cutoff)</div>
                     <div style="font-size: 12px; color: #cbd5e1; margin-top: 2px;">Issued Daily on Weather Clearance</div>
                 </div>
 
                 <div style="background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 10px; padding: 12px 14px;">
-                    <div style="font-size: 12px; color: #94a3b8; font-weight: 700; text-transform: uppercase;">Spring 2027 Reopening</div>
-                    <div style="font-size: 16px; color: #38bdf8; font-weight: 800; margin-top: 3px;">May 10 – May 15, 2027</div>
+                    <div style="font-size: 12px; color: #cbd5e1; font-weight: 700; text-transform: uppercase;">Spring 2027 Reopening</div>
+                    <div style="font-size: 16px; color: #7dd3fc; font-weight: 800; margin-top: 3px;">May 10 – May 15, 2027</div>
                     <div style="font-size: 12px; color: #cbd5e1; margin-top: 2px;">Post-BRO Snow Clearance</div>
                 </div>
             </div>
 
             <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center;">
-                <a href="https://wa.me/917617617651?text=Namaste!%20I%20am%20inquiring%20about%20the%20final%20October/November%202026%20Adi%20Kailash%20batches%20before%20winter%20closing." target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; background: #25d366; color: #ffffff; padding: 11px 20px; border-radius: 8px; font-weight: 700; font-size: 14px; text-decoration: none; box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);">
+                <a href="https://wa.me/917617617651?text=Namaste!%20I%20am%20inquiring%20about%20the%20final%20October/November%202026%20Adi%20Kailash%20batches%20before%20winter%20closing." target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; background: #127035; color: #ffffff; padding: 11px 20px; border-radius: 8px; font-weight: 700; font-size: 14px; text-decoration: none; box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);">
                     <i class="fa-brands fa-whatsapp" style="font-size: 17px;"></i> Book Last 2026 Batch on WhatsApp
                 </a>
                 <a href="/adi-kailash" style="display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #f59e0b, #d97706); color: #0f172a; padding: 11px 20px; border-radius: 8px; font-weight: 800; font-size: 14px; text-decoration: none; box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);">
                     <i class="fa-solid fa-mountain" style="font-size: 15px;"></i> View Autumn Packages
                 </a>
-                <span style="font-size: 13px; color: #94a3b8; margin-left: auto;">
+                <span style="font-size: 13px; color: #cbd5e1; margin-left: auto;">
                     <i class="fa-solid fa-location-dot" style="color: #f59e0b;"></i> Ground Ops: Dharchula & Pithoragarh
                 </span>
             </div>
@@ -3684,7 +3680,7 @@ BLOG_ENHANCERS['when-does-adi-kailash-yatra-2026-close-for-winter'] = {
                     </tr>
                     <tr style="border-bottom: 1px solid #1e293b; background: rgba(245, 158, 11, 0.06);">
                         <td style="padding: 14px 16px; font-weight: 700; color: #fde047;">Peak Golden Darshan Window</td>
-                        <td style="padding: 14px 16px;">Oct 1 – Oct 31, 2026<br><span style="color:#fbbf24; font-size:11.5px;">⚠️ ILP paused Oct 19–26 for Marathon (<a href="/blog/adi-kailash-ilp-suspended-oct-19-to-26-2026-for-parikrama-run" style="color:#fde047; text-decoration:underline;">notice</a>)</span></td>
+                        <td style="padding: 14px 16px;">Oct 1 – Oct 31, 2026<br><span style="color: #fde047; font-size:11.5px;">⚠️ ILP paused Oct 19–26 for Marathon (<a href="/blog/adi-kailash-ilp-suspended-oct-19-to-26-2026-for-parikrama-run" style="color:#fde047; text-decoration:underline;">notice</a>)</span></td>
                         <td style="padding: 14px 16px;">8°C to 14°C / -2°C to -6°C</td>
                         <td style="padding: 14px 16px;">Dry, stable, peak 4x4 transit</td>
                         <td style="padding: 14px 16px; color: #fde047; font-weight: 600;">High Volume Pre-bookings</td>
@@ -3716,7 +3712,7 @@ BLOG_ENHANCERS['when-does-adi-kailash-yatra-2026-close-for-winter'] = {
         <div class="ry-table-responsive-wrap" style="margin: 24px 0;">
             <table style="width: 100%; border-collapse: collapse; font-size: 14px; text-align: left; background: #0f172a; border: 1px solid #334155; border-radius: 12px; overflow: hidden; color: #f8fafc;">
                 <thead>
-                    <tr style="background: #1e293b; color: #38bdf8; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #475569;">
+                    <tr style="background: #1e293b; color: #7dd3fc; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #475569;">
                         <th style="padding: 14px 16px;">Sector / Checkpoint</th>
                         <th style="padding: 14px 16px;">Altitude</th>
                         <th style="padding: 14px 16px;">Late Autumn Conditions</th>
@@ -3783,7 +3779,7 @@ BLOG_ENHANCERS['when-does-adi-kailash-yatra-2026-close-for-winter'] = {
         const trustBox = `
         <div style="background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%); border: 2px solid #d4af37; border-radius: 14px; padding: 26px; margin: 32px 0 16px 0; color: #ffffff; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);">
             <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 14px;">
-                <h3 style="font-family: var(--font-serif); color: #fbbf24; margin: 0; font-size: 22px; display: flex; align-items: center; gap: 10px;">
+                <h3 style="font-family: var(--font-serif); color: #fde047; margin: 0; font-size: 22px; display: flex; align-items: center; gap: 10px;">
                     <i class="fa-solid fa-shield-heart" style="color: #d4af37;"></i> Book the Final 2026 Batches with Rudraansh Yatra
                 </h3>
                 <span style="background: rgba(212, 175, 55, 0.2); border: 1px solid #d4af37; border-radius: 20px; padding: 4px 14px; font-size: 12px; color: #fde68a; font-weight: 700;">
@@ -3811,14 +3807,14 @@ BLOG_ENHANCERS['when-does-adi-kailash-yatra-2026-close-for-winter'] = {
             </div>
 
             <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center;">
-                <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20reserve%20a%20seat%20for%20the%20October/November%202026%20final%20Adi%20Kailash%20batches." target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; background: #25d366; color: #ffffff; padding: 12px 22px; border-radius: 10px; font-weight: 700; font-size: 14.5px; text-decoration: none; box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);">
+                <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20reserve%20a%20seat%20for%20the%20October/November%202026%20final%20Adi%20Kailash%20batches." target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; background: #127035; color: #ffffff; padding: 12px 22px; border-radius: 10px; font-weight: 700; font-size: 14.5px; text-decoration: none; box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);">
                     <i class="fa-brands fa-whatsapp" style="font-size: 18px;"></i> Inquire on WhatsApp
                 </a>
                 <a href="tel:+917617617651" style="display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #d4af37, #b8860b); color: #0f172a; padding: 12px 22px; border-radius: 10px; font-weight: 800; font-size: 14.5px; text-decoration: none; box-shadow: 0 4px 14px rgba(212, 175, 55, 0.35);">
                     <i class="fa-solid fa-phone" style="font-size: 16px;"></i> Call +91 76176 17651
                 </a>
-                <span style="font-size: 12.5px; color: #94a3b8; margin-left: auto;">
-                    <i class="fa-solid fa-location-dot" style="color: #fbbf24;"></i> Physical Office: Pithoragarh, Uttarakhand
+                <span style="font-size: 12.5px; color: #cbd5e1; margin-left: auto;">
+                    <i class="fa-solid fa-location-dot" style="color: #fde047;"></i> Physical Office: Pithoragarh, Uttarakhand
                 </span>
             </div>
         </div>
@@ -4031,27 +4027,27 @@ BLOG_ENHANCERS['5-things-you-need-to-do-before-planning-a-trip-to-adi-kailash'] 
 <style>
 .ry-5t-banner{background:linear-gradient(135deg,#0a1628 0%,#0f2444 100%);border:2px solid #d4af37;border-radius:14px;padding:22px 24px;margin:0 0 28px 0;color:#fff;box-shadow:0 10px 30px rgba(0,0,0,.5);box-sizing:border-box;width:100%;max-width:100%;overflow:hidden}
 .ry-5t-banner-head{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
-.ry-5t-banner-title{color:#fbbf24;font-size:18px;font-weight:700;line-height:1.3}
+.ry-5t-banner-title{color: #fde047;font-size:18px;font-weight:700;line-height:1.3}
 .ry-5t-banner-desc{font-size:14.5px;color:#e2e8f0;line-height:1.65;margin-bottom:14px}
 .ry-5t-warning{background:rgba(239,68,68,.12);border-left:3px solid #ef4444;padding:10px 12px;border-radius:0 6px 6px 0;margin-bottom:16px;font-size:13.5px;color:#fca5a5;box-sizing:border-box;width:100%;max-width:100%;word-break:break-word}
 .ry-5t-checklist{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
 .ry-5t-check-item{display:inline-flex;align-items:center;gap:6px;background:rgba(212,175,55,.1);border:1px solid rgba(212,175,55,.3);border-radius:20px;padding:5px 12px;font-size:12.5px;color:#fde68a;font-weight:600;max-width:100%;box-sizing:border-box}
 .ry-5t-btn-row{display:flex;gap:10px;flex-wrap:wrap;width:100%}
 .ry-5t-btn{padding:11px 20px;border-radius:8px;text-decoration:none;font-weight:700;font-size:13.5px;display:inline-flex;align-items:center;gap:8px;box-sizing:border-box}
-.ry-5t-btn.wa{background:#22c55e;color:#fff;box-shadow:0 4px 14px rgba(34,197,94,.35)}
+.ry-5t-btn.wa{background:#127035;color:#fff;box-shadow:0 4px 14px rgba(18,112,53,.35)}
 .ry-5t-btn.pkg{background:#d4af37;color:#0f172a;box-shadow:0 4px 14px rgba(212,175,55,.3)}
 .ry-5t-nav{background:rgba(15,23,42,.5);border:1px solid rgba(212,175,55,.25);border-radius:10px;padding:14px 16px;margin-bottom:28px;font-size:13.5px;color:#cbd5e1;box-sizing:border-box;width:100%;max-width:100%;overflow:hidden}
-.ry-5t-nav strong{color:#fbbf24;display:block;margin-bottom:8px}
+.ry-5t-nav strong{color: #fde047;display:block;margin-bottom:8px}
 .ry-5t-nav-pills{display:flex;flex-wrap:wrap;gap:7px}
 .ry-5t-nav-pill{color:#93c5fd;text-decoration:none;background:rgba(147,197,253,.1);padding:5px 11px;border-radius:20px;border:1px solid rgba(147,197,253,.2);font-size:12.5px;display:inline-flex;align-items:center;max-width:100%;box-sizing:border-box}
 .ry-5t-bottom{background:#0f172a;border:2px dashed rgba(212,175,55,.5);border-radius:12px;padding:22px 24px;margin:32px 0 8px 0;color:#fff;box-sizing:border-box;width:100%;max-width:100%;overflow:hidden}
-.ry-5t-bottom-title{font-size:15px;font-weight:700;color:#fbbf24;margin-bottom:8px;word-break:break-word}
+.ry-5t-bottom-title{font-size:15px;font-weight:700;color: #fde047;margin-bottom:8px;word-break:break-word}
 .ry-5t-bottom-desc{font-size:14px;color:#e2e8f0;line-height:1.65;margin-bottom:16px;word-break:break-word}
 .ry-5t-bottom-btn-row{display:flex;gap:10px;flex-wrap:wrap;width:100%}
 .ry-5t-bottom-btn{padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:700;font-size:13.5px;display:inline-flex;align-items:center;gap:7px;box-sizing:border-box}
-.ry-5t-bottom-btn.wa{background:#22c55e;color:#fff}
+.ry-5t-bottom-btn.wa{background:#127035;color:#fff}
 .ry-5t-bottom-btn.call{background:transparent;border:1.5px solid #d4af37;color:#d4af37}
-.ry-5t-also{margin-top:14px;font-size:13px;color:#94a3b8;word-break:break-word;line-height:1.6}
+.ry-5t-also{margin-top:14px;font-size:13px;color: #cbd5e1;word-break:break-word;line-height:1.6}
 .ry-5t-also a{color:#93c5fd}
 .ry-5t-speakable{background:#f0f9ff;border:1.5px solid #bae6fd;border-radius:10px;padding:16px 20px;margin:24px 0;font-size:14.5px;color:#0c4a6e;line-height:1.8;box-sizing:border-box;width:100%;max-width:100%;word-break:break-word}
 .ry-5t-speakable strong{color:#0a1628}
@@ -4509,15 +4505,15 @@ BLOG_ENHANCERS['adi-kailash-yatra-difficulty-level-can-beginners-do-it'] = {
 <div style="background: linear-gradient(135deg, #0f2d1a 0%, #1a3a25 100%); border: 1.5px solid rgba(34,197,94,0.4); border-left: 5px solid #22c55e; border-radius: 12px; padding: 18px 22px; margin-bottom: 28px; font-family: var(--font-sans, sans-serif);">
   <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
     <span style="font-size: 20px;">⛰️</span>
-    <strong style="color: #4ade80; font-size: 15px; text-transform: uppercase; letter-spacing: 0.5px;">Difficulty Assessment — Rudraansh Yatra Guides</strong>
+    <strong style="color: #86efac; font-size: 15px; text-transform: uppercase; letter-spacing: 0.5px;">Difficulty Assessment — Rudraansh Yatra Guides</strong>
   </div>
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-bottom: 14px;">
     <div class="ry-diff-card" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(34,197,94,0.3); border-radius: 8px; padding: 12px 14px; text-align: center;">
-      <div style="color: #4ade80; font-size: 22px; font-weight: 900; font-family: var(--font-sans);">Moderate</div>
+      <div style="color: #86efac; font-size: 22px; font-weight: 900; font-family: var(--font-sans);">Moderate</div>
       <div style="color: #d1fae5; font-size: 12px; margin-top: 4px;">Overall Difficulty</div>
     </div>
     <div class="ry-diff-card" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(34,197,94,0.3); border-radius: 8px; padding: 12px 14px; text-align: center;">
-      <div style="color: #fbbf24; font-size: 22px; font-weight: 900;">14,200 ft</div>
+      <div style="color: #fde047; font-size: 22px; font-weight: 900;">14,200 ft</div>
       <div style="color: #d1fae5; font-size: 12px; margin-top: 4px;">Max Altitude (Jyolingkong)</div>
     </div>
     <div class="ry-diff-card" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(34,197,94,0.3); border-radius: 8px; padding: 12px 14px; text-align: center;">
@@ -4525,7 +4521,7 @@ BLOG_ENHANCERS['adi-kailash-yatra-difficulty-level-can-beginners-do-it'] = {
       <div style="color: #d1fae5; font-size: 12px; margin-top: 4px;">Total Walking (non-motorable)</div>
     </div>
     <div class="ry-diff-card" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(34,197,94,0.3); border-radius: 8px; padding: 12px 14px; text-align: center;">
-      <div style="color: #4ade80; font-size: 22px; font-weight: 900;">✓ Yes</div>
+      <div style="color: #86efac; font-size: 22px; font-weight: 900;">✓ Yes</div>
       <div style="color: #d1fae5; font-size: 12px; margin-top: 4px;">Beginner-Accessible</div>
     </div>
   </div>
@@ -4601,7 +4597,7 @@ BLOG_ENHANCERS['adi-kailash-yatra-difficulty-level-can-beginners-do-it'] = {
     Our guides at <strong style="color: #f5c842;">Rudraansh Yatra</strong> — based physically in <strong>Pithoragarh</strong> — help first-time yatris with personalised fitness plans, acclimatization schedules, ILP documentation, and gear checklists. Call or WhatsApp us for a free pre-yatra consultation.
   </p>
   <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px;">
-    <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20know%20if%20the%20Adi%20Kailash%20Yatra%20is%20suitable%20for%20beginners.%20Please%20guide%20me%20on%20fitness%20preparation%20and%20acclimatization." target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; background: #25d366; color: white; padding: 11px 20px; border-radius: 8px; font-size: 13.5px; font-weight: 700; text-decoration: none;">
+    <a href="https://wa.me/917617617651?text=Namaste!%20I%20want%20to%20know%20if%20the%20Adi%20Kailash%20Yatra%20is%20suitable%20for%20beginners.%20Please%20guide%20me%20on%20fitness%20preparation%20and%20acclimatization." target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; background: #127035; color: white; padding: 11px 20px; border-radius: 8px; font-size: 13.5px; font-weight: 700; text-decoration: none;">
       <i class="fa-brands fa-whatsapp"></i> WhatsApp — Am I Fit Enough?
     </a>
     <a href="tel:+917617617651" style="display: inline-flex; align-items: center; gap: 8px; background: rgba(245,200,66,0.15); color: #f5c842; border: 1.5px solid rgba(245,200,66,0.5); padding: 11px 20px; border-radius: 8px; font-size: 13.5px; font-weight: 700; text-decoration: none;">
@@ -4873,13 +4869,13 @@ BLOG_ENHANCERS['adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitu
 <style>
 .ry-prk-hero-banner { background: linear-gradient(135deg, #091a2e 0%, #0f2b48 100%); border: 2px solid #d4af37; border-radius: 14px; padding: 22px 24px; margin: 0 0 28px 0; color: #ffffff; box-shadow: 0 10px 30px rgba(0,0,0,0.45); font-family: var(--font-sans, sans-serif); }
 .ry-prk-hero-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
-.ry-prk-hero-title { color: #fbbf24; font-size: 20px; font-weight: 800; line-height: 1.3; margin: 0; }
+.ry-prk-hero-title { color: #fde047; font-size: 20px; font-weight: 800; line-height: 1.3; margin: 0; }
 .ry-prk-badge-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
 .ry-prk-badge { background: rgba(212,175,55,0.15); border: 1px solid rgba(212,175,55,0.4); color: #fde68a; font-size: 12.5px; font-weight: 700; padding: 4px 10px; border-radius: 20px; }
 .ry-prk-hero-desc { font-size: 14.5px; line-height: 1.65; color: #e2e8f0; margin-bottom: 16px; }
 .ry-prk-btn-grid { display: flex; gap: 10px; flex-wrap: wrap; }
 .ry-prk-btn-main { padding: 11px 20px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 13.5px; display: inline-flex; align-items: center; gap: 8px; }
-.ry-prk-btn-main.wa { background: #22c55e; color: #ffffff; box-shadow: 0 4px 14px rgba(34,197,94,0.35); }
+.ry-prk-btn-main.wa { background: #127035; color: #ffffff; box-shadow: 0 4px 14px rgba(34,197,94,0.35); }
 .ry-prk-btn-main.pk { background: #d4af37; color: #0a192f; box-shadow: 0 4px 14px rgba(212,175,55,0.35); }
 .ry-prk-btn-main.call { background: transparent; border: 1.5px solid #93c5fd; color: #93c5fd; }
 .ry-prk-quicknav { background: rgba(10,25,47,0.04); border: 1px solid rgba(10,25,47,0.12); border-radius: 10px; padding: 14px 18px; margin: 24px 0; font-family: var(--font-sans, sans-serif); }
@@ -4907,7 +4903,7 @@ BLOG_ENHANCERS['adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitu
     <span class="ry-prk-badge">🏁 5 Categories: 5k | 10k | 21k | 42k | 60k Ultra</span>
   </div>
   <p class="ry-prk-hero-desc">
-    Participating in India's highest high-altitude mountain marathon? <strong style="color: #fbbf24;">Rudraansh Yatra</strong> is the <strong>NIDHI-certified direct ground operator based in Pithoragarh</strong> providing end-to-end athlete support: <strong>fast-track SDM Inner Line Permits (ILP)</strong>, <strong>4×4 Mahindra Bolero transfers from Kathgodam/Pithoragarh</strong>, and <strong>confirmed homestays in Gunji & Nabi</strong> with runner-specific meals and emergency oxygen support.
+    Participating in India's highest high-altitude mountain marathon? <strong style="color: #fde047;">Rudraansh Yatra</strong> is the <strong>NIDHI-certified direct ground operator based in Pithoragarh</strong> providing end-to-end athlete support: <strong>fast-track SDM Inner Line Permits (ILP)</strong>, <strong>4×4 Mahindra Bolero transfers from Kathgodam/Pithoragarh</strong>, and <strong>confirmed homestays in Gunji & Nabi</strong> with runner-specific meals and emergency oxygen support.
   </p>
   <div class="ry-prk-btn-grid">
     <a href="https://wa.me/917617617651?text=Namaste!%20I%20am%20participating%20in%20Adi%20Kailash%20Parikrama%20Run%202026.%20Please%20guide%20me%20on%20ILP%20permits,%204x4%20Bolero%20transfers,%20and%20Gunji%20homestay%20booking." target="_blank" rel="noopener" class="ry-prk-btn-main wa">
@@ -4995,7 +4991,7 @@ BLOG_ENHANCERS['adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitu
 
             const acclimatizationAndGearBoxes = `
 <div id="acclimatization-plan" style="margin: 28px 0; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border: 1.5px solid rgba(212,175,55,0.4); border-radius: 12px; padding: 20px 22px; color: #ffffff; font-family: var(--font-sans, sans-serif);">
-  <h3 style="color: #fbbf24; font-size: 17px; font-weight: 800; margin-top: 0; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+  <h3 style="color: #fde047; font-size: 17px; font-weight: 800; margin-top: 0; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
     <span>⏱️</span> Mandatory 3-Day High-Altitude Acclimatization Timeline
   </h3>
   <p style="color: #cbd5e1; font-size: 13.5px; line-height: 1.6; margin-bottom: 14px;">
@@ -5007,11 +5003,11 @@ BLOG_ENHANCERS['adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitu
       <div style="color: #e2e8f0; font-size: 12.5px; line-height: 1.5; margin-top: 4px;">Arrive via Pithoragarh / Kathgodam. Complete physical ILP verification at SDM Office Dharchula. Rest and hydrate.</div>
     </div>
     <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 12px 14px;">
-      <div style="color: #fbbf24; font-weight: 700; font-size: 13px;">DAY 2: Gunji (3,200m / 10,300 ft)</div>
+      <div style="color: #fde047; font-weight: 700; font-size: 13px;">DAY 2: Gunji (3,200m / 10,300 ft)</div>
       <div style="color: #e2e8f0; font-size: 12.5px; line-height: 1.5; margin-top: 4px;">4×4 Bolero transfer via Tawaghat & Malpa. Check in to Gunji homestay. Light 20-minute jog, oximeter test, zero alcohol.</div>
     </div>
     <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 12px 14px;">
-      <div style="color: #4ade80; font-weight: 700; font-size: 13px;">DAY 3: Active Trail Hike (Nabi/Kuti)</div>
+      <div style="color: #86efac; font-weight: 700; font-size: 13px;">DAY 3: Active Trail Hike (Nabi/Kuti)</div>
       <div style="color: #e2e8f0; font-size: 12.5px; line-height: 1.5; margin-top: 4px;">Climb high (3,600m) to Nabi or Kuti, sleep low at Gunji. Mandatory medical checkup, BIB collection, and route briefing.</div>
     </div>
   </div>
@@ -5126,22 +5122,22 @@ BLOG_ENHANCERS['adi-kailash-parikrama-run-2026-oct-2425-uttarakhands-high-altitu
 
             const bottomCta = `
 <div id="homestay-logistics" style="background: linear-gradient(135deg, #091a2e 0%, #0f2b48 100%); border: 2px solid #d4af37; border-radius: 14px; padding: 24px 26px; margin: 36px 0 10px 0; color: #ffffff; font-family: var(--font-sans, sans-serif); box-shadow: 0 10px 30px rgba(0,0,0,0.45);">
-  <h3 style="color: #fbbf24; font-size: 18px; font-weight: 800; margin-top: 0; margin-bottom: 8px;">🏔️ Official Runner Logistics & Homestay Support in Gunji</h3>
+  <h3 style="color: #fde047; font-size: 18px; font-weight: 800; margin-top: 0; margin-bottom: 8px;">🏔️ Official Runner Logistics & Homestay Support in Gunji</h3>
   <p style="color: #e2e8f0; font-size: 14px; line-height: 1.65; margin-bottom: 16px;">
-    Headquartered in <strong>Pithoragarh</strong> with ground offices in <strong>Dharchula</strong>, <strong style="color: #fbbf24;">Rudraansh Yatra</strong> provides end-to-end management for athletes competing in the <strong>Adi Kailash Parikrama Run 2026</strong>. From SDM permit clearance and 4x4 Bolero mountain transfers to guaranteed Rung homestay rooms and ITBP-linked emergency medical coordination.
+    Headquartered in <strong>Pithoragarh</strong> with ground offices in <strong>Dharchula</strong>, <strong style="color: #fde047;">Rudraansh Yatra</strong> provides end-to-end management for athletes competing in the <strong>Adi Kailash Parikrama Run 2026</strong>. From SDM permit clearance and 4x4 Bolero mountain transfers to guaranteed Rung homestay rooms and ITBP-linked emergency medical coordination.
   </p>
   <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 18px;">
-    <a href="https://wa.me/917617617651?text=Hi%20Rudraansh%20Yatra,%20I%20am%20registering%20for%20the%20Adi%20Kailash%20Parikrama%20Run%202026.%20Please%20reserve%20my%20ILP%20permits,%204x4%20Bolero%20transport,%20and%20Gunji%20homestay." target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; background: #22c55e; color: #ffffff; padding: 11px 20px; border-radius: 8px; font-size: 13.5px; font-weight: 700; text-decoration: none;">
+    <a href="https://wa.me/917617617651?text=Hi%20Rudraansh%20Yatra,%20I%20am%20registering%20for%20the%20Adi%20Kailash%20Parikrama%20Run%202026.%20Please%20reserve%20my%20ILP%20permits,%204x4%20Bolero%20transport,%20and%20Gunji%20homestay." target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; background: #127035; color: #ffffff; padding: 11px 20px; border-radius: 8px; font-size: 13.5px; font-weight: 700; text-decoration: none;">
       <i class="fa-brands fa-whatsapp" style="font-size: 17px;"></i> Book Runner Logistics via WhatsApp
     </a>
-    <a href="tel:+917617617651" style="display: inline-flex; align-items: center; gap: 8px; background: rgba(212,175,55,0.15); color: #fbbf24; border: 1.5px solid #fbbf24; padding: 11px 20px; border-radius: 8px; font-size: 13.5px; font-weight: 700; text-decoration: none;">
+    <a href="tel:+917617617651" style="display: inline-flex; align-items: center; gap: 8px; background: rgba(212,175,55,0.15); color: #fde047; border: 1.5px solid #fbbf24; padding: 11px 20px; border-radius: 8px; font-size: 13.5px; font-weight: 700; text-decoration: none;">
       <i class="fa-solid fa-phone"></i> Call +91 76176 17651
     </a>
     <a href="/contact" style="display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.1); color: #ffffff; border: 1px solid rgba(255,255,255,0.25); padding: 11px 20px; border-radius: 8px; font-size: 13.5px; font-weight: 700; text-decoration: none;">
       📍 Pithoragarh Office Details
     </a>
   </div>
-  <p style="color: #94a3b8; font-size: 12.5px; margin: 0; line-height: 1.6;">
+  <p style="color: #cbd5e1; font-size: 12.5px; margin: 0; line-height: 1.6;">
     <strong style="color: #cbd5e1;">Related Yatra Guides:</strong>
     <a href="/blog/inner-line-permit-adi-kailash-2026-step-by-step" style="color: #93c5fd; text-decoration: underline;">ILP Permit Guide</a> ·
     <a href="/blog/adi-kailash-packing-list-essential-guide-for-yatris" style="color: #93c5fd; text-decoration: underline;">High-Altitude Packing List</a> ·
@@ -5292,7 +5288,7 @@ BLOG_ENHANCERS['how-to-reach-pithoragarh'] = {
             '.ry-pth-badge{background:rgba(212,175,55,.15);border-left:3px solid #d4af37;padding:10px 14px;border-radius:4px;margin-bottom:18px;font-size:14px;color:#fde68a}' +
             '.ry-pth-btn-row{display:flex;gap:12px;flex-wrap:wrap}' +
             '.ry-pth-btn{padding:12px 22px;border-radius:8px;text-decoration:none;font-weight:700;font-size:14px;display:inline-flex;align-items:center;gap:8px;transition:all .2s ease}' +
-            '.ry-pth-btn.wa{background:#22c55e;color:#fff}' +
+            '.ry-pth-btn.wa{background:#127035;color:#fff}' +
             '.ry-pth-btn.wa:hover{background:#16a34a;transform:translateY(-1px)}' +
             '.ry-pth-btn.pk{background:#d4af37;color:#0a192f}' +
             '.ry-pth-btn.pk:hover{background:#b89628;transform:translateY(-1px)}' +
@@ -5314,7 +5310,7 @@ BLOG_ENHANCERS['how-to-reach-pithoragarh'] = {
             '.ry-pth-bottom-desc{font-size:14.5px;color:#f1f5f9;line-height:1.65;margin-bottom:16px}' +
             '.ry-pth-bottom-btn-row{display:flex;gap:12px;flex-wrap:wrap}' +
             '.ry-pth-bottom-btn{padding:11px 20px;border-radius:8px;text-decoration:none;font-weight:700;font-size:13.5px;display:inline-flex;align-items:center;gap:8px;transition:all .2s ease}' +
-            '.ry-pth-bottom-btn.wa{background:#22c55e;color:#fff}' +
+            '.ry-pth-bottom-btn.wa{background:#127035;color:#fff}' +
             '.ry-pth-bottom-btn.wa:hover{background:#16a34a;transform:translateY(-1px)}' +
             '.ry-pth-bottom-btn.call{background:transparent;border:1.5px solid #d4af37;color:#fde68a}' +
             '.ry-pth-bottom-btn.call:hover{background:rgba(212,175,55,0.15)}' +
@@ -5370,7 +5366,7 @@ BLOG_ENHANCERS['how-to-reach-pithoragarh'] = {
             '<tr><td><strong>Weather Risk</strong></td><td>Low</td><td>High (fog cancels flights)</td><td>Moderate (monsoon)</td></tr>' +
             '<tr><td><strong>Reliability</strong></td><td>High</td><td>Weather-dependent</td><td>High</td></tr>' +
             '</tbody></table></div>' +
-            '<p style="font-size:12.5px;color:#94a3b8;margin-top:6px">New Sept 2026: <a href="/blog/how-to-reach-pithoragarh-from-delhi-dehradun-2026-flight-update" style="color:#93c5fd;text-decoration:underline">Delhi to Pithoragarh 6 days/week</a>.</p>' +
+            '<p style="font-size:12.5px;color: #cbd5e1;margin-top:6px">New Sept 2026: <a href="/blog/how-to-reach-pithoragarh-from-delhi-dehradun-2026-flight-update" style="color:#93c5fd;text-decoration:underline">Delhi to Pithoragarh 6 days/week</a>.</p>' +
             '</div>';
 
         var railheadsTable =
@@ -5553,7 +5549,7 @@ BLOG_ENHANCERS['adi-kailash-yatra-for-solo-female-travellers-safety-guide'] = {
 
         var safetyChecklist =
             '<div id="solo-women-checklist" style="background:linear-gradient(135deg,#1a0a2e 0%,#2d1b4e 100%);border:2px solid #d4af37;border-radius:14px;padding:22px 24px;margin:28px 0;color:#fff;box-shadow:0 10px 30px rgba(0,0,0,.45)">' +
-            '<p style="color:#fbbf24;font-size:16px;font-weight:700;margin:0 0 14px">&#9989; Solo Female Traveller Safety Checklist</p>' +
+            '<p style="color: #fde047;font-size:16px;font-weight:700;margin:0 0 14px">&#9989; Solo Female Traveller Safety Checklist</p>' +
             '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px">' +
             '<div style="background:rgba(255,255,255,.06);border-radius:8px;padding:12px 14px;font-size:13.5px;color:#e2e8f0">&#128101; <strong>Choose a female-friendly group date</strong><br>30 Sep, 12 Oct or 15 Oct 2026 — separate bathing facilities arranged</div>' +
             '<div style="background:rgba(255,255,255,.06);border-radius:8px;padding:12px 14px;font-size:13.5px;color:#e2e8f0">&#128196; <strong>Get your ILP before Dharchula</strong><br>Carry original ID + 2 photos. Physical copies at all checkpoints</div>' +
@@ -5567,13 +5563,13 @@ BLOG_ENHANCERS['adi-kailash-yatra-for-solo-female-travellers-safety-guide'] = {
 
         var departureDatesBox =
             '<div id="female-departure-dates" style="background:rgba(15,23,42,.7);border:1.5px solid rgba(212,175,55,.4);border-radius:12px;padding:18px 20px;margin:24px 0;color:#fff">' +
-            '<p style="color:#fbbf24;font-size:15px;font-weight:700;margin:0 0 10px">&#128197; 2026 Female-Friendly Group Departures</p>' +
+            '<p style="color: #fde047;font-size:15px;font-weight:700;margin:0 0 10px">&#128197; 2026 Female-Friendly Group Departures</p>' +
             '<div class="ry-table-responsive-wrap" style="overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;max-width:100%;box-sizing:border-box">' +
             '<table style="width:100%;border-collapse:collapse;font-size:13.5px;min-width:360px">' +
             '<thead><tr style="border-bottom:1px solid rgba(212,175,55,.3)">' +
-            '<th style="padding:8px 12px;text-align:left;color:#fbbf24;font-weight:700">Departure Date</th>' +
-            '<th style="padding:8px 12px;text-align:left;color:#fbbf24;font-weight:700">Female Bathing</th>' +
-            '<th style="padding:8px 12px;text-align:left;color:#fbbf24;font-weight:700">Status</th>' +
+            '<th style="padding:8px 12px;text-align:left;color: #fde047;font-weight:700">Departure Date</th>' +
+            '<th style="padding:8px 12px;text-align:left;color: #fde047;font-weight:700">Female Bathing</th>' +
+            '<th style="padding:8px 12px;text-align:left;color: #fde047;font-weight:700">Status</th>' +
             '</tr></thead>' +
             '<tbody>' +
             '<tr style="border-bottom:1px solid rgba(255,255,255,.07)"><td style="padding:8px 12px;color:#e2e8f0">30 September 2026</td><td style="padding:8px 12px;color:#4ade80">&#10003; Separate facilities</td><td style="padding:8px 12px;color:#fbbf24">Filling fast</td></tr>' +
@@ -5840,16 +5836,16 @@ BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanak
     render: function(paragraphsHtml) {
         var executiveSummary =
             '<!-- GEO / AEO / AIO Quick Answer Box -->' +
-            '<div id="quick-answer" class="ry-quick-answer-card" style="background: linear-gradient(135deg, rgba(15, 23, 42, 0.92) 0%, rgba(30, 41, 59, 0.95) 100%); border: 1.5px solid rgba(212, 175, 55, 0.5); border-radius: 16px; padding: 24px 26px; margin: 0 0 32px 0; box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35); position: relative; overflow: hidden;">' +
+            '<div id="quick-answer" class="ry-quick-answer-card" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border: 1.5px solid rgba(212, 175, 55, 0.5); border-radius: 16px; padding: 24px 26px; margin: 0 0 32px 0; box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35); position: relative; overflow: hidden;">' +
             '<div style="position: absolute; top: 0; right: 0; background: linear-gradient(135deg, #d4af37, #f59e0b); color: #0f172a; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; padding: 4px 14px; border-bottom-left-radius: 12px;">' +
             '<i class="fa-solid fa-bolt"></i> Verified Dispatch' +
             '</div>' +
             '<div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">' +
-            '<div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(212, 175, 55, 0.15); display: flex; align-items: center; justify-content: center; color: #fbbf24; font-size: 18px;">' +
+            '<div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(212, 175, 55, 0.15); display: flex; align-items: center; justify-content: center; color: #fde047; font-size: 18px;">' +
             '<i class="fa-solid fa-mountain-sun"></i>' +
             '</div>' +
             '<div>' +
-            '<span style="font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: #fbbf24; font-weight: 700;">Executive Summary &bull; Direct Answer</span>' +
+            '<span style="font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: #fde047; font-weight: 700;">Executive Summary &bull; Direct Answer</span>' +
             '<h3 style="font-family: var(--font-serif); color: #f8fafc; margin: 2px 0 0 0; font-size: 20px; font-weight: 700;">Kailash Mansarovar Yatra 2026: 10th &amp; Final Batch via Lipulekh Pass</h3>' +
             '</div>' +
             '</div>' +
@@ -5858,58 +5854,58 @@ BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanak
             '</p>' +
             '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(212, 175, 55, 0.25);">' +
             '<div style="background: rgba(255, 255, 255, 0.04); border-radius: 10px; padding: 10px 14px; border-left: 3px solid #d4af37;">' +
-            '<div style="font-size: 11.5px; color: #94a3b8; text-transform: uppercase;">Final Batch Strength</div>' +
+            '<div style="font-size: 11.5px; color: #cbd5e1; text-transform: uppercase;">Final Batch Strength</div>' +
             '<div style="font-size: 16px; font-weight: 700; color: #f8fafc; margin-top: 2px;">44 Devotees (28M / 16F)</div>' +
             '</div>' +
             '<div style="background: rgba(255, 255, 255, 0.04); border-radius: 10px; padding: 10px 14px; border-left: 3px solid #38bdf8;">' +
-            '<div style="font-size: 11.5px; color: #94a3b8; text-transform: uppercase;">States Represented</div>' +
+            '<div style="font-size: 11.5px; color: #cbd5e1; text-transform: uppercase;">States Represented</div>' +
             '<div style="font-size: 16px; font-weight: 700; color: #f8fafc; margin-top: 2px;">12 Indian States</div>' +
             '</div>' +
             '<div style="background: rgba(255, 255, 255, 0.04); border-radius: 10px; padding: 10px 14px; border-left: 3px solid #4ade80;">' +
-            '<div style="font-size: 11.5px; color: #94a3b8; text-transform: uppercase;">2026 Season Total</div>' +
-            '<div style="font-size: 16px; font-weight: 700; color: #4ade80; margin-top: 2px;">468 Yatris (+97.5% YoY)</div>' +
+            '<div style="font-size: 11.5px; color: #cbd5e1; text-transform: uppercase;">2026 Season Total</div>' +
+            '<div style="font-size: 16px; font-weight: 700; color: #86efac; margin-top: 2px;">468 Yatris (+97.5% YoY)</div>' +
             '</div>' +
             '<div style="background: rgba(255, 255, 255, 0.04); border-radius: 10px; padding: 10px 14px; border-left: 3px solid #fb923c;">' +
-            '<div style="font-size: 11.5px; color: #94a3b8; text-transform: uppercase;">Border Crossing</div>' +
+            '<div style="font-size: 11.5px; color: #cbd5e1; text-transform: uppercase;">Border Crossing</div>' +
             '<div style="font-size: 16px; font-weight: 700; color: #f8fafc; margin-top: 2px;">Lipulekh Pass (17,060 ft)</div>' +
             '</div>' +
             '</div>' +
             '</div>' +
             '<!-- Modern Interactive Table of Contents -->' +
-            '<nav id="table-of-contents" aria-label="Table of Contents" style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(212, 175, 55, 0.35); border-radius: 14px; padding: 20px 22px; margin-bottom: 32px; box-shadow: 0 4px 16px rgba(0,0,0,0.2);">' +
+            '<nav id="table-of-contents" aria-label="Table of Contents" style="background: rgba(15, 23, 42, 0.96); border: 1px solid rgba(212, 175, 55, 0.35); border-radius: 14px; padding: 20px 22px; margin-bottom: 32px; box-shadow: 0 4px 16px rgba(0,0,0,0.2);">' +
             '<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; border-bottom: 1px solid rgba(212, 175, 55, 0.2); padding-bottom: 10px;">' +
-            '<h3 style="font-family: var(--font-serif); color: var(--color-gold); margin: 0; font-size: 18.5px; display: flex; align-items: center; gap: 8px;">' +
-            '<i class="fa-solid fa-list-check" style="color: #fbbf24;"></i> Inside This 2026 Yatra Dispatch' +
+            '<h3 style="font-family: var(--font-serif); color: #FDE047; margin: 0; font-size: 18.5px; display: flex; align-items: center; gap: 8px;">' +
+            '<i class="fa-solid fa-list-check" style="color: #fde047;"></i> Inside This 2026 Yatra Dispatch' +
             '</h3>' +
-            '<span style="font-size: 12px; color: #94a3b8; font-weight: 500;">Quick Navigation</span>' +
+            '<span style="font-size: 12px; color: #cbd5e1; font-weight: 500;">Quick Navigation</span>' +
             '</div>' +
             '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; font-size: 14px;">' +
             '<a href="#section-1" style="display: flex; align-items: center; gap: 8px; color: #cbd5e1; text-decoration: none; padding: 8px 12px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); transition: all 0.2s ease;">' +
-            '<span style="color: #fbbf24; font-weight: 700;">1.</span> Final Batch Departs Lipulekh' +
+            '<span style="color: #fde047; font-weight: 700;">1.</span> Final Batch Departs Lipulekh' +
             '</a>' +
             '<a href="#section-2" style="display: flex; align-items: center; gap: 8px; color: #cbd5e1; text-decoration: none; padding: 8px 12px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); transition: all 0.2s ease;">' +
-            '<span style="color: #fbbf24; font-weight: 700;">2.</span> 12-State Demographic Roster' +
+            '<span style="color: #fde047; font-weight: 700;">2.</span> 12-State Demographic Roster' +
             '</a>' +
             '<a href="#section-surge" style="display: flex; align-items: center; gap: 8px; color: #cbd5e1; text-decoration: none; padding: 8px 12px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); transition: all 0.2s ease;">' +
-            '<span style="color: #fbbf24; font-weight: 700;">&bull;</span> 2025 vs 2026 Surge (+97.5%)' +
+            '<span style="color: #fde047; font-weight: 700;">&bull;</span> 2025 vs 2026 Surge (+97.5%)' +
             '</a>' +
             '<a href="#section-3" style="display: flex; align-items: center; gap: 8px; color: #cbd5e1; text-decoration: none; padding: 8px 12px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); transition: all 0.2s ease;">' +
-            '<span style="color: #fbbf24; font-weight: 700;">3.</span> Kumaoni Tilak &amp; Mala Welcome' +
+            '<span style="color: #fde047; font-weight: 700;">3.</span> Kumaoni Tilak &amp; Mala Welcome' +
             '</a>' +
             '<a href="#section-4" style="display: flex; align-items: center; gap: 8px; color: #cbd5e1; text-decoration: none; padding: 8px 12px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); transition: all 0.2s ease;">' +
-            '<span style="color: #fbbf24; font-weight: 700;">4.</span> Dainik Jagran Front Page Report' +
+            '<span style="color: #fde047; font-weight: 700;">4.</span> Dainik Jagran Front Page Report' +
             '</a>' +
             '<a href="#section-5" style="display: flex; align-items: center; gap: 8px; color: #cbd5e1; text-decoration: none; padding: 8px 12px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); transition: all 0.2s ease;">' +
-            '<span style="color: #fbbf24; font-weight: 700;">5.</span> Live Status: Batches 7, 8 &amp; 9' +
+            '<span style="color: #fde047; font-weight: 700;">5.</span> Live Status: Batches 7, 8 &amp; 9' +
             '</a>' +
             '<a href="#section-elevation" style="display: flex; align-items: center; gap: 8px; color: #cbd5e1; text-decoration: none; padding: 8px 12px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); transition: all 0.2s ease;">' +
-            '<span style="color: #fbbf24; font-weight: 700;">&bull;</span> Lipulekh Elevation Profile' +
+            '<span style="color: #fde047; font-weight: 700;">&bull;</span> Lipulekh Elevation Profile' +
             '</a>' +
             '<a href="#section-alternative" style="display: flex; align-items: center; gap: 8px; color: #cbd5e1; text-decoration: none; padding: 8px 12px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); transition: all 0.2s ease;">' +
-            '<span style="color: #fbbf24; font-weight: 700;">&bull;</span> Adi Kailash Indian Alternative' +
+            '<span style="color: #fde047; font-weight: 700;">&bull;</span> Adi Kailash Indian Alternative' +
             '</a>' +
             '<a href="#section-6" style="display: flex; align-items: center; gap: 8px; color: #cbd5e1; text-decoration: none; padding: 8px 12px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); transition: all 0.2s ease;">' +
-            '<span style="color: #fbbf24; font-weight: 700;">6.</span> 10 Essential FAQs Answered' +
+            '<span style="color: #fde047; font-weight: 700;">6.</span> 10 Essential FAQs Answered' +
             '</a>' +
             '</div>' +
             '</nav>';
@@ -5919,40 +5915,40 @@ BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanak
             '<p class="blog-text">The final Lipulekh Pass batch comprised <strong>28 male and 16 female pilgrims</strong>, uniting devotees from all corners of the country in high-altitude spiritual fellowship:</p>' +
             '<!-- State Demographics Infographic Grid -->' +
             '<div id="demographics-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(135px, 1fr)); gap: 10px; margin: 20px 0 24px 0;">' +
-            '<div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(212, 175, 55, 0.35); border-radius: 10px; padding: 12px 14px; text-align: center;">' +
-            '<div style="font-size: 20px; font-weight: 800; color: #fbbf24;">11</div>' +
+            '<div style="background: rgba(15, 23, 42, 0.96); border: 1px solid rgba(212, 175, 55, 0.35); border-radius: 10px; padding: 12px 14px; text-align: center;">' +
+            '<div style="font-size: 20px; font-weight: 800; color: #fde047;">11</div>' +
             '<div style="font-size: 13px; font-weight: 600; color: #f8fafc; margin-top: 2px;">Uttar Pradesh</div>' +
-            '<div style="font-size: 10.5px; color: #94a3b8; text-transform: uppercase;">Highest State</div>' +
+            '<div style="font-size: 10.5px; color: #cbd5e1; text-transform: uppercase;">Highest State</div>' +
             '</div>' +
-            '<div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(212, 175, 55, 0.35); border-radius: 10px; padding: 12px 14px; text-align: center;">' +
-            '<div style="font-size: 20px; font-weight: 800; color: #fbbf24;">10</div>' +
+            '<div style="background: rgba(15, 23, 42, 0.96); border: 1px solid rgba(212, 175, 55, 0.35); border-radius: 10px; padding: 12px 14px; text-align: center;">' +
+            '<div style="font-size: 20px; font-weight: 800; color: #fde047;">10</div>' +
             '<div style="font-size: 13px; font-weight: 600; color: #f8fafc; margin-top: 2px;">Gujarat</div>' +
-            '<div style="font-size: 10.5px; color: #94a3b8; text-transform: uppercase;">West Zone</div>' +
+            '<div style="font-size: 10.5px; color: #cbd5e1; text-transform: uppercase;">West Zone</div>' +
             '</div>' +
-            '<div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(212, 175, 55, 0.35); border-radius: 10px; padding: 12px 14px; text-align: center;">' +
-            '<div style="font-size: 20px; font-weight: 800; color: #fbbf24;">5</div>' +
+            '<div style="background: rgba(15, 23, 42, 0.96); border: 1px solid rgba(212, 175, 55, 0.35); border-radius: 10px; padding: 12px 14px; text-align: center;">' +
+            '<div style="font-size: 20px; font-weight: 800; color: #fde047;">5</div>' +
             '<div style="font-size: 13px; font-weight: 600; color: #f8fafc; margin-top: 2px;">Rajasthan</div>' +
-            '<div style="font-size: 10.5px; color: #94a3b8; text-transform: uppercase;">North-West</div>' +
+            '<div style="font-size: 10.5px; color: #cbd5e1; text-transform: uppercase;">North-West</div>' +
             '</div>' +
-            '<div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(212, 175, 55, 0.35); border-radius: 10px; padding: 12px 14px; text-align: center;">' +
-            '<div style="font-size: 20px; font-weight: 800; color: #fbbf24;">4</div>' +
+            '<div style="background: rgba(15, 23, 42, 0.96); border: 1px solid rgba(212, 175, 55, 0.35); border-radius: 10px; padding: 12px 14px; text-align: center;">' +
+            '<div style="font-size: 20px; font-weight: 800; color: #fde047;">4</div>' +
             '<div style="font-size: 13px; font-weight: 600; color: #f8fafc; margin-top: 2px;">Maharashtra</div>' +
-            '<div style="font-size: 10.5px; color: #94a3b8; text-transform: uppercase;">West Zone</div>' +
+            '<div style="font-size: 10.5px; color: #cbd5e1; text-transform: uppercase;">West Zone</div>' +
             '</div>' +
-            '<div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(212, 175, 55, 0.35); border-radius: 10px; padding: 12px 14px; text-align: center;">' +
-            '<div style="font-size: 20px; font-weight: 800; color: #fbbf24;">4</div>' +
+            '<div style="background: rgba(15, 23, 42, 0.96); border: 1px solid rgba(212, 175, 55, 0.35); border-radius: 10px; padding: 12px 14px; text-align: center;">' +
+            '<div style="font-size: 20px; font-weight: 800; color: #fde047;">4</div>' +
             '<div style="font-size: 13px; font-weight: 600; color: #f8fafc; margin-top: 2px;">Delhi NCR</div>' +
-            '<div style="font-size: 10.5px; color: #94a3b8; text-transform: uppercase;">Capital Region</div>' +
+            '<div style="font-size: 10.5px; color: #cbd5e1; text-transform: uppercase;">Capital Region</div>' +
             '</div>' +
-            '<div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(212, 175, 55, 0.35); border-radius: 10px; padding: 12px 14px; text-align: center;">' +
-            '<div style="font-size: 20px; font-weight: 800; color: #fbbf24;">3</div>' +
+            '<div style="background: rgba(15, 23, 42, 0.96); border: 1px solid rgba(212, 175, 55, 0.35); border-radius: 10px; padding: 12px 14px; text-align: center;">' +
+            '<div style="font-size: 20px; font-weight: 800; color: #fde047;">3</div>' +
             '<div style="font-size: 13px; font-weight: 600; color: #f8fafc; margin-top: 2px;">Tamil Nadu</div>' +
-            '<div style="font-size: 10.5px; color: #94a3b8; text-transform: uppercase;">South Zone</div>' +
+            '<div style="font-size: 10.5px; color: #cbd5e1; text-transform: uppercase;">South Zone</div>' +
             '</div>' +
-            '<div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(212, 175, 55, 0.35); border-radius: 10px; padding: 12px 14px; text-align: center;">' +
-            '<div style="font-size: 20px; font-weight: 800; color: #fbbf24;">7</div>' +
+            '<div style="background: rgba(15, 23, 42, 0.96); border: 1px solid rgba(212, 175, 55, 0.35); border-radius: 10px; padding: 12px 14px; text-align: center;">' +
+            '<div style="font-size: 20px; font-weight: 800; color: #fde047;">7</div>' +
             '<div style="font-size: 13px; font-weight: 600; color: #f8fafc; margin-top: 2px;">Other States</div>' +
-            '<div style="font-size: 10.5px; color: #94a3b8; text-transform: uppercase;">MP, BR, JH, JK, WB, UK</div>' +
+            '<div style="font-size: 10.5px; color: #cbd5e1; text-transform: uppercase;">MP, BR, JH, JK, WB, UK</div>' +
             '</div>' +
             '</div>' +
             '<!-- Structured State-Wise Demographic Roster Table -->' +
@@ -5960,53 +5956,53 @@ BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanak
             '<table style="width: 100%; border-collapse: collapse; font-size: 14px; text-align: left;">' +
             '<thead>' +
             '<tr style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(212, 175, 55, 0.1)); border-bottom: 1.5px solid rgba(212, 175, 55, 0.4);">' +
-            '<th style="padding: 12px 16px; color: #fbbf24; font-weight: 700;">State / Union Territory</th>' +
-            '<th style="padding: 12px 16px; color: #fbbf24; font-weight: 700;">Yatri Count</th>' +
-            '<th style="padding: 12px 16px; color: #fbbf24; font-weight: 700;">Regional Zone</th>' +
-            '<th style="padding: 12px 16px; color: #fbbf24; font-weight: 700;">Key Demographic Highlight</th>' +
+            '<th style="padding: 12px 16px; color: #fde047; font-weight: 700;">State / Union Territory</th>' +
+            '<th style="padding: 12px 16px; color: #fde047; font-weight: 700;">Yatri Count</th>' +
+            '<th style="padding: 12px 16px; color: #fde047; font-weight: 700;">Regional Zone</th>' +
+            '<th style="padding: 12px 16px; color: #fde047; font-weight: 700;">Key Demographic Highlight</th>' +
             '</tr>' +
             '</thead>' +
             '<tbody>' +
-            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 16px; font-weight: 600; color: #f8fafc;">Uttar Pradesh</td><td style="padding: 10px 16px; color: #4ade80; font-weight: 700;">11 Yatris</td><td style="padding: 10px 16px; color: #94a3b8;">North India</td><td style="padding: 10px 16px; color: #cbd5e1;">Largest state contingent in Batch 10</td></tr>' +
-            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 16px; font-weight: 600; color: #f8fafc;">Gujarat</td><td style="padding: 10px 16px; color: #4ade80; font-weight: 700;">10 Yatris</td><td style="padding: 10px 16px; color: #94a3b8;">West India</td><td style="padding: 10px 16px; color: #cbd5e1;">Strong presence from Ahmedabad, Surat &amp; Rajkot</td></tr>' +
-            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 16px; font-weight: 600; color: #f8fafc;">Rajasthan</td><td style="padding: 10px 16px; color: #4ade80; font-weight: 700;">5 Yatris</td><td style="padding: 10px 16px; color: #94a3b8;">North-West India</td><td style="padding: 10px 16px; color: #cbd5e1;">Devotees from Jaipur &amp; Jodhpur</td></tr>' +
-            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 16px; font-weight: 600; color: #f8fafc;">Maharashtra</td><td style="padding: 10px 16px; color: #4ade80; font-weight: 700;">4 Yatris</td><td style="padding: 10px 16px; color: #94a3b8;">West India</td><td style="padding: 10px 16px; color: #cbd5e1;">Pilgrims from Mumbai &amp; Pune</td></tr>' +
-            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 16px; font-weight: 600; color: #f8fafc;">Delhi NCR</td><td style="padding: 10px 16px; color: #4ade80; font-weight: 700;">4 Yatris</td><td style="padding: 10px 16px; color: #94a3b8;">North India</td><td style="padding: 10px 16px; color: #cbd5e1;">Transit through Kathgodam &amp; Tanakpur</td></tr>' +
-            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 16px; font-weight: 600; color: #f8fafc;">Tamil Nadu</td><td style="padding: 10px 16px; color: #4ade80; font-weight: 700;">3 Yatris</td><td style="padding: 10px 16px; color: #94a3b8;">South India</td><td style="padding: 10px 16px; color: #cbd5e1;">Cross-country spiritual devotion</td></tr>' +
-            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 16px; font-weight: 600; color: #f8fafc;">Jharkhand, MP, Bihar, J&amp;K, WB, UK</td><td style="padding: 10px 16px; color: #4ade80; font-weight: 700;">7 Yatris</td><td style="padding: 10px 16px; color: #94a3b8;">East / Central / North</td><td style="padding: 10px 16px; color: #cbd5e1;">Unified representation completing the 44-yatri roster</td></tr>' +
-            '<tr style="background: rgba(212, 175, 55, 0.1);"><td style="padding: 11px 16px; font-weight: 800; color: #fbbf24;">Batch 10 Total</td><td style="padding: 11px 16px; font-weight: 800; color: #fbbf24;">44 Yatris</td><td style="padding: 11px 16px; color: #fbbf24;" colspan="2">28 Male &bull; 16 Female Devotees</td></tr>' +
+            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 16px; font-weight: 600; color: #f8fafc;">Uttar Pradesh</td><td style="padding: 10px 16px; color: #86efac; font-weight: 700;">11 Yatris</td><td style="padding: 10px 16px; color: #cbd5e1;">North India</td><td style="padding: 10px 16px; color: #cbd5e1;">Largest state contingent in Batch 10</td></tr>' +
+            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 16px; font-weight: 600; color: #f8fafc;">Gujarat</td><td style="padding: 10px 16px; color: #86efac; font-weight: 700;">10 Yatris</td><td style="padding: 10px 16px; color: #cbd5e1;">West India</td><td style="padding: 10px 16px; color: #cbd5e1;">Strong presence from Ahmedabad, Surat &amp; Rajkot</td></tr>' +
+            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 16px; font-weight: 600; color: #f8fafc;">Rajasthan</td><td style="padding: 10px 16px; color: #86efac; font-weight: 700;">5 Yatris</td><td style="padding: 10px 16px; color: #cbd5e1;">North-West India</td><td style="padding: 10px 16px; color: #cbd5e1;">Devotees from Jaipur &amp; Jodhpur</td></tr>' +
+            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 16px; font-weight: 600; color: #f8fafc;">Maharashtra</td><td style="padding: 10px 16px; color: #86efac; font-weight: 700;">4 Yatris</td><td style="padding: 10px 16px; color: #cbd5e1;">West India</td><td style="padding: 10px 16px; color: #cbd5e1;">Pilgrims from Mumbai &amp; Pune</td></tr>' +
+            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 16px; font-weight: 600; color: #f8fafc;">Delhi NCR</td><td style="padding: 10px 16px; color: #86efac; font-weight: 700;">4 Yatris</td><td style="padding: 10px 16px; color: #cbd5e1;">North India</td><td style="padding: 10px 16px; color: #cbd5e1;">Transit through Kathgodam &amp; Tanakpur</td></tr>' +
+            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 16px; font-weight: 600; color: #f8fafc;">Tamil Nadu</td><td style="padding: 10px 16px; color: #86efac; font-weight: 700;">3 Yatris</td><td style="padding: 10px 16px; color: #cbd5e1;">South India</td><td style="padding: 10px 16px; color: #cbd5e1;">Cross-country spiritual devotion</td></tr>' +
+            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 16px; font-weight: 600; color: #f8fafc;">Jharkhand, MP, Bihar, J&amp;K, WB, UK</td><td style="padding: 10px 16px; color: #86efac; font-weight: 700;">7 Yatris</td><td style="padding: 10px 16px; color: #cbd5e1;">East / Central / North</td><td style="padding: 10px 16px; color: #cbd5e1;">Unified representation completing the 44-yatri roster</td></tr>' +
+            '<tr style="background: rgba(212, 175, 55, 0.1);"><td style="padding: 11px 16px; font-weight: 800; color: #fde047;">Batch 10 Total</td><td style="padding: 11px 16px; font-weight: 800; color: #fde047;">44 Yatris</td><td style="padding: 11px 16px; color: #fde047;" colspan="2">28 Male &bull; 16 Female Devotees</td></tr>' +
             '</tbody>' +
             '</table>' +
             '</div>' +
             '<!-- 2025 vs 2026 Comparative Analytics Card -->' +
             '<div id="section-surge" style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%); border: 1.5px solid rgba(74, 222, 128, 0.4); border-radius: 14px; padding: 22px 24px; margin: 26px 0; box-shadow: 0 8px 24px rgba(0,0,0,0.25);">' +
             '<div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 14px;">' +
-            '<h3 style="font-family: var(--font-serif); color: #4ade80; margin: 0; font-size: 19px; display: flex; align-items: center; gap: 8px;">' +
+            '<h3 style="font-family: var(--font-serif); color: #86efac; margin: 0; font-size: 19px; display: flex; align-items: center; gap: 8px;">' +
             '<i class="fa-solid fa-chart-line"></i> 2026 Season Performance Surge: +97.5% Year-Over-Year' +
             '</h3>' +
-            '<span style="background: rgba(74, 222, 128, 0.15); color: #4ade80; border: 1px solid rgba(74, 222, 128, 0.4); border-radius: 20px; padding: 3px 12px; font-size: 12px; font-weight: 700;">Official KMVN / MEA Records</span>' +
+            '<span style="background: #0b2919; color: #86efac; border: 1px solid rgba(74, 222, 128, 0.4); border-radius: 20px; padding: 3px 12px; font-size: 12px; font-weight: 700;">Official KMVN / MEA Records</span>' +
             '</div>' +
             '<p style="font-size: 14.5px; color: #cbd5e1; line-height: 1.65; margin: 0 0 16px 0;">' +
             'The 2026 pilgrimage via Lipulekh Pass marks a monumental revival for trans-Himalayan yatra logistics. Compared to <strong>237 total pilgrims in 2025</strong>, the 2026 season concluded with <strong>468 pilgrims across 10 complete batches</strong>, achieving a remarkable <strong>+97.5% surge</strong> in completed journeys.' +
             '</p>' +
             '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 16px;">' +
             '<div style="background: rgba(255,255,255,0.03); border-radius: 8px; padding: 12px 14px; text-align: center; border: 1px solid rgba(255,255,255,0.06);">' +
-            '<div style="font-size: 12px; color: #94a3b8; text-transform: uppercase;">2025 Pilgrims Total</div>' +
+            '<div style="font-size: 12px; color: #cbd5e1; text-transform: uppercase;">2025 Pilgrims Total</div>' +
             '<div style="font-size: 22px; font-weight: 800; color: #e2e8f0; margin-top: 4px;">237 Yatris</div>' +
-            '<div style="font-size: 11px; color: #94a3b8;">Previous Season Baseline</div>' +
+            '<div style="font-size: 11px; color: #cbd5e1;">Previous Season Baseline</div>' +
             '</div>' +
             '<div style="background: rgba(74, 222, 128, 0.08); border-radius: 8px; padding: 12px 14px; text-align: center; border: 1px solid rgba(74, 222, 128, 0.3);">' +
-            '<div style="font-size: 12px; color: #4ade80; text-transform: uppercase;">2026 Pilgrims Total</div>' +
-            '<div style="font-size: 22px; font-weight: 800; color: #4ade80; margin-top: 4px;">468 Yatris</div>' +
+            '<div style="font-size: 12px; color: #86efac; text-transform: uppercase;">2026 Pilgrims Total</div>' +
+            '<div style="font-size: 22px; font-weight: 800; color: #86efac; margin-top: 4px;">468 Yatris</div>' +
             '<div style="font-size: 11px; color: #86efac;">+231 Yatris (+97.5% YoY)</div>' +
             '</div>' +
             '<div style="background: rgba(255,255,255,0.03); border-radius: 8px; padding: 12px 14px; text-align: center; border: 1px solid rgba(255,255,255,0.06);">' +
-            '<div style="font-size: 12px; color: #94a3b8; text-transform: uppercase;">Batches Mobilized</div>' +
-            '<div style="font-size: 22px; font-weight: 800; color: #fbbf24; margin-top: 4px;">10 Batches</div>' +
+            '<div style="font-size: 12px; color: #cbd5e1; text-transform: uppercase;">Batches Mobilized</div>' +
+            '<div style="font-size: 22px; font-weight: 800; color: #fde047; margin-top: 4px;">10 Batches</div>' +
             '<div style="font-size: 11px; color: #fde68a;">100% Departure Rate</div>' +
             '</div>' +
             '</div>' +
-            '<p style="font-size: 13px; color: #94a3b8; margin: 0; font-style: italic;">' +
+            '<p style="font-size: 13px; color: #cbd5e1; margin: 0; font-style: italic;">' +
             '<strong>Full 10-Batch Distribution:</strong> Batch 1 (51 yatris) &bull; Batch 2 (47) &bull; Batch 3 (50) &bull; Batch 4 (48) &bull; Batch 5 (45) &bull; Batch 6 (46) &bull; Batch 7 (45) &bull; Batch 8 (46) &bull; Batch 9 (46) &bull; Batch 10 (44) = <strong>468 Yatris Total</strong>.' +
             '</p>' +
             '</div>';
@@ -6016,63 +6012,63 @@ BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanak
             '<p class="blog-text">While the 10th batch departed Tanakpur for Pithoragarh, the entire trans-Himalayan corridor was actively buzzing with interconnected batches across Uttarakhand and Tibet:</p>' +
             '<!-- Live Parallel Batch Pipeline -->' +
             '<div id="parallel-batches" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 20px 0 24px 0;">' +
-            '<div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 12px; padding: 16px; border-top: 4px solid #38bdf8;">' +
+            '<div style="background: rgba(15, 23, 42, 0.96); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 12px; padding: 16px; border-top: 4px solid #38bdf8;">' +
             '<div style="display: flex; justify-content: space-between; align-items: center;">' +
-            '<span style="font-size: 12px; font-weight: 700; color: #38bdf8; text-transform: uppercase;">Batch 10 (Final)</span>' +
-            '<span style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; font-size: 11px; padding: 2px 8px; border-radius: 10px;">En Route</span>' +
+            '<span style="font-size: 12px; font-weight: 700; color: #7dd3fc; text-transform: uppercase;">Batch 10 (Final)</span>' +
+            '<span style="background: #0c2d48; color: #7dd3fc; font-size: 11px; padding: 2px 8px; border-radius: 10px;">En Route</span>' +
             '</div>' +
             '<div style="font-size: 15px; font-weight: 700; color: #f8fafc; margin-top: 6px;">Tanakpur ➔ Pithoragarh</div>' +
-            '<p style="font-size: 12.5px; color: #94a3b8; margin: 6px 0 0 0; line-height: 1.5;">44 yatris advanced to Sor Valley for medical tests &amp; high-altitude road transit.</p>' +
+            '<p style="font-size: 12.5px; color: #cbd5e1; margin: 6px 0 0 0; line-height: 1.5;">44 yatris advanced to Sor Valley for medical tests &amp; high-altitude road transit.</p>' +
             '</div>' +
-            '<div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(251, 191, 36, 0.4); border-radius: 12px; padding: 16px; border-top: 4px solid #fbbf24;">' +
+            '<div style="background: rgba(15, 23, 42, 0.96); border: 1px solid rgba(251, 191, 36, 0.4); border-radius: 12px; padding: 16px; border-top: 4px solid #fbbf24;">' +
             '<div style="display: flex; justify-content: space-between; align-items: center;">' +
-            '<span style="font-size: 12px; font-weight: 700; color: #fbbf24; text-transform: uppercase;">Batch 9</span>' +
-            '<span style="background: rgba(251, 191, 36, 0.15); color: #fbbf24; font-size: 11px; padding: 2px 8px; border-radius: 10px;">At Nabhidhang</span>' +
+            '<span style="font-size: 12px; font-weight: 700; color: #fde047; text-transform: uppercase;">Batch 9</span>' +
+            '<span style="background: rgba(251, 191, 36, 0.15); color: #fde047; font-size: 11px; padding: 2px 8px; border-radius: 10px;">At Nabhidhang</span>' +
             '</div>' +
             '<div style="font-size: 15px; font-weight: 700; color: #f8fafc; margin-top: 6px;">Darshan &amp; Base Camp</div>' +
-            '<p style="font-size: 12.5px; color: #94a3b8; margin: 6px 0 0 0; line-height: 1.5;">Completed Adi Kailash &amp; Parvati Sarovar darshan; stationed beneath Om Parvat.</p>' +
+            '<p style="font-size: 12.5px; color: #cbd5e1; margin: 6px 0 0 0; line-height: 1.5;">Completed Adi Kailash &amp; Parvati Sarovar darshan; stationed beneath Om Parvat.</p>' +
             '</div>' +
-            '<div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(168, 85, 247, 0.4); border-radius: 12px; padding: 16px; border-top: 4px solid #a855f7;">' +
+            '<div style="background: rgba(15, 23, 42, 0.96); border: 1px solid rgba(168, 85, 247, 0.4); border-radius: 12px; padding: 16px; border-top: 4px solid #a855f7;">' +
             '<div style="display: flex; justify-content: space-between; align-items: center;">' +
-            '<span style="font-size: 12px; font-weight: 700; color: #c084fc; text-transform: uppercase;">Batch 8</span>' +
-            '<span style="background: rgba(168, 85, 247, 0.15); color: #c084fc; font-size: 11px; padding: 2px 8px; border-radius: 10px;">In Tibet</span>' +
+            '<span style="font-size: 12px; font-weight: 700; color: #e9d5ff; text-transform: uppercase;">Batch 8</span>' +
+            '<span style="background: rgba(168, 85, 247, 0.15); color: #e9d5ff; font-size: 11px; padding: 2px 8px; border-radius: 10px;">In Tibet</span>' +
             '</div>' +
             '<div style="font-size: 15px; font-weight: 700; color: #f8fafc; margin-top: 6px;">Mount Kailash Kora</div>' +
-            '<p style="font-size: 12.5px; color: #94a3b8; margin: 6px 0 0 0; line-height: 1.5;">Circumambulating Mount Kailash (4,600m–5,630m across Dolma La pass).</p>' +
+            '<p style="font-size: 12.5px; color: #cbd5e1; margin: 6px 0 0 0; line-height: 1.5;">Circumambulating Mount Kailash (4,600m–5,630m across Dolma La pass).</p>' +
             '</div>' +
-            '<div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(74, 222, 128, 0.4); border-radius: 12px; padding: 16px; border-top: 4px solid #4ade80;">' +
+            '<div style="background: rgba(15, 23, 42, 0.96); border: 1px solid rgba(74, 222, 128, 0.4); border-radius: 12px; padding: 16px; border-top: 4px solid #4ade80;">' +
             '<div style="display: flex; justify-content: space-between; align-items: center;">' +
-            '<span style="font-size: 12px; font-weight: 700; color: #4ade80; text-transform: uppercase;">Batch 7</span>' +
-            '<span style="background: rgba(74, 222, 128, 0.15); color: #4ade80; font-size: 11px; padding: 2px 8px; border-radius: 10px;">Returning</span>' +
+            '<span style="font-size: 12px; font-weight: 700; color: #86efac; text-transform: uppercase;">Batch 7</span>' +
+            '<span style="background: #0b2919; color: #86efac; font-size: 11px; padding: 2px 8px; border-radius: 10px;">Returning</span>' +
             '</div>' +
             '<div style="font-size: 15px; font-weight: 700; color: #f8fafc; margin-top: 6px;">Stationed at Taklakot</div>' +
-            '<p style="font-size: 12.5px; color: #94a3b8; margin: 6px 0 0 0; line-height: 1.5;">Completed full Kailash &amp; Mansarovar parikrama; preparing for return crossing.</p>' +
+            '<p style="font-size: 12.5px; color: #cbd5e1; margin: 6px 0 0 0; line-height: 1.5;">Completed full Kailash &amp; Mansarovar parikrama; preparing for return crossing.</p>' +
             '</div>' +
             '</div>' +
             '<!-- Elevation Profile & Route Stations Card -->' +
             '<div id="section-elevation" style="background: rgba(15,23,42,0.6); border: 1px solid rgba(212,175,55,0.3); border-radius: 14px; padding: 22px 24px; margin: 26px 0;">' +
             '<h3 style="font-family: var(--font-serif); color: var(--color-gold); margin-top: 0; font-size: 18.5px; display: flex; align-items: center; gap: 8px;">' +
-            '<i class="fa-solid fa-route" style="color: #fbbf24;"></i> Lipulekh Pass Yatra Corridor &bull; Station Elevation Profile' +
+            '<i class="fa-solid fa-route" style="color: #fde047;"></i> Lipulekh Pass Yatra Corridor &bull; Station Elevation Profile' +
             '</h3>' +
             '<div class="ry-table-responsive-wrap" style="overflow-x: auto; -webkit-overflow-scrolling: touch; width: 100%; max-width: 100%; box-sizing: border-box; margin-top: 14px; border-radius: 8px;">' +
             '<table style="width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 550px;">' +
             '<thead>' +
             '<tr style="background: rgba(212,175,55,0.15); border-bottom: 1px solid rgba(212,175,55,0.3);">' +
-            '<th style="padding: 10px 14px; text-align: left; color: #fbbf24; font-weight: 700;">Station / Waypoint</th>' +
-            '<th style="padding: 10px 14px; text-align: left; color: #fbbf24; font-weight: 700;">Elevation</th>' +
-            '<th style="padding: 10px 14px; text-align: left; color: #fbbf24; font-weight: 700;">Jurisdiction</th>' +
-            '<th style="padding: 10px 14px; text-align: left; color: #fbbf24; font-weight: 700;">Operational Role</th>' +
+            '<th style="padding: 10px 14px; text-align: left; color: #fde047; font-weight: 700;">Station / Waypoint</th>' +
+            '<th style="padding: 10px 14px; text-align: left; color: #fde047; font-weight: 700;">Elevation</th>' +
+            '<th style="padding: 10px 14px; text-align: left; color: #fde047; font-weight: 700;">Jurisdiction</th>' +
+            '<th style="padding: 10px 14px; text-align: left; color: #fde047; font-weight: 700;">Operational Role</th>' +
             '</tr>' +
             '</thead>' +
             '<tbody>' +
-            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 14px; font-weight: 600; color: #f8fafc;">Tanakpur TRC</td><td style="padding: 10px 14px; color: #38bdf8;">255 m (837 ft)</td><td style="padding: 10px 14px; color: #94a3b8;">Champawat, UK</td><td style="padding: 10px 14px; color: #cbd5e1;">Reception, verification &amp; traditional welcome</td></tr>' +
-            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 14px; font-weight: 600; color: #f8fafc;">Pithoragarh</td><td style="padding: 10px 14px; color: #38bdf8;">1,627 m (5,338 ft)</td><td style="padding: 10px 14px; color: #94a3b8;">Pithoragarh, UK</td><td style="padding: 10px 14px; color: #cbd5e1;">District HQ, medical fitness &amp; staging base</td></tr>' +
-            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 14px; font-weight: 600; color: #f8fafc;">Dharchula</td><td style="padding: 10px 14px; color: #38bdf8;">940 m (3,084 ft)</td><td style="padding: 10px 14px; color: #94a3b8;">Kali River Border</td><td style="padding: 10px 14px; color: #cbd5e1;">SDM Office ILP permit issuance &amp; 4x4 transition</td></tr>' +
-            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 14px; font-weight: 600; color: #f8fafc;">Gunji</td><td style="padding: 10px 14px; color: #fbbf24; font-weight: 700;">3,200 m (10,499 ft)</td><td style="padding: 10px 14px; color: #94a3b8;">Byas Valley</td><td style="padding: 10px 14px; color: #cbd5e1;">Mandatory ITBP medical clearance &amp; acclimatization</td></tr>' +
-            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 14px; font-weight: 600; color: #f8fafc;">Nabhidhang</td><td style="padding: 10px 14px; color: #fbbf24; font-weight: 700;">4,240 m (13,910 ft)</td><td style="padding: 10px 14px; color: #94a3b8;">Indo-Tibet Border</td><td style="padding: 10px 14px; color: #cbd5e1;">Base camp below Om Parvat snow miracle</td></tr>' +
-            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 14px; font-weight: 600; color: #f8fafc;">Lipulekh Pass</td><td style="padding: 10px 14px; color: #f87171; font-weight: 800;">5,200 m (17,060 ft)</td><td style="padding: 10px 14px; color: #94a3b8;">Himalayan Crest</td><td style="padding: 10px 14px; color: #cbd5e1;">International border crossing between India &amp; Tibet</td></tr>' +
-            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 14px; font-weight: 600; color: #f8fafc;">Taklakot (Purang)</td><td style="padding: 10px 14px; color: #38bdf8;">3,900 m (12,795 ft)</td><td style="padding: 10px 14px; color: #94a3b8;">Tibet (China)</td><td style="padding: 10px 14px; color: #cbd5e1;">Immigration, currency exchange &amp; Tibetan coach staging</td></tr>' +
-            '<tr><td style="padding: 10px 14px; font-weight: 600; color: #f8fafc;">Mount Kailash Kora</td><td style="padding: 10px 14px; color: #c084fc; font-weight: 700;">4,600 m &ndash; 5,630 m</td><td style="padding: 10px 14px; color: #94a3b8;">Ngari, Tibet</td><td style="padding: 10px 14px; color: #cbd5e1;">52 km sacred circumambulation via Dolma La pass</td></tr>' +
+            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 14px; font-weight: 600; color: #f8fafc;">Tanakpur TRC</td><td style="padding: 10px 14px; color: #7dd3fc;">255 m (837 ft)</td><td style="padding: 10px 14px; color: #cbd5e1;">Champawat, UK</td><td style="padding: 10px 14px; color: #cbd5e1;">Reception, verification &amp; traditional welcome</td></tr>' +
+            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 14px; font-weight: 600; color: #f8fafc;">Pithoragarh</td><td style="padding: 10px 14px; color: #7dd3fc;">1,627 m (5,338 ft)</td><td style="padding: 10px 14px; color: #cbd5e1;">Pithoragarh, UK</td><td style="padding: 10px 14px; color: #cbd5e1;">District HQ, medical fitness &amp; staging base</td></tr>' +
+            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 14px; font-weight: 600; color: #f8fafc;">Dharchula</td><td style="padding: 10px 14px; color: #7dd3fc;">940 m (3,084 ft)</td><td style="padding: 10px 14px; color: #cbd5e1;">Kali River Border</td><td style="padding: 10px 14px; color: #cbd5e1;">SDM Office ILP permit issuance &amp; 4x4 transition</td></tr>' +
+            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 14px; font-weight: 600; color: #f8fafc;">Gunji</td><td style="padding: 10px 14px; color: #fde047; font-weight: 700;">3,200 m (10,499 ft)</td><td style="padding: 10px 14px; color: #cbd5e1;">Byas Valley</td><td style="padding: 10px 14px; color: #cbd5e1;">Mandatory ITBP medical clearance &amp; acclimatization</td></tr>' +
+            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 14px; font-weight: 600; color: #f8fafc;">Nabhidhang</td><td style="padding: 10px 14px; color: #fde047; font-weight: 700;">4,240 m (13,910 ft)</td><td style="padding: 10px 14px; color: #cbd5e1;">Indo-Tibet Border</td><td style="padding: 10px 14px; color: #cbd5e1;">Base camp below Om Parvat snow miracle</td></tr>' +
+            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 14px; font-weight: 600; color: #f8fafc;">Lipulekh Pass</td><td style="padding: 10px 14px; color: #f87171; font-weight: 800;">5,200 m (17,060 ft)</td><td style="padding: 10px 14px; color: #cbd5e1;">Himalayan Crest</td><td style="padding: 10px 14px; color: #cbd5e1;">International border crossing between India &amp; Tibet</td></tr>' +
+            '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06);"><td style="padding: 10px 14px; font-weight: 600; color: #f8fafc;">Taklakot (Purang)</td><td style="padding: 10px 14px; color: #7dd3fc;">3,900 m (12,795 ft)</td><td style="padding: 10px 14px; color: #cbd5e1;">Tibet (China)</td><td style="padding: 10px 14px; color: #cbd5e1;">Immigration, currency exchange &amp; Tibetan coach staging</td></tr>' +
+            '<tr><td style="padding: 10px 14px; font-weight: 600; color: #f8fafc;">Mount Kailash Kora</td><td style="padding: 10px 14px; color: #e9d5ff; font-weight: 700;">4,600 m &ndash; 5,630 m</td><td style="padding: 10px 14px; color: #cbd5e1;">Ngari, Tibet</td><td style="padding: 10px 14px; color: #cbd5e1;">52 km sacred circumambulation via Dolma La pass</td></tr>' +
             '</tbody>' +
             '</table>' +
             '</div>' +
@@ -6080,10 +6076,10 @@ BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanak
             '<!-- Adi Kailash & Om Parvat Bridge Card (Accessible Indian Territory Alternative) -->' +
             '<div id="section-alternative" style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.98) 100%); border: 1.5px solid rgba(212, 175, 55, 0.5); border-radius: 14px; padding: 24px; margin: 28px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.35);">' +
             '<div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">' +
-            '<span style="background: rgba(212, 175, 55, 0.15); color: #fbbf24; border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 20px; padding: 3px 12px; font-size: 12px; font-weight: 700; text-transform: uppercase;">' +
+            '<span style="background: rgba(212, 175, 55, 0.15); color: #fde047; border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 20px; padding: 3px 12px; font-size: 12px; font-weight: 700; text-transform: uppercase;">' +
             '<i class="fa-solid fa-om"></i> Accessible Domestic Alternative' +
             '</span>' +
-            '<span style="color: #4ade80; font-size: 13px; font-weight: 700;">No Passport or Chinese Visa Required</span>' +
+            '<span style="color: #86efac; font-size: 13px; font-weight: 700;">No Passport or Chinese Visa Required</span>' +
             '</div>' +
             '<h3 style="font-family: var(--font-serif); color: #f8fafc; font-size: 20px; margin: 0 0 12px 0;">' +
             'Cannot Travel to Tibet? Experience Adi Kailash &amp; Om Parvat Inside Uttarakhand' +
@@ -6108,63 +6104,63 @@ BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanak
             '<h2 id="section-6" class="blog-heading">6. Frequently Asked Questions (FAQ)</h2>' +
             '<p class="blog-text">Get verified answers regarding the 10th batch, Lipulekh Pass logistics, season statistics, and domestic pilgrimage alternatives:</p>' +
             '<div style="display: flex; flex-direction: column; gap: 14px; margin: 24px 0;">' +
-            '<div style="background: rgba(15,23,42,0.7); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 18px 20px;">' +
-            '<h3 style="font-family: var(--font-serif); color: var(--color-gold); font-size: 16.5px; margin: 0 0 8px 0; display: flex; align-items: baseline; gap: 8px;">' +
-            '<span style="color: #fbbf24; font-weight: 800;">Q1.</span> Which was the final batch for Kailash Mansarovar Yatra 2026 via Lipulekh Pass?' +
+            '<div style="background: rgba(15, 23, 42, 0.96); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 18px 20px;">' +
+            '<h3 style="font-family: var(--font-serif); color: #FDE047; font-size: 16.5px; margin: 0 0 8px 0; display: flex; align-items: baseline; gap: 8px;">' +
+            '<span style="color: #fde047; font-weight: 800;">Q1.</span> Which was the final batch for Kailash Mansarovar Yatra 2026 via Lipulekh Pass?' +
             '</h3>' +
             '<p style="margin: 0; font-size: 14.5px; color: #cbd5e1; line-height: 1.65;"><strong>Answer:</strong> The 10th batch comprising 44 pilgrims (28 male, 16 female) from 12 Indian states was the final batch of the 2026 season via Lipulekh Pass. They were received with a traditional Kumaoni tilak-mala welcome at Tanakpur Tourist Rest Camp (TRC) before advancing towards Pithoragarh and Dharchula.</p>' +
             '</div>' +
-            '<div style="background: rgba(15,23,42,0.7); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 18px 20px;">' +
-            '<h3 style="font-family: var(--font-serif); color: var(--color-gold); font-size: 16.5px; margin: 0 0 8px 0; display: flex; align-items: baseline; gap: 8px;">' +
-            '<span style="color: #fbbf24; font-weight: 800;">Q2.</span> How many total pilgrims completed Kailash Mansarovar Yatra via Lipulekh in 2026?' +
+            '<div style="background: rgba(15, 23, 42, 0.96); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 18px 20px;">' +
+            '<h3 style="font-family: var(--font-serif); color: #FDE047; font-size: 16.5px; margin: 0 0 8px 0; display: flex; align-items: baseline; gap: 8px;">' +
+            '<span style="color: #fde047; font-weight: 800;">Q2.</span> How many total pilgrims completed Kailash Mansarovar Yatra via Lipulekh in 2026?' +
             '</h3>' +
             '<p style="margin: 0; font-size: 14.5px; color: #cbd5e1; line-height: 1.65;"><strong>Answer:</strong> A total of 468 pilgrims across 10 organized batches completed the pilgrimage via the Tanakpur-Pithoragarh-Lipulekh Pass border corridor in 2026. This represents a 97.5% year-over-year surge compared to 2025, which saw 237 pilgrims.</p>' +
             '</div>' +
-            '<div style="background: rgba(15,23,42,0.7); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 18px 20px;">' +
-            '<h3 style="font-family: var(--font-serif); color: var(--color-gold); font-size: 16.5px; margin: 0 0 8px 0; display: flex; align-items: baseline; gap: 8px;">' +
-            '<span style="color: #fbbf24; font-weight: 800;">Q3.</span> What is the state-wise breakdown of the 44 yatris in the 10th batch?' +
+            '<div style="background: rgba(15, 23, 42, 0.96); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 18px 20px;">' +
+            '<h3 style="font-family: var(--font-serif); color: #FDE047; font-size: 16.5px; margin: 0 0 8px 0; display: flex; align-items: baseline; gap: 8px;">' +
+            '<span style="color: #fde047; font-weight: 800;">Q3.</span> What is the state-wise breakdown of the 44 yatris in the 10th batch?' +
             '</h3>' +
             '<p style="margin: 0; font-size: 14.5px; color: #cbd5e1; line-height: 1.65;"><strong>Answer:</strong> The 44 pilgrims in the 10th batch represented 12 Indian states: Uttar Pradesh led with 11 yatris, Gujarat had 10, Rajasthan had 5, Maharashtra had 4, Delhi had 4, and Tamil Nadu had 3. The remaining devotees hailed from Madhya Pradesh, Bihar, Jharkhand, Jammu &amp; Kashmir, West Bengal, and Uttarakhand.</p>' +
             '</div>' +
-            '<div style="background: rgba(15,23,42,0.7); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 18px 20px;">' +
-            '<h3 style="font-family: var(--font-serif); color: var(--color-gold); font-size: 16.5px; margin: 0 0 8px 0; display: flex; align-items: baseline; gap: 8px;">' +
-            '<span style="color: #fbbf24; font-weight: 800;">Q4.</span> What is the traditional Kumaoni welcome ceremony held at Tanakpur TRC?' +
+            '<div style="background: rgba(15, 23, 42, 0.96); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 18px 20px;">' +
+            '<h3 style="font-family: var(--font-serif); color: #FDE047; font-size: 16.5px; margin: 0 0 8px 0; display: flex; align-items: baseline; gap: 8px;">' +
+            '<span style="color: #fde047; font-weight: 800;">Q4.</span> What is the traditional Kumaoni welcome ceremony held at Tanakpur TRC?' +
             '</h3>' +
             '<p style="margin: 0; font-size: 14.5px; color: #cbd5e1; line-height: 1.65;"><strong>Answer:</strong> At the Tanakpur TRC, local Kumaoni women dressed in vibrant traditional hill attire welcomed the yatris by applying sacred vermilion (roli-akshat) tilak on their foreheads and presenting fragrant flower garlands (mala). TRC Manager Manoj Kumar highlighted this ceremony as a celebration of Himalayan hospitality and safe journey blessings.</p>' +
             '</div>' +
-            '<div style="background: rgba(15,23,42,0.7); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 18px 20px;">' +
-            '<h3 style="font-family: var(--font-serif); color: var(--color-gold); font-size: 16.5px; margin: 0 0 8px 0; display: flex; align-items: baseline; gap: 8px;">' +
-            '<span style="color: #fbbf24; font-weight: 800;">Q5.</span> What was the operational status of Batches 7, 8, and 9 during the 10th batch departure?' +
+            '<div style="background: rgba(15, 23, 42, 0.96); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 18px 20px;">' +
+            '<h3 style="font-family: var(--font-serif); color: #FDE047; font-size: 16.5px; margin: 0 0 8px 0; display: flex; align-items: baseline; gap: 8px;">' +
+            '<span style="color: #fde047; font-weight: 800;">Q5.</span> What was the operational status of Batches 7, 8, and 9 during the 10th batch departure?' +
             '</h3>' +
             '<p style="margin: 0; font-size: 14.5px; color: #cbd5e1; line-height: 1.65;"><strong>Answer:</strong> While Batch 10 departed Tanakpur for Pithoragarh, the 9th batch reached Nabhidhang after performing darshan at Adi Kailash and Parvati Sarovar. In Tibet, the 8th batch was actively undertaking the holy Mount Kailash circumambulation (Kora/Parikrama), and the 7th batch completed their parikrama and arrived at Taklakot for the return journey.</p>' +
             '</div>' +
-            '<div style="background: rgba(15,23,42,0.7); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 18px 20px;">' +
-            '<h3 style="font-family: var(--font-serif); color: var(--color-gold); font-size: 16.5px; margin: 0 0 8px 0; display: flex; align-items: baseline; gap: 8px;">' +
-            '<span style="color: #fbbf24; font-weight: 800;">Q6.</span> What is the elevation profile and route corridor for Lipulekh Pass Yatra?' +
+            '<div style="background: rgba(15, 23, 42, 0.96); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 18px 20px;">' +
+            '<h3 style="font-family: var(--font-serif); color: #FDE047; font-size: 16.5px; margin: 0 0 8px 0; display: flex; align-items: baseline; gap: 8px;">' +
+            '<span style="color: #fde047; font-weight: 800;">Q6.</span> What is the elevation profile and route corridor for Lipulekh Pass Yatra?' +
             '</h3>' +
             '<p style="margin: 0; font-size: 14.5px; color: #cbd5e1; line-height: 1.65;"><strong>Answer:</strong> The Lipulekh Pass route spans from Tanakpur (elevation 255 m) to Pithoragarh (1,627 m), Dharchula (940 m), Gunji (3,200 m), Nabhidhang (4,240 m), and reaches Lipulekh Pass at 5,200 m (17,060 ft) before entering Tibet towards Taklakot (3,900 m) and Mount Kailash (peak 6,638 m; parikrama up to 5,630 m at Dolma La).</p>' +
             '</div>' +
-            '<div style="background: rgba(15,23,42,0.7); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 18px 20px;">' +
-            '<h3 style="font-family: var(--font-serif); color: var(--color-gold); font-size: 16.5px; margin: 0 0 8px 0; display: flex; align-items: baseline; gap: 8px;">' +
-            '<span style="color: #fbbf24; font-weight: 800;">Q7.</span> Why is Lipulekh Pass historically and strategically significant for Kailash Yatra?' +
+            '<div style="background: rgba(15, 23, 42, 0.96); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 18px 20px;">' +
+            '<h3 style="font-family: var(--font-serif); color: #FDE047; font-size: 16.5px; margin: 0 0 8px 0; display: flex; align-items: baseline; gap: 8px;">' +
+            '<span style="color: #fde047; font-weight: 800;">Q7.</span> Why is Lipulekh Pass historically and strategically significant for Kailash Yatra?' +
             '</h3>' +
             '<p style="margin: 0; font-size: 14.5px; color: #cbd5e1; line-height: 1.65;"><strong>Answer:</strong> Lipulekh Pass is the oldest traditional trans-Himalayan trade and pilgrimage crossing between Kumaon (India) and Ngari Prefecture (Tibet). Under the Ministry of External Affairs (MEA) and KMVN, it provides the primary terrestrial Indian route for the Kailash Mansarovar Yatra, avoiding third-country transit via Nepal or flight dependencies.</p>' +
             '</div>' +
-            '<div style="background: rgba(15,23,42,0.7); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 18px 20px;">' +
-            '<h3 style="font-family: var(--font-serif); color: var(--color-gold); font-size: 16.5px; margin: 0 0 8px 0; display: flex; align-items: baseline; gap: 8px;">' +
-            '<span style="color: #fbbf24; font-weight: 800;">Q8.</span> Can Indian pilgrims currently visit Mount Kailash and Lake Mansarovar from Uttarakhand?' +
+            '<div style="background: rgba(15, 23, 42, 0.96); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 18px 20px;">' +
+            '<h3 style="font-family: var(--font-serif); color: #FDE047; font-size: 16.5px; margin: 0 0 8px 0; display: flex; align-items: baseline; gap: 8px;">' +
+            '<span style="color: #fde047; font-weight: 800;">Q8.</span> Can Indian pilgrims currently visit Mount Kailash and Lake Mansarovar from Uttarakhand?' +
             '</h3>' +
             '<p style="margin: 0; font-size: 14.5px; color: #cbd5e1; line-height: 1.65;"><strong>Answer:</strong> Direct terrestrial border crossing into Tibet via Lipulekh Pass is governed by bilateral government agreements between India and China and MEA lotteries. For independent travellers and private domestic pilgrims without Chinese visas, the sacred Darshan of Om Parvat and Adi Kailash inside Indian territory (Pithoragarh district) remains fully open and operational with an Inner Line Permit (ILP).</p>' +
             '</div>' +
-            '<div style="background: rgba(15,23,42,0.7); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 18px 20px;">' +
-            '<h3 style="font-family: var(--font-serif); color: var(--color-gold); font-size: 16.5px; margin: 0 0 8px 0; display: flex; align-items: baseline; gap: 8px;">' +
-            '<span style="color: #fbbf24; font-weight: 800;">Q9.</span> What is the best alternative to Kailash Mansarovar Yatra inside Indian territory?' +
+            '<div style="background: rgba(15, 23, 42, 0.96); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 18px 20px;">' +
+            '<h3 style="font-family: var(--font-serif); color: #FDE047; font-size: 16.5px; margin: 0 0 8px 0; display: flex; align-items: baseline; gap: 8px;">' +
+            '<span style="color: #fde047; font-weight: 800;">Q9.</span> What is the best alternative to Kailash Mansarovar Yatra inside Indian territory?' +
             '</h3>' +
             '<p style="margin: 0; font-size: 14.5px; color: #cbd5e1; line-height: 1.65;"><strong>Answer:</strong> The Adi Kailash (Chhota Kailash) and Om Parvat Yatra in Pithoragarh, Uttarakhand, is the ultimate domestic alternative. Located entirely within Indian territory, it requires no passport or Chinese visa, is reachable by 4x4 motorable roads up to Jyolingkong, and costs significantly less (₹18,000 to ₹35,000 vs ₹2.5–3.5 Lakhs for Tibet).</p>' +
             '</div>' +
-            '<div style="background: rgba(15,23,42,0.7); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 18px 20px;">' +
-            '<h3 style="font-family: var(--font-serif); color: var(--color-gold); font-size: 16.5px; margin: 0 0 8px 0; display: flex; align-items: baseline; gap: 8px;">' +
-            '<span style="color: #fbbf24; font-weight: 800;">Q10.</span> How can pilgrims book or get Inner Line Permits (ILP) with Rudraansh Yatra?' +
+            '<div style="background: rgba(15, 23, 42, 0.96); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 18px 20px;">' +
+            '<h3 style="font-family: var(--font-serif); color: #FDE047; font-size: 16.5px; margin: 0 0 8px 0; display: flex; align-items: baseline; gap: 8px;">' +
+            '<span style="color: #fde047; font-weight: 800;">Q10.</span> How can pilgrims book or get Inner Line Permits (ILP) with Rudraansh Yatra?' +
             '</h3>' +
             '<p style="margin: 0; font-size: 14.5px; color: #cbd5e1; line-height: 1.65;"><strong>Answer:</strong> Rudraansh Yatra is a verified local ground operator based physically in Pithoragarh. They handle end-to-end Inner Line Permit (ILP) administrative processing with the Dharchula SDM office, government medical certifications, 4x4 Bolero transport, high-altitude homestays in Gunji and Nabi, and local mountain guides. Inquiries can be made via WhatsApp or phone at +91 76176 17651.</p>' +
             '</div>' +
@@ -6174,7 +6170,7 @@ BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanak
             '<!-- Verified Operator Trust Box -->' +
             '<div id="plan-your-yatra" class="ry-operator-trust-card" style="background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 100%); border: 2px solid #d4af37; border-radius: 16px; padding: 26px 28px; margin: 32px 0; color: #fff; box-shadow: 0 12px 36px rgba(0,0,0,0.45); position: relative;">' +
             '<div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 14px;">' +
-            '<h2 style="font-family: var(--font-serif); color: #fbbf24; margin: 0; font-size: 22px; display: flex; align-items: center; gap: 10px;">' +
+            '<h2 style="font-family: var(--font-serif); color: #fde047; margin: 0; font-size: 22px; display: flex; align-items: center; gap: 10px;">' +
             '<i class="fa-solid fa-shield-halved"></i> Plan Your Himalayan Yatra with Rudraansh Yatra' +
             '</h2>' +
             '<span style="background: rgba(212, 175, 55, 0.2); border: 1px solid #d4af37; border-radius: 20px; padding: 4px 14px; font-size: 12px; color: #fde68a; font-weight: 700;">' +
@@ -6199,14 +6195,14 @@ BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanak
             '</div>' +
             '</div>' +
             '<div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center;">' +
-            '<a href="https://wa.me/917617617651?text=Namaste!%20I%20read%20the%20Kailash%20Mansarovar%20final%20batch%20report.%20I%20would%20like%20information%20on%20Adi%20Kailash%20and%20border%20pilgrimage%20packages." target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; background: #25d366; color: #ffffff; padding: 12px 22px; border-radius: 10px; font-weight: 700; font-size: 14.5px; text-decoration: none; box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);">' +
+            '<a href="https://wa.me/917617617651?text=Namaste!%20I%20read%20the%20Kailash%20Mansarovar%20final%20batch%20report.%20I%20would%20like%20information%20on%20Adi%20Kailash%20and%20border%20pilgrimage%20packages." target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; background: #127035; color: #ffffff; padding: 12px 22px; border-radius: 10px; font-weight: 700; font-size: 14.5px; text-decoration: none; box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);">' +
             '<i class="fa-brands fa-whatsapp" style="font-size: 18px;"></i> WhatsApp Our Ground Team' +
             '</a>' +
             '<a href="tel:+917617617651" style="display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #d4af37, #b8860b); color: #0f172a; padding: 12px 22px; border-radius: 10px; font-weight: 800; font-size: 14.5px; text-decoration: none; box-shadow: 0 4px 14px rgba(212, 175, 55, 0.35);">' +
             '<i class="fa-solid fa-phone" style="font-size: 16px;"></i> Call +91 76176 17651' +
             '</a>' +
-            '<span style="font-size: 12.5px; color: #94a3b8; margin-left: auto;">' +
-            '<i class="fa-solid fa-location-dot" style="color: #fbbf24;"></i> Physical Office: Pithoragarh, Uttarakhand' +
+            '<span style="font-size: 12.5px; color: #cbd5e1; margin-left: auto;">' +
+            '<i class="fa-solid fa-location-dot" style="color: #fde047;"></i> Physical Office: Pithoragarh, Uttarakhand' +
             '</span>' +
             '</div>' +
             '</div>';
@@ -6476,7 +6472,7 @@ BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanak
         </div>
         <div class="ry-rev-card">
             <div class="label">Recommended Action</div>
-            <div class="val" style="color: #fbbf24;">Reschedule Sept 15&ndash;19</div>
+            <div class="val" style="color: #fde047;">Reschedule Sept 15&ndash;19</div>
             <div class="sub">Push departure dates to Sept 20+</div>
         </div>
     </div>
@@ -6492,7 +6488,7 @@ BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanak
 
 <!-- Non-Overlap & Search Intent Guide Box -->
 <div class="ry-non-overlap-box">
-    <div style="display: flex; align-items: center; gap: 8px; color: #fbbf24; font-weight: 700; font-size: 14px;">
+    <div style="display: flex; align-items: center; gap: 8px; color: #fde047; font-weight: 700; font-size: 14px;">
         <i class="fa-solid fa-compass"></i> Guide Navigation &amp; Related Yatra Resources:
     </div>
     <p style="color: #cbd5e1; font-size: 13px; margin: 6px 0 12px 0; line-height: 1.55;">
@@ -6500,24 +6496,24 @@ BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanak
     </p>
     <div class="ry-nav-pills">
         <a href="/blog/inner-line-permit-adi-kailash-2026-step-by-step" class="ry-nav-pill">
-            <span><i class="fa-solid fa-id-card" style="color: #fbbf24; margin-right: 6px;"></i> Complete ILP Documents &amp; Step-by-Step Guide</span>
-            <i class="fa-solid fa-chevron-right" style="color: #fbbf24; font-size: 10px;"></i>
+            <span><i class="fa-solid fa-id-card" style="color: #fde047; margin-right: 6px;"></i> Complete ILP Documents &amp; Step-by-Step Guide</span>
+            <i class="fa-solid fa-chevron-right" style="color: #fde047; font-size: 10px;"></i>
         </a>
         <a href="/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates" class="ry-nav-pill">
-            <span><i class="fa-solid fa-cloud-showers-heavy" style="color: #fbbf24; margin-right: 6px;"></i> 2026 Monsoon Status &amp; Reopening Updates</span>
-            <i class="fa-solid fa-chevron-right" style="color: #fbbf24; font-size: 10px;"></i>
+            <span><i class="fa-solid fa-cloud-showers-heavy" style="color: #fde047; margin-right: 6px;"></i> 2026 Monsoon Status &amp; Reopening Updates</span>
+            <i class="fa-solid fa-chevron-right" style="color: #fde047; font-size: 10px;"></i>
         </a>
         <a href="/blog/is-adi-kailash-yatra-closed-right-now-reopening-date-why-travellers-get-stuck-at-dharchula" class="ry-nav-pill">
-            <span><i class="fa-solid fa-triangle-exclamation" style="color: #fbbf24; margin-right: 6px;"></i> Why Pilgrims Get Stuck at Dharchula</span>
-            <i class="fa-solid fa-chevron-right" style="color: #fbbf24; font-size: 10px;"></i>
+            <span><i class="fa-solid fa-triangle-exclamation" style="color: #fde047; margin-right: 6px;"></i> Why Pilgrims Get Stuck at Dharchula</span>
+            <i class="fa-solid fa-chevron-right" style="color: #fde047; font-size: 10px;"></i>
         </a>
         <a href="/blog/best-time-to-visit-adi-kailash-om-parvat-weather-season-guide" class="ry-nav-pill">
-            <span><i class="fa-solid fa-calendar-check" style="color: #fbbf24; margin-right: 6px;"></i> Best Time to Visit &amp; Autumn Weather Guide</span>
-            <i class="fa-solid fa-chevron-right" style="color: #fbbf24; font-size: 10px;"></i>
+            <span><i class="fa-solid fa-calendar-check" style="color: #fde047; margin-right: 6px;"></i> Best Time to Visit &amp; Autumn Weather Guide</span>
+            <i class="fa-solid fa-chevron-right" style="color: #fde047; font-size: 10px;"></i>
         </a>
         <a href="/blog/adi-kailash-packing-list-essential-guide-for-yatris" class="ry-nav-pill">
-            <span><i class="fa-solid fa-suitcase-rolling" style="color: #fbbf24; margin-right: 6px;"></i> Essential Packing List for Autumn Yatra</span>
-            <i class="fa-solid fa-chevron-right" style="color: #fbbf24; font-size: 10px;"></i>
+            <span><i class="fa-solid fa-suitcase-rolling" style="color: #fde047; margin-right: 6px;"></i> Essential Packing List for Autumn Yatra</span>
+            <i class="fa-solid fa-chevron-right" style="color: #fde047; font-size: 10px;"></i>
         </a>
     </div>
 </div>
@@ -6624,13 +6620,13 @@ BLOG_ENHANCERS['kailash-mansarovar-yatra-2026-tilak-mala-welcome-44-yatris-tanak
                 <td><strong>Gunji to Jolingkong (Adi Kailash)</strong></td>
                 <td>28 km | 4,200 m</td>
                 <td>High-altitude plateau road; stable dry condition, light frost</td>
-                <td><span style="color: #fbbf24; font-weight: 700;">🟡 Ready for Opening on Sept 20</span></td>
+                <td><span style="color: #fde047; font-weight: 700;">🟡 Ready for Opening on Sept 20</span></td>
             </tr>
             <tr>
                 <td><strong>Gunji to Nabidhang (Om Parvat)</strong></td>
                 <td>18 km | 4,115 m</td>
                 <td>High-altitude border road; excellent visibility of Om Parvat</td>
-                <td><span style="color: #fbbf24; font-weight: 700;">🟡 Ready for Opening on Sept 20</span></td>
+                <td><span style="color: #fde047; font-weight: 700;">🟡 Ready for Opening on Sept 20</span></td>
             </tr>
         </tbody>
     </table>
@@ -7023,7 +7019,7 @@ BLOG_ENHANCERS['adi-kailash-ilp-suspended-oct-19-to-26-2026-for-parikrama-run'] 
 <!-- ===== AEO / AIO Executive Alert Banner ===== -->
 <div class="ry-live-banner" id="executive-summary" style="border-color: #f59e0b;">
     <div class="ry-live-badge-row">
-        <span class="ry-status-live" style="background: rgba(245,158,11,0.18); border-color: #f59e0b; color: #fbbf24;">
+        <span class="ry-status-live" style="background: rgba(245,158,11,0.18); border-color: #f59e0b; color: #fde047;">
             <span class="ry-pulse-green" style="background:#f59e0b; box-shadow:0 0 0 0 rgba(245,158,11,0.7);"></span>
             ⚠ Official ILP Suspension Notice
         </span>
@@ -7051,7 +7047,7 @@ BLOG_ENHANCERS['adi-kailash-ilp-suspended-oct-19-to-26-2026-for-parikrama-run'] 
         </div>
         <div class="ry-kpi-card">
             <div class="label">Reason for Pause</div>
-            <div class="val" style="color:#fbbf24;">Parikrama Run</div>
+            <div class="val" style="color: #fde047;">Parikrama Run</div>
             <div class="sub">Ultra marathon Oct 24–25</div>
         </div>
         <div class="ry-kpi-card">
@@ -7083,7 +7079,7 @@ BLOG_ENHANCERS['adi-kailash-ilp-suspended-oct-19-to-26-2026-for-parikrama-run'] 
 
 <!-- Inter-linking Nav Pills — Related Content -->
 <div class="ry-non-overlap-box">
-    <div style="display:flex; align-items:center; gap:8px; color:#fbbf24; font-weight:700; font-size:14px;">
+    <div style="display:flex; align-items:center; gap:8px; color: #fde047; font-weight:700; font-size:14px;">
         <i class="fa-solid fa-compass"></i> Related ILP &amp; October 2026 Planning Guides:
     </div>
     <p style="color:#cbd5e1; font-size:13px; margin:6px 0 12px 0; line-height:1.55;">
@@ -7091,28 +7087,28 @@ BLOG_ENHANCERS['adi-kailash-ilp-suspended-oct-19-to-26-2026-for-parikrama-run'] 
     </p>
     <div class="ry-nav-pills">
         <a href="/blog/adi-kailash-parikrama-run-2-0-winners-results-gunji" class="ry-nav-pill">
-            <span><i class="fa-solid fa-person-running" style="color:#fbbf24; margin-right:6px;"></i> Parikrama Run 2026 — Full Runner's Guide</span>
-            <i class="fa-solid fa-chevron-right" style="color:#fbbf24; font-size:10px;"></i>
+            <span><i class="fa-solid fa-person-running" style="color: #fde047; margin-right:6px;"></i> Parikrama Run 2026 — Full Runner's Guide</span>
+            <i class="fa-solid fa-chevron-right" style="color: #fde047; font-size:10px;"></i>
         </a>
         <a href="/blog/inner-line-permit-adi-kailash-2026-step-by-step" class="ry-nav-pill">
-            <span><i class="fa-solid fa-id-card" style="color:#fbbf24; margin-right:6px;"></i> ILP Step-by-Step Guide 2026</span>
-            <i class="fa-solid fa-chevron-right" style="color:#fbbf24; font-size:10px;"></i>
+            <span><i class="fa-solid fa-id-card" style="color: #fde047; margin-right:6px;"></i> ILP Step-by-Step Guide 2026</span>
+            <i class="fa-solid fa-chevron-right" style="color: #fde047; font-size:10px;"></i>
         </a>
         <a href="/blog/when-does-adi-kailash-yatra-2026-close-for-winter" class="ry-nav-pill">
-            <span><i class="fa-solid fa-snowflake" style="color:#fbbf24; margin-right:6px;"></i> Winter Closing Dates &amp; Last Batch Guide</span>
-            <i class="fa-solid fa-chevron-right" style="color:#fbbf24; font-size:10px;"></i>
+            <span><i class="fa-solid fa-snowflake" style="color: #fde047; margin-right:6px;"></i> Winter Closing Dates &amp; Last Batch Guide</span>
+            <i class="fa-solid fa-chevron-right" style="color: #fde047; font-size:10px;"></i>
         </a>
         <a href="/blog/adi-kailash-permits-open-first-batch-completes-yatra-september-2026" class="ry-nav-pill">
-            <span><i class="fa-solid fa-check-circle" style="color:#fbbf24; margin-right:6px;"></i> 1st Autumn Batch Completed — Ground Report</span>
-            <i class="fa-solid fa-chevron-right" style="color:#fbbf24; font-size:10px;"></i>
+            <span><i class="fa-solid fa-check-circle" style="color: #fde047; margin-right:6px;"></i> 1st Autumn Batch Completed — Ground Report</span>
+            <i class="fa-solid fa-chevron-right" style="color: #fde047; font-size:10px;"></i>
         </a>
         <a href="/blog/adi-kailash-yatra-2026-latest-status-monsoon-suspensions-reopening-updates" class="ry-nav-pill">
-            <span><i class="fa-solid fa-road" style="color:#fbbf24; margin-right:6px;"></i> 2026 Full Route &amp; Status History</span>
-            <i class="fa-solid fa-chevron-right" style="color:#fbbf24; font-size:10px;"></i>
+            <span><i class="fa-solid fa-road" style="color: #fde047; margin-right:6px;"></i> 2026 Full Route &amp; Status History</span>
+            <i class="fa-solid fa-chevron-right" style="color: #fde047; font-size:10px;"></i>
         </a>
         <a href="/blog/best-time-to-visit-adi-kailash-om-parvat-weather-season-guide" class="ry-nav-pill">
-            <span><i class="fa-solid fa-calendar-days" style="color:#fbbf24; margin-right:6px;"></i> Best Time to Visit — Month-by-Month Guide</span>
-            <i class="fa-solid fa-chevron-right" style="color:#fbbf24; font-size:10px;"></i>
+            <span><i class="fa-solid fa-calendar-days" style="color: #fde047; margin-right:6px;"></i> Best Time to Visit — Month-by-Month Guide</span>
+            <i class="fa-solid fa-chevron-right" style="color: #fde047; font-size:10px;"></i>
         </a>
     </div>
 </div>
@@ -7247,25 +7243,25 @@ ${paragraphsHtml}
 </p>
 <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:16px; margin:20px 0 30px 0;">
     <a href="/adi-kailash-from-pithoragarh" style="display:block; background:linear-gradient(135deg,#0a192f,#0f2d5c); border:1px solid rgba(212,175,55,0.35); border-radius:12px; padding:18px; text-decoration:none; transition:all 0.2s;">
-        <div style="color:#fbbf24; font-weight:800; font-size:15px; margin-bottom:6px;">🏔 From Pithoragarh</div>
+        <div style="color: #fde047; font-weight:800; font-size:15px; margin-bottom:6px;">🏔 From Pithoragarh</div>
         <div style="color:#e2e8f0; font-size:13px; line-height:1.5;">3 Days / 2 Nights &bull; ₹18,000/person</div>
-        <div style="color:#94a3b8; font-size:12px; margin-top:6px;">→ Fastest route for locals &amp; nearby travellers</div>
+        <div style="color: #cbd5e1; font-size:12px; margin-top:6px;">→ Fastest route for locals &amp; nearby travellers</div>
     </a>
     <a href="/adi-kailash-from-kathgodam" style="display:block; background:linear-gradient(135deg,#0a192f,#0f2d5c); border:1px solid rgba(212,175,55,0.35); border-radius:12px; padding:18px; text-decoration:none; transition:all 0.2s;">
-        <div style="color:#fbbf24; font-weight:800; font-size:15px; margin-bottom:6px;">🚂 From Kathgodam</div>
+        <div style="color: #fde047; font-weight:800; font-size:15px; margin-bottom:6px;">🚂 From Kathgodam</div>
         <div style="color:#e2e8f0; font-size:13px; line-height:1.5;">6 Days / 5 Nights &bull; ₹30,000/person</div>
-        <div style="color:#94a3b8; font-size:12px; margin-top:6px;">→ Train-friendly for Mumbai, Pune, Ahmedabad</div>
+        <div style="color: #cbd5e1; font-size:12px; margin-top:6px;">→ Train-friendly for Mumbai, Pune, Ahmedabad</div>
     </a>
     <a href="/adi-kailash-from-delhi" style="display:block; background:linear-gradient(135deg,#0a192f,#0f2d5c); border:1px solid rgba(212,175,55,0.35); border-radius:12px; padding:18px; text-decoration:none; transition:all 0.2s;">
-        <div style="color:#fbbf24; font-weight:800; font-size:15px; margin-bottom:6px;">✈ From Delhi</div>
+        <div style="color: #fde047; font-weight:800; font-size:15px; margin-bottom:6px;">✈ From Delhi</div>
         <div style="color:#e2e8f0; font-size:13px; line-height:1.5;">6 Days / 5 Nights &bull; ₹35,000/person</div>
-        <div style="color:#94a3b8; font-size:12px; margin-top:6px;">→ Flights to Pithoragarh or Pantnagar</div>
+        <div style="color: #cbd5e1; font-size:12px; margin-top:6px;">→ Flights to Pithoragarh or Pantnagar</div>
     </a>
 </div>
 
 <!-- ===== Ground Support CTA ===== -->
 <div class="ry-ground-support-banner" style="background:linear-gradient(135deg,#0a192f,#0f2d5c); border:1.5px solid rgba(212,175,55,0.4); border-radius:14px; padding:24px; margin:32px 0; text-align:center;">
-    <h3 style="color:#fbbf24; font-family:var(--font-serif),Georgia,serif; font-size:22px; margin:0 0 10px 0;">Need Help Navigating the October ILP Window?</h3>
+    <h3 style="color: #fde047; font-family:var(--font-serif),Georgia,serif; font-size:22px; margin:0 0 10px 0;">Need Help Navigating the October ILP Window?</h3>
     <p style="color:#e2e8f0; font-size:14.5px; line-height:1.6; margin-bottom:18px;">
         Rudraansh Yatra's Pithoragarh operations desk tracks every permit update, road closure, and seasonal event — so you don't have to. Reach out now to lock in your October 27+ batch before slots fill.
     </p>
@@ -7276,7 +7272,7 @@ ${paragraphsHtml}
         <a href="tel:+917617617651" class="ry-cta-btn call">
             <i class="fa-solid fa-phone"></i> Call +91 7617617651
         </a>
-        <a href="/adi-kailash" class="ry-cta-btn" style="background:rgba(212,175,55,0.2); color:#fbbf24; border:1px solid rgba(212,175,55,0.5);">
+        <a href="/adi-kailash" class="ry-cta-btn" style="background:rgba(212,175,55,0.2); color: #fde047; border:1px solid rgba(212,175,55,0.5);">
             <i class="fa-solid fa-mountain"></i> View All Packages
         </a>
     </div>

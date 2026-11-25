@@ -43,7 +43,7 @@
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"></noscript>
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></noscript>
-    <link rel="stylesheet" href="style.css?v=8.2">
+    <link rel="stylesheet" href="style.css?v=8.5">
     <style>
         .policy-hero{background:linear-gradient(135deg,var(--color-primary) 0%,#1a3a5c 100%);color:var(--color-text-light);padding:80px 0 60px;text-align:center;position:relative;overflow:hidden}
         .policy-hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 60% 40%,rgba(212,175,55,0.08) 0%,transparent 60%);pointer-events:none}
@@ -566,9 +566,9 @@
         <div class="footer-bottom">
             <div class="container">
                 <p>&copy; 2026 Rudraansh Yatra. All Rights Reserved. |
-                    <a href="privacy-policy" style="text-decoration:underline;color:var(--color-gold);">Privacy Policy</a> |
-                    <a href="terms-and-conditions" style="text-decoration:underline;color:var(--color-gold);">Terms</a> |
-                    <a href="refund-policy" style="text-decoration:underline;color:var(--color-gold);">Refund Policy</a>
+                    <a href="privacy-policy" style="text-decoration: underline; color: var(--color-gold-dark); font-weight: 600;">Privacy Policy</a> |
+                    <a href="terms-and-conditions" style="text-decoration: underline; color: var(--color-gold-dark); font-weight: 600;">Terms</a> |
+                    <a href="refund-policy" style="text-decoration: underline; color: var(--color-gold-dark); font-weight: 600;">Refund Policy</a>
                 </p>
             </div>
         </div>
@@ -577,7 +577,7 @@
     <!-- Custom Trip Modal -->
     <div class="modal-overlay" id="custom-trip-modal">
         <div class="modal-box">
-            <button class="modal-close" id="modal-close-btn">&times;</button>
+            <button class="modal-close" id="modal-close-btn" aria-label="Close enquiry form">&times;</button>
             <h3 class="modal-title">Unlock Special Yatra Discounts</h3>
             <p class="modal-subtitle">Share details to get up to 10% direct discount on your Kumaon booking.</p>
             <div class="discount-badge-container" style="background:rgba(197,160,89,0.08);border:1px dashed var(--color-gold);border-radius:var(--border-radius-sm);padding:12px;margin-bottom:20px;text-align:center;">
@@ -600,7 +600,7 @@
                 </div>
                 <div class="modal-btn-grid">
                     <button type="button" class="btn btn-secondary" id="submit-email-btn"><i class="fa-solid fa-envelope"></i> Share via Email</button>
-                    <button type="button" class="btn btn-primary" id="submit-wa-btn" style="background-color:#25D366;color:white;"><i class="fa-brands fa-whatsapp"></i> Share via WhatsApp</button>
+                    <button type="button" class="btn btn-primary" id="submit-wa-btn" style="background-color: #127035;color:white;"><i class="fa-brands fa-whatsapp"></i> Share via WhatsApp</button>
                 </div>
             </form>
         </div>

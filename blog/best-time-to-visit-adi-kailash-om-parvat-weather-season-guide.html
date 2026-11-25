@@ -183,7 +183,7 @@
     
     <!-- Preload LCP Hero Banner with high fetch priority -->
     <link rel="preload" as="image" href="/assets/images/adi-kailash-peak.webp" fetchpriority="high">
-    <link rel="stylesheet" href="/style.css?v=8.2">
+    <link rel="stylesheet" href="/style.css?v=8.5">
     <style>
         .blog-detail-container {
             display: grid;
@@ -213,8 +213,8 @@
             font-size: 12.5px;
             color: var(--color-text-secondary);
         }
-        .breadcrumbs-list a { color: var(--color-text-secondary); text-decoration: none; }
-        .breadcrumbs-list a:hover { color: var(--color-gold); }
+        .breadcrumbs-list a { color: var(--color-primary); text-decoration: none; }
+        .breadcrumbs-list a:hover { color: var(--color-gold-dark); }
         .breadcrumb-sep { color: var(--color-text-secondary); font-size: 10px; }
         .breadcrumbs-list [aria-current="page"] span {
             color: var(--color-primary);
@@ -300,7 +300,7 @@
         h2.blog-heading, 
         .blog-heading {
             font-family: var(--font-serif) !important;
-            color: var(--color-primary) !important;
+            color: var(--color-primary);
             font-weight: 700 !important;
             line-height: 1.3 !important;
             margin-top: 36px !important;
@@ -368,7 +368,7 @@
         }
         .blog-detail-body th {
             background: rgba(10, 25, 47, 0.05) !important;
-            color: var(--color-primary) !important;
+            color: var(--color-primary);
             font-weight: 700 !important;
         }
         .blog-detail-body img,
@@ -554,10 +554,9 @@
             transition: var(--transition-smooth) !important; text-decoration: none !important;
         }
         .promo-card-itinerary-link:hover { color: var(--color-gold-dark) !important; }
-        .promo-card-whatsapp-btn {
-            display: flex !important; align-items: center !important;
+        .promo-card-whatsapp-btn { display: flex !important; align-items: center !important;
             justify-content: center !important; gap: 8px !important;
-            background: #25d366 !important; border: 1px solid #25d366 !important;
+            background: #127035 !important; border: 1px solid #127035 !important;
             color: #FFFFFF !important; padding: 11px 16px !important;
             border-radius: 8px !important; font-size: 12px !important;
             font-weight: 700 !important; text-transform: uppercase !important;
@@ -723,7 +722,7 @@
                 border: none;
                 cursor: pointer;
             }
-            .mob-wa-btn.wa { background: #25d366; color: #fff; }
+            .mob-wa-btn.wa { background: #127035; color: #fff; }
             .mob-wa-btn.wa:active { background: #1da552; transform: scale(0.98); }
             .mob-wa-btn.call { background: var(--color-primary); color: #fff; }
             .mob-wa-btn.call:active { background: #172A45; transform: scale(0.98); }
@@ -742,7 +741,6 @@
         .ry-cost-box,
         .ry-vs-card,
         .ry-season-banner,
-        .ry-highlight-box,
         .ry-flight-summary,
         .ry-cld-banner,
         .ry-cld-bottom,
@@ -762,10 +760,9 @@
         .ry-cost-box h1, .ry-cost-box h2, .ry-cost-box h3, .ry-cost-box h4,
         .ry-vs-card h1, .ry-vs-card h2, .ry-vs-card h3, .ry-vs-card h4,
         .ry-season-banner h1, .ry-season-banner h2, .ry-season-banner h3, .ry-season-banner h4,
-        .ry-highlight-box h1, .ry-highlight-box h2, .ry-highlight-box h3, .ry-highlight-box h4,
         .ry-flight-summary h1, .ry-flight-summary h2, .ry-flight-summary h3, .ry-flight-summary h4,
         .ry-cld-banner h1, .ry-cld-banner h2, .ry-cld-banner h3, .ry-cld-banner h4,
-        .ry-compare-head, .ry-cost-title, .ry-highlight-title {
+        .ry-compare-head, .ry-cost-title {
             color: #fbbf24 !important;
             font-family: var(--font-sans, 'Plus Jakarta Sans', system-ui, sans-serif) !important;
             margin-top: 0 !important;
@@ -777,23 +774,20 @@
         .ry-cost-box p,
         .ry-vs-card p,
         .ry-season-banner p,
-        .ry-highlight-box p,
         .ry-flight-summary p,
         .ry-cld-banner-desc,
         .ry-cld-bottom-desc {
             color: #cbd5e1 !important;
         }
 
-        .ry-route-summary ul, .ry-cost-box ul, .ry-vs-card ul, .ry-season-banner ul, .ry-highlight-box ul,
-        .ry-flight-summary ul, .ry-vs-points {
+        .ry-route-summary ul, .ry-cost-box ul, .ry-vs-card ul, .ry-season-banner ul, .ry-flight-summary ul, .ry-vs-points {
             list-style: none !important;
             list-style-type: none !important;
             margin: 10px 0 0 0 !important;
             padding: 0 !important;
         }
 
-        .ry-route-summary li, .ry-cost-box li, .ry-vs-card li, .ry-season-banner li, .ry-highlight-box li,
-        .ry-flight-summary li, .ry-vs-points li {
+        .ry-route-summary li, .ry-cost-box li, .ry-vs-card li, .ry-season-banner li, .ry-flight-summary li, .ry-vs-points li {
             list-style: none !important;
             list-style-type: none !important;
             color: #e2e8f0 !important;
@@ -805,12 +799,12 @@
         }
 
         .ry-route-summary li strong, .ry-cost-box li strong, .ry-vs-card li strong, 
-        .ry-season-banner li strong, .ry-highlight-box li strong, .ry-flight-summary li strong, .ry-vs-points li strong {
+        .ry-season-banner li strong, .ry-flight-summary li strong, .ry-vs-points li strong {
             color: #ffffff !important;
             font-weight: 700 !important;
         }
 
-        .ry-route-summary a, .ry-cost-box a, .ry-vs-card a, .ry-season-banner a, .ry-highlight-box a, .ry-flight-summary a {
+        .ry-route-summary a, .ry-cost-box a, .ry-vs-card a, .ry-season-banner a, .ry-flight-summary a {
             color: #93c5fd !important;
             text-decoration: underline;
         }
@@ -1045,7 +1039,6 @@
         .ry-cost-box,
         .ry-vs-card,
         .ry-season-banner,
-        .ry-highlight-box,
         .ry-flight-summary,
         .ry-cld-banner,
         .ry-cld-bottom,
@@ -1065,10 +1058,9 @@
         .ry-cost-box h1, .ry-cost-box h2, .ry-cost-box h3, .ry-cost-box h4,
         .ry-vs-card h1, .ry-vs-card h2, .ry-vs-card h3, .ry-vs-card h4,
         .ry-season-banner h1, .ry-season-banner h2, .ry-season-banner h3, .ry-season-banner h4,
-        .ry-highlight-box h1, .ry-highlight-box h2, .ry-highlight-box h3, .ry-highlight-box h4,
         .ry-flight-summary h1, .ry-flight-summary h2, .ry-flight-summary h3, .ry-flight-summary h4,
         .ry-cld-banner h1, .ry-cld-banner h2, .ry-cld-banner h3, .ry-cld-banner h4,
-        .ry-compare-head, .ry-cost-title, .ry-highlight-title {
+        .ry-compare-head, .ry-cost-title {
             color: #fbbf24 !important;
             font-family: var(--font-sans, 'Plus Jakarta Sans', system-ui, sans-serif) !important;
             margin-top: 0 !important;
@@ -1080,23 +1072,20 @@
         .ry-cost-box p,
         .ry-vs-card p,
         .ry-season-banner p,
-        .ry-highlight-box p,
         .ry-flight-summary p,
         .ry-cld-banner-desc,
         .ry-cld-bottom-desc {
             color: #cbd5e1 !important;
         }
 
-        .ry-route-summary ul, .ry-cost-box ul, .ry-vs-card ul, .ry-season-banner ul, .ry-highlight-box ul,
-        .ry-flight-summary ul, .ry-vs-points {
+        .ry-route-summary ul, .ry-cost-box ul, .ry-vs-card ul, .ry-season-banner ul, .ry-flight-summary ul, .ry-vs-points {
             list-style: none !important;
             list-style-type: none !important;
             margin: 10px 0 0 0 !important;
             padding: 0 !important;
         }
 
-        .ry-route-summary li, .ry-cost-box li, .ry-vs-card li, .ry-season-banner li, .ry-highlight-box li,
-        .ry-flight-summary li, .ry-vs-points li {
+        .ry-route-summary li, .ry-cost-box li, .ry-vs-card li, .ry-season-banner li, .ry-flight-summary li, .ry-vs-points li {
             list-style: none !important;
             list-style-type: none !important;
             color: #e2e8f0 !important;
@@ -1108,12 +1097,12 @@
         }
 
         .ry-route-summary li strong, .ry-cost-box li strong, .ry-vs-card li strong, 
-        .ry-season-banner li strong, .ry-highlight-box li strong, .ry-flight-summary li strong, .ry-vs-points li strong {
+        .ry-season-banner li strong, .ry-flight-summary li strong, .ry-vs-points li strong {
             color: #ffffff !important;
             font-weight: 700 !important;
         }
 
-        .ry-route-summary a, .ry-cost-box a, .ry-vs-card a, .ry-season-banner a, .ry-highlight-box a, .ry-flight-summary a {
+        .ry-route-summary a, .ry-cost-box a, .ry-vs-card a, .ry-season-banner a, .ry-flight-summary a {
             color: #93c5fd !important;
             text-decoration: underline;
         }
@@ -1281,7 +1270,7 @@
                 
 <style>
 
-.ry-route-summary h3, .ry-route-summary h2, .ry-cost-box h3, .ry-cost-box h2, .ry-vs-card h3, .ry-vs-card h2, .ry-season-banner h3, .ry-season-banner h2, .ry-highlight-box h3, .ry-cost-title, .ry-highlight-title {
+.ry-route-summary h3, .ry-route-summary h2, .ry-cost-box h3, .ry-cost-box h2, .ry-vs-card h3, .ry-vs-card h2, .ry-season-banner h3, .ry-season-banner h2, .ry-cost-title {
     color: #fbbf24 !important;
     font-family: var(--font-sans), sans-serif !important;
     margin: 0 !important;
@@ -1302,7 +1291,6 @@
         .ry-cost-box,
         .ry-vs-card,
         .ry-season-banner,
-        .ry-highlight-box,
         .ry-flight-summary,
         .ry-cld-banner,
         .ry-cld-bottom,
@@ -1322,10 +1310,9 @@
         .ry-cost-box h1, .ry-cost-box h2, .ry-cost-box h3, .ry-cost-box h4,
         .ry-vs-card h1, .ry-vs-card h2, .ry-vs-card h3, .ry-vs-card h4,
         .ry-season-banner h1, .ry-season-banner h2, .ry-season-banner h3, .ry-season-banner h4,
-        .ry-highlight-box h1, .ry-highlight-box h2, .ry-highlight-box h3, .ry-highlight-box h4,
         .ry-flight-summary h1, .ry-flight-summary h2, .ry-flight-summary h3, .ry-flight-summary h4,
         .ry-cld-banner h1, .ry-cld-banner h2, .ry-cld-banner h3, .ry-cld-banner h4,
-        .ry-compare-head, .ry-cost-title, .ry-highlight-title {
+        .ry-compare-head, .ry-cost-title {
             color: #fbbf24 !important;
             font-family: var(--font-sans, 'Plus Jakarta Sans', system-ui, sans-serif) !important;
             margin-top: 0 !important;
@@ -1337,23 +1324,20 @@
         .ry-cost-box p,
         .ry-vs-card p,
         .ry-season-banner p,
-        .ry-highlight-box p,
         .ry-flight-summary p,
         .ry-cld-banner-desc,
         .ry-cld-bottom-desc {
             color: #cbd5e1 !important;
         }
 
-        .ry-route-summary ul, .ry-cost-box ul, .ry-vs-card ul, .ry-season-banner ul, .ry-highlight-box ul,
-        .ry-flight-summary ul, .ry-vs-points {
+        .ry-route-summary ul, .ry-cost-box ul, .ry-vs-card ul, .ry-season-banner ul, .ry-flight-summary ul, .ry-vs-points {
             list-style: none !important;
             list-style-type: none !important;
             margin: 10px 0 0 0 !important;
             padding: 0 !important;
         }
 
-        .ry-route-summary li, .ry-cost-box li, .ry-vs-card li, .ry-season-banner li, .ry-highlight-box li,
-        .ry-flight-summary li, .ry-vs-points li {
+        .ry-route-summary li, .ry-cost-box li, .ry-vs-card li, .ry-season-banner li, .ry-flight-summary li, .ry-vs-points li {
             list-style: none !important;
             list-style-type: none !important;
             color: #e2e8f0 !important;
@@ -1365,12 +1349,12 @@
         }
 
         .ry-route-summary li strong, .ry-cost-box li strong, .ry-vs-card li strong, 
-        .ry-season-banner li strong, .ry-highlight-box li strong, .ry-flight-summary li strong, .ry-vs-points li strong {
+        .ry-season-banner li strong, .ry-flight-summary li strong, .ry-vs-points li strong {
             color: #ffffff !important;
             font-weight: 700 !important;
         }
 
-        .ry-route-summary a, .ry-cost-box a, .ry-vs-card a, .ry-season-banner a, .ry-highlight-box a, .ry-flight-summary a {
+        .ry-route-summary a, .ry-cost-box a, .ry-vs-card a, .ry-season-banner a, .ry-flight-summary a {
             color: #93c5fd !important;
             text-decoration: underline;
         }
@@ -1412,7 +1396,7 @@
 <div class="ry-season-banner">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
         <h3 style="margin:0 !important;color:#fbbf24 !important;font-size:19px !important;font-weight:800 !important;font-family:var(--font-sans), sans-serif !important;">☀️ 2026 Yatra Season &amp; Weather Windows</h3>
-        <span style="background:#22c55e;color:#fff;font-size:12px;font-weight:700;padding:4px 10px;border-radius:12px;">Official BRO &amp; SDM Calendar</span>
+        <span style="background:#127035;color:#fff;font-size:12px;font-weight:700;padding:4px 10px;border-radius:12px;">Official BRO &amp; SDM Calendar</span>
     </div>
     <div class="ry-season-grid">
         <div class="ry-season-col prime">
@@ -1461,14 +1445,14 @@
                 <td><strong>May</strong></td>
                 <td>12°C / 2°C</td>
                 <td>6°C / -2°C</td>
-                <td><span style="color:#16a34a;font-weight:700;">OPEN</span> (Post-snow opening)</td>
+                <td><span style="color:#166534;font-weight:700;">OPEN</span> (Post-snow opening)</td>
                 <td>Prismatic white snow blanket; crisp OM formation</td>
             </tr>
             <tr>
                 <td><strong>June</strong></td>
                 <td>18°C / 6°C</td>
                 <td>10°C / 2°C</td>
-                <td><span style="color:#16a34a;font-weight:700;">OPEN</span> (Peak Season)</td>
+                <td><span style="color:#166534;font-weight:700;">OPEN</span> (Peak Season)</td>
                 <td>Parvati Sarovar thawed; clearest morning reflections</td>
             </tr>
             <tr>
@@ -1482,21 +1466,21 @@
                 <td><strong>September</strong></td>
                 <td>14°C / 2°C</td>
                 <td>7°C / -3°C</td>
-                <td><span style="color:#16a34a;font-weight:700;">REOPENS ~Sept 15</span></td>
+                <td><span style="color:#166534;font-weight:700;">REOPENS ~Sept 15</span></td>
                 <td>Air washed crystal-clean; gushing fresh waterfalls</td>
             </tr>
             <tr>
                 <td><strong>October</strong></td>
                 <td>10°C / -3°C</td>
                 <td>4°C / -8°C</td>
-                <td><span style="color:#16a34a;font-weight:700;">OPEN</span> (Golden Autumn)</td>
+                <td><span style="color:#166534;font-weight:700;">OPEN</span> (Golden Autumn)</td>
                 <td>Pristine blue skies; deep night stargazing</td>
             </tr>
             <tr>
                 <td><strong>November</strong></td>
                 <td>4°C / -10°C</td>
                 <td>-2°C / -16°C</td>
-                <td><span style="color:#ea580c;font-weight:700;">CLOSING ~Nov 15</span></td>
+                <td><span style="color:#9A3412;font-weight:700;">CLOSING ~Nov 15</span></td>
                 <td>Sub-zero freeze; early winter snow shutdown</td>
             </tr>
         </tbody>
@@ -1567,7 +1551,7 @@
 <div class="ry-cost-box" style="margin-top:35px;background:#064e3b;border-color:#34d399;">
     <div class="ry-cost-head">
         <h4 class="ry-cost-title" style="color:#34d399;">📅 Lock In Your Ideal Season Departure for 2026</h4>
-        <span class="ry-cost-badge" style="background:#10b981;">Limited Homestay Capacity in Gunji</span>
+        <span class="ry-cost-badge" style="background:#047857;">Limited Homestay Capacity in Gunji</span>
     </div>
     <p style="font-size:14px;color:#cbd5e1;line-height:1.6;margin-bottom:16px;">
         Because the Vyas Valley has limited homestay capacity (~250 beds per night across Gunji and Nabi), May–June and September–October departures fill up quickly. Secure your slot early with zero cancellation risk.
@@ -1729,10 +1713,10 @@
                                     <span class="promo-card-price-unit">/ person</span>
                                 </div>
                             </div>
-                            <a href="/adi-kailash" class="promo-card-itinerary-link" itemprop="url">Itinerary <i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i></a>
+                            <a href="/adi-kailash" class="promo-card-itinerary-link" itemprop="url" aria-label="Itinerary - Adi Kailash & Om Parvat Yatra">Itinerary <i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i></a>
                         </div>
                         
-                        <a href="https://wa.me/917617617651?text=Namaste!%20I%20am%20interested%20in%20requesting%20the%20itinerary%20for%20Adi%20Kailash%20%26%20Om%20Parvat%20Yatra." target="_blank" class="promo-card-whatsapp-btn">
+                        <a href="https://wa.me/917617617651?text=Namaste!%20I%20am%20interested%20in%20requesting%20the%20itinerary%20for%20Adi%20Kailash%20%26%20Om%20Parvat%20Yatra." target="_blank" rel="noopener noreferrer" class="promo-card-whatsapp-btn" aria-label="Request Itinerary on WhatsApp - Adi Kailash & Om Parvat">
                             <i class="fa-brands fa-whatsapp"></i> Request Itinerary on WhatsApp
                         </a>
                     </div>
@@ -1787,10 +1771,10 @@
                                     <span class="promo-card-price-unit">/ person</span>
                                 </div>
                             </div>
-                            <a href="/darma-valley" class="promo-card-itinerary-link" itemprop="url">Itinerary <i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i></a>
+                            <a href="/darma-valley" class="promo-card-itinerary-link" itemprop="url" aria-label="Itinerary - Darma Valley Exploration">Itinerary <i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i></a>
                         </div>
                         
-                        <a href="https://wa.me/917617617651?text=Namaste!%20I%20am%20interested%20in%20requesting%20the%20itinerary%20for%20Darma%20Valley%20Exploration." target="_blank" class="promo-card-whatsapp-btn">
+                        <a href="https://wa.me/917617617651?text=Namaste!%20I%20am%20interested%20in%20requesting%20the%20itinerary%20for%20Darma%20Valley%20Exploration." target="_blank" rel="noopener noreferrer" class="promo-card-whatsapp-btn" aria-label="Request Itinerary on WhatsApp - Darma Valley Exploration">
                             <i class="fa-brands fa-whatsapp"></i> Request Itinerary on WhatsApp
                         </a>
                     </div>
@@ -1871,7 +1855,7 @@
     <footer>
         <div class="container footer-grid">
             <div>
-                <a href="/" class="logo" style="margin-bottom: 20px;">
+                <a href="/" class="logo" aria-label="Rudraansh Yatra Home" style="margin-bottom: 20px;">
                     <div class="logo-icon-img-wrap">
                         <img src="/assets/images/logo.png" alt="Rudraansh Yatra Logo" class="logo-icon-img" width="44" height="44" loading="lazy">
                     </div>
@@ -1937,7 +1921,7 @@
         <!-- Custom Itinerary Modal -->
     <div class="modal-overlay" id="custom-trip-modal">
         <div class="modal-box">
-            <button class="modal-close" id="modal-close-btn">&times;</button>
+            <button class="modal-close" id="modal-close-btn" aria-label="Close enquiry form">&times;</button>
             <h3 class="modal-title">Unlock Special Yatra Discounts</h3>
             <p class="modal-subtitle">Share details to get up to 10% direct discount on your Kumaon booking.</p>
             
@@ -1976,7 +1960,7 @@
 
                 <div class="modal-btn-grid">
                     <button type="button" class="btn btn-secondary" id="submit-email-btn"><i class="fa-solid fa-envelope"></i> Share via Email</button>
-                    <button type="button" class="btn btn-primary" id="submit-wa-btn" style="background-color: #25D366; color: white;"><i class="fa-brands fa-whatsapp"></i> Share via WhatsApp</button>
+                    <button type="button" class="btn btn-primary" id="submit-wa-btn" style="background-color: #127035; color: white;"><i class="fa-brands fa-whatsapp"></i> Share via WhatsApp</button>
                 </div>
             </form>
         </div>

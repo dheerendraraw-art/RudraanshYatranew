@@ -79,9 +79,9 @@
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is Om Parvat?","acceptedAnswer":{"@type":"Answer","text":"Om Parvat is a sacred Himalayan peak at 5,590m altitude (18,340 ft; historically surveyed up to 6,191m) in Pithoragarh district, Uttarakhand. It is famous for a naturally-occurring 'OM' (ॐ) symbol formed in snow on its face, visible from the Nabidhang viewpoint at 4,246 metres (13,930 ft). The phenomenon is considered divine by Hindus worldwide."}},{"@type":"Question","name":"From where can we see Om Parvat?","acceptedAnswer":{"@type":"Answer","text":"Om Parvat is visible from Nabidhang, a viewpoint at 4,246 metres altitude in Vyas Valley, Pithoragarh. The viewpoint is reached by 4x4 vehicle from the Nabi/Gunji homestay. The Om symbol is most clearly visible in the morning hours between 7 AM and 10 AM."}},{"@type":"Question","name":"How to reach Om Parvat?","acceptedAnswer":{"@type":"Answer","text":"To reach Om Parvat viewpoint (Nabidhang), you need to: 1) Travel to Pithoragarh by road or flight to Pantnagar, 2) Drive to Nabi/Gunji via Dharchula (requires Inner Line Permit), 3) Take a 4x4 vehicle to Nabidhang at 4,246m. The entire route is drive-based — no trekking required. Rudraansh Yatra organises this as part of all Adi Kailash packages."}},{"@type":"Question","name":"When is the best time to see Om Parvat?","acceptedAnswer":{"@type":"Answer","text":"Best time to see Om Parvat is May-June and September-October when skies are clear. The OM snow symbol is most prominent in these months. July-August monsoon brings cloud cover that obscures the view. October has particularly crisp visibility with fresh snowfall."}}]}</script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="../style.css?v=8.2">
+    <link rel="stylesheet" href="../style.css?v=8.5">
     <style>
-        .blog-hero{padding:80px 0 60px;background:linear-gradient(to bottom,rgba(10,25,47,.55),rgba(10,25,47,.92)),url('../assets/images/adi-kailash-hero.webp') center/cover;text-align:center}
+        .blog-hero{padding:80px 0 60px;background:linear-gradient(to bottom,rgba(10,25,47,.82),rgba(10,25,47,.94)),url('../assets/images/adi-kailash-hero.webp') center/cover;text-align:center}
         .blog-container{width:100%;max-width:820px;margin:0 auto;padding:0 20px;box-sizing:border-box}
         .blog-body{padding:50px 0;width:100%;max-width:100%;box-sizing:border-box;overflow-x:hidden}
         .blog-body h2{font-family:var(--font-serif);font-size:clamp(22px,3vw,30px);color:var(--color-primary);margin:40px 0 14px;border-bottom:2px solid rgba(212,175,55,.2);padding-bottom:10px}
@@ -89,7 +89,7 @@
         .blog-body p{color:var(--color-text-secondary);font-size:16px;line-height:1.85;margin-bottom:18px}
         .blog-body ul,.blog-body ol{color:var(--color-text-secondary);font-size:15.5px;line-height:1.8;padding-left:22px;margin-bottom:18px}
         .blog-body li{margin-bottom:7px}
-        .blog-body a{color:var(--color-gold);font-weight:600;text-decoration:underline}
+        .blog-body a{color:var(--color-gold-dark);font-weight:600;text-decoration:underline}
         .blog-body strong{color:var(--color-primary)}
         .info-box{background:linear-gradient(135deg,rgba(212,175,55,.07),rgba(10,25,47,.03));border-left:4px solid var(--color-gold);border-radius:0 10px 10px 0;padding:16px 20px;margin:24px 0}
         .info-box strong{color:var(--color-primary);display:block;margin-bottom:6px}
@@ -211,7 +211,7 @@
                 font-size: 13px; font-weight: 700; text-decoration: none;
                 font-family: var(--font-sans); transition: all 0.18s; border: none; cursor: pointer;
             }
-            .mob-wa-btn.wa { background: #25d366; color: #fff; }
+            .mob-wa-btn.wa { background: #127035; color: #fff; }
             .mob-wa-btn.wa:active { background: #1da552; transform: scale(0.98); }
             .mob-wa-btn.call { background: var(--color-primary); color: #fff; }
             .mob-wa-btn.call:active { background: #172A45; transform: scale(0.98); }
@@ -228,7 +228,6 @@
         .ry-cost-box,
         .ry-vs-card,
         .ry-season-banner,
-        .ry-highlight-box,
         .ry-flight-summary,
         .ry-cld-banner,
         .ry-cld-bottom,
@@ -248,10 +247,9 @@
         .ry-cost-box h1, .ry-cost-box h2, .ry-cost-box h3, .ry-cost-box h4,
         .ry-vs-card h1, .ry-vs-card h2, .ry-vs-card h3, .ry-vs-card h4,
         .ry-season-banner h1, .ry-season-banner h2, .ry-season-banner h3, .ry-season-banner h4,
-        .ry-highlight-box h1, .ry-highlight-box h2, .ry-highlight-box h3, .ry-highlight-box h4,
         .ry-flight-summary h1, .ry-flight-summary h2, .ry-flight-summary h3, .ry-flight-summary h4,
         .ry-cld-banner h1, .ry-cld-banner h2, .ry-cld-banner h3, .ry-cld-banner h4,
-        .ry-compare-head, .ry-cost-title, .ry-highlight-title {
+        .ry-compare-head, .ry-cost-title {
             color: #fbbf24 !important;
             font-family: var(--font-sans, 'Plus Jakarta Sans', system-ui, sans-serif) !important;
             margin-top: 0 !important;
@@ -263,23 +261,20 @@
         .ry-cost-box p,
         .ry-vs-card p,
         .ry-season-banner p,
-        .ry-highlight-box p,
         .ry-flight-summary p,
         .ry-cld-banner-desc,
         .ry-cld-bottom-desc {
             color: #cbd5e1 !important;
         }
 
-        .ry-route-summary ul, .ry-cost-box ul, .ry-vs-card ul, .ry-season-banner ul, .ry-highlight-box ul,
-        .ry-flight-summary ul, .ry-vs-points {
+        .ry-route-summary ul, .ry-cost-box ul, .ry-vs-card ul, .ry-season-banner ul, .ry-flight-summary ul, .ry-vs-points {
             list-style: none !important;
             list-style-type: none !important;
             margin: 10px 0 0 0 !important;
             padding: 0 !important;
         }
 
-        .ry-route-summary li, .ry-cost-box li, .ry-vs-card li, .ry-season-banner li, .ry-highlight-box li,
-        .ry-flight-summary li, .ry-vs-points li {
+        .ry-route-summary li, .ry-cost-box li, .ry-vs-card li, .ry-season-banner li, .ry-flight-summary li, .ry-vs-points li {
             list-style: none !important;
             list-style-type: none !important;
             color: #e2e8f0 !important;
@@ -291,12 +286,12 @@
         }
 
         .ry-route-summary li strong, .ry-cost-box li strong, .ry-vs-card li strong, 
-        .ry-season-banner li strong, .ry-highlight-box li strong, .ry-flight-summary li strong, .ry-vs-points li strong {
+        .ry-season-banner li strong, .ry-flight-summary li strong, .ry-vs-points li strong {
             color: #ffffff !important;
             font-weight: 700 !important;
         }
 
-        .ry-route-summary a, .ry-cost-box a, .ry-vs-card a, .ry-season-banner a, .ry-highlight-box a, .ry-flight-summary a {
+        .ry-route-summary a, .ry-cost-box a, .ry-vs-card a, .ry-season-banner a, .ry-flight-summary a {
             color: #93c5fd !important;
             text-decoration: underline;
         }
@@ -328,6 +323,7 @@
             word-break: break-word !important;
             box-sizing: border-box !important;
         }
+    .blog-hero .hero-desc{color:#ffffff;}
     </style>
 </head>
 <body>
@@ -350,7 +346,7 @@
             <span class="hero-badge"><span></span> Sacred Darshan Guide 2026</span>
             <h1 class="hero-title" style="font-size:clamp(24px,4vw,42px);">Om Parvat Darshan — Complete Guide 2027</h1>
             <p class="hero-desc" style="max-width:620px;margin:12px auto 0;">How to See the Sacred OM in Snow &bull; Nabidhang Viewpoint &bull; Best Season &bull; How to Book</p>
-            <p style="color:rgba(255,255,255,.75);font-size:13px;margin-top:14px;"><i class="fa-solid fa-user" style="color:var(--color-gold);margin-right:4px;"></i> By <strong style="color:#ffffff;">Dheerendra Rautela</strong> (Lead Guide, Rudraansh Yatra) &bull; <i class="fa-solid fa-calendar-days" style="color:var(--color-gold);margin:0 4px;"></i> Published: August 2026 &bull; <i class="fa-solid fa-clock" style="color:var(--color-gold);margin:0 4px;"></i> 9 min read</p>
+            <p style="color:rgba(255,255,255,.94);font-size:13px;margin-top:14px;"><i class="fa-solid fa-user" style="color:var(--color-gold);margin-right:4px;"></i> By <strong style="color:#ffffff;">Dheerendra Rautela</strong> (Lead Guide, Rudraansh Yatra) &bull; <i class="fa-solid fa-calendar-days" style="color:var(--color-gold);margin:0 4px;"></i> Published: August 2026 &bull; <i class="fa-solid fa-clock" style="color:var(--color-gold);margin:0 4px;"></i> 9 min read</p>
         </div>
     </section>
 
@@ -359,7 +355,7 @@
             <p>Of all the miraculous sights in the Himalayas, few are as awe-inspiring as <strong>Om Parvat</strong> — a majestic Himalayan peak (5,590m, also cited up to 6,191m in border surveys) in the Vyas Valley of Pithoragarh where the sacred <strong>"OM" (ॐ) symbol</strong> appears naturally formed in snow on the mountain's face. Yatris witness this divine sight from the <strong>Nabidhang viewpoint at 4,246 metres (13,930 ft)</strong>. For Hindus worldwide, witnessing this divine sight is a deeply spiritual and emotional experience.</p>
             <p>This guide covers everything you need to know to plan your <strong>Om Parvat darshan in 2027</strong> — from the viewpoint location to the best season, ILP requirements, and how to book a package with Rudraansh Yatra, the direct local ground operator in Pithoragarh.</p>
 
-            <div class="info-box"><strong>&#9728;&#65039; Om Parvat Darshan is Part of All Adi Kailash Packages</strong>Om Parvat darshan is included as a combined darshan with Adi Kailash. You do not need a separate yatra. Choose your package: <a href="/adi-kailash-from-pithoragarh">From Pithoragarh (Rs.18,000)</a>, <a href="/adi-kailash-from-kathgodam">From Kathgodam (Rs.30,000)</a>, or <a href="/adi-kailash-from-delhi">From Delhi (Rs.35,000)</a>.</div>
+            <div class="info-box"><strong>&#9728;&#65039; Om Parvat Darshan is Part of All Adi Kailash Packages</strong>Om Parvat darshan is included as a combined darshan with Adi Kailash. You do not need a separate yatra. Choose your package:<div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;"><a href="/adi-kailash-from-pithoragarh" style="display:inline-flex;align-items:center;min-height:36px;padding:6px 12px;border-radius:8px;border:1px solid rgba(120,88,10,0.35);background:rgba(212,175,55,0.12);color:var(--color-gold-dark);text-decoration:underline;">From Pithoragarh (Rs.18,000)</a><a href="/adi-kailash-from-kathgodam" style="display:inline-flex;align-items:center;min-height:36px;padding:6px 12px;border-radius:8px;border:1px solid rgba(120,88,10,0.35);background:rgba(212,175,55,0.12);color:var(--color-gold-dark);text-decoration:underline;">From Kathgodam (Rs.30,000)</a><a href="/adi-kailash-from-delhi" style="display:inline-flex;align-items:center;min-height:36px;padding:6px 12px;border-radius:8px;border:1px solid rgba(120,88,10,0.35);background:rgba(212,175,55,0.12);color:var(--color-gold-dark);text-decoration:underline;">From Delhi (Rs.35,000)</a></div></div>
 
             <h2>What is Om Parvat?</h2>
             <p>Om Parvat (also called Adi Om Shivling) stands at <strong>5,590 metres (18,340 feet)</strong> above sea level (frequently cited as 6,191m in older and border massif survey records) in the Kumaon Himalayas of Pithoragarh district, Uttarakhand. The mountain gained its sacred fame from a miraculous natural phenomenon: <strong>snow permanently accumulates on the rocky face of the mountain in the shape of the sacred Sanskrit syllable "OM" (ॐ)</strong>.</p>
