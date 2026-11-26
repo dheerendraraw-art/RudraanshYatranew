@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -9,10 +9,11 @@
     <meta name="description"
         content="Book sacred Adi Kailash & Om Parvat Yatra 2027 with Rudraansh Yatra, Pithoragarh's native ground operator. ILP permits, 4x4 Bolero & homestays from ₹18,000.">
     <!-- Preload LCP Hero Image Early (highest network priority for fast mobile LCP) -->
-    <link rel="preload" as="image" href="assets/images/adi-kailash-hero.webp" type="image/webp" fetchpriority="high">
+    <link rel="preload" as="image" href="assets/images/adi-kailash-hero-mobile.webp" media="(max-width: 768px)" type="image/webp" fetchpriority="high">
+    <link rel="preload" as="image" href="assets/images/adi-kailash-hero.webp" media="(min-width: 769px)" type="image/webp" fetchpriority="high">
     <!-- Google Search Site Name & Favicon -->
     <meta property="og:site_name" content="Rudraansh Yatra">
-    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="icon" type="image/png" href="/assets/images/favicon-64.png">
     <!-- Canonical URL -->
     <link rel="canonical" href="https://rudraanshyatra.com/">
 
@@ -668,66 +669,69 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"></noscript>
-    <!-- Font Awesome: Async Non-blocking Load -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></noscript>
+    <!-- Font Awesome (self-hosted subset with font-display: swap, non-blocking) -->
+    <link rel="preload" href="/assets/css/fa-home.min.css?v=8.7" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="/assets/css/fa-home.min.css?v=8.7"></noscript>
 
-    <!-- Preload LCP Hero Image (mobile + desktop) -->
-    <link rel="preload" as="image" href="assets/images/adi-kailash-hero.webp" type="image/webp" fetchpriority="high">
-
-    <!-- CRITICAL CSS: Inline above-the-fold styles for instant first paint -->
+    <!-- CRITICAL CSS: Inline above-the-fold styles for instant first paint & zero CLS -->
     <style>
-      :root{--color-primary:#0A192F;--color-primary-light:#172A45;--color-bg-base:#F4F1EA;--color-bg-card:#FAF9F6;--color-gold:#D4AF37;--color-gold-dark:#78580A;--color-text-primary:#111827;--color-text-secondary:#374151;--color-text-light:#F4F1EA;--font-serif:'Cormorant Garamond',Georgia,serif;--font-sans:'Plus Jakarta Sans',system-ui,sans-serif;--max-width:1240px;--border-radius-sm:6px;--border-radius-md:14px;--glass-bg:rgba(250,249,246,0.85);--glass-border:rgba(10,25,47,0.08);--shadow-subtle:0 4px 20px rgba(10,25,47,0.03);--shadow-md:0 10px 30px rgba(10,25,47,0.06);}
+      :root{--color-primary:#0A192F;--color-primary-light:#172A45;--color-bg-base:#F4F1EA;--color-bg-card:#FAF9F6;--color-gold:#D4AF37;--color-gold-dark:#78580A;--color-text-primary:#111827;--color-text-secondary:#374151;--color-text-light:#F4F1EA;--font-serif:'Cormorant Garamond','Cormorant Fallback',Georgia,serif;--font-sans:'Plus Jakarta Sans','PJSans Fallback',system-ui,sans-serif;--max-width:1240px;--border-radius-sm:6px;--border-radius-md:14px;--glass-bg:rgba(250,249,246,0.85);--glass-border:rgba(10,25,47,0.08);--shadow-subtle:0 4px 20px rgba(10,25,47,0.03);--shadow-md:0 10px 30px rgba(10,25,47,0.06);--transition-smooth:all 0.3s cubic-bezier(0.16,1,0.3,1)}
       *{margin:0;padding:0;box-sizing:border-box}
       html,body{max-width:100%;overflow-x:hidden}
       body{background-color:var(--color-bg-base);color:var(--color-text-primary);font-family:var(--font-sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+      a{color:inherit;text-decoration:none}
       .container{max-width:var(--max-width);margin:0 auto;padding:0 24px}
       .top-bar{background-color:var(--color-primary);color:var(--color-text-light);font-size:13px;font-weight:500;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.1)}
       .top-bar .container{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
       .top-info{display:flex;gap:24px;align-items:center}
       .top-info a{color:inherit;text-decoration:none}
-      .top-socials{display:flex;gap:18px}
+      .top-socials{display:flex;gap:18px;align-items:center}
+      .top-socials a{color:inherit;display:inline-flex;align-items:center;justify-content:center}
       header{background-color:var(--glass-bg);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--glass-border);position:sticky;top:0;z-index:1000;box-shadow:var(--shadow-subtle)}
       .navbar-shell{display:flex;justify-content:space-between;align-items:center;padding:16px 0}
       .logo{display:flex;align-items:center;gap:12px;color:inherit;text-decoration:none}
-      .logo-icon-img-wrap{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--color-gold);overflow:hidden;display:flex;align-items:center;justify-content:center}
+      .logo-icon-img-wrap{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--color-gold);overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0}
       .logo-icon-img{width:100%;height:100%;object-fit:cover;object-position:50% 37.5%;transform:scale(1.65);display:block}
       .logo-text{font-family:var(--font-serif);font-size:24px;font-weight:600;color:var(--color-primary)}
       .logo-text span{color:var(--color-gold-dark)}
       .nav-menu{display:flex;list-style:none;gap:32px;align-items:center}
+      .nav-link{font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--color-primary);position:relative;padding:12px 0;min-height:44px;display:inline-flex;align-items:center}
+      .nav-dropdown-toggle{background:none;border:none;font-family:inherit;cursor:pointer}
+      .dropdown{position:relative}
+      .dropdown-menu{display:none;position:absolute;top:100%;left:0;background:var(--color-bg-card);border:1px solid var(--glass-border);border-radius:10px;padding:10px 0;min-width:220px;list-style:none;z-index:1200}
+      .submenu{display:none;list-style:none}
+      .nav-btn{background:var(--color-primary);color:#fff;border:1px solid var(--color-gold);padding:10px 20px;border-radius:var(--border-radius-sm);font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;display:inline-flex;align-items:center;gap:8px;min-height:44px}
       .menu-toggle{display:none;flex-direction:column;gap:6px;background:none;border:none;cursor:pointer;z-index:1100;min-width:44px;min-height:44px;padding:10px 9px;align-items:center;justify-content:center}
       .menu-toggle span{display:block;width:26px;height:2px;background-color:var(--color-primary);border-radius:2px}
-      .hero{position:relative;height:85vh;min-height:600px;background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;color:var(--color-text-light);text-align:center}
+      .hero{position:relative;height:85vh;min-height:600px;background-color:#0A192F;display:flex;align-items:center;justify-content:center;color:var(--color-text-light);text-align:center;overflow:hidden}
       .hero::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(180deg,rgba(10,25,47,0.45) 0%,rgba(10,25,47,0.8) 100%);z-index:1}
       .hero-content{position:relative;z-index:2;max-width:900px;padding:0 24px}
       .hero-video-bg{position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;z-index:0}
       .hero-video-bg video{width:100%;height:100%;object-fit:cover}
-      @media(max-width:991px){.menu-toggle{display:flex}.nav-menu{display:none;position:fixed;top:0;right:0;width:300px;height:100vh;background-color:var(--color-bg-card);border-left:1px solid var(--glass-border);flex-direction:column;justify-content:flex-start;align-items:flex-start;padding:100px 40px;gap:24px;box-shadow:var(--shadow-md);transition:all 0.4s cubic-bezier(0.16,1,0.3,1);z-index:999}.nav-menu.active{display:flex}}
-      @media(max-width:768px){.top-info span:last-child{display:none}.hero{height:100svh;min-height:500px}}
-    
-@media(max-width:480px){
-    .hero-stats-bar{flex-wrap:wrap;gap:10px;}
-    .hero-stat-num{font-size:22px!important;}
-    .hero-badge{font-size:10px!important;padding:4px 10px!important;}
-}
-/* Metric-matched font fallbacks — prevent CLS while Google Fonts load */
-@font-face{font-family:'PJSans Fallback';src:local('Arial');ascent-override:96%;descent-override:20%;line-gap-override:0%;size-adjust:103%}
-@font-face{font-family:'Cormorant Fallback';src:local('Georgia');ascent-override:90%;descent-override:25%;line-gap-override:0%;size-adjust:105%}
-:root{--font-sans:'Plus Jakarta Sans','PJSans Fallback',system-ui,sans-serif;--font-serif:'Cormorant Garamond','Cormorant Fallback',Georgia,serif}
-</style>
+      .hero-badge{background-color:rgba(10,25,47,0.88);border:1px solid rgba(212,175,55,0.55);padding:10px 20px;border-radius:50px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:2px;color:#FDE047;display:inline-flex;align-items:center;gap:10px;margin-bottom:24px}
+      .hero-badge span{width:8px;height:8px;background-color:var(--color-gold);border-radius:50%;display:inline-block}
+      .hero-title{font-family:var(--font-serif);font-size:clamp(36px,6vw,68px);margin-bottom:24px;color:var(--color-text-light);font-weight:400;line-height:1.15}
+      .hero-desc{font-size:18px;max-width:700px;margin:0 auto 40px auto;color:rgba(244,241,234,0.95);font-weight:300}
+      .btn-container{display:flex;gap:18px;justify-content:center;flex-wrap:wrap}
+      .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:16px 32px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:2px;border-radius:var(--border-radius-sm);cursor:pointer;border:1px solid transparent;text-decoration:none}
+      .btn-primary{background-color:var(--color-gold);color:var(--color-primary)}
+      .btn-whatsapp{background-color:#127035;color:#fff}
+      .ry-mobile-bottom-bar{position:fixed;bottom:0;left:0;right:0;z-index:9999;display:none}
+      @media(max-width:991px){.menu-toggle{display:flex}.nav-menu{display:none;position:fixed;top:0;right:0;width:300px;height:100vh;background-color:var(--color-bg-card);border-left:1px solid var(--glass-border);flex-direction:column;justify-content:flex-start;align-items:flex-start;padding:100px 40px;gap:24px;box-shadow:var(--shadow-md);z-index:999}.nav-menu.active{display:flex}}
+      @media(max-width:768px){.top-info span:last-child{display:none}.hero{height:100svh;min-height:500px}.ry-mobile-bottom-bar{display:flex}.top-socials a{min-width:34px;min-height:34px}.top-bar .top-info a{min-height:32px;display:inline-flex;align-items:center}}
+      @media(max-width:480px){.hero-stats-bar{flex-wrap:wrap;gap:10px}.hero-stat-num{font-size:22px!important}.hero-badge{font-size:10px!important;padding:4px 10px!important}}
+      .fa-solid,.fa-brands,.fa-regular{display:inline-flex;align-items:center;justify-content:center;min-width:1em;height:1em;line-height:1;vertical-align:-0.125em}
+      /* Metric-matched font fallbacks — prevent CLS while Google Fonts load */
+      @font-face{font-family:'PJSans Fallback';src:local('Arial');ascent-override:98%;descent-override:21%;line-gap-override:0%;size-adjust:101%}
+      @font-face{font-family:'Cormorant Fallback';src:local('Georgia');ascent-override:95%;descent-override:22%;line-gap-override:0%;size-adjust:90%}
+    </style>
 
-    <!-- Full Stylesheet: synchronous load (HTTP/2 + gzip; critical CSS above handles FOUC) -->
-    <link rel="stylesheet" href="style.css?v=8.5">
+    <!-- Full Homepage Stylesheet: non-blocking async load (tree-shaken & minified) -->
+    <link rel="preload" href="/assets/css/home.min.css?v=8.7" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/assets/css/home.min.css?v=8.7"></noscript>
 
-    <!-- ===== Meta Pixel ===== -->
+    <!-- ===== Meta Pixel Queue Stub (network script deferred below for fast LCP/TBT) ===== -->
     <script>
-        !function(f,b,e,v,n,t,s)
-        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-        n.queue=[];t=b.createElement(e);t.async=!0;
-        t.src=v;s=b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t,s)}(window, document,'script',
-        'https://connect.facebook.net/en_US/fbevents.js');
+        !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[]}(window);
         fbq('init', '1071708388842400');
         fbq('track', 'PageView');
     </script>
@@ -1083,8 +1087,8 @@
             <a href="/" class="logo">
                 <div class="logo-icon-img-wrap">
                     <picture>
-                        <source srcset="assets/images/logo.webp" type="image/webp">
-                        <img src="assets/images/logo.png" alt="Rudraansh Yatra Logo" class="logo-icon-img" width="44" height="44" decoding="async" loading="lazy">
+                        <source srcset="assets/images/logo-88.webp" type="image/webp">
+                        <img src="assets/images/logo.png" alt="Rudraansh Yatra Logo" class="logo-icon-img" width="44" height="44" decoding="async">
                     </picture>
                 </div>
                 <div class="logo-text">Rudraansh <span>Yatra</span></div>
@@ -1141,22 +1145,26 @@
     <main id="main-content">
 
     <!-- Hero Section -->
-    <section class="hero" aria-label="Adi Kailash &amp; Om Parvat Yatra — Rudraansh Yatra Home" style="background-image: url('assets/images/adi-kailash-hero.webp');">
+    <section class="hero" aria-label="Adi Kailash &amp; Om Parvat Yatra — Rudraansh Yatra Home">
         <div class="hero-video-bg" id="hero-video-wrap">
             <!-- Static hero image: always visible, is the LCP element -->
-            <img id="hero-static-img"
-                 src="assets/images/adi-kailash-hero.webp"
-                 alt="Adi Kailash sacred peak at Jyolingkong 4570m in Vyas Valley Kumaon Himalaya"
-                 width="1920" height="1080"
-                 fetchpriority="high"
-                 decoding="async"
-                 style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;">
+            <picture>
+                <source media="(max-width: 768px)" srcset="assets/images/adi-kailash-hero-mobile.webp">
+                <img id="hero-static-img"
+                     src="assets/images/adi-kailash-hero.webp"
+                     alt="Adi Kailash sacred peak at Jyolingkong 4570m in Vyas Valley Kumaon Himalaya"
+                     width="667" height="375"
+                     fetchpriority="high"
+                     decoding="async"
+                     style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;">
+            </picture>
         </div>
         <script>
-          // Inject video ONLY on desktop (>=900px) — never touch the 11MB file on mobile
-          (function(){
-            if(window.innerWidth>=900&&!window.matchMedia('(prefers-reduced-motion:reduce)').matches){
+          // Inject video ONLY on desktop (>=900px) after load so it never forces reflow or touches mobile bandwidth
+          window.addEventListener('load',function(){
+            if(window.matchMedia('(min-width:900px)').matches&&!window.matchMedia('(prefers-reduced-motion:reduce)').matches){
               var wrap=document.getElementById('hero-video-wrap');
+              if(!wrap)return;
               var v=document.createElement('video');
               v.muted=true;v.playsInline=true;v.loop=true;v.autoplay=true;
               v.poster='assets/images/adi-kailash-hero.webp';
@@ -1167,7 +1175,7 @@
               wrap.appendChild(v);
               v.play().catch(function(){});
             }
-          })();
+          });
         </script>
         <div class="hero-content">
             <div class="hero-badge">
@@ -1200,7 +1208,7 @@
 
                 <div class="card" itemscope itemtype="https://schema.org/Product">
                     <div class="card-img-container">
-                        <img itemprop="image" src="assets/images/adi-kailash-parvat.webp" alt="Adi Kailash Chhota Kailash sacred peak with snow cap at Jyolingkong 4570m Vyas Valley Pithoragarh Uttarakhand" width="380" height="250" loading="lazy">
+                        <picture><source media="(min-width: 992px)" srcset="assets/images/adi-kailash-parvat.webp"><img itemprop="image" src="assets/images/adi-kailash-parvat-card.webp" alt="Adi Kailash Chhota Kailash sacred peak with snow cap at Jyolingkong 4570m Vyas Valley Pithoragarh Uttarakhand" width="380" height="250" loading="lazy" decoding="async"></picture>
                         <span class="card-badge spiritual">Spiritual Yatra</span>
                         <span class="card-duration">3D to 6D Packages</span>
                     </div>
@@ -1250,7 +1258,7 @@
                 <!-- Package: Adi Kailash with Patal Bhuvaneshwar -->
                 <div class="card" itemscope itemtype="https://schema.org/Product">
                     <div class="card-img-container">
-                        <img itemprop="image" src="assets/images/patal-bhuvaneshwar-new.webp" alt="Patal Bhuvaneshwar sacred underground cave temple and Adi Kailash pilgrimage circuit Uttarakhand" width="380" height="250" loading="lazy">
+                        <picture><source media="(min-width: 992px)" srcset="assets/images/patal-bhuvaneshwar-new.webp"><img itemprop="image" src="assets/images/patal-bhuvaneshwar-new-card.webp" alt="Patal Bhuvaneshwar sacred underground cave temple and Adi Kailash pilgrimage circuit Uttarakhand" width="380" height="250" loading="lazy" decoding="async"></picture>
                         <span class="card-badge spiritual">Spiritual Yatra</span>
                         <span class="card-duration">4D to 7D Packages</span>
                     </div>
@@ -1300,7 +1308,7 @@
                 <!-- Package B: Khaliya Top -->
                 <div class="card" itemscope itemtype="https://schema.org/Product">
                     <div class="card-img-container">
-                        <img itemprop="image" src="assets/images/khaliya-top.webp" alt="Panchachuli Peak trekking trail view from Khaliya Top alpine meadow in Munsiyari" width="380" height="250" loading="lazy">
+                        <picture><source media="(min-width: 992px)" srcset="assets/images/khaliya-top.webp"><img itemprop="image" src="assets/images/khaliya-top-card.webp" alt="Panchachuli Peak trekking trail view from Khaliya Top alpine meadow in Munsiyari" width="380" height="250" loading="lazy" decoding="async"></picture>
                         <span class="card-badge adventure">Alpine Trek</span>
                         <span class="card-duration">4 Days / 3 Nights</span>
                     </div>
@@ -1351,7 +1359,7 @@
                 <!-- Package C: Mt. Kailash -->
                 <div class="card" itemscope itemtype="https://schema.org/Product">
                     <div class="card-img-container">
-                        <img itemprop="image" src="assets/images/Kailash.webp" alt="Mount Kailash Peak parikrama and holy pilgrimage route in Tibet Himalaya" width="380" height="250" loading="lazy">
+                        <picture><source media="(min-width: 992px)" srcset="assets/images/Kailash.webp"><img itemprop="image" src="assets/images/Kailash-card.webp" alt="Mount Kailash Peak parikrama and holy pilgrimage route in Tibet Himalaya" width="380" height="250" loading="lazy" decoding="async"></picture>
                         <span class="card-badge spiritual">Tibet Pilgrimage</span>
                         <span class="card-duration">13 Days / 12 Nights</span>
                     </div>
@@ -1390,7 +1398,7 @@
                 <!-- Package E: Darma Valley Exploration -->
                 <div class="card" itemscope itemtype="https://schema.org/Product">
                     <div class="card-img-container">
-                        <img itemprop="image" src="assets/images/Panchacholi.webp" alt="Panchachuli Peaks view and Darma Valley exploration trek path with traditional tribal villages of Dharchula Kumaon" width="380" height="250" loading="lazy">
+                        <picture><source media="(min-width: 992px)" srcset="assets/images/Panchacholi.webp"><img itemprop="image" src="assets/images/Panchacholi-card.webp" alt="Panchachuli Peaks view and Darma Valley exploration trek path with traditional tribal villages of Dharchula Kumaon" width="380" height="250" loading="lazy" decoding="async"></picture>
                         <span class="card-badge adventure">Culture Exploration</span>
                         <span class="card-duration">5 Days / 4 Nights</span>
                     </div>
@@ -1740,7 +1748,7 @@
                 <!-- MSME Card -->
                 <div class="feature-box text-center" style="padding: 40px 30px; border: 1px solid var(--color-gold); background: var(--color-bg-card); border-radius: var(--border-radius-md); display: flex; flex-direction: column; justify-content: space-between; min-height: 380px;">
                     <div>
-                        <div style="margin-bottom: 20px; display: flex; justify-content: center; height: 80px; align-items: center;"><img src="/assets/images/msme-logo.png" alt="MSME Registration Certificate - Rudraansh Yatra registered under Ministry of Micro Small Medium Enterprises Government of India" style="height: 100%; object-fit: contain;" width="99" height="80" loading="lazy"></div>
+                        <div style="margin-bottom: 20px; display: flex; justify-content: center; height: 80px; align-items: center;"><img src="/assets/images/msme-logo.webp" alt="MSME Registration Certificate - Rudraansh Yatra registered under Ministry of Micro Small Medium Enterprises Government of India" style="height: 100%; object-fit: contain;" width="99" height="80" loading="lazy" decoding="async"></div>
                         <h3 class="feature-title" style="color: var(--color-primary); margin-bottom: 12px; font-family: var(--font-serif); font-size: 20px;">MSME Registered</h3>
                         <p class="feature-desc" style="font-size: 14px; color: var(--color-text-primary); line-height: 1.6;">Registered under the <strong>Ministry of Micro, Small & Medium Enterprises (MSME)</strong>, Government of India. Promoting reliable, local tourism entrepreneurship in the borderlands.</p>
                     </div>
@@ -1750,7 +1758,7 @@
                 <!-- NIDHI Card -->
                 <div class="feature-box text-center" style="padding: 40px 30px; border: 1px solid var(--color-gold); background: var(--color-bg-card); border-radius: var(--border-radius-md); display: flex; flex-direction: column; justify-content: space-between; min-height: 380px;">
                     <div>
-                        <div style="margin-bottom: 20px; display: flex; justify-content: center; height: 80px; align-items: center;"><img src="/assets/images/nidhi-logo.png" alt="NIDHI Certification Badge - Rudraansh Yatra accredited under National Integrated Database of Hospitality Industry Ministry of Tourism India" style="height: 100%; object-fit: contain;" width="80" height="80" loading="lazy"></div>
+                        <div style="margin-bottom: 20px; display: flex; justify-content: center; height: 80px; align-items: center;"><img src="/assets/images/nidhi-logo.webp" alt="NIDHI Certification Badge - Rudraansh Yatra accredited under National Integrated Database of Hospitality Industry Ministry of Tourism India" style="height: 100%; object-fit: contain;" width="80" height="80" loading="lazy" decoding="async"></div>
                         <h3 class="feature-title" style="color: var(--color-primary); margin-bottom: 12px; font-family: var(--font-serif); font-size: 20px;">NIDHI Certified</h3>
                         <p class="feature-desc" style="font-size: 14px; color: var(--color-text-primary); line-height: 1.6;">Accredited under <strong>NIDHI (National Integrated Database of Hospitality Industry)</strong>, Ministry of Tourism, Government of India. Compliant with standard safety and accommodation protocols.</p>
                     </div>
@@ -1839,7 +1847,7 @@
                     <div class="blog-carousel-track">
                         <article class="blog-card" id="blog-post-adi-kailash-kapat-closed-nov-5" data-category="Winter Alert" data-title="adi kailash mandir kapat closed on 5th nov: winter closure rituals, ilp permit status & ground reality update" data-excerpt="the sacred kapat of adi kailash shiva-parvati temple at jyolingkong officially closed for winter on 5th november. official sdm dharchula ilp closing date is not confirmed yet. read real-time ground status and 2027 reopening guide.">
                             <div class="blog-card-img-wrap">
-                                <img src="assets/images/adi-kailash-winter-closing.jpg" alt="Adi Kailash Temple Kapat Closed on 5th November at Jyolingkong with Mount Adi Kailash and Parvati Sarovar" class="blog-card-img" loading="lazy" onerror="this.src='assets/images/adi-kailash-hero.webp'">
+                                <img src="assets/images/adi-kailash-winter-closing-card.webp" alt="Adi Kailash Temple Kapat Closed on 5th November at Jyolingkong with Mount Adi Kailash and Parvati Sarovar" class="blog-card-img" loading="lazy" decoding="async" onerror="this.src='assets/images/adi-kailash-hero-mobile.webp'">
                                 <span class="blog-card-badge" style="background: #dc2626; color: #ffffff;">Winter Alert</span>
                             </div>
                             <div class="blog-card-content">
@@ -1880,7 +1888,7 @@
 
                         <article class="blog-card" id="blog-post-adi-kailash-closing-date" data-category="Permits & Guidelines" data-title="when does adi kailash yatra 2026 close for winter? closing dates, snowfall & last batch guide" data-excerpt="complete winter closing dates for adi kailash and om parvat yatra 2026. official closure schedule, itbp checkpoint cutoff dates, transhumance migration (kooch), and final autumn batch booking guidelines.">
                             <div class="blog-card-img-wrap">
-                                <img src="assets/images/adi-kailash-winter-closing.webp" alt="Shiva-Parvati Temple at Jolingkong beneath snow-capped Mount Adi Kailash before winter snowfall closure - Rudraansh Yatra" class="blog-card-img" loading="lazy" onerror="this.src='assets/images/adi-kailash-winter-closing.jpg'">
+                                <img src="assets/images/adi-kailash-winter-closing-card.webp" alt="Shiva-Parvati Temple at Jolingkong beneath snow-capped Mount Adi Kailash before winter snowfall closure - Rudraansh Yatra" class="blog-card-img" loading="lazy" decoding="async" onerror="this.src='assets/images/adi-kailash-hero-mobile.webp'">
                                 <span class="blog-card-badge">Permits & Guidelines</span>
                             </div>
                             <div class="blog-card-content">
@@ -1901,7 +1909,7 @@
 
                         <article class="blog-card" id="blog-post-adi-vs-mt-kailash" data-category="Expedition Guide" data-title="adi kailash vs. kailash mansarovar: what's the real difference?" data-excerpt="a neutral, high-altitude comparison between adi kailash in uttarakhand and kailash mansarovar in tibet. detailed breakdown of permit ease, passport requirements, physical difficulty, and cost differences.">
                             <div class="blog-card-img-wrap">
-                                <img src="assets/images/adi-kailash-parvat.webp" alt="Adi Kailash vs. Kailash Mansarovar: What's the Real Difference? - Sacred Himalayan Travel Diary & Expedition in Kumaon Uttarakhand" class="blog-card-img" loading="lazy" onerror="this.src='assets/images/adi-kailash-hero.webp'">
+                                <img src="assets/images/adi-kailash-parvat-card.webp" alt="Adi Kailash vs. Kailash Mansarovar: What's the Real Difference? - Sacred Himalayan Travel Diary & Expedition in Kumaon Uttarakhand" class="blog-card-img" loading="lazy" decoding="async" onerror="this.src='assets/images/adi-kailash-hero-mobile.webp'">
                                 <span class="blog-card-badge">Expedition Guide</span>
                             </div>
                             <div class="blog-card-content">
@@ -1922,7 +1930,7 @@
 
                         <article class="blog-card" id="blog-post-adi-kailash-guide-2026" data-category="Expedition Guide" data-title="adi kailash yatra complete guide 2026" data-excerpt="everything you need to know before visiting adi kailash and om parvat. complete route details from pithoragarh, kathgodam, and delhi, permit checklists, altitude acclimation, and packing essentials.">
                             <div class="blog-card-img-wrap">
-                                <img src="assets/images/adi-kailash-hero.webp" alt="Adi Kailash Yatra Complete Guide 2026 - Sacred Himalayan Travel Diary & Expedition in Kumaon Uttarakhand" class="blog-card-img" loading="lazy" onerror="this.src='assets/images/adi-kailash-hero.webp'">
+                                <img src="assets/images/adi-kailash-hero-mobile.webp" alt="Adi Kailash Yatra Complete Guide 2026 - Sacred Himalayan Travel Diary & Expedition in Kumaon Uttarakhand" class="blog-card-img" loading="lazy" decoding="async" onerror="this.src='assets/images/adi-kailash-hero.webp'">
                                 <span class="blog-card-badge">Expedition Guide</span>
                             </div>
                             <div class="blog-card-content">
@@ -1943,7 +1951,7 @@
 
                         <article class="blog-card" id="blog-post-om-parvat-darshan-guide" data-category="Expedition Guide" data-title="om parvat darshan: witness the sacred ॐ in snow" data-excerpt="how to view the snow om from nabidhang viewpoint (4,246m) in vyas valley. best morning viewing times, road conditions, 4x4 bolero transport, and spiritual legends of this divine phenomenon.">
                             <div class="blog-card-img-wrap">
-                                <img src="assets/images/om-parvat.webp" alt="Om Parvat Darshan: Witness the Sacred ॐ in Snow - Sacred Himalayan Travel Diary & Expedition in Kumaon Uttarakhand" class="blog-card-img" loading="lazy" onerror="this.src='assets/images/adi-kailash-hero.webp'">
+                                <img src="assets/images/om-parvat-card.webp" alt="Om Parvat Darshan: Witness the Sacred ॐ in Snow - Sacred Himalayan Travel Diary & Expedition in Kumaon Uttarakhand" class="blog-card-img" loading="lazy" decoding="async" onerror="this.src='assets/images/adi-kailash-hero-mobile.webp'">
                                 <span class="blog-card-badge">Expedition Guide</span>
                             </div>
                             <div class="blog-card-content">
@@ -2087,11 +2095,11 @@
                         </div>
                     </div>
                     <div class="review-avatars">
-                        <img src="https://lh3.googleusercontent.com/a/ACg8ocIp7GFDi4YaR5mXRTAA8baFKFYxp_CZNdsq-C4t4IyaMAr3fA=s128-c0x00000000-cc-rp-mo" alt="Ranjan Bhatt - Verified Rudraansh Yatra Google Reviewer" width="24" height="24" loading="lazy" decoding="async">
-                        <img src="https://lh3.googleusercontent.com/a/ACg8ocJyAMsPXyMgLZSQk3ahxcctZVAJrZQk5ADf-FEEuiCzCeCJTA=s128-c0x00000000-cc-rp-mo" alt="Deepak Mehta - Verified Rudraansh Yatra Google Reviewer" width="24" height="24" loading="lazy" decoding="async">
-                        <img src="https://lh3.googleusercontent.com/a/ACg8ocJipFGjUGtN4mSZ2XhFJaKYByZeZuuHBUgdFt4-tFBFdIAwqg=s128-c0x00000000-cc-rp-mo" alt="Sachin Tiwari - Verified Rudraansh Yatra Google Reviewer" width="24" height="24" loading="lazy" decoding="async">
-                        <img src="https://lh3.googleusercontent.com/a/ACg8ocJEBfy1K0ku3Ct2pTFfDrfdQFvhh5yZZZpgJ20x2DGhd4CElw=s128-c0x00000000-cc-rp-mo" alt="Rohit Bisht - Verified Rudraansh Yatra Google Reviewer" width="24" height="24" loading="lazy" decoding="async">
-                        <img src="https://lh3.googleusercontent.com/a-/ALV-UjVj7y9sTvl8ewE21e-jCf4DkPW49QQLP1spTdPE8l0dcj1ZNFbi=s128-c0x00000000-cc-rp-mo" alt="RaJni Mehta - Verified Rudraansh Yatra Google Reviewer" width="24" height="24" loading="lazy" decoding="async">
+                        <img src="https://lh3.googleusercontent.com/a/ACg8ocIp7GFDi4YaR5mXRTAA8baFKFYxp_CZNdsq-C4t4IyaMAr3fA=s84-c0x00000000-cc-rp-mo" alt="Ranjan Bhatt - Verified Rudraansh Yatra Google Reviewer" width="24" height="24" loading="lazy" decoding="async">
+                        <img src="https://lh3.googleusercontent.com/a/ACg8ocJyAMsPXyMgLZSQk3ahxcctZVAJrZQk5ADf-FEEuiCzCeCJTA=s84-c0x00000000-cc-rp-mo" alt="Deepak Mehta - Verified Rudraansh Yatra Google Reviewer" width="24" height="24" loading="lazy" decoding="async">
+                        <img src="https://lh3.googleusercontent.com/a/ACg8ocJipFGjUGtN4mSZ2XhFJaKYByZeZuuHBUgdFt4-tFBFdIAwqg=s84-c0x00000000-cc-rp-mo" alt="Sachin Tiwari - Verified Rudraansh Yatra Google Reviewer" width="24" height="24" loading="lazy" decoding="async">
+                        <img src="https://lh3.googleusercontent.com/a/ACg8ocJEBfy1K0ku3Ct2pTFfDrfdQFvhh5yZZZpgJ20x2DGhd4CElw=s84-c0x00000000-cc-rp-mo" alt="Rohit Bisht - Verified Rudraansh Yatra Google Reviewer" width="24" height="24" loading="lazy" decoding="async">
+                        <img src="https://lh3.googleusercontent.com/a-/ALV-UjVj7y9sTvl8ewE21e-jCf4DkPW49QQLP1spTdPE8l0dcj1ZNFbi=s84-c0x00000000-cc-rp-mo" alt="RaJni Mehta - Verified Rudraansh Yatra Google Reviewer" width="24" height="24" loading="lazy" decoding="async">
                     </div>
                 </div>
 
@@ -2100,7 +2108,7 @@
                 <div class="review-card detail-card">
                     <div class="reviewer-meta">
                         <div class="reviewer-avatar">
-                            <img src="https://lh3.googleusercontent.com/a/ACg8ocIp7GFDi4YaR5mXRTAA8baFKFYxp_CZNdsq-C4t4IyaMAr3fA=s128-c0x00000000-cc-rp-mo" alt="Ranjan Bhatt" width="42" height="42" loading="lazy" decoding="async">
+                            <img src="https://lh3.googleusercontent.com/a/ACg8ocIp7GFDi4YaR5mXRTAA8baFKFYxp_CZNdsq-C4t4IyaMAr3fA=s84-c0x00000000-cc-rp-mo" alt="Ranjan Bhatt" width="42" height="42" loading="lazy" decoding="async">
                         </div>
                         <div class="reviewer-info">
                             <h4 class="review-title">Truly Memorable Experience</h4>
@@ -2118,8 +2126,8 @@
                     </div>
                     <p class="review-text">I recently completed the Adi Kailash &amp; Om Parvat Yatra with Rudraansh Yatra, and it was truly a memorable experience. The entire trip was very well organized from start to finish. The team was professional, friendly, and always ready to help.</p>
                     <div class="review-photos">
-                        <img src="assets/images/om-parvat-group.webp?v=2" alt="Om Parvat Yatra Group" class="review-photo-thumb" width="120" height="90" loading="lazy" decoding="async" onclick="openReviewLightbox(this.src)">
-                        <img src="assets/images/adi-kailash-senior-citizens.webp" alt="Senior Citizens Yatra" class="review-photo-thumb" width="120" height="90" loading="lazy" decoding="async" onclick="openReviewLightbox(this.src)">
+                        <img src="assets/images/om-parvat-group-thumb.webp" data-full="assets/images/om-parvat-group.webp?v=2" alt="Om Parvat Yatra Group" class="review-photo-thumb" width="120" height="90" loading="lazy" decoding="async" onclick="openReviewLightbox(this.dataset.full || this.src)">
+                        <img src="assets/images/adi-kailash-senior-citizens-thumb.webp" data-full="assets/images/adi-kailash-senior-citizens.webp" alt="Senior Citizens Yatra" class="review-photo-thumb" width="120" height="90" loading="lazy" decoding="async" onclick="openReviewLightbox(this.dataset.full || this.src)">
                     </div>
                     <a href="https://search.google.com/local/reviews?placeid=ChIJUaOjOEsloTkRjOLS3RK_S_A" class="read-more" target="_blank" rel="noopener noreferrer" aria-label="Read on Google.. review by Ranjan Bhatt">Read on Google..</a>
                 </div>
@@ -2128,7 +2136,7 @@
                 <div class="review-card detail-card">
                     <div class="reviewer-meta">
                         <div class="reviewer-avatar">
-                            <img src="https://lh3.googleusercontent.com/a/ACg8ocJyAMsPXyMgLZSQk3ahxcctZVAJrZQk5ADf-FEEuiCzCeCJTA=s128-c0x00000000-cc-rp-mo" alt="Deepak Mehta" width="42" height="42" loading="lazy" decoding="async">
+                            <img src="https://lh3.googleusercontent.com/a/ACg8ocJyAMsPXyMgLZSQk3ahxcctZVAJrZQk5ADf-FEEuiCzCeCJTA=s84-c0x00000000-cc-rp-mo" alt="Deepak Mehta" width="42" height="42" loading="lazy" decoding="async">
                         </div>
                         <div class="reviewer-info">
                             <h4 class="review-title">Amazing Trip &amp; Memories</h4>
@@ -2146,8 +2154,8 @@
                     </div>
                     <p class="review-text">What an amazing trip! Beautiful views, great memories, and unforgettable moments. Can't wait to come back</p>
                     <div class="review-photos">
-                        <img src="assets/images/Kailash.webp" alt="Kailash Peak" class="review-photo-thumb" width="120" height="90" loading="lazy" decoding="async" onclick="openReviewLightbox(this.src)">
-                        <img src="assets/images/adi-kailash-panchachuli.webp" alt="Panchachuli Trek" class="review-photo-thumb" width="120" height="90" loading="lazy" decoding="async" onclick="openReviewLightbox(this.src)">
+                        <img src="assets/images/Kailash-card.webp" data-full="assets/images/Kailash.webp" alt="Kailash Peak" class="review-photo-thumb" width="120" height="90" loading="lazy" decoding="async" onclick="openReviewLightbox(this.dataset.full || this.src)">
+                        <img src="assets/images/adi-kailash-panchachuli-thumb.webp" data-full="assets/images/adi-kailash-panchachuli.webp" alt="Panchachuli Trek" class="review-photo-thumb" width="120" height="90" loading="lazy" decoding="async" onclick="openReviewLightbox(this.dataset.full || this.src)">
                     </div>
                     <a href="https://search.google.com/local/reviews?placeid=ChIJUaOjOEsloTkRjOLS3RK_S_A" class="read-more" target="_blank" rel="noopener noreferrer" aria-label="Read on Google.. review by Deepak Mehta">Read on Google..</a>
                 </div>
@@ -2156,7 +2164,7 @@
                 <div class="review-card detail-card">
                     <div class="reviewer-meta">
                         <div class="reviewer-avatar">
-                            <img src="https://lh3.googleusercontent.com/a/ACg8ocJipFGjUGtN4mSZ2XhFJaKYByZeZuuHBUgdFt4-tFBFdIAwqg=s128-c0x00000000-cc-rp-mo" alt="Sachin Tiwari" width="42" height="42" loading="lazy" decoding="async">
+                            <img src="https://lh3.googleusercontent.com/a/ACg8ocJipFGjUGtN4mSZ2XhFJaKYByZeZuuHBUgdFt4-tFBFdIAwqg=s84-c0x00000000-cc-rp-mo" alt="Sachin Tiwari" width="42" height="42" loading="lazy" decoding="async">
                         </div>
                         <div class="reviewer-info">
                             <h4 class="review-title">Best Travel Experience &amp; Care</h4>
@@ -2174,8 +2182,8 @@
                     </div>
                     <p class="review-text">“The rudraansh yatra gave me the best travel experience. Everything was well organized, and the hotel and food arrangements were excellent. I truly appreciated the comfort, care, and quality they provided throughout the trip.”</p>
                     <div class="review-photos">
-                        <img src="assets/images/Panchacholi.webp" alt="Panchachuli Peak" class="review-photo-thumb" width="120" height="90" loading="lazy" decoding="async" onclick="openReviewLightbox(this.src)">
-                        <img src="assets/images/khaliya-top.webp" alt="Khaliya Top Trek" class="review-photo-thumb" width="120" height="90" loading="lazy" decoding="async" onclick="openReviewLightbox(this.src)">
+                        <img src="assets/images/Panchacholi-card.webp" data-full="assets/images/Panchacholi.webp" alt="Panchachuli Peak" class="review-photo-thumb" width="120" height="90" loading="lazy" decoding="async" onclick="openReviewLightbox(this.dataset.full || this.src)">
+                        <img src="assets/images/khaliya-top-card.webp" data-full="assets/images/khaliya-top.webp" alt="Khaliya Top Trek" class="review-photo-thumb" width="120" height="90" loading="lazy" decoding="async" onclick="openReviewLightbox(this.dataset.full || this.src)">
                     </div>
                     <a href="https://search.google.com/local/reviews?placeid=ChIJUaOjOEsloTkRjOLS3RK_S_A" class="read-more" target="_blank" rel="noopener noreferrer" aria-label="Read on Google.. review by Sachin Tiwari">Read on Google..</a>
                 </div>
@@ -2184,7 +2192,7 @@
                 <div class="review-card detail-card">
                     <div class="reviewer-meta">
                         <div class="reviewer-avatar">
-                            <img src="https://lh3.googleusercontent.com/a/ACg8ocJEBfy1K0ku3Ct2pTFfDrfdQFvhh5yZZZpgJ20x2DGhd4CElw=s128-c0x00000000-cc-rp-mo" alt="Rohit Bisht" width="42" height="42" loading="lazy" decoding="async">
+                            <img src="https://lh3.googleusercontent.com/a/ACg8ocJEBfy1K0ku3Ct2pTFfDrfdQFvhh5yZZZpgJ20x2DGhd4CElw=s84-c0x00000000-cc-rp-mo" alt="Rohit Bisht" width="42" height="42" loading="lazy" decoding="async">
                         </div>
                         <div class="reviewer-info">
                             <h4 class="review-title">Great Stay &amp; Friendly Behaviour</h4>
@@ -2202,7 +2210,7 @@
                     </div>
                     <p class="review-text">Best experience with Rudraansh Yatra. The Stay, facilities, their behaviour towards travellers was great.</p>
                     <div class="review-photos">
-                        <img src="assets/images/panchachuli-trek.webp" alt="Panchachuli Trek" class="review-photo-thumb" width="120" height="90" loading="lazy" decoding="async" onclick="openReviewLightbox(this.src)">
+                        <img src="assets/images/panchachuli-trek-thumb.webp" data-full="assets/images/panchachuli-trek.webp" alt="Panchachuli Trek" class="review-photo-thumb" width="120" height="90" loading="lazy" decoding="async" onclick="openReviewLightbox(this.dataset.full || this.src)">
                     </div>
                     <a href="https://search.google.com/local/reviews?placeid=ChIJUaOjOEsloTkRjOLS3RK_S_A" class="read-more" target="_blank" rel="noopener noreferrer" aria-label="Read on Google.. review by Rohit Bisht">Read on Google..</a>
                 </div>
@@ -2211,7 +2219,7 @@
                 <div class="review-card detail-card">
                     <div class="reviewer-meta">
                         <div class="reviewer-avatar">
-                            <img src="https://lh3.googleusercontent.com/a-/ALV-UjVj7y9sTvl8ewE21e-jCf4DkPW49QQLP1spTdPE8l0dcj1ZNFbi=s128-c0x00000000-cc-rp-mo" alt="RaJni Mehta" width="42" height="42" loading="lazy" decoding="async">
+                            <img src="https://lh3.googleusercontent.com/a-/ALV-UjVj7y9sTvl8ewE21e-jCf4DkPW49QQLP1spTdPE8l0dcj1ZNFbi=s84-c0x00000000-cc-rp-mo" alt="RaJni Mehta" width="42" height="42" loading="lazy" decoding="async">
                         </div>
                         <div class="reviewer-info">
                             <h4 class="review-title">Best Safety For Solo/Female Pilgrims</h4>
@@ -2463,7 +2471,7 @@
             <div class="footer-about">
                 <a href="/" class="footer-logo">
                     <div class="logo-icon-img-wrap">
-                        <img src="assets/images/logo.png" alt="Rudraansh Yatra Logo" class="logo-icon-img" width="44" height="44" decoding="async" loading="lazy">
+                        <img src="assets/images/logo-88.webp" alt="Rudraansh Yatra Logo" class="logo-icon-img" width="44" height="44" decoding="async" loading="lazy">
                     </div>
                     Rudraansh <span>Yatra</span>
                 </a>
@@ -2582,11 +2590,23 @@
         </div>
     </div>
 
-    <script src="app.js?v=1.8" defer></script>
+    <script src="app.min.js?v=1.9" defer></script>
 
-    <!-- ===== Google Translate Init ===== -->
+    <!-- ===== On-Demand Google Translate Init (zero JS loaded on English visits until user opens selector) ===== -->
     <div id="google_translate_element"></div>
-    <script type="text/javascript">
+    <script>
+        var _gtLoading = false;
+        function loadGoogleTranslateOnce(cb) {
+            if (window.google && window.google.translate) { if (cb) cb(); return; }
+            window._gtPendingCb = cb || window._gtPendingCb;
+            if (_gtLoading) return;
+            _gtLoading = true;
+            var s = document.createElement('script');
+            s.async = true;
+            s.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+            document.body.appendChild(s);
+        }
+
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
                 pageLanguage: 'en',
@@ -2594,6 +2614,11 @@
                 autoDisplay: false,
                 layout: google.translate.TranslateElement.InlineLayout.SIMPLE
             }, 'google_translate_element');
+            if (typeof window._gtPendingCb === 'function') {
+                var fn = window._gtPendingCb;
+                window._gtPendingCb = null;
+                setTimeout(fn, 250);
+            }
         }
 
         function setGoogleTranslateCookie(lang) {
@@ -2611,6 +2636,17 @@
             }
         }
 
+        function applyGoogleTranslateSelect(langCode) {
+            var selectEl = document.querySelector('.goog-te-combo') || document.querySelector('#google_translate_element select');
+            if (selectEl) {
+                selectEl.value = (langCode === 'en' ? '' : langCode);
+                selectEl.dispatchEvent(new Event('change', { bubbles: true }));
+                selectEl.dispatchEvent(new Event('input', { bubbles: true }));
+                return true;
+            }
+            return false;
+        }
+
         function rudraSetLanguage(langCode) {
             setGoogleTranslateCookie(langCode);
             try { localStorage.setItem('ry_lang', langCode); } catch(e){}
@@ -2626,15 +2662,12 @@
             }
             document.getElementById('langSelectorWrap')?.classList.remove('open');
 
-            // Dispatch translation to Google Translate widget
-            var selectEl = document.querySelector('.goog-te-combo') || document.querySelector('#google_translate_element select');
-            if (selectEl) {
-                selectEl.value = (langCode === 'en' ? '' : langCode);
-                selectEl.dispatchEvent(new Event('change', { bubbles: true }));
-                selectEl.dispatchEvent(new Event('input', { bubbles: true }));
-            } else {
-                // If translate widget not initialized yet, reload to let the cookie auto-translate
-                window.location.reload();
+            if (!applyGoogleTranslateSelect(langCode)) {
+                loadGoogleTranslateOnce(function() {
+                    if (!applyGoogleTranslateSelect(langCode)) {
+                        window.location.reload();
+                    }
+                });
             }
         }
 
@@ -2646,6 +2679,7 @@
                     e.preventDefault();
                     e.stopPropagation();
                     wrap.classList.toggle('open');
+                    loadGoogleTranslateOnce();
                 });
                 document.addEventListener('click', function(e) {
                     if (!wrap.contains(e.target)) {
@@ -2657,38 +2691,27 @@
                 });
             }
 
-            // Restore saved language on load
+            // Restore saved language on load & load widget only if non-English is active
             try {
                 var saved = localStorage.getItem('ry_lang');
-                if (saved && saved !== 'en') {
-                    var chosen = document.querySelector('.lang-option[data-lang="' + saved + '"]');
-                    var btnLabel = document.querySelector('.lang-selector-btn .lang-label');
-                    if (chosen && btnLabel) {
-                        btnLabel.textContent = chosen.dataset.name || 'Language';
+                var hasGoogCookie = /googtrans=\/en\/[a-z]+/i.test(document.cookie);
+                if ((saved && saved !== 'en') || hasGoogCookie) {
+                    if (saved && saved !== 'en') {
+                        var chosen = document.querySelector('.lang-option[data-lang="' + saved + '"]');
+                        var btnLabel = document.querySelector('.lang-selector-btn .lang-label');
+                        if (chosen && btnLabel) {
+                            btnLabel.textContent = chosen.dataset.name || 'Language';
+                        }
+                        document.querySelectorAll('.lang-option').forEach(function(el) {
+                            el.classList.toggle('active', el.dataset.lang === saved);
+                        });
                     }
-                    document.querySelectorAll('.lang-option').forEach(function(el) {
-                        el.classList.toggle('active', el.dataset.lang === saved);
-                    });
+                    loadGoogleTranslateOnce();
                 }
             } catch(e){}
         });
     </script>
-    <script defer src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <!-- ===== End Google Translate Init ===== -->
-    <!-- ===== Google Analytics 4 (deferred) ===== -->
-    <script>
-        window.addEventListener('load', function() {
-            var s = document.createElement('script');
-            s.async = true;
-            s.src = 'https://www.googletagmanager.com/gtag/js?id=G-3CGY0WCBBJ';
-            document.head.appendChild(s);
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-3CGY0WCBBJ', { 'send_page_view': true, 'cookie_flags': 'SameSite=None;Secure' });
-        });
-    </script>
-    <!-- ===== End GA4 ===== -->
+    <!-- ===== End On-Demand Google Translate ===== -->
     <script>
         // Show summary bar when user starts interacting
         function showSummaryBar() {
@@ -2698,22 +2721,40 @@
         document.addEventListener('DOMContentLoaded', function() {
             var destCards = document.querySelectorAll('.dest-select-card');
             destCards.forEach(function(c) { c.addEventListener('click', showSummaryBar); });
-        });</script>
-
-    <!-- ===== Google Analytics 4 (deferred for performance) ===== -->
-    <script>
-        window.addEventListener('load', function() {
-            var s = document.createElement('script');
-            s.async = true;
-            s.src = 'https://www.googletagmanager.com/gtag/js?id=G-3CGY0WCBBJ';
-            document.head.appendChild(s);
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-3CGY0WCBBJ', { 'send_page_view': true, 'cookie_flags': 'SameSite=None;Secure' });
         });
     </script>
-    <!-- ===== End GA4 ===== -->
+
+    <!-- ===== Deferred Single GA4 & Meta Pixel Loader (loads after first user interaction or 4.5s post-load idle) ===== -->
+    <script>
+        (function() {
+            var loaded = false;
+            function loadThirdPartyAnalytics() {
+                if (loaded) return;
+                loaded = true;
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                window.gtag = window.gtag || gtag;
+                gtag('js', new Date());
+                gtag('config', 'G-3CGY0WCBBJ', { 'send_page_view': true, 'cookie_flags': 'SameSite=None;Secure' });
+
+                var ga = document.createElement('script');
+                ga.async = true;
+                ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-3CGY0WCBBJ';
+                document.head.appendChild(ga);
+
+                var fb = document.createElement('script');
+                fb.async = true;
+                fb.src = 'https://connect.facebook.net/en_US/fbevents.js';
+                document.head.appendChild(fb);
+            }
+            ['pointerdown', 'touchstart', 'keydown', 'scroll'].forEach(function(ev) {
+                window.addEventListener(ev, loadThirdPartyAnalytics, { once: true, passive: true });
+            });
+            window.addEventListener('load', function() {
+                setTimeout(loadThirdPartyAnalytics, 4500);
+            });
+        })();
+    </script>
 </body>
 
 </html>

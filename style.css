@@ -852,7 +852,6 @@ button.nav-dropdown-toggle {
     align-items: center;
     gap: 10px;
     margin-bottom: 24px;
-    animation: fadeInUp 0.8s ease;
 }
 
 .hero-badge span {
@@ -870,7 +869,6 @@ button.nav-dropdown-toggle {
     margin-bottom: 24px;
     color: var(--color-text-light);
     font-weight: 400;
-    animation: fadeInUp 1s ease;
 }
 
 .hero-desc {
@@ -879,7 +877,6 @@ button.nav-dropdown-toggle {
     margin: 0 auto 40px auto;
     color: rgba(244, 241, 234, 0.95);
     font-weight: 300;
-    animation: fadeInUp 1.2s ease;
 }
 
 .btn-container {
@@ -887,7 +884,6 @@ button.nav-dropdown-toggle {
     gap: 18px;
     justify-content: center;
     flex-wrap: wrap;
-    animation: fadeInUp 1.4s ease;
 }
 
 /* Button UI Components */
@@ -1902,7 +1898,16 @@ textarea.form-control {
     box-shadow: 0 6px 25px rgba(37, 211, 102, 0.35);
     z-index: 998;
     transition: var(--transition-smooth);
-    animation: pulse 2s infinite;
+}
+.whatsapp-floating::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: rgba(18, 112, 53, 0.45);
+    z-index: -1;
+    animation: pulseRing 2.2s ease-out infinite;
+    pointer-events: none;
 }
 
 .whatsapp-floating:hover {
@@ -2058,15 +2063,14 @@ footer h3::after, footer h4::after {
     }
 }
 
-@keyframes pulse {
+@keyframes pulseRing {
     0% {
-        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4);
+        transform: scale(1);
+        opacity: 0.55;
     }
-    70% {
-        box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
-    }
-    100% {
-        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+    70%, 100% {
+        transform: scale(1.42);
+        opacity: 0;
     }
 }
 
@@ -2140,18 +2144,14 @@ footer h3::after, footer h4::after {
    PREMIUM DISCOUNT POPUP MODAL (dmo-*)  — Enhanced v2
    ================================================================ */
 
-/* ── Keyframe Animations ── */
+/* ── Keyframe Animations (Compositor-only GPU properties) ── */
 @keyframes dmoGoldPulse {
-  0%, 100% { box-shadow: 0 0 18px rgba(212,175,55,0.25), 0 0 0 0 rgba(212,175,55,0.15); }
-  50%       { box-shadow: 0 0 36px rgba(212,175,55,0.5),  0 0 0 8px rgba(212,175,55,0); }
-}
-@keyframes dmoShimmer {
-  0%   { background-position: -200% center; }
-  100% { background-position: 200% center; }
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50%       { transform: scale(1.04); opacity: 1; }
 }
 @keyframes dmoPillGlow {
-  0%, 100% { box-shadow: 0 0 16px rgba(212,175,55,0.25); }
-  50%       { box-shadow: 0 0 40px rgba(212,175,55,0.65), 0 0 60px rgba(245,208,96,0.2); }
+  0%, 100% { opacity: 0.85; transform: scale(1); }
+  50%       { opacity: 1; transform: scale(1.02); }
 }
 @keyframes dmoSlideUp {
   from { opacity: 0; transform: translateY(36px) scale(0.94); }
@@ -2161,8 +2161,8 @@ footer h3::after, footer h4::after {
   from { opacity: 0; } to { opacity: 1; }
 }
 @keyframes dmoTopBarSweep {
-  0%   { background-position: -200% center; }
-  100% { background-position: 200% center; }
+  0%   { transform: translate3d(-50%, 0, 0); }
+  100% { transform: translate3d(50%, 0, 0); }
 }
 @keyframes dmoSpotPulse {
   0%, 100% { opacity: 0.6; transform: scale(1); }
@@ -2172,8 +2172,8 @@ footer h3::after, footer h4::after {
   0%, 100% { opacity: 0.15; } 50% { opacity: 0.6; }
 }
 @keyframes dmoBtnShimmer {
-  0%   { left: -120%; }
-  60%, 100% { left: 120%; }
+  0%   { transform: translate3d(-160%, 0, 0); }
+  60%, 100% { transform: translate3d(260%, 0, 0); }
 }
 @keyframes dmoSuccessBounce {
   0%   { transform: scale(0.5); opacity: 0; }
@@ -2230,15 +2230,24 @@ footer h3::after, footer h4::after {
     background-size: 220px 220px, 160px 160px, 130px 130px;
     background-position: 10px 20px, 80px 60px, 40px 110px;
     opacity: 0.35;
+}
+.modal-overlay.active .discount-modal-box::before {
     animation: dmoStarTwinkle 4s ease-in-out infinite;
 }
 
 /* ── Animated Top Bar ── */
 .dmo-top-bar {
     height: 3px;
-    background: linear-gradient(90deg, transparent 0%, #d4af37 20%, #f5d060 40%, #ffe97a 50%, #f5d060 60%, #d4af37 80%, transparent 100%);
-    background-size: 200% 100%;
     position: absolute; top: 0; left: 0; right: 0; z-index: 5;
+    overflow: hidden;
+}
+.dmo-top-bar::before {
+    content: '';
+    position: absolute; inset: 0;
+    width: 200%; left: -50%;
+    background: linear-gradient(90deg, transparent 0%, #d4af37 25%, #f5d060 45%, #ffe97a 50%, #f5d060 55%, #d4af37 75%, transparent 100%);
+}
+.modal-overlay.active .dmo-top-bar::before {
     animation: dmoTopBarSweep 3s linear infinite;
 }
 
@@ -2281,15 +2290,19 @@ footer h3::after, footer h4::after {
     border-radius: 20px;
     margin-bottom: 14px;
     text-transform: uppercase;
-    animation: dmoUrgencyBlink 2.5s ease-in-out infinite;
     position: relative;
+}
+.modal-overlay.active .dmo-badge {
+    animation: dmoUrgencyBlink 2.5s ease-in-out infinite;
 }
 .dmo-badge::before {
     content: '';
     display: inline-block; width: 6px; height: 6px;
     background: #f5c842; border-radius: 50%;
-    animation: dmoUrgencyBlink 1.2s ease-in-out infinite;
     box-shadow: 0 0 6px rgba(245,200,66,0.8);
+}
+.modal-overlay.active .dmo-badge::before {
+    animation: dmoUrgencyBlink 1.2s ease-in-out infinite;
 }
 
 /* ── 10% OFF Pill ── */
@@ -2300,13 +2313,19 @@ footer h3::after, footer h4::after {
     border-radius: 60px;
     padding: 8px 28px;
     margin-bottom: 20px;
-    animation: dmoPillGlow 2.8s ease-in-out infinite;
+    box-shadow: 0 0 24px rgba(212,175,55,0.35);
     position: relative; overflow: hidden;
+}
+.modal-overlay.active .dmo-discount-pill {
+    animation: dmoPillGlow 2.8s ease-in-out infinite;
 }
 .dmo-discount-pill::after {
     content: '';
-    position: absolute; top: 0; left: -120%; width: 60%; height: 100%;
+    position: absolute; top: 0; left: 0; width: 60%; height: 100%;
     background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    transform: translate3d(-160%, 0, 0);
+}
+.modal-overlay.active .dmo-discount-pill::after {
     animation: dmoBtnShimmer 3.5s ease-in-out infinite;
 }
 .dmo-discount-num {
@@ -2403,7 +2422,6 @@ footer h3::after, footer h4::after {
 .dmo-submit-btn {
     width: 100%;
     background: linear-gradient(110deg, #b8922a 0%, #d4af37 35%, #f5d060 55%, #d4af37 75%, #b8922a 100%);
-    background-size: 200% 100%;
     color: #0a1428;
     border: none;
     border-radius: 13px;
@@ -2416,12 +2434,14 @@ footer h3::after, footer h4::after {
     box-shadow: 0 8px 28px rgba(212,175,55,0.35), 0 2px 8px rgba(0,0,0,0.3);
     font-family: 'Plus Jakarta Sans', sans-serif;
     position: relative; overflow: hidden;
-    animation: dmoShimmer 3s linear infinite;
 }
 .dmo-submit-btn::after {
     content: '';
-    position: absolute; top: 0; left: -120%; width: 60%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+    position: absolute; top: 0; left: 0; width: 60%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.28), transparent);
+    transform: translate3d(-160%, 0, 0);
+}
+.modal-overlay.active .dmo-submit-btn::after {
     animation: dmoBtnShimmer 2.8s ease-in-out infinite;
 }
 .dmo-submit-btn:hover {
@@ -2455,9 +2475,12 @@ footer h3::after, footer h4::after {
     width: 64px; height: 64px;
     background: rgba(212,175,55,0.1);
     border: 1.5px solid rgba(212,175,55,0.3);
+    box-shadow: 0 0 24px rgba(212,175,55,0.3);
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     margin: 0 auto 14px; color: #d4af37;
+}
+.modal-overlay.active .dmo-otp-icon {
     animation: dmoGoldPulse 2.5s ease-in-out infinite;
 }
 .dmo-otp-title { font-size: 20px; font-weight: 700; color: #ffffff; margin: 0 0 8px; }

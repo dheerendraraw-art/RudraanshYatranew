@@ -1192,20 +1192,27 @@ function initializeDiscountPopup() {
         // Ensure clones are removed
         track.querySelectorAll('.blog-card-clone').forEach(el => el.remove());
 
-        const allCards = document.querySelectorAll('.blog-carousel-track .blog-card');
+        const allCards = Array.from(document.querySelectorAll('.blog-carousel-track .blog-card'));
+        const cardCount = allCards.length;
 
         let rafId = null;
         const throttledUpdate3DTransforms = () => {
             if (rafId) return;
             rafId = requestAnimationFrame(() => {
+                rafId = null;
+                // Batch all layout reads before any style writes to avoid forced reflows
                 const containerRect = container.getBoundingClientRect();
+                if (!containerRect.width) return;
                 const containerCenter = containerRect.left + containerRect.width / 2;
                 const maxDistance = containerRect.width / 2;
+                const rects = new Array(cardCount);
+                for (let i = 0; i < cardCount; i++) {
+                    rects[i] = allCards[i].getBoundingClientRect();
+                }
 
-                allCards.forEach(card => {
-                    const cardRect = card.getBoundingClientRect();
+                for (let i = 0; i < cardCount; i++) {
+                    const cardRect = rects[i];
                     const cardCenter = cardRect.left + cardRect.width / 2;
-                    
                     const offset = cardCenter - containerCenter;
                     let ratio = offset / maxDistance;
                     ratio = Math.max(-1.5, Math.min(1.5, ratio));
@@ -1215,10 +1222,10 @@ function initializeDiscountPopup() {
                     const scale = 1 - Math.min(0.2, Math.abs(ratio) * 0.1);
                     const opacity = 1 - Math.min(0.5, Math.abs(ratio) * 0.3);
 
+                    const card = allCards[i];
                     card.style.transform = `perspective(1000px) rotateY(${rotateY}deg) translateZ(${translateZ}px) scale(${scale})`;
                     card.style.opacity = opacity;
-                });
-                rafId = null;
+                }
             });
         };
 
@@ -1280,18 +1287,20 @@ function initializeDiscountPopup() {
             container.scrollLeft = scrollLeft - walk;
         });
 
-        // Initialize positions starting at scrollLeft 0
-        container.scrollLeft = 0;
-        setTimeout(throttledUpdate3DTransforms, 100);
+        // Initialize 3D transforms only once carousel nears viewport (avoids initial load reflow)
+        if ('IntersectionObserver' in window) {
+            const io = new IntersectionObserver((entries) => {
+                if (entries.some(e => e.isIntersecting)) {
+                    io.disconnect();
+                    throttledUpdate3DTransforms();
+                }
+            }, { rootMargin: '250px 0px' });
+            io.observe(container);
+        }
     };
 
     // Initialize carousel on DOM load
     initBlogCarousel();
-
-    // Re-initialize when window loads to ensure LCP images are computed correctly
-    window.addEventListener('load', () => {
-        setTimeout(initBlogCarousel, 500);
-    });
 
     // Pay Now Button Handler for direct packages
     const payNowBtn = document.getElementById('btn-pay-now');
