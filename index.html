@@ -716,10 +716,33 @@
       .btn-primary{background-color:var(--color-gold);color:var(--color-primary)}
       .btn-whatsapp{background-color:#127035;color:#fff}
       .ry-mobile-bottom-bar{position:fixed;bottom:0;left:0;right:0;z-index:9999;display:none}
-      @media(max-width:991px){.menu-toggle{display:flex}.nav-menu{display:none;position:fixed;top:0;right:0;width:300px;height:100vh;background-color:var(--color-bg-card);border-left:1px solid var(--glass-border);flex-direction:column;justify-content:flex-start;align-items:flex-start;padding:100px 40px;gap:24px;box-shadow:var(--shadow-md);z-index:999}.nav-menu.active{display:flex}}
-      @media(max-width:768px){.top-info span:last-child{display:none}.hero{height:100svh;min-height:500px}.ry-mobile-bottom-bar{display:flex}.top-socials a{min-width:34px;min-height:34px}.top-bar .top-info a{min-height:32px;display:inline-flex;align-items:center}}
-      @media(max-width:480px){.hero-stats-bar{flex-wrap:wrap;gap:10px}.hero-stat-num{font-size:22px!important}.hero-badge{font-size:10px!important;padding:4px 10px!important}}
       .fa-solid,.fa-brands,.fa-regular{display:inline-flex;align-items:center;justify-content:center;min-width:1em;height:1em;line-height:1;vertical-align:-0.125em}
+      .top-bar i,header i{display:inline-flex!important;align-items:center!important;justify-content:center!important;width:1.25em!important;height:1em!important;line-height:1!important;flex-shrink:0}
+      #faq,.cta-section,.google-reviews-section,.payment-trust-section,footer{content-visibility:auto;contain-intrinsic-size:auto 650px}
+      @media(max-width:991px){.menu-toggle{display:flex}.nav-menu{display:none;position:fixed;top:0;right:0;width:300px;height:100vh;background-color:var(--color-bg-card);border-left:1px solid var(--glass-border);flex-direction:column;justify-content:flex-start;align-items:flex-start;padding:100px 40px;gap:24px;box-shadow:var(--shadow-md);z-index:999}.nav-menu.active{display:flex}}
+      @media(max-width:768px){
+        .top-bar{max-width:100vw!important;overflow:hidden!important;padding:5px 0!important;font-size:11px!important}
+        .top-bar .container{display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;justify-content:space-between!important;align-items:center!important;gap:8px 12px!important;padding:0 12px!important;max-width:100%!important}
+        .top-bar .top-info{row-gap:4px!important;column-gap:14px!important}
+        .top-bar .top-info span:last-child{display:none}
+        .top-addr-desktop{display:none!important}
+        .top-bar .top-info a{min-height:32px!important;display:inline-flex!important;align-items:center!important;padding:4px 2px!important}
+        .top-socials a{min-width:34px;min-height:34px}
+        .lang-selector-btn{min-height:34px!important;min-width:44px!important;padding:6px 12px!important;display:inline-flex!important;align-items:center!important}
+        .container{padding:0 16px!important}
+        .navbar-shell{padding:0 16px!important}
+        .logo-icon-img-wrap{width:38px;height:38px}
+        .logo-text{font-size:20px}
+        .hero{height:auto!important;min-height:380px!important;max-height:430px!important;padding:50px 16px 36px!important}
+        .hero-content{padding:12px 16px!important}
+        .hero-badge{display:inline-flex!important;margin:0 auto 14px!important;font-size:11px!important;padding:4px 10px!important;background-color:#0a192fe6!important;border-color:#d4af3799!important;color:#f5c842!important}
+        .hero-title{font-size:clamp(22px,7vw,42px)!important;line-height:1.25!important;margin:10px 0 12px!important;font-weight:600!important;color:#fff!important}
+        .hero-desc{font-size:14px!important;line-height:1.6!important;max-width:100%!important;margin:10px 0 40px!important;color:#f8fafc!important}
+        .btn-container{flex-direction:column!important;gap:12px!important;width:100%!important;padding:0 16px!important;align-items:center!important}
+        .btn-container .btn{width:100%!important;max-width:280px!important;padding:11px 20px!important;min-height:44px;box-sizing:border-box}
+        .ry-mobile-bottom-bar{display:flex}
+      }
+      @media(max-width:480px){.hero-stats-bar{flex-wrap:wrap;gap:10px}.hero-stat-num{font-size:22px!important}.hero-title{font-size:clamp(20px,8vw,32px)!important}}
       /* Metric-matched font fallbacks — prevent CLS while Google Fonts load */
       @font-face{font-family:'PJSans Fallback';src:local('Arial');ascent-override:98%;descent-override:21%;line-gap-override:0%;size-adjust:101%}
       @font-face{font-family:'Cormorant Fallback';src:local('Georgia');ascent-override:95%;descent-override:22%;line-gap-override:0%;size-adjust:90%}
@@ -2367,8 +2390,9 @@
                     }
 
                     data.reviews.forEach((r, idx) => {
-                        const avatarHtml = r.profile_photo_url 
-                            ? `<img src="${r.profile_photo_url}" alt="${r.author_name}">`
+                        const avatarUrl = r.profile_photo_url ? r.profile_photo_url.replace(/=s\d+-/, '=s84-') : '';
+                        const avatarHtml = avatarUrl
+                            ? `<img src="${avatarUrl}" alt="${r.author_name}" width="42" height="42" loading="lazy" decoding="async">`
                             : `<div class="reviewer-avatar initials" style="background-color: ${getAvatarColor(idx)};">${r.author_name.charAt(0)}</div>`;
 
                         let starsHtml = '';
@@ -2384,7 +2408,7 @@
 
                         const photosHtml = (r.photos && r.photos.length > 0) 
                             ? `<div class="review-photos">` + 
-                                r.photos.map(pSrc => `<img src="${pSrc}" alt="Yatra Photo" class="review-photo-thumb" onclick="openReviewLightbox(this.src)">`).join('') + 
+                                r.photos.map(pSrc => `<img src="${pSrc}" alt="Yatra Photo" class="review-photo-thumb" width="120" height="90" loading="lazy" decoding="async" onclick="openReviewLightbox(this.src)">`).join('') + 
                               `</div>`
                             : '';
 
